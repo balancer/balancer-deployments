@@ -242,6 +242,8 @@ export default {
     },
   },
   paths: {
+    artifacts: './src/helpers/.hardhat/artifacts',
+    cache: './src/helpers/.hardhat/cache',
     sources: './src/helpers/contracts',
   },
 };

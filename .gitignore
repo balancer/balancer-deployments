@@ -15,8 +15,7 @@ node_modules/
 .pnp.*
 
 # Hardhat artifacts
-artifacts/
-cache/
+src/helpers/.hardhat/*
 
 # Build artifacts
 dist/
