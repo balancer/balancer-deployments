@@ -1,6 +1,7 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-local-networks-config-plugin';
+import 'hardhat-ignore-warnings';
 
 //import './src/helpers/setupTests';
 
@@ -245,5 +246,11 @@ export default {
     artifacts: './src/helpers/.hardhat/artifacts',
     cache: './src/helpers/.hardhat/cache',
     sources: './src/helpers/contracts',
+  },
+  warnings: {
+    '*': {
+      'shadowing-opcode': 'off',
+      default: 'error',
+    },
   },
 };

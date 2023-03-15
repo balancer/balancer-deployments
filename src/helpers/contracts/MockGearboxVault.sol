@@ -14,12 +14,10 @@
 
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
 import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
+import "./MaliciousQueryReverter.sol";
 
-import "./interfaces/IGearboxDieselToken.sol";
-
-contract MockGearboxVault is IGearboxVault, MaliciousQueryReverter {
+contract MockGearboxVault is MaliciousQueryReverter {
     using FixedPoint for uint256;
 
     address private immutable _asset;
@@ -29,12 +27,12 @@ contract MockGearboxVault is IGearboxVault, MaliciousQueryReverter {
         _asset = underlyingAsset;
     }
 
-    function underlyingToken() external view override returns (address) {
+    function underlyingToken() external view returns (address) {
         return _asset;
     }
 
     // solhint-disable-next-line func-name-mixedcase
-    function getDieselRate_RAY() external view override returns (uint256) {
+    function getDieselRate_RAY() external view returns (uint256) {
         maybeRevertMaliciously();
         return _rate;
     }
@@ -43,7 +41,7 @@ contract MockGearboxVault is IGearboxVault, MaliciousQueryReverter {
         _rate = rate;
     }
 
-    function fromDiesel(uint256 amountDiesel) external view override returns (uint256) {
+    function fromDiesel(uint256 amountDiesel) external view returns (uint256) {
         return amountDiesel.mulDown(_rate) / 10**9;
     }
 
@@ -51,11 +49,11 @@ contract MockGearboxVault is IGearboxVault, MaliciousQueryReverter {
         uint256,
         address,
         uint256
-    ) external pure override {
+    ) external pure {
         // solhint-disable-previous-line no-empty-blocks
     }
 
-    function removeLiquidity(uint256, address) external pure override {
+    function removeLiquidity(uint256, address) external pure {
         // solhint-disable-previous-line no-empty-blocks
     }
 }

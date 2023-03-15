@@ -14,37 +14,35 @@
 
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./TestToken.sol";
 
-import "../interfaces/IStaticAToken.sol";
-
-contract MockStaticAToken is TestToken, IStaticAToken {
+contract MockStaticAToken is TestToken {
     // solhint-disable-next-line var-name-mixedcase
     address private immutable _ASSET;
-    ILendingPool private immutable _lendingPool;
+    address private immutable _lendingPool;
 
     constructor(
         string memory name,
         string memory symbol,
         uint8 decimals,
         address underlyingAsset,
-        ILendingPool lendingPool
+        address lendingPool
     ) TestToken(name, symbol, decimals) {
         _ASSET = underlyingAsset;
         _lendingPool = lendingPool;
     }
 
     // solhint-disable-next-line func-name-mixedcase
-    function ASSET() external view override returns (address) {
+    function ASSET() external view returns (address) {
         return _ASSET;
     }
 
     // solhint-disable-next-line func-name-mixedcase
-    function LENDING_POOL() external view override returns (ILendingPool) {
+    function LENDING_POOL() external view returns (address) {
         return _lendingPool;
     }
 
-    function rate() external pure override returns (uint256) {
+    function rate() external pure returns (uint256) {
         revert("Should not call this");
     }
 
@@ -53,7 +51,7 @@ contract MockStaticAToken is TestToken, IStaticAToken {
         uint256,
         uint16,
         bool
-    ) external pure override returns (uint256) {
+    ) external pure returns (uint256) {
         return 0;
     }
 
@@ -61,11 +59,11 @@ contract MockStaticAToken is TestToken, IStaticAToken {
         address,
         uint256,
         bool
-    ) external pure override returns (uint256, uint256) {
+    ) external pure returns (uint256, uint256) {
         return (0, 0);
     }
 
-    function staticToDynamicAmount(uint256 amount) external pure override returns (uint256) {
+    function staticToDynamicAmount(uint256 amount) external pure returns (uint256) {
         return amount;
     }
 }

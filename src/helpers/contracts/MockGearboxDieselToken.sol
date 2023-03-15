@@ -12,11 +12,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.7.0;
 
-interface ILendingPool {
-    /**
-     * @dev returns a 27 decimal fixed point 'ray' value so a rate of 1 is represented as 1e27
-     */
-    function getReserveNormalizedIncome(address asset) external view returns (uint256);
+import "./TestToken.sol";
+
+contract MockGearboxDieselToken is TestToken {
+    address private immutable _gearboxVault;
+
+    constructor(
+        string memory name,
+        string memory symbol,
+        uint8 decimals,
+        address gearboxVaultAddress
+    ) TestToken(name, symbol, decimals) {
+        _gearboxVault = gearboxVaultAddress;
+    }
+
+    function owner() external view returns (address) {
+        return address(_gearboxVault);
+    }
 }

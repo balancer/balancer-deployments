@@ -14,16 +14,14 @@
 
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
+import "./MaliciousQueryReverter.sol";
 
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./TestToken.sol";
 
-import "../interfaces/ILendingPool.sol";
-
-contract MockAaveLendingPool is ILendingPool, MaliciousQueryReverter {
+contract MockAaveLendingPool is MaliciousQueryReverter {
     uint256 private _rate = 1e27;
 
-    function getReserveNormalizedIncome(address) external view override returns (uint256) {
+    function getReserveNormalizedIncome(address) external view returns (uint256) {
         maybeRevertMaliciously();
         return _rate;
     }

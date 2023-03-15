@@ -14,11 +14,9 @@
 
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./MaliciousQueryReverter.sol";
+import "./TestToken.sol";
 
-//we're unable to implement IYearnTokenVault because it defines the decimals function, which collides with
-//the TestToken ERC20 implementation
 contract MockYearnTokenVault is TestToken, MaliciousQueryReverter {
     address private immutable _token;
 

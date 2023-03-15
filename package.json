@@ -36,7 +36,7 @@
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
   },
   "devDependencies": {
-    "@balancer-labs/v2-interfaces": "^0.3.0",
+    "@balancer-labs/v2-interfaces": "latest",
     "@balancer-labs/v2-pool-utils": "^3.1.2",
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
     "@ethersproject/contracts": "^5.0.0",
@@ -58,6 +58,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.5",
+    "hardhat-ignore-warnings": "^0.2.8",
     "hardhat-local-networks-config-plugin": "^0.0.6",
     "lodash.range": "^3.2.0",
     "node-fetch": "^2.6.7",
