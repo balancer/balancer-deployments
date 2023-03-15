@@ -2,11 +2,11 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { advanceTime, DAY, WEEK } from '@balancer-labs/v2-helpers/src/time';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { fp } from './helpers/numbers';
+import { actionId } from './helpers/models/misc/actions';
+import { advanceTime, DAY, WEEK } from './helpers/time';
+import * as expectEvent from './helpers/test/expectEvent';
+import { ZERO_ADDRESS } from './helpers/constants';
 
 import { describeForkTest } from '../../../src/forkTests';
 import Task, { TaskMode } from '../../../src/task';

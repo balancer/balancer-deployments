@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import { bn, fp } from './helpers/numbers';
+import { MAX_UINT256 } from './helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import * as expectEvent from './helpers/test/expectEvent';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 import {
   DAI,

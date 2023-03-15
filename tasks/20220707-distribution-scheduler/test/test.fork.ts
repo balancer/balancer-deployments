@@ -2,12 +2,12 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { bn, fp } from './helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentWeekTimestamp, MONTH, WEEK } from '@balancer-labs/v2-helpers/src/time';
-import { expectTransferEvent } from '@balancer-labs/v2-helpers/src/test/expectTransfer';
+import { advanceTime, currentWeekTimestamp, MONTH, WEEK } from './helpers/time';
+import { expectTransferEvent } from './helpers/test/expectTransfer';
 
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import { MAX_UINT256 } from './helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 

@@ -2,11 +2,11 @@ import { AsyncFunc } from 'mocha';
 import { BigNumber } from 'ethers';
 import chai, { expect } from 'chai';
 
-import { NAry } from '@balancer-labs/v2-helpers/src/models/types/types';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { NAry } from './models/types/types';
+import { ZERO_ADDRESS } from './constants';
 import { BalancerErrors } from '@balancer-labs/balancer-js';
-import { BigNumberish, bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { expectEqualWithError, expectLessThanOrEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
+import { BigNumberish, bn, fp } from './numbers';
+import { expectEqualWithError, expectLessThanOrEqualWithError } from './relativeError';
 
 import { sharedBeforeEach } from './sharedBeforeEach';
 

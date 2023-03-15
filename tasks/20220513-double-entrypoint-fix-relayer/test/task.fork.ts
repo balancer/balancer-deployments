@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
+import { actionId } from './helpers/models/misc/actions';
 import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';

@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { calculateInvariant } from '@balancer-labs/v2-helpers/src/models/pools/stable/math';
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
+import * as expectEvent from './helpers/test/expectEvent';
+import { bn, fp } from './helpers/numbers';
+import { calculateInvariant } from './helpers/models/pools/stable/math';
+import { expectEqualWithError } from './helpers/test/relativeError';
 
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import { MAX_UINT256 } from './helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../../src';

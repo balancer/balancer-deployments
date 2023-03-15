@@ -1,5 +1,5 @@
 import { Contract } from 'ethers';
-import { deploy } from '@balancer-labs/v2-helpers/src/contract';
+import { deploy } from './contract';
 
 import { RawStablePoolDeployment, StablePoolDeployment } from './types';
 

@@ -9,8 +9,8 @@ import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
 import { getForkedNetwork } from '../../../../src/test';
 import { impersonate } from '../../../../src/signers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { expectTransferEvent } from '@balancer-labs/v2-helpers/src/test/expectTransfer';
+import { actionId } from './helpers/models/misc/actions';
+import { expectTransferEvent } from './helpers/test/expectTransfer';
 import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
 
 describeForkTest('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {

@@ -3,9 +3,9 @@ import { BigNumber, Contract, ContractTransaction } from 'ethers';
 
 import { SwapKind } from '@balancer-labs/balancer-js';
 import { actionId } from '../../misc/actions';
-import { BigNumberish } from '@balancer-labs/v2-helpers/src/numbers';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { BigNumberish } from './numbers';
+import { ZERO_ADDRESS } from './constants';
+import * as expectEvent from './test/expectEvent';
 
 import { GeneralSwap } from '../../vault/types';
 import { Account, TxParams } from '../../types/types';

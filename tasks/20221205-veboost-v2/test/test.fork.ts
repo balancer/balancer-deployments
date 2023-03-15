@@ -2,9 +2,9 @@ import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { expect } from 'chai';
 
-import { ZERO_BYTES32 } from '@balancer-labs/v2-helpers/src/constants';
+import { ZERO_BYTES32 } from './helpers/constants';
 
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
+import { actionId } from './helpers/models/misc/actions';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 

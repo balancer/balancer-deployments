@@ -3,21 +3,14 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
 
-import { BigNumber, FP_ONE, fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumber, FP_ONE, fp } from './helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import {
-  advanceTime,
-  currentTimestamp,
-  currentWeekTimestamp,
-  DAY,
-  MONTH,
-  WEEK,
-} from '@balancer-labs/v2-helpers/src/time';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from './helpers/time';
+import * as expectEvent from './helpers/test/expectEvent';
 
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { expectTransferEvent } from '@balancer-labs/v2-helpers/src/test/expectTransfer';
-import { MAX_UINT256, ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { expectEqualWithError } from './helpers/test/relativeError';
+import { expectTransferEvent } from './helpers/test/expectTransfer';
+import { MAX_UINT256, ZERO_ADDRESS } from './helpers/constants';
 import { range } from 'lodash';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../src';

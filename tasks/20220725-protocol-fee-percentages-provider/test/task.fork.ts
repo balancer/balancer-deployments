@@ -2,10 +2,10 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumber, fp } from './helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
+import { actionId } from './helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 

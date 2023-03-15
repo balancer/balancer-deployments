@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { actionId } from './helpers/models/misc/actions';
+import { ZERO_ADDRESS } from './helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../src';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';

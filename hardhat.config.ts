@@ -1,14 +1,12 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-local-networks-config-plugin';
-import 'hardhat-ignore-warnings';
 
-import '@balancer-labs/v2-common/setupTests';
+//import './src/helpers/setupTests';
 
 import { task } from 'hardhat/config';
 import { TASK_TEST } from 'hardhat/builtin-tasks/task-names';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { hardhatBaseConfig } from '@balancer-labs/v2-common';
 
 import path from 'path';
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
@@ -20,7 +18,6 @@ import Verifier from './src/verifier';
 import logger, { Logger } from './src/logger';
 import { checkActionIds, checkActionIdUniqueness, saveActionIds } from './src/actionId';
 import { saveContractDeploymentAddresses } from './src/network';
-import { name } from './package.json';
 
 task('deploy', 'Run deployment task')
   .addParam('id', 'Deployment task ID')
@@ -236,11 +233,15 @@ export default {
     timeout: 600000,
   },
   solidity: {
-    compilers: hardhatBaseConfig.compilers,
-    overrides: { ...hardhatBaseConfig.overrides(name) },
+    version: '0.7.1',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 9999,
+      },
+    },
   },
   paths: {
-    sources: './tasks',
+    sources: './src/helpers/contracts',
   },
-  warnings: hardhatBaseConfig.warnings,
 };

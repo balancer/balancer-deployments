@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import * as expectEvent from './helpers/test/expectEvent';
 
 import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
 import { getForkedNetwork } from '../../../../src/test';
 import { impersonate } from '../../../../src/signers';
-import { advanceTime, WEEK } from '@balancer-labs/v2-helpers/src/time';
+import { advanceTime, WEEK } from './helpers/time';
 
 describeForkTest('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, function () {
   let govMultisig: SignerWithAddress, checkpointMultisig: SignerWithAddress;

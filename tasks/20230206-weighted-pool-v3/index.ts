@@ -1,6 +1,6 @@
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { ZERO_ADDRESS } from './helpers/constants';
+import { bn, fp } from './helpers/numbers';
+import * as expectEvent from './helpers/test/expectEvent';
 
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
 import Task, { TaskMode } from '../../src/task';

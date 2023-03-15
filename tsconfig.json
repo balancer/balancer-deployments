@@ -1,4 +1,7 @@
 {
+  "include": ["index.ts", "src", "addresses/**/*.json", "tasks/**/artifact/*.json", "tasks/**/output/*.json"],
+  "exclude": ["tasks/**/test", "tasks/**/output/test.json"],
+  "files": ["./hardhat.config.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
@@ -41,7 +44,7 @@
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 
     /* Module Resolution Options */
-    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
@@ -65,9 +68,6 @@
     /* Advanced Options */
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
-    "resolveJsonModule": true,
-    "include": ["index.ts", "src", "addresses/**/*.json", "tasks/**/artifact/*.json", "tasks/**/output/*.json"],
-    "exclude": ["tasks/**/test", "tasks/**/output/test.json"],
-    "files": ["./hardhat.config.ts"]
+    "resolveJsonModule": true
   }
 }

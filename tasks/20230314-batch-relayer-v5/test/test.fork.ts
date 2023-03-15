@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumberish } from './helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import { MAX_UINT256 } from './helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 

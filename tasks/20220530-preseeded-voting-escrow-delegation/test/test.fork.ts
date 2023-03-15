@@ -2,12 +2,12 @@ import hre from 'hardhat';
 import { BigNumber, Contract } from 'ethers';
 import { expect } from 'chai';
 
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import * as expectEvent from './helpers/test/expectEvent';
 
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { ZERO_ADDRESS } from './helpers/constants';
 import { range } from 'lodash';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { fromNow, MONTH } from '@balancer-labs/v2-helpers/src/time';
+import { actionId } from './helpers/models/misc/actions';
+import { fromNow, MONTH } from './helpers/time';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';

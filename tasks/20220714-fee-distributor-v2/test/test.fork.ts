@@ -2,12 +2,12 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { bn, fp } from './helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '@balancer-labs/v2-helpers/src/time';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from './helpers/time';
+import * as expectEvent from './helpers/test/expectEvent';
 
-import { expectTransferEvent } from '@balancer-labs/v2-helpers/src/test/expectTransfer';
+import { expectTransferEvent } from './helpers/test/expectTransfer';
 import { _TypedDataEncoder } from 'ethers/lib/utils';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';

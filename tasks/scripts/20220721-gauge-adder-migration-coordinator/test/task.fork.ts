@@ -8,7 +8,7 @@ import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
 import { getForkedNetwork } from '../../../../src/test';
 import { impersonate } from '../../../../src/signers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
+import { actionId } from './helpers/models/misc/actions';
 
 describeForkTest('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, function () {
   let govMultisig: SignerWithAddress;

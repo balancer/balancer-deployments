@@ -3,15 +3,15 @@ import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
 import { SwapKind, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import * as expectEvent from './helpers/test/expectEvent';
+import { fp } from './helpers/numbers';
+import { MAX_UINT256 } from './helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { calculateInvariant } from '@balancer-labs/v2-helpers/src/models/pools/weighted/math';
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '@balancer-labs/v2-helpers/src/time';
+import { calculateInvariant } from './helpers/models/pools/weighted/math';
+import { expectEqualWithError } from './helpers/test/relativeError';
+import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from './helpers/time';
 
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
+import { actionId } from './helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 

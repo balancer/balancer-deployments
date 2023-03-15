@@ -1,5 +1,5 @@
 import { BigNumberish, ContractReceipt } from 'ethers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import * as expectEvent from './test/expectEvent';
 import { Interface } from 'ethers/lib/utils';
 import { Account } from '../models/types/types';
 import TypesConverter from '../models/types/TypesConverter';

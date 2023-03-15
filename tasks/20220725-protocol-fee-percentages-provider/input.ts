@@ -1,4 +1,4 @@
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { fp } from './helpers/numbers';
 import Task, { TaskMode } from '../../src/task';
 import { BigNumber } from 'ethers';
 
