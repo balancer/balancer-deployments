@@ -9,7 +9,6 @@ import { actionId } from './helpers/models/misc/actions';
 import { MAX_UINT256, ZERO_ADDRESS } from './helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { ManagedPoolParams } from './helpers/models/pools/weighted/types';
-import { ProtocolFee } from './helpers/models/vault/types';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../../src';
 
@@ -43,6 +42,8 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
   const POOL_SWAP_FEE_PERCENTAGE = fp(0.01);
   const POOL_MANAGEMENT_AUM_FEE_PERCENTAGE = fp(0.01);
   const WEIGHTS = toNormalizedWeights([fp(20), fp(30), fp(50)]);
+
+  const AUM_PROTOCOL_FEE_ID = 3;
 
   before('run task', async () => {
     task = new Task('20221021-managed-pool', TaskMode.TEST, getForkedNetwork(hre));
@@ -83,7 +84,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
       swapEnabledOnStart: swapEnabled,
       mustAllowlistLPs: mustAllowlistLPs,
       managementAumFeePercentage: POOL_MANAGEMENT_AUM_FEE_PERCENTAGE,
-      aumFeeId: ProtocolFee.AUM,
+      aumFeeId: AUM_PROTOCOL_FEE_ID,
     };
 
     const receipt = await (await factory.connect(owner).create(newPoolParams, owner.address)).wait();
@@ -225,7 +226,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
         swapEnabledOnStart: true,
         mustAllowlistLPs: true,
         managementAumFeePercentage: POOL_MANAGEMENT_AUM_FEE_PERCENTAGE,
-        aumFeeId: ProtocolFee.AUM,
+        aumFeeId: AUM_PROTOCOL_FEE_ID,
       };
       await expect(factory.connect(owner).create(newPoolParams, owner.address)).to.be.revertedWith('BAL#211');
     });

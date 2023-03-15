@@ -10,7 +10,6 @@ import Task, { TaskMode } from '../../../src/task';
 import { getForkedNetwork } from '../../../src/test';
 import { getSigner, impersonate } from '../../../src/signers';
 import { actionId } from './helpers/models/misc/actions';
-import TimelockAuthorizer from './helpers/models/authorizer/TimelockAuthorizer';
 import { advanceTime, DAY } from './helpers/time';
 import { ZERO_ADDRESS } from './helpers/constants';
 
@@ -32,6 +31,8 @@ describeForkTest('GaugeAdderV3', 'mainnet', 16370000, function () {
   const DAO_MULTISIG = '0x10a19e7ee7d7f8a52822f6817de8ea18204f2e4f';
 
   const weightCap = fp(0.001);
+
+  const EVERYWHERE = '0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF';
 
   before('create timelock authorizer', async () => {
     const timelockTask = new Task('20221202-timelock-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
@@ -114,55 +115,43 @@ describeForkTest('GaugeAdderV3', 'mainnet', 16370000, function () {
         gaugeController.interface
       );
 
+      await authorizer.connect(daoMultisig).manageGranter(addFactoryAction, lmMultisig.address, EVERYWHERE, true);
+      await authorizer.connect(daoMultisig).manageGranter(addGaugeAction, lmMultisig.address, EVERYWHERE, true);
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(addFactoryAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
-      await authorizer
-        .connect(daoMultisig)
-        .manageGranter(addGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
-      await authorizer
-        .connect(daoMultisig)
-        .manageGranter(gaugeControllerAddGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(gaugeControllerAddGaugeAction, lmMultisig.address, EVERYWHERE, true);
 
-      let tx = await authorizer
-        .connect(lmMultisig)
-        .grantPermissions([addFactoryAction], admin.address, [TimelockAuthorizer.EVERYWHERE]);
+      let tx = await authorizer.connect(lmMultisig).grantPermissions([addFactoryAction], admin.address, [EVERYWHERE]);
       expectEvent.inReceipt(await tx.wait(), 'PermissionGranted', {
         actionId: addFactoryAction,
         account: admin.address,
-        where: TimelockAuthorizer.EVERYWHERE,
+        where: EVERYWHERE,
       });
 
-      tx = await authorizer
-        .connect(lmMultisig)
-        .grantPermissions([addGaugeAction], admin.address, [TimelockAuthorizer.EVERYWHERE]);
+      tx = await authorizer.connect(lmMultisig).grantPermissions([addGaugeAction], admin.address, [EVERYWHERE]);
       expectEvent.inReceipt(await tx.wait(), 'PermissionGranted', {
         actionId: addGaugeAction,
         account: admin.address,
-        where: TimelockAuthorizer.EVERYWHERE,
+        where: EVERYWHERE,
       });
 
       // Granting `GaugeController#add_gauge` permissions to the entrypoint has a delay, so the permission needs
       // to be scheduled and executed after the required time passes.
       tx = await authorizer
         .connect(lmMultisig)
-        .scheduleGrantPermission(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE, []);
+        .scheduleGrantPermission(gaugeControllerAddGaugeAction, gaugeAdder.address, EVERYWHERE, []);
       const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
       const scheduledExecutionId = event.args.scheduledExecutionId;
 
       // The adder cannot add a gauge in the controller before the delay passes.
-      expect(
-        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE)
-      ).to.be.false;
+      expect(await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, EVERYWHERE)).to.be.false;
 
       await advanceTime(14 * DAY);
       await authorizer.connect(lmMultisig).execute(scheduledExecutionId);
 
-      expect(await authorizer.canPerform(addFactoryAction, admin.address, TimelockAuthorizer.EVERYWHERE)).to.be.true;
-      expect(await authorizer.canPerform(addGaugeAction, admin.address, TimelockAuthorizer.EVERYWHERE)).to.be.true;
-      expect(
-        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE)
-      ).to.be.true;
+      expect(await authorizer.canPerform(addFactoryAction, admin.address, EVERYWHERE)).to.be.true;
+      expect(await authorizer.canPerform(addGaugeAction, admin.address, EVERYWHERE)).to.be.true;
+      expect(await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, EVERYWHERE)).to.be.true;
 
       const entrypoint = await gaugeAdder.getAuthorizerAdaptorEntrypoint();
       const gaugeAdderAuthorizer = await adaptorEntrypoint.getAuthorizer();
