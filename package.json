@@ -58,6 +58,7 @@
     "decimal.js": "^10.4.3",
     "eslint": "^8.26.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethereum-waffle": "^3.4.4",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.5",
