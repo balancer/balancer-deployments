@@ -37,12 +37,6 @@ jobs:
       - name: Install
         run: yarn --immutable
         if: steps.cache.outputs.cache-hit != 'true'
-      - name: Build Balancer JS
-        run: yarn workspace @balancer-labs/balancer-js build
-      - name: Compile
-        run: yarn build # Ideally we wouldn't depend on the packages of other artifacts, but we use some of their mocks
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Forked Network Cache
         # Hardhat caches node requests when working with forked networks (e.g. when querying contract code, storage,
         # etc.) to save time in future runs. We cache this directory accross runs.
@@ -56,16 +50,16 @@ jobs:
         uses: pat-s/always-upload-cache@v3.0.1
         id: cache-forked-network
         with:
-          path: 'pkg/deployments/cache/hardhat-network-fork/**'
+          path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
           key: hardhat-network-fork-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
             hardhat-network-fork-
       - name: Prepare Config
-        run: yarn workspace @balancer-labs/v2-deployments ci:prepare-config
+        run: yarn ci:prepare-config
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_ARCHIVE_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_ARCHIVE_ENDPOINT }}
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_ARCHIVE_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_ARCHIVE_ENDPOINT }}
       - name: Test
-        run: yarn workspace @balancer-labs/v2-deployments test
+        run: yarn test

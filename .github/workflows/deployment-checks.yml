@@ -5,9 +5,7 @@ on:
     branches:
       - master
   pull_request:
-    branches: '*'
-    paths:
-      - 'pkg/deployments/**'
+    branches: ['*', '**/*']
 
 jobs:
   check-artifacts:
@@ -16,10 +14,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up environment
         uses: ./.github/actions/setup
-      - name: Compile balancer-js
-        run: yarn workspace @balancer-labs/balancer-js build
       - name: Check Deployment Artifacts
-        run: yarn workspace @balancer-labs/v2-deployments check-artifacts
+        run: yarn check-artifacts
 
   check-addresses:
     runs-on: ubuntu-latest
@@ -27,10 +23,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up environment
         uses: ./.github/actions/setup
-      - name: Compile balancer-js
-        run: yarn workspace @balancer-labs/balancer-js build
       - name: Prepare Config
-        run: yarn workspace @balancer-labs/v2-deployments ci:prepare-config
+        run: yarn ci:prepare-config
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_INFURA_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_INFURA_ENDPOINT }}
@@ -41,7 +35,7 @@ jobs:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_INFURA_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_INFURA_ENDPOINT }}
       - name: Check Deployment Addresses
-        run: yarn workspace @balancer-labs/v2-deployments check-deployments
+        run: yarn check-deployments
 
   check-action-ids:
     runs-on: ubuntu-latest
@@ -49,10 +43,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up environment
         uses: ./.github/actions/setup
-      - name: Compile balancer-js
-        run: yarn workspace @balancer-labs/balancer-js build
       - name: Prepare Config
-        run: yarn workspace @balancer-labs/v2-deployments ci:prepare-config
+        run: yarn ci:prepare-config
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_INFURA_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_INFURA_ENDPOINT }}
@@ -63,7 +55,7 @@ jobs:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_INFURA_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_INFURA_ENDPOINT }}
       - name: Check Action IDs
-        run: yarn workspace @balancer-labs/v2-deployments check-action-ids
+        run: yarn check-action-ids
 
   markdown-link-check:
     runs-on: ubuntu-latest
