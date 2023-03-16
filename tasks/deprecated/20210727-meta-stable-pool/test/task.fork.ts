@@ -2,12 +2,12 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import * as expectEvent from './helpers/test/expectEvent';
-import { bn, fp } from './helpers/numbers';
+import * as expectEvent from '../../../../src/helpers/expectEvent';
+import { bn, fp } from '../../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { calculateInvariant } from './helpers/models/pools/stable/math';
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { MAX_UINT256, ZERO_ADDRESS } from './helpers/constants';
+import { calculateInvariant } from '../../../../src/helpers/models/pools/stable/math';
+import { expectEqualWithError } from '../../../../src/helpers/relativeError';
+import { MAX_UINT256, ZERO_ADDRESS } from '../../../../src/helpers/constants';
 import { StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
 
 import { describeForkTest, getSigner, getForkedNetwork, Task, TaskMode, impersonate } from '../../../../src';

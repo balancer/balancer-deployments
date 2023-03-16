@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
 import { SwapKind, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import * as expectEvent from './helpers/test/expectEvent';
-import { fp } from './helpers/numbers';
-import { MAX_UINT256 } from './helpers/constants';
+import * as expectEvent from '../../../../src/helpers/expectEvent';
+import { fp } from '../../../../src/helpers/numbers';
+import { MAX_UINT256 } from '../../../../src/helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { calculateInvariant } from './helpers/models/pools/weighted/math';
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from './helpers/time';
+import { calculateInvariant } from '../../../../src/helpers/models/pools/weighted/math';
+import { expectEqualWithError } from '../../../../src/helpers/relativeError';
+import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '../../../../src/helpers/time';
 
 import { describeForkTest, getSigner, getForkedNetwork, Task, TaskMode, impersonate } from '../../../../src';
 

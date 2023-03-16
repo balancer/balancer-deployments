@@ -2,9 +2,9 @@ import Task, { TaskMode } from '../../src/task';
 import { TaskRunOptions } from '../../src/types';
 import { ComposableStablePoolDeployment } from './input';
 
-import { ZERO_ADDRESS } from './helpers/constants';
-import { bn } from './helpers/numbers';
-import * as expectEvent from './helpers/test/expectEvent';
+import { ZERO_ADDRESS } from '../../src/helpers/constants';
+import { bn } from '../../src/helpers/numbers';
+import * as expectEvent from '../../src/helpers/expectEvent';
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
 import { ethers } from 'hardhat';
 

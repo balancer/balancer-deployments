@@ -1,9 +1,9 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import * as expectEvent from './helpers/test/expectEvent';
-import { bn, fp, FP_ONE } from './helpers/numbers';
-import { MAX_UINT256 } from './helpers/constants';
+import * as expectEvent from '../../../../src/helpers/expectEvent';
+import { bn, fp, FP_ONE } from '../../../../src/helpers/numbers';
+import { MAX_UINT256 } from '../../../../src/helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { SwapKind } from '@balancer-labs/balancer-js';
 

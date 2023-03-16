@@ -2,11 +2,11 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { fp } from './helpers/numbers';
+import { fp } from '../../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceToTimestamp, currentWeekTimestamp, DAY, WEEK } from './helpers/time';
-import * as expectEvent from './helpers/test/expectEvent';
-import { expectTransferEvent } from './helpers/test/expectTransfer';
+import { advanceToTimestamp, currentWeekTimestamp, DAY, WEEK } from '../../../../src/helpers/time';
+import * as expectEvent from '../../../../src/helpers/expectEvent';
+import { expectTransferEvent } from '../../../../src/helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../../src';
 

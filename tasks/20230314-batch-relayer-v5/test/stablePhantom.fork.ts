@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { bn } from './helpers/numbers';
-import { MAX_UINT256 } from './helpers/constants';
+import { bn } from '../../../src/helpers/numbers';
+import { MAX_UINT256 } from '../../../src/helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
-import { actionId } from './helpers/models/misc/actions';
-import * as expectEvent from './helpers/test/expectEvent';
+import { actionId } from '../../../src/helpers/models/misc/actions';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 import {
   DAI,
@@ -18,7 +18,7 @@ import {
   swapFeePercentage,
   tokens,
   initialBalances,
-} from './helpers/sharedStableParams';
+} from '../../../src/helpers/sharedStableParams';
 
 describeForkTest('Stable Phantom Exit', 'mainnet', 13776527, function () {
   let vault: Contract, authorizer: Contract;

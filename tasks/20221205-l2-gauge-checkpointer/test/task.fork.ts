@@ -2,9 +2,9 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, fp } from './helpers/numbers';
+import { BigNumber, fp } from '../../../src/helpers/numbers';
 import { GaugeType } from '@balancer-labs/balancer-js/src/types';
-import * as expectEvent from './helpers/test/expectEvent';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 
 import { describeForkTest } from '../../../src/forkTests';
 import Task, { TaskMode } from '../../../src/task';

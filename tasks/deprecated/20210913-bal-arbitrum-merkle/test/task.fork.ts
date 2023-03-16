@@ -1,11 +1,11 @@
 import hre, { ethers } from 'hardhat';
 import { Contract, BigNumber } from 'ethers';
 
-import { bn, fp } from './helpers/numbers';
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { MerkleTree } from './helpers/merkleTree';
+import { bn, fp } from '../../../../src/helpers/numbers';
+import { expectEqualWithError } from '../../../../src/helpers/relativeError';
+import { MerkleTree } from '../../../../src/helpers/merkleTree';
 
-import { MAX_UINT256 } from './helpers/constants';
+import { MAX_UINT256 } from '../../../../src/helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../../src';

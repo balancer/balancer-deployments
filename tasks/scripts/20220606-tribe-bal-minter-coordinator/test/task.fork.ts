@@ -8,9 +8,9 @@ import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
 import { getForkedNetwork } from '../../../../src/test';
 import { impersonate } from '../../../../src/signers';
-import { actionId } from './helpers/models/misc/actions';
-import { ZERO_ADDRESS } from './helpers/constants';
-import * as expectEvent from './helpers/test/expectEvent';
+import { actionId } from '../../../src/helpers/models/misc/actions';
+import { ZERO_ADDRESS } from '../../../src/helpers/constants';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 
 describeForkTest('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;

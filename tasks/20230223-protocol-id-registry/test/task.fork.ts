@@ -2,8 +2,8 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { fp } from './helpers/numbers';
-import { actionId } from './helpers/models/misc/actions';
+import { fp } from '../../../src/helpers/numbers';
+import { actionId } from '../../../src/helpers/models/misc/actions';
 
 import { describeForkTest } from '../../../src/forkTests';
 import Task, { TaskMode } from '../../../src/task';

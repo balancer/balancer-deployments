@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { Contract, ContractReceipt } from 'ethers';
 
 import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
-import { fp } from './helpers/numbers';
-import * as expectEvent from './helpers/test/expectEvent';
+import { fp } from '../../../src/helpers/numbers';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 
 import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
@@ -13,7 +13,7 @@ import { getForkedNetwork } from '../../../../src/test';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { TRANSITION_END_BLOCK, TimelockAuthorizerTransitionMigratorDeployment } from '../input';
 import { RoleData } from '../input/types';
-import { DAY, advanceTime } from './helpers/time';
+import { DAY, advanceTime } from '../../../src/helpers/time';
 
 describeForkTest('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSITION_END_BLOCK, function () {
   let input: TimelockAuthorizerTransitionMigratorDeployment;

@@ -6,9 +6,9 @@ import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { bn, fp } from './helpers/numbers';
+import { bn, fp } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { expectTransferEvent } from './helpers/test/expectTransfer';
+import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 import { MerkleTree } from './merkleTree';

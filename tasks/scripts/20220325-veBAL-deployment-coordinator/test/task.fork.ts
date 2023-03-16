@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceToTimestamp, DAY } from './helpers/time';
+import { advanceToTimestamp, DAY } from '../../../src/helpers/time';
 
 import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';

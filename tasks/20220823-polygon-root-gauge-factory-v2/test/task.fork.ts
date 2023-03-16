@@ -3,15 +3,15 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { range } from 'lodash';
 
-import { BigNumber, fp, FP_ONE } from './helpers/numbers';
+import { BigNumber, fp, FP_ONE } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK } from './helpers/time';
-import * as expectEvent from './helpers/test/expectEvent';
-import { expectTransferEvent } from './helpers/test/expectTransfer';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK } from '../../../src/helpers/time';
+import * as expectEvent from '../../../src/helpers/expectEvent';
+import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
 
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { ZERO_ADDRESS } from './helpers/constants';
-import { actionId } from './helpers/models/misc/actions';
+import { expectEqualWithError } from '../../../src/helpers/relativeError';
+import { ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { actionId } from '../../../src/helpers/models/misc/actions';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../src';
 

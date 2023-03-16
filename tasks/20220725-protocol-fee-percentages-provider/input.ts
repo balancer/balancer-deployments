@@ -1,4 +1,4 @@
-import { fp } from './helpers/numbers';
+import { fp } from '../../src/helpers/numbers';
 import Task, { TaskMode } from '../../src/task';
 import { BigNumber } from 'ethers';
 

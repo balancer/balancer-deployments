@@ -24,3 +24,12 @@ pkg/balancer-js/src/typechain/*
 # Forge
 forge-artifacts/
 forge-cache/
+
+# Action ID artifacts
+action-ids/**/new-collisions.json
+
+# Deployment outputs on local test networks
+test.json
+
+# Build directory
+dist

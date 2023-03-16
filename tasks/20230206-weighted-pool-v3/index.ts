@@ -1,6 +1,6 @@
-import { ZERO_ADDRESS } from './helpers/constants';
-import { bn, fp } from './helpers/numbers';
-import * as expectEvent from './helpers/test/expectEvent';
+import { ZERO_ADDRESS } from '../../src/helpers/constants';
+import { bn, fp } from '../../src/helpers/numbers';
+import * as expectEvent from '../../src/helpers/expectEvent';
 
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
 import Task, { TaskMode } from '../../src/task';

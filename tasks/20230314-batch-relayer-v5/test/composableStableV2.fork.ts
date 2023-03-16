@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { fp } from './helpers/numbers';
-import { MAX_UINT256 } from './helpers/constants';
-import * as expectEvent from './helpers/test/expectEvent';
+import { fp } from '../../../src/helpers/numbers';
+import { MAX_UINT256 } from '../../../src/helpers/constants';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 import {
   DAI,
@@ -18,7 +18,7 @@ import {
   tokens,
   initialBalances,
   PoolKind,
-} from './helpers/sharedStableParams';
+} from '../../../src/helpers/sharedStableParams';
 
 describeForkTest('BatchRelayerLibrary - Composable Stable V2+', 'mainnet', 16789433, function () {
   let task: Task;

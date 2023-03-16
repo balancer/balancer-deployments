@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
 import { BasePoolEncoder, SwapKind, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import * as expectEvent from './helpers/test/expectEvent';
-import { fp } from './helpers/numbers';
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { actionId } from './helpers/models/misc/actions';
-import { MAX_UINT256, ZERO_ADDRESS } from './helpers/constants';
-import { deploy } from './helpers/contract';
+import * as expectEvent from '../../../src/helpers/expectEvent';
+import { fp } from '../../../src/helpers/numbers';
+import { expectEqualWithError } from '../../../src/helpers/relativeError';
+import { actionId } from '../../../src/helpers/models/misc/actions';
+import { MAX_UINT256, ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { deploy } from '../../../src/helpers/contract';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../src';

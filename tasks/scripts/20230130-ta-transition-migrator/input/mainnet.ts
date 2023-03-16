@@ -1,7 +1,7 @@
 import { flatten } from 'lodash';
 import Task, { TaskMode } from '../../../../src/task';
 import { RoleData } from './types';
-import { ANY_ADDRESS } from './helpers/constants';
+import { ANY_ADDRESS } from '../../../../src/helpers/constants';
 
 const EVERYWHERE = ANY_ADDRESS;
 

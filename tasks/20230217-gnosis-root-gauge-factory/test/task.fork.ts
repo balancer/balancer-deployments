@@ -3,20 +3,20 @@ import { defaultAbiCoder } from '@ethersproject/abi';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { GaugeType } from '@balancer-labs/balancer-js/src/types';
-import { BigNumber, fp, FP_ONE } from './helpers/numbers';
+import { BigNumber, fp, FP_ONE } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from './helpers/time';
-import * as expectEvent from './helpers/test/expectEvent';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '../../../src/helpers/time';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 
 import Task, { TaskMode } from '../../../src/task';
 import { getForkedNetwork } from '../../../src/test';
 import { getSigner, impersonate } from '../../../src/signers';
-import { expectEqualWithError } from './helpers/test/relativeError';
-import { ZERO_ADDRESS, MAX_UINT256 } from './helpers/constants';
+import { expectEqualWithError } from '../../../src/helpers/relativeError';
+import { ZERO_ADDRESS, MAX_UINT256 } from '../../../src/helpers/constants';
 import { range } from 'lodash';
-import { expectTransferEvent } from './helpers/test/expectTransfer';
+import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
 import { describeForkTest } from '../../../src/forkTests';
-import { deployedAt } from './helpers/contract';
+import { deployedAt } from '../../../src/helpers/contract';
 import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
 
 describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {

@@ -2,12 +2,12 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { BigNumberish } from './helpers/numbers';
+import { BigNumberish } from '../../../../src/helpers/numbers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { RelayerAuthorization, SwapKind, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { fromNow, MINUTE } from './helpers/time';
-import { MAX_UINT256 } from './helpers/constants';
+import { fromNow, MINUTE } from '../../../../src/helpers/time';
+import { MAX_UINT256 } from '../../../../src/helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../../src';
 

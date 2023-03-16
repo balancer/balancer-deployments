@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { MAX_UINT256 } from './helpers/constants';
+import { MAX_UINT256 } from '../../../src/helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
-import * as expectEvent from './helpers/test/expectEvent';
+import * as expectEvent from '../../../src/helpers/expectEvent';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
 import {
   DAI,
@@ -17,7 +17,7 @@ import {
   tokens,
   initialBalances,
   PoolKind,
-} from './helpers/sharedStableParams';
+} from '../../../src/helpers/sharedStableParams';
 
 describeForkTest('BatchRelayerLibrary - Legacy Stable', 'mainnet', 14860000, function () {
   let task: Task;

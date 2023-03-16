@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from './helpers/numbers';
+import { BigNumberish } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../src';
-import { MAX_UINT256 } from './helpers/constants';
+import { MAX_UINT256 } from '../../../src/helpers/constants';
 
 describeForkTest('GearboxWrapping', 'mainnet', 16622559, function () {
   let task: Task;
