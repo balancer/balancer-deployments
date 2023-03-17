@@ -5,7 +5,8 @@ import { BigNumber, Contract } from 'ethers';
 import { BigNumberish } from '../../../../src/helpers/numbers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { RelayerAuthorization, SwapKind, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { RelayerAuthorization, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../../src/helpers/models/types/types';
 import { fromNow, MINUTE } from '../../../../src/helpers/time';
 import { MAX_UINT256 } from '../../../../src/helpers/constants';
 

@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { BigNumber, fp } from '../../../src/helpers/numbers';
-import { GaugeType } from '@balancer-labs/balancer-js/src/types';
 import * as expectEvent from '../../../src/helpers/expectEvent';
 
 import { describeForkTest } from '../../../src/forkTests';
 import Task, { TaskMode } from '../../../src/task';
 import { getForkedNetwork } from '../../../src/test';
 import { impersonate } from '../../../src/signers';
+import { GaugeType } from '../../../src/helpers/models/types/types';
 
 // This block number is before the manual weekly checkpoint. This ensures gauges will actually be checkpointed.
 // This test verifies the checkpointer against the manual transactions for the given period.

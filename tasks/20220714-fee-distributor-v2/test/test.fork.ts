@@ -2,7 +2,7 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { bn, fp } from 'src/helpers/numbers';
+import { bn, fp } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '../../../src/helpers/time';
 import * as expectEvent from '../../../src/helpers/expectEvent';

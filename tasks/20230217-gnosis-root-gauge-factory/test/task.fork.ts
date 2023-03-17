@@ -2,7 +2,6 @@ import hre, { ethers } from 'hardhat';
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { GaugeType } from '@balancer-labs/balancer-js/src/types';
 import { BigNumber, fp, FP_ONE } from '../../../src/helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '../../../src/helpers/time';
@@ -16,8 +15,9 @@ import { ZERO_ADDRESS, MAX_UINT256 } from '../../../src/helpers/constants';
 import { range } from 'lodash';
 import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
 import { describeForkTest } from '../../../src/forkTests';
-import { deployedAt } from '../../../src/helpers/contract';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { deployedAt } from '../../../src/contracts';
+import { WeightedPoolEncoder } from '../../../src/helpers/models/pools/weighted/encoder';
+import { GaugeType } from '../../../src/helpers/models/types/types';
 
 describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;

@@ -1,7 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BasePoolEncoder, SwapKind, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { BasePoolEncoder, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../../src/helpers/models/types/types';
 import * as expectEvent from '../../../../src/helpers/expectEvent';
 import { fp } from '../../../../src/helpers/numbers';
 import { expectEqualWithError } from '../../../../src/helpers/relativeError';

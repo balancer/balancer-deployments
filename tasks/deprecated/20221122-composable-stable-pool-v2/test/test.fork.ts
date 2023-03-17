@@ -11,7 +11,8 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 import { MAX_UINT256, ZERO_ADDRESS } from '../../../../src/helpers/constants';
 import { bn, fp } from '../../../../src/helpers/numbers';
-import { BasePoolEncoder, StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
+import { BasePoolEncoder, StablePoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../../src/helpers/models/types/types';
 import { actionId } from '../../../../src/helpers/models/misc/actions';
 import { expectEqualWithError } from '../../../../src/helpers/relativeError';
 

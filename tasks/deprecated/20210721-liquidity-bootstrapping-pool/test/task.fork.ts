@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { SwapKind, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind, WeightedPoolEncoder } from '../../../../src/helpers/models/pools/weighted/encoder';
 import * as expectEvent from '../../../../src/helpers/expectEvent';
 import { fp } from '../../../../src/helpers/numbers';
 import { MAX_UINT256 } from '../../../../src/helpers/constants';

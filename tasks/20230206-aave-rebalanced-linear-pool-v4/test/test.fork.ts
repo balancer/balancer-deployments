@@ -7,7 +7,7 @@ import { bn, fp, FP_ONE } from '../../../src/helpers/numbers';
 import { MAX_UINT256 } from '../../../src/helpers/constants';
 import { deploy, deployedAt, getArtifact } from '../../../src/helpers/contract';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { SwapKind } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../src/helpers/models/types/types';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../src';
 

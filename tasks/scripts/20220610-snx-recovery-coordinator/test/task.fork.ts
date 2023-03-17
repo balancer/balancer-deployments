@@ -9,9 +9,9 @@ import { describeForkTest } from '../../../../src/forkTests';
 import Task, { TaskMode } from '../../../../src/task';
 import { getForkedNetwork } from '../../../../src/test';
 import { impersonate } from '../../../../src/signers';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { actionId } from '../../../../src/helpers/models/misc/actions';
+import { expectTransferEvent } from '../../../../src/helpers/expectTransfer';
+import { WeightedPoolEncoder } from '../../../../src/helpers/models/pools/weighted/encoder';
 
 describeForkTest('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
   let govMultisig: SignerWithAddress;

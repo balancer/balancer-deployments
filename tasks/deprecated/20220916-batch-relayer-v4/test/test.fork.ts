@@ -5,7 +5,7 @@ import { BigNumber, Contract } from 'ethers';
 import { BigNumberish } from '../../../../src/helpers/numbers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { WeightedPoolEncoder } from '../../../../src/helpers/models/pools/weighted/encoder';
 
 import { MAX_UINT256 } from '../../../../src/helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';

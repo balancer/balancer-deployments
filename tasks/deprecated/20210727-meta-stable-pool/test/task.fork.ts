@@ -8,7 +8,8 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 import { calculateInvariant } from '../../../../src/helpers/models/pools/stable/math';
 import { expectEqualWithError } from '../../../../src/helpers/relativeError';
 import { MAX_UINT256, ZERO_ADDRESS } from '../../../../src/helpers/constants';
-import { StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
+import { StablePoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../../src/helpers/models/types/types';
 
 import { describeForkTest, getSigner, getForkedNetwork, Task, TaskMode, impersonate } from '../../../../src';
 

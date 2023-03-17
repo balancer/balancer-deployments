@@ -1,7 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BasePoolEncoder, StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
+import { BasePoolEncoder, StablePoolEncoder } from '@balancer-labs/balancer-js';
+import { SwapKind } from '../../../../src/helpers/models/types/types';
 import * as expectEvent from '../../../../src/helpers/expectEvent';
 import { bn, fp } from '../../../../src/helpers/numbers';
 import { calculateInvariant } from '../../../../src/helpers/models/pools/stable/math';

@@ -14,7 +14,7 @@ import { MAX_UINT256, ZERO_ADDRESS } from '../../../src/helpers/constants';
 import { range } from 'lodash';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../src';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { WeightedPoolEncoder } from '../../../src/helpers/models/pools/weighted/encoder';
 
 describeForkTest('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, function () {
   let admin: SignerWithAddress, other: SignerWithAddress, balWhale: SignerWithAddress;
