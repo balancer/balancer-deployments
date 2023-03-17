@@ -29,8 +29,8 @@
     "extract-artifacts": "hardhat extract-artifacts",
     "build-address-lookup": "hardhat build-address-lookup --network mainnet && hardhat build-address-lookup --network polygon && hardhat build-address-lookup --network arbitrum && hardhat build-address-lookup --network optimism && hardhat build-address-lookup --network goerli && hardhat build-address-lookup --network gnosis && hardhat build-address-lookup --network bsc && hardhat build-address-lookup --network avalanche",
     "lint": "yarn lint:solidity && yarn lint:typescript",
-    "lint:solidity": "solhint 'tasks/**/*.sol'",
-    "lint:typescript": "NODE_NO_WARNINGS=1 eslint . --ext .ts --ignore-path ../../.eslintignore  --max-warnings 0",
+    "lint:solidity": "solhint 'src/helpers/contracts/**/*.sol'",
+    "lint:typescript": "NODE_NO_WARNINGS=1 eslint . --ext .ts --ignore-path ./.eslintignore  --max-warnings 0",
     "prepack": "yarn build",
     "test": "yarn build && hardhat test ./**/test/*.ts",
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
@@ -57,6 +57,7 @@
     "chalk": "^4.1.2",
     "decimal.js": "^10.4.3",
     "eslint": "^8.26.0",
+    "eslint-plugin-mocha-no-only": "^1.1.1",
     "eslint-plugin-prettier": "^4.2.1",
     "ethereum-waffle": "^3.4.4",
     "ethereumjs-util": "^7.1.5",

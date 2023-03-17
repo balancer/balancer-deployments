@@ -30,8 +30,6 @@ contract MaliciousQueryReverter {
             spoofSwapQueryRevert();
         } else if (revertType == RevertType.MaliciousJoinExitQuery) {
             spoofJoinExitQueryRevert();
-        } else {
-            // Do nothing
         }
     }
 

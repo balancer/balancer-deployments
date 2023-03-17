@@ -57,6 +57,7 @@ __metadata:
     chalk: ^4.1.2
     decimal.js: ^10.4.3
     eslint: ^8.26.0
+    eslint-plugin-mocha-no-only: ^1.1.1
     eslint-plugin-prettier: ^4.2.1
     ethereum-waffle: ^3.4.4
     ethereumjs-util: ^7.1.5
@@ -4596,6 +4597,15 @@ __metadata:
   version: 1.0.5
   resolution: "escape-string-regexp@npm:1.0.5"
   checksum: f9484b8b4c8827d816e0fd905c25ed4b561376a9c220e1430403ea84619bf680c76a883a48cff8b8e091daf55d6a497e37479f9787b9f15f3c421b6054289744
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-mocha-no-only@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "eslint-plugin-mocha-no-only@npm:1.1.1"
+  dependencies:
+    requireindex: ~1.1.0
+  checksum: 0dd7492d5a0f57cf7f58efa046bfbbd01482d3cea2daca0e7c67b5090700b2a0fea22b937d30462a77078ccf513c38a30c03b4380b6568029a63ae5e59ad31f4
   languageName: node
   linkType: hard
 
@@ -9814,6 +9824,13 @@ fsevents@~2.3.2:
   version: 1.0.1
   resolution: "require-main-filename@npm:1.0.1"
   checksum: 26719298b8ba213424f69beea3898fa5bdddeb7039cbc78d8680524f05b459c7d9c523fda12d1aabe74d4475458480ba231ab5147fefb3855b8e6b6b65666d99
+  languageName: node
+  linkType: hard
+
+"requireindex@npm:~1.1.0":
+  version: 1.1.0
+  resolution: "requireindex@npm:1.1.0"
+  checksum: 571a7c97bc3c881321c757c8a1bee09da41eeefab8294bd7858bc4f108eab73e4ad4ce80f8206e7c20ffa1482eda842f3b3021f28ab543ddfc1756272659c71e
   languageName: node
   linkType: hard
 
