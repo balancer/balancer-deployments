@@ -57,9 +57,9 @@ jobs:
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_ARCHIVE_ENDPOINT }}
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_ARCHIVE_ENDPOINT }}
-          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_ARCHIVE_ENDPOINT }}
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_ARCHIVE_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
       - name: Test
         run: yarn test

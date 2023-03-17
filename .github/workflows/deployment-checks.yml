@@ -26,14 +26,14 @@ jobs:
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_INFURA_ENDPOINT }}
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_INFURA_ENDPOINT }}
-          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_INFURA_ENDPOINT }}
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_INFURA_ENDPOINT }}
-          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_INFURA_ENDPOINT }}
-          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_INFURA_ENDPOINT }}
-          AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_INFURA_ENDPOINT }}
-          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_INFURA_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
+          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
       - name: Check Deployment Addresses
         run: yarn check-deployments
 
@@ -46,14 +46,14 @@ jobs:
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_INFURA_ENDPOINT }}
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_INFURA_ENDPOINT }}
-          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_INFURA_ENDPOINT }}
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_INFURA_ENDPOINT }}
-          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_INFURA_ENDPOINT }}
-          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_INFURA_ENDPOINT }}
-          AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_INFURA_ENDPOINT }}
-          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_INFURA_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
+          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
       - name: Check Action IDs
         run: yarn check-action-ids
 
