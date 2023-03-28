@@ -5,13 +5,10 @@ import { Contract } from 'ethers';
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { impersonate } from '../../../../src/signers';
-import { actionId } from '../../../../src/helpers/models/misc/actions';
-import { expectTransferEvent } from '../../../../src/helpers/expectTransfer';
-import { WeightedPoolEncoder } from '../../../../src/helpers/models/pools/weighted/encoder';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
+import { actionId } from '@helpers/models/misc/actions';
+import { expectTransferEvent } from '@helpers/expectTransfer';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 describeForkTest('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
   let govMultisig: SignerWithAddress;

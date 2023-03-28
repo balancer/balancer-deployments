@@ -1,8 +1,8 @@
-import { DAY } from '../../../src/helpers/time';
-import Task, { TaskMode } from '../../../src/task';
+import { DAY } from '@helpers/time';
+import { Task, TaskMode } from '@src';
 import { flatten } from 'lodash';
 import { DelayData, RoleData } from './types';
-import { ANY_ADDRESS } from '../../../src/helpers/constants';
+import { ANY_ADDRESS } from '@helpers/constants';
 
 const EVERYWHERE = ANY_ADDRESS;
 

@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { actionId } from '@helpers/models/misc/actions';
+import { ZERO_ADDRESS } from '@helpers/constants';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
 import { Interface } from '@ethersproject/abi';
 

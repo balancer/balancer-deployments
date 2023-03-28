@@ -4,10 +4,10 @@ import { Contract } from 'ethers';
 
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { WeightedPoolEncoder } from '../../../src/helpers/models/pools/weighted/encoder';
+import { actionId } from '@helpers/models/misc/actions';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('DoubleEntrypointFixRelayer', 'mainnet', 14770592, function () {
   let govMultisig: SignerWithAddress;

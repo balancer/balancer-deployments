@@ -1,5 +1,4 @@
-import Task from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { Task, TaskRunOptions } from '@src';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   await task.deployAndVerify('DistributionScheduler', [], from, force);

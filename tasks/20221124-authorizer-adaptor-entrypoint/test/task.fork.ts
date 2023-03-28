@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { describeForkTest, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('AuthorizerAdaptorEntrypoint', 'mainnet', 16041900, function () {
   let adaptorEntrypoint: Contract, vault: Contract, authorizerAdaptor: Contract, authorizer: Contract;

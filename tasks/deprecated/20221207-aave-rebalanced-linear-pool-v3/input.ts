@@ -1,5 +1,5 @@
-import Task, { TaskMode } from '../../../src/task';
-import { MONTH } from '../../../src/helpers/time';
+import { Task, TaskMode } from '@src';
+import { MONTH } from '@helpers/time';
 
 export type AaveLinearPoolDeployment = {
   Vault: string;

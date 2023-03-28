@@ -1,4 +1,4 @@
-import Task, { TaskMode } from '../../src/task';
+import { Task, TaskMode } from '@src';
 
 export type L2GaugeCheckpointerDeployment = {
   GaugeAdder: string;

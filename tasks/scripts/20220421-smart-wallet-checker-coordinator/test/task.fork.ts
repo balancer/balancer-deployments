@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { getSigner, impersonate } from '../../../../src/signers';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { getSigner, impersonate } from '@src';
 
 describeForkTest('SmartWalletCheckerCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress, other: SignerWithAddress;

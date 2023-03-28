@@ -1,11 +1,10 @@
-import { bn } from '../../../src/helpers/numbers';
-import Task, { TaskMode } from '../../../src/task';
-import { TaskRunOptions } from '../../../src/types';
+import { bn } from '@helpers/numbers';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { AaveLinearPoolDeployment } from './input';
-import { ZERO_ADDRESS } from '../../../src/helpers/constants';
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import * as expectEvent from '@helpers/expectEvent';
 import { ethers } from 'hardhat';
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../../src';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as AaveLinearPoolDeployment;

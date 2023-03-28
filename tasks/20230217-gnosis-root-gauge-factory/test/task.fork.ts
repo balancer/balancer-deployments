@@ -2,22 +2,22 @@ import hre, { ethers } from 'hardhat';
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BigNumber, fp, FP_ONE } from '../../../src/helpers/numbers';
+import { BigNumber, fp, FP_ONE } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '../../../src/helpers/time';
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '@helpers/time';
+import * as expectEvent from '@helpers/expectEvent';
 
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { getSigner, impersonate } from '../../../src/signers';
-import { expectEqualWithError } from '../../../src/helpers/relativeError';
-import { ZERO_ADDRESS, MAX_UINT256 } from '../../../src/helpers/constants';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { getSigner, impersonate } from '@src';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { ZERO_ADDRESS, MAX_UINT256 } from '@helpers/constants';
 import { range } from 'lodash';
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
-import { describeForkTest } from '../../../src/forkTests';
-import { deployedAt } from '../../../src/contracts';
-import { WeightedPoolEncoder } from '../../../src/helpers/models/pools/weighted/encoder';
-import { GaugeType } from '../../../src/helpers/models/types/types';
+import { expectTransferEvent } from '@helpers/expectTransfer';
+import { describeForkTest } from '@src';
+import { deployedAt } from '@src/contracts';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { GaugeType } from '@helpers/models/types/types';
 
 describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
@@ -86,7 +86,8 @@ describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
     const veBALTask = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, getForkedNetwork(hre));
     veBAL = await veBALTask.instanceAt('VotingEscrow', veBALTask.output({ network: 'mainnet' }).VotingEscrow);
 
-    bal80weth20Pool = await deployedAt('v2-pool-weighted/WeightedPool', VEBAL_POOL);
+    const weightedPoolTask = new Task('20210418-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    bal80weth20Pool = await weightedPoolTask.instanceAt('WeightedPool', VEBAL_POOL);
 
     const poolId = await bal80weth20Pool.getPoolId();
 

@@ -1,6 +1,5 @@
-import { bn } from '../../src/helpers/numbers';
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { bn } from '@helpers/numbers';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { GearboxLinearPoolDeployment } from './input';
 import { ZERO_ADDRESS } from '../../src/helpers/constants';
 import * as expectEvent from '../../src/helpers/expectEvent';
