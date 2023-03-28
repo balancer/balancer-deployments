@@ -1,10 +1,11 @@
+import { ethers } from 'hardhat';
+
 import { ZERO_ADDRESS } from '../../src/helpers/constants';
-import { bn, fp } from '../../src/helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import * as expectEvent from '../../src/helpers/expectEvent';
 
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { WeightedPoolDeployment } from './input';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

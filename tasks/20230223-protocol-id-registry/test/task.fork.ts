@@ -2,13 +2,10 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { fp } from '../../../src/helpers/numbers';
-import { actionId } from '../../../src/helpers/models/misc/actions';
+import { fp } from '@helpers/numbers';
+import { actionId } from '@helpers/models/misc/actions';
 
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { impersonate } from '../../../src/signers';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 describeForkTest('ProtocolIdRegistry', 'mainnet', 16691900, function () {

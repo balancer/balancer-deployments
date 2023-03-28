@@ -1,17 +1,18 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BasePoolEncoder, StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../../src/helpers/models/types/types';
-import * as expectEvent from '../../../../src/helpers/expectEvent';
-import { bn, fp } from '../../../../src/helpers/numbers';
-import { calculateInvariant } from '../../../../src/helpers/models/pools/stable/math';
-import { expectEqualWithError } from '../../../../src/helpers/relativeError';
-import { actionId } from '../../../../src/helpers/models/misc/actions';
-import { MAX_UINT256 } from '../../../../src/helpers/constants';
+import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp } from '@helpers/numbers';
+import { calculateInvariant } from '@helpers/models/pools/stable/math';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { actionId } from '@helpers/models/misc/actions';
+import { MAX_UINT256 } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../../src';
+import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('StablePoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;

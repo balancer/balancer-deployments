@@ -2,21 +2,19 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import * as expectEvent from '../../../src/helpers/expectEvent';
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { getSigner, impersonate } from '../../../src/signers';
+import * as expectEvent from '@helpers/expectEvent';
+import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
-import { MAX_UINT256, ZERO_ADDRESS } from '../../../src/helpers/constants';
-import { bn, fp } from '../../../src/helpers/numbers';
-import { BasePoolEncoder, StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../src/helpers/models/types/types';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { expectEqualWithError } from '../../../src/helpers/relativeError';
-import { deploy } from '../../../src/helpers/contract';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
+import { bn, fp } from '@helpers/numbers';
+import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import { actionId } from '@helpers/models/misc/actions';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { deploy } from '@helpers/contract';
 
 describeForkTest('ComposableStablePool V3', 'mainnet', 16577000, function () {
   let task: Task;

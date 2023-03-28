@@ -4,11 +4,8 @@ import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { impersonate } from '../../../../src/signers';
-import { actionId } from '../../../src/helpers/models/misc/actions';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
+import { actionId } from '@helpers/models/misc/actions';
 
 describeForkTest('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, function () {
   let govMultisig: SignerWithAddress;

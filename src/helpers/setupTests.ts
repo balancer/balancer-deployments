@@ -20,8 +20,8 @@ declare global {
       zeros: void;
       zeroAddress: void;
       equalFp(value: BigNumberish): void;
-      lteWithError(value: NAry<BigNumberish>, error: BigNumberish): void;
-      equalWithError(value: NAry<BigNumberish>, error: BigNumberish): void;
+      lteWithError(value: NAry<BigNumberish>, error?: BigNumberish): void;
+      equalWithError(value: NAry<BigNumberish>, error?: BigNumberish): void;
       almostEqual(value: NAry<BigNumberish>, error?: BigNumberish): void;
       almostEqualFp(value: NAry<BigNumberish>, error?: BigNumberish): void;
     }
@@ -56,7 +56,7 @@ chai.use(function (chai, utils) {
     expect(this._obj).to.be.equal(fp(expectedValue));
   });
 
-  Assertion.addMethod('equalWithError', function (expectedValue: NAry<BigNumberish>, error: BigNumberish) {
+  Assertion.addMethod('equalWithError', function (expectedValue: NAry<BigNumberish>, error?: BigNumberish) {
     if (Array.isArray(expectedValue)) {
       const actual: BigNumberish[] = this._obj;
       actual.forEach((actual, i) => expectEqualWithError(actual, expectedValue[i], error));
@@ -65,7 +65,7 @@ chai.use(function (chai, utils) {
     }
   });
 
-  Assertion.addMethod('lteWithError', function (expectedValue: NAry<BigNumberish>, error: BigNumberish) {
+  Assertion.addMethod('lteWithError', function (expectedValue: NAry<BigNumberish>, error?: BigNumberish) {
     if (Array.isArray(expectedValue)) {
       const actual: BigNumberish[] = this._obj;
       actual.forEach((actual, i) => expectLessThanOrEqualWithError(actual, expectedValue[i], error));

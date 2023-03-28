@@ -2,15 +2,15 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { bn, fp } from '../../../src/helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '../../../src/helpers/time';
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '@helpers/time';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
+import { expectTransferEvent } from '@helpers/expectTransfer';
 import { _TypedDataEncoder } from 'ethers/lib/utils';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('FeeDistributor', 'mainnet', 15130000, function () {
   let veBALHolder: SignerWithAddress,

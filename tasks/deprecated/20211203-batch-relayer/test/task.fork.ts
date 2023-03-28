@@ -2,15 +2,16 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { BigNumberish } from '../../../../src/helpers/numbers';
+import { BigNumberish } from '@helpers/numbers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { RelayerAuthorization, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../../src/helpers/models/types/types';
-import { fromNow, MINUTE } from '../../../../src/helpers/time';
-import { MAX_UINT256 } from '../../../../src/helpers/constants';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { RelayerAuthorization } from '@helpers/models/misc/signatures';
+import { SwapKind } from '@helpers/models/types/types';
+import { fromNow, MINUTE } from '@helpers/time';
+import { MAX_UINT256 } from '@helpers/constants';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
 describeForkTest('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   let task: Task;

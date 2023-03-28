@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
-import { BigNumberish, bn } from '../../../src/helpers/numbers';
+import { BigNumberish, bn } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { MAX_UINT256 } from '../../../src/helpers/constants';
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '../../../src';
+import { MAX_UINT256 } from '@helpers/constants';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
 describeForkTest('CompoundV2Wrapping', 'polygon', 40305420, function () {
   let task: Task;

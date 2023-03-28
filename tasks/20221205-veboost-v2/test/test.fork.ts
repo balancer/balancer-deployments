@@ -2,11 +2,11 @@ import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { expect } from 'chai';
 
-import { ZERO_BYTES32 } from '../../../src/helpers/constants';
+import { ZERO_BYTES32 } from '@helpers/constants';
 
-import { actionId } from '../../../src/helpers/models/misc/actions';
+import { actionId } from '@helpers/models/misc/actions';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('veBoostV2', 'mainnet', 16110000, function () {
   let oldDelegation: Contract;

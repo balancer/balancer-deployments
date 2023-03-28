@@ -3,18 +3,18 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
 
-import { BigNumber, FP_ONE, fp } from '../../../src/helpers/numbers';
+import { BigNumber, FP_ONE, fp } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from '../../../src/helpers/time';
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from '@helpers/time';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { expectEqualWithError } from '../../../src/helpers/relativeError';
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
-import { MAX_UINT256, ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { expectTransferEvent } from '@helpers/expectTransfer';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../src';
-import { WeightedPoolEncoder } from '../../../src/helpers/models/pools/weighted/encoder';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 describeForkTest('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, function () {
   let admin: SignerWithAddress, other: SignerWithAddress, balWhale: SignerWithAddress;

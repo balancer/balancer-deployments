@@ -1,11 +1,10 @@
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ComposableStablePoolDeployment } from './input';
 
 import { ZERO_ADDRESS } from '../../src/helpers/constants';
-import { bn } from '../../src/helpers/numbers';
+import { bn } from '@helpers/numbers';
 import * as expectEvent from '../../src/helpers/expectEvent';
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
 import { ethers } from 'hardhat';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

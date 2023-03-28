@@ -2,15 +2,12 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract, ContractReceipt } from 'ethers';
 
-import { bn } from '../../../src/helpers/numbers';
+import { bn } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
+import { expectTransferEvent } from '@helpers/expectTransfer';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { impersonate } from '../../../../src/signers';
-import { ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
+import { ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
 
 describeForkTest('veBALGaugeFixCoordinator', 'mainnet', 14850000, function () {

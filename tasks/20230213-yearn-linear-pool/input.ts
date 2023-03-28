@@ -1,4 +1,4 @@
-import Task, { TaskMode } from '../../src/task';
+import { Task, TaskMode } from '@src';
 import { MONTH } from '../../src/helpers/time';
 
 export type YearnLinearPoolDeployment = {

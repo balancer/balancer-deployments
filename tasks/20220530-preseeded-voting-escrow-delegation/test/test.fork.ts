@@ -2,15 +2,15 @@ import hre from 'hardhat';
 import { BigNumber, Contract } from 'ethers';
 import { expect } from 'chai';
 
-import * as expectEvent from '../../../src/helpers/expectEvent';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { ZERO_ADDRESS } from '../../../src/helpers/constants';
+import { ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { fromNow, MONTH } from '../../../src/helpers/time';
+import { actionId } from '@helpers/models/misc/actions';
+import { fromNow, MONTH } from '@helpers/time';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('PreseededVotingEscrowDelegation', 'mainnet', 14850000, function () {
   let oldDelegation: Contract;

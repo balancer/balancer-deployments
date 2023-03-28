@@ -3,12 +3,9 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceToTimestamp, DAY } from '../../../src/helpers/time';
+import { advanceToTimestamp, DAY } from '@helpers/time';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { impersonate } from '../../../../src/signers';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 
 describeForkTest('veBALDeploymentCoordinator', 'mainnet', 14458084, function () {
   let balMultisig: SignerWithAddress, govMultisig: SignerWithAddress;

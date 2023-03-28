@@ -2,16 +2,17 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import { SwapKind, WeightedPoolEncoder } from '../../../../src/helpers/models/pools/weighted/encoder';
-import * as expectEvent from '../../../../src/helpers/expectEvent';
-import { fp, bn } from '../../../../src/helpers/numbers';
-import { MAX_UINT256 } from '../../../../src/helpers/constants';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import * as expectEvent from '@helpers/expectEvent';
+import { fp, bn } from '@helpers/numbers';
+import { MAX_UINT256 } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { calculateInvariant } from '../../../../src/helpers/models/pools/weighted/math';
-import { expectEqualWithError } from '../../../../src/helpers/relativeError';
-import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '../../../../src/helpers/time';
+import { calculateInvariant } from '@helpers/models/pools/weighted/math';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '@helpers/time';
 
-import { describeForkTest, getSigners, getForkedNetwork, Task, TaskMode, impersonate } from '../../../../src';
+import { describeForkTest, getSigners, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
 
 describeForkTest('InvestmentPoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, wallet: SignerWithAddress, whale: SignerWithAddress;

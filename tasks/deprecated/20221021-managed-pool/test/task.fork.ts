@@ -1,17 +1,19 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BasePoolEncoder, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../../src/helpers/models/types/types';
-import * as expectEvent from '../../../../src/helpers/expectEvent';
-import { fp } from '../../../../src/helpers/numbers';
-import { expectEqualWithError } from '../../../../src/helpers/relativeError';
-import { actionId } from '../../../../src/helpers/models/misc/actions';
-import { MAX_UINT256, ZERO_ADDRESS } from '../../../../src/helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { ManagedPoolParams } from '../../../../src/helpers/models/pools/weighted/types';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
 
-import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../../src';
+import { SwapKind } from '@helpers/models/types/types';
+import * as expectEvent from '@helpers/expectEvent';
+import { fp } from '@helpers/numbers';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { actionId } from '@helpers/models/misc/actions';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+
+import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
 describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
@@ -75,7 +77,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
     const assetManagers: string[] = Array(tokens.length).fill(ZERO_ADDRESS);
     assetManagers[0] = owner.address;
 
-    const newPoolParams: ManagedPoolParams = {
+    const newPoolParams = {
       name: NAME,
       symbol: SYMBOL,
       tokens: tokens,
@@ -217,7 +219,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
 
       expect(await factory.isDisabled()).to.be.true;
 
-      const newPoolParams: ManagedPoolParams = {
+      const newPoolParams = {
         name: NAME,
         symbol: SYMBOL,
         tokens: tokens,

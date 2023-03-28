@@ -2,14 +2,14 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { bn, fp } from '../../../src/helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentWeekTimestamp, MONTH, WEEK } from '../../../src/helpers/time';
-import { expectTransferEvent } from '../../../src/helpers/expectTransfer';
+import { advanceTime, currentWeekTimestamp, MONTH, WEEK } from '@helpers/time';
+import { expectTransferEvent } from '@helpers/expectTransfer';
 
-import { MAX_UINT256 } from '../../../src/helpers/constants';
+import { MAX_UINT256 } from '@helpers/constants';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('DistributionScheduler', 'mainnet', 14850000, function () {
   let lmCommittee: SignerWithAddress, distributor: SignerWithAddress;

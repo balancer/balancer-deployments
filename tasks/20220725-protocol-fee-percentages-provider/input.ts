@@ -1,5 +1,5 @@
-import { fp } from '../../src/helpers/numbers';
-import Task, { TaskMode } from '../../src/task';
+import { fp } from '@helpers/numbers';
+import { Task, TaskMode } from '@src';
 import { BigNumber } from 'ethers';
 
 export type ProtocolFeePercentagesProviderDeployment = {

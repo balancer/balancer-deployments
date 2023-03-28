@@ -2,16 +2,16 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import * as expectEvent from '../../../../src/helpers/expectEvent';
-import { bn, fp } from '../../../../src/helpers/numbers';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { calculateInvariant } from '../../../../src/helpers/models/pools/stable/math';
-import { expectEqualWithError } from '../../../../src/helpers/relativeError';
-import { MAX_UINT256, ZERO_ADDRESS } from '../../../../src/helpers/constants';
-import { StablePoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../../src/helpers/models/types/types';
+import { calculateInvariant } from '@helpers/models/pools/stable/math';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
+import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
+import { SwapKind } from '@helpers/models/types/types';
 
-import { describeForkTest, getSigner, getForkedNetwork, Task, TaskMode, impersonate } from '../../../../src';
+import { describeForkTest, getSigner, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
 
 describeForkTest('MetaStablePoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress;

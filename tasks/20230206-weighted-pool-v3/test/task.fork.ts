@@ -1,18 +1,20 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
-import { BasePoolEncoder, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { SwapKind } from '../../../src/helpers/models/types/types';
-import * as expectEvent from '../../../src/helpers/expectEvent';
-import { fp } from '../../../src/helpers/numbers';
-import { expectEqualWithError } from '../../../src/helpers/relativeError';
-import { actionId } from '../../../src/helpers/models/misc/actions';
-import { MAX_UINT256, ZERO_ADDRESS } from '../../../src/helpers/constants';
-import { deploy } from '../../../src/helpers/contract';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import * as expectEvent from '@helpers/expectEvent';
+import { fp } from '@helpers/numbers';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { actionId } from '@helpers/models/misc/actions';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
+import { deploy } from '@helpers/contract';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../src';
+import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
 describeForkTest('WeightedPool V3', 'mainnet', 16577000, function () {
   let owner: SignerWithAddress,

@@ -1,5 +1,5 @@
-import { ZERO_ADDRESS } from '../../../src/helpers/constants';
-import { bn, fp, FP_ZERO } from '../../../src/helpers/numbers';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import { bn, fp, FP_ZERO } from '@helpers/numbers';
 
 export const DAI = '0x6b175474e89094c44da98b954eedeac495271d0f';
 export const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
