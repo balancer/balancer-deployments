@@ -37,7 +37,6 @@ __metadata:
   resolution: "@balancer-labs/v2-deployments@workspace:."
   dependencies:
     "@balancer-labs/v2-interfaces": latest
-    "@balancer-labs/v2-pool-utils": ^3.1.2
     "@balancer-labs/v2-solidity-utils": ^3.0.2
     "@ethersproject/contracts": ^5.0.0
     "@nomicfoundation/hardhat-network-helpers": ^1.0.6
@@ -91,17 +90,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@balancer-labs/v2-pool-utils@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "@balancer-labs/v2-pool-utils@npm:3.1.2"
-  dependencies:
-    "@balancer-labs/v2-interfaces": 0.3.0
-    "@balancer-labs/v2-solidity-utils": 3.0.2
-  checksum: 28577e99c94f3c312daba309c554373c9da3adf75c172e4f975180d68128bfcbc00d00cfe9aee71c85b096104d7eb85d52e4b159c2420462c5e0ce5ba9a0efac
-  languageName: node
-  linkType: hard
-
-"@balancer-labs/v2-solidity-utils@npm:3.0.2, @balancer-labs/v2-solidity-utils@npm:^3.0.2":
+"@balancer-labs/v2-solidity-utils@npm:^3.0.2":
   version: 3.0.2
   resolution: "@balancer-labs/v2-solidity-utils@npm:3.0.2"
   dependencies:

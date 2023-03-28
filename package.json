@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@balancer-labs/v2-interfaces": "latest",
-    "@balancer-labs/v2-pool-utils": "^3.1.2",
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
     "@ethersproject/contracts": "^5.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
