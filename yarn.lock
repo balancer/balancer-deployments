@@ -72,6 +72,7 @@ __metadata:
     solhint: ^3.2.0
     solhint-plugin-prettier: ^0.0.4
     ts-node: ^10.9.1
+    tsconfig-paths: ^4.1.2
     typescript: 4.3.2
   languageName: unknown
   linkType: soft
@@ -7340,6 +7341,15 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
+"json5@npm:^2.2.2":
+  version: 2.2.3
+  resolution: "json5@npm:2.2.3"
+  bin:
+    json5: lib/cli.js
+  checksum: c6ab786b232e576477f63d9b672ee4b546a181ac732e8cba0603e3e7352ac1fe9287344af1132c76c71613b5f69ce4f9b92ec41a10f51030ab764e015087932a
+  languageName: node
+  linkType: hard
+
 "jsonfile@npm:^2.1.0":
   version: 2.4.0
   resolution: "jsonfile@npm:2.4.0"
@@ -10909,6 +10919,13 @@ resolve@1.17.0:
   languageName: node
   linkType: hard
 
+"strip-bom@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "strip-bom@npm:3.0.0"
+  checksum: 361dd1dd08ae626940061570d20bcf73909d0459734b8880eb3d14176aa28f41cf85d13af036c323ce739e04ef3930a71b516950c5985b318bae3757ecb2974c
+  languageName: node
+  linkType: hard
+
 "strip-hex-prefix@npm:1.0.0":
   version: 1.0.0
   resolution: "strip-hex-prefix@npm:1.0.0"
@@ -11273,6 +11290,17 @@ resolve@1.17.0:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 1431392d552ac51f0c9598681487f85b3200c09e425d63fb2e419a052b2216dba048c876ec4e04beb4c7451c6f96117fd90eb83fbec6e486bade2bd4bdd2b560
+  languageName: node
+  linkType: hard
+
+"tsconfig-paths@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "tsconfig-paths@npm:4.1.2"
+  dependencies:
+    json5: ^2.2.2
+    minimist: ^1.2.6
+    strip-bom: ^3.0.0
+  checksum: 63105b37eec99143d56d53664f33481a3b4291d2130afb2dd762116c22779b5731c63fdd2bfd09804569f820e9c4bff0d1db7961a463ea5fb664cec8d93097a0
   languageName: node
   linkType: hard
 

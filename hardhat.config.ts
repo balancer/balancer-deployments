@@ -2,6 +2,7 @@ import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
+import 'tsconfig-paths/register';
 
 import './src/helpers/setupTests';
 
