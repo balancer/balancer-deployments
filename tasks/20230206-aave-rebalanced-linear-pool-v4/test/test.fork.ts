@@ -5,7 +5,7 @@ import { setCode } from '@nomicfoundation/hardhat-network-helpers';
 import * as expectEvent from '@helpers/expectEvent';
 import { bn, fp, FP_ONE } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
-import { deploy, deployedAt, getArtifact } from '@helpers/contract';
+import { deploy, instanceAt, getArtifact } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { SwapKind } from '@helpers/models/types/types';
 
@@ -329,7 +329,7 @@ describeForkTest('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
 
       // These artifacts come from 20221207-aave-rebalanced-linear-pool-v3 task (deprecated).
       await setCode(USDT_LENDING_POOL, getArtifact('MockAaveLendingPool').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockAaveLendingPool', USDT_LENDING_POOL);
+      const mockLendingPool = await instanceAt('MockAaveLendingPool', USDT_LENDING_POOL);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT
@@ -340,7 +340,7 @@ describeForkTest('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
     let attacker: Contract;
 
     before('deploy attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.address]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: BigNumber, expectRevert: boolean) {

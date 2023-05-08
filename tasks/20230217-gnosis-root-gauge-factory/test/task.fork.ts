@@ -15,7 +15,6 @@ import { ZERO_ADDRESS, MAX_UINT256 } from '@helpers/constants';
 import { range } from 'lodash';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { describeForkTest } from '@src';
-import { deployedAt } from '@src/contracts';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { GaugeType } from '@helpers/models/types/types';
 

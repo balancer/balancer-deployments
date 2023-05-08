@@ -11,7 +11,7 @@ import { fp } from '@helpers/numbers';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { actionId } from '@helpers/models/misc/actions';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { deploy } from '@helpers/contract';
+import { deploy } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
@@ -196,7 +196,7 @@ describeForkTest('WeightedPool V3', 'mainnet', 16577000, function () {
     const attackerFunds = fp(1);
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerWP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.address]);
       await comp.connect(whale).transfer(attacker.address, attackerFunds);
       await uni.connect(whale).transfer(attacker.address, attackerFunds);
       await aave.connect(whale).transfer(attacker.address, attackerFunds);

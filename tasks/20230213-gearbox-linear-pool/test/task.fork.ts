@@ -9,7 +9,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 
 import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { describeForkTest } from '@src';
-import { deploy, deployedAt, getArtifact } from '@helpers/contract';
+import { deploy, instanceAt, getArtifact } from '@src';
 
 export enum SwapKind {
   GivenIn = 0,
@@ -350,7 +350,7 @@ describeForkTest('GearboxLinearPoolFactory', 'mainnet', 16636000, function () {
       );
 
       await setCode(GEARBOX_VAULT, getArtifact('MockGearboxVault').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockGearboxVault', GEARBOX_VAULT);
+      const mockLendingPool = await instanceAt('MockGearboxVault', GEARBOX_VAULT);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT
@@ -362,7 +362,7 @@ describeForkTest('GearboxLinearPoolFactory', 'mainnet', 16636000, function () {
 
     before('deploy attacker', async () => {
       // Using Reentrancy Attacker from Aave Fork Test (task 20230206-aave-rebalanced-linear-pool-v4)
-      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.address]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: BigNumber, expectRevert: boolean) {

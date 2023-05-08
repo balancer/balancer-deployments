@@ -9,7 +9,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 
 import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { describeForkTest } from '@src';
-import { deploy, deployedAt, getArtifact } from '@helpers/contract';
+import { deploy, instanceAt, getArtifact } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 
 export enum SwapKind {
@@ -347,12 +347,12 @@ describeForkTest('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
 
     before('use WETH', async () => {
       wethHolder = await impersonate(WETH_HOLDER, fp(100));
-      const weth = await deployedAt('IERC20', WETH);
+      const weth = await instanceAt('IERC20', WETH);
       await weth.connect(wethHolder).approve(vault.address, MAX_UINT256);
     });
 
     before('deploy attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerLP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerLP', [vault.address]);
     });
 
     before('deploy pool and prepare', async () => {
@@ -449,7 +449,7 @@ describeForkTest('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
       );
 
       await setCode(erc4626Token, getArtifact('MockERC4626Token').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockERC4626Token', erc4626Token);
+      const mockLendingPool = await instanceAt('MockERC4626Token', erc4626Token);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT

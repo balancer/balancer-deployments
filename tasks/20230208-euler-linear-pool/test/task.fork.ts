@@ -9,7 +9,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 
 import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { describeForkTest } from '@src';
-import { deploy, deployedAt, getArtifact } from '@helpers/contract';
+import { deploy, instanceAt, getArtifact } from '@src';
 
 export enum SwapKind {
   GivenIn = 0,
@@ -355,7 +355,7 @@ describeForkTest('EulerLinearPoolFactory', 'mainnet', 16550500, function () {
       );
 
       await setCode(eUSDC, getArtifact('MockEulerToken').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockEulerToken', eUSDC);
+      const mockLendingPool = await instanceAt('MockEulerToken', eUSDC);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT
@@ -366,7 +366,7 @@ describeForkTest('EulerLinearPoolFactory', 'mainnet', 16550500, function () {
     let attacker: Contract;
 
     before('deploy attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerEP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerEP', [vault.address]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: BigNumber, expectRevert: boolean) {

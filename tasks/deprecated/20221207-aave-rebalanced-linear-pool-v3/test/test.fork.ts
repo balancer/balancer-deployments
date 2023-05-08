@@ -5,7 +5,7 @@ import { setCode } from '@nomicfoundation/hardhat-network-helpers';
 import * as expectEvent from '@helpers/expectEvent';
 import { bn, fp, FP_ONE } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
-import { deployedAt, getArtifact } from '@helpers/contract';
+import { instanceAt, getArtifact } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { SwapKind } from '@helpers/models/types/types';
 
@@ -323,7 +323,7 @@ describeForkTest('AaveLinearPoolFactory', 'mainnet', 15225000, function () {
       );
 
       await setCode(USDT_LENDING_POOL, getArtifact('MockAaveLendingPool').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockAaveLendingPool', USDT_LENDING_POOL);
+      const mockLendingPool = await instanceAt('MockAaveLendingPool', USDT_LENDING_POOL);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT

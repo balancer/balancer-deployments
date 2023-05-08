@@ -14,7 +14,7 @@ import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
 import { SwapKind } from '@helpers/models/types/types';
 import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
-import { deploy } from '@helpers/contract';
+import { deploy } from '@src';
 
 describeForkTest('ComposableStablePool V3', 'mainnet', 16577000, function () {
   let task: Task;
@@ -292,7 +292,7 @@ describeForkTest('ComposableStablePool V3', 'mainnet', 16577000, function () {
     const attackerFunds = 1000;
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.address]);
       await busd.connect(whale).transfer(attacker.address, attackerFunds);
       await usdc.connect(whale).transfer(attacker.address, attackerFunds);
       await aura.connect(auraWhale).transfer(attacker.address, attackerFunds);
