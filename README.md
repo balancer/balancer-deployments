@@ -1,119 +1,186 @@
-# <img src="logo.svg" alt="Balancer" height="128px">
+# <img src="../../logo.svg" alt="Balancer" height="128px">
 
-# Balancer V2 Monorepo
+# Balancer V2 Deployments
 
-[![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](https://docs.balancer.fi/)
-[![CI Status](https://github.com/balancer-labs/balancer-v2-monorepo/workflows/CI/badge.svg)](https://github.com/balancer-labs/balancer-v2-monorepo/actions)
-[![License](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.org/package/@balancer-labs/v2-deployments)
+[![GitHub Repository](https://img.shields.io/badge/github-deployments-lightgrey?logo=github)](https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments)
 
-This repository contains the Balancer Protocol V2 core smart contracts, including the `Vault` and standard Pools, along with their tests, configuration, and deployment information.
+This package contains the addresses and ABIs of all Balancer V2 deployed contracts for Ethereum mainnet, Polygon, Arbitrum, Optimism, Gnosis, BSC and Avalanche, as well as various test networks. Each deployment consists of a deployment script (called 'task'), inputs (script configuration, such as dependencies), outputs (typically contract addresses), ABIs and bytecode files of related contracts.
 
-For a high-level introduction to Balancer V2, see [Introducing Balancer V2: Generalized AMMs](https://medium.com/balancer-protocol/balancer-v2-generalizing-amms-16343c4563ff).
+Addresses and ABIs can be consumed from the package in JavaScript environments, or manually retrieved from the [GitHub](https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments) repository.
 
-## Structure
+Note that some protocol contracts are created dynamically: for example, `WeightedPool` contracts are deployed by the canonical `WeightedPoolFactory`. While the ABIs of these contracts are stored in the `abi` directory of each deployment, their addresses are not. Those can be retrieved by querying the on-chain state or processing emitted events.
 
-This is a Yarn monorepo, with the packages meant to be published in the [`pkg`](./pkg) directory. Newly developed packages may not be published yet.
+## Overview
 
-Active development occurs in this repository, which means some contracts in it might not be production-ready. Proceed with caution.
+### Deploying Contracts
 
-### Packages
+For more information on how to create new deployments or run existing ones in new networks, head to the [deployment guide](DEPLOYING.md).
 
-- [`v2-deployments`](./pkg/deployments): addresses and ABIs of all Balancer V2 deployed contracts, for mainnet and various test networks.
-- [`v2-interfaces`](./pkg/interfaces): Solidity interfaces for all contracts.
-- [`v2-vault`](./pkg/vault): the [`Vault`](./pkg/vault/contracts/Vault.sol) contract and all core interfaces, including [`IVault`](./pkg/interfaces/contracts/vault/IVault.sol) and the Pool interfaces: [`IBasePool`](./pkg/interfaces/contracts/vault/IBasePool.sol), [`IGeneralPool`](./pkg/interfaces/contracts/vault/IGeneralPool.sol) and [`IMinimalSwapInfoPool`](./pkg/interfaces/contracts/vault/IMinimalSwapInfoPool.sol).
-- [`v2-pool-weighted`](./pkg/pool-weighted): the [`WeightedPool`](./pkg/pool-weighted/contracts/WeightedPool.sol), and [`LiquidityBootstrappingPool`](./pkg/pool-weighted/contracts/lbp/LiquidityBootstrappingPool.sol) contracts, along with their associated factories.
-- [`v2-pool-linear`](./pkg/pool-linear): the [`LinearPool`](./pkg/pool-linear/contracts/LinearPool.sol) contracts, along with its associated factory. Derived Linear Pools can be found in the [Orb Collective repo](https://github.com/orbcollective/linear-pools).
-- [`v2-pool-utils`](./pkg/pool-utils): Solidity utilities used to develop Pool contracts.
-- [`v2-solidity-utils`](./pkg/solidity-utils): miscellaneous Solidity helpers and utilities used in many different contracts.
-- [`v2-standalone-utils`](./pkg/standalone-utils): miscellaneous standalone utility contracts.
-- [`v2-liquidity-mining`](./pkg/liquidity-mining): contracts that compose the liquidity mining (veBAL) system.
-- [`v2-governance-scripts`](./pkg/governance-scripts): contracts that execute complex governance actions.
+### Installation
 
-## Pre-requisites
-
-The build & test instructions below should work out of the box with Node 18. More specifically, it is recommended to use the LTS version 18.15.0; Node 19 and higher are not supported. Node 18.16.0 has a [known issue](https://github.com/NomicFoundation/hardhat/issues/3877) that makes the build flaky.
-
-Multiple Node versions can be installed in the same system, either manually or with a version manager.
-One option to quickly select the suggested Node version is using `nvm`, and running:
-
-```bash
-$ nvm use
+```console
+$ npm install @balancer-labs/v2-deployments
 ```
 
-## Clone
+### Usage
 
-This repository uses git submodules; use `--recurse-submodules` option when cloning. For example, using https:
+Import `@balancer-labs/v2-deployments` to access the different ABIs and deployed addresses. To see all current Task IDs and their associated contracts, head to [Active Deployments](#active-deployments).
 
-```bash
-$ git clone --recurse-submodules https://github.com/balancer-labs/balancer-v2-monorepo.git
-```
+Past deployments that are currently not in use or have been superseded can be accessed in the [Deprecated Deployments](#deprecated-deployments) section. Use `deprecated/` as prefix when referring to a deprecated task ID.
 
-## Build and Test
+> ⚠️ Exercise care when interacting with deprecated deployments: there's often a very good reason why they're no longer active.
+>
+> You can find information on why each deployment has been deprecated in their corresponding readme file.
 
-Before any tests can be run, the repository needs to be prepared:
+---
 
-### First time build
+- **async function getBalancerContract(taskID, contract, network)**
 
-```bash
-$ yarn # install all dependencies
-$ yarn workspace @balancer-labs/balancer-js build # build balancer-js first
-```
+Returns an [Ethers](https://docs.ethers.io/v5/) contract object for a canonical deployment (e.g. the Vault, or a Pool factory).
 
-### Regular build
+_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/plugins/nomiclabs-hardhat-ethers.html) plugin._
 
-```bash
-$ yarn build # compile all contracts
-```
+- **async function getBalancerContractAt(taskID, contract, address)**
 
-Most tests are standalone and simply require installation of dependencies and compilation. Some packages however have extra requirements. Notably, the [`v2-deployments`](./pkg/deployments) package must have access to mainnet archive nodes in order to perform fork tests. For more details, head to [its readme file](./pkg/deployments/README.md).
+Returns an [Ethers](https://docs.ethers.io/v5/) contract object for a contract dynamically created at a known address (e.g. a Pool created from a factory).
 
-In order to run all tests (including those with extra dependencies), run:
+_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/plugins/nomiclabs-hardhat-ethers.html) plugin._
 
-```bash
-$ yarn test # run all tests
-```
+- **function getBalancerContractAbi(taskID, contract)**
 
-To instead run a single package's tests, run:
+Returns a contract's [ABI](https://docs.soliditylang.org/en/latest/abi-spec.html).
 
-```bash
-$ cd pkg/<package> # e.g. cd pkg/v2-vault
-$ yarn test
-```
+- **function getBalancerContractBytecode(taskID, contract)**
 
-You can see a sample report of a test run [here](./audits/test-report.md).
+Returns a contract's [creation code](https://docs.soliditylang.org/en/latest/contracts.html#creating-contracts).
 
-### Foundry (Forge) tests
+- **function getBalancerContractAddress(taskID, contract, network)**
 
-To run Forge tests, first [install Foundry](https://book.getfoundry.sh/getting-started/installation). The installation steps below apply to Linux or MacOS. Follow the link for additional options.
+Returns the address of a contract's canonical deployment.
 
-```bash
-$ curl -L https://foundry.paradigm.xyz | bash
-$ source ~/.bashrc # or open a new terminal
-$ foundryup
-```
+- **function getBalancerDeployment(taskID, network)**
 
-Then, to run tests in a single package, run:
-```bash
-$ cd pkg/<package> # e.g. cd pkg/v2-vault
-$ yarn test-fuzz
-```
+Returns an object with all contracts from a deployment and their addresses.
 
-## Security
+## Active Deployments
 
-Multiple independent reviews and audits were performed by [Certora](https://www.certora.com/), [OpenZeppelin](https://openzeppelin.com/) and [Trail of Bits](https://www.trailofbits.com/). The latest reports from these engagements are located in the [`audits`](./audits) directory.
+| Description                                            | Task ID                                                                                              |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Authorizer, governance contract                        | [`20210418-authorizer`](./tasks/20210418-authorizer)                                                 |
+| Vault, main protocol contract                          | [`20210418-vault`](./tasks/20210418-vault)                                                           |
+| Rate Provider for wstETH                               | [`20210812-wsteth-rate-provider`](./tasks/20210812-wsteth-rate-provider)                             |
+| Liquidity Bootstrapping Pools                          | [`20211202-no-protocol-fee-lbp`](./tasks/20211202-no-protocol-fee-lbp)                               |
+| Authorizer Adaptor for extending governance            | [`20220325-authorizer-adaptor`](./tasks/20220325-authorizer-adaptor)                                 |
+| Wallet for the BAL token                               | [`20220325-bal-token-holder-factory`](./tasks/20220325-bal-token-holder-factory)                     |
+| Admin of the BAL token                                 | [`20220325-balancer-token-admin`](./tasks/20220325-balancer-token-admin)                             |
+| Liquidity Mining: veBAL, Gauge Controller and Minter   | [`20220325-gauge-controller`](./tasks/20220325-gauge-controller)                                     |
+| Test Balancer Token                                    | [`20220325-test-balancer-token`](./tasks/20220325-test-balancer-token)                               |
+| Delegation of veBAL boosts                             | [`20220325-ve-delegation`](./tasks/20220325-ve-delegation)                                           |
+| Gauges on child networks (L2s and sidechains)          | [`20220413-child-chain-gauge-factory`](./tasks/20220413-child-chain-gauge-factory)                   |
+| veBAL Smart Wallet Checker                             | [`20220420-smart-wallet-checker`](./tasks/20220420-smart-wallet-checker)                             |
+| Relayer with the fix for the Double Entrypoint issue   | [`20220513-double-entrypoint-fix-relayer`](./tasks/20220513-double-entrypoint-fix-relayer)           |
+| Protocol Fee Withdrawer                                | [`20220517-protocol-fee-withdrawer`](./tasks/20220517-protocol-fee-withdrawer)                       |
+| Child Chain Gauge Token Adder                          | [`20220527-child-chain-gauge-token-adder`](./tasks/20220527-child-chain-gauge-token-adder)           |
+| Preseeded Voting Escrow Delegation                     | [`20220530-preseeded-voting-escrow-delegation`](./tasks/20220530-preseeded-voting-escrow-delegation) |
+| Distribution Scheduler for reward tokens on gauges     | [`20220707-distribution-scheduler`](./tasks/20220707-distribution-scheduler)                         |
+| Fee Distributor for veBAL holders V2                   | [`20220714-fee-distributor-v2`](./tasks/20220714-fee-distributor-v2)                                 |
+| Swap, join and exit simulations (queries)              | [`20220721-balancer-queries`](./tasks/20220721-balancer-queries)                                     |
+| Protocol fee percentages provider                      | [`20220725-protocol-fee-percentages-provider`](./tasks/20220725-protocol-fee-percentages-provider)   |
+| Child Chain Gauge Reward Helper                        | [`20220812-child-chain-reward-helper`](./tasks/20220812-child-chain-reward-helper)                   |
+| Mainnet Staking Gauges V2                              | [`20220822-mainnet-gauge-factory-v2`](./tasks/20220822-mainnet-gauge-factory-v2)                     |
+| Arbitrum Root Gauges V2, for veBAL voting              | [`20220823-arbitrum-root-gauge-factory-v2`](./tasks/20220823-arbitrum-root-gauge-factory-v2)         |
+| Optimism Root Gauges V2, for veBAL voting              | [`20220823-optimism-root-gauge-factory-v2`](./tasks/20220823-optimism-root-gauge-factory-v2)         |
+| Polygon Root Gauges V2, for veBAL voting               | [`20220823-polygon-root-gauge-factory-v2`](./tasks/20220823-polygon-root-gauge-factory-v2)           |
+| Pool Recovery Helper                                   | [`20221123-pool-recovery-helper`](./tasks/20221123-pool-recovery-helper)                             |
+| Authorizer Adaptor Entrypoint                          | [`20221124-authorizer-adaptor-entrypoint`](./tasks/20221124-authorizer-adaptor-entrypoint)           |
+| L2 Gauge Checkpointer                                  | [`20221205-l2-gauge-checkpointer`](./tasks/20221205-l2-gauge-checkpointer)                           |
+| VeBoost V2                                             | [`20221205-veboost-v2`](./tasks/20221205-veboost-v2)                                                 |
+| Gauge Registrant V3, supporting the Adaptor entrypoint | [`20230109-gauge-adder-v3`](./tasks/20230109-gauge-adder-v3)                                         |
+| Linear Pools for Euler Tokens                          | [`20230208-euler-linear-pool`](./tasks/20230208-euler-linear-pool)                                   |
+| Single Recipient Stakeless Gauges V2                   | [`20230215-single-recipient-gauge-factory`](./tasks/20230215-single-recipient-gauge-factory-v2)      |
+| Gnosis Root Gauge, for veBAL voting                    | [`20230217-gnosis-root-gauge-factory`](./tasks/20230217-gnosis-root-gauge-factory)                   |
+| Merkle Orchard Distributor V2                          | [`20230222-merkle-orchard-v2`](./tasks/20230222-merkle-orchard-v2)                                   |
+| Protocol ID registry                                   | [`20230223-protocol-id-registry`](./tasks/20230223-protocol-id-registry)                             |
+| Batch Relayer V5                                       | [`20230314-batch-relayer-v5`](./tasks/20230314-batch-relayer-v5)                                     |
+| L2 Balancer Pseudo Minter                              | [`20230316-l2-balancer-pseudo-minter`](./tasks/20230316-l2-balancer-pseudo-minter)                   |
+| Child Chain Gauge Factory V2                           | [`20230316-child-chain-gauge-factory-v2`](./tasks/20230316-child-chain-gauge-factory-v2)             |
+| L2 Voting Escrow Delegation Proxy                      | [`20230316-l2-ve-delegation-proxy`](./tasks/20230316-l2-ve-delegation-proxy)                         |
+| Weighted Pool V4                                       | [`20230320-weighted-pool-v4`](./tasks/20230320-weighted-pool-v4)                                     |
+| Composable Stable Pools V4                             | [`20230320-composable-stable-pool-v4`](./tasks/20230320-composable-stable-pool-v4)                   |
+| Timelock Authorizer, governance contract               | [`20230403-timelock-authorizer`](./tasks/20230403-timelock-authorizer)                               |
+| L2 Layer0 Bridge Forwarder                             | [`20230404-l2-layer0-bridge-forwarder`](./tasks/20230404-l2-layer0-bridge-forwarder)                 |
+| Linear Pools for ERC4626 Tokens V4                     | [`20230409-erc4626-linear-pool-v4`](./tasks/20230409-erc4626-linear-pool-v4)                         |
+| Linear Pools for Yearn Tokens V2                       | [`20230409-yearn-linear-pool-v2`](./tasks/20230409-yearn-linear-pool-v2)                             |
+| Linear Pools for Gearbox Tokens V2                     | [`20230409-gearbox-linear-pool-v2`](./tasks/20230409-gearbox-linear-pool-v2)                         |
+| Linear Pools for Aave aTokens V5                       | [`20230410-aave-linear-pool-v5`](./tasks/20230410-aave-linear-pool-v5)                               |
+| Linear Pools for Silo Tokens V2                        | [`20230410-silo-linear-pool-v2`](./tasks/20230410-silo-linear-pool-v2)                               |
+| Managed Pool V2                                        | [`20230411-managed-pool-v2`](./tasks/20230411-managed-pool-v2)                                       |
+| Authorizer with Adaptor Validation                     | [`20230414-authorizer-wrapper`](./tasks/20230414-authorizer-wrapper)                                 |
+| Voting Escrow Remapper                                 | [`20230504-vebal-remapper`](./tasks/20230504-vebal-remapper)                                         |
 
-Bug bounties apply to most of the smart contracts hosted in this repository: head to [Balancer V2 Bug Bounties](https://docs.balancer.fi/reference/contracts/security.html#bug-bounty) to learn more. Alternatively, send an email to security@balancer.finance.
+## Scripts
 
-All core smart contracts are immutable, and cannot be upgraded. See page 6 of the [Trail of Bits audit](https://github.com/balancer-labs/balancer-v2-monorepo/blob/master/audits/trail-of-bits/2021-04-02.pdf):
+These are deployments for script-like contracts (often called 'coordinators') which are typically granted some permission by Governance and then executed, after which they become useless.
 
-> Upgradeability | Not Applicable. The system cannot be upgraded.
+| Description                                         | Task ID                                                                                                    |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Coordination of the veBAL deployment                | [`20220325-veBAL-deployment-coordinator`](./tasks/scripts/20220325-veBAL-deployment-coordinator)           |
+| Coordination of setup of L2 gauges for veBAL system | [`20220415-veBAL-L2-gauge-setup-coordinator`](./tasks/scripts/20220415-veBAL-L2-gauge-setup-coordinator)   |
+| Coordination of veBAL gauges fix (Option 1)         | [`20220418-veBAL-gauge-fix-coordinator`](./tasks/scripts/20220418-veBAL-gauge-fix-coordinator)             |
+| veBAL Smart Wallet Checker Coordinator              | [`20220421-smart-wallet-checker-coordinator`](./tasks/scripts/20220421-smart-wallet-checker-coordinator)   |
+| Tribe BAL Minter Coordinator                        | [`20220606-tribe-bal-minter-coordinator`](./tasks/scripts/20220606-tribe-bal-minter-coordinator)           |
+| Coordination of the double entrypoint issue fix     | [`20220610-snx-recovery-coordinator`](./tasks/scripts/20220610-snx-recovery-coordinator)                   |
+| Coordination of the Gauge Adder migration           | [`20220721-gauge-adder-migration-coordinator`](./tasks/scripts/20220721-gauge-adder-migration-coordinator) |
+| Timelock authorizer transition permission migration | [`20230130-ta-transition-migrator`](./tasks/scripts/20230130-ta-transition-migrator)                       |
 
-## Licensing
+## Deprecated Deployments
 
-Most of the Solidity source code is licensed under the GNU General Public License Version 3 (GPL v3): see [`LICENSE`](./LICENSE).
+These deployments have been deprecated because they're either outdated and have been replaced by newer versions, or because they no longer form part of the current infrastructure. **In almost all cases they should no longer be used,** and are only kept here for historical reasons.
 
-### Exceptions
+Go to each deprecated deployment's readme file to learn more about why it is deprecated, and what the replacement deployment is (if any).
 
-- All files in the `openzeppelin` directory of the [`v2-solidity-utils`](./pkg/solidity-utils) package are based on the [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) library, and as such are licensed under the MIT License: see [LICENSE](./pkg/solidity-utils/contracts/openzeppelin/LICENSE).
-- The `LogExpMath` contract from the [`v2-solidity-utils`](./pkg/solidity-utils) package is licensed under the MIT License.
-- All other files, including tests and the [`pvt`](./pvt) directory are unlicensed.
+| Description                                         | Task ID                                                                                                 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Weighted Pools of up to 8 tokens                    | [`20210418-weighted-pool`](./tasks/deprecated/20210418-weighted-pool)                                   |
+| Stable Pools of up to 5 tokens                      | [`20210624-stable-pool`](./tasks/deprecated/20210624-stable-pool)                                       |
+| Liquidity Bootstrapping Pools of up to 4 tokens     | [`20210721-liquidity-bootstrapping-pool`](./tasks/deprecated/20210721-liquidity-bootstrapping-pool)     |
+| Meta Stable Pools with 2 tokens and price oracle    | [`20210727-meta-stable-pool`](./tasks/deprecated/20210727-meta-stable-pool)                             |
+| Distributor contract for LDO rewards                | [`20210811-ldo-merkle`](./tasks/deprecated/20210811-ldo-merkle)                                         |
+| Relayer for Lido stETH wrapping/unwrapping          | [`20210812-lido-relayer`](./tasks/deprecated/20210812-lido-relayer)                                     |
+| Basic Investment Pools for few tokens               | [`20210907-investment-pool`](./tasks/deprecated/20210907-investment-pool)                               |
+| Distributor contract for arbitrum BAL rewards       | [`20210913-bal-arbitrum-merkle`](./tasks/deprecated/20210913-bal-arbitrum-merkle)                       |
+| Distributor contract for arbitrum MCB rewards       | [`20210928-mcb-arbitrum-merkle`](./tasks/deprecated/20210928-mcb-arbitrum-merkle)                       |
+| Merkle Orchard Distributor                          | [`20211012-merkle-orchard`](./tasks/deprecated/20211012-merkle-orchard)                                 |
+| Batch Relayer                                       | [`20211203-batch-relayer`](./tasks/deprecated/20211203-batch-relayer)                                   |
+| Linear Pools for Aave aTokens                       | [`20211208-aave-linear-pool`](./tasks/deprecated/20211208-aave-linear-pool)                             |
+| Preminted BPT Meta Stable Pools                     | [`20211208-stable-phantom-pool`](./tasks/deprecated/20211208-stable-phantom-pool)                       |
+| Linear Pools for ERC4626 Tokens                     | [`20220304-erc4626-linear-pool`](./tasks/deprecated/20220304-erc4626-linear-pool)                       |
+| Batch Relayer V2                                    | [`20220318-batch-relayer-v2`](./tasks/deprecated/20220318-batch-relayer-v2)                             |
+| Mainnet Staking Gauges                              | [`20220325-mainnet-gauge-factory`](./tasks/deprecated/20220325-mainnet-gauge-factory)                   |
+| Single Recipient Stakeless Gauges                   | [`20220325-single-recipient-gauge-factory`](./tasks/deprecated/20220325-single-recipient-gauge-factory) |
+| Gauge Registrant                                    | [`20220325-gauge-adder`](./tasks/deprecated/20220325-gauge-adder)                                       |
+| Linear Pools for ERC4626 Tokens V2                  | [`20220404-erc4626-linear-pool-v2`](./tasks/deprecated/20220404-erc4626-linear-pool-v2)                 |
+| Arbitrum Root Gauges, for veBAL voting              | [`20220413-arbitrum-root-gauge-factory`](./tasks/deprecated/20220413-arbitrum-root-gauge-factory)       |
+| Polygon Root Gauges, for veBAL voting               | [`20220413-polygon-root-gauge-factory`](./tasks/deprecated/20220413-polygon-root-gauge-factory)         |
+| Fee Distributor for veBAL holders                   | [`20220420-fee-distributor`](./tasks/deprecated/20220420-fee-distributor)                               |
+| Linear Pools for Unbutton tokens                    | [`20220425-unbutton-aave-linear-pool`](./tasks/deprecated/20220425-unbutton-aave-linear-pool)           |
+| Stable Pools V2 of up to 5 tokens                   | [`20220609-stable-pool-v2`](./tasks/deprecated/20220609-stable-pool-v2)                                 |
+| Optimism Root Gauges, for veBAL voting              | [`20220628-optimism-root-gauge-factory`](./tasks/deprecated/20220628-optimism-root-gauge-factory)       |
+| Gauge Registrant V2, supporting new networks        | [`20220628-gauge-adder-v2`](./tasks/deprecated/20220628-gauge-adder-v2)                                 |
+| Batch Relayer V3                                    | [`20220720-batch-relayer-v3`](./tasks/deprecated/20220720-batch-relayer-v3)                             |
+| Linear Pools for Aave aTokens (with rebalancing) V2 | [`20220817-aave-rebalanced-linear-pool`](./tasks/deprecated/20220817-aave-rebalanced-linear-pool)       |
+| Composable Stable Pools                             | [`20220906-composable-stable-pool`](./tasks/deprecated/20220906-composable-stable-pool)                 |
+| Weighted Pool V2                                    | [`20220908-weighted-pool-v2`](./tasks/deprecated/20220908-weighted-pool-v2)                             |
+| Batch Relayer V4                                    | [`20220916-batch-relayer-v4`](./tasks/deprecated/20220916-batch-relayer-v4)                             |
+| Managed Pool                                        | [`20221021-managed-pool`](./tasks/deprecated/20221021-managed-pool)                                     |
+| Composable Stable Pools V2                          | [`20221122-composable-stable-pool-v2`](./tasks/deprecated/20221122-composable-stable-pool-v2)           |
+| Linear Pools for Aave aTokens (with rebalancing) V3 | [`20221207-aave-rebalanced-linear-pool-v3`](./tasks/deprecated/20221207-aave-rebalanced-linear-pool-v3) |
+| Weighted Pool V3                                    | [`20230206-weighted-pool-v3`](./tasks/deprecated/20230206-weighted-pool-v3)                             |
+| Composable Stable Pools V3                          | [`20230206-composable-stable-pool-v3`](./tasks/deprecated/20230206-composable-stable-pool-v3)           |
+| Timelock Authorizer, governance contract            | [`20221202-timelock-authorizer`](./tasks/deprecated/20221202-timelock-authorizer)                       |
+| Linear Pools for ERC4626 Tokens V3                  | [`20230206-erc4626-linear-pool-v3`](./tasks/deprecated/20230206-erc4626-linear-pool-v3)                 |
+| Linear Pools for Aave aTokens (with rebalancing) V4 | [`20230206-aave-rebalanced-linear-pool-v4`](./tasks/deprecated/20230206-aave-rebalanced-linear-pool-v4) |
+| Linear Pools for Yearn Tokens                       | [`20230213-yearn-linear-pool`](./tasks/deprecated/20230213-yearn-linear-pool)                           |
+| Linear Pools for Gearbox Tokens                     | [`20230213-gearbox-linear-pool`](./tasks/deprecated/20230213-gearbox-linear-pool)                       |
+| Linear Pools for Silo Tokens                        | [`20230315-silo-linear-pool`](./tasks/deprecated/20230315-silo-linear-pool)                             |
