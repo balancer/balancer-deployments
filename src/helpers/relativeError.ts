@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { Decimal } from 'decimal.js';
-import { BigNumberish, bn, pct } from '../numbers';
+import { BigNumberish, bn, pct } from './numbers';
 
 export function expectEqualWithError(actual: BigNumberish, expected: BigNumberish, error: BigNumberish = 0.001): void {
   actual = bn(actual);
