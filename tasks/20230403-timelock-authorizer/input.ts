@@ -15,9 +15,19 @@ export type TimelockAuthorizerDeployment = {
   GrantDelays: DelayData[];
 };
 
-export default {
+export type TimelockAuthorizerDeploymentInputType = {
+  Authorizer: Task;
+  AuthorizerAdaptorEntrypoint: Task;
+  networks: string[];
+  goerli: any;
+  [key: string]: any; // index signature
+};
+
+const input: TimelockAuthorizerDeploymentInputType = {
   Authorizer,
   AuthorizerAdaptorEntrypoint,
   networks: ['goerli'],
   goerli: require('./input/goerli.ts'),
 };
+
+export default input;
