@@ -27,7 +27,6 @@ import {
   fetchTheGraphPermissions,
 } from './src/actionId';
 import { checkContractDeploymentAddresses, saveContractDeploymentAddresses } from './src/network';
-import { name } from './package.json';
 
 const THEGRAPHURLS: { [key: string]: string } = {
   goerli: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-authorizer-goerli',
@@ -306,14 +305,26 @@ export default {
     timeout: 600000,
   },
   solidity: {
-    compilers: hardhatBaseConfig.compilers,
-    overrides: { ...hardhatBaseConfig.overrides(name) },
+    version: '0.7.1',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 9999,
+      },
+    },
   },
   vyper: {
     compilers: [{ version: '0.3.1' }, { version: '0.3.3' }],
   },
   paths: {
-    sources: './tasks',
+    artifacts: './src/helpers/.hardhat/artifacts',
+    cache: './src/helpers/.hardhat/cache',
+    sources: './src/helpers/contracts',
   },
-  warnings: hardhatBaseConfig.warnings,
+  warnings: {
+    '*': {
+      'shadowing-opcode': 'off',
+      default: 'error',
+    },
+  },
 };
