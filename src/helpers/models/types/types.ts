@@ -135,3 +135,19 @@ export enum GaugeType {
   Gnosis,
   ZkSync,
 }
+
+export type ManagedPoolParams = {
+  name: string;
+  symbol: string;
+  assetManagers: string[];
+};
+
+export type ManagedPoolSettingsParams = {
+  tokens: string[];
+  normalizedWeights: BigNumberish[];
+  swapFeePercentage: BigNumberish;
+  swapEnabledOnStart: boolean;
+  mustAllowlistLPs: boolean;
+  managementAumFeePercentage: BigNumberish;
+  aumFeeId: BigNumberish;
+};
