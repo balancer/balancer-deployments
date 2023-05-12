@@ -1,5 +1,5 @@
-import { MONTH } from '@balancer-labs/v2-helpers/src/time';
-import Task, { TaskMode } from '../../src/task';
+import { MONTH } from '@helpers/time';
+import { Task, TaskMode } from '@src';
 
 export type ManagedPoolDeployment = {
   Vault: string;

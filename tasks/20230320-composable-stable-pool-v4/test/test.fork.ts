@@ -2,20 +2,22 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
 
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { getSigner, impersonate } from '../../../src/signers';
+import * as expectEvent from '@helpers/expectEvent';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { getSigner, impersonate } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
-import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@balancer-labs/v2-helpers/src/constants';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { BasePoolEncoder, StablePoolEncoder, SwapKind } from '@balancer-labs/balancer-js';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { deploy } from '@balancer-labs/v2-helpers/src/contract';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
+import { bn, fp } from '@helpers/numbers';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import { actionId } from '@helpers/models/misc/actions';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { deploy } from '@src';
 import { randomBytes } from 'ethers/lib/utils';
 
 describeForkTest('ComposableStablePool V4', 'mainnet', 16577000, function () {
@@ -300,7 +302,7 @@ describeForkTest('ComposableStablePool V4', 'mainnet', 16577000, function () {
     const attackerFunds = 1000;
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.address]);
       await busd.connect(whale).transfer(attacker.address, attackerFunds);
       await usdc.connect(whale).transfer(attacker.address, attackerFunds);
       await aura.connect(auraWhale).transfer(attacker.address, attackerFunds);

@@ -1,12 +1,11 @@
 import { ethers } from 'hardhat';
 import { randomBytes } from 'ethers/lib/utils';
-import { bn } from '@balancer-labs/v2-helpers/src/numbers';
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { bn } from '@helpers/numbers';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { AaveLinearPoolDeployment } from './input';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import * as expectEvent from '@helpers/expectEvent';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as AaveLinearPoolDeployment;

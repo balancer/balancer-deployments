@@ -1,13 +1,12 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp, FP_ONE } from '@balancer-labs/v2-helpers/src/numbers';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp, FP_ONE } from '@helpers/numbers';
+import { MAX_UINT256 } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { SwapKind } from '@balancer-labs/balancer-js';
-
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../../src';
+import { SwapKind } from '@helpers/models/types/types';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 
 describeForkTest('AaveLinearPoolFactory', 'mainnet', 15225000, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;

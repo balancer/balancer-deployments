@@ -1,4 +1,4 @@
-import Task, { TaskMode } from '../../src/task';
+import { Task, TaskMode } from '@src';
 import { DelayData, RoleData } from './input/types';
 
 const Authorizer = new Task('20210418-authorizer', TaskMode.READ_ONLY);

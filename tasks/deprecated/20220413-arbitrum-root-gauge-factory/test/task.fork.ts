@@ -2,17 +2,17 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, FP_ONE } from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumber, FP_ONE } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentWeekTimestamp, DAY, WEEK } from '@balancer-labs/v2-helpers/src/time';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { advanceTime, currentWeekTimestamp, DAY, WEEK } from '@helpers/time';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
-import { expectTransferEvent } from '@balancer-labs/v2-helpers/src/test/expectTransfer';
+import { expectTransferEvent } from '@helpers/expectTransfer';
 
-import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '../../../../src';
+import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 describeForkTest('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;

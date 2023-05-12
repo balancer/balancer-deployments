@@ -2,14 +2,14 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { GaugeType } from '@balancer-labs/balancer-js/src/types';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { BigNumber, fp } from '@helpers/numbers';
+import { GaugeType } from '@helpers/models/types/types';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { impersonate } from '../../../src/signers';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { impersonate } from '@src';
 
 // This block number is before the manual weekly checkpoint. This ensures gauges will actually be checkpointed.
 // This test verifies the checkpointer against the manual transactions for the given period.
@@ -167,7 +167,7 @@ describeForkTest('L2GaugeCheckpointer', 'mainnet', 15839900, function () {
   describe('checkpoint', () => {
     let gaugeDataAboveMinWeight: GaugeData[] = [];
 
-    sharedBeforeEach(() => {
+    sharedBeforeEach(async () => {
       // Gauges that are above a threshold will get another checkpoint attempt when the threshold is lowered.
       // This block takes a snapshot so that gauges can be repeatedly checkpointed without skipping.
     });

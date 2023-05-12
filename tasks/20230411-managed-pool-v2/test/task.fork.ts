@@ -1,22 +1,21 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BasePoolEncoder, SwapKind, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@balancer-labs/v2-helpers/src/constants';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp } from '@helpers/numbers';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { actionId } from '@helpers/models/misc/actions';
+import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import {
-  ManagedPoolParams,
-  ManagedPoolSettingsParams,
-} from '@balancer-labs/v2-helpers/src/models/pools/weighted/types';
-import { ProtocolFee } from '@balancer-labs/v2-helpers/src/models/vault/types';
-import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
-import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../src';
+import { ManagedPoolParams, ManagedPoolSettingsParams, ProtocolFee } from '@helpers/models/types/types';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 import { randomBytes } from 'ethers/lib/utils';
-import { deploy } from '@balancer-labs/v2-helpers/src/contract';
+import { deploy } from '@src';
 
 describeForkTest('ManagedPoolFactory', 'mainnet', 17033100, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
@@ -248,7 +247,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 17033100, function () {
     const attackerFunds = fp(1000);
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerMP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerMP', [vault.address]);
       await comp.connect(whale).transfer(attacker.address, attackerFunds);
       await uni.connect(whale).transfer(attacker.address, attackerFunds);
       await aave.connect(whale).transfer(attacker.address, attackerFunds);

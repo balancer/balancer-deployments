@@ -26,7 +26,7 @@ export function inReceipt(receipt: ContractReceipt, eventName: string, eventArgs
 
         contains(e.args, k, v);
       } catch (error) {
-        exceptions.push(error);
+        exceptions.push(String(error));
         return false;
       }
     }
@@ -70,7 +70,7 @@ export function inIndirectReceipt(
 
         contains(e.args, k, v);
       } catch (error) {
-        exceptions.push(error);
+        exceptions.push(String(error));
         return false;
       }
     }

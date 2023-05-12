@@ -1,17 +1,32 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
-import { BasePoolEncoder, SwapKind, toNormalizedWeights, WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { expectEqualWithError } from '@balancer-labs/v2-helpers/src/test/relativeError';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { MAX_UINT256, ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { BigNumberish, Contract } from 'ethers';
+import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { SwapKind } from '@helpers/models/types/types';
+import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
+import * as expectEvent from '@helpers/expectEvent';
+import { fp } from '@helpers/numbers';
+import { expectEqualWithError } from '@helpers/relativeError';
+import { actionId } from '@helpers/models/misc/actions';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { ManagedPoolParams } from '@balancer-labs/v2-helpers/src/models/pools/weighted/types';
-import { ProtocolFee } from '@balancer-labs/v2-helpers/src/models/vault/types';
+import { ProtocolFee } from '@helpers/models/types/types';
 
-import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../../src';
+import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
+
+type ManagedPoolParams = {
+  name: string;
+  symbol: string;
+  assetManagers: string[];
+  tokens: string[];
+  normalizedWeights: BigNumberish[];
+  swapFeePercentage: BigNumberish;
+  swapEnabledOnStart: boolean;
+  mustAllowlistLPs: boolean;
+  managementAumFeePercentage: BigNumberish;
+  aumFeeId: BigNumberish;
+};
 
 describeForkTest('ManagedPoolFactory', 'mainnet', 15634000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;

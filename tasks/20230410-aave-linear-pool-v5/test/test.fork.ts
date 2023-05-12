@@ -3,14 +3,14 @@ import { expect } from 'chai';
 import { randomBytes } from 'ethers/lib/utils';
 import { BigNumber, Contract } from 'ethers';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp, FP_ONE } from '@balancer-labs/v2-helpers/src/numbers';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
-import { deploy, deployedAt, getArtifact } from '@balancer-labs/v2-helpers/src/contract';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp, FP_ONE } from '@helpers/numbers';
+import { MAX_UINT256 } from '@helpers/constants';
+import { deploy, instanceAt, getArtifact } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { SwapKind } from '@balancer-labs/balancer-js';
+import { SwapKind } from '@helpers/models/types/types';
 
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../src';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 
 describeForkTest('AaveLinearPoolFactory V5', 'mainnet', 16592300, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
@@ -333,7 +333,7 @@ describeForkTest('AaveLinearPoolFactory V5', 'mainnet', 16592300, function () {
       );
 
       await setCode(USDT_LENDING_POOL, getArtifact('MockAaveLendingPool').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockAaveLendingPool', USDT_LENDING_POOL);
+      const mockLendingPool = await instanceAt('MockAaveLendingPool', USDT_LENDING_POOL);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT
@@ -344,7 +344,7 @@ describeForkTest('AaveLinearPoolFactory V5', 'mainnet', 16592300, function () {
     let attacker: Contract;
 
     before('deploy attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', { args: [vault.address] });
+      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.address]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: BigNumber, expectRevert: boolean) {
