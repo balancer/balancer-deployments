@@ -15,10 +15,9 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "../interfaces/IInterestRateModel.sol";
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
+import "./MaliciousQueryReverter.sol";
 
-contract MockInterestRateModel is IInterestRateModel, MaliciousQueryReverter {
+contract MockInterestRateModel is MaliciousQueryReverter {
     uint256 private _rcomp;
     uint256 private _rcur;
 
@@ -31,7 +30,7 @@ contract MockInterestRateModel is IInterestRateModel, MaliciousQueryReverter {
         address, /* _silo */
         address, /* _asset */
         uint256 /* _blockTimestamp */
-    ) external view override returns (uint256 rcomp) {
+    ) external view returns (uint256 rcomp) {
         maybeRevertMaliciously();
         return _rcomp;
     }
@@ -40,7 +39,7 @@ contract MockInterestRateModel is IInterestRateModel, MaliciousQueryReverter {
         address, /* _silo */
         address, /* _asset */
         uint256 /* _blockTimestamp */
-    ) external view override returns (uint256 rcur) {
+    ) external view returns (uint256 rcur) {
         return _rcur;
     }
 

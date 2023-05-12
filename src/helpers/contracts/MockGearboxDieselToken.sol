@@ -14,12 +14,10 @@
 
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./TestToken.sol";
 
-import "./interfaces/IGearboxDieselToken.sol";
-
-contract MockGearboxDieselToken is TestToken, IGearboxDieselToken {
-    IGearboxVault private immutable _gearboxVault;
+contract MockGearboxDieselToken is TestToken {
+    address private immutable _gearboxVault;
 
     constructor(
         string memory name,
@@ -27,10 +25,10 @@ contract MockGearboxDieselToken is TestToken, IGearboxDieselToken {
         uint8 decimals,
         address gearboxVaultAddress
     ) TestToken(name, symbol, decimals) {
-        _gearboxVault = IGearboxVault(gearboxVaultAddress);
+        _gearboxVault = gearboxVaultAddress;
     }
 
-    function owner() external view override returns (address) {
+    function owner() external view returns (address) {
         return address(_gearboxVault);
     }
 }

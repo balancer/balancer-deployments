@@ -15,9 +15,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@balancer-labs/v2-interfaces/contracts/liquidity-mining/IOmniVotingEscrow.sol";
-
-contract MockOmniVotingEscrow is IOmniVotingEscrow {
+contract MockOmniVotingEscrow {
     event SendUserBalance(address user, uint16 chainId, address refundAddress);
 
     uint256 private _nativeFee;
@@ -27,7 +25,7 @@ contract MockOmniVotingEscrow is IOmniVotingEscrow {
         uint16,
         bool,
         bytes calldata
-    ) external view override returns (uint256 nativeFee, uint256 zroFee) {
+    ) external view returns (uint256 nativeFee, uint256 zroFee) {
         return (_nativeFee, _zroFee);
     }
 
@@ -38,7 +36,7 @@ contract MockOmniVotingEscrow is IOmniVotingEscrow {
         address payable _refundAddress,
         address,
         bytes memory
-    ) external payable override {
+    ) external payable {
         emit SendUserBalance(_user, _dstChainId, _refundAddress);
     }
 
