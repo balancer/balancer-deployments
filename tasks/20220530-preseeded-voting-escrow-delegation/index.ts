@@ -1,5 +1,4 @@
-import Task from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { Task, TaskRunOptions } from '@src';
 import { PreseededVotingEscrowDelegationDeployment } from './input';
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';

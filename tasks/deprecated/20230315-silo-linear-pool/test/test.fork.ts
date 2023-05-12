@@ -2,14 +2,14 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp, FP_ONE } from '@balancer-labs/v2-helpers/src/numbers';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp, FP_ONE } from '@helpers/numbers';
+import { MAX_UINT256 } from '@helpers/constants';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '../../../../src';
-import { describeForkTest } from '../../../../src/forkTests';
-import { deployedAt, getArtifact } from '@balancer-labs/v2-helpers/src/contract';
+import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
+import { describeForkTest } from '@src';
+import { instanceAt, getArtifact } from '@src';
 
 export enum SwapKind {
   GivenIn = 0,
@@ -349,7 +349,7 @@ describeForkTest('SiloLinearPoolFactory', 'mainnet', 16478568, function () {
 
       // Using MockSilo from 20230410-silo-linear-pool-v2
       await setCode(USDC_SILO, getArtifact('MockSilo').deployedBytecode);
-      const mockLendingPool = await deployedAt('MockSilo', USDC_SILO);
+      const mockLendingPool = await instanceAt('MockSilo', USDC_SILO);
 
       await mockLendingPool.setRevertType(2); // Type 2 is malicious swap query revert
       await expect(rebalancer.rebalance(other.address)).to.be.revertedWith('BAL#357'); // MALICIOUS_QUERY_REVERT

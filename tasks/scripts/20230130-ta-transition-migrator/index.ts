@@ -1,9 +1,8 @@
 import { Contract } from 'ethers';
-import Task, { TaskMode } from '../../../src/task';
-import { TaskRunOptions } from '../../../src/types';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { TRANSITION_END_BLOCK, TRANSITION_START_BLOCK, TimelockAuthorizerTransitionMigratorDeployment } from './input';
 import { RoleData } from './input/types';
-import { ANY_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { ANY_ADDRESS } from '@helpers/constants';
 import { excludedRoles } from './input/mainnet';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

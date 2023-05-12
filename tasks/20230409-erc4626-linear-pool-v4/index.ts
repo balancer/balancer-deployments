@@ -1,13 +1,12 @@
 import { randomBytes } from 'ethers/lib/utils';
 import { ethers } from 'hardhat';
 
-import { bn } from '@balancer-labs/v2-helpers/src/numbers';
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src';
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { bn } from '@helpers/numbers';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ERC4626LinearPoolDeployment } from './input';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import * as expectEvent from '@helpers/expectEvent';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as ERC4626LinearPoolDeployment;

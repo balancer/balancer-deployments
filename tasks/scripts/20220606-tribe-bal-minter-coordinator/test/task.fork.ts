@@ -4,13 +4,13 @@ import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
-import { describeForkTest } from '../../../../src/forkTests';
-import Task, { TaskMode } from '../../../../src/task';
-import { getForkedNetwork } from '../../../../src/test';
-import { impersonate } from '../../../../src/signers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { impersonate } from '@src';
+import { actionId } from '@helpers/models/misc/actions';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import * as expectEvent from '@helpers/expectEvent';
 
 describeForkTest('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;

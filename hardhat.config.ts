@@ -3,13 +3,13 @@ import '@nomiclabs/hardhat-vyper';
 import '@nomiclabs/hardhat-waffle';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
+import 'tsconfig-paths/register';
 
-import '@balancer-labs/v2-common/setupTests';
+import './src/helpers/setupTests';
 
 import { task } from 'hardhat/config';
 import { TASK_TEST } from 'hardhat/builtin-tasks/task-names';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { hardhatBaseConfig } from '@balancer-labs/v2-common';
 
 import path from 'path';
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';

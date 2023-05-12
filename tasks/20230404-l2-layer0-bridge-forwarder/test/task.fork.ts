@@ -2,16 +2,16 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { fp } from '@helpers/numbers';
+import { actionId } from '@helpers/models/misc/actions';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { impersonate } from '../../../src/signers';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { impersonate } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { randomAddress, ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { randomAddress, ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function () {
   let vault: Contract, authorizer: Contract;

@@ -1,4 +1,4 @@
-import Task, { TaskMode } from '../../../src/task';
+import { Task, TaskMode } from '@src';
 
 import { roles as mainnetRoles, delayedRoles as mainnetDelayedRoles } from './input/mainnet';
 import { RoleData } from './input/types';

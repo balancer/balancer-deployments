@@ -1,18 +1,18 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { fp } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import * as expectEvent from '@helpers/expectEvent';
 
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
-import { getSigner, impersonate } from '../../../src/signers';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import TimelockAuthorizer from '@balancer-labs/v2-helpers/src/models/authorizer/TimelockAuthorizer';
-import { advanceTime, DAY } from '@balancer-labs/v2-helpers/src/time';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { describeForkTest } from '@src';
+import { Task, TaskMode } from '@src';
+import { getForkedNetwork } from '@src';
+import { getSigner, impersonate } from '@src';
+import { actionId } from '@helpers/models/misc/actions';
+import TimelockAuthorizer from '@helpers/models/authorizer/TimelockAuthorizer';
+import { advanceTime, DAY } from '@helpers/time';
+import { ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest('GaugeAdderV3', 'mainnet', 16370000, function () {
   let factory: Contract;

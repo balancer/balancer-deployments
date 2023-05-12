@@ -1,10 +1,10 @@
-import Task, { TaskMode } from '../../src/task';
+import { ethers } from 'hardhat';
 import { NoProtocolFeeLiquidityBootstrappingPoolDeployment } from './input';
-import { TaskRunOptions } from '../../src/types';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
+import { Task, TaskMode, TaskRunOptions } from '@src';
+import { bn, fp } from '@helpers/numbers';
+import * as expectEvent from '@helpers/expectEvent';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
+import { ZERO_ADDRESS } from '@helpers/constants';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as NoProtocolFeeLiquidityBootstrappingPoolDeployment;

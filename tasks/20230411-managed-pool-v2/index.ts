@@ -1,10 +1,10 @@
-import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '../../src/network';
-import Task, { TaskMode } from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { ethers } from 'hardhat';
+import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ManagedPoolDeployment } from './input';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { ZERO_ADDRESS, ZERO_BYTES32 } from '@balancer-labs/v2-helpers/src/constants';
+import * as expectEvent from '@helpers/expectEvent';
+import { bn, fp } from '@helpers/numbers';
+import { ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as ManagedPoolDeployment;

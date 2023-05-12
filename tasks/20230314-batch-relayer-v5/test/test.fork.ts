@@ -1,14 +1,14 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@balancer-labs/v2-helpers/src/numbers';
+import { BigNumberish } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
-import { MAX_UINT256 } from '@balancer-labs/v2-helpers/src/constants';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
+import { MAX_UINT256 } from '@helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '../../../src';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
-import { sharedBeforeEach } from '@balancer-labs/v2-common/sharedBeforeEach';
+import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 
 describeForkTest('BatchRelayerLibrary', 'mainnet', 15485000, function () {
   let task: Task;

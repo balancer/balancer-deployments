@@ -3,11 +3,11 @@ import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '../../../src';
-import { actionId } from '@balancer-labs/v2-helpers/src/models/misc/actions';
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import * as expectEvent from '@balancer-labs/v2-helpers/src/test/expectEvent';
+import { impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
+import { actionId } from '@helpers/models/misc/actions';
+import { fp } from '@helpers/numbers';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import * as expectEvent from '@helpers/expectEvent';
 
 describeForkTest('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
   let admin: SignerWithAddress;
@@ -17,7 +17,7 @@ describeForkTest('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, functio
     actualAuthorizer: Contract,
     authorizerAdaptor: Contract,
     adaptorEntrypoint: Contract,
-    gaugeAdder;
+    gaugeAdder: Contract;
 
   let task: Task;
   let addEthereumGaugeAction: string;

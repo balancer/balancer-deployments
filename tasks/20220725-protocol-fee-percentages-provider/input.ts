@@ -1,5 +1,5 @@
-import { fp } from '@balancer-labs/v2-helpers/src/numbers';
-import Task, { TaskMode } from '../../src/task';
+import { fp } from '@helpers/numbers';
+import { Task, TaskMode } from '@src';
 import { BigNumber } from 'ethers';
 
 export type ProtocolFeePercentagesProviderDeployment = {

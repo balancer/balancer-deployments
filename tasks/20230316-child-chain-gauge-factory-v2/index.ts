@@ -1,5 +1,4 @@
-import Task from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { Task, TaskRunOptions } from '@src';
 import { ChildChainLiquidityGaugeFactoryDeployment } from './input';
 
 export type ExtraInputs = {

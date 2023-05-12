@@ -1,6 +1,5 @@
-import { ZERO_ADDRESS } from '@balancer-labs/v2-helpers/src/constants';
-import Task from '../../src/task';
-import { TaskRunOptions } from '../../src/types';
+import { ZERO_ADDRESS } from '@helpers/constants';
+import { Task, TaskRunOptions } from '@src';
 import { L2VotingEscrowDelegationProxyDeployment } from './input';
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
