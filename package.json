@@ -3,14 +3,13 @@
   "version": "3.2.0",
   "description": "Addresses and ABIs of all Balancer V2 deployed contracts",
   "license": "GPL-3.0-only",
-  "homepage": "https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments#readme",
+  "homepage": "https://github.com/balancer/balancer-deployments/#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/balancer-labs/balancer-v2-monorepo.git",
-    "directory": "pkg/deployments"
+    "url": "https://github.com/balancer-labs/balancer-deployments.git"
   },
   "bugs": {
-    "url": "https://github.com/balancer-labs/balancer-v2-monorepo/issues"
+    "url": "https://github.com/balancer-labs/balancer-deployments/issues"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -38,39 +37,46 @@
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
   },
   "devDependencies": {
-    "@balancer-labs/balancer-js": "workspace:*",
-    "@balancer-labs/v2-helpers": "workspace:*",
     "@balancer-labs/v2-interfaces": "workspace:*",
+    "@balancer-labs/v2-solidity-utils": "^3.0.2",
+    "@ethersproject/contracts": "^5.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@nomiclabs/hardhat-vyper": "^3.0.3",
     "@solidity-parser/parser": "^0.14.5",
+    "@types/chai": "^4",
     "@types/lodash": "^4.14.186",
     "@types/lodash.range": "^3.2.7",
+    "@types/mocha": "^10",
     "@types/node": "^14.14.31",
+    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
+    "chai": "^4.3.6",
     "chalk": "^4.1.2",
+    "decimal.js": "^10.4.3",
     "eslint": "^8.26.0",
+    "eslint-plugin-mocha-no-only": "^1.1.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethereum-waffle": "^3.4.4",
+    "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
     "graphql-request": "^5.2.0",
     "hardhat": "^2.12.5",
-    "hardhat-ignore-warnings": "^0.2.4",
+    "hardhat-ignore-warnings": "^0.2.8",
     "hardhat-local-networks-config-plugin": "^0.0.6",
     "lodash.range": "^3.2.0",
+    "mocha": "^10.2.0",
     "node-fetch": "^2.6.7",
     "prettier": "^2.7.1",
     "prettier-plugin-solidity": "v1.0.0-alpha.59",
     "solhint": "^3.2.0",
     "solhint-plugin-prettier": "^0.0.4",
     "ts-node": "^10.9.1",
-    "typescript": "^4.0.2"
-  },
-  "peerDependencies": {
-    "@ethersproject/contracts": "^5.0.0",
-    "hardhat": "^2.8.3"
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^4.3.2"
   }
 }
