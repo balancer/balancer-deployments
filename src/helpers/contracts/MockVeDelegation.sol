@@ -15,14 +15,14 @@
 pragma solidity ^0.7.0;
 
 import "@balancer-labs/v2-interfaces/contracts/liquidity-mining/IVeDelegation.sol";
-import "@balancer-labs/v2-solidity-utils/contracts/test/ERC20Mock.sol";
+import "./TestToken.sol";
 
 // For compatibility, we're keeping the same function names as in the original Curve code, including the mixed-case
 // naming convention.
 // solhint-disable func-name-mixedcase
 
-contract MockVeDelegation is IVeDelegation, ERC20Mock {
-    constructor() ERC20Mock("Mock VE delegation", "dveBAL") {
+contract MockVeDelegation is IVeDelegation, TestToken {
+    constructor() TestToken("Mock VE delegation", "dveBAL", 18) {
         // solhint-disable-previous-line no-empty-blocks
     }
 

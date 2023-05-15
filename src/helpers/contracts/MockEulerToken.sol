@@ -15,8 +15,8 @@
 pragma solidity ^0.7.0;
 
 // has many ERC20 and additional functions
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./MaliciousQueryReverter.sol";
+import "./TestToken.sol";
 
 contract MockEulerToken is TestToken, MaliciousQueryReverter {
     // from Euler docs:

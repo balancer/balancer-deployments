@@ -13,14 +13,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.pragma solidity ^0.7.0;
 pragma solidity ^0.7.0;
 
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
-import "@balancer-labs/v2-solidity-utils/contracts/test/TestToken.sol";
+import "./MaliciousQueryReverter.sol";
+import "./TestToken.sol";
 
-import "../interfaces/ISilo.sol";
-import "../interfaces/IShareToken.sol";
-
-contract MockShareToken is TestToken, IShareToken, MaliciousQueryReverter {
-    ISilo private immutable _silo;
+contract MockShareToken is TestToken, MaliciousQueryReverter {
+    address private immutable _silo;
     address private immutable _asset;
     uint256 private _supply;
 
@@ -36,21 +33,21 @@ contract MockShareToken is TestToken, IShareToken, MaliciousQueryReverter {
         address asset,
         uint8 decimals
     ) TestToken(name, symbol, decimals) {
-        _silo = ISilo(silo);
+        _silo = address(silo);
         _asset = asset;
     }
 
-    function asset() external view override returns (address) {
+    function asset() external view returns (address) {
         maybeRevertMaliciously();
         return _asset;
     }
 
-    function silo() external view override returns (ISilo) {
+    function silo() external view returns (address) {
         maybeRevertMaliciously();
         return _silo;
     }
 
-    function totalSupply() public view override(ERC20, IShareToken) returns (uint256) {
+    function totalSupply() public view override returns (uint256) {
         maybeRevertMaliciously();
         return _supply;
     }

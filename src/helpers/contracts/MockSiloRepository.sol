@@ -15,13 +15,10 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "../interfaces/ISiloRepository.sol";
-import "../interfaces/IInterestRateModel.sol";
 import "./MockInterestRateModel.sol";
+import "./MaliciousQueryReverter.sol";
 
-import "@balancer-labs/v2-pool-utils/contracts/test/MaliciousQueryReverter.sol";
-
-contract MockSiloRepository is ISiloRepository, MaliciousQueryReverter {
+contract MockSiloRepository is MaliciousQueryReverter {
     uint256 private _protocolShareFee;
     MockInterestRateModel private immutable _mockModel;
 
@@ -32,12 +29,12 @@ contract MockSiloRepository is ISiloRepository, MaliciousQueryReverter {
     function getInterestRateModel(
         address, /* silo */
         address /* asset */
-    ) external view override returns (IInterestRateModel) {
+    ) external view returns (address) {
         maybeRevertMaliciously();
-        return _mockModel;
+        return address(_mockModel);
     }
 
-    function protocolShareFee() external view override returns (uint256) {
+    function protocolShareFee() external view returns (uint256) {
         maybeRevertMaliciously();
         return _protocolShareFee;
     }

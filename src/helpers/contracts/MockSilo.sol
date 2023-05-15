@@ -15,12 +15,10 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "../interfaces/ISilo.sol";
-import "../interfaces/ISiloRepository.sol";
 import "./MockBaseSilo.sol";
 
-contract MockSilo is ISilo, MockBaseSilo {
-    constructor(ISiloRepository _siloRepository, address _siloAsset) MockBaseSilo(_siloRepository, _siloAsset) {
+contract MockSilo is MockBaseSilo {
+    constructor(address _siloRepository, address _siloAsset) MockBaseSilo(_siloRepository, _siloAsset) {
         // solhint-disable-previous-line no-empty-blocks
     }
 
@@ -28,7 +26,7 @@ contract MockSilo is ISilo, MockBaseSilo {
         address, /* _asset */
         uint256, /* _amount */
         bool /* _collateralOnly */
-    ) external pure override returns (uint256 collateralAmount, uint256 collateralShare) {
+    ) external pure returns (uint256 collateralAmount, uint256 collateralShare) {
         return (0, 0);
     }
 
@@ -36,7 +34,7 @@ contract MockSilo is ISilo, MockBaseSilo {
         address, /* _asset */
         uint256, /* _amount */
         bool /* _collateralOnly */
-    ) external pure override returns (uint256 withdrawnAmount, uint256 withdrawnShare) {
+    ) external pure returns (uint256 withdrawnAmount, uint256 withdrawnShare) {
         return (0, 0);
     }
 }

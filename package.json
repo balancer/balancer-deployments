@@ -30,10 +30,10 @@
     "build-address-lookup": "hardhat build-address-lookup --network mainnet && hardhat build-address-lookup --network polygon && hardhat build-address-lookup --network arbitrum && hardhat build-address-lookup --network optimism && hardhat build-address-lookup --network gnosis && hardhat build-address-lookup --network bsc && hardhat build-address-lookup --network avalanche && hardhat build-address-lookup --network goerli && hardhat build-address-lookup --network sepolia",
     "check-address-lookup": "hardhat check-address-lookup --network mainnet && hardhat check-address-lookup --network polygon && hardhat check-address-lookup --network arbitrum && hardhat check-address-lookup --network optimism && hardhat check-address-lookup --network gnosis && hardhat check-address-lookup --network bsc && hardhat check-address-lookup --network avalanche && hardhat check-address-lookup --network goerli && hardhat check-address-lookup --network sepolia",
     "lint": "yarn lint:solidity && yarn lint:typescript",
-    "lint:solidity": "solhint 'tasks/**/*.sol'",
-    "lint:typescript": "NODE_NO_WARNINGS=1 eslint . --ext .ts --ignore-path ../../.eslintignore  --max-warnings 0",
+    "lint:solidity": "solhint 'src/helpers/contracts/**/*.sol'",
+    "lint:typescript": "NODE_NO_WARNINGS=1 eslint . --ext .ts --ignore-path ./.eslintignore  --max-warnings 0",
     "prepack": "yarn build",
-    "test": "yarn build && hardhat test ./**/test/*.ts",
+    "test": "yarn build && hardhat test ./tasks/**/test/*.ts",
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
   },
   "devDependencies": {
