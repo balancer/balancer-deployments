@@ -146,6 +146,6 @@ function doForkTestsOnNetwork(network: string, block: number) {
   });
 }
 
-// for (const network of input.networks) {
-//   doForkTestsOnNetwork(network, input[network].TRANSITION_END_BLOCK);
-// }
+for (const network of input.networks) {
+  doForkTestsOnNetwork(network, input[network].TRANSITION_END_BLOCK);
+}

@@ -16,7 +16,6 @@ import { ZERO_ADDRESS, MAX_UINT256 } from '@helpers/constants';
 import { range } from 'lodash';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { describeForkTest } from '@src';
-import { instanceAt } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
@@ -86,7 +85,8 @@ describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
     const veBALTask = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, getForkedNetwork(hre));
     veBAL = await veBALTask.instanceAt('VotingEscrow', veBALTask.output({ network: 'mainnet' }).VotingEscrow);
 
-    bal80weth20Pool = await instanceAt('v2-pool-weighted/WeightedPool', VEBAL_POOL);
+    const weightedPoolTask = new Task('20210418-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    bal80weth20Pool = await weightedPoolTask.instanceAt('WeightedPool2Tokens', VEBAL_POOL);
 
     const poolId = await bal80weth20Pool.getPoolId();
 
