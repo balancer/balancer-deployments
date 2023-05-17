@@ -54,6 +54,7 @@ jobs:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
+          ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_INFURA_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Check Action IDs
@@ -75,6 +76,7 @@ jobs:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
+          ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_INFURA_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Check Deployment Address Lookup File

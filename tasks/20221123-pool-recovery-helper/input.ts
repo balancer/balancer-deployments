@@ -57,6 +57,9 @@ export default {
   avalanche: {
     InitialFactories: [],
   },
+  zkevm: {
+    InitialFactories: [],
+  },
   sepolia: {
     InitialFactories: [],
   },

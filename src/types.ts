@@ -14,6 +14,7 @@ export const NETWORKS = [
   'gnosis',
   'bsc',
   'avalanche',
+  'zkevm',
   'sepolia',
 ];
 

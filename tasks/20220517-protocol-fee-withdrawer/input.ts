@@ -35,6 +35,9 @@ export default {
   avalanche: {
     InitialDeniedTokens: [],
   },
+  zkevm: {
+    InitialDeniedTokens: [],
+  },
   goerli: {
     InitialDeniedTokens: [],
   },

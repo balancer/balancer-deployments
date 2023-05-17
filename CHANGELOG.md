@@ -35,12 +35,13 @@
 - Deprecated `20230213-gearbox-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
 
-## 3.2.0 (2023-02-24)
-
 ### New Networks
 
 - Deployed all L2 contracts to Avalanche.
 - Deployed all contracts on Goerli to Sepolia.
+- Deployed all L2 contracts to Polygon zkEVM.
+
+## 3.2.0 (2023-02-24)
 
 ### New Deployments
 

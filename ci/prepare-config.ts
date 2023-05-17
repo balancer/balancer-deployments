@@ -28,6 +28,9 @@ if (process.env.CI) {
       "avalanche": {
         "url": "${process.env.AVALANCHE_RPC_ENDPOINT}"
       },
+      "zkevm": {
+        "url": "${process.env.ZKEVM_RPC_ENDPOINT}"
+      },
       "goerli": {
         "url": "${process.env.GOERLI_RPC_ENDPOINT}"
       },
