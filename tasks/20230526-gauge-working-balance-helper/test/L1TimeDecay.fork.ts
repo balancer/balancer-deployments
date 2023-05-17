@@ -5,7 +5,7 @@ import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, imperso
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { fp, fpMul } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { WeightedPoolEncoder } from '@balancer-labs/balancer-js';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, WEEK, advanceTime, currentTimestamp } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
