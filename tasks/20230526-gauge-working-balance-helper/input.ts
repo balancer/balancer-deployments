@@ -1,4 +1,4 @@
-import Task, { TaskMode } from '../../src/task';
+import { Task, TaskMode } from '@src';
 
 export type GaugeWorkingBalanceHelperDeployment = {
   VotingEscrowDelegationProxy: string;
@@ -11,20 +11,15 @@ export default {
       .VotingEscrowDelegationProxy,
     ReadTotalSupplyFromVE: true,
   },
-  goerli: {
-    VotingEscrowDelegationProxy: new Task('20220325-ve-delegation', TaskMode.READ_ONLY).output({ network: 'goerli' })
-      .VotingEscrowDelegationProxy,
-    ReadTotalSupplyFromVE: true,
+  polygon: {
+    VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
+      network: 'polygon',
+    }).VotingEscrowDelegationProxy,
+    ReadTotalSupplyFromVE: false,
   },
   arbitrum: {
     VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
       network: 'arbitrum',
-    }).VotingEscrowDelegationProxy,
-    ReadTotalSupplyFromVE: false,
-  },
-  gnosis: {
-    VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
-      network: 'gnosis',
     }).VotingEscrowDelegationProxy,
     ReadTotalSupplyFromVE: false,
   },
@@ -34,10 +29,32 @@ export default {
     }).VotingEscrowDelegationProxy,
     ReadTotalSupplyFromVE: false,
   },
-  polygon: {
+  gnosis: {
     VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
-      network: 'polygon',
+      network: 'gnosis',
     }).VotingEscrowDelegationProxy,
     ReadTotalSupplyFromVE: false,
+  },
+  avalanche: {
+    VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
+      network: 'avalanche',
+    }).VotingEscrowDelegationProxy,
+    ReadTotalSupplyFromVE: false,
+  },
+  zkevm: {
+    VotingEscrowDelegationProxy: new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY).output({
+      network: 'zkevm',
+    }).VotingEscrowDelegationProxy,
+    ReadTotalSupplyFromVE: false,
+  },
+  goerli: {
+    VotingEscrowDelegationProxy: new Task('20220325-ve-delegation', TaskMode.READ_ONLY).output({ network: 'goerli' })
+      .VotingEscrowDelegationProxy,
+    ReadTotalSupplyFromVE: true,
+  },
+  sepolia: {
+    VotingEscrowDelegationProxy: new Task('20220325-ve-delegation', TaskMode.READ_ONLY).output({ network: 'sepolia' })
+      .VotingEscrowDelegationProxy,
+    ReadTotalSupplyFromVE: true,
   },
 };
