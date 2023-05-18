@@ -118,7 +118,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Voting Escrow Remapper                                 | [`20230504-vebal-remapper`](./tasks/20230504-vebal-remapper)                                         |
 | Gauge Registrant V4                                    | [`20230519-gauge-adder-v4`](./tasks/20230519-gauge-adder-v4)                                         |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
-| L2 Gauge Checkpointer                                  | [`20230519-l2-gauge-checkpointer`](./tasks/20230519-l2-gauge-checkpointer)                           |
+| L2 Gauge Checkpointer                                  | [`20230527-l2-gauge-checkpointer`](./tasks/20230527-l2-gauge-checkpointer)                           |
 
 ## Scripts
 
