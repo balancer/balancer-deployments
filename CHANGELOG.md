@@ -23,6 +23,7 @@
 - Deployed `AaveLinearPoolFactoryV5` to all networks.
 - Deployed `GearboxLinearPoolFactoryV2` to Mainnet.
 - Deployed `SiloLinearPoolFactoryV2` to Goerli and Mainnet.
+- Deployed `PolygonZkEVMRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 

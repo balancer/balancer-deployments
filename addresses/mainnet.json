@@ -634,5 +634,13 @@
   "0x6048A8c631Fb7e77EcA533Cf9C29784e482391e7": {
     "task": "20230414-authorizer-wrapper",
     "name": "AuthorizerWithAdaptorValidation"
+  },
+  "0x9bF951848288cCD87d06FaC426150262cD3447De": {
+    "task": "20230526-zkevm-root-gauge-factory",
+    "name": "PolygonZkEVMRootGaugeFactory"
+  },
+  "0x45bF48D996d22afc9BC150DF7FB4d13A49088602": {
+    "task": "20230526-zkevm-root-gauge-factory",
+    "name": "PolygonZkEVMRootGauge"
   }
 }
