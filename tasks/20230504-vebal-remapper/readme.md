@@ -7,5 +7,8 @@ This deployment also contains the `OmniVotingEscrowAdaptor` auxiliary contract, 
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Goerli testnet addresses](./output/goerli.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`OmniVotingEscrowAdaptor` artifact](./artifact/OmniVotingEscrowAdaptor.json)
 - [`VotingEscrowRemapper` artifact](./artifact/VotingEscrowRemapper.json)
