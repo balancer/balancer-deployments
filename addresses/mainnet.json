@@ -635,14 +635,6 @@
     "task": "20230414-authorizer-wrapper",
     "name": "AuthorizerWithAdaptorValidation"
   },
-  "0x9bF951848288cCD87d06FaC426150262cD3447De": {
-    "task": "20230526-zkevm-root-gauge-factory",
-    "name": "PolygonZkEVMRootGaugeFactory"
-  },
-  "0x45bF48D996d22afc9BC150DF7FB4d13A49088602": {
-    "task": "20230526-zkevm-root-gauge-factory",
-    "name": "PolygonZkEVMRootGauge"
-  },
   "0x96484f2aBF5e58b15176dbF1A799627B53F13B6d": {
     "task": "20230504-vebal-remapper",
     "name": "OmniVotingEscrowAdaptor"
@@ -650,5 +642,13 @@
   "0x83E443EF4f9963C77bd860f94500075556668cb8": {
     "task": "20230504-vebal-remapper",
     "name": "VotingEscrowRemapper"
+  },
+  "0x9bF951848288cCD87d06FaC426150262cD3447De": {
+    "task": "20230526-zkevm-root-gauge-factory",
+    "name": "PolygonZkEVMRootGaugeFactory"
+  },
+  "0x45bF48D996d22afc9BC150DF7FB4d13A49088602": {
+    "task": "20230526-zkevm-root-gauge-factory",
+    "name": "PolygonZkEVMRootGauge"
   }
 }
