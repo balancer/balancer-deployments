@@ -490,5 +490,25 @@
         "revokeRolesFromMany(bytes32[],address[])": "0x0033144b33b8042bf633629e4c271cfcf8ef41fce453bbab55bbe8af50fd1f3c"
       }
     }
+  },
+  "20230504-vebal-remapper": {
+    "OmniVotingEscrowAdaptor": {
+      "useAdaptor": false,
+      "actionIds": {
+        "sendUserBalance(address,uint16,address)": "0x9e0138c7503999432f96a07d16070dd82b2d2f4b83ba0d8929345aabae2bdc9d",
+        "setAdapterParams(bytes)": "0x166b7d39605e6c0b90d43774990cf351a53a006b3d9b686a453142de3fbea628",
+        "setOmniVotingEscrow(address)": "0x3ba753a2de5539879f481488cfc216f3fe3397789e5a944d17e61c3fbd569981",
+        "setUseZero(bool)": "0xb5b7827cc778f4b4d8a0c0f40a66b0338ec17825f6f035d25e81906b69b92c69",
+        "setZeroPaymentAddress(address)": "0x80a0ca6da9a96e84e5e55d5e9ba7c848aab6861998f0ae43d507d8f8835cd7b1"
+      }
+    },
+    "VotingEscrowRemapper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "clearNetworkRemapping(address,uint16)": "0x1f7187f86d9ee8e2b87edac1a3891dfd160ec1e204abc8d27b3c5a843c700659",
+        "setNetworkRemapping(address,address,uint16)": "0x72ef4700b259dd2ee174066e36133c7d9d455495b52ea8735aa955bba69ffee1",
+        "setNetworkRemappingManager(address,address)": "0xd2b0db71f202c1fe58ac19654ff20bc1979580e3bde8170f82eb11b3a1f773a0"
+      }
+    }
   }
 }
