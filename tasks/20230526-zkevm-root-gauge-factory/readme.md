@@ -4,4 +4,5 @@ Deployment of the `PolygonZkEVMRootGaugeFactory`, for stakeless gauges that brid
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`PolygonZkEVMRootGaugeFactory` artifact](./artifact/PolygonZkEVMRootGaugeFactory.json)
