@@ -20,7 +20,7 @@ describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
   let daoMultisig: SignerWithAddress;
   let gaugeController: Contract;
 
-  let task: Task;
+  let task: Task, mainnetGaugeFactoryTask: Task;
 
   const LP_TOKEN = '0xbc5F4f9332d8415AAf31180Ab4661c9141CC84E4';
   const DAO_MULTISIG = '0x10a19e7ee7d7f8a52822f6817de8ea18204f2e4f';
@@ -44,6 +44,9 @@ describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
     // At this block we have the authorizer wrapper in place, which is adaptor entrypoint aware.
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
+
+    // We'll need this task later on.
+    mainnetGaugeFactoryTask = new Task('20220822-mainnet-gauge-factory-v2', TaskMode.READ_ONLY, 'mainnet');
   });
 
   context('construction', () => {
@@ -131,8 +134,7 @@ describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
     it('can add gauge to controller', async () => {
       const tx = await factory.create(LP_TOKEN, weightCap);
       const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
-
-      gauge = await task.instanceAt('LiquidityGaugeV5', event.args.gauge);
+      gauge = await mainnetGaugeFactoryTask.instanceAt('LiquidityGaugeV5', event.args.gauge);
 
       await gaugeAdder.connect(admin).addGauge(gauge.address, 'Ethereum');
 
