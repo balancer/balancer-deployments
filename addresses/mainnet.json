@@ -643,6 +643,10 @@
     "task": "20230504-vebal-remapper",
     "name": "VotingEscrowRemapper"
   },
+  "0x5DbAd78818D4c8958EfF2d5b95b28385A22113Cd": {
+    "task": "20230519-gauge-adder-v4",
+    "name": "GaugeAdder"
+  },
   "0x9bF951848288cCD87d06FaC426150262cD3447De": {
     "task": "20230526-zkevm-root-gauge-factory",
     "name": "PolygonZkEVMRootGaugeFactory"
