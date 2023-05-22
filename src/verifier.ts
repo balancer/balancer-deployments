@@ -6,6 +6,8 @@ import { encodeArguments } from '@nomiclabs/hardhat-etherscan/dist/src/ABIEncode
 import { getLibraryLinks, Libraries } from '@nomiclabs/hardhat-etherscan/dist/src/solc/libraries';
 import { chainConfig } from '@nomiclabs/hardhat-etherscan/dist/src/ChainConfig';
 
+import hardhatConfig from '../hardhat.config';
+
 import {
   Bytecode,
   ContractInformation,
@@ -56,7 +58,12 @@ export default class Verifier {
     const response = await this.verify(task, name, address, constructorArguments, libraries);
 
     if (response.isVerificationSuccess()) {
-      const etherscanEndpoints = await getEtherscanEndpoints(this.network.provider, this.network.name, chainConfig, []);
+      const etherscanEndpoints = await getEtherscanEndpoints(
+        this.network.provider,
+        this.network.name,
+        chainConfig,
+        hardhatConfig.etherscan.customChains ?? []
+      );
 
       const contractURL = new URL(`/address/${address}#code`, etherscanEndpoints.urls.browserURL);
       return contractURL.toString();
@@ -102,7 +109,12 @@ export default class Verifier {
 
     const solcFullVersion = await getLongVersion(contractInformation.solcVersion);
 
-    const etherscanEndpoints = await getEtherscanEndpoints(this.network.provider, this.network.name, chainConfig, []);
+    const etherscanEndpoints = await getEtherscanEndpoints(
+      this.network.provider,
+      this.network.name,
+      chainConfig,
+      hardhatConfig.etherscan.customChains ?? []
+    );
 
     const verificationStatus = await this.attemptVerification(
       etherscanEndpoints,
