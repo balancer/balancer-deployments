@@ -20,7 +20,7 @@ export type TimelockAuthorizerDeploymentInputType = {
   Authorizer: Task;
   AuthorizerAdaptorEntrypoint: Task;
   networks: string[];
-  goerli: any;
+  sepolia: any;
   [key: string]: any; // index signature
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -28,8 +28,8 @@ export type TimelockAuthorizerDeploymentInputType = {
 const input: TimelockAuthorizerDeploymentInputType = {
   Authorizer,
   AuthorizerAdaptorEntrypoint,
-  networks: ['goerli'],
-  goerli: require('./input/goerli.ts'),
+  networks: ['sepolia'],
+  sepolia: require('./input/sepolia.ts'),
 };
 
 export default input;
