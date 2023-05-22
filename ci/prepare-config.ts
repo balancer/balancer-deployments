@@ -43,7 +43,8 @@ if (process.env.CI) {
     },
     "defaultConfig": {
       "gasPrice": "auto",
-      "gasMultiplier": 1
+      "gasMultiplier": 1,
+      "accounts": []
     }
   }`;
 
