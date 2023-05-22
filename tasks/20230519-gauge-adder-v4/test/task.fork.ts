@@ -116,6 +116,14 @@ describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
       expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
     });
 
+    it('returns the added type correctly', async () => {
+      expect(await gaugeAdder.getGaugeTypesCount()).to.eq(1);
+      expect(await gaugeAdder.getGaugeTypes()).to.deep.eq(['Ethereum']);
+      expect(await gaugeAdder.getGaugeTypeAtIndex(0)).to.eq('Ethereum');
+      expect(await gaugeAdder.isValidGaugeType('Ethereum')).to.be.true;
+      expect(await gaugeAdder.isValidGaugeType('ZkSync')).to.be.false;
+    });
+
     it('can add factories for a gauge type', async () => {
       const tx = await gaugeAdder.connect(admin).setGaugeFactory(factory.address, 'Ethereum'); // Ethereum is type 2
       const receipt = await tx.wait();
@@ -131,13 +139,18 @@ describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
       expect(decodedArgs.gaugeFactory).to.be.eq(factory.address);
     });
 
-    it('can add gauge to controller', async () => {
+    it('returns added factory correctly', async () => {
+      expect(await gaugeAdder.getFactoryForGaugeType('Ethereum')).to.eq(factory.address);
+    });
+
+    it('can add gauge to adder and controller', async () => {
       const tx = await factory.create(LP_TOKEN, weightCap);
       const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
       gauge = await mainnetGaugeFactoryTask.instanceAt('LiquidityGaugeV5', event.args.gauge);
 
       await gaugeAdder.connect(admin).addGauge(gauge.address, 'Ethereum');
 
+      expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Ethereum')).to.be.true;
       expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
     });
   });
