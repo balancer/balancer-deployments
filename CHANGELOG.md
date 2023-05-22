@@ -23,6 +23,8 @@
 - Deployed `AaveLinearPoolFactoryV5` to all networks.
 - Deployed `GearboxLinearPoolFactoryV2` to Mainnet.
 - Deployed `SiloLinearPoolFactoryV2` to Goerli and Mainnet.
+- Deployed `PolygonZkEVMRootGaugeFactory` to Mainnet.
+- Deployed `VotingEscrowRemapper` and `OmniVotingEscrowAdaptor` to Goerli, Sepolia and Mainnet.
 
 ### Deprecations
 
@@ -35,12 +37,13 @@
 - Deprecated `20230213-gearbox-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
 
-## 3.2.0 (2023-02-24)
-
 ### New Networks
 
 - Deployed all L2 contracts to Avalanche.
 - Deployed all contracts on Goerli to Sepolia.
+- Deployed all L2 contracts to Polygon zkEVM.
+
+## 3.2.0 (2023-02-24)
 
 ### New Deployments
 

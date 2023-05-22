@@ -1196,7 +1196,7 @@
     },
     "YearnLinearPool": {
       "useAdaptor": false,
-       "factoryOutput": "0xAC5B4EF7eDe2F2843a704E96dcAA637F4BA3Dc3f",
+      "factoryOutput": "0xAC5B4EF7eDe2F2843a704E96dcAA637F4BA3Dc3f",
       "actionIds": {
         "disableRecoveryMode()": "0x591a17eb2cfcfb9c46bc914beabe5e72b148a01206bc779c16d87fb1ed84ba82",
         "enableRecoveryMode()": "0x256eccbca05f769e9349017e92e50ee5d1801d9afbbaf9f6986f61d8ccfb6cb0",
@@ -1293,6 +1293,44 @@
       "actionIds": {
         "create(string,string,address,address,uint256,uint256,address,uint256,bytes32)": "0xaf947869f4f3a0e0363abd32db76969213326c9b60ffff5a505902700c42ffc4",
         "disable()": "0xcc2b10c657509434d44ea360695df848ccc5e8a27438dd62f0ae87b147224965"
+      }
+    }
+  },
+  "20230526-zkevm-root-gauge-factory": {
+    "PolygonZkEVMRootGaugeFactory": {
+      "useAdaptor": true,
+      "actionIds": {
+        "create(address,uint256)": "0x817de1d55149f9976836222b163cd53ade05fea9f5ade499b4572e14d3561d6e"
+      }
+    },
+    "PolygonZkEVMRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256)": "0xa7eb8749bae4020b0007b643972b60456da2b6b92fa6b583c7277fc2dea05a39",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
+  },
+  "20230504-vebal-remapper": {
+    "OmniVotingEscrowAdaptor": {
+      "useAdaptor": false,
+      "actionIds": {
+        "sendUserBalance(address,uint16,address)": "0xe6bd930b919474f80aa7e6ef7b6023d43fd49eeac1fd6665525383ced0441c95",
+        "setAdapterParams(bytes)": "0xe328d2657bafde36e59625f80f41c74de687ccee4942f370e85b0366c831967d",
+        "setOmniVotingEscrow(address)": "0xaecef2a08acfa6437c6cad5d0aad2bd0172fec6050bd95d13aa5450c25aaa391",
+        "setUseZero(bool)": "0xcfcc23f0d0144b21618e0d1938fb0254a665ca4f35591323ae915c0a1d00e80f",
+        "setZeroPaymentAddress(address)": "0x2793e2362f816c53d200c46eaac0844c04ef9aec5016105fbe2efd65a802be29"
+      }
+    },
+    "VotingEscrowRemapper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "clearNetworkRemapping(address,uint16)": "0x70d896d8af9031c99d4aa3e6324b33b163bd79a55200b048ef2656f29aad738c",
+        "setNetworkRemapping(address,address,uint16)": "0x020b90ada54354853c5e3fc54dc3af0fc9b0cd545f312b800fd0fbde2e47a14d",
+        "setNetworkRemappingManager(address,address)": "0x6bb341db03eede206e544c654a59ef89eea83bc65fada2cfeeaf18c5c0f76ac0"
       }
     }
   }
