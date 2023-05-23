@@ -64,8 +64,10 @@ export function saveContractDeploymentAddresses(tasks: Task[], network: string):
  *       address: <deployment-address>
  *     },
  *     (...)
- *   ]
- * }
+ *   ],
+ *   status: <ACTIVE | DEPRECATED | SCRIPT>
+ * },
+ * (...)
  */
 export function buildContractDeploymentAddressesEntries(tasks: Task[]): object {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
