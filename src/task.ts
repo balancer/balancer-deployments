@@ -24,7 +24,6 @@ import {
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from './network';
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
-import { task } from 'hardhat/config';
 
 const TASKS_DIRECTORY = path.resolve(__dirname, '../tasks');
 const DEPRECATED_DIRECTORY = path.join(TASKS_DIRECTORY, 'deprecated');
