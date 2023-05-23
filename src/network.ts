@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Task from './task';
+import Task, { TaskStatus } from './task';
 
 import { Network } from './types';
 
@@ -76,10 +76,16 @@ export function buildContractDeploymentAddressesEntries(tasks: Task[]): object {
       .map(([name, address]) => [{ name, address }])
       .flat();
 
+    // Some tasks do not have outputs for every network, so we just skip them.
+    if (taskEntries.length == 0) {
+      continue;
+    }
+
     allTaskEntries = {
       ...allTaskEntries,
       [task.id]: {
         contracts: [...taskEntries],
+        status: TaskStatus[task.getStatus()],
       },
     };
   }

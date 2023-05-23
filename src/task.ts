@@ -24,6 +24,7 @@ import {
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from './network';
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
+import { task } from 'hardhat/config';
 
 const TASKS_DIRECTORY = path.resolve(__dirname, '../tasks');
 const DEPRECATED_DIRECTORY = path.join(TASKS_DIRECTORY, 'deprecated');
@@ -34,6 +35,12 @@ export enum TaskMode {
   TEST, // Deploys but saves to test output
   CHECK, // Checks past deployments on deploy
   READ_ONLY, // Fails on deploy
+}
+
+export enum TaskStatus {
+  ACTIVE,
+  DEPRECATED,
+  SCRIPT,
 }
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -299,6 +306,19 @@ export default class Task {
     } else if (this.mode === TaskMode.LIVE || this.mode === TaskMode.TEST) {
       this._save(output);
     }
+  }
+
+  getStatus(): TaskStatus {
+    const taskDirectory = this.dir();
+    if (taskDirectory === path.join(TASKS_DIRECTORY, this.id)) {
+      return TaskStatus.ACTIVE;
+    } else if (taskDirectory === path.join(DEPRECATED_DIRECTORY, this.id)) {
+      return TaskStatus.DEPRECATED;
+    } else if (taskDirectory === path.join(SCRIPTS_DIRECTORY, this.id)) {
+      return TaskStatus.SCRIPT;
+    }
+
+    throw new Error('Unknown task status');
   }
 
   private _checkManuallySavedArtifacts(output: Output) {
