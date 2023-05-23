@@ -58,6 +58,19 @@ describeForkTest('GaugeAdderMigrationCoordinator-V3-V4', 'mainnet', 17322200, fu
     expect(await coordinator.getCurrentStage()).to.equal(1);
   });
 
+  it('gauge adder has the expected types set up', async () => {
+    const gaugeTypes = await newGaugeAdder.getGaugeTypes();
+    expect(gaugeTypes).to.be.deep.eq([
+      'Ethereum',
+      'Polygon',
+      'Arbitrum',
+      'Optimism',
+      'Gnosis',
+      'PolygonZkEvm',
+      'ZkSync',
+    ]);
+  });
+
   it('gauge adder has the expected factories set up', async () => {
     expect(await newGaugeAdder.getFactoryForGaugeType('Ethereum')).to.equal(task.input().LiquidityGaugeFactory);
     expect(await newGaugeAdder.getFactoryForGaugeType('Polygon')).to.equal(task.input().PolygonRootGaugeFactory);
@@ -83,11 +96,23 @@ describeForkTest('GaugeAdderMigrationCoordinator-V3-V4', 'mainnet', 17322200, fu
   it('grants permissions to the multisig to add gauges of existing types on the new GaugeAdder', async () => {
     const multisig = task.input().LiquidityMiningMultisig;
 
-    const activeAddGaugeFunctions = ['addGauge(address,string memory)'];
-    for (const addGaugeFunction of activeAddGaugeFunctions) {
-      const permission = await actionId(newGaugeAdder, addGaugeFunction);
-      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.address)).to.be.true;
-    }
+    const permission = await actionId(newGaugeAdder, 'addGauge');
+    expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.address)).to.be.true;
+  });
+
+  it('does not hold permission to add gauge types', async () => {
+    const permission = await actionId(newGaugeAdder, 'addGaugeType');
+    expect(await authorizer.hasRole(permission, coordinator.address)).to.equal(false);
+  });
+
+  it('does not hold permission to set gauge factories', async () => {
+    const permission = await actionId(newGaugeAdder, 'setGaugeFactory');
+    expect(await authorizer.hasRole(permission, coordinator.address)).to.equal(false);
+  });
+
+  it('does not hold permission to add gauges', async () => {
+    const permission = await actionId(newGaugeAdder, 'addGauge');
+    expect(await authorizer.hasRole(permission, coordinator.address)).to.equal(false);
   });
 
   it('renounces the admin role', async () => {
