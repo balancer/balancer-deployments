@@ -55,18 +55,32 @@ export function saveContractDeploymentAddresses(tasks: Task[], network: string):
 }
 
 /**
- * Builds an object that maps deployment addresses to {task ID, contract name} for all given tasks.
+ * Builds an object that maps task IDs to deployment info for all given tasks.
+ * The resulting format reads as follows:
+ * <task-id>: {
+ *   contracts: [
+ *     {
+ *       name: <contract-name>,
+ *       address: <deployment-address>
+ *     },
+ *     (...)
+ *   ]
+ * }
  */
 export function buildContractDeploymentAddressesEntries(tasks: Task[]): object {
-  let allTaskEntries = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let allTaskEntries = {} as any;
 
   for (const task of tasks) {
-    const taskEntries = Object.fromEntries(
-      Object.entries(task.output({ ensure: false })).map(([name, address]) => [address, { task: task.id, name }])
-    );
+    const taskEntries = Object.entries(task.output({ ensure: false }))
+      .map(([name, address]) => [{ name, address }])
+      .flat();
+
     allTaskEntries = {
       ...allTaskEntries,
-      ...taskEntries,
+      [task.id]: {
+        contracts: [...taskEntries],
+      },
     };
   }
 
