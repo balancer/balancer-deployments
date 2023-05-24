@@ -13,10 +13,10 @@ import { range } from 'lodash';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { actionId } from '@helpers/models/misc/actions';
 
-import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode, deploy } from '@src';
+import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
+describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let daoMultisig: SignerWithAddress;
   let factory: Contract, gauge: Contract;
@@ -40,7 +40,7 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
 
   const weightCap = fp(0.001);
 
-  const ETHEREUM_CHAIN_ID = 1;
+  const ETHEREUM_HARDHAT_CHAIN_ID = 31337;
   const AVALANCHE_CHAIN_ID = 43114;
 
   const MIN_BRIDGE_LIMIT = fp(1.459854);
@@ -180,45 +180,46 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
   });
 
   before('grant permissions on gauge adder', async () => {
-    await authorizer
-      .connect(daoMultisig)
-      .grantRole(await adaptorEntrypoint.getActionId(gaugeAdder.interface.getSighash('addGaugeType')), admin.address);
-
-    await authorizer
-      .connect(daoMultisig)
-      .grantRole(
-        await adaptorEntrypoint.getActionId(gaugeAdder.interface.getSighash('setGaugeFactory')),
-        admin.address
-      );
-
-    await authorizer
-      .connect(daoMultisig)
-      .grantRole(await adaptorEntrypoint.getActionId(gaugeAdder.interface.getSighash('addGauge')), admin.address);
-
+    const addGaugeTypeAction = await actionId(gaugeAdder, 'addGaugeType');
+    const setFactoryAction = await actionId(gaugeAdder, 'setGaugeFactory');
+    const addGaugeAction = await actionId(gaugeAdder, 'addGauge');
     const gaugeControllerAddGaugeAction = await actionId(
       adaptorEntrypoint,
       'add_gauge(address,int128)',
       gaugeController.interface
     );
 
+    await authorizer.connect(daoMultisig).grantRole(addGaugeTypeAction, admin.address);
+    await authorizer.connect(daoMultisig).grantRole(setFactoryAction, admin.address);
+    await authorizer.connect(daoMultisig).grantRole(addGaugeAction, admin.address);
     await authorizer.connect(daoMultisig).grantRole(gaugeControllerAddGaugeAction, gaugeAdder.address);
   });
 
-  it('works', () => {
-    expect(true).to.be.true;
-  })
-
   it('add gauge to gauge controller', async () => {
-    await gaugeAdder.connect(admin).addGaugeType('Avalanche');
+    expect(await gaugeAdder.getGaugeTypesCount()).to.eq(0);
+
+    const tx = await gaugeAdder.connect(admin).addGaugeType('Avalanche');
+    const receipt = await tx.wait();
+
+    // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
+    // One event in receipt, named `GaugeTypeAdded`
+    expect(receipt.events.length).to.be.eq(1);
+    const event = receipt.events[0];
+    expect(event.event).to.be.eq('GaugeTypeAdded');
+
+    // Contains expected `gaugeType` and `gaugeFactory`.
+    const decodedArgs = event.decode(event.data);
+    expect(decodedArgs.gaugeType).to.be.eq('Avalanche');
+
     await gaugeAdder.connect(admin).setGaugeFactory(factory.address, 'Avalanche');
     await gaugeAdder.connect(admin).addGauge(gauge.address, 'Avalanche');
 
     expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Avalanche')).to.be.true;
 
-    /*expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;*/
+    expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
   });
 
-  it.skip('vote for gauge', async () => {
+  it('vote for gauge', async () => {
     expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
@@ -235,7 +236,7 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
 
-  it.skip('mint & bridge tokens', async () => {
+  it('mint & bridge tokens', async () => {
     // The gauge has votes for this week, and it will mint the first batch of tokens. We store the current gauge
     // relative weight, as it will change as time goes by due to vote decay.
     const firstMintWeekTimestamp = await currentWeekTimestamp();
@@ -283,12 +284,12 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
       from: gauge.address,
       to: recipient.address,
       amount: actualEmissions,
-      fromChainID: ETHEREUM_CHAIN_ID,
+      fromChainID: ETHEREUM_HARDHAT_CHAIN_ID,
       toChainID: AVALANCHE_CHAIN_ID,
     });
   });
 
-  it.skip('mint multiple weeks', async () => {
+  it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
     await gaugeController.checkpoint_gauge(gauge.address);
@@ -341,7 +342,7 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17268518, function () {
       token: ANY_BAL,
       from: gauge.address,
       to: recipient.address,
-      fromChainID: ETHEREUM_CHAIN_ID,
+      fromChainID: ETHEREUM_HARDHAT_CHAIN_ID,
       toChainID: AVALANCHE_CHAIN_ID,
     });
 
