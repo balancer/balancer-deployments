@@ -25,6 +25,7 @@
 - Deployed `SiloLinearPoolFactoryV2` to Goerli and Mainnet.
 - Deployed `PolygonZkEVMRootGaugeFactory` to Mainnet.
 - Deployed `VotingEscrowRemapper` and `OmniVotingEscrowAdaptor` to Goerli, Sepolia and Mainnet.
+- Deployed `GaugeAdder` V4 to Goerli, Sepolia and Mainnet.
 
 ### Deprecations
 
