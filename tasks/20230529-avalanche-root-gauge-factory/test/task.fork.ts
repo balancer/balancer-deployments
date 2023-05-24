@@ -99,7 +99,7 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
     bal80weth20Pool = await weightedPoolTask.instanceAt('WeightedPool2Tokens', VEBAL_POOL);
   });
 
-  describe('AvalancheRootGaugeFactory', () => {
+  describe('Factory bridge limits', () => {
     const randomInt = (max: number) => Math.floor(Math.random() * Math.floor(max));
 
     it('stores the original bridge limits', async () => {
@@ -217,6 +217,18 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
     expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Avalanche')).to.be.true;
 
     expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
+  });
+
+  it('stores the AnySwap wrapper', async () => {
+    expect(await gauge.getAnyBAL()).to.eq(ANY_BAL);
+  });
+
+  it('stores the Multichain Router', async () => {
+    expect((await gauge.getMultichainRouter()).toLowerCase()).to.eq(task.input().MultichainRouter.toLowerCase());
+  });
+
+  it('stores the recipient', async () => {
+    expect(await gauge.getRecipient()).to.eq(recipient.address);
   });
 
   it('vote for gauge', async () => {
