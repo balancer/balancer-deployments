@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Task from './task';
+import Task, { TaskStatus } from './task';
 
 import { Network } from './types';
 
@@ -55,18 +55,40 @@ export function saveContractDeploymentAddresses(tasks: Task[], network: string):
 }
 
 /**
- * Builds an object that maps deployment addresses to {task ID, contract name} for all given tasks.
+ * Builds an object that maps task IDs to deployment info for all given tasks.
+ * The resulting format reads as follows:
+ * <task-id>: {
+ *   contracts: [
+ *     {
+ *       name: <contract-name>,
+ *       address: <deployment-address>
+ *     },
+ *     (...)
+ *   ],
+ *   status: <ACTIVE | DEPRECATED | SCRIPT>
+ * },
+ * (...)
  */
 export function buildContractDeploymentAddressesEntries(tasks: Task[]): object {
-  let allTaskEntries = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let allTaskEntries = {} as any;
 
   for (const task of tasks) {
-    const taskEntries = Object.fromEntries(
-      Object.entries(task.output({ ensure: false })).map(([name, address]) => [address, { task: task.id, name }])
-    );
+    const taskEntries = Object.entries(task.output({ ensure: false }))
+      .map(([name, address]) => [{ name, address }])
+      .flat();
+
+    // Some tasks do not have outputs for every network, so we just skip them.
+    if (taskEntries.length == 0) {
+      continue;
+    }
+
     allTaskEntries = {
       ...allTaskEntries,
-      ...taskEntries,
+      [task.id]: {
+        contracts: [...taskEntries],
+        status: TaskStatus[task.getStatus()],
+      },
     };
   }
 
