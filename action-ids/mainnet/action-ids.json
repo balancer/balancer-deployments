@@ -1343,5 +1343,18 @@
         "setGaugeFactory(address,string)": "0x3f44776af02a9227991da37715b44e45db40735e216b3ab33144859bb6737166"
       }
     }
+  },
+  "20230527-l2-gauge-checkpointer": {
+    "L2GaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xf04824af360d2eaf35009710de9dd8111fccade72de8f1033342f96a53fee5dc",
+        "addGaugesWithVerifiedType(string,address[])": "0x1b6c47bfcba58391eb7c8e74ea3c377e0d6c62825a6184d59c4478e225110fd4",
+        "checkpointGaugesAboveRelativeWeight(uint256)": "0x54a75b87402f413febdc962618c1897225cd2aabf1b5b159e72187b61d28b419",
+        "checkpointGaugesOfTypeAboveRelativeWeight(string,uint256)": "0x6379ef621e9360d66c706ba7cf1ca6ba747313347d7f11586ed2510ab0187ff1",
+        "checkpointSingleGauge(string,address)": "0x573e195a87af10f159d9c6a9f450549f8e57433d9ba76a8bc5c109c81c74fb13",
+        "removeGauges(string,address[])": "0x55566cb4e0ccd22ac860f52d3981d1999e5c5abf014314ef837b5b6da7b25a2e"
+      }
+    }
   }
 }

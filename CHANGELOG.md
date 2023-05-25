@@ -27,6 +27,7 @@
 - Deployed `VotingEscrowRemapper` and `OmniVotingEscrowAdaptor` to Goerli, Sepolia and Mainnet.
 - Deployed `GaugeAdder` V4 to Goerli, Sepolia and Mainnet.
 - Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism and Gnosis.
+- Deployed `L2GaugeCheckpointer` to Mainnet.
 
 ### Deprecations
 
