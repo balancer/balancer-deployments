@@ -7,4 +7,5 @@ V3 has since been deprecated.
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`GaugeAdderMigrationCoordinator` artifact](./artifact/GaugeAdderMigrationCoordinator.json)

@@ -1093,6 +1093,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20230519-gauge-adder-migration-v3-to-v4": {
+    "contracts": [
+      {
+        "name": "GaugeAdderMigrationCoordinator",
+        "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
+      }
+    ],
+    "status": "SCRIPT"
+  },
   "20230519-gauge-adder-v4": {
     "contracts": [
       {
