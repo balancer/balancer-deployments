@@ -547,15 +547,6 @@
     ],
     "status": "DEPRECATED"
   },
-  "20221205-l2-gauge-checkpointer": {
-    "contracts": [
-      {
-        "name": "L2GaugeCheckpointer",
-        "address": "0xf23b4DB826DbA14c0e857029dfF076b1c0264843"
-      }
-    ],
-    "status": "ACTIVE"
-  },
   "20221205-veboost-v2": {
     "contracts": [
       {
