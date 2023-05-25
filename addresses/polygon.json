@@ -656,5 +656,14 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230525-l2-veboost-v2": {
+    "contracts": [
+      {
+        "name": "VeBoostV2",
+        "address": "0xD961E30156C2E0D0d925A0De45f931CB7815e970"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
