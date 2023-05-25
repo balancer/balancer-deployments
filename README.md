@@ -94,7 +94,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Polygon Root Gauges V2, for veBAL voting               | [`20220823-polygon-root-gauge-factory-v2`](./tasks/20220823-polygon-root-gauge-factory-v2)           |
 | Pool Recovery Helper                                   | [`20221123-pool-recovery-helper`](./tasks/20221123-pool-recovery-helper)                             |
 | Authorizer Adaptor Entrypoint                          | [`20221124-authorizer-adaptor-entrypoint`](./tasks/20221124-authorizer-adaptor-entrypoint)           |
-| L2 Gauge Checkpointer                                  | [`20221205-l2-gauge-checkpointer`](./tasks/20221205-l2-gauge-checkpointer)                           |
 | VeBoost V2                                             | [`20221205-veboost-v2`](./tasks/20221205-veboost-v2)                                                 |
 | Linear Pools for Euler Tokens                          | [`20230208-euler-linear-pool`](./tasks/20230208-euler-linear-pool)                                   |
 | Single Recipient Stakeless Gauges V2                   | [`20230215-single-recipient-gauge-factory`](./tasks/20230215-single-recipient-gauge-factory-v2)      |
@@ -120,6 +119,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Gauge Registrant V4                                    | [`20230519-gauge-adder-v4`](./tasks/20230519-gauge-adder-v4)                                         |
 | L2 VeBoost V2                                          | [`20230525-l2-veboost-v2`](./tasks/20230525-l2-veboost-v2)                                           |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
+| L2 Gauge Checkpointer                                  | [`20230527-l2-gauge-checkpointer`](./tasks/20230527-l2-gauge-checkpointer)                           |
 
 ## Scripts
 
