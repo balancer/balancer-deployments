@@ -8,4 +8,8 @@ The artifact is the same as in the [20221205-veboost-v2 task](../20221205-veboos
 
 ## Useful Files
 
+- [Polygon mainnet addresses](./output/polygon.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
 - [`VeBoostV2` artifact](./artifact/VeBoostV2.json)
