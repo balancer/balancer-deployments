@@ -3,19 +3,19 @@ export type L2VeBoostV2Deployment = {
 };
 
 export default {
-  // https://github.com/LayerZero-Labs/lz_gauges/blob/main/deployments/polygon/OmniVotingEscrowChild.json#LL2C15-L2C57
+  // https://polygonscan.com/address/0xE241C6e48CA045C7f631600a0f1403b2bFea05ad
   polygon: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
-  // https://github.com/LayerZero-Labs/lz_gauges/blob/main/deployments/arbitrum/OmniVotingEscrowChild.json#LL2C15-L2C57
+  // https://arbiscan.io/address/0xe241c6e48ca045c7f631600a0f1403b2bfea05ad
   arbitrum: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
-  // https://github.com/LayerZero-Labs/lz_gauges/blob/main/deployments/optimism/OmniVotingEscrowChild.json#LL2C15-L2C57
+  // https://optimistic.etherscan.io/address/0xe241c6e48ca045c7f631600a0f1403b2bfea05ad
   optimism: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
-  // https://github.com/LayerZero-Labs/lz_gauges/blob/main/deployments/gnosis/OmniVotingEscrowChild.json#LL2C15-L2C57
+  // https://gnosisscan.io/address/0xe241c6e48ca045c7f631600a0f1403b2bfea05ad
   gnosis: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
