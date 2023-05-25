@@ -123,7 +123,7 @@ describeForkTest('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
     adaptorEntrypoint = await adaptorEntrypointTask.deployedInstance('AuthorizerAdaptorEntrypoint');
   });
 
-  // At this block, the adder ocordinator has been deployed but not executed.
+  // At this block, the adder coordinator has been deployed but not executed.
   // Then, we can fetch the deployed contract and execute it here to setup the correct types in the adder, which are
   // necessary for the checkpointer to work correctly.
   before('run adder migrator coordinator', async () => {
@@ -194,7 +194,7 @@ describeForkTest('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
     );
   });
 
-  before('grant checkpoint permission to fees gauge checkpointer', async () => {
+  before('grant checkpoint permission to gauge checkpointer', async () => {
     // Any gauge works; we just need the interface.
     const gauge = await task.instanceAt('IStakelessGauge', gauges.get(GaugeType.Polygon)![0].address);
 
