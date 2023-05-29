@@ -5,7 +5,7 @@ import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, imperso
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { FP_ONE, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
-import { advanceTime, MONTH } from '@helpers/time';
+import { MONTH } from '@helpers/time';
 import { actionId } from '@helpers/models/misc/actions';
 
 describeForkTest('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function () {

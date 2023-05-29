@@ -29,6 +29,7 @@ contract MockL2VotingEscrow is IERC20 {
         return _balances[user];
     }
 
+    // solhint-disable-next-line func-name-mixedcase
     function adjusted_balance_of(address user) external view returns (uint256) {
         return _balances[user];
     }
