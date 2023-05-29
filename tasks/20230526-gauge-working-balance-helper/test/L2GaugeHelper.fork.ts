@@ -87,7 +87,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function (
       expect(await workingBalanceHelper.readsTotalSupplyFromVE()).to.be.false;
     });
   });
-  
+
   context('with no veBAL', () => {
     it('projected balance should equal current', async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
@@ -144,7 +144,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function (
       expect(projectedWorkingBalance).to.be.gt(currentWorkingBalance);
     });
 
-    it('projected ratio should greater than current', async () => {
+    it('projected ratio should be greater than current', async () => {
       const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
         gauge.address,
         veBALHolder.address
