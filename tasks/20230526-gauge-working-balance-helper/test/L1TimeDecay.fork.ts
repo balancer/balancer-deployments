@@ -36,20 +36,6 @@ describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, 
     workingBalanceHelper = await task.deployedInstance('GaugeWorkingBalanceHelper');
   });
 
-  describe('getters', () => {
-    it('stores the veDelegationProxy', async () => {
-      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.address);
-    });
-
-    it('stores the votingEscrow', async () => {
-      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.address);
-    });
-
-    it('indicates where to read supply from', async () => {
-      expect(await workingBalanceHelper.readsTotalSupplyFromVE()).to.be.true;
-    });
-  });
-
   before('setup accounts', async () => {
     [, veBALHolder, other] = await getSigners();
 
@@ -113,6 +99,20 @@ describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, 
     await gauge.connect(other)['deposit(uint256)'](stakeAmount);
   });
 
+  describe('getters', () => {
+    it('stores the veDelegationProxy', async () => {
+      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.address);
+    });
+
+    it('stores the votingEscrow', async () => {
+      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.address);
+    });
+
+    it('indicates where to read supply from', async () => {
+      expect(await workingBalanceHelper.readsTotalSupplyFromVE()).to.be.true;
+    });
+  });
+  
   it('projected balance should equal current', async () => {
     const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
       gauge.address,
