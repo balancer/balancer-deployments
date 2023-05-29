@@ -644,15 +644,6 @@
     ],
     "status": "DEPRECATED"
   },
-  "20221205-l2-gauge-checkpointer": {
-    "contracts": [
-      {
-        "name": "L2GaugeCheckpointer",
-        "address": "0xf23b4DB826DbA14c0e857029dfF076b1c0264843"
-      }
-    ],
-    "status": "ACTIVE"
-  },
   "20221205-veboost-v2": {
     "contracts": [
       {
@@ -1093,6 +1084,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20230519-gauge-adder-migration-v3-to-v4": {
+    "contracts": [
+      {
+        "name": "GaugeAdderMigrationCoordinator",
+        "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
+      }
+    ],
+    "status": "SCRIPT"
+  },
   "20230519-gauge-adder-v4": {
     "contracts": [
       {
@@ -1111,6 +1111,15 @@
       {
         "name": "PolygonZkEVMRootGauge",
         "address": "0x45bF48D996d22afc9BC150DF7FB4d13A49088602"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230527-l2-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "L2GaugeCheckpointer",
+        "address": "0x343688C5cB92115a52cA485af7f62B4B7A2e9CcC"
       }
     ],
     "status": "ACTIVE"
