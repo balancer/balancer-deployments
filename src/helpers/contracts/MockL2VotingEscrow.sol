@@ -29,6 +29,10 @@ contract MockL2VotingEscrow is IERC20 {
         return _balances[user];
     }
 
+    function adjusted_balance_of(address user) external view returns (uint256) {
+        return _balances[user];
+    }
+
     function allowance(address, address user) external view override returns (uint256) {
         return _balances[user];
     }
@@ -43,7 +47,8 @@ contract MockL2VotingEscrow is IERC20 {
 
     // solhint-disable-next-line func-name-mixedcase
     function create_lock(uint256 value, uint256) external {
-        _balances[msg.sender] = value;
+        // Note that we don't do any time decay here
+        _balances[msg.sender] += value;
         _totalSupply += value;
     }
 
