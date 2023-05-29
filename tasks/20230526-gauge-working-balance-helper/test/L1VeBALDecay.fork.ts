@@ -112,7 +112,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, 
       expect(await workingBalanceHelper.readsTotalSupplyFromVE()).to.be.true;
     });
   });
-  
+
   it('projected balance should equal current', async () => {
     const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
       gauge.address,
@@ -159,7 +159,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, 
       await votingEscrow.connect(other).create_lock(otherBalance, currentTime.add(LOCK_PERIOD));
     });
 
-    it('veBAL decay affects projected balances', async () => {
+    it('veBAL share size affects projected balances', async () => {
       const [, projectedBalanceBefore] = await workingBalanceHelper.getWorkingBalances(gauge.address, other.address);
       const [, projectedRatioBefore] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
         gauge.address,
@@ -169,8 +169,8 @@ describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, 
       await gauge.connect(other).user_checkpoint(other.address);
       await workingBalanceHelper.getWorkingBalances(gauge.address, other.address);
 
+      // Dilute other's share
       await votingEscrow.connect(veBALHolder).create_lock(whaleBalance, (await currentTimestamp()).add(LOCK_PERIOD));
-      await advanceTime(WEEK);
 
       const [currentBalanceAfter, projectedBalanceAfter] = await workingBalanceHelper.getWorkingBalances(
         gauge.address,
