@@ -8,7 +8,7 @@ import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, currentTimestamp, advanceTime } from '@helpers/time';
 
-describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function () {
+describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;
@@ -94,7 +94,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
       expect(await workingBalanceHelper.readsTotalSupplyFromVE()).to.be.true;
     });
   });
-  
+
   context('with no veBAL', () => {
     it('projected balance should equal current', async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(

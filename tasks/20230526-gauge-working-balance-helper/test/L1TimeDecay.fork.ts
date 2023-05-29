@@ -9,7 +9,7 @@ import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, WEEK, advanceTime, currentTimestamp } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17258776, function () {
+describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;
