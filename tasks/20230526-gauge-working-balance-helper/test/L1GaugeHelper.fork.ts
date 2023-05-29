@@ -87,20 +87,19 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
     lpToken = await instanceAt('IERC20', LP_TOKEN);
   });
 
-  context('with no veBAL', () => {
+  before('stake in gauge', async () => {
     const stakeAmount = fp(100);
+    await lpToken.connect(lpTokenHolder).transfer(veBALHolder.address, stakeAmount);
+    await lpToken.connect(lpTokenHolder).transfer(other.address, stakeAmount);
 
-    before('stake in gauge', async () => {
-      await lpToken.connect(lpTokenHolder).transfer(veBALHolder.address, stakeAmount);
-      await lpToken.connect(lpTokenHolder).transfer(other.address, stakeAmount);
+    await lpToken.connect(veBALHolder).approve(gauge.address, MAX_UINT256);
+    await lpToken.connect(other).approve(gauge.address, MAX_UINT256);
 
-      await lpToken.connect(veBALHolder).approve(gauge.address, MAX_UINT256);
-      await lpToken.connect(other).approve(gauge.address, MAX_UINT256);
+    await gauge.connect(veBALHolder)['deposit(uint256)'](stakeAmount);
+    await gauge.connect(other)['deposit(uint256)'](stakeAmount);
+  });
 
-      await gauge.connect(veBALHolder)['deposit(uint256)'](stakeAmount);
-      await gauge.connect(other)['deposit(uint256)'](stakeAmount);
-    });
-
+  context('with no veBAL', () => {
     it('projected balance should equal current', async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
         gauge.address,
