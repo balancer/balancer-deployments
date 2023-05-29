@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { fp, fpMul, fromFp } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
-import { MONTH, currentTimestamp } from '@helpers/time';
+import { MONTH, currentTimestamp, advanceTime } from '@helpers/time';
 
 describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function () {
   let workingBalanceHelper: Contract;
@@ -113,10 +113,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
   });
 
   context('with veBAL', () => {
-    const TOKENLESS_PRODUCTION = 0.4;
-    const MAX_BALANCE_RATIO = 1 / TOKENLESS_PRODUCTION;
-
-    before('create veBAL whale', async () => {
+    before('create veBAL holder', async () => {
       const [poolAddress] = await vault.getPool(VEBAL_POOL_ID);
 
       const bal80weth20Pool = await instanceAt('IERC20', poolAddress);
@@ -134,29 +131,29 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
         { value: VAULT_BOUNTY }
       );
 
-      const totalBalance = await bal80weth20Pool.balanceOf(veBALHolder.address);
-      const whaleBalance = fpMul(totalBalance, fp(0.99));
-      const otherBalance = totalBalance.sub(whaleBalance);
-
-      await bal80weth20Pool.connect(veBALHolder).transfer(other.address, otherBalance);
-
+      const holderBalance = await bal80weth20Pool.balanceOf(veBALHolder.address);
       await bal80weth20Pool.connect(veBALHolder).approve(votingEscrow.address, MAX_UINT256);
-      await bal80weth20Pool.connect(other).approve(votingEscrow.address, MAX_UINT256);
 
       const currentTime = await currentTimestamp();
-      await votingEscrow.connect(veBALHolder).create_lock(whaleBalance, currentTime.add(LOCK_PERIOD));
-      await votingEscrow.connect(other).create_lock(otherBalance, currentTime.add(LOCK_PERIOD));
+      await votingEscrow.connect(veBALHolder).create_lock(holderBalance, currentTime.add(LOCK_PERIOD));
     });
 
-    it(`projected balance should be greater than current by the maximum ratio (${MAX_BALANCE_RATIO})`, async () => {
+    it(`projected balance should be greater than current`, async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
         gauge.address,
         veBALHolder.address
       );
 
-      expect(fromFp(projectedWorkingBalance).toNumber() / fromFp(currentWorkingBalance).toNumber()).to.eq(
-        MAX_BALANCE_RATIO
+      expect(projectedWorkingBalance).to.be.gt(currentWorkingBalance);
+    });
+
+    it(`projected ratio should be greater than current`, async () => {
+      const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
+        gauge.address,
+        veBALHolder.address
       );
+
+      expect(projectedWorkingRatio).to.be.gt(currentWorkingRatio);
     });
 
     context('updates after checkpointing', () => {
@@ -164,26 +161,53 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
         await gauge.connect(veBALHolder).user_checkpoint(veBALHolder.address);
       });
 
-      it('projected balance should be close to or less than current', async () => {
+      it('projected balance should be equal to or slightly less than current', async () => {
         const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
           gauge.address,
           veBALHolder.address
         );
 
         expect(projectedWorkingBalance).to.be.almostEqual(currentWorkingBalance);
-        expect(projectedWorkingBalance).to.be.gt(0);
         expect(projectedWorkingBalance).to.be.lte(currentWorkingBalance);
       });
 
-      it('projected ratio should be close to or less than current', async () => {
+      it('projected ratio should be equal to or slightly less than current', async () => {
         const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
           gauge.address,
           veBALHolder.address
         );
 
         expect(projectedWorkingRatio).to.be.almostEqual(currentWorkingRatio);
-        expect(projectedWorkingRatio).to.be.gt(0);
         expect(projectedWorkingRatio).to.be.lte(currentWorkingRatio);
+      });
+    });
+
+    context('decays after veBAL balance decays', () => {
+      before(async () => {
+        // Because the LP holder owns so few BPT tokens, they get a 2.5 boost even with just a little veBAL. So we don't
+        // quite see the effect of the balance decay. We instead test for the extreme case when we're past the locktime,
+        // at which point their veBAL balance is zero and there's no boost.
+        // Another way of thinking about this is that they got much more veBAL than they needed for the 2.5 boost, so
+        // even after it decays there's no real effect.
+        await advanceTime(13 * MONTH);
+      });
+
+      it('projected balance should be less than current', async () => {
+        const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
+          gauge.address,
+          veBALHolder.address
+        );
+
+        expect(projectedWorkingBalance).to.be.lt(currentWorkingBalance);
+      });
+
+      it('projected ratio should be less than current', async () => {
+        const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
+          gauge.address,
+          veBALHolder.address
+        );
+
+        expect(projectedWorkingRatio).to.be.lt(currentWorkingRatio);
       });
     });
   });
