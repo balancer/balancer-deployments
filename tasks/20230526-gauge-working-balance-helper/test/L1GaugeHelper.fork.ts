@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, instanceAt } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { fp, fpMul, fromFp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, currentTimestamp, advanceTime } from '@helpers/time';
@@ -14,7 +14,6 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
   let votingEscrow: Contract;
   let veBALHolder: SignerWithAddress;
   let lpTokenHolder: SignerWithAddress;
-  let other: SignerWithAddress;
   let vault: Contract;
   let gauge: Contract;
   let lpToken: Contract;
@@ -52,7 +51,7 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
   });
 
   before('setup accounts', async () => {
-    [, veBALHolder, other] = await getSigners();
+    [, veBALHolder] = await getSigners();
 
     veBALHolder = await impersonate(veBALHolder.address, VAULT_BOUNTY.add(fp(5))); // plus gas
     lpTokenHolder = await impersonate(LP_TOKEN_HOLDER, fp(100));
@@ -90,13 +89,10 @@ describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17258776, function (
   before('stake in gauge', async () => {
     const stakeAmount = fp(100);
     await lpToken.connect(lpTokenHolder).transfer(veBALHolder.address, stakeAmount);
-    await lpToken.connect(lpTokenHolder).transfer(other.address, stakeAmount);
 
     await lpToken.connect(veBALHolder).approve(gauge.address, MAX_UINT256);
-    await lpToken.connect(other).approve(gauge.address, MAX_UINT256);
 
     await gauge.connect(veBALHolder)['deposit(uint256)'](stakeAmount);
-    await gauge.connect(other)['deposit(uint256)'](stakeAmount);
   });
 
   context('with no veBAL', () => {
