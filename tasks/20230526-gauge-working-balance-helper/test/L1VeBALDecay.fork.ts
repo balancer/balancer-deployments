@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 import { fp, fpMul } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
-import { MONTH, WEEK, advanceTime, currentTimestamp } from '@helpers/time';
+import { MONTH, currentTimestamp } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
 describeForkTest('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, function () {
