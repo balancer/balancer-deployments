@@ -112,8 +112,10 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
     });
 
     describe('setting bridge limits', async () => {
-      const newLowerLimit = MIN_BRIDGE_LIMIT.mul(randomInt(100));
-      const newUpperLimit = MAX_BRIDGE_LIMIT.mul(randomInt(10));
+      const factor = randomInt(10) + 1;
+
+      const newLowerLimit = MIN_BRIDGE_LIMIT.mul(factor);
+      const newUpperLimit = MAX_BRIDGE_LIMIT.mul(factor);
 
       context('without permission', () => {
         it('fails if the caller has no permission', async () => {
