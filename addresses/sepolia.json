@@ -476,5 +476,14 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230526-gauge-working-balance-helper": {
+    "contracts": [
+      {
+        "name": "GaugeWorkingBalanceHelper",
+        "address": "0x2E4aBED3362A622C5f712bB183005A476b146bd3"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
