@@ -43,8 +43,10 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
   const ETHEREUM_HARDHAT_CHAIN_ID = 31337;
   const AVALANCHE_CHAIN_ID = 43114;
 
-  const MIN_BRIDGE_LIMIT = fp(1.459854);
-  const MAX_BRIDGE_LIMIT = fp(729927.007299);
+  // Actual limits are 1.459854 - 729927.007299
+  // Use slightly stricter limits for a safety margin.
+  const MIN_BRIDGE_LIMIT = fp(2);
+  const MAX_BRIDGE_LIMIT = fp(725000);
 
   const bridgeInterface = new ethers.utils.Interface([
     'event LogAnySwapOut(address indexed token, address indexed from, address indexed to, uint amount, uint fromChainID, uint toChainID)',
@@ -137,6 +139,13 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
 
           expect(minBridgeAmount).to.eq(newLowerLimit);
           expect(maxBridgeAmount).to.eq(newUpperLimit);
+        });
+
+        it('ensure valid bridge limits', async () => {
+          // Reverse the limits; max must be > min
+          await expect(
+            factory.connect(admin).setAvalancheBridgeLimits(newUpperLimit, newLowerLimit)
+          ).to.be.revertedWith('Invalid Bridge Limits');
         });
       });
     });

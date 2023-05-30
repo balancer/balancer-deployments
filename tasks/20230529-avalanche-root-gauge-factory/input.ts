@@ -20,7 +20,7 @@ export default {
     // From https://docs.multichain.org/developer-guide/bridge-api-token-list-tx-status
     MultichainRouter: '0x765277eebeca2e31912c9946eae1021199b39c61',
     // The following values were taken from the router UI: https://app.multichain.org/#/router
-    MinBridgeLimit: fp(1.459854),
-    MaxBridgeLimit: fp(729927.007299),
+    MinBridgeLimit: fp(2), // Actual limit is 1.459854 - make slightly higher for a safety margin
+    MaxBridgeLimit: fp(725000), // Actual limit is 729,927.007299 - make slightly lower for a safety margin
   },
 };
