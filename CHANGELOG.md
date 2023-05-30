@@ -26,6 +26,8 @@
 - Deployed `PolygonZkEVMRootGaugeFactory` to Mainnet.
 - Deployed `VotingEscrowRemapper` and `OmniVotingEscrowAdaptor` to Goerli, Sepolia and Mainnet.
 - Deployed `GaugeAdder` V4 to Goerli, Sepolia and Mainnet.
+- Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism and Gnosis.
+- Deployed `L2GaugeCheckpointer` to Mainnet.
 
 ### Deprecations
 
@@ -74,6 +76,7 @@
 - Deployed `MerkleOrchard` V2 to Mainnet, Goerli, Arbitrum and Polygon.
 - Deployed `SingleRecipientGaugeFactory` V2 to Mainnet and Goerli.
 - Deployed `ProtocolIdRegistry` to Mainnet, Goerli, Arbitrum, Polygon, Optimism and Gnosis.
+- Deployed `GaugeWorkingBalanceHelper` to all networks.
 
 ### Deprecations
 
