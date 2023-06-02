@@ -67,6 +67,10 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17395000, function () {
     // power. Moreover, since the block number is close to the present at this point, advancing days breaks the first
     // weight check for the gauge (i.e. before the very first gauge checkpoint), which would make the 'bridge & mint'
     // test unnecessarily complex later on.
+    //
+    // Specifically, `gauge_relative_weight` returns 0 before the first gauge checkpoint, even when there are votes,
+    // which would cause the "vote for gauge" test to fail: and we cannot checkpoint it manually there, since the next
+    // "mint and bridge" needs to test for zero emissions and do its own checkpoint.
     veBALHolder = await impersonate((await getSigner(2)).address, VAULT_BOUNTY.add(fp(5))); // plus gas
   });
 
