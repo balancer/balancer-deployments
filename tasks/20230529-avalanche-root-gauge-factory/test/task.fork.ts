@@ -228,7 +228,7 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
 
     await gaugeAdder.connect(admin).setGaugeFactory(factory.address, 'Avalanche');
     await gaugeAdder.connect(admin).addGauge(gauge.address, 'Avalanche');
-    
+
     expect(await gaugeAdder.getGaugeTypes()).to.deep.eq(['Avalanche']);
 
     expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Avalanche')).to.be.true;
