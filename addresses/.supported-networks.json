@@ -1,0 +1,38 @@
+{
+  "mainnet": {
+    "chainId": 1,
+    "block-explorer": "https://etherscan.io"
+  },
+  "arbitrum": {
+    "chainId": 42161,
+    "block-explorer": "https://arbiscan.io"
+  },
+  "avalanche": {
+    "chainId": 43114,
+    "block-explorer": "https://snowtrace.io"
+  },
+  "bsc": {
+    "chainId": 56,
+    "block-explorer": "https://bscscan.com"
+  },
+  "goerli": {
+    "chainId": 5,
+    "block-explorer": "https://goerli.etherscan.io"
+  },
+  "optimism": {
+    "chainId": 10,
+    "block-explorer": "https://optimistic.etherscan.io"
+  },
+  "polygon": {
+    "chainId": 137,
+    "block-explorer": "https://polygonscan.com"
+  },
+  "sepolia": {
+    "chainId": 11155111,
+    "block-explorer": "https://sepolia.etherscan.io"
+  },
+  "zkevm": {
+    "chainId": 1101,
+    "block-explorer": "https://zkevm.polygonscan.com"
+  }
+}
