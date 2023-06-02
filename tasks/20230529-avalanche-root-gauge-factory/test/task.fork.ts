@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
+describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17395000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let daoMultisig: SignerWithAddress;
   let factory: Contract, gauge: Contract;
@@ -58,16 +58,15 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
     factory = await task.deployedInstance('AvalancheRootGaugeFactory');
   });
 
-  before('advance time', async () => {
-    // This causes all voting cooldowns to expire, letting the veBAL holder vote again
-    await advanceTime(DAY * 12);
-  });
-
   before('setup accounts', async () => {
     admin = await getSigner(0);
     recipient = await getSigner(1);
 
     daoMultisig = await impersonate(DAO_MULTISIG, fp(100));
+    // Since the veBAL holder is synthetic, we do not need to start the test advancing the time to reset the voting
+    // power. Moreover, since the block number is close to the present at this point, advancing days breaks the first
+    // weight check for the gauge (i.e. before the very first gauge checkpoint), which would make the 'bridge & mint'
+    // test unnecessarily complex later on.
     veBALHolder = await impersonate((await getSigner(2)).address, VAULT_BOUNTY.add(fp(5))); // plus gas
   });
 
@@ -195,41 +194,24 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
   });
 
   before('grant permissions on gauge adder', async () => {
+    // The adder is already configured with basic types and the permission to add gauges to the `GaugeController`
+    // at this point.
+    // So we will need permissions to create the new type, set the factory and add the gauge in the adder.
     const addGaugeTypeAction = await actionId(gaugeAdder, 'addGaugeType');
     const setFactoryAction = await actionId(gaugeAdder, 'setGaugeFactory');
     const addGaugeAction = await actionId(gaugeAdder, 'addGauge');
-    const gaugeControllerAddGaugeAction = await actionId(
-      adaptorEntrypoint,
-      'add_gauge(address,int128)',
-      gaugeController.interface
-    );
 
     await authorizer.connect(daoMultisig).grantRole(addGaugeTypeAction, admin.address);
     await authorizer.connect(daoMultisig).grantRole(setFactoryAction, admin.address);
     await authorizer.connect(daoMultisig).grantRole(addGaugeAction, admin.address);
-    await authorizer.connect(daoMultisig).grantRole(gaugeControllerAddGaugeAction, gaugeAdder.address);
   });
 
   it('add gauge to gauge controller', async () => {
-    expect(await gaugeAdder.getGaugeTypesCount()).to.eq(0);
-
-    const tx = await gaugeAdder.connect(admin).addGaugeType('Avalanche');
-    const receipt = await tx.wait();
-
-    // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
-    // One event in receipt, named `GaugeTypeAdded`
-    expect(receipt.events.length).to.be.eq(1);
-    const event = receipt.events[0];
-    expect(event.event).to.be.eq('GaugeTypeAdded');
-
-    // Contains expected `gaugeType` and `gaugeFactory`.
-    const decodedArgs = event.decode(event.data);
-    expect(decodedArgs.gaugeType).to.be.eq('Avalanche');
+    await gaugeAdder.connect(admin).addGaugeType('Avalanche');
+    expect(await gaugeAdder.getGaugeTypes()).to.include('Avalanche');
 
     await gaugeAdder.connect(admin).setGaugeFactory(factory.address, 'Avalanche');
     await gaugeAdder.connect(admin).addGauge(gauge.address, 'Avalanche');
-
-    expect(await gaugeAdder.getGaugeTypes()).to.deep.eq(['Avalanche']);
 
     expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Avalanche')).to.be.true;
 
