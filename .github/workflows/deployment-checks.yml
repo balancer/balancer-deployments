@@ -122,122 +122,102 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Mainnet Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
-      - name: Check Mainnet Action IDs
-        run: yarn check-network-action-ids mainnet
+        with:
+          network-name: mainnet
   check-polygon-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Polygon Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
-      - name: Check Polygon Action IDs
-        run: yarn check-network-action-ids polygon
+        with:
+          network-name: polygon
   check-arbitrum-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Arbitrum Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
-      - name: Check Arbitrum Action IDs
-        run: yarn check-network-action-ids arbitrum
+        with:
+          network-name: arbitrum
   check-optimism-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Optimism Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
-      - name: Check Optimism Action IDs
-        run: yarn check-network-action-ids optimism
+        with:
+          network-name: optimism
   check-bsc-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Binance Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
-      - name: Check Binance Action IDs
-        run: yarn check-network-action-ids bsc
+        with:
+          network-name: bsc
   check-gnosis-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Gnosis Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
-      - name: Check Gnosis Action IDs
-        run: yarn check-network-action-ids gnosis
+        with:
+          network-name: gnosis
   check-avalanche-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Avalanche Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-      - name: Check Avalanche Action IDs
-        run: yarn check-network-action-ids avalanche
+        with:
+          network-name: avalanche
   check-zkevm-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Polygon-ZkEvm Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
-      - name: Check Polygon-ZkEvm Action IDs
-        run: yarn check-network-action-ids zkevm
+        with:
+          network-name: zkevm
   check-goerli-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Goerli Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
-      - name: Check Goerli Action IDs
-        run: yarn check-network-action-ids goerli
+        with:
+          network-name: goerli
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Sepolia Deployment Addresses
+        uses: ./.github/actions/check-network-action-ids
         env:
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
-      - name: Check Sepolia Action IDs
-        run: yarn check-network-action-ids sepolia
+        with:
+          network-name: sepolia
 
   check-address-lookup:
     runs-on: ubuntu-latest
