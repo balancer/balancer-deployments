@@ -21,122 +21,102 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Mainnet Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
-      - name: Check Mainnet Deployment Addresses
-        run: yarn check-network-deployments mainnet
+        with:
+          network-name: mainnet
   check-polygon-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Polygon Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
-      - name: Check Polygon Deployment Addresses
-        run: yarn check-network-deployments polygon
+        with:
+          network-name: polygon
   check-arbitrum-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Arbitrum Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
-      - name: Check Arbitrum Deployment Addresses
-        run: yarn check-network-deployments arbitrum
+        with:
+          network-name: arbitrum
   check-optimism-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Optimism Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
-      - name: Check Optimism Deployment Addresses
-        run: yarn check-network-deployments optimism
+        with:
+          network-name: optimism
   check-bsc-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Binance Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
-      - name: Check Binance Deployment Addresses
-        run: yarn check-network-deployments bsc
+        with:
+          network-name: bsc
   check-gnosis-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Gnosis Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
-      - name: Check Gnosis Deployment Addresses
-        run: yarn check-network-deployments gnosis
+        with:
+          network-name: gnosis
   check-avalanche-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Avalanche Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-      - name: Check Avalanche Deployment Addresses
-        run: yarn check-network-deployments avalanche
+        with:
+          network-name: avalanche
   check-zkevm-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Polygon-ZkEvm Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
-      - name: Check Polygon-ZkEvm Deployment Addresses
-        run: yarn check-network-deployments zkevm
+        with:
+          network-name: zkevm
   check-goerli-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Goerli Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
-      - name: Check Goerli Deployment Addresses
-        run: yarn check-network-deployments goerli
+        with:
+          network-name: goerli
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up environment
-        uses: ./.github/actions/setup
-      - name: Prepare Config
-        run: yarn ci:prepare-config
+      - name: Check Sepolia Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
         env:
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
-      - name: Check Sepolia Deployment Addresses
-        run: yarn check-network-deployments sepolia
+        with:
+          network-name: sepolia
 
   check-mainnet-action-ids:
     runs-on: ubuntu-latest
