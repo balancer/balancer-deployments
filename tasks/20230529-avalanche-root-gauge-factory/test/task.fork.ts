@@ -174,6 +174,10 @@ describeForkTest('AvalancheRootGaugeFactory', 'mainnet', 17330239, function () {
     await veBAL
       .connect(veBALHolder)
       .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime.add(MONTH * 12));
+
+    // Verify non-zero veBAL balance
+    const now = await currentTimestamp();
+    expect(await veBAL['balanceOf(address,uint256)'](veBALHolder.address, now)).to.gt(0);
   });
 
   it('can create a gauge', async () => {
