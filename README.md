@@ -121,6 +121,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./tasks/20230526-gauge-working-balance-helper)             |
 | L2 Gauge Checkpointer                                  | [`20230527-l2-gauge-checkpointer`](./tasks/20230527-l2-gauge-checkpointer)                           |
+| Avalanche Root Gauge, for veBAL voting                 | [`20230529-avalanche-root-gauge-factory`](./tasks/20230529-avalanche-root-gauge-factory)             |
 
 ## Scripts
 
