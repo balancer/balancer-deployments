@@ -77,6 +77,7 @@
 - Deployed `SingleRecipientGaugeFactory` V2 to Mainnet and Goerli.
 - Deployed `ProtocolIdRegistry` to Mainnet, Goerli, Arbitrum, Polygon, Optimism and Gnosis.
 - Deployed `GaugeWorkingBalanceHelper` to all networks.
+- Deployed `AvalancheRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 

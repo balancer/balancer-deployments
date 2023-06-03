@@ -4,4 +4,5 @@ Deployment of the `AvalancheRootGaugeFactory`, for stakeless gauges that bridge 
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`AvalancheRootGaugeFactory` artifact](./artifact/AvalancheRootGaugeFactory.json)
