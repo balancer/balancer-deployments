@@ -35,6 +35,8 @@ const MEDIUM_DELAY = DAY;
 // system or protocol fees).
 const LONG_DELAY = 2 * DAY;
 
+export const ROOT_TRANSFER_DELAY = LONG_DELAY;
+
 export const GrantDelays: DelayData[] = [
   // BAL is minted by the BalancerMinter. Changing the minter means changing the veBAL liquidity mining system.
   {
