@@ -35,7 +35,7 @@ const MEDIUM_DELAY = DAY;
 // system or protocol fees).
 const LONG_DELAY = 2 * DAY;
 
-export const ROOT_TRANSFER_DELAY = LONG_DELAY;
+export const RootTransferDelay = LONG_DELAY;
 
 export const GrantDelays: DelayData[] = [
   // BAL is minted by the BalancerMinter. Changing the minter means changing the veBAL liquidity mining system.
@@ -88,16 +88,16 @@ export const GrantDelays: DelayData[] = [
 
   // The permission to withdraw protocol fees is held solely by the ProtocolFeeWithdrawer.
   {
-    actionId: Vault.actionId('ProtocolFeeCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
     newDelay: LONG_DELAY,
   },
   // The permission to modify protocol fees at the Collector is held by the ProtocolFeePercentagesProvider.
   {
-    actionId: Vault.actionId('ProtocolFeeCollector', 'setSwapFeePercentage(uint256)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'setSwapFeePercentage(uint256)'),
     newDelay: LONG_DELAY,
   },
   {
-    actionId: Vault.actionId('ProtocolFeeCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
     newDelay: LONG_DELAY,
   },
 ];
