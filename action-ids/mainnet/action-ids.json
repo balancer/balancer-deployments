@@ -1356,5 +1356,24 @@
         "removeGauges(string,address[])": "0x55566cb4e0ccd22ac860f52d3981d1999e5c5abf014314ef837b5b6da7b25a2e"
       }
     }
+  },
+  "20230529-avalanche-root-gauge-factory": {
+    "AvalancheRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0xef55231281d75552d7a09d4ec5c5887068bb8197d9111dee358b45cfc10d7951",
+        "setAvalancheBridgeLimits(uint256,uint256)": "0x1a18ad8cf4b6aef8d28c715ad5644514bec15690a30b000bc7ccd6bd68acaca2"
+      }
+    },
+    "AvalancheRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256)": "0xa7eb8749bae4020b0007b643972b60456da2b6b92fa6b583c7277fc2dea05a39",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
   }
 }
