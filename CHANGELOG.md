@@ -2,9 +2,9 @@
 
 ## Unreleased
 
-### Deprecations
+### Breaking changes
 
-- Deprecated `20221202-timelock-authorizer`.
+- The `20221205-l2-gauge-checkpointer` task was deleted and replaced with `20230527-l2-gauge-checkpointer`. The old task had not been used by anyone.
 
 ### New Deployments
 
@@ -31,6 +31,7 @@
 
 ### Deprecations
 
+- Deprecated `20221202-timelock-authorizer`.
 - Deprecated `20220916-batch-relayer-v4`.
 - Deprecated `20230206-weighted-pool-v3`.
 - Deprecated `20230206-composable-stable-pool-v3`.
