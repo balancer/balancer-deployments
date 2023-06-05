@@ -15,7 +15,7 @@
 - Deployed `WeightedPoolFactory` V4 to all networks.
 - Deployed `ComposableStablePoolFactory` V4 to all networks.
 - Deployed `ChildChainGaugeFactory` and `ChildChainGauge` to all networks except Ethereum.
-- Deployed `L2LayerZeroBridgeForwarder` V5 to all networks except Ethereum.
+- Deployed `L2LayerZeroBridgeForwarder` to all networks except Ethereum.
 - Deployed `ManagedPoolFactory` V2 to all networks.
 - Deployed `AuthorizerWithAdaptorValidation` to all networks.
 - Deployed `ERC4626LinearPoolFactoryV4` to Mainnet, Polygon, Optimism, Arbitrum and Avalanche.
@@ -28,17 +28,20 @@
 - Deployed `GaugeAdder` V4 to Goerli, Sepolia and Mainnet.
 - Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism and Gnosis.
 - Deployed `L2GaugeCheckpointer` to Mainnet.
+- Deployed `GaugeWorkingBalanceHelper` to all networks.
+- Deployed `AvalancheRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 
 - Deprecated `20221202-timelock-authorizer`.
 - Deprecated `20220916-batch-relayer-v4`.
-- Deprecated `20230206-weighted-pool-v3`.
+- Deprecated `20230109-gauge-adder-v3`.
+- Deprecated `20230206-aave-rebalanced-linear-pool-v4`.
 - Deprecated `20230206-composable-stable-pool-v3`.
 - Deprecated `20230206-erc4626-linear-pool-v3`.
-- Deprecated `20230213-yearn-linear-pool`.
-- Deprecated `20230206-aave-rebalanced-linear-pool-v4`.
+- Deprecated `20230206-weighted-pool-v3`.
 - Deprecated `20230213-gearbox-linear-pool`.
+- Deprecated `20230213-yearn-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
 
 ### New Networks
@@ -77,8 +80,6 @@
 - Deployed `MerkleOrchard` V2 to Mainnet, Goerli, Arbitrum and Polygon.
 - Deployed `SingleRecipientGaugeFactory` V2 to Mainnet and Goerli.
 - Deployed `ProtocolIdRegistry` to Mainnet, Goerli, Arbitrum, Polygon, Optimism and Gnosis.
-- Deployed `GaugeWorkingBalanceHelper` to all networks.
-- Deployed `AvalancheRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 
