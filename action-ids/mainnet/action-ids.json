@@ -1333,5 +1333,47 @@
         "setNetworkRemappingManager(address,address)": "0x6bb341db03eede206e544c654a59ef89eea83bc65fada2cfeeaf18c5c0f76ac0"
       }
     }
+  },
+  "20230519-gauge-adder-v4": {
+    "GaugeAdder": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauge(address,string)": "0x83dc5eaaade2c71d34c71bd21fe617f5f6d83bf53bd9d886d00c756e386b8cd1",
+        "addGaugeType(string)": "0x2960d085c4c968d7cad55c0da3f97014525b948fdce990ecaef4e832b5f0b151",
+        "setGaugeFactory(address,string)": "0x3f44776af02a9227991da37715b44e45db40735e216b3ab33144859bb6737166"
+      }
+    }
+  },
+  "20230527-l2-gauge-checkpointer": {
+    "L2GaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xf04824af360d2eaf35009710de9dd8111fccade72de8f1033342f96a53fee5dc",
+        "addGaugesWithVerifiedType(string,address[])": "0x1b6c47bfcba58391eb7c8e74ea3c377e0d6c62825a6184d59c4478e225110fd4",
+        "checkpointGaugesAboveRelativeWeight(uint256)": "0x54a75b87402f413febdc962618c1897225cd2aabf1b5b159e72187b61d28b419",
+        "checkpointGaugesOfTypeAboveRelativeWeight(string,uint256)": "0x6379ef621e9360d66c706ba7cf1ca6ba747313347d7f11586ed2510ab0187ff1",
+        "checkpointSingleGauge(string,address)": "0x573e195a87af10f159d9c6a9f450549f8e57433d9ba76a8bc5c109c81c74fb13",
+        "removeGauges(string,address[])": "0x55566cb4e0ccd22ac860f52d3981d1999e5c5abf014314ef837b5b6da7b25a2e"
+      }
+    }
+  },
+  "20230529-avalanche-root-gauge-factory": {
+    "AvalancheRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0xef55231281d75552d7a09d4ec5c5887068bb8197d9111dee358b45cfc10d7951",
+        "setAvalancheBridgeLimits(uint256,uint256)": "0x1a18ad8cf4b6aef8d28c715ad5644514bec15690a30b000bc7ccd6bd68acaca2"
+      }
+    },
+    "AvalancheRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256)": "0xa7eb8749bae4020b0007b643972b60456da2b6b92fa6b583c7277fc2dea05a39",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
   }
 }

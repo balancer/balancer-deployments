@@ -510,5 +510,15 @@
         "setNetworkRemappingManager(address,address)": "0xd2b0db71f202c1fe58ac19654ff20bc1979580e3bde8170f82eb11b3a1f773a0"
       }
     }
+  },
+  "20230519-gauge-adder-v4": {
+    "GaugeAdder": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauge(address,string)": "0x8953309e9807defd47d7dd7082b416598f957184ccea67f597b3697b65edbcca",
+        "addGaugeType(string)": "0xa639de4f3447b93bb6f4a7e0195ea7e42e5b9816bbd4bfb3e8d8e3ca917c1522",
+        "setGaugeFactory(address,string)": "0x7f8caf4a00b7cbdfc7ad11ff555235a685a67afdf0b96c9cb673c2eceb0eb401"
+      }
+    }
   }
 }

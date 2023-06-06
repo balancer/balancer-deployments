@@ -36,6 +36,12 @@ export enum TaskMode {
   READ_ONLY, // Fails on deploy
 }
 
+export enum TaskStatus {
+  ACTIVE,
+  DEPRECATED,
+  SCRIPT,
+}
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 export default class Task {
@@ -299,6 +305,19 @@ export default class Task {
     } else if (this.mode === TaskMode.LIVE || this.mode === TaskMode.TEST) {
       this._save(output);
     }
+  }
+
+  getStatus(): TaskStatus {
+    const taskDirectory = this.dir();
+    if (taskDirectory === path.join(TASKS_DIRECTORY, this.id)) {
+      return TaskStatus.ACTIVE;
+    } else if (taskDirectory === path.join(DEPRECATED_DIRECTORY, this.id)) {
+      return TaskStatus.DEPRECATED;
+    } else if (taskDirectory === path.join(SCRIPTS_DIRECTORY, this.id)) {
+      return TaskStatus.SCRIPT;
+    }
+
+    throw new Error('Unknown task status');
   }
 
   private _checkManuallySavedArtifacts(output: Output) {
