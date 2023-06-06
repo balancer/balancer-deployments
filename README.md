@@ -118,7 +118,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Voting Escrow Remapper                                 | [`20230504-vebal-remapper`](./tasks/20230504-vebal-remapper)                                         |
 | Gauge Registrant V4                                    | [`20230519-gauge-adder-v4`](./tasks/20230519-gauge-adder-v4)                                         |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
-| Timelock Authorizer, governance contract               | [`20230403-timelock-authorizer`](./tasks/20230522-timelock-authorizer)                               |
+| Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./tasks/20230522-timelock-authorizer)                               |
 
 ## Scripts
 
