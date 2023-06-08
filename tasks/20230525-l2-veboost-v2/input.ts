@@ -19,4 +19,12 @@ export default {
   gnosis: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
+  // https://snowtrace.io/address/0xe241c6e48ca045c7f631600a0f1403b2bfea05ad
+  avalanche: {
+    VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
+  },
+  // https://zkevm.polygonscan.com/address/0xe241c6e48ca045c7f631600a0f1403b2bfea05ad
+  zkevm: {
+    VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
+  },
 };
