@@ -12,4 +12,6 @@ The artifact is the same as in the [20221205-veboost-v2 task](../20221205-veboos
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Polygon zkEVM mainnet addresses](./output/zkevm.json)
 - [`VeBoostV2` artifact](./artifact/VeBoostV2.json)
