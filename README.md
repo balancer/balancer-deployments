@@ -106,7 +106,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | L2 Voting Escrow Delegation Proxy                      | [`20230316-l2-ve-delegation-proxy`](./tasks/20230316-l2-ve-delegation-proxy)                         |
 | Weighted Pool V4                                       | [`20230320-weighted-pool-v4`](./tasks/20230320-weighted-pool-v4)                                     |
 | Composable Stable Pools V4                             | [`20230320-composable-stable-pool-v4`](./tasks/20230320-composable-stable-pool-v4)                   |
-| Timelock Authorizer, governance contract               | [`20230403-timelock-authorizer`](./tasks/20230403-timelock-authorizer)                               |
 | L2 Layer0 Bridge Forwarder                             | [`20230404-l2-layer0-bridge-forwarder`](./tasks/20230404-l2-layer0-bridge-forwarder)                 |
 | Linear Pools for ERC4626 Tokens V4                     | [`20230409-erc4626-linear-pool-v4`](./tasks/20230409-erc4626-linear-pool-v4)                         |
 | Linear Pools for Yearn Tokens V2                       | [`20230409-yearn-linear-pool-v2`](./tasks/20230409-yearn-linear-pool-v2)                             |
@@ -122,6 +121,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./tasks/20230526-gauge-working-balance-helper)             |
 | L2 Gauge Checkpointer                                  | [`20230527-l2-gauge-checkpointer`](./tasks/20230527-l2-gauge-checkpointer)                           |
 | Avalanche Root Gauge, for veBAL voting                 | [`20230529-avalanche-root-gauge-factory`](./tasks/20230529-avalanche-root-gauge-factory)             |
+| Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./tasks/20230522-timelock-authorizer)                               |
 
 ## Scripts
 
