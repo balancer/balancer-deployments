@@ -30,6 +30,7 @@
 - Deployed `L2GaugeCheckpointer` to Mainnet.
 - Deployed `GaugeWorkingBalanceHelper` to all networks.
 - Deployed `AvalancheRootGaugeFactory` to Mainnet.
+- Deployed `BalancerPoolDataQueries` to all networks.
 
 ### Deprecations
 
