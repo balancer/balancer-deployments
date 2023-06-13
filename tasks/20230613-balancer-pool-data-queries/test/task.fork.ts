@@ -1,11 +1,9 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { bn, fp } from '@balancer-labs/v2-helpers/src/numbers';
+import { bn, fp } from '@helpers/numbers';
 
-import { describeForkTest } from '../../../src/forkTests';
-import Task, { TaskMode } from '../../../src/task';
-import { getForkedNetwork } from '../../../src/test';
+import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 
 const BAL_ETH_POOL_ID = '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56000200000000000000000014';
 const BAL_ETH_POOL = '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56';
@@ -64,7 +62,7 @@ describeForkTest('BalancerPoolDataQueries', 'mainnet', 16474000, function () {
   let balancerPoolDataQueries: Contract;
 
   before('deploy balancer pool data queries', async () => {
-    const task = new Task('20230124-balancer-pool-data-queries', TaskMode.TEST, getForkedNetwork(hre));
+    const task = new Task('20230613-balancer-pool-data-queries', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
 
     balancerPoolDataQueries = await task.deployedInstance('BalancerPoolDataQueries');
