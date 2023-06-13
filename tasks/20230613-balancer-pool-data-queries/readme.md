@@ -9,5 +9,6 @@ Deployment of the `BalancerPoolDataQueries` contract. It provides a way to perfo
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BalancerPoolDataQueries` artifact](./artifact/BalancerPoolDataQueries.json)
