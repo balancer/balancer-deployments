@@ -319,5 +319,14 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230613-balancer-pool-data-queries": {
+    "contracts": [
+      {
+        "name": "BalancerPoolDataQueries",
+        "address": "0xE3881627B8DeeBCCF9c23B291430a549Fc0bE5F7"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
