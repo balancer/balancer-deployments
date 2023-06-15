@@ -31,6 +31,7 @@
 - Deployed `GaugeWorkingBalanceHelper` to all networks.
 - Deployed `AvalancheRootGaugeFactory` to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
+- Deployed `TimelockAuthorizer` to Sepolia.
 
 ### Deprecations
 
