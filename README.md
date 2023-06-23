@@ -123,6 +123,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./tasks/20230522-timelock-authorizer)                               |
 | Pool Data Queries for bulk operations                  | [`20230613-balancer-pool-data-queries`](./tasks/20230613-balancer-pool-data-queries)                 |
 | Composable Stable Pools V5                             | [`20230711-composable-stable-pool-v5`](./tasks/20230711-composable-stable-pool-v5)                   |
+| L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./tasks/20230712-child-chain-gauge-checkpointer)         |
 
 ## Scripts
 
