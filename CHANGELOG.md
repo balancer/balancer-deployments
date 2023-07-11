@@ -13,7 +13,7 @@
 - Deployed `L2BalancerPseudoMinter` to all networks except Ethereum.
 - Deployed `VotingEscrowDelegationProxy` and `NullVotingEscrow` to all networks except Ethereum.
 - Deployed `WeightedPoolFactory` V4 to all networks.
-- Deployed `ComposableStablePoolFactory` V5 to all networks.
+- Deployed `ComposableStablePoolFactory` V4 to all networks.
 - Deployed `ChildChainGaugeFactory` and `ChildChainGauge` to all networks except Ethereum.
 - Deployed `L2LayerZeroBridgeForwarder` to all networks except Ethereum.
 - Deployed `ManagedPoolFactory` V2 to all networks.
@@ -32,6 +32,7 @@
 - Deployed `AvalancheRootGaugeFactory` to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
 - Deployed `TimelockAuthorizer` to Sepolia.
+- Deployed `ComposableStablePoolFactory` V5 to all networks.
 
 ### Deprecations
 
