@@ -32,6 +32,7 @@
 - Deployed `AvalancheRootGaugeFactory` to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
 - Deployed `TimelockAuthorizer` to Sepolia.
+- Deployed `ComposableStablePoolFactory` V5 to all networks.
 
 ### Deprecations
 
@@ -45,6 +46,7 @@
 - Deprecated `20230213-gearbox-linear-pool`.
 - Deprecated `20230213-yearn-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
+- Deprecated `20230320-composable-stable-pool-v4`.
 
 ### New Networks
 
