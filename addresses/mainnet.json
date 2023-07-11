@@ -913,7 +913,7 @@
         "address": "0x5537f945D8c3FCFDc1b8DECEEBD220FAD26aFdA8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [

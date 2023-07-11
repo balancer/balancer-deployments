@@ -160,7 +160,7 @@
         "address": "0x6f5F794A3CeF904b8517C4c311DE2FA837Ff24a0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
