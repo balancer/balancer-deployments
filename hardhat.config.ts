@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-vyper';
 import '@nomiclabs/hardhat-waffle';
@@ -300,7 +301,30 @@ task(
 
 task(TASK_TEST).addOptionalParam('id', 'Specific task ID of the fork test to run.').setAction(test);
 
+const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY || '';
+const ADMIN_PRIVATE_KEY = process.env.CONTROLLER_PRIVATE_KEY || '';
+
 export default {
+  networks: {
+    neonlabs: {
+      chainId: 245022934,
+      url: 'https://shadow-mainnet.neonevm.org/',
+      accounts: [
+        DEPLOYER_PRIVATE_KEY,
+        ADMIN_PRIVATE_KEY,
+      ],
+      saveDeployments: true
+    },
+    devnet: {
+      chainId: 245022926,
+      url: 'https://devnet.neonevm.org/',
+      accounts: [
+        DEPLOYER_PRIVATE_KEY,
+        ADMIN_PRIVATE_KEY,
+      ],
+      saveDeployments: true
+    },
+  },
   mocha: {
     timeout: 600000,
   },
@@ -337,6 +361,22 @@ export default {
           browserURL: 'https://zkevm.polygonscan.com/',
         },
       },
+      {
+        network: "neonlabs",
+        chainId: 245022934,
+        urls: {
+          apiURL: "https://shadow-mainnet-api.neonscan.org/hardhat/verify",
+          browserURL: "https://shadow.neonscan.org"
+        }
+      },
+      {
+        network: "devnet",
+        chainId: 245022926,
+        urls: {
+          apiURL: "https://devnet-api.neonscan.org/hardhat/verify",
+          browserURL: "https://devnet.neonscan.org"
+        }
+      }
     ],
   },
 };
