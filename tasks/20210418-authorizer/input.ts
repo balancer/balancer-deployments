@@ -36,4 +36,10 @@ export default {
   sepolia: {
     admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
+  neonlabs: {
+    admin: '0xa16b39D51416c4496d71A8027ce01054F1484653',
+  },
+  devnet: {
+    admin: '0xa16b39D51416c4496d71A8027ce01054F1484653',
+  }
 };
