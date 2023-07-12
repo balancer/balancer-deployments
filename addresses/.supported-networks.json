@@ -34,5 +34,9 @@
   "zkevm": {
     "chainId": 1101,
     "block-explorer": "https://zkevm.polygonscan.com"
+  },
+  "base": {
+    "chainId": 8453,
+    "block-explorer": "https://wwstage.basescan.org"
   }
 }
