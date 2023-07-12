@@ -38,6 +38,9 @@ export default {
   zkevm: {
     InitialDeniedTokens: [],
   },
+  base: {
+    InitialDeniedTokens: [],
+  },
   goerli: {
     InitialDeniedTokens: [],
   },

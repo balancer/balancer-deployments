@@ -11,6 +11,7 @@ Deployment of `L2LayerZeroBridgeForwarder`, which is called by the Layer0 contra
 - [BSC mainnet addresses](./output/bsc.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`L2LayerZeroBridgeForwarder` artifact](./artifact/L2LayerZeroBridgeForwarder.json)

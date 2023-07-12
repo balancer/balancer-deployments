@@ -63,4 +63,7 @@ export default {
   sepolia: {
     InitialFactories: [],
   },
+  base: {
+    InitialFactories: [],
+  },
 };

@@ -14,6 +14,7 @@ This contract is expected to be eventually replaced by one with a) native suppor
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Authorizer` artifact](./artifact/Authorizer.json)
