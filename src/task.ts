@@ -24,6 +24,7 @@ import {
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from './network';
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
+import { sleep } from '@helpers/sleep';
 
 const TASKS_DIRECTORY = path.resolve(__dirname, '../tasks');
 const DEPRECATED_DIRECTORY = path.join(TASKS_DIRECTORY, 'deprecated');
@@ -100,7 +101,7 @@ export default class Task {
     }
 
     const instance = await this.deploy(name, args, from, force, libs);
-
+    await sleep(30000)
     await this.verify(name, instance.address, args, libs);
     return instance;
   }
