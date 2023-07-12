@@ -599,7 +599,7 @@
     "contracts": [
       {
         "name": "BalancerPoolDataQueries",
-        "address": "0x6B5dA774890Db7B7b96C6f44e6a4b0F657399E2e"
+        "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
       }
     ],
     "status": "ACTIVE"
