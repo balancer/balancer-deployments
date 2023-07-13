@@ -11,6 +11,12 @@
       "contractName": "ChildChainGauge",
       "signature": "claim_rewards()",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards()",
+      "useAdaptor": true
     }
   ],
   "0xe41be765d5cfad11c08db014eff2b4a8d61ef1cdb4e261ccbd8e6ea97547d17a": [
@@ -22,6 +28,12 @@
     },
     {
       "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
       "contractName": "ChildChainGauge",
       "signature": "claim_rewards(address)",
       "useAdaptor": true
@@ -39,6 +51,12 @@
       "contractName": "ChildChainGauge",
       "signature": "claim_rewards(address,address)",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address,address)",
+      "useAdaptor": true
     }
   ],
   "0xdb7a8a865c118c708b7b58aa81fcd9faf63dcde098724f59f3caa5b83ea396b9": [
@@ -50,6 +68,12 @@
     },
     {
       "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit(uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
       "contractName": "ChildChainGauge",
       "signature": "deposit(uint256)",
       "useAdaptor": true
@@ -67,6 +91,12 @@
       "contractName": "ChildChainGauge",
       "signature": "deposit(uint256,address)",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit(uint256,address)",
+      "useAdaptor": true
     }
   ],
   "0xf88d34e766f85b5f4d620e7d4166da3f9bdf13e6f68adbf890b136082b2916e1": [
@@ -78,6 +108,12 @@
     },
     {
       "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "set_rewards_receiver(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
       "contractName": "ChildChainGauge",
       "signature": "set_rewards_receiver(address)",
       "useAdaptor": true
@@ -95,6 +131,12 @@
       "contractName": "ChildChainGauge",
       "signature": "withdraw(uint256)",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "withdraw(uint256)",
+      "useAdaptor": true
     }
   ],
   "0xce713085e9498c958964f4c64979785027e7a93323b68bca8e87296c696fa643": [
@@ -106,6 +148,12 @@
     },
     {
       "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "set_reward_distributor(address,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
       "contractName": "ChildChainGauge",
       "signature": "set_reward_distributor(address,address)",
       "useAdaptor": true
@@ -122,6 +170,138 @@
       "taskId": "20230316-child-chain-gauge-factory-v2",
       "contractName": "ChildChainGaugeFactory",
       "signature": "create(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGaugeFactory",
+      "signature": "create(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xde6b942f89e9060258ffab001fdc0f8f8586641c2f0aa6a47ab427260a470059": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "add_reward(address,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "add_reward(address,address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xbe310d1b3796ddca6cf53459cad020bf96085725cef266423cb09eef0e395aa4": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address,address,uint256[])",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address,address,uint256[])",
+      "useAdaptor": true
+    }
+  ],
+  "0xddb2e5eb8f7853bb83552651570c8b87b5e79cf7d8db23ead90e3109a9da4c13": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claimable_tokens(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claimable_tokens(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xab0b9020e618692f256ca998e9958f5a0381801234d37a5a1545017e2488f542": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit_reward_token(address,uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit_reward_token(address,uint256)",
+      "useAdaptor": true
+    }
+  ],
+  "0xc0e7c1f6cda94ca87c275bf4d063e10053b0ebbdea218d3710b9d522a4852023": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "initialize(address,string)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "initialize(address,string)",
+      "useAdaptor": true
+    }
+  ],
+  "0x58a62240278232213392be311889725c8de77ca8633fa45a1b3fd119dbe8f153": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "killGauge()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "killGauge()",
+      "useAdaptor": true
+    }
+  ],
+  "0xefc9aa1da5cd66f85fa5731c6b17ac1454039768bc72d02824d97e09d3eff790": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "unkillGauge()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "unkillGauge()",
+      "useAdaptor": true
+    }
+  ],
+  "0xe61e4a449660c19d22eee34923ff4af6ee513588593c3656f981ea1828862192": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "user_checkpoint(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "user_checkpoint(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xaccf36b10d9bc422a35c27e5b56d801f71d0e6b5452cf8264f29dfad7550cb3d": [
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "withdraw(uint256,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-avax-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "withdraw(uint256,address)",
       "useAdaptor": true
     }
   ]
