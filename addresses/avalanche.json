@@ -43,37 +43,11 @@
     ],
     "status": "ACTIVE"
   },
-  "20220413-child-chain-gauge-factory": {
-    "contracts": [
-      {
-        "name": "RewardsOnlyGauge",
-        "address": "0x41B953164995c11C81DA73D212ED8Af25741b7Ac"
-      },
-      {
-        "name": "ChildChainStreamer",
-        "address": "0xD7FAD3bd59D6477cbe1BE7f646F7f1BA25b230f8"
-      },
-      {
-        "name": "ChildChainLiquidityGaugeFactory",
-        "address": "0xb08E16cFc07C684dAA2f93C70323BAdb2A6CBFd2"
-      }
-    ],
-    "status": "ACTIVE"
-  },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
       {
         "name": "ProtocolFeesWithdrawer",
         "address": "0x8F42aDBbA1B16EaAE3BB5754915E0D06059aDd75"
-      }
-    ],
-    "status": "ACTIVE"
-  },
-  "20220527-child-chain-gauge-token-adder": {
-    "contracts": [
-      {
-        "name": "ChildChainGaugeTokenAdder",
-        "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
     "status": "ACTIVE"
@@ -171,7 +145,7 @@
     ],
     "status": "ACTIVE"
   },
-  "20230316-child-chain-gauge-factory-v2": {
+  "20230316-avax-child-chain-gauge-factory-v2": {
     "contracts": [
       {
         "name": "ChildChainGauge",
@@ -182,16 +156,16 @@
         "address": "0x161f4014C27773840ccb4EC1957113e6DD028846"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
-  "20230316-l2-balancer-pseudo-minter": {
+  "20230316-avax-l2-balancer-pseudo-minter": {
     "contracts": [
       {
         "name": "L2BalancerPseudoMinter",
         "address": "0xEa924b45a3fcDAAdf4E5cFB1665823B8F8F2039B"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230316-l2-ve-delegation-proxy": {
     "contracts": [

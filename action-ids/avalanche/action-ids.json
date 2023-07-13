@@ -84,14 +84,6 @@
       }
     }
   },
-  "20220527-child-chain-gauge-token-adder": {
-    "ChildChainGaugeTokenAdder": {
-      "useAdaptor": false,
-      "actionIds": {
-        "addTokenToGauge(address,address,address)": "0x49e783a1aedce49dedc1f4599f898c3136453816218ab89c029423bf0a25a47a"
-      }
-    }
-  },
   "20220725-protocol-fee-percentages-provider": {
     "ProtocolFeePercentagesProvider": {
       "useAdaptor": false,
@@ -213,7 +205,7 @@
       }
     }
   },
-  "20230316-l2-balancer-pseudo-minter": {
+  "20230316-avax-l2-balancer-pseudo-minter": {
     "L2BalancerPseudoMinter": {
       "useAdaptor": false,
       "actionIds": {
