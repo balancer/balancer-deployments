@@ -696,5 +696,18 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x268E2EE1413D768b6e2dc3F5a4ddc9Ae03d9AF42"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xe4f1878eC9710846E2B529C1b5037F8bA94583b1"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
