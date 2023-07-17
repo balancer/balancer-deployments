@@ -48,6 +48,7 @@
 - Deprecated `20230213-yearn-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
 - Deprecated `20230320-composable-stable-pool-v4`.
+- Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
 
 ### New Networks
 
