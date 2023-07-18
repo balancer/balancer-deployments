@@ -22,7 +22,7 @@ describeForkTest('ChainlinkRateProviderFactory', 'mainnet', 17717232, function (
     rateProviderFactory = await task.deployedInstance('ChainlinkRateProviderFactory');
   });
 
-  it('create a ChainLinkRateProvider', async () => {
+  before('create a ChainLinkRateProvider', async () => {
     const tx = await (await rateProviderFactory.create(usdcPriceFeed.address)).wait();
     const event = await expectEvent.inReceipt(tx, 'RateProviderCreated');
 
@@ -32,7 +32,7 @@ describeForkTest('ChainlinkRateProviderFactory', 'mainnet', 17717232, function (
     expect(await rateProviderFactory.isRateProviderFromFactory(rateProvider.address)).to.be.true;
   });
 
-  it('get rate', async () => {
+  it('rate is about 1 USD per USDC', async () => {
     expect(await rateProvider.getRate()).to.almostEqual(fp(1));
   });
 });
