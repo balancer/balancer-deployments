@@ -4,6 +4,4 @@ Deployment of `ChainlinkRateProviderFactory`, which creates and deploys `Chainli
 
 ## Useful Files
 
-- [`AggregatorV3Interface` artifact](./artifact/AggregatorV3Interface.json)
-- [`ChainlinkRateProvider` artifact](./artifact/ChainlinkRateProvider.json)
 - [`ChainlinkRateProviderFactory` artifact](./artifact/ChainlinkRateProviderFactory.json)
