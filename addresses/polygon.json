@@ -709,5 +709,14 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
