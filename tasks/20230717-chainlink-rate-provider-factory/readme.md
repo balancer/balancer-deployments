@@ -11,7 +11,7 @@ Deployment of `ChainlinkRateProviderFactory`, which creates and deploys `Chainli
 - [BSC mainnet addresses](./output/bsc.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Polygon zkEVM mainnet addresses](./output/zkevm.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ChainlinkRateProviderFactory` artifact](./artifact/ChainlinkRateProviderFactory.json)
