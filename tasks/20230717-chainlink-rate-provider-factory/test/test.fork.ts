@@ -1,8 +1,7 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
+import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import * as aggregatorV3InterfaceArtifact from '../artifact/AggregatorV3Interface.json';
 import * as chainlinkRateProviderArtifact from '../artifact/ChainlinkRateProvider.json';
 import * as expectEvent from '@helpers/expectEvent';
