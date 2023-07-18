@@ -34,6 +34,7 @@
 - Deployed `TimelockAuthorizer` to Sepolia.
 - Deployed `ComposableStablePoolFactory` V5 to all networks.
 - Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
+- Deployed `ChainlinkRateProviderFactory` to all networks.
 
 ### Deprecations
 
