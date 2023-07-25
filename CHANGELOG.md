@@ -33,6 +33,8 @@
 - Deployed `BalancerPoolDataQueries` to all networks.
 - Deployed `TimelockAuthorizer` to Sepolia.
 - Deployed `ComposableStablePoolFactory` V5 to all networks.
+- Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
+- Deployed `ChainlinkRateProviderFactory` to all networks.
 
 ### Deprecations
 
@@ -47,6 +49,7 @@
 - Deprecated `20230213-yearn-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
 - Deprecated `20230320-composable-stable-pool-v4`.
+- Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
 
 ### New Networks
 

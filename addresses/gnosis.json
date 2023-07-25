@@ -447,5 +447,27 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xd488810DaAdD52C5892663FEA4e0bcb71eF744cB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
