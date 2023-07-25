@@ -7,6 +7,7 @@ Supersedes `20230213-gearbox-linear-pool`, modifying the pool factory to use Cre
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GearboxLinearPoolFactory` artifact](./artifact/GearboxLinearPoolFactory.json)
 - [`GearboxLinearPool` artifact](./artifact/GearboxLinearPool.json)
