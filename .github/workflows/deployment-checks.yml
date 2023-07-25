@@ -97,6 +97,16 @@ jobs:
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
           network-name: zkevm
+  check-base-deployments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Base Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
+        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+        with:
+          network-name: base
   check-goerli-deployments:
     runs-on: ubuntu-latest
     steps:
