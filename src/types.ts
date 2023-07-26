@@ -16,6 +16,7 @@ export const NETWORKS = [
   'avalanche',
   'zkevm',
   'sepolia',
+  'base',
 ];
 
 export type Network = (typeof NETWORKS)[number];

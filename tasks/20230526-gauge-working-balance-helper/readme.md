@@ -11,6 +11,7 @@ Deployment of the `GaugeWorkingBalanceHelper`, which reads the current and proje
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GaugeWorkingBalanceHelper` artifact](./artifact/GaugeWorkingBalanceHelper.json)

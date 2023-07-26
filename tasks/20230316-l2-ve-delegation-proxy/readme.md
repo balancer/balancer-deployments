@@ -14,6 +14,7 @@ The proxy itself is the same as the [L1 proxy](../20220325-ve-delegation), excep
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`NullVotingEscrow` artifact](./artifact/NullVotingEscrow.json)

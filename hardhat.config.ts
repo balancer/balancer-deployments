@@ -337,6 +337,14 @@ export default {
           browserURL: 'https://zkevm.polygonscan.com/',
         },
       },
+      {
+        network: 'base',
+        chainId: 8453,
+        urls: {
+          apiURL: 'https://api.basescan.org/api',
+          browserURL: 'https://basescan.org/',
+        },
+      },
     ],
   },
 };
