@@ -132,7 +132,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Mainnet Deployment Addresses
+      - name: Check Mainnet Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Polygon Deployment Addresses
+      - name: Check Polygon Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Arbitrum Deployment Addresses
+      - name: Check Arbitrum Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
@@ -162,7 +162,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Optimism Deployment Addresses
+      - name: Check Optimism Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
@@ -172,7 +172,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Binance Deployment Addresses
+      - name: Check Binance Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
@@ -182,7 +182,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Gnosis Deployment Addresses
+      - name: Check Gnosis Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
@@ -192,7 +192,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Avalanche Deployment Addresses
+      - name: Check Avalanche Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
@@ -202,17 +202,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Polygon-ZkEvm Deployment Addresses
+      - name: Check Polygon-ZkEvm Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
           network-name: zkevm
+  check-base-action-ids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Base Action IDs
+        uses: ./.github/actions/check-network-action-ids
+        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+        with:
+          network-name: base
   check-goerli-action-ids:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Goerli Deployment Addresses
+      - name: Check Goerli Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
@@ -222,7 +232,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Sepolia Deployment Addresses
+      - name: Check Sepolia Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
