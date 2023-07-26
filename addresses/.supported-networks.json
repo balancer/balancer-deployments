@@ -37,6 +37,6 @@
   },
   "base": {
     "chainId": 8453,
-    "block-explorer": "https://wwstage.basescan.org"
+    "block-explorer": "https://basescan.org"
   }
 }
