@@ -210,7 +210,7 @@
         "disable()": "0x7f9f1c0ce60031b2efe78d00537ab2537cf4b0545ddbdff7f7621ae114895db3"
       }
     },
-    "LiquidityBootstrappingPool": {
+    "NoProtocolFeeLiquidityBootstrappingPool": {
       "useAdaptor": false,
       "factoryOutput": "0x71528afe250438e184b2deAF7947f0f45931DF3b",
       "actionIds": {
