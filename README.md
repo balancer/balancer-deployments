@@ -124,7 +124,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Composable Stable Pools V5                             | [`20230711-composable-stable-pool-v5`](./tasks/20230711-composable-stable-pool-v5)                   |
 | L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./tasks/20230712-child-chain-gauge-checkpointer)         |
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./tasks/20230717-chainlink-rate-provider-factory)       |
-| Stakeless Gauge Checkpointer                           | [`20230731-stakeless-gauge-checkpointer`](./tasks/20230725-stakeless-gauge-checkpointer)             |
+| Stakeless Gauge Checkpointer                           | [`20230731-stakeless-gauge-checkpointer`](./tasks/20230731-stakeless-gauge-checkpointer)             |
 
 ## Scripts
 
