@@ -542,5 +542,14 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230731-stakeless-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "StakelessGaugeCheckpointer",
+        "address": "0x96484f2aBF5e58b15176dbF1A799627B53F13B6d"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
