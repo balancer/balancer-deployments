@@ -1,5 +1,4 @@
 {
   "ERC4626LinearPoolFactory": "0x89857161e0ad36F8c5a537733c1FCf7145220AaE",
-  "MockERC4626Token": "",
-  "MockERC4626LinearPool": ""
+  "MockERC4626Token": "0x1802953277FD955f9a254B80Aa0582f193cF1d77"
 }

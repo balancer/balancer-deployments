@@ -17,6 +17,7 @@ token.
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fantom mainnet addresses](./output/fantom.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)

@@ -1,4 +1,5 @@
 {
   "Vault": "0x20dd72Ed959b6147912C2e529F0a0C651c33c9ce",
-  "ProtocolFeesCollector": "0xc6920d3a369e7c8bd1a22dbe385e11d1f7af948f"
+  "ProtocolFeesCollector": "0xC6920d3a369E7c8BD1A22DbE385e11d1F7aF948F",
+  "BalancerHelpers": "0x230a59F4d9ADc147480f03B0D3fFfeCd56c3289a"
 }

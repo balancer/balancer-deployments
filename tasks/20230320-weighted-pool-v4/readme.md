@@ -14,6 +14,7 @@ Supersedes `20230206-weighted-pool-v3`.
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fantom mainnet addresses](./output/fantom.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
