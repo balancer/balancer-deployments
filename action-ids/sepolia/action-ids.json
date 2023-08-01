@@ -546,5 +546,19 @@
         "updateTokenRateCache(address)": "0xa61915a6a08fd242acb4f68477be1b7f619a6038e3d3e9830f4c8e4044270542"
       }
     }
+  },
+  "20230731-stakeless-gauge-checkpointer": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xfb5e569a8fded8509b8f07683a408ae649905de2b4b5a23621091145471c2537",
+        "addGaugesWithVerifiedType(string,address[])": "0x516e0b4b978cc577a90225512d3d6da9b9621c8bebdfb96229418f24f758eb18",
+        "checkpointGaugesAboveRelativeWeight(uint256)": "0x52ff9128f3c90fc493e200f0a4e0813631a9cc6644126e0cc5b1b1b9f6fcfc9c",
+        "checkpointGaugesOfTypeAboveRelativeWeight(string,uint256)": "0x5544730b2837275dbdc92e72bdff78b0f0ae9c1d7444ad723ea8ab02be1d2af9",
+        "checkpointMultipleGauges(string[],address[])": "0x16914633867733033c39f475ea86e45152bea73352660ce0cc56d068c4925b69",
+        "checkpointSingleGauge(string,address)": "0x53b1331ae0637068394da3bf779b66ffa030fa63396b9e4585fa759385a9e5d5",
+        "removeGauges(string,address[])": "0x5ffb7b84f97324ae02f37b6c4ca4558f8eb509a560ca8868087a5c64278f23d2"
+      }
+    }
   }
 }
