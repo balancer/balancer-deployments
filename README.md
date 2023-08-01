@@ -118,13 +118,13 @@ Returns an object with all contracts from a deployment and their addresses.
 | L2 VeBoost V2                                          | [`20230525-l2-veboost-v2`](./tasks/20230525-l2-veboost-v2)                                           |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./tasks/20230526-gauge-working-balance-helper)             |
-| L2 Gauge Checkpointer                                  | [`20230527-l2-gauge-checkpointer`](./tasks/20230527-l2-gauge-checkpointer)                           |
 | Avalanche Root Gauge, for veBAL voting                 | [`20230529-avalanche-root-gauge-factory`](./tasks/20230529-avalanche-root-gauge-factory)             |
 | Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./tasks/20230522-timelock-authorizer)                               |
 | Pool Data Queries for bulk operations                  | [`20230613-balancer-pool-data-queries`](./tasks/20230613-balancer-pool-data-queries)                 |
 | Composable Stable Pools V5                             | [`20230711-composable-stable-pool-v5`](./tasks/20230711-composable-stable-pool-v5)                   |
 | L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./tasks/20230712-child-chain-gauge-checkpointer)         |
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./tasks/20230717-chainlink-rate-provider-factory)       |
+| Stakeless Gauge Checkpointer                           | [`20230731-stakeless-gauge-checkpointer`](./tasks/20230731-stakeless-gauge-checkpointer)             |
 
 ## Scripts
 
@@ -195,3 +195,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Linear Pools for Gearbox Tokens                     | [`20230213-gearbox-linear-pool`](./tasks/deprecated/20230213-gearbox-linear-pool)                       |
 | Linear Pools for Silo Tokens                        | [`20230315-silo-linear-pool`](./tasks/deprecated/20230315-silo-linear-pool)                             |
 | Composable Stable Pools V4                          | [`20230320-composable-stable-pool-v4`](./tasks/deprecated/20230320-composable-stable-pool-v4)           |
+| L2 Gauge Checkpointer                               | [`20230527-l2-gauge-checkpointer`](./tasks/deprecated/20230527-l2-gauge-checkpointer)                   |
