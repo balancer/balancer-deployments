@@ -5,4 +5,6 @@ Replaces the [`L2GaugeCheckpointer`](../deprecated/20230527-l2-gauge-checkpointe
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`StakelessGaugeCheckpointer` artifact](./artifact/StakelessGaugeCheckpointer.json)
