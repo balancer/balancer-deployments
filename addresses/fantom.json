@@ -1,0 +1,55 @@
+{
+  "20210418-authorizer": {
+    "contracts": [
+      {
+        "name": "Authorizer",
+        "address": "0x974D3FF709D84Ba44cde3257C0B5B0b14C081Ce9"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20210418-vault": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0x20dd72Ed959b6147912C2e529F0a0C651c33c9ce"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xC6920d3a369E7c8BD1A22DbE385e11d1F7aF948F"
+      },
+      {
+        "name": "BalancerHelpers",
+        "address": "0x230a59F4d9ADc147480f03B0D3fFfeCd56c3289a"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220325-authorizer-adaptor": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptor",
+        "address": "0xf7D5DcE55E6D47852F054697BAB6A1B48A00ddbd"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x45fFd460cC6642B8D8Fb12373DFd77Ceb0f4932B"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220721-balancer-queries": {
+    "contracts": [
+      {
+        "name": "BalancerQueries",
+        "address": "0x1B0A42663DF1edeA171cD8732d288a81EFfF6d23"
+      }
+    ],
+    "status": "ACTIVE"
+  }
+}

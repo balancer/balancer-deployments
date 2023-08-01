@@ -345,6 +345,14 @@ export default {
           browserURL: 'https://basescan.org/',
         },
       },
+      {
+        network: 'fantom',
+        chainId: 250,
+        urls: {
+          apiURL: 'https://api.ftmscan.com/api',
+          browserURL: 'https://ftmscan.com',
+        },
+      },
     ],
   },
 };

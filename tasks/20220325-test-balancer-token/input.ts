@@ -15,4 +15,7 @@ export default {
   base: {
     Admin: '0xC40DCFB13651e64C8551007aa57F9260827B6462',
   },
+  fantom: {
+    Admin: '0x9d0327954009C59eD70Dc98b7726e911879d4D92',
+  },
 };
