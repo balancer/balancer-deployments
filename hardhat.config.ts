@@ -351,8 +351,8 @@ export default {
         urls: {
           apiURL: 'https://api.ftmscan.com/api',
           browserURL: 'https://ftmscan.com',
-        }
-      }
+        },
+      },
     ],
   },
 };
