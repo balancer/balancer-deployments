@@ -1,3 +1,4 @@
 {
-  "ComposableStablePoolFactory": "0x23F03a4fb344d8B98833d2ACe093cc305E03474f"
+  "ComposableStablePoolFactory": "0x23F03a4fb344d8B98833d2ACe093cc305E03474f",
+  "MockComposableStablePool": "0xAe3Cf8Cb5D85f8B826A2181729Df3D1760827529"
 }

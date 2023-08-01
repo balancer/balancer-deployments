@@ -65,6 +65,23 @@
         "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0x4d1253ae7f9df22ca46a6866392d11b78ecb70b156befba6782a440a2399a2ca",
         "disable()": "0x5dc061964dc7fa8f96ce7cf63544a2e11dd5742f489bdb3bcd4eeda4cc2a66fd"
       }
+    },
+    "ComposableStablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xAe3Cf8Cb5D85f8B826A2181729Df3D1760827529",
+      "actionIds": {
+        "disableRecoveryMode()": "0x31359e0480ea394c15803ccab9cba90edfc22c09fe2ca2d2413fdee65767be3f",
+        "enableRecoveryMode()": "0xf0b6d3e3c6a1969c377ea7e189a1f16f6243a75778ba6901cb286363e9410e21",
+        "pause()": "0x413bc23b4c27dd9a6d696a6fcced40ad72d5cf945d87514801ae29d45cc13388",
+        "setAssetManagerPoolConfig(address,bytes)": "0x9c1904a989511ec641cd18c63fbc1ae33c081040e7f803ffa12e3fd0e055d2c8",
+        "setSwapFeePercentage(uint256)": "0x7e5ec55641b59be25255556d1e9ed11e869360f5646f587f3678f9e6661a5fc3",
+        "setTokenRateCacheDuration(address,uint256)": "0x2c8288ebcf9eb14920bdaab799e7f29c395fa812c9fa97d086e5228235c36136",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0xde8d32d8b381db796491ef5f0b177da5b8cfb67583752e18bdb658549c736baa",
+        "stopAmplificationParameterUpdate()": "0x8537ba25ce5193fdc181497f6e7aae9492f6e272b3dea43d72282595532197d0",
+        "unpause()": "0x937d934b501d2611f3614b67b047714bb3c6c216eb1efe3a753fe50508ab0790",
+        "updateProtocolFeePercentageCache()": "0xd6d9e3d3006f3967b419615abb5d505c443faf1b1af3def9ad29a4f0aa18c133",
+        "updateTokenRateCache(address)": "0x35647f916b37d1d05c8dad77026b94a26b851939dfe6c942fc764242522ba53e"
+      }
     }
   },
   "20230320-weighted-pool-v4": {
@@ -95,6 +112,19 @@
       "actionIds": {
         "create(string,string,address,address,uint256,uint256,address,uint256,bytes32)": "0x89a13bf88bcdc8483dea737302a2d07f6d4ff07eb132aab69265148b1caacf33",
         "disable()": "0xe62ed2de0300c8b9b910b875b78229d00c4f4bd887e7e2602a7081217b66d487"
+      }
+    },
+    "ERC4626LinearPool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x92502cD8E00f5b8e737b2Ba203FDd7CD27B23c8f",
+      "actionIds": {
+        "disableRecoveryMode()": "0x51b579ee40c87eb7a3e18c89d6e84fa55eb2bff0332e9c418d9be8fa6167cdc5",
+        "enableRecoveryMode()": "0x4df871351c2d130e0d29357db60b9c3dc20b1fb2ed631cccfdbbf5640fcd3996",
+        "initialize()": "0x417e0ad931c374e8177ab32e3c5bdfc26690b61f3c11e83e877a08a19e1cf6b8",
+        "pause()": "0xbd50fb5fdc861f71c03920f38e2c14e27caf146c56db34712a866dced7e311d7",
+        "setSwapFeePercentage(uint256)": "0x2cf65b90223681ba4cb5811654fbae53288920c88cf171b0514b6012d5b3a4c9",
+        "setTargets(uint256,uint256)": "0xfd962f4ab56e6686ced4b4d741d13cd597a56df94f84321583fed3d2ca45fb24",
+        "unpause()": "0xc7a93e5df83d3f685db92589ae9c21a23f479904887d1db33e5af29284f1aafc"
       }
     }
   }
