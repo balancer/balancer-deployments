@@ -1144,7 +1144,7 @@
         "address": "0xc57b4BE50BF6BBe5f6a4fE379DA342B32b37bF2f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
