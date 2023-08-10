@@ -19,9 +19,7 @@ pragma experimental ABIEncoderV2;
  * @dev Partial interface for LayerZero BAL proxy.
  */
 interface ILayerZeroBALProxy {
-    /**
-     * @dev Emitted when `_amount` tokens are moved from the sender `_from` to (`_dstChainId`, `_toAddress`)
-     */
+    /// @dev Emitted when `_amount` tokens are moved from the sender `_from` to (`_dstChainId`, `_toAddress`)
     event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes32 indexed _toAddress, uint256 _amount);
 
     function owner() external view returns (address);
