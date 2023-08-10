@@ -20,8 +20,7 @@ pragma experimental ABIEncoderV2;
  */
 interface ILayerZeroBALProxy {
     /**
-     * @dev Emitted when `_amount` tokens are moved from the `_sender` to (`_dstChainId`, `_toAddress`)
-     * `_nonce` is the outbound nonce
+     * @dev Emitted when `_amount` tokens are moved from the sender `_from` to (`_dstChainId`, `_toAddress`)
      */
     event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes32 indexed _toAddress, uint256 _amount);
 

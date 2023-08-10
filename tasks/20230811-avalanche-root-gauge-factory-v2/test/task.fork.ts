@@ -34,10 +34,9 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
 
   let task: Task;
   let minimumBridgeAmount: BigNumber;
+  let balProxyAddress: string;
 
   const LZ_AVAX_CHAIN_ID = 106;
-  // Address of wrapped BAL for the bridge
-  const LZ_BAL_PROXY = '0xE15bCB9E0EA69e6aB9FA080c4c4A5632896298C3';
   const DAO_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
   const VEBAL_POOL = '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56';
   const VAULT_BOUNTY = fp(1000);
@@ -48,6 +47,8 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
     task = new Task('20230811-avalanche-root-gauge-factory-v2', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     factory = await task.deployedInstance('AvalancheRootGaugeFactory');
+    const input = task.input() as AvalancheRootGaugeFactoryDeployment;
+    balProxyAddress = input.BALProxy;
   });
 
   before('setup accounts', async () => {
@@ -95,7 +96,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
     const weightedPoolTask = new Task('20210418-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
     bal80weth20Pool = await weightedPoolTask.instanceAt('WeightedPool2Tokens', VEBAL_POOL);
 
-    lzBalProxy = await instanceAt('ILayerZeroBALProxy', LZ_BAL_PROXY);
+    lzBalProxy = await instanceAt('ILayerZeroBALProxy', balProxyAddress);
   });
 
   before('create veBAL whale', async () => {
@@ -163,7 +164,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
   });
 
   it('stores the BAL proxy from Layer Zero', async () => {
-    expect(await gauge.getBALProxy()).to.eq(LZ_BAL_PROXY);
+    expect(await gauge.getBALProxy()).to.eq(balProxyAddress);
   });
 
   it('stores the recipient', async () => {
@@ -240,7 +241,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
       mintReceipt,
       {
         from: gauge.address,
-        to: LZ_BAL_PROXY,
+        to: balProxyAddress,
       },
       BAL
     );
@@ -313,7 +314,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
       receipt,
       {
         from: gauge.address,
-        to: LZ_BAL_PROXY,
+        to: balProxyAddress,
       },
       BAL
     );
@@ -359,7 +360,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
               receipt,
               {
                 from: mockGauge.address,
-                to: LZ_BAL_PROXY,
+                to: balProxyAddress,
               },
               BAL
             );
