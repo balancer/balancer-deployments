@@ -15,6 +15,10 @@
     "chainId": 56,
     "block-explorer": "https://bscscan.com"
   },
+  "gnosis": {
+    "chainId": 100,
+    "block-explorer": "https://gnosisscan.io"
+  },
   "goerli": {
     "chainId": 5,
     "block-explorer": "https://goerli.etherscan.io"
