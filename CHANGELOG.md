@@ -29,7 +29,7 @@
 - Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism, Gnosis, Avalanche and zkEVM.
 - Deployed `L2GaugeCheckpointer` to Mainnet.
 - Deployed `GaugeWorkingBalanceHelper` to all networks.
-- Deployed `AvalancheRootGaugeFactory` to Mainnet.
+- Deployed `AvalancheRootGaugeFactory` V2 to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
 - Deployed `TimelockAuthorizer` to Sepolia.
 - Deployed `ComposableStablePoolFactory` V5 to all networks.
@@ -52,6 +52,7 @@
 - Deprecated `20230320-composable-stable-pool-v4`.
 - Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
 - Deprecated `20230527-l2-gauge-checkpointer`.
+- Deprecated `20230529-avalanche-root-gauge-factory`.
 
 ### New Networks
 
