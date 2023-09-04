@@ -6,4 +6,5 @@ Replaces [Avalanche root gauge V1](../deprecated/20230529-avalanche-root-gauge-f
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`AvalancheRootGaugeFactory` artifact](./artifact/AvalancheRootGaugeFactory.json)

@@ -1185,5 +1185,18 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230811-avalanche-root-gauge-factory-v2": {
+    "contracts": [
+      {
+        "name": "AvalancheRootGaugeFactory",
+        "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
+      },
+      {
+        "name": "AvalancheRootGauge",
+        "address": "0x3Eae4a1c2E36870A006E816930d9f55DF0a72a13"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
