@@ -1,8 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
+import { BigNumberish, Contract } from 'ethers';
 
-import { BigNumber, fp, FP_ONE } from '@helpers/numbers';
+import { BigNumber, bn, fp, FP_ONE } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
@@ -40,6 +40,11 @@ describeForkTest('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
   const VAULT_BOUNTY = fp(1000);
 
   const weightCap = fp(0.001);
+
+  // And the gauge then deposits those in the predicate via the bridge mechanism
+  const bridgeInterface = new ethers.utils.Interface([
+    'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
+  ]);
 
   before('run task', async () => {
     task = new Task('20230911-base-root-gauge-factory', TaskMode.TEST, getForkedNetwork(hre));
@@ -296,11 +301,6 @@ describeForkTest('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
 
     expect(transferEvent.args.value).to.be.almostEqual(expectedEmissions);
 
-    // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
-      'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-    ]);
-
     const depositEvent = expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: L2BALToken,
@@ -309,5 +309,68 @@ describeForkTest('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     });
 
     expect(depositEvent.args._amount).to.be.almostEqual(expectedEmissions);
+  });
+
+  describe('multiple bridges (mock gauge)', () => {
+    let mockGauge: Contract;
+    let mockRecipient: string;
+    let bridgeAddress: string;
+
+    sharedBeforeEach(async () => {
+      const input = task.input() as BaseRootGaugeFactoryDeployment;
+      // We need to set force to `true`.
+      mockGauge = await task.deploy(
+        'MockBaseRootGauge',
+        [input.BalancerMinter, input.L1StandardBridge, input.BaseBAL],
+        admin,
+        true
+      );
+      mockRecipient = await mockGauge.getRecipient();
+      bridgeAddress = input.L1StandardBridge;
+
+      // Fund mock gauge with BAL
+      const mintAction = await actionId(BALTokenAdmin, 'mint');
+      await authorizer.connect(daoMultisig).grantRole(mintAction, admin.address);
+      await BALTokenAdmin.mint(mockGauge.address, fp(100000));
+    });
+
+    function itBridgesTokens(amount: BigNumberish) {
+      it(`bridges ${amount}`, async () => {
+        const bnAmount = BigNumber.from(amount);
+        const receipt = await (await mockGauge.bridge(amount)).wait();
+
+        const transferEvent = expectTransferEvent(
+          receipt,
+          {
+            from: mockGauge.address,
+            to: bridgeAddress,
+          },
+          BAL
+        );
+        expect(transferEvent.args.value).to.be.eq(bnAmount);
+
+        const depositEvent = expectEvent.inIndirectReceipt(receipt, bridgeInterface, 'ERC20DepositInitiated', {
+          _l1Token: BAL,
+          _l2Token: L2BALToken,
+          _from: mockGauge.address,
+          _to: mockRecipient,
+        });
+
+        expect(depositEvent.args._amount).to.be.almostEqual(bnAmount);
+      });
+    }
+
+    context('round amounts', () => {
+      for (let amount = bn(1); amount.lte(fp(10000)); amount = amount.mul(10)) {
+        itBridgesTokens(amount);
+      }
+    });
+
+    context('non-round amounts', () => {
+      for (let amount = bn(1); amount.lte(fp(10000)); amount = amount.mul(10)) {
+        const randomInt = (max: BigNumber) => BigNumber.from(ethers.utils.randomBytes(32)).mod(max);
+        itBridgesTokens(amount.add(randomInt(amount.mul(8))));
+      }
+    });
   });
 });
