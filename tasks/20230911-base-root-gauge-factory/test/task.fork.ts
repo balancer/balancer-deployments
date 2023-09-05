@@ -318,7 +318,9 @@ describeForkTest('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
 
     sharedBeforeEach(async () => {
       const input = task.input() as BaseRootGaugeFactoryDeployment;
+
       // We need to set force to `true`.
+      // The mock root gauge code is in the monorepo, in liquidity-mining/contracts/test.
       mockGauge = await task.deploy(
         'MockBaseRootGauge',
         [input.BalancerMinter, input.L1StandardBridge, input.BaseBAL],
