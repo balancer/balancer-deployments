@@ -337,6 +337,7 @@ describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function (
     sharedBeforeEach(async () => {
       const input = task.input() as AvalancheRootGaugeFactoryDeployment;
       // We need to set force to `true`.
+      // Source code for this Mock is in src/helpers/contracts
       mockGauge = await task.deploy('MockAvalancheRootGauge', [input.BalancerMinter, input.BALProxy], admin, true);
 
       // Fund mock gauge with BAL
