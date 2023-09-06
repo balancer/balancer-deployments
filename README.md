@@ -125,6 +125,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./tasks/20230717-chainlink-rate-provider-factory)       |
 | Stakeless Gauge Checkpointer                           | [`20230731-stakeless-gauge-checkpointer`](./tasks/20230731-stakeless-gauge-checkpointer)             |
 | Avalanche Root Gauge V2, for veBAL voting              | [`20230811-avalanche-root-gauge-factory-v2`](./tasks/20230811-avalanche-root-gauge-factory-v2)       |
+| Base Root Gauge, for veBAL voting                      | [`20230911-base-root-gauge-factory`](./tasks/20230911-base-root-gauge-factory)                       |
 
 ## Scripts
 
