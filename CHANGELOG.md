@@ -36,6 +36,7 @@
 - Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
 - Deployed `ChainlinkRateProviderFactory` to all networks.
 - Deployed `StakelessGaugeCheckpointer` to Ethereum and Sepolia.
+- Deployed `BaseRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 
