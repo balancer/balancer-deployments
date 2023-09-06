@@ -1198,5 +1198,18 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20230911-base-root-gauge-factory": {
+    "contracts": [
+      {
+        "name": "BaseRootGaugeFactory",
+        "address": "0x8e3B64b3737097F283E965869e3503AA20F31E4D"
+      },
+      {
+        "name": "BaseRootGauge",
+        "address": "0x9a4d642b9876231BB9062559521A48097abFe6CB"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }

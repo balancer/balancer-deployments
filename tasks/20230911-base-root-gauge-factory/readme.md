@@ -5,4 +5,5 @@ This uses the same L1StandardBridge as Optimism, and has no special requirements
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`BaseRootGaugeFactory` artifact](./artifact/BaseRootGaugeFactory.json)
