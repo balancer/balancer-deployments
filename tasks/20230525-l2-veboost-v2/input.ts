@@ -27,4 +27,8 @@ export default {
   zkevm: {
     VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
   },
+  // https://basescan.org/address/0xE241C6e48CA045C7f631600a0f1403b2bFea05ad
+  base: {
+    VotingEscrow: '0xE241C6e48CA045C7f631600a0f1403b2bFea05ad',
+  },
 };
