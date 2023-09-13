@@ -298,6 +298,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20230525-l2-veboost-v2": {
+    "contracts": [
+      {
+        "name": "VeBoostV2",
+        "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
       {
