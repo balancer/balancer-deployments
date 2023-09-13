@@ -402,6 +402,50 @@ describeForkTest('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 17332499, fu
         itPerformsCheckpoint();
       });
 
+      context('when checkpointing multiple gauges (single type)', () => {
+        sharedBeforeEach(async () => {
+          gaugeDataAboveMinWeight = gnosisGaugeDataAboveMinWeight;
+
+          performCheckpoint = async () => {
+            const tx = await stakelessGaugeCheckpointer.checkpointMultipleGaugesOfMatchingType(
+              GaugeType[GaugeType.Gnosis],
+              gaugeDataAboveMinWeight.map((gaugeData) => gaugeData.address)
+            );
+            return await tx.wait();
+          };
+        });
+
+        itPerformsCheckpoint();
+      });
+
+      context('when checkpointing multiple gauges (multiple types)', () => {
+        sharedBeforeEach(async () => {
+          gaugeDataAboveMinWeight = [...arbitrumGaugeDataAboveMinWeight, ...polygonGaugeDataAboveMinWeight];
+          // An array with one string representing the type for each of the gauges to checkpoint
+          const matchingTypesArray = [
+            Array(arbitrumGaugeDataAboveMinWeight.length).fill(GaugeType[GaugeType.Arbitrum]),
+            Array(polygonGaugeDataAboveMinWeight.length).fill(GaugeType[GaugeType.Polygon]),
+          ].flat();
+
+          // In this case we are mixing Arbitrum gauges, so we need to pay bridge costs.
+          const value = await stakelessGaugeCheckpointer.getGaugeTypesBridgeCost(
+            [GaugeType[GaugeType.Arbitrum], GaugeType[GaugeType.Polygon]],
+            minRelativeWeight
+          );
+
+          performCheckpoint = async () => {
+            const tx = await stakelessGaugeCheckpointer.checkpointMultipleGauges(
+              matchingTypesArray,
+              gaugeDataAboveMinWeight.map((gaugeData) => gaugeData.address),
+              { value }
+            );
+            return await tx.wait();
+          };
+        });
+
+        itPerformsCheckpoint();
+      });
+
       function itPerformsCheckpoint() {
         it('performs a checkpoint for (non-checkpointed) gauges', async () => {
           const receipt = await performCheckpoint();
