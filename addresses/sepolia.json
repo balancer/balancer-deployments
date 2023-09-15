@@ -551,5 +551,14 @@
       }
     ],
     "status": "DEPRECATED"
+  },
+  "20230915-stakeless-gauge-checkpointer-v2": {
+    "contracts": [
+      {
+        "name": "StakelessGaugeCheckpointer",
+        "address": "0x268E2EE1413D768b6e2dc3F5a4ddc9Ae03d9AF42"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }

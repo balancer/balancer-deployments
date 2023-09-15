@@ -35,7 +35,7 @@
 - Deployed `ComposableStablePoolFactory` V5 to all networks.
 - Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
 - Deployed `ChainlinkRateProviderFactory` to all networks.
-- Deployed `StakelessGaugeCheckpointer` to Ethereum and Sepolia.
+- Deployed `StakelessGaugeCheckpointer` V2 to Ethereum and Sepolia.
 - Deployed `BaseRootGaugeFactory` to Mainnet.
 
 ### Deprecations
@@ -54,6 +54,7 @@
 - Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
 - Deprecated `20230527-l2-gauge-checkpointer`.
 - Deprecated `20230529-avalanche-root-gauge-factory`.
+- Deprecated `20230731-stakeless-gauge-checkpointer`.
 
 ### New Networks
 
