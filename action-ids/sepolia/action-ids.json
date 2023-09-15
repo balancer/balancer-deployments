@@ -560,5 +560,20 @@
         "removeGauges(string,address[])": "0x5ffb7b84f97324ae02f37b6c4ca4558f8eb509a560ca8868087a5c64278f23d2"
       }
     }
+  },
+  "20230915-stakeless-gauge-checkpointer-v2": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xc95d3ad2c3312c8ea5b8aaf0f3dde4fceb2afd5f7902c01034f81b17027b45b6",
+        "addGaugesWithVerifiedType(string,address[])": "0x04aa570fe83bc6077c318bf2123835160ead27dbffa8fb50c088de73cd414d03",
+        "checkpointAllGaugesAboveRelativeWeight(uint256)": "0x344e0f6b0d7665ce6c8684c11b7097d0bbb4e518e39eeeef0d48b9c72bfc0276",
+        "checkpointGaugesOfTypesAboveRelativeWeight(string[],uint256)": "0xdb96afea6e0027b68e987f10c7611eb3e236dc83d27e05efede6b80c5837fc10",
+        "checkpointMultipleGauges(string[],address[])": "0xb5da45177833df9e8eb9de30d50cdd0481ca473ea88789969ddb82d117bcbbda",
+        "checkpointMultipleGaugesOfMatchingType(string,address[])": "0xb9a1c3e3d9b75ce2d77ca777367e91fbd19117dd8ab54ac4df2341058d6ffa5a",
+        "checkpointSingleGauge(string,address)": "0x7f5601aaf83c543109540061beb071a2df24fbfc92447d6865a719857c26592c",
+        "removeGauges(string,address[])": "0x8893551f3687759577a63e3bb2353198881cc5e60fc93eb79a26f7560a927326"
+      }
+    }
   }
 }
