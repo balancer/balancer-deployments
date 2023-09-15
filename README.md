@@ -123,9 +123,9 @@ Returns an object with all contracts from a deployment and their addresses.
 | Composable Stable Pools V5                             | [`20230711-composable-stable-pool-v5`](./tasks/20230711-composable-stable-pool-v5)                   |
 | L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./tasks/20230712-child-chain-gauge-checkpointer)         |
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./tasks/20230717-chainlink-rate-provider-factory)       |
-| Stakeless Gauge Checkpointer                           | [`20230731-stakeless-gauge-checkpointer`](./tasks/20230731-stakeless-gauge-checkpointer)             |
 | Avalanche Root Gauge V2, for veBAL voting              | [`20230811-avalanche-root-gauge-factory-v2`](./tasks/20230811-avalanche-root-gauge-factory-v2)       |
 | Base Root Gauge, for veBAL voting                      | [`20230911-base-root-gauge-factory`](./tasks/20230911-base-root-gauge-factory)                       |
+| Stakeless Gauge Checkpointer V2                        | [`20230915-stakeless-gauge-checkpointer-v2`](./tasks/20230915-stakeless-gauge-checkpointer-v2)       |
 
 ## Scripts
 
@@ -198,3 +198,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Composable Stable Pools V4                          | [`20230320-composable-stable-pool-v4`](./tasks/deprecated/20230320-composable-stable-pool-v4)           |
 | L2 Gauge Checkpointer                               | [`20230527-l2-gauge-checkpointer`](./tasks/deprecated/20230527-l2-gauge-checkpointer)                   |
 | Avalanche Root Gauge, for veBAL voting              | [`20230529-avalanche-root-gauge-factory`](./tasks/deprecated/20230529-avalanche-root-gauge-factory)     |
+| Stakeless Gauge Checkpointer                        | [`20230731-stakeless-gauge-checkpointer`](./tasks/deprecated/20230731-stakeless-gauge-checkpointer)     |
