@@ -5,4 +5,6 @@ Replaces the [`StakelessGaugeCheckpointer V1`](../deprecated/20230731-stakeless-
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`StakelessGaugeCheckpointer` artifact](./artifact/StakelessGaugeCheckpointer.json)
