@@ -933,6 +933,19 @@
     ],
     "status": "ACTIVE"
   },
+  "20230522-timelock-authorizer": {
+    "contracts": [
+      {
+        "name": "TimelockAuthorizerMigrator",
+        "address": "0x47B489bf5836f83ABD928C316F8e39bC0587B020"
+      },
+      {
+        "name": "TimelockAuthorizer",
+        "address": "0x4AF28bFfB71fb56fBB5518b50CfA17e3fCEe19e1"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
       {
