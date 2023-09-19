@@ -481,11 +481,11 @@
     "contracts": [
       {
         "name": "TimelockAuthorizerMigrator",
-        "address": "0x5cF4928a3205728bd12830E1840F7DB85c62a4B9"
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
       },
       {
         "name": "TimelockAuthorizer",
-        "address": "0x2A154bc57D8584566B018A100fF20b94459E27eb"
+        "address": "0x693A9Aca2f7b699BBd3d55d980Ac8a5D7a66868B"
       }
     ],
     "status": "ACTIVE"
