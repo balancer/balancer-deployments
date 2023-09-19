@@ -32,7 +32,6 @@ import {
   saveContractDeploymentAddresses,
   saveTimelockAuthorizerConfig,
 } from './src/network';
-import { network } from 'hardhat';
 
 const THEGRAPHURLS: { [key: string]: string } = {
   goerli: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-authorizer-goerli',
