@@ -4,8 +4,6 @@ import Task, { TaskStatus } from './task';
 
 import { Network } from './types';
 import { getActionIdInfo } from 'actionId';
-import { actionId } from '@helpers/models/misc/actions';
-import { delay } from 'lodash';
 import { timestampToString } from '@helpers/time';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
@@ -116,46 +114,106 @@ export function checkContractDeploymentAddresses(tasks: Task[], network: string)
   return _stringifyEntries(allTaskEntries) === existingFileContents;
 }
 
+/**
+ * Builds and saves the timelock authorizer config JSON file, containing grant and execution delays.
+ * It is based in the input configuration in the deployment task for the given network.
+ */
 export async function saveTimelockAuthorizerConfig(task: Task, network: string) {
-  if (network === 'hardhat') return;
+  const allDelays = _buildTimelockAuthorizerConfig(task, network);
+  if (Object.keys(allDelays).length > 0) {
+    const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
+    fs.writeFileSync(filePath, _stringifyEntries(allDelays));
+  }
+}
 
+/**
+ * Returns true if the config file in `TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY` has the right configuration for the
+ * network, and false otherwise.
+ * If the timelock authorizer is not deployed for a given network, the file should not exist.
+ * If the timelock authorizer is deployed for a given network, the file should exist and not be empty.
+ */
+export function checkTimelockAuthorizerConfig(task: Task, network: string): boolean {
+  const allDelays = _buildTimelockAuthorizerConfig(task, network);
+
+  let taskHasOutput = true;
+  try {
+    task.output();
+  } catch {
+    taskHasOutput = false;
+  }
+
+  const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
+  const fileExists = fs.existsSync(filePath) && fs.statSync(filePath).isFile();
+
+  // If the task has an output, there should be a file and vice-versa.
+  // If the task has an output, the configuration cannot be empty.
+  if (taskHasOutput !== fileExists || (taskHasOutput && Object.keys(allDelays).length === 0)) {
+    return false;
+  }
+
+  // Load the existing content if any exists.
+  const existingFileContents: string = fileExists ? fs.readFileSync(filePath).toString() : '{}';
+
+  return _stringifyEntries(allDelays) === existingFileContents;
+}
+
+/**
+ * Builds an object that contains the information for Grant delays and Execute delays.
+ * The resulting format reads as follows:
+ * grantDelays: [
+ *   {
+ *     "actionId": {
+ *       "taskId": "<task-name>",
+ *       "contractName": "<contract-name>",
+ *       "useAdaptor": <true | false>,
+ *       "signature": "<function-signature>",
+ *       "actionId": "<action-id-hash>"
+ *     },
+ *     "delay": {
+ *       "label": "<human-readable-delay>",
+ *       "value": <delay-in-seconds>
+ *     }
+ *   },
+ * ],
+ * executeDelays: [
+ *  (...)
+ * ]
+ * (...)
+ */
+function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
   const rawInput = task.rawInput();
-  console.log('raw input: ', rawInput);
-  const networkInput = rawInput[network];
-  console.log('network input: ', networkInput);
-  const grantDelays = await Promise.all(
+  const grantDelays =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawInput.GrantDelays.map(async (grantDelay: any) => {
+    rawInput.GrantDelays?.map((grantDelay: any) => {
       return {
-        actionId: await getActionIdInfo(grantDelay.actionId, network),
+        actionId: getActionIdInfo(grantDelay.actionId, network),
         delay: {
           label: timestampToString(grantDelay.newDelay),
           value: grantDelay.newDelay,
         },
       };
-    })
-  );
+    });
 
-  const executeDelays = await Promise.all(
+  const executeDelays =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawInput.ExecuteDelays.map(async (executeDelay: any) => {
+    rawInput.ExecuteDelays?.map((executeDelay: any) => {
       return {
-        actionId: await getActionIdInfo(executeDelay.actionId, network),
+        actionId: getActionIdInfo(executeDelay.actionId, network),
         delay: {
           label: timestampToString(executeDelay.newDelay),
           value: executeDelay.newDelay,
         },
       };
-    })
-  );
+    });
 
-  const allDelays = {
+  if (grantDelays === undefined && executeDelays === undefined) {
+    return {};
+  }
+
+  return {
     grantDelays,
     executeDelays,
   };
-
-  const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
-  fs.writeFileSync(filePath, _stringifyEntries(allDelays));
 }
 
 function _stringifyEntries(entries: object): string {
