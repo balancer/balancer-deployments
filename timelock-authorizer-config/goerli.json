@@ -1,0 +1,500 @@
+{
+  "grantDelays": [
+    {
+      "actionId": {
+        "taskId": "20220325-balancer-token-admin",
+        "contractName": "BalancerTokenAdmin",
+        "useAdaptor": false,
+        "signature": "mint(address,uint256)",
+        "actionId": "0x2315d78651468c46e4eb3cfca481a165fc94d355f1e38cb4e8c60fefdda8f86b"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "add_gauge(address,int128)",
+        "actionId": "0xf0a77343972ffaea6782864c7880d1cee9576736637f7702cb0a922223208118"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "add_gauge(address,int128,uint256)",
+        "actionId": "0xaf6651b82c68c85c61ca1ebbae0a7ef9e0ea7394dfdd74ee3b066be3b00b5bec"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "setRelayerApproval(address,address,bool)",
+        "actionId": "0x0014a06d322ff07fcc02b12f93eb77bb76e28cdee4fc0670b9dec98d24bbfec8"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "swap((bytes32,uint8,address,address,uint256,bytes),(address,bool,address,bool),uint256,uint256)",
+        "actionId": "0x7b8a1d293670124924a0f532213753b89db10bde737249d4540e9a03657d1aff"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "batchSwap(uint8,(bytes32,uint256,uint256,uint256,bytes)[],address[],(address,bool,address,bool),int256[],uint256)",
+        "actionId": "0x1282ab709b2b70070f829c46bc36f76b32ad4989fecb2fcb09a1b3ce00bbfc30"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "joinPool(bytes32,address,address,(address[],uint256[],bytes,bool))",
+        "actionId": "0x78ad1b68d148c070372f8643c4648efbb63c6a8a338f3c24714868e791367653"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "exitPool(bytes32,address,address,(address[],uint256[],bytes,bool))",
+        "actionId": "0xc149e88b59429ded7f601ab52ecd62331cac006ae07c16543439ed138dcb8d34"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "manageUserBalance((uint8,address,uint256,address,address)[])",
+        "actionId": "0xeba777d811cd36c06d540d7ff2ed18ed042fd67bbf7c9afcf88c818c7ee6b498"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "ProtocolFeesCollector",
+        "useAdaptor": false,
+        "signature": "withdrawCollectedFees(address[],uint256[],address)",
+        "actionId": "0xb2b6e48fa160a7c887d9d7a68b6a9bb9d47d4953d33e07f3a39e175d75e97796"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "ProtocolFeesCollector",
+        "useAdaptor": false,
+        "signature": "setSwapFeePercentage(uint256)",
+        "actionId": "0xb28b769768735d011b267f781c3be90bce51d5059ba015bc7a28b3e882fb2083"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "ProtocolFeesCollector",
+        "useAdaptor": false,
+        "signature": "withdrawCollectedFees(address[],uint256[],address)",
+        "actionId": "0xb2b6e48fa160a7c887d9d7a68b6a9bb9d47d4953d33e07f3a39e175d75e97796"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    }
+  ],
+  "executeDelays": [
+    {
+      "actionId": {
+        "taskId": "20210418-vault",
+        "contractName": "Vault",
+        "useAdaptor": false,
+        "signature": "setAuthorizer(address)",
+        "actionId": "0x1cbb503dcc0f4acaedf71a098211ff8b15a220fc26a6974a8d9deaab040fa6e0"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220420-smart-wallet-checker",
+        "contractName": "SmartWalletChecker",
+        "useAdaptor": false,
+        "signature": "allowlistAddress(address)",
+        "actionId": "0x552cf8a9722ea54b6fc81eef9df54cbbb0bdd80c1bdacf23d965b7bf7bd9f431"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "VotingEscrow",
+        "useAdaptor": true,
+        "signature": "apply_smart_wallet_checker()",
+        "actionId": "0xaab3dcbbea6d6ade649059061ed3e599f6af4ef510107e1f3907a073c1f09244"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-ve-delegation",
+        "contractName": "VotingEscrowDelegationProxy",
+        "useAdaptor": false,
+        "signature": "setDelegation(address)",
+        "actionId": "0x34ca00eedd53ffb79d208b3a006775f9adee47b8035872d5bf5b44660794e7b7"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "change_type_weight(int128,uint256)",
+        "actionId": "0x152991b33a10294e25bee98ea5904acd66ba104e55686c0e5c2b7c60c8b5587a"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "change_gauge_weight(address,uint256)",
+        "actionId": "0xf4026bb29355fe5b78b8cfbcc14f402a288ec32f152c4ef7abb23bf2ca67588b"
+      },
+      "delay": {
+        "label": "1 day",
+        "value": 86400
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "add_type(string)",
+        "actionId": "0xddcafee4026801d086053d165ec6a6104729fc0990d0ef6513cb2c418f390236"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-gauge-controller",
+        "contractName": "GaugeController",
+        "useAdaptor": true,
+        "signature": "add_type(string,uint256)",
+        "actionId": "0xb799cbcaf2184ce1ba2d895a50758a4942b871e9db63344a532b545651d69536"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-balancer-token-admin",
+        "contractName": "BalancerTokenAdmin",
+        "useAdaptor": false,
+        "signature": "snapshot()",
+        "actionId": "0x96133dcf4672458fd010cde802d2f7f1fd5117d5bee5b993848b76059a4d205c"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220725-protocol-fee-percentages-provider",
+        "contractName": "ProtocolFeePercentagesProvider",
+        "useAdaptor": false,
+        "signature": "registerFeeType(uint256,string,uint256,uint256)",
+        "actionId": "0x57d35b2b35f2327f31e3eb2ca76e6cfffa8b460b1504edfba7b5954bad1d364b"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220725-protocol-fee-percentages-provider",
+        "contractName": "ProtocolFeePercentagesProvider",
+        "useAdaptor": false,
+        "signature": "setFeeTypePercentage(uint256,uint256)",
+        "actionId": "0xb83d1e9cbef2b3d9321c1d0eb607a8f868eddc97d838926a6697e122b9aad078"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230404-l2-layer0-bridge-forwarder",
+        "contractName": "L2LayerZeroBridgeForwarder",
+        "useAdaptor": false,
+        "signature": "setDelegation(address)",
+        "actionId": "0x2b1063482a56fcc1993bcf1ee2a264d8d49e7ce1e26e76544e5292ab97210119"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230504-vebal-remapper",
+        "contractName": "OmniVotingEscrowAdaptor",
+        "useAdaptor": false,
+        "signature": "setAdapterParams(bytes)",
+        "actionId": "0x54c66f0926db043fd8e623ad2f5f286822e0505918e9a64d6ff6b2533148baef"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230504-vebal-remapper",
+        "contractName": "OmniVotingEscrowAdaptor",
+        "useAdaptor": false,
+        "signature": "setOmniVotingEscrow(address)",
+        "actionId": "0x051999085ef95e994d249982784051930228fa5b1555e4b6191f4e2d87ef70c4"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230504-vebal-remapper",
+        "contractName": "OmniVotingEscrowAdaptor",
+        "useAdaptor": false,
+        "signature": "setUseZero(bool)",
+        "actionId": "0x96cd69bdf8f32f9f13e2d10e9db83cf181e08962cc1e7a8523f1f9f8c22c0f16"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230504-vebal-remapper",
+        "contractName": "OmniVotingEscrowAdaptor",
+        "useAdaptor": false,
+        "signature": "setZeroPaymentAddress(address)",
+        "actionId": "0xfa08331f0860684717f0e3fa283f539e186d06f3a9f1c1d7ce29a4f4f68afaac"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-mainnet-gauge-factory",
+        "contractName": "LiquidityGaugeV5",
+        "useAdaptor": true,
+        "signature": "set_reward_distributor(address,address)",
+        "actionId": "0x75f03d945d74639aa78784e5071604aa86c170a9f4c32bdf428231d560be70b7"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230316-l2-ve-delegation-proxy",
+        "contractName": "VotingEscrowDelegationProxy",
+        "useAdaptor": false,
+        "signature": "setDelegation(address)",
+        "actionId": "0xb37c54f1251a66c91992372dad9df4ea678283452056a1aa1e743b730d469cde"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230316-l2-balancer-pseudo-minter",
+        "contractName": "L2BalancerPseudoMinter",
+        "useAdaptor": false,
+        "signature": "addGaugeFactory(address)",
+        "actionId": "0x395452eddfaf475cccb315fe68df346df514a07264ba291edb128246b94a936a"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230316-l2-balancer-pseudo-minter",
+        "contractName": "L2BalancerPseudoMinter",
+        "useAdaptor": false,
+        "signature": "removeGaugeFactory(address)",
+        "actionId": "0xd10a81975bf0c68340e10129804be1e3c504a51ac73f693f1905a66da6f067bd"
+      },
+      "delay": {
+        "label": "3 hours",
+        "value": 10800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220325-mainnet-gauge-factory",
+        "contractName": "LiquidityGaugeV5",
+        "useAdaptor": true,
+        "signature": "add_reward(address,address)",
+        "actionId": "0x6b5e3750e9adcbd4a75428ed3fc6d2d3fc8a52866660ad3778d3f8c33108edff"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220822-mainnet-gauge-factory-v2",
+        "contractName": "LiquidityGaugeV5",
+        "useAdaptor": true,
+        "signature": "setRelativeWeightCap(uint256)",
+        "actionId": "0x53ded5c23d686756f2cc6a8feb053e1a98ea78534f788670216e0617a9cf7101"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20220517-protocol-fee-withdrawer",
+        "contractName": "ProtocolFeesWithdrawer",
+        "useAdaptor": false,
+        "signature": "withdrawCollectedFees(address[],uint256[],address)",
+        "actionId": "0xaa5a0ba6d1f9627e6905842fe5a64690d039e96637fbf3530abd0960a03bf1a6"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230223-protocol-id-registry",
+        "contractName": "ProtocolIdRegistry",
+        "useAdaptor": false,
+        "signature": "registerProtocolId(uint256,string)",
+        "actionId": "0xdfc349d88d311b76af85f0bdc6a81be0e30485d488472e3813359f8e26fc1c95"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230223-protocol-id-registry",
+        "contractName": "ProtocolIdRegistry",
+        "useAdaptor": false,
+        "signature": "renameProtocolId(uint256,string)",
+        "actionId": "0x397a10db2c15733cdb7c0fad6226786d83e216ed46c740257186765f4018bec5"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    },
+    {
+      "actionId": {
+        "taskId": "20230504-vebal-remapper",
+        "contractName": "VotingEscrowRemapper",
+        "useAdaptor": false,
+        "signature": "setNetworkRemappingManager(address,address)",
+        "actionId": "0xd6aa04e37affe1a66309250024fad872cec43e5e59e0b03ab48e00abb896af64"
+      },
+      "delay": {
+        "label": "30 minutes",
+        "value": 1800
+      }
+    }
+  ]
+}
