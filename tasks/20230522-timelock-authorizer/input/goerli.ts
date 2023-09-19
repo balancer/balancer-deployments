@@ -2,9 +2,9 @@ import { DAY, HOUR } from '@helpers/time';
 import { Task, TaskMode } from '@src';
 import { DelayData, RoleData } from './types';
 
-export const TRANSITION_END_BLOCK = 4316000;
+export const TRANSITION_END_BLOCK = 9722300;
 
-const network = 'sepolia';
+const network = 'goerli';
 
 const Vault = new Task('20210418-vault', TaskMode.READ_ONLY, network);
 
@@ -27,7 +27,8 @@ const ProtocolFeePercentagesProvider = new Task(
 );
 const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.READ_ONLY, network);
 
-export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
+// Ballerinas Multisig
+export const Root = '0xe13E1EB85923981465E60d050FBfF22bF9DA857f';
 
 // Happens frequently
 const SHORT_DELAY = 0.5 * HOUR;
