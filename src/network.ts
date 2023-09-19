@@ -3,9 +3,14 @@ import path from 'path';
 import Task, { TaskStatus } from './task';
 
 import { Network } from './types';
+import { getActionIdInfo } from 'actionId';
+import { actionId } from '@helpers/models/misc/actions';
+import { delay } from 'lodash';
+import { timestampToString } from '@helpers/time';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
 const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(__dirname, '../addresses');
+const TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY = path.resolve(__dirname, '../timelock-authorizer-config');
 
 export function saveContractDeploymentTransactionHash(
   deployedAddress: string,
@@ -109,6 +114,48 @@ export function checkContractDeploymentAddresses(tasks: Task[], network: string)
   const existingFileContents: string = fileExists ? fs.readFileSync(filePath).toString() : '';
 
   return _stringifyEntries(allTaskEntries) === existingFileContents;
+}
+
+export async function saveTimelockAuthorizerConfig(task: Task, network: string) {
+  if (network === 'hardhat') return;
+
+  const rawInput = task.rawInput();
+  console.log('raw input: ', rawInput);
+  const networkInput = rawInput[network];
+  console.log('network input: ', networkInput);
+  const grantDelays = await Promise.all(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rawInput.GrantDelays.map(async (grantDelay: any) => {
+      return {
+        actionId: await getActionIdInfo(grantDelay.actionId, network),
+        delay: {
+          label: timestampToString(grantDelay.newDelay),
+          value: grantDelay.newDelay,
+        },
+      };
+    })
+  );
+
+  const executeDelays = await Promise.all(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rawInput.ExecuteDelays.map(async (executeDelay: any) => {
+      return {
+        actionId: await getActionIdInfo(executeDelay.actionId, network),
+        delay: {
+          label: timestampToString(executeDelay.newDelay),
+          value: executeDelay.newDelay,
+        },
+      };
+    })
+  );
+
+  const allDelays = {
+    grantDelays,
+    executeDelays,
+  };
+
+  const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
+  fs.writeFileSync(filePath, _stringifyEntries(allDelays));
 }
 
 function _stringifyEntries(entries: object): string {
