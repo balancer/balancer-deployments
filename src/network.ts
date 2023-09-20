@@ -181,10 +181,11 @@ export function checkTimelockAuthorizerConfig(task: Task, network: string): bool
  * (...)
  */
 function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
-  const rawInput = task.rawInput();
+  const settings = task.settings();
+
   const grantDelays =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawInput.GrantDelays?.map((grantDelay: any) => {
+    settings.GrantDelays?.map((grantDelay: any) => {
       return {
         actionId: getActionIdInfo(grantDelay.actionId, network),
         delay: {
@@ -196,7 +197,7 @@ function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
 
   const executeDelays =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawInput.ExecuteDelays?.map((executeDelay: any) => {
+    settings.ExecuteDelays?.map((executeDelay: any) => {
       return {
         actionId: getActionIdInfo(executeDelay.actionId, network),
         delay: {
