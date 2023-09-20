@@ -1,4 +1,4 @@
-import { BigNumber, ContractReceipt, providers } from 'ethers';
+import { BigNumber, ContractReceipt } from 'ethers';
 
 import { BigNumberish, bn } from './numbers';
 
@@ -31,12 +31,11 @@ export const setNextBlockTimestamp = async (timestamp: BigNumberish): Promise<vo
 
 export const lastBlockNumber = async (): Promise<number> => await time.latestBlock();
 
-export const receiptTimestamp = async (
-  receipt: ContractReceipt | Promise<ContractReceipt>,
-  provider: providers.JsonRpcProvider
-): Promise<number> => {
+export const receiptTimestamp = async (receipt: ContractReceipt | Promise<ContractReceipt>): Promise<number> => {
+  const { ethers } = await import('hardhat');
+
   const blockHash = (await receipt).blockHash;
-  const block = await provider.getBlock(blockHash);
+  const block = await ethers.provider.getBlock(blockHash);
   return block.timestamp;
 };
 
