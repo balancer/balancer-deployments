@@ -5,6 +5,8 @@ import Task, { TaskStatus } from './task';
 import { Network } from './types';
 import { getActionIdInfo } from 'actionId';
 import { timestampToString } from '@helpers/time';
+import { BigNumber } from 'ethers';
+import { bn, decimal } from '@helpers/numbers';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
 const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(__dirname, '../addresses');
@@ -135,12 +137,7 @@ export async function saveTimelockAuthorizerConfig(task: Task, network: string) 
 export function checkTimelockAuthorizerConfig(task: Task, network: string): boolean {
   const allDelays = _buildTimelockAuthorizerConfig(task, network);
 
-  let taskHasOutput = true;
-  try {
-    task.output();
-  } catch {
-    taskHasOutput = false;
-  }
+  const taskHasOutput = task.hasOutput();
 
   const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
   const fileExists = fs.existsSync(filePath) && fs.statSync(filePath).isFile();
@@ -157,12 +154,58 @@ export function checkTimelockAuthorizerConfig(task: Task, network: string): bool
   return _stringifyEntries(allDelays) === existingFileContents;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getTimelockAuthorizerConfigDiff(task: Task, network: string): Promise<any[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const diff: any[] = [];
+
+  if (!task.hasOutput()) {
+    // If the contract is not deployed for this network, return early.
+    return diff;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allDelays: any = _buildTimelockAuthorizerConfig(task, network);
+
+  const timelockAuthorizer = await task.deployedInstance('TimelockAuthorizer');
+
+  for (const delayInfo of allDelays.grantDelays) {
+    const actionId = delayInfo.actionIdInfo.actionId;
+    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdGrantDelay(actionId);
+
+    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+      diff.push({
+        actionId: delayInfo.actionIdInfo,
+        onchainDelay: decimal(onchainDelay),
+        expectedDelay: delayInfo.delay.value,
+        type: 'Grant',
+      });
+    }
+  }
+
+  for (const delayInfo of allDelays.executeDelays) {
+    const actionId = delayInfo.actionIdInfo.actionId;
+    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdDelay(actionId);
+
+    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+      diff.push({
+        actionId: delayInfo.actionIdInfo,
+        onchainDelay: decimal(onchainDelay),
+        expectedDelay: delayInfo.delay.value,
+        type: 'Execute',
+      });
+    }
+  }
+
+  return diff;
+}
+
 /**
  * Builds an object that contains the information for Grant delays and Execute delays.
  * The resulting format reads as follows:
  * grantDelays: [
  *   {
- *     "actionId": {
+ *     "actionIdInfo": {
  *       "taskId": "<task-name>",
  *       "contractName": "<contract-name>",
  *       "useAdaptor": <true | false>,
@@ -187,7 +230,7 @@ function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     settings.GrantDelays?.map((grantDelay: any) => {
       return {
-        actionId: getActionIdInfo(grantDelay.actionId, network),
+        actionIdInfo: getActionIdInfo(grantDelay.actionId, network),
         delay: {
           label: timestampToString(grantDelay.newDelay),
           value: grantDelay.newDelay,
@@ -199,7 +242,7 @@ function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     settings.ExecuteDelays?.map((executeDelay: any) => {
       return {
-        actionId: getActionIdInfo(executeDelay.actionId, network),
+        actionIdInfo: getActionIdInfo(executeDelay.actionId, network),
         delay: {
           label: timestampToString(executeDelay.newDelay),
           value: executeDelay.newDelay,

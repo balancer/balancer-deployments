@@ -292,6 +292,17 @@ export default class Task {
     return this._getDefaultExportForNetwork('settings.ts');
   }
 
+  hasOutput(): boolean {
+    let taskHasOutput = true;
+    try {
+      this.output();
+    } catch {
+      taskHasOutput = false;
+    }
+
+    return taskHasOutput;
+  }
+
   save(rawOutput: RawOutput): void {
     const output = this._parseRawOutput(rawOutput);
 
