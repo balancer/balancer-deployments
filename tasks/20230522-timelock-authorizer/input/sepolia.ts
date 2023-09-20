@@ -261,3 +261,12 @@ const actionIds = [
 if (new Set(actionIds).size !== actionIds.length) {
   throw new Error('Duplicate action ID found in configuration');
 }
+
+const delays = [
+  ExecuteDelays.map((delayData) => delayData.newDelay),
+  GrantDelays.map((delayData) => delayData.newDelay),
+].flat();
+
+if (delays.some((delay) => delay < SHORT_DELAY || delay > LONG_DELAY)) {
+  throw new Error('Delays outside expected bounds');
+}
