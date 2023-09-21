@@ -102,7 +102,7 @@ export const GrantDelays: DelayData[] = [
     newDelay: LONG_DELAY,
   },
   {
-    actionId: Vault.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'setFlashLoanFeePercentage(uint256)'),
     newDelay: LONG_DELAY,
   },
 ];
@@ -251,3 +251,23 @@ export const ExecuteDelays: DelayData[] = [
     newDelay: SHORT_DELAY,
   },
 ];
+
+// Checks
+
+const actionIds = [
+  ExecuteDelays.map((delayData) => delayData.actionId),
+  GrantDelays.map((delayData) => delayData.actionId),
+].flat();
+
+if (new Set(actionIds).size !== actionIds.length) {
+  throw new Error('Duplicate action ID found in configuration');
+}
+
+const delays = [
+  ExecuteDelays.map((delayData) => delayData.newDelay),
+  GrantDelays.map((delayData) => delayData.newDelay),
+].flat();
+
+if (delays.some((delay) => delay < SHORT_DELAY || delay > LONG_DELAY)) {
+  throw new Error('Delays outside expected bounds');
+}
