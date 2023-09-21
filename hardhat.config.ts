@@ -391,7 +391,7 @@ task(
   const configDiff = await getTimelockAuthorizerConfigDiff(tasks[0], hre.network.name);
 
   if (configDiff.length === 0) {
-    logger.success(`Timelock Authorizer config JSON is correct for network ${hre.network.name}`);
+    logger.success(`Timelock Authorizer config is correctly applied on-chain for network ${hre.network.name}`);
   } else {
     throw new Error(
       `Timelock Authorizer config file is incorrect for network ${
