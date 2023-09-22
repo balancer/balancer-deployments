@@ -148,8 +148,8 @@
         "taskId": "20210418-vault",
         "contractName": "ProtocolFeesCollector",
         "useAdaptor": false,
-        "signature": "withdrawCollectedFees(address[],uint256[],address)",
-        "actionId": "0xb2b6e48fa160a7c887d9d7a68b6a9bb9d47d4953d33e07f3a39e175d75e97796"
+        "signature": "setFlashLoanFeePercentage(uint256)",
+        "actionId": "0xbe2a180d5cc5d803a8eec4cea569989fc1c593d7eeadd1f262f360a68b0e842e"
       },
       "delay": {
         "label": "1 day",
