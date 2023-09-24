@@ -1,6 +1,6 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 
 import * as expectEvent from '@helpers/expectEvent';
 import { describeForkTest } from '@src';
@@ -293,7 +293,7 @@ describeForkTest('ComposableStablePool V5', 'mainnet', 17663500, function () {
       });
     });
   });
-
+  
   describe('read-only reentrancy protection', () => {
     let pool: Contract;
     let poolId: string;
@@ -445,6 +445,23 @@ describeForkTest('ComposableStablePool V5', 'mainnet', 17663500, function () {
     });
   });
 
+  it('cannot execute the contract halves', async () => {
+    const { contractA, contractB } = await factory.getCreationCodeContracts();
+
+    const txA = {
+      to: contractA,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    const txB = {
+      to: contractB,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    await expect(owner.sendTransaction(txA)).to.be.reverted;
+    await expect(owner.sendTransaction(txB)).to.be.reverted;
+  });
+  
   describe('factory disable', () => {
     it('the factory can be disabled', async () => {
       await authorizer.connect(govMultisig).grantRole(await actionId(factory, 'disable'), govMultisig.address);

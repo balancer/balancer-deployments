@@ -1,6 +1,6 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
@@ -152,6 +152,23 @@ describeForkTest('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet', 14
 
     // Weights are not exact due to being stored in fewer bits
     expect(await pool.getNormalizedWeights()).to.equalWithError(endWeights, 0.0001);
+  });
+
+  it('cannot execute the contract halves', async () => {
+    const { contractA, contractB } = await factory.getCreationCodeContracts();
+
+    const txA = {
+      to: contractA,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    const txB = {
+      to: contractB,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    await expect(owner.sendTransaction(txA)).to.be.reverted;
+    await expect(owner.sendTransaction(txB)).to.be.reverted;
   });
 
   it('authorized accounts can disable the factory', async () => {
