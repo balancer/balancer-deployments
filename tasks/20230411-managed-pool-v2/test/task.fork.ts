@@ -383,7 +383,7 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 17033100, function () {
     await expect(owner.sendTransaction(txA)).to.be.reverted;
     await expect(owner.sendTransaction(txB)).to.be.reverted;
   });
-  
+
   describe('factory disable', () => {
     it('the factory can be disabled', async () => {
       await authorizer.connect(govMultisig).grantRole(await actionId(factory, 'disable'), govMultisig.address);
