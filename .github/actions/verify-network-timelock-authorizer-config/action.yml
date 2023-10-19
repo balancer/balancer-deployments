@@ -11,6 +11,6 @@ runs:
     - name: Prepare Config
       run: yarn ci:prepare-config
       shell: bash
-    - name: Check Action IDs
+    - name: Check Timelock Authorizer config
       run: yarn verify-network-timelock-authorizer-config ${{ inputs.network-name }}
       shell: bash

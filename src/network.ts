@@ -118,7 +118,7 @@ export function checkContractDeploymentAddresses(tasks: Task[], network: string)
 
 /**
  * Builds and saves the timelock authorizer config JSON file, containing grant and execution delays.
- * It is based in the input configuration in the deployment task for the given network.
+ * It is based on the input configuration in the deployment task for the given network.
  */
 export async function saveTimelockAuthorizerConfig(task: Task, network: string) {
   const allDelays = _buildTimelockAuthorizerConfig(task, network);
@@ -135,6 +135,7 @@ export async function saveTimelockAuthorizerConfig(task: Task, network: string) 
  * If the timelock authorizer is deployed for a given network, the file should exist and not be empty.
  */
 export function checkTimelockAuthorizerConfig(task: Task, network: string): boolean {
+  // Returns an empty object if there are no delays defined
   const allDelays = _buildTimelockAuthorizerConfig(task, network);
 
   const taskHasOutput = task.hasOutput();
