@@ -1,6 +1,6 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { BasePoolEncoder } from '@helpers/models/pools/utils/encoder';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
@@ -365,6 +365,23 @@ describeForkTest('ManagedPoolFactory', 'mainnet', 17033100, function () {
       expect(vaultUNIBalanceAfterExit).to.lt(vaultUNIBalanceBeforeExit);
       expect(ownerUNIBalanceAfterExit).to.gt(ownerUNIBalanceBeforeExit);
     });
+  });
+
+  it('cannot execute the contract halves', async () => {
+    const { contractA, contractB } = await factory.getCreationCodeContracts();
+
+    const txA = {
+      to: contractA,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    const txB = {
+      to: contractB,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    await expect(owner.sendTransaction(txA)).to.be.reverted;
+    await expect(owner.sendTransaction(txB)).to.be.reverted;
   });
 
   describe('factory disable', () => {

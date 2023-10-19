@@ -1,6 +1,6 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 
 import * as expectEvent from '@helpers/expectEvent';
 import { describeForkTest } from '@src';
@@ -443,6 +443,23 @@ describeForkTest('ComposableStablePool V5', 'mainnet', 17663500, function () {
 
       expect(pool2.address).to.not.equal(pool.address);
     });
+  });
+
+  it('cannot execute the contract halves', async () => {
+    const { contractA, contractB } = await factory.getCreationCodeContracts();
+
+    const txA = {
+      to: contractA,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    const txB = {
+      to: contractB,
+      value: ethers.utils.parseEther('0.001'),
+    };
+
+    await expect(owner.sendTransaction(txA)).to.be.reverted;
+    await expect(owner.sendTransaction(txB)).to.be.reverted;
   });
 
   describe('factory disable', () => {
