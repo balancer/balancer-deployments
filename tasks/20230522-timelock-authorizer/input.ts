@@ -21,8 +21,6 @@ export type TimelockAuthorizerDeploymentInputType = {
   Authorizer: Task;
   AuthorizerAdaptorEntrypoint: Task;
   networks: string[];
-  goerli: any;
-  sepolia: any;
   [key: string]: any; // index signature
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -31,8 +29,13 @@ const input: TimelockAuthorizerDeploymentInputType = {
   Authorizer,
   AuthorizerAdaptorEntrypoint,
   networks: ['goerli', 'sepolia'],
-  goerli: require('./input/goerli.ts'),
-  sepolia: require('./input/sepolia.ts'),
 };
+
+// Include input files for each network inside global inputs.
+input.networks.forEach((network) => {
+  input[network] = require(`./input/${network}.ts`);
+});
+
+console.log('input: ', input);
 
 export default input;
