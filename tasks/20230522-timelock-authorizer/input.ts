@@ -36,6 +36,4 @@ input.networks.forEach((network) => {
   input[network] = require(`./input/${network}.ts`);
 });
 
-console.log('input: ', input);
-
 export default input;
