@@ -271,12 +271,7 @@ export default class Task {
   }
 
   rawInput(): RawInputKeyValue {
-    const taskInputPath = this._fileAt(this.dir(), 'input.ts');
-    const rawInput = require(taskInputPath).default;
-    const globalInput = { ...rawInput };
-    NETWORKS.forEach((network) => delete globalInput[network]);
-    const networkInput = rawInput[this.network] || {};
-    return { ...globalInput, ...networkInput };
+    return this._getDefaultExportForNetwork('input.ts');
   }
 
   input(): Input {
@@ -291,6 +286,21 @@ export default class Task {
     const taskOutputDir = this._dirAt(this.dir(), 'output', ensure);
     const taskOutputFile = this._fileAt(taskOutputDir, `${network}.json`, ensure);
     return this._read(taskOutputFile);
+  }
+
+  settings(): RawInputKeyValue {
+    return this._getDefaultExportForNetwork('settings.ts');
+  }
+
+  hasOutput(): boolean {
+    let taskHasOutput = true;
+    try {
+      this.output();
+    } catch {
+      taskHasOutput = false;
+    }
+
+    return taskHasOutput;
   }
 
   save(rawOutput: RawOutput): void {
@@ -318,6 +328,15 @@ export default class Task {
     }
 
     throw new Error('Unknown task status');
+  }
+
+  private _getDefaultExportForNetwork(script: string): RawInputKeyValue {
+    const taskInputPath = this._fileAt(this.dir(), script);
+    const rawInput = require(taskInputPath).default;
+    const globalInput = { ...rawInput };
+    NETWORKS.forEach((network) => delete globalInput[network]);
+    const networkInput = rawInput[this.network] || {};
+    return { ...globalInput, ...networkInput };
   }
 
   private _checkManuallySavedArtifacts(output: Output) {

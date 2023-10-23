@@ -281,6 +281,17 @@ jobs:
       - name: Check Deployment Address Lookup File
         run: yarn check-address-lookup
 
+  check-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up environment
+        uses: ./.github/actions/setup
+      - name: Prepare Config
+        run: yarn ci:prepare-config
+      - name: Check Timelock Authorizer Configuration Files
+        run: yarn check-timelock-authorizer-config
+
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:

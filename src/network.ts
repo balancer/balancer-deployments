@@ -3,9 +3,14 @@ import path from 'path';
 import Task, { TaskStatus } from './task';
 
 import { Network } from './types';
+import { getActionIdInfo } from 'actionId';
+import { timestampToString } from '@helpers/time';
+import { BigNumber } from 'ethers';
+import { bn, decimal } from '@helpers/numbers';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
 const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(__dirname, '../addresses');
+const TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY = path.resolve(__dirname, '../timelock-authorizer-config');
 
 export function saveContractDeploymentTransactionHash(
   deployedAddress: string,
@@ -109,6 +114,151 @@ export function checkContractDeploymentAddresses(tasks: Task[], network: string)
   const existingFileContents: string = fileExists ? fs.readFileSync(filePath).toString() : '';
 
   return _stringifyEntries(allTaskEntries) === existingFileContents;
+}
+
+/**
+ * Builds and saves the timelock authorizer config JSON file, containing grant and execution delays.
+ * It is based on the input configuration in the deployment task for the given network.
+ */
+export async function saveTimelockAuthorizerConfig(task: Task, network: string) {
+  const allDelays = _buildTimelockAuthorizerConfig(task, network);
+  if (Object.keys(allDelays).length > 0) {
+    const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
+    fs.writeFileSync(filePath, _stringifyEntries(allDelays));
+  }
+}
+
+/**
+ * Returns true if the config file in `TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY` has the right configuration for the
+ * network, and false otherwise.
+ * If the timelock authorizer is not deployed for a given network, the file should not exist.
+ * If the timelock authorizer is deployed for a given network, the file should exist and not be empty.
+ */
+export function checkTimelockAuthorizerConfig(task: Task, network: string): boolean {
+  // Returns an empty object if there are no delays defined
+  const allDelays = _buildTimelockAuthorizerConfig(task, network);
+
+  const taskHasOutput = task.hasOutput();
+
+  const filePath = path.join(TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY, `${network}.json`);
+  const fileExists = fs.existsSync(filePath) && fs.statSync(filePath).isFile();
+
+  // If the task has an output, there should be a file and vice-versa.
+  // If the task has an output, the configuration cannot be empty.
+  if (taskHasOutput !== fileExists || (taskHasOutput && Object.keys(allDelays).length === 0)) {
+    return false;
+  }
+
+  // Load the existing content if any exists.
+  const existingFileContents: string = fileExists ? fs.readFileSync(filePath).toString() : '{}';
+
+  return _stringifyEntries(allDelays) === existingFileContents;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getTimelockAuthorizerConfigDiff(task: Task, network: string): Promise<any[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const diff: any[] = [];
+
+  if (!task.hasOutput()) {
+    // If the contract is not deployed for this network, return early.
+    return diff;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allDelays: any = _buildTimelockAuthorizerConfig(task, network);
+
+  const timelockAuthorizer = await task.deployedInstance('TimelockAuthorizer');
+
+  for (const delayInfo of allDelays.grantDelays) {
+    const actionId = delayInfo.actionIdInfo.actionId;
+    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdGrantDelay(actionId);
+
+    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+      diff.push({
+        actionId: delayInfo.actionIdInfo,
+        onchainDelay: decimal(onchainDelay),
+        expectedDelay: delayInfo.delay.value,
+        type: 'Grant',
+      });
+    }
+  }
+
+  for (const delayInfo of allDelays.executeDelays) {
+    const actionId = delayInfo.actionIdInfo.actionId;
+    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdDelay(actionId);
+
+    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+      diff.push({
+        actionId: delayInfo.actionIdInfo,
+        onchainDelay: decimal(onchainDelay),
+        expectedDelay: delayInfo.delay.value,
+        type: 'Execute',
+      });
+    }
+  }
+
+  return diff;
+}
+
+/**
+ * Builds an object that contains the information for Grant delays and Execute delays.
+ * The resulting format reads as follows:
+ * grantDelays: [
+ *   {
+ *     "actionIdInfo": {
+ *       "taskId": "<task-name>",
+ *       "contractName": "<contract-name>",
+ *       "useAdaptor": <true | false>,
+ *       "signature": "<function-signature>",
+ *       "actionId": "<action-id-hash>"
+ *     },
+ *     "delay": {
+ *       "label": "<human-readable-delay>",
+ *       "value": <delay-in-seconds>
+ *     }
+ *   },
+ * ],
+ * executeDelays: [
+ *  (...)
+ * ]
+ * (...)
+ */
+function _buildTimelockAuthorizerConfig(task: Task, network: string): object {
+  const settings = task.settings();
+
+  const grantDelays =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    settings.GrantDelays?.map((grantDelay: any) => {
+      return {
+        actionIdInfo: getActionIdInfo(grantDelay.actionId, network),
+        delay: {
+          label: timestampToString(grantDelay.newDelay),
+          value: grantDelay.newDelay,
+        },
+      };
+    });
+
+  const executeDelays =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    settings.ExecuteDelays?.map((executeDelay: any) => {
+      return {
+        actionIdInfo: getActionIdInfo(executeDelay.actionId, network),
+        delay: {
+          label: timestampToString(executeDelay.newDelay),
+          value: executeDelay.newDelay,
+        },
+      };
+    });
+
+  if (grantDelays === undefined && executeDelays === undefined) {
+    return {};
+  }
+
+  return {
+    grantDelays,
+    executeDelays,
+  };
 }
 
 function _stringifyEntries(entries: object): string {
