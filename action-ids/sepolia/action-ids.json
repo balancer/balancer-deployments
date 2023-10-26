@@ -520,5 +520,60 @@
         "setGaugeFactory(address,string)": "0x7f8caf4a00b7cbdfc7ad11ff555235a685a67afdf0b96c9cb673c2eceb0eb401"
       }
     }
+  },
+  "20230711-composable-stable-pool-v5": {
+    "ComposableStablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0x0c3f598dc7aa481ed45cb1777811fd5ab1839d9d61acb838d9f7345e0fd27810",
+        "disable()": "0x5da10df3725113f161d0a34f95f3192adf5711a72f9997042802ca4deaab8536"
+      }
+    },
+    "ComposableStablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xE24Aba051aaeB07f981bD449f4B0b3250e08d4fB",
+      "actionIds": {
+        "disableRecoveryMode()": "0x5e56eeabf8d8b240c47776cdcabd5813d724add62624e9504e6f9e2b29d97d64",
+        "enableRecoveryMode()": "0xd468524a938c019e3151a98b97796e4be103fd97a3ce97c72e9d2d1944646b7e",
+        "pause()": "0xd253462a2f12666193252586ea1e77029f695cb7c6dfd30d3fdd9ef478b79dda",
+        "setAssetManagerPoolConfig(address,bytes)": "0x36694e5d254902fb5cabd2fcad4a8bdfb0355cbe6dcc1bbf59629c51a4dce7b1",
+        "setSwapFeePercentage(uint256)": "0xd23bddda33fa9d1407edb5855cf10ea390c7be853e70f212a20399a6c3920147",
+        "setTokenRateCacheDuration(address,uint256)": "0xbf11773e1faf5ddddd67d00182cf727a3092304f7fbc7619f8416387c8399402",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x9ea85fed68d52971e9cec4a1518fee8d7390fc495a433d9888f2d796c9319667",
+        "stopAmplificationParameterUpdate()": "0x50202409d347666142c640cd4ba725490ad98410f68f6c38ca4d5f6f4ad5cd73",
+        "unpause()": "0x2cfc3e8a9d2d7f1f7c2f90bde789cf8f8e7d2a057d0916fb55f5120a9e932eb5",
+        "updateProtocolFeePercentageCache()": "0x30ee37222d9c416e0fcf6dd37b6e0fb8d51f0108f1013758ea419909e001238e",
+        "updateTokenRateCache(address)": "0xa61915a6a08fd242acb4f68477be1b7f619a6038e3d3e9830f4c8e4044270542"
+      }
+    }
+  },
+  "20230731-stakeless-gauge-checkpointer": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xfb5e569a8fded8509b8f07683a408ae649905de2b4b5a23621091145471c2537",
+        "addGaugesWithVerifiedType(string,address[])": "0x516e0b4b978cc577a90225512d3d6da9b9621c8bebdfb96229418f24f758eb18",
+        "checkpointGaugesAboveRelativeWeight(uint256)": "0x52ff9128f3c90fc493e200f0a4e0813631a9cc6644126e0cc5b1b1b9f6fcfc9c",
+        "checkpointGaugesOfTypeAboveRelativeWeight(string,uint256)": "0x5544730b2837275dbdc92e72bdff78b0f0ae9c1d7444ad723ea8ab02be1d2af9",
+        "checkpointMultipleGauges(string[],address[])": "0x16914633867733033c39f475ea86e45152bea73352660ce0cc56d068c4925b69",
+        "checkpointSingleGauge(string,address)": "0x53b1331ae0637068394da3bf779b66ffa030fa63396b9e4585fa759385a9e5d5",
+        "removeGauges(string,address[])": "0x5ffb7b84f97324ae02f37b6c4ca4558f8eb509a560ca8868087a5c64278f23d2"
+      }
+    }
+  },
+  "20230915-stakeless-gauge-checkpointer-v2": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xc95d3ad2c3312c8ea5b8aaf0f3dde4fceb2afd5f7902c01034f81b17027b45b6",
+        "addGaugesWithVerifiedType(string,address[])": "0x04aa570fe83bc6077c318bf2123835160ead27dbffa8fb50c088de73cd414d03",
+        "checkpointAllGaugesAboveRelativeWeight(uint256)": "0x344e0f6b0d7665ce6c8684c11b7097d0bbb4e518e39eeeef0d48b9c72bfc0276",
+        "checkpointGaugesOfTypesAboveRelativeWeight(string[],uint256)": "0xdb96afea6e0027b68e987f10c7611eb3e236dc83d27e05efede6b80c5837fc10",
+        "checkpointMultipleGauges(string[],address[])": "0xb5da45177833df9e8eb9de30d50cdd0481ca473ea88789969ddb82d117bcbbda",
+        "checkpointMultipleGaugesOfMatchingType(string,address[])": "0xb9a1c3e3d9b75ce2d77ca777367e91fbd19117dd8ab54ac4df2341058d6ffa5a",
+        "checkpointSingleGauge(string,address)": "0x7f5601aaf83c543109540061beb071a2df24fbfc92447d6865a719857c26592c",
+        "removeGauges(string,address[])": "0x8893551f3687759577a63e3bb2353198881cc5e60fc93eb79a26f7560a927326"
+      }
+    }
   }
 }

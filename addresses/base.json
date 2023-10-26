@@ -1,0 +1,363 @@
+{
+  "20210418-authorizer": {
+    "contracts": [
+      {
+        "name": "Authorizer",
+        "address": "0x809B79b53F18E9bc08A961ED4678B901aC93213a"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20210418-vault": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerHelpers",
+        "address": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20211202-no-protocol-fee-lbp": {
+    "contracts": [
+      {
+        "name": "NoProtocolFeeLiquidityBootstrappingPoolFactory",
+        "address": "0x0c6052254551EAe3ECac77B01DFcf1025418828f"
+      },
+      {
+        "name": "MockLiquidityBootstrappingPool",
+        "address": "0x71528afe250438e184b2deAF7947f0f45931DF3b"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220325-authorizer-adaptor": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptor",
+        "address": "0x6CaD2ea22BFA7F4C14Aae92E47F510Cd5C509bc7"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0xA1Fa945425eD2e08Acb932E000bCc2f21B21588A"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220517-protocol-fee-withdrawer": {
+    "contracts": [
+      {
+        "name": "ProtocolFeesWithdrawer",
+        "address": "0xAcf05BE5134d64d150d153818F8C67EE36996650"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220721-balancer-queries": {
+    "contracts": [
+      {
+        "name": "BalancerQueries",
+        "address": "0x300Ab2038EAc391f26D9F895dc61F8F66a548833"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220725-protocol-fee-percentages-provider": {
+    "contracts": [
+      {
+        "name": "ProtocolFeePercentagesProvider",
+        "address": "0xDEd7Fef7D8eCdcB74F22f0169e1A9EC696e6695d"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20221123-pool-recovery-helper": {
+    "contracts": [
+      {
+        "name": "PoolRecoveryHelper",
+        "address": "0x03F3Fb107e74F2EAC9358862E91ad3c692712054"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20221124-authorizer-adaptor-entrypoint": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptorEntrypoint",
+        "address": "0x9129E834e15eA19b6069e8f08a8EcFc13686B8dC"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230223-protocol-id-registry": {
+    "contracts": [
+      {
+        "name": "ProtocolIdRegistry",
+        "address": "0x682f0dDBFd41D1272982f64a499Fb62d80e27589"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230314-batch-relayer-v5": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0xDF9B5B00Ef9bca66e9902Bd813dB14e4343Be025"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x76f7204B62f554b79d444588EDac9dfA7032c71a"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-child-chain-gauge-factory-v2": {
+    "contracts": [
+      {
+        "name": "ChildChainGauge",
+        "address": "0x9f7E65887413a8497b87bA2058cE6E4Ef4B37013"
+      },
+      {
+        "name": "ChildChainGaugeFactory",
+        "address": "0xb1a4FE1C6d25a0DDAb47431A92A723dd71d9021f"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-l2-balancer-pseudo-minter": {
+    "contracts": [
+      {
+        "name": "L2BalancerPseudoMinter",
+        "address": "0x0c5538098EBe88175078972F514C9e101D325D4F"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-l2-ve-delegation-proxy": {
+    "contracts": [
+      {
+        "name": "NullVotingEscrow",
+        "address": "0x475D18169BE8a89357A9ee3Ab00ca386d20fA229"
+      },
+      {
+        "name": "VotingEscrowDelegationProxy",
+        "address": "0xD87F44Df0159DC78029AB9CA7D7e57E7249F5ACD"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230320-weighted-pool-v4": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x4C32a8a8fDa4E24139B51b456B42290f51d6A1c4"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0xd9dbbfAA703f3C33838365aE00fE4EB22CdF8d46"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230404-l2-layer0-bridge-forwarder": {
+    "contracts": [
+      {
+        "name": "L2LayerZeroBridgeForwarder",
+        "address": "0x8eA89804145c007e7D226001A96955ad53836087"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230409-erc4626-linear-pool-v4": {
+    "contracts": [
+      {
+        "name": "ERC4626LinearPoolFactory",
+        "address": "0x161f4014C27773840ccb4EC1957113e6DD028846"
+      },
+      {
+        "name": "MockERC4626Token",
+        "address": "0x4638ab64022927C9bD5947607459D13f57f1551C"
+      },
+      {
+        "name": "MockERC4626LinearPool",
+        "address": "0x1CC2E10C486Ffb7228810B9c7C183d0CD92cdF44"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230409-gearbox-linear-pool-v2": {
+    "contracts": [
+      {
+        "name": "GearboxLinearPoolFactory",
+        "address": "0x9Dd32684176638D977883448A4c914311c07bd62"
+      },
+      {
+        "name": "MockGearboxVault",
+        "address": "0x79e435875cCee3Cd9e8da23fE34F9A011d05EA6C"
+      },
+      {
+        "name": "MockGearboxDieselToken",
+        "address": "0xb521dD5C8e13fE202626CaC98873FEA2b7760cE4"
+      },
+      {
+        "name": "MockGearboxLinearPool",
+        "address": "0x3c28a59356B473847AAa5e0b6F561636079213A6"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230409-yearn-linear-pool-v2": {
+    "contracts": [
+      {
+        "name": "YearnLinearPoolFactory",
+        "address": "0x44d33798dddCdAbc93Fe6a40C80588033Dc502d3"
+      },
+      {
+        "name": "MockYearnTokenVault",
+        "address": "0xDBf7B9F1d2Bfba14e42709f84dda3187eE410e38"
+      },
+      {
+        "name": "MockYearnLinearPool",
+        "address": "0x369877467FC3B6774DE4E11E0c0AbBdE70Eb40FD"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230410-aave-linear-pool-v5": {
+    "contracts": [
+      {
+        "name": "AaveLinearPoolFactory",
+        "address": "0x687b8C9b41E01Be8B591725fac5d5f52D0564d79"
+      },
+      {
+        "name": "MockAaveLendingPool",
+        "address": "0x88ED12A90142fDBFe2a28f7d5b48927254C7e760"
+      },
+      {
+        "name": "MockStaticAToken",
+        "address": "0x698CaED853bE9cEA96C268f565e2b61D3b2BcDA4"
+      },
+      {
+        "name": "MockAaveLinearPool",
+        "address": "0x712e23a9B91Aa30EE7997d1c7a1a285d4C7912D1"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230411-managed-pool-v2": {
+    "contracts": [
+      {
+        "name": "ManagedPoolAddRemoveTokenLib",
+        "address": "0xb19382073c7A0aDdbb56Ac6AF1808Fa49e377B75"
+      },
+      {
+        "name": "CircuitBreakerLib",
+        "address": "0xEF454a7B3f965D3f6723E462405246f8Cd865425"
+      },
+      {
+        "name": "ManagedPoolAmmLib",
+        "address": "0x7d2248F194755DCa9A1887099394F39476d28C9a"
+      },
+      {
+        "name": "ExternalWeightedMath",
+        "address": "0x7920BFa1b2041911b354747CA7A6cDD2dfC50Cfd"
+      },
+      {
+        "name": "RecoveryModeHelper",
+        "address": "0x313a8D36b1d90a4cba3A505fDc3480C3870bE053"
+      },
+      {
+        "name": "ManagedPoolFactory",
+        "address": "0x9a62C91626d39D0216b3959112f9D4678E20134d"
+      },
+      {
+        "name": "MockManagedPool",
+        "address": "0xE50AD96Af9370D05D3C1cE85F17C31557B29C4Ee"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230414-authorizer-wrapper": {
+    "contracts": [
+      {
+        "name": "AuthorizerWithAdaptorValidation",
+        "address": "0xA69E0Ccf150a29369D8Bbc0B3f510849dB7E8EEE"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230525-l2-veboost-v2": {
+    "contracts": [
+      {
+        "name": "VeBoostV2",
+        "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230526-gauge-working-balance-helper": {
+    "contracts": [
+      {
+        "name": "GaugeWorkingBalanceHelper",
+        "address": "0xa7d524046ef89de9F8e4f2d7B029f66cCB738d48"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230613-balancer-pool-data-queries": {
+    "contracts": [
+      {
+        "name": "BalancerPoolDataQueries",
+        "address": "0x6B1Da720Be2D11d95177ccFc40A917c2688f396c"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x8df317a729fcaA260306d7de28888932cb579b88"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0x7F6E9d6a4093Af9d09bAE92d24bfE42Fc5369aE6"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0xaf779e58dafb4307b998C7b3C9D3f788DFc80632"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x7B25d5712fB49627534012327E46455b3fF7b26C"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0x0A973B6DB16C2ded41dC91691Cc347BEb0e2442B"
+      }
+    ],
+    "status": "ACTIVE"
+  }
+}

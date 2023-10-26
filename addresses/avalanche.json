@@ -43,37 +43,11 @@
     ],
     "status": "ACTIVE"
   },
-  "20220413-child-chain-gauge-factory": {
-    "contracts": [
-      {
-        "name": "RewardsOnlyGauge",
-        "address": "0x41B953164995c11C81DA73D212ED8Af25741b7Ac"
-      },
-      {
-        "name": "ChildChainStreamer",
-        "address": "0xD7FAD3bd59D6477cbe1BE7f646F7f1BA25b230f8"
-      },
-      {
-        "name": "ChildChainLiquidityGaugeFactory",
-        "address": "0xb08E16cFc07C684dAA2f93C70323BAdb2A6CBFd2"
-      }
-    ],
-    "status": "ACTIVE"
-  },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
       {
         "name": "ProtocolFeesWithdrawer",
         "address": "0x8F42aDBbA1B16EaAE3BB5754915E0D06059aDd75"
-      }
-    ],
-    "status": "ACTIVE"
-  },
-  "20220527-child-chain-gauge-token-adder": {
-    "contracts": [
-      {
-        "name": "ChildChainGaugeTokenAdder",
-        "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
     "status": "ACTIVE"
@@ -171,7 +145,7 @@
     ],
     "status": "ACTIVE"
   },
-  "20230316-child-chain-gauge-factory-v2": {
+  "20230316-avax-child-chain-gauge-factory-v2": {
     "contracts": [
       {
         "name": "ChildChainGauge",
@@ -182,13 +156,35 @@
         "address": "0x161f4014C27773840ccb4EC1957113e6DD028846"
       }
     ],
+    "status": "DEPRECATED"
+  },
+  "20230316-avax-l2-balancer-pseudo-minter": {
+    "contracts": [
+      {
+        "name": "L2BalancerPseudoMinter",
+        "address": "0xEa924b45a3fcDAAdf4E5cFB1665823B8F8F2039B"
+      }
+    ],
+    "status": "DEPRECATED"
+  },
+  "20230316-child-chain-gauge-factory-v2": {
+    "contracts": [
+      {
+        "name": "ChildChainGauge",
+        "address": "0x4132f7AcC9dB7A6cF7BE2Dd3A9DC8b30C7E6E6c8"
+      },
+      {
+        "name": "ChildChainGaugeFactory",
+        "address": "0xf23b4DB826DbA14c0e857029dfF076b1c0264843"
+      }
+    ],
     "status": "ACTIVE"
   },
   "20230316-l2-balancer-pseudo-minter": {
     "contracts": [
       {
         "name": "L2BalancerPseudoMinter",
-        "address": "0xEa924b45a3fcDAAdf4E5cFB1665823B8F8F2039B"
+        "address": "0x85a80afee867aDf27B50BdB7b76DA70f1E853062"
       }
     ],
     "status": "ACTIVE"
@@ -217,7 +213,7 @@
         "address": "0xEa4643102dFC03d5e382e7827Bf767f6587E9965"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -343,7 +339,42 @@
     "contracts": [
       {
         "name": "BalancerPoolDataQueries",
-        "address": "0xF24917fB88261a37Cc57F686eBC831a5c0B9fD39"
+        "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0x9FD66B741ac546055E04E768Dd52edD33574D453"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x36caC20dd805d128c1a6Dd16eeA845C574b5A17C"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xE63e90EeC6860a0Bc163BB26f7333cbE55559fb5"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0x76578ecf9a141296Ec657847fb45B0585bCDa3a6"
       }
     ],
     "status": "ACTIVE"

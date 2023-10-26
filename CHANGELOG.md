@@ -26,12 +26,17 @@
 - Deployed `PolygonZkEVMRootGaugeFactory` to Mainnet.
 - Deployed `VotingEscrowRemapper` and `OmniVotingEscrowAdaptor` to Goerli, Sepolia and Mainnet.
 - Deployed `GaugeAdder` V4 to Goerli, Sepolia and Mainnet.
-- Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism, Gnosis, Avalanche and zkEVM.
+- Deployed `VeBoostV2` to Polygon, Arbitrum, Optimism, Gnosis, Avalanche, zkEVM and Base.
 - Deployed `L2GaugeCheckpointer` to Mainnet.
 - Deployed `GaugeWorkingBalanceHelper` to all networks.
-- Deployed `AvalancheRootGaugeFactory` to Mainnet.
+- Deployed `AvalancheRootGaugeFactory` V2 to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
-- Deployed `TimelockAuthorizer` to Sepolia.
+- Deployed `TimelockAuthorizer` to Goerli and Sepolia.
+- Deployed `ComposableStablePoolFactory` V5 to all networks.
+- Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
+- Deployed `ChainlinkRateProviderFactory` to all networks.
+- Deployed `StakelessGaugeCheckpointer` V2 to Ethereum and Sepolia.
+- Deployed `BaseRootGaugeFactory` to Mainnet.
 
 ### Deprecations
 
@@ -45,6 +50,11 @@
 - Deprecated `20230213-gearbox-linear-pool`.
 - Deprecated `20230213-yearn-linear-pool`.
 - Deprecated `20230315-silo-linear-pool`.
+- Deprecated `20230320-composable-stable-pool-v4`.
+- Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
+- Deprecated `20230527-l2-gauge-checkpointer`.
+- Deprecated `20230529-avalanche-root-gauge-factory`.
+- Deprecated `20230731-stakeless-gauge-checkpointer`.
 
 ### New Networks
 

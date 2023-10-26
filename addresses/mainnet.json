@@ -913,7 +913,7 @@
         "address": "0x5537f945D8c3FCFDc1b8DECEEBD220FAD26aFdA8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -1131,7 +1131,7 @@
         "address": "0x343688C5cB92115a52cA485af7f62B4B7A2e9CcC"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230529-avalanche-root-gauge-factory": {
     "contracts": [
@@ -1144,13 +1144,79 @@
         "address": "0xc57b4BE50BF6BBe5f6a4fE379DA342B32b37bF2f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
       {
         "name": "BalancerPoolDataQueries",
-        "address": "0xf5CDdF6feD9C589f1Be04899F48f9738531daD59"
+        "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0x20356663C17D31549d1210379749E2aE36722D8f"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230731-stakeless-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "StakelessGaugeCheckpointer",
+        "address": "0x0f08eEf2C785AA5e7539684aF04755dEC1347b7c"
+      }
+    ],
+    "status": "DEPRECATED"
+  },
+  "20230811-avalanche-root-gauge-factory-v2": {
+    "contracts": [
+      {
+        "name": "AvalancheRootGaugeFactory",
+        "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
+      },
+      {
+        "name": "AvalancheRootGauge",
+        "address": "0x3Eae4a1c2E36870A006E816930d9f55DF0a72a13"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230911-base-root-gauge-factory": {
+    "contracts": [
+      {
+        "name": "BaseRootGaugeFactory",
+        "address": "0x8e3B64b3737097F283E965869e3503AA20F31E4D"
+      },
+      {
+        "name": "BaseRootGauge",
+        "address": "0x9a4d642b9876231BB9062559521A48097abFe6CB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230915-stakeless-gauge-checkpointer-v2": {
+    "contracts": [
+      {
+        "name": "StakelessGaugeCheckpointer",
+        "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
     "status": "ACTIVE"

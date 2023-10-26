@@ -13,6 +13,8 @@ result they would have if called on the Vault given the current state.
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
+- [Fantom mainnet addresses](./output/fantom.json)
 - [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BalancerQueries` artifact](./artifact/BalancerQueries.json)

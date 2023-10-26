@@ -36,4 +36,10 @@ export default {
   sepolia: {
     admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
+  base: {
+    admin: '0xC40DCFB13651e64C8551007aa57F9260827B6462',
+  },
+  fantom: {
+    admin: '0x4fbe899d37fb7514adf2f41B0630E018Ec275a0C',
+  },
 };

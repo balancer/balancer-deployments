@@ -820,7 +820,7 @@
         "address": "0x5D343D374A769D1AB102e0418a516DadB08A86E4"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -933,6 +933,19 @@
     ],
     "status": "ACTIVE"
   },
+  "20230522-timelock-authorizer": {
+    "contracts": [
+      {
+        "name": "TimelockAuthorizerMigrator",
+        "address": "0xaD89051bEd8d96f045E8912aE1672c6C0bF8a85E"
+      },
+      {
+        "name": "TimelockAuthorizer",
+        "address": "0x68056E4234A6Aa4dB6fE66E93703fd90669a8697"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
       {
@@ -946,7 +959,42 @@
     "contracts": [
       {
         "name": "BalancerPoolDataQueries",
-        "address": "0x662112B8CB18889e81459b92CA0f894a2ef2c1B8"
+        "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x4bdCc2fb18AEb9e2d281b0278D946445070EAda7"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0x21cb3534c12E956a600cB3102b825686D10888e7"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xd488810DaAdD52C5892663FEA4e0bcb71eF744cB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
       }
     ],
     "status": "ACTIVE"

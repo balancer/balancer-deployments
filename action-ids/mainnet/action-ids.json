@@ -1375,5 +1375,96 @@
         "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
       }
     }
+  },
+  "20230711-composable-stable-pool-v5": {
+    "ComposableStablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0x86f1ab596c40f152a34aaff5983979d3de09356a303a15af89b0aabb8b8526fb",
+        "disable()": "0xceeb84f98e049989237e570ba87203572b1ba663061d817739b66a9fb08a7901"
+      }
+    },
+    "ComposableStablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x20356663C17D31549d1210379749E2aE36722D8f",
+      "actionIds": {
+        "disableRecoveryMode()": "0x004ed6bc39c7b1141c8d34bc8c481dde189197c700d070129e6f6a3cbbfdce9f",
+        "enableRecoveryMode()": "0x9a645ed7f1bf603a8f6a44b2227b47a0355b902e65abb9d45e60bbc7e220992f",
+        "pause()": "0xbb09fe1ad67eb7a320ad9131d81ea3835e51215410ea5d5866bc516003d06287",
+        "setAssetManagerPoolConfig(address,bytes)": "0x34c5ab3275e5ac75e17ba7dfdeb0d7ebfbfb813cb3d1b608a3d93f1fa75e6e0d",
+        "setSwapFeePercentage(uint256)": "0x42bc3b76ebdb675c6f7836b464d27c7517e14b05dc08bb944a4837563fc805ca",
+        "setTokenRateCacheDuration(address,uint256)": "0x4bb7796cbdc90c45e85adef80563ca8f377e879de799e82e437abab49a63ebc3",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x6bf9f64e8755a240cd5604ab5cabd4a1eed020059be9a1a64be071859f023276",
+        "stopAmplificationParameterUpdate()": "0xd5e70e51651eb5be66f83b01794f74b5dbb417b607bf0425c5c5d3aa7386b38b",
+        "unpause()": "0x1279ddb5bff5184643057feb45413adb8d9bd0836bc750c0f79cedb37c060ca1",
+        "updateProtocolFeePercentageCache()": "0x2be4d7bdb2e2ecbd85fc7dba1ff652a701786f44c3735fa4a10ec0e04cb74752",
+        "updateTokenRateCache(address)": "0x2bb772ea44877929e766a106b034c5cd65414309e05150845082444794577b34"
+      }
+    }
+  },
+  "20230731-stakeless-gauge-checkpointer": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0xb618e3fb703584d3a1025aabf97fb7b986b2b666e3d3dae5b89e399c250c1c93",
+        "addGaugesWithVerifiedType(string,address[])": "0x44a49a1e60182181a387c557dae431aa77fe501cd972be1020c9f287096a061f",
+        "checkpointGaugesAboveRelativeWeight(uint256)": "0x59f33b7b8fd2d385978a0a7d4e69c0c5e242b45fff1cdc9e622cec1453f995cf",
+        "checkpointGaugesOfTypeAboveRelativeWeight(string,uint256)": "0x5b6b4784f400eead34eedf74f3bf87ea6bf96920af067f2bb94f4ff0f04288d1",
+        "checkpointMultipleGauges(string[],address[])": "0xa8d6a28512db4a2a7327e3dff08e39e31efc2292dc0eb9bcc70d0820b7ed34a7",
+        "checkpointSingleGauge(string,address)": "0x5d2abc4ad6367f4bfb67f6d501620b781c5d35a2e021c2ab4dd8befcab17e8fa",
+        "removeGauges(string,address[])": "0xfee7000015bfc10d718c5bd11e7573986e6b8283ddcac0f5b6016ece5249711c"
+      }
+    }
+  },
+  "20230811-avalanche-root-gauge-factory-v2": {
+    "AvalancheRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0xfad22b622975a1bc89c6cb88a9d9d6928401bf2a4e7d18536101f9b42ec7515b"
+      }
+    },
+    "AvalancheRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256)": "0xa7eb8749bae4020b0007b643972b60456da2b6b92fa6b583c7277fc2dea05a39",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
+  },
+  "20230911-base-root-gauge-factory": {
+    "BaseRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0x691118ddf5c498a47b894826264afd0d259a9e6e81049aca1b722c973117bffc"
+      }
+    },
+    "BaseRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256)": "0xa7eb8749bae4020b0007b643972b60456da2b6b92fa6b583c7277fc2dea05a39",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
+  },
+  "20230915-stakeless-gauge-checkpointer-v2": {
+    "StakelessGaugeCheckpointer": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addGauges(string,address[])": "0x8e09948549180ad7218065115c91ebf280d177eaa1de0bb80ab5e67826a07c74",
+        "addGaugesWithVerifiedType(string,address[])": "0x54f43cdb53a74c7bd91359b21ad8cd82a6a41b6ff8718aea74f1d2b9292c6b41",
+        "checkpointAllGaugesAboveRelativeWeight(uint256)": "0xeef817bea9f90865dd4acb941142fb31df8b000ef923f2cb76311eb0d2dbe051",
+        "checkpointGaugesOfTypesAboveRelativeWeight(string[],uint256)": "0x24163807447322f9698ca1e49185cf5a4ceb7cd4f1faf39b575d0e4f85bf92ad",
+        "checkpointMultipleGauges(string[],address[])": "0x9d73b38f541a984ada9a198ce8abb57063f37c6bd342d460c4d441a88f5b87f8",
+        "checkpointMultipleGaugesOfMatchingType(string,address[])": "0x9910a03e643d74a769f0213e8467fd2777647f3325c8c62148dc6f62012dea7e",
+        "checkpointSingleGauge(string,address)": "0x216e5ad6741d942f184cec39f3dd6d2db1ff0c877b9804953d281a23fc6e9811",
+        "removeGauges(string,address[])": "0x925200f5f95b4131609c62d42944f8e9b0bfef74d062ef3b3e469eb09b4baebe"
+      }
+    }
   }
 }

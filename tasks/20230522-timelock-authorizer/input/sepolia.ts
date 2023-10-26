@@ -1,39 +1,43 @@
-import { DAY } from '@helpers/time';
+import { DAY, HOUR } from '@helpers/time';
 import { Task, TaskMode } from '@src';
 import { DelayData, RoleData } from './types';
 
-const Vault = new Task('20210418-vault', TaskMode.READ_ONLY, 'sepolia');
+export const TRANSITION_END_BLOCK = 4316000;
 
-const BalancerTokenAdmin = new Task('20220325-balancer-token-admin', TaskMode.READ_ONLY, 'sepolia');
-const GaugeController = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, 'sepolia');
-const VotingEscrowDelegationProxy = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, 'sepolia');
+const network = 'sepolia';
 
-const MainnetGaugeFactory = new Task('20220822-mainnet-gauge-factory-v2', TaskMode.READ_ONLY, 'sepolia');
-const L2VotingEscrowDelegationProxy = new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY, 'sepolia');
-const L2BalancerPseudoMinter = new Task('20230316-l2-balancer-pseudo-minter', TaskMode.READ_ONLY, 'sepolia');
-const L2Layer0BridgeForwarder = new Task('20230404-l2-layer0-bridge-forwarder', TaskMode.READ_ONLY, 'sepolia');
-const VeBALRemapper = new Task('20230504-vebal-remapper', TaskMode.READ_ONLY, 'sepolia');
+const Vault = new Task('20210418-vault', TaskMode.READ_ONLY, network);
 
-const SmartWalletChecker = new Task('20220420-smart-wallet-checker', TaskMode.READ_ONLY, 'sepolia');
-const ProtocolFeeWithdrawer = new Task('20220517-protocol-fee-withdrawer', TaskMode.READ_ONLY, 'sepolia');
+const BalancerTokenAdmin = new Task('20220325-balancer-token-admin', TaskMode.READ_ONLY, network);
+const GaugeController = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, network);
+const VotingEscrowDelegationProxy = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, network);
+
+const MainnetGaugeFactory = new Task('20220822-mainnet-gauge-factory-v2', TaskMode.READ_ONLY, network);
+const L2VotingEscrowDelegationProxy = new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY, network);
+const L2BalancerPseudoMinter = new Task('20230316-l2-balancer-pseudo-minter', TaskMode.READ_ONLY, network);
+const L2Layer0BridgeForwarder = new Task('20230404-l2-layer0-bridge-forwarder', TaskMode.READ_ONLY, network);
+const VeBALRemapper = new Task('20230504-vebal-remapper', TaskMode.READ_ONLY, network);
+
+const SmartWalletChecker = new Task('20220420-smart-wallet-checker', TaskMode.READ_ONLY, network);
+const ProtocolFeeWithdrawer = new Task('20220517-protocol-fee-withdrawer', TaskMode.READ_ONLY, network);
 const ProtocolFeePercentagesProvider = new Task(
   '20220725-protocol-fee-percentages-provider',
   TaskMode.READ_ONLY,
-  'sepolia'
+  network
 );
-const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.READ_ONLY, 'sepolia');
+const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.READ_ONLY, network);
 
-export const Root = '0x171C0fF5943CE5f133130436A29bF61E26516003';
+export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
 // Happens frequently
-const SHORT_DELAY = 0.25 * DAY;
+const SHORT_DELAY = 0.5 * HOUR;
 
 // May happen frequently but can be dangerous
-const MEDIUM_DELAY = DAY;
+const MEDIUM_DELAY = 3 * HOUR;
 
 // Happens basically never. A long grant delay typically involves replacing infrastructure (e.g. replacing the veBAL
 // system or protocol fees).
-const LONG_DELAY = 2 * DAY;
+const LONG_DELAY = DAY;
 
 export const RootTransferDelay = LONG_DELAY;
 
@@ -97,7 +101,7 @@ export const GrantDelays: DelayData[] = [
     newDelay: LONG_DELAY,
   },
   {
-    actionId: Vault.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'setFlashLoanFeePercentage(uint256)'),
     newDelay: LONG_DELAY,
   },
 ];
@@ -246,3 +250,23 @@ export const ExecuteDelays: DelayData[] = [
     newDelay: SHORT_DELAY,
   },
 ];
+
+// Checks
+
+const actionIds = [
+  ExecuteDelays.map((delayData) => delayData.actionId),
+  GrantDelays.map((delayData) => delayData.actionId),
+].flat();
+
+if (new Set(actionIds).size !== actionIds.length) {
+  throw new Error('Duplicate action ID found in configuration');
+}
+
+const delays = [
+  ExecuteDelays.map((delayData) => delayData.newDelay),
+  GrantDelays.map((delayData) => delayData.newDelay),
+].flat();
+
+if (delays.some((delay) => delay < SHORT_DELAY || delay > LONG_DELAY)) {
+  throw new Error('Delays outside expected bounds');
+}

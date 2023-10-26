@@ -16,7 +16,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 
 import { checkArtifact, extractArtifact } from './src/artifact';
 import test from './src/test';
-import Task, { TaskMode } from './src/task';
+import Task, { TaskMode, TaskStatus } from './src/task';
 import Verifier from './src/verifier';
 import logger, { Logger } from './src/logger';
 import {
@@ -26,7 +26,13 @@ import {
   getActionIdInfo,
   fetchTheGraphPermissions,
 } from './src/actionId';
-import { checkContractDeploymentAddresses, saveContractDeploymentAddresses } from './src/network';
+import {
+  checkContractDeploymentAddresses,
+  checkTimelockAuthorizerConfig,
+  getTimelockAuthorizerConfigDiff,
+  saveContractDeploymentAddresses,
+  saveTimelockAuthorizerConfig,
+} from './src/network';
 
 const THEGRAPHURLS: { [key: string]: string } = {
   goerli: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-authorizer-goerli',
@@ -298,6 +304,103 @@ task(
   }
 });
 
+task('build-timelock-authorizer-config', `Builds JSON file with Timelock Authorizer configuration`).setAction(
+  async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+    Logger.setDefaults(false, args.verbose || false);
+
+    if (hre.network.name === 'hardhat') {
+      logger.warn(`invalid network: ${hre.network.name}`);
+      return;
+    }
+
+    // Get active timelock authorizer task.
+    const tasks = Task.getAllTaskIds()
+      .filter((taskId) => taskId.includes('timelock-authorizer'))
+      .map((taskId) => new Task(taskId, TaskMode.READ_ONLY, hre.network.name))
+      .filter((task) => task.getStatus() === TaskStatus.ACTIVE);
+
+    if (tasks.length !== 1) {
+      const errorMsg = tasks.length === 0 ? 'not found' : 'is not unique';
+      logger.error(`Active timelock authorizer task ${errorMsg}`);
+      return;
+    }
+
+    saveTimelockAuthorizerConfig(tasks[0], hre.network.name);
+
+    logger.success(`Timelock Authorizer config JSON generated for network ${hre.network.name}`);
+  }
+);
+
+task(
+  'check-timelock-authorizer-config',
+  `Check whether the existing timelock authorizer configuration file is correct`
+).setAction(async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+  Logger.setDefaults(false, args.verbose || false);
+
+  if (hre.network.name === 'hardhat') {
+    logger.warn(`invalid network: ${hre.network.name}`);
+    return;
+  }
+
+  // Get active timelock authorizer task.
+  const tasks = Task.getAllTaskIds()
+    .filter((taskId) => taskId.includes('timelock-authorizer'))
+    .map((taskId) => new Task(taskId, TaskMode.READ_ONLY, hre.network.name))
+    .filter((task) => task.getStatus() === TaskStatus.ACTIVE);
+
+  if (tasks.length !== 1) {
+    const errorMsg = tasks.length === 0 ? 'not found' : 'is not unique';
+    logger.error(`Active timelock authorizer task ${errorMsg}`);
+    return;
+  }
+
+  const isConfigOk = checkTimelockAuthorizerConfig(tasks[0], hre.network.name);
+
+  if (isConfigOk) {
+    logger.success(`Timelock Authorizer config JSON is correct for network ${hre.network.name}`);
+  } else {
+    throw new Error(
+      `Timelock Authorizer config file is incorrect for network ${hre.network.name}. Please run 'build-timelock-authorizer-config' to regenerate it`
+    );
+  }
+});
+
+task(
+  'verify-timelock-authorizer-config',
+  `Check whether the existing timelock authorizer configuration file matches the delays configured onchain`
+).setAction(async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+  Logger.setDefaults(false, args.verbose || false);
+
+  if (hre.network.name === 'hardhat') {
+    logger.warn(`invalid network: ${hre.network.name}`);
+    return;
+  }
+
+  // Get active timelock authorizer task.
+  const tasks = Task.getAllTaskIds()
+    .filter((taskId) => taskId.includes('timelock-authorizer'))
+    .map((taskId) => new Task(taskId, TaskMode.READ_ONLY, hre.network.name))
+    .filter((task) => task.getStatus() === TaskStatus.ACTIVE);
+
+  if (tasks.length !== 1) {
+    const errorMsg = tasks.length === 0 ? 'not found' : 'is not unique';
+    logger.error(`Active timelock authorizer task ${errorMsg}`);
+    return;
+  }
+
+  const configDiff = await getTimelockAuthorizerConfigDiff(tasks[0], hre.network.name);
+
+  if (configDiff.length === 0) {
+    logger.success(`Timelock Authorizer config is correctly applied on-chain for network ${hre.network.name}`);
+  } else {
+    throw new Error(
+      `Timelock Authorizer config file is incorrect for network ${
+        hre.network.name
+      }. Differences found:\n${JSON.stringify(configDiff, null, 2)}`
+    );
+  }
+});
+
 task(TASK_TEST).addOptionalParam('id', 'Specific task ID of the fork test to run.').setAction(test);
 
 export default {
@@ -335,6 +438,22 @@ export default {
         urls: {
           apiURL: 'https://api-zkevm.polygonscan.com/api',
           browserURL: 'https://zkevm.polygonscan.com/',
+        },
+      },
+      {
+        network: 'base',
+        chainId: 8453,
+        urls: {
+          apiURL: 'https://api.basescan.org/api',
+          browserURL: 'https://basescan.org/',
+        },
+      },
+      {
+        network: 'fantom',
+        chainId: 250,
+        urls: {
+          apiURL: 'https://api.ftmscan.com/api',
+          browserURL: 'https://ftmscan.com',
         },
       },
     ],

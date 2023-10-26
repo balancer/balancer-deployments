@@ -321,7 +321,7 @@
         "address": "0xf3678A0b54C61ccD88Ce321c2e07f87aC75F08B9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -430,7 +430,42 @@
     "contracts": [
       {
         "name": "BalancerPoolDataQueries",
-        "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
+        "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x4bdCc2fb18AEb9e2d281b0278D946445070EAda7"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0xa359b6BB0a89ED9f237C83f32fF05c658DA8b3aB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230712-child-chain-gauge-checkpointer": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xd488810DaAdD52C5892663FEA4e0bcb71eF744cB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
       }
     ],
     "status": "ACTIVE"

@@ -249,7 +249,7 @@ async function checkFactoryOutput(task: Task, contractName: string, factoryOutpu
 }
 
 /** Returns full info for a given actionId and network */
-export async function getActionIdInfo(actionId: string, network: string): Promise<ActionIdInfo | undefined> {
+export function getActionIdInfo(actionId: string, network: string): ActionIdInfo | undefined {
   // read network JSON file from action-ids dir
   const tasks = safeReadJsonFile<TaskActionIds>(path.join(ACTION_ID_DIRECTORY, network, 'action-ids.json'));
   // filter all the entries which have the same actionId
