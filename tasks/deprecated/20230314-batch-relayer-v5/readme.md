@@ -1,9 +1,10 @@
 # 2023-03-14 - Batch Relayer V5
 
-Deployment of the fifth `BalancerRelayer` using `BatchRelayerLibrary`, for combining multiple operations (swaps, joins, etc.) in a single transaction.
+> ⚠️ **DEPRECATED** ⚠️
+> This deployment has been deprecated in favor of a new version with more functionality: specifically, support for recovery mode exits and queries: [batch-relayer-v6](../../20231031-batch-relayer-v6/).
+> V5 is still safe to use.
 
-This new version provides full support for all versions of Stable Pools: in particular, V2 and higher, which support proportional joins and exits.
-It also adds support for many new protocol wrappers: CompoundV2 (Midas), Euler, Gearbox, Silo, Tetu, and Yearn.
+Deployment of the fifth `BalancerRelayer` using `BatchRelayerLibrary`, for combining multiple operations (swaps, joins, etc.) in a single transaction.
 
 ## Useful Files
 

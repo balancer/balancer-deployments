@@ -100,7 +100,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Gnosis Root Gauge, for veBAL voting                    | [`20230217-gnosis-root-gauge-factory`](./tasks/20230217-gnosis-root-gauge-factory)                   |
 | Merkle Orchard Distributor V2                          | [`20230222-merkle-orchard-v2`](./tasks/20230222-merkle-orchard-v2)                                   |
 | Protocol ID registry                                   | [`20230223-protocol-id-registry`](./tasks/20230223-protocol-id-registry)                             |
-| Batch Relayer V5                                       | [`20230314-batch-relayer-v5`](./tasks/20230314-batch-relayer-v5)                                     |
 | L2 Balancer Pseudo Minter                              | [`20230316-l2-balancer-pseudo-minter`](./tasks/20230316-l2-balancer-pseudo-minter)                   |
 | Child Chain Gauge Factory V2                           | [`20230316-child-chain-gauge-factory-v2`](./tasks/20230316-child-chain-gauge-factory-v2)             |
 | L2 Voting Escrow Delegation Proxy                      | [`20230316-l2-ve-delegation-proxy`](./tasks/20230316-l2-ve-delegation-proxy)                         |
@@ -195,6 +194,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Linear Pools for Aave aTokens (with rebalancing) V4 | [`20230206-aave-rebalanced-linear-pool-v4`](./tasks/deprecated/20230206-aave-rebalanced-linear-pool-v4) |
 | Linear Pools for Yearn Tokens                       | [`20230213-yearn-linear-pool`](./tasks/deprecated/20230213-yearn-linear-pool)                           |
 | Linear Pools for Gearbox Tokens                     | [`20230213-gearbox-linear-pool`](./tasks/deprecated/20230213-gearbox-linear-pool)                       |
+| Batch Relayer V5                                    | [`20230314-batch-relayer-v5`](./tasks/deprecated/20230314-batch-relayer-v5)                             |
 | Linear Pools for Silo Tokens                        | [`20230315-silo-linear-pool`](./tasks/deprecated/20230315-silo-linear-pool)                             |
 | Composable Stable Pools V4                          | [`20230320-composable-stable-pool-v4`](./tasks/deprecated/20230320-composable-stable-pool-v4)           |
 | L2 Gauge Checkpointer                               | [`20230527-l2-gauge-checkpointer`](./tasks/deprecated/20230527-l2-gauge-checkpointer)                   |
