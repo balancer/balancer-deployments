@@ -126,6 +126,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Avalanche Root Gauge V2, for veBAL voting              | [`20230811-avalanche-root-gauge-factory-v2`](./tasks/20230811-avalanche-root-gauge-factory-v2)       |
 | Base Root Gauge, for veBAL voting                      | [`20230911-base-root-gauge-factory`](./tasks/20230911-base-root-gauge-factory)                       |
 | Stakeless Gauge Checkpointer V2                        | [`20230915-stakeless-gauge-checkpointer-v2`](./tasks/20230915-stakeless-gauge-checkpointer-v2)       |
+| ERC4626 Rate Provider Factory                          | [`20231107-erc4626-rate-provider-factory`](./tasks/20230915-erc4626-rate-provider-factory)           |
 
 ## Scripts
 
