@@ -9,8 +9,8 @@ import { fp } from '@helpers/numbers';
 describeForkTest('ERC4626RateProviderFactory', 'mainnet', 18380714, function () {
   let task: Task;
   let erc4626: Contract, rateProviderFactory: Contract, rateProvider: Contract;
-  
-  let sFraxErc4626Address = '0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32';
+
+  const sFraxErc4626Address = '0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32';
 
   before('run task', async () => {
     task = new Task('20231102-erc4626-rate-provider-factory', TaskMode.TEST, getForkedNetwork(hre));
