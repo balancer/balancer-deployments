@@ -121,57 +121,91 @@ describeForkTest('BatchRelayerLibrary - Query functionality', 'mainnet', 1841288
       expect(balances).to.deep.equal(initialBalances);
     });
 
-    it('BalancerQueries querySwap matches relayer querySwap', async () => {
+    describe('compare to Balancer Queries', () => {
       const amountIn = fp(100);
+      let actualAmountOut;
+      let expectedAmountOut: BigNumber;
 
-      // Do a swap through Balancer Queries
-      const expectedAmountOut = await balancerQueries.callStatic.querySwap(
-        {
-          poolId: poolId,
-          kind: SwapKind.GivenIn,
-          assetIn: DAI,
-          assetOut: MKR,
-          amount: amountIn,
-          userData: '0x',
-        },
-        {
-          sender: owner.address,
-          recipient: owner.address,
-          fromInternalBalance: false,
-          toInternalBalance: false,
-        }
-      );
+      sharedBeforeEach('do BalancerQuery', async () => {
+        // Do a swap through Balancer Queries
+        expectedAmountOut = await balancerQueries.callStatic.querySwap(
+          {
+            poolId: poolId,
+            kind: SwapKind.GivenIn,
+            assetIn: DAI,
+            assetOut: MKR,
+            amount: amountIn,
+            userData: '0x',
+          },
+          {
+            sender: owner.address,
+            recipient: owner.address,
+            fromInternalBalance: false,
+            toInternalBalance: false,
+          }
+        );
+      });
 
-      const outputReference = toChainedReference(0);
+      it('check direct swap', async () => {
+        const callData = library.interface.encodeFunctionData('swap', [
+          {
+            poolId: poolId,
+            kind: SwapKind.GivenIn,
+            assetIn: DAI,
+            assetOut: MKR,
+            amount: amountIn,
+            userData: '0x',
+          },
+          {
+            sender: owner.address,
+            recipient: owner.address,
+            fromInternalBalance: false,
+            toInternalBalance: false,
+          },
+          0, // limit
+          MAX_UINT256, // deadline
+          0, // value
+          0,
+        ]);
 
-      // Do the same swap through the relayer, and store the output in a chained reference
-      const callData = library.interface.encodeFunctionData('swap', [
-        {
-          poolId: poolId,
-          kind: SwapKind.GivenIn,
-          assetIn: DAI,
-          assetOut: MKR,
-          amount: amountIn,
-          userData: '0x',
-        },
-        {
-          sender: owner.address,
-          recipient: owner.address,
-          fromInternalBalance: false,
-          toInternalBalance: false,
-        },
-        0, // limit
-        MAX_UINT256, // deadline
-        0, // value
-        outputReference,
-      ]);
+        [actualAmountOut] = await relayer.connect(owner).callStatic.vaultActionsQueryMulticall([callData]);
 
-      // Retrieve the chained reference and check - they should match
-      await relayer.connect(owner).vaultActionsQueryMulticall([callData]);
+        expect(actualAmountOut).to.equal(expectedAmountOut);
+      });
 
-      const actualAmountOut = await library.callStatic.peekChainedReferenceValue(outputReference);
+      it('check swap with peek', async () => {
+        // Trying internal peek
+        const outputReference = toChainedReference(3);
 
-      expect(actualAmountOut).to.equal(expectedAmountOut);
+        // Do the same swap through the relayer, and store the output in a chained reference
+        const swapData = library.interface.encodeFunctionData('swap', [
+          {
+            poolId: poolId,
+            kind: SwapKind.GivenIn,
+            assetIn: DAI,
+            assetOut: MKR,
+            amount: amountIn,
+            userData: '0x',
+          },
+          {
+            sender: owner.address,
+            recipient: owner.address,
+            fromInternalBalance: false,
+            toInternalBalance: false,
+          },
+          0, // limit
+          MAX_UINT256, // deadline
+          0, // value
+          outputReference,
+        ]);
+
+        const peekData = library.interface.encodeFunctionData('peekChainedReferenceValue', [outputReference]);
+
+        const results = await relayer.connect(owner).callStatic.vaultActionsQueryMulticall([swapData, peekData]);
+        actualAmountOut = results[1];
+
+        expect(actualAmountOut).to.equal(expectedAmountOut);
+      });
     });
   });
 
