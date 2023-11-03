@@ -72,4 +72,9 @@ export default {
     BalancerMinter: ZERO_ADDRESS,
     CanCallUserCheckpoint: false,
   },
+  base: {
+    wstETH: ZERO_ADDRESS,
+    BalancerMinter: ZERO_ADDRESS,
+    CanCallUserCheckpoint: false,
+  },
 };
