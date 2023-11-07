@@ -10,7 +10,7 @@ import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskM
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { randomBytes } from 'ethers/lib/utils';
 
-describeForkTest('BatchRelayerLibrary - Query functionality', 'mainnet', 18412883, function () {
+describeForkTest('BatchRelayerLibrary V6 - Query functionality', 'mainnet', 18412883, function () {
   const DAI = '0x6b175474e89094c44da98b954eedeac495271d0f';
   const MKR = '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2';
 
