@@ -27,56 +27,56 @@ export default {
   mainnet: {
     wstETH: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0',
     BalancerMinter,
-    CanCallUserCheckpoint: true,
+    CanCallUserCheckpoint: false,
   },
   goerli: {
     wstETH: '0x6320cD32aA674d2898A68ec82e869385Fc5f7E2f',
     BalancerMinter,
-    CanCallUserCheckpoint: true,
+    CanCallUserCheckpoint: false,
   },
   sepolia: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter,
-    CanCallUserCheckpoint: true,
+    CanCallUserCheckpoint: false,
   },
   polygon: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'polygon' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   arbitrum: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'arbitrum' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   optimism: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'optimism' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   gnosis: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'gnosis' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   bsc: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: ZERO_ADDRESS,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   avalanche: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'avalanche' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   zkevm: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'zkevm' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
   base: {
     wstETH: ZERO_ADDRESS,
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'base' }).L2BalancerPseudoMinter,
-    CanCallUserCheckpoint: false,
+    CanCallUserCheckpoint: true,
   },
 };
