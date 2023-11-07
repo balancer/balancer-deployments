@@ -32,7 +32,7 @@ describeForkTest('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
 
   const TRANSFER_EXTERNAL_USER_BALANCE_OP_KIND = 3;
 
-  const CHAINED_REFERENCE_PREFIX = 'ba10';
+  const CHAINED_REFERENCE_PREFIX = 'ba11';
   function toChainedReference(key: BigNumberish): BigNumber {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
