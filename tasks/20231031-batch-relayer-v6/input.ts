@@ -11,6 +11,7 @@ export type BatchRelayerDeployment = {
 
 const Vault = new Task('20210418-vault', TaskMode.READ_ONLY);
 const BalancerMinter = new Task('20220325-gauge-controller', TaskMode.READ_ONLY);
+const L2BalancerPseudoMinter = new Task('20230316-l2-balancer-pseudo-minter', TaskMode.READ_ONLY);
 
 const version = {
   name: 'BatchRelayer',
@@ -21,7 +22,8 @@ const version = {
 export default {
   Vault,
   Version: JSON.stringify(version),
-  // wstETH and BalancerMinter are only deployed on mainnet, and goerli.
+  // wstETH and BalancerMinter are only deployed on mainnet and testnets.
+  // On L2s, we can use the L2BalancerPseudoMinter, which has the same interface as BalancerMinter.
   mainnet: {
     wstETH: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0',
     BalancerMinter,
@@ -39,22 +41,22 @@ export default {
   },
   polygon: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'polygon' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   arbitrum: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'arbitrum' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   optimism: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'optimism' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   gnosis: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'gnosis' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   bsc: {
@@ -64,17 +66,17 @@ export default {
   },
   avalanche: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'avalanche' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   zkevm: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'zkevm' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
   base: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: ZERO_ADDRESS,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'base' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: false,
   },
 };
