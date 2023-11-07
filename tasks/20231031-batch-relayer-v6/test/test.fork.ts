@@ -30,8 +30,6 @@ describeForkTest('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
   // The holder also holds RETH_STABLE_GAUGE tokens
   const RETH_STABLE_GAUGE = '0x79eF6103A513951a3b25743DB509E267685726B7';
 
-  const TRANSFER_EXTERNAL_USER_BALANCE_OP_KIND = 3;
-
   const CHAINED_REFERENCE_PREFIX = 'ba11';
   function toChainedReference(key: BigNumberish): BigNumber {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
@@ -153,20 +151,16 @@ describeForkTest('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
     expect(await destinationGauge.balanceOf(sender.address)).to.be.gt(0);
   });
 
+  it('can call user checkpoint: false', async () => {
+    expect(await library.canCallUserCheckpoint()).to.be.false;
+  });
+
   it('sender can update their gauge liquidity limits', async () => {
-    const tx = await relayer.connect(sender).multicall([
-      library.interface.encodeFunctionData('manageUserBalance', [
-        [RETH_STABLE_GAUGE, ETH_STETH_GAUGE].map((gauge) => ({
-          kind: TRANSFER_EXTERNAL_USER_BALANCE_OP_KIND,
-          asset: gauge,
-          amount: 1, // The amount must be non-zero to trigger the token transfer and liquidity limit update
-          sender: sender.address,
-          recipient: sender.address,
-        })),
-        0, // value: 0 (no need to transfer ETH)
-        [], // no output references
-      ]),
-    ]);
+    const tx = await relayer
+      .connect(sender)
+      .multicall([
+        library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [RETH_STABLE_GAUGE, ETH_STETH_GAUGE]]),
+      ]);
 
     const gaugeInterface = new ethers.utils.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
