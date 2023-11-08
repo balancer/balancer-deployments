@@ -7,7 +7,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest('ERC4626Wrapping', 'mainnet', 18412883, function () {
+describeForkTest('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 18412883, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -23,7 +23,7 @@ describeForkTest('ERC4626Wrapping', 'mainnet', 18412883, function () {
   const amountToWrap = bn(1e18);
 
   before('run task', async () => {
-    task = new Task('20230314-batch-relayer-v5', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20231031-batch-relayer-v6', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     library = await task.deployedInstance('BatchRelayerLibrary');
     relayer = await task.instanceAt('BalancerRelayer', await library.getEntrypoint());

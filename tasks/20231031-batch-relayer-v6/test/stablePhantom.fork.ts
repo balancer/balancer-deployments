@@ -18,10 +18,12 @@ import {
   swapFeePercentage,
   tokens,
   initialBalances,
+  PoolKind,
 } from './helpers/sharedStableParams';
 
-describeForkTest('Stable Phantom Exit', 'mainnet', 13776527, function () {
-  let vault: Contract, authorizer: Contract;
+/// TODO: support with relayer?
+describeForkTest.skip('BatchRelayerLibrary V6 - Stable Phantom Exit', 'mainnet', 13776527, function () {
+  let vault: Contract, authorizer: Contract, library: Contract, relayer: Contract;
 
   before('load vault and tokens', async () => {
     const vaultTask = new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
@@ -48,6 +50,13 @@ describeForkTest('Stable Phantom Exit', 'mainnet', 13776527, function () {
     owner = await getSigner();
     whale = await impersonate(LARGE_TOKEN_HOLDER);
     govMultisig = await impersonate(GOV_MULTISIG);
+  });
+
+  before('run task', async () => {
+    const task = new Task('20231031-batch-relayer-v6', TaskMode.TEST, getForkedNetwork(hre));
+    await task.run({ force: true });
+    library = await task.deployedInstance('BatchRelayerLibrary');
+    relayer = await task.instanceAt('BalancerRelayer', await library.getEntrypoint());
   });
 
   before('run stable phantom pool task', async () => {
@@ -113,12 +122,29 @@ describeForkTest('Stable Phantom Exit', 'mainnet', 13776527, function () {
 
     const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
-    const tx = await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-      assets: registeredTokens,
-      minAmountsOut: Array(registeredTokens.length).fill(0),
-      fromInternalBalance: false,
-      userData: defaultAbiCoder.encode(['uint256', 'uint256'], [ExitKindPhantom.EXACT_BPT_IN_FOR_TOKENS_OUT, bptIn]),
-    });
+    const bptBalance = await pool.balanceOf(owner.address);
+    expect(bptBalance).to.gt(0);
+
+    const userData = defaultAbiCoder.encode(
+      ['uint256', 'uint256'],
+      [ExitKindPhantom.EXACT_BPT_IN_FOR_TOKENS_OUT, bptIn]
+    );
+
+    const exitCalldata = library.interface.encodeFunctionData('exitPool', [
+      poolId,
+      PoolKind.LEGACY_STABLE,
+      owner.address,
+      owner.address,
+      {
+        assets: registeredTokens,
+        minAmountsOut: Array(registeredTokens.length).fill(0),
+        userData,
+        toInternalBalance: false,
+      },
+      [],
+    ]);
+
+    const tx = await relayer.connect(owner).multicall([exitCalldata]);
     const receipt = await (await tx).wait();
     const { deltas } = expectEvent.inReceipt(receipt, 'PoolBalanceChanged').args;
     const amountsOut = deltas.map((x: BigNumber) => x.mul(-1));

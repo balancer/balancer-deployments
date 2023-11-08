@@ -5,7 +5,7 @@ import { BigNumberish, bn } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest('SiloWrapping', 'mainnet', 16622559, function () {
+describeForkTest('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 16622559, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
