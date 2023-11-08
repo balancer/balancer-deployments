@@ -61,6 +61,10 @@ jobs:
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
+          ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
