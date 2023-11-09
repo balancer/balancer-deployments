@@ -49,7 +49,7 @@
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
-    "@nomiclabs/hardhat-vyper": "^3.0.3",
+    "@nomiclabs/hardhat-vyper": "^3.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@solidity-parser/parser": "^0.14.5",
     "@types/chai": "^4",
