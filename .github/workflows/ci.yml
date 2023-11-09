@@ -65,6 +65,7 @@ jobs:
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
           GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
