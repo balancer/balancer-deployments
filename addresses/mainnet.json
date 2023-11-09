@@ -875,7 +875,7 @@
         "address": "0xfeA793Aa415061C483D2390414275AD314B3F621"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230315-silo-linear-pool": {
     "contracts": [

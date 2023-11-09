@@ -112,7 +112,7 @@
         "address": "0x4678731DC41142A902a114aC5B2F77b63f4a259D"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230316-child-chain-gauge-factory-v2": {
     "contracts": [
