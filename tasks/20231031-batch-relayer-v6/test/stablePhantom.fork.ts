@@ -21,8 +21,7 @@ import {
   PoolKind,
 } from './helpers/sharedStableParams';
 
-/// TODO: support with relayer?
-describeForkTest.skip('BatchRelayerLibrary V6 - Stable Phantom Exit', 'mainnet', 13776527, function () {
+describeForkTest('BatchRelayerLibrary V6 - Stable Phantom Exit', 'mainnet', 13776527, function () {
   let vault: Contract, authorizer: Contract, library: Contract, relayer: Contract;
 
   before('load vault and tokens', async () => {
@@ -116,6 +115,25 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Stable Phantom Exit', 'mainnet',
     expect(paused).to.be.true;
   });
 
+  before('approve relayer at the authorizer', async () => {
+    const relayerActionIds = await Promise.all(
+      ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
+        vault.getActionId(vault.interface.getSighash(action))
+      )
+    );
+
+    // We impersonate an account with the default admin role in order to be able to approve the relayer. This assumes
+    // such an account exists.
+    const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
+
+    // Grant relayer permission to call all relayer functions
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+  });
+
+  before('approve relayer by the user', async () => {
+    await vault.connect(owner).setRelayerApproval(owner.address, relayer.address, true);
+  });
+
   it('exits proportionally when paused', async () => {
     const previousBptBalance = await pool.balanceOf(owner.address);
     const bptIn = previousBptBalance.div(4);
@@ -132,21 +150,22 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Stable Phantom Exit', 'mainnet',
 
     const exitCalldata = library.interface.encodeFunctionData('exitPool', [
       poolId,
-      PoolKind.LEGACY_STABLE,
+      PoolKind.STABLE_PHANTOM,
       owner.address,
       owner.address,
       {
         assets: registeredTokens,
         minAmountsOut: Array(registeredTokens.length).fill(0),
+        fromInternalBalance: false,
         userData,
-        toInternalBalance: false,
       },
       [],
     ]);
 
     const tx = await relayer.connect(owner).multicall([exitCalldata]);
+
     const receipt = await (await tx).wait();
-    const { deltas } = expectEvent.inReceipt(receipt, 'PoolBalanceChanged').args;
+    const { deltas } = expectEvent.inIndirectReceipt(receipt, vault.interface, 'PoolBalanceChanged').args;
     const amountsOut = deltas.map((x: BigNumber) => x.mul(-1));
 
     const expectedAmountsOut = (registeredBalances as BigNumber[]).map((b) => b.div(4));
