@@ -98,6 +98,28 @@ jobs:
         with:
           network-name: zkevm
 
+  verify-base-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify Base Timelock Authorizer Configuration
+        uses: ./.github/actions/verify-network-timelock-authorizer-config
+        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+        with:
+          network-name: base
+
+  verify-fantom-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify Fantom Timelock Authorizer Configuration
+        uses: ./.github/actions/verify-network-timelock-authorizer-config
+        env:
+          FANTOM_RPC_ENDPOINT: ${{ secrets.FANTOM_RPC_ENDPOINT }}
+        with:
+          network-name: fantom
+
   verify-goerli-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
