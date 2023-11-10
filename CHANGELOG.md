@@ -37,6 +37,7 @@
 - Deployed `ChainlinkRateProviderFactory` to all networks.
 - Deployed `StakelessGaugeCheckpointer` V2 to Ethereum and Sepolia.
 - Deployed `BaseRootGaugeFactory` to Mainnet.
+- Deployed `BatchRelayerLibrary` V6 to all networks.
 
 ### Deprecations
 
