@@ -7,6 +7,7 @@ import { getActionIdInfo } from 'actionId';
 import { timestampToString } from '@helpers/time';
 import { BigNumber } from 'ethers';
 import { bn, decimal } from '@helpers/numbers';
+import retry from 'async-retry';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
 const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(__dirname, '../addresses');
@@ -199,6 +200,16 @@ export async function getTimelockAuthorizerConfigDiff(task: Task, network: strin
   }
 
   return diff;
+}
+
+export async function withRetries(f: () => Promise<void>): Promise<void> {
+  await retry(async () => f(), {
+    retries: 5, // Number of retries before giving up
+    factor: 2, // Exponential factor
+    minTimeout: 1000, // Minimum wait time before retrying
+    maxTimeout: 10000, // Maximum wait time before retrying
+    randomize: true, // Randomize the wait time
+  });
 }
 
 /**

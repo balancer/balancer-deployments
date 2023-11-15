@@ -32,6 +32,7 @@ import {
   getTimelockAuthorizerConfigDiff,
   saveContractDeploymentAddresses,
   saveTimelockAuthorizerConfig,
+  withRetries,
 } from './src/network';
 
 const THEGRAPHURLS: { [key: string]: string } = {
@@ -117,7 +118,7 @@ task('check-deployments', `Check that all tasks' deployments correspond to their
           const outputFiles = readdirSync(outputDir);
           if (outputFiles.some((outputFile) => outputFile.includes(hre.network.name))) {
             // Not all tasks have outputs for all networks, so we skip those that don't
-            await task.run(args);
+            await withRetries(async () => task.run(args));
           }
         }
       }
@@ -220,7 +221,7 @@ task('check-action-ids', `Check that contract action-ids correspond the expected
     } else {
       for (const taskID of Task.getAllTaskIds()) {
         const task = new Task(taskID, TaskMode.READ_ONLY, hre.network.name);
-        await checkActionIds(task);
+        await withRetries(async () => checkActionIds(task));
       }
     }
     checkActionIdUniqueness(hre.network.name);
