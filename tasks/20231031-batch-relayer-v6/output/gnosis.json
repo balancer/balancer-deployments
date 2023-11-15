@@ -1,0 +1,5 @@
+{
+  "BatchRelayerLibrary": "0x8eA89804145c007e7D226001A96955ad53836087",
+  "BatchRelayerQueryLibrary": "0x884976294666ccF6dd61006BBcDafe74ca889504",
+  "BalancerRelayer": "0x2163c2FcD0940e84B8a68991bF926eDfB0Cd926C"
+}

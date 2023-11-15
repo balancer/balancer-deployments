@@ -560,5 +560,22 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0xEDFd0A7005A7c72c44Ff13bEa370c86A9D11beE1"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0xCD2A81Af5d5B485164709dCC4b3791B9f504cFc6"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x7852fB9d0895e6e8b3EedA553c03F6e2F9124dF9"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
