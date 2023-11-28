@@ -1,10 +1,29 @@
 import hre from 'hardhat';
+import chalk from 'chalk';
 
 import { HttpNetworkConfig, HardhatNetworkConfig } from 'hardhat/types';
 import { Network } from './types';
 
 export function describeForkTest(name: string, forkNetwork: Network, blockNumber: number, callback: () => void): void {
-  describe(name, () => {
+  describe(name, function () {
+    // Retrying is useful in CI, where the tests may fail when hitting request rate limits.
+    if (process.env.CI) {
+      this.retries(2);
+
+      // Delay between retries (only if the attempt fails)
+      afterEach(async function () {
+        if (this.currentTest?.state === undefined) {
+          const delay = 10000;
+          const formattedMessage = chalk.keyword('yellow')(
+            `⚠️   Test '${this.currentTest?.title}' failed, retrying in ${delay}ms`
+          );
+          console.warn(formattedMessage);
+          const sleep = () => new Promise((r) => setTimeout(r, delay));
+          await sleep();
+        }
+      });
+    }
+
     _describeBody(forkNetwork, blockNumber, callback);
   });
 }
