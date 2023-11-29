@@ -13,13 +13,18 @@ export function describeForkTest(name: string, forkNetwork: Network, blockNumber
       // Delay between retries (only if the attempt fails)
       afterEach(async function () {
         if (this.currentTest?.state === undefined) {
-          const delay = 10000;
+          const delay = 5000;
           const formattedMessage = chalk.keyword('yellow')(
             `⚠️   Test '${this.currentTest?.title}' failed, retrying in ${delay}ms`
           );
           console.warn(formattedMessage);
-          const sleep = () => new Promise((r) => setTimeout(r, delay));
-          await sleep();
+
+          // Block event loop to ensure no requests are sent to the RPC.
+          const date = Date.now();
+          let currentDate = null;
+          do {
+            currentDate = Date.now();
+          } while (currentDate - date < 5000);
         }
       });
     }
