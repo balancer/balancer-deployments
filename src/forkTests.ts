@@ -13,7 +13,7 @@ export function describeForkTest(name: string, forkNetwork: Network, blockNumber
       // Delay between retries (only if the attempt fails)
       afterEach(async function () {
         if (this.currentTest?.state === undefined) {
-          const delay = 5000;
+          const delay = 15000;
           const formattedMessage = chalk.keyword('yellow')(
             `⚠️   Test '${this.currentTest?.title}' failed, retrying in ${delay}ms`
           );
