@@ -743,6 +743,13 @@
         "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
         "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
       }
+    },
+    "OptimismRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0x57f8f62a97b34cc13c5dfdbcf315c27432556dc18e9d2c3398d2be54568a85f5",
+        "setOptimismGasLimit(uint32)": "0x6a625c2e350a93dad2713c2fa449ec9304288897f8b7ad89c21417b9020eb99e"
+      }
     }
   },
   "20220823-arbitrum-root-gauge-factory-v2": {
