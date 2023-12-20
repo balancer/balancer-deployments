@@ -4,9 +4,9 @@ import { Contract } from 'ethers';
 
 import { fp } from '@helpers/numbers';
 import { actionId } from '@helpers/models/misc/actions';
-import { advanceTime, DAY } from '@helpers/time';
+import { advanceTime, DAY, SECOND } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
-import { ZERO_ADDRESS } from '@helpers/constants';
+import { ANY_ADDRESS, ZERO_ADDRESS } from '@helpers/constants';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -18,7 +18,8 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 function doForkTestsOnNetwork(network: string, block: number) {
   describeForkTest(`TimelockAuthorizer ${network}`, network, block, function () {
     let input: TimelockAuthorizerDeployment;
-    let migrator: Contract, vault: Contract, newAuthorizer: Contract, oldAuthorizer: Contract;
+    let migrator: Contract, vault: Contract, newAuthorizer: Contract, oldAuthorizer: Contract, votingEscrow: Contract;
+    let adaptorEntrypoint: Contract;
     let root: SignerWithAddress;
     let task: Task;
 
@@ -35,6 +36,16 @@ function doForkTestsOnNetwork(network: string, block: number) {
     before('load vault', async () => {
       const vaultTask = new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
       vault = await vaultTask.instanceAt('Vault', await migrator.vault());
+
+      const gaugeControllerTask = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, getForkedNetwork(hre));
+      votingEscrow = await gaugeControllerTask.deployedInstance('VotingEscrow');
+
+      const adaptorEntrypointTask = new Task(
+        '20221124-authorizer-adaptor-entrypoint',
+        TaskMode.READ_ONLY,
+        getForkedNetwork(hre)
+      );
+      adaptorEntrypoint = await adaptorEntrypointTask.deployedInstance('AuthorizerAdaptorEntrypoint');
     });
 
     before('load old authorizer and impersonate multisig', async () => {
@@ -121,6 +132,52 @@ function doForkTestsOnNetwork(network: string, block: number) {
         });
       });
     }
+
+    it('tries to hack smart wallet checker set', async () => {
+      const smart_wallet_checker_before = await votingEscrow.smart_wallet_checker();
+      console.log('smart wallet checker before: ', smart_wallet_checker_before);
+
+      const commitActionId = '0x205469f5cc55d981b8eeb1b14073b29504f1eb31e9aa5ce13558bb28e7ad4532'; // commit_smart_wallet_checker action ID
+      await newAuthorizer.connect(root).grantPermission(commitActionId, root.address, votingEscrow.address);
+
+      await adaptorEntrypoint
+        .connect(root)
+        .performAction(
+          votingEscrow.address,
+          votingEscrow.interface.encodeFunctionData('commit_smart_wallet_checker', [ANY_ADDRESS])
+        );
+
+      const performActionActionId = '0xa55f6e5fac211b825bedbeb928434b06f524409829fa8a160b1983507c46a502';
+      await newAuthorizer.connect(root).grantPermission(performActionActionId, root.address, adaptorEntrypoint.address);
+
+      let tx = await newAuthorizer.connect(root).scheduleDelayChange(performActionActionId, 1 * SECOND, []);
+      let event = expectEvent.inReceipt(await tx.wait(), 'DelayChangeScheduled');
+
+      // Only 5 days are needed to change the delay.
+      // performAction doesn't even have its action ID registered as it shouldn't be necessary. Nevertheless, we can
+      // change the delay to call it to 1 second.
+      // After this happens, any timelocked action behind the authorizer adaptor can be called in a second.
+      // In this case, `apply_smart_wallet_checker` should be behind the long delay, but can still be executed after
+      // the delay set for `performAction` (1 second).
+      await advanceTime(5 * DAY);
+      await newAuthorizer.connect(root).execute(event.args.scheduledExecutionId);
+
+      const calldata = votingEscrow.interface.getSighash('apply_smart_wallet_checker');
+
+      tx = await newAuthorizer
+        .connect(root)
+        .schedule(
+          adaptorEntrypoint.address,
+          adaptorEntrypoint.interface.encodeFunctionData('performAction', [votingEscrow.address, calldata]),
+          []
+        );
+      event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
+      await advanceTime(2 * SECOND);
+      await newAuthorizer.connect(root).execute(event.args.scheduledExecutionId);
+
+      const smart_wallet_checker_after = await votingEscrow.smart_wallet_checker();
+      console.log('smart wallet checker after: ', smart_wallet_checker_after);
+    });
 
     it('allows migrating the authorizer address again', async () => {
       const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');

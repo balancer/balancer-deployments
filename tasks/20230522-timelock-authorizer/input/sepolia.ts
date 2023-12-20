@@ -37,7 +37,7 @@ const MEDIUM_DELAY = 3 * HOUR;
 
 // Happens basically never. A long grant delay typically involves replacing infrastructure (e.g. replacing the veBAL
 // system or protocol fees).
-const LONG_DELAY = DAY;
+const LONG_DELAY = 30 * DAY;
 
 export const RootTransferDelay = LONG_DELAY;
 
