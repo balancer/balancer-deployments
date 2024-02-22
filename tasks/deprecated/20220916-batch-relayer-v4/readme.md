@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 > This deployment has been deprecated in favor of a new version with full support for stable pools and new protocols.
-> The new version is: [batch-relayer-v5](../../20230314-batch-relayer-v5/).
+> The new version is: [batch-relayer-v5](../20230314-batch-relayer-v5/).
 
 Deployment of the fourth `BalancerRelayer` using `BatchRelayerLibrary`, for combining multiple operations (swaps, joins, etc.) in a single transaction.
 

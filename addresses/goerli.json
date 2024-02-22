@@ -747,7 +747,7 @@
         "address": "0x03F1ab8b19bcE21EB06C364aEc9e40322572a1e9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230315-silo-linear-pool": {
     "contracts": [
@@ -995,6 +995,23 @@
       {
         "name": "ChainlinkRateProviderFactory",
         "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x6B1Da720Be2D11d95177ccFc40A917c2688f396c"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0xE21c4FF088d6829A8a4A17Ff2EE2c99CD202073e"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x7f36A11750F225De646b0de7b26BC74e797c310B"
       }
     ],
     "status": "ACTIVE"

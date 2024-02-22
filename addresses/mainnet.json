@@ -875,7 +875,7 @@
         "address": "0xfeA793Aa415061C483D2390414275AD314B3F621"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230315-silo-linear-pool": {
     "contracts": [
@@ -1217,6 +1217,23 @@
       {
         "name": "StakelessGaugeCheckpointer",
         "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0xeA66501dF1A00261E3bB79D1E90444fc6A186B62"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0x481Ca759BABB6fF011E11890e183bE00de3714e7"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x35Cea9e57A393ac66Aaa7E25C391D52C74B5648f"
       }
     ],
     "status": "ACTIVE"

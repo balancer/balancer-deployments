@@ -408,7 +408,7 @@
         "address": "0x03F1ab8b19bcE21EB06C364aEc9e40322572a1e9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230316-child-chain-gauge-factory-v2": {
     "contracts": [
@@ -635,6 +635,23 @@
       {
         "name": "ChainlinkRateProviderFactory",
         "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0xA69E0Ccf150a29369D8Bbc0B3f510849dB7E8EEE"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0xA876B2DBcC73f28347677c4Be589E11910CC10Eb"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x015ACA20a1422F3c729086c17f15F10e0CfbC75A"
       }
     ],
     "status": "ACTIVE"

@@ -112,7 +112,7 @@
         "address": "0x4678731DC41142A902a114aC5B2F77b63f4a259D"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230316-child-chain-gauge-factory-v2": {
     "contracts": [
@@ -333,6 +333,19 @@
     "contracts": [
       {
         "name": "ComposableStablePoolFactory",
+        "address": "0x577e5993B9Cc480F07F98B5Ebd055604bd9071C4"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0xA76C92aaF1FE0f4c3be46edd1Ab020F5774eDf46"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230711-zkevm-composable-stable-pool-v5": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
         "address": "0x956CCab09898C0AF2aCa5e6C229c3aD4E93d9288"
       },
       {
@@ -340,7 +353,7 @@
         "address": "0x7682e108Cd89d86303625c8478c21Ff86f401166"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230712-child-chain-gauge-checkpointer": {
     "contracts": [
@@ -360,6 +373,23 @@
       {
         "name": "ChainlinkRateProviderFactory",
         "address": "0x4132f7AcC9dB7A6cF7BE2Dd3A9DC8b30C7E6E6c8"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x0c5538098EBe88175078972F514C9e101D325D4F"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0x4Dbf624Ffc95ceD541e6C9E786AF87848dC3F3d9"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x8e620FfCa2580ed87241D7e10F85EE75d0a906F5"
       }
     ],
     "status": "ACTIVE"

@@ -332,6 +332,32 @@
     "ComposableStablePoolFactory": {
       "useAdaptor": false,
       "actionIds": {
+        "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0x436c6cc050b902862757ea4f8519351a526a3a992398b41e6ac16247133e0261",
+        "disable()": "0x64a2a630490e7632c2c8136b3761d329589d65bc8e9b6bb4864d79bc930d5e3c"
+      }
+    },
+    "ComposableStablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xA76C92aaF1FE0f4c3be46edd1Ab020F5774eDf46",
+      "actionIds": {
+        "disableRecoveryMode()": "0x873caa0fd93d3c1661f94fc8bdbe1c379f7fcda27086da0c26ec1f38bead59c1",
+        "enableRecoveryMode()": "0x0060ad8f81979d2e64cb0d53e650dee47343f112c476effa7f1617731de77913",
+        "pause()": "0x2175568c6322118c9ae102adda930e3aee7b000bdf4cd0f0a0ee991c8c039d7e",
+        "setAssetManagerPoolConfig(address,bytes)": "0xa9ebbdd1a0446f47373141eff0e19b8f77787be9a8980c1fc1af3130d79ee393",
+        "setSwapFeePercentage(uint256)": "0xbfd69d98e6966ce935b9eba83ae8f056ed06f6406b875e0cf728e3d9c2c39961",
+        "setTokenRateCacheDuration(address,uint256)": "0xf9fe5188a9dbdabb500bc64eefce46460daa95a047e57a9e9a04de41aa27f964",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x2cca85787a500e04397f218a9851b4521750e6dc26edfdb062bb37f2d79b8de7",
+        "stopAmplificationParameterUpdate()": "0x5a443c2e20bbd9246c672bd23a142a1c540ad1190fd7e5148866e4356d60ab29",
+        "unpause()": "0xd1146a7de2edb055c46c7ade9662cf9fc4af9ff58da4ca2f5911b7f63db16602",
+        "updateProtocolFeePercentageCache()": "0xfaa64815f9381fbcb4ba2a7a531f546f0342e0bc2c9beab2a9034a76aac8a4b5",
+        "updateTokenRateCache(address)": "0xd0547cf0b3b617880170eef83bcd448ffc9461adc5ce16e7d3317761caa857b5"
+      }
+    }
+  },
+  "20230711-zkevm-composable-stable-pool-v5": {
+    "ComposableStablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
         "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0xec55a48979fccaafa3f4f81d987cc5aa26dfa67ce20b1cf608c13cc65459ed2f",
         "disable()": "0x0ebf042d38f8e1bb630c3010c686232d7334f90360a82eb23623fd01fbe8e656"
       }

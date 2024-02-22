@@ -42,9 +42,10 @@ __metadata:
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.6"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.1"
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.2"
-    "@nomiclabs/hardhat-vyper": "npm:^3.0.3"
+    "@nomiclabs/hardhat-vyper": "npm:^3.0.5"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.5"
     "@solidity-parser/parser": "npm:^0.14.5"
+    "@types/async-retry": "npm:^1"
     "@types/chai": "npm:^4"
     "@types/lodash": "npm:^4.14.186"
     "@types/lodash.range": "npm:^3.2.7"
@@ -53,6 +54,7 @@ __metadata:
     "@types/node-fetch": "npm:^2.6.2"
     "@typescript-eslint/eslint-plugin": "npm:^5.41.0"
     "@typescript-eslint/parser": "npm:^5.41.0"
+    async-retry: "npm:^1.3.3"
     chai: "npm:^4.3.6"
     chalk: "npm:^4.1.2"
     decimal.js: "npm:^10.4.3"
@@ -1129,9 +1131,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-vyper@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@nomiclabs/hardhat-vyper@npm:3.0.3"
+"@nomiclabs/hardhat-vyper@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@nomiclabs/hardhat-vyper@npm:3.0.5"
   dependencies:
     debug: "npm:^4.1.1"
     fs-extra: "npm:^7.0.1"
@@ -1140,7 +1142,7 @@ __metadata:
     semver: "npm:^6.3.0"
   peerDependencies:
     hardhat: ^2.8.3
-  checksum: da2794403bd56d9e07f7ca1be95194fb9ba02f3292dab6f9f81f4b24f98711381721a75db87004dc976f2e631b3864266a46a8dc9d53f6c9919ec0980c864d66
+  checksum: 4aec2401282f7ba80f000788a3df8b5b0031505987aafb9749a72a38f6494fce6d843c9a3ac57b942f24bd54f887cf2668503fb6e7b6bb8982ca0422cff7dffe
   languageName: node
   linkType: hard
 
@@ -1435,6 +1437,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/async-retry@npm:^1":
+  version: 1.4.8
+  resolution: "@types/async-retry@npm:1.4.8"
+  dependencies:
+    "@types/retry": "npm:*"
+  checksum: a0f1909cf39624066735600c0270be1eee43ec2c34721f78d73ec5bbdcd6c8117a2419d2e93c1466215a14533954ca8f65d45e5e36f8d90f7ab9166a43b635df
+  languageName: node
+  linkType: hard
+
 "@types/bn.js@npm:^4.11.3, @types/bn.js@npm:^4.11.5":
   version: 4.11.6
   resolution: "@types/bn.js@npm:4.11.6"
@@ -1606,6 +1617,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: f6e2bc61d2fbeabfd6c5df826e87832aa89f7b190dc993503ff1bbc19608ba75223f4c41c22bfb9500b66e36bf00e7a2c2c0af9e6abba6c2e5bad808eb324d2c
+  languageName: node
+  linkType: hard
+
+"@types/retry@npm:*":
+  version: 0.12.5
+  resolution: "@types/retry@npm:0.12.5"
+  checksum: e5d082aec34220f96a4b3232bb3fdd502eb15a3266b9e113999ae7637227a562d09223935435c4ed11a5ee6ee2f33cb709fa1269b964bc0cc684790b8a834c42
   languageName: node
   linkType: hard
 
@@ -2201,6 +2219,15 @@ __metadata:
   version: 1.0.1
   resolution: "async-limiter@npm:1.0.1"
   checksum: 6e4c39e263e9f424cbfa599051ac53c0dd5f784c70e42845f47d22e4f66d44d6a26a083ef950cbdf06c3564bb0b52690ed3820b10dab63e226cc27dd28db961a
+  languageName: node
+  linkType: hard
+
+"async-retry@npm:^1.3.3":
+  version: 1.3.3
+  resolution: "async-retry@npm:1.3.3"
+  dependencies:
+    retry: "npm:0.13.1"
+  checksum: 386075c0d73135a742de0f95e5bcb9aa051d51b578066d8e105bc6a6e36c566071b14114637a369e172f6207b429c706b16c7f39b4240af71edc29ce0339abcf
   languageName: node
   linkType: hard
 
@@ -10065,6 +10092,13 @@ __metadata:
   version: 0.1.15
   resolution: "ret@npm:0.1.15"
   checksum: d65bd0cc83122e33a284e87ff9b51f553e5da3d05b0643740a0c07189f6025972a70856e794bdae3d8cdfb36bc8c05a3aad3935bdadbd20bdaa1789b70a21e8c
+  languageName: node
+  linkType: hard
+
+"retry@npm:0.13.1":
+  version: 0.13.1
+  resolution: "retry@npm:0.13.1"
+  checksum: e26ac693801b9f84a369fe90800d844bbe7e4ae325b11496eef0fcb400d06a3f477e93701fc8ac99c110d893155f1e37fee6473b82e90c5ea5547076dac0af63
   languageName: node
   linkType: hard
 
