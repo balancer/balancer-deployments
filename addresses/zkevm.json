@@ -340,7 +340,7 @@
         "address": "0xA76C92aaF1FE0f4c3be46edd1Ab020F5774eDf46"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230711-zkevm-composable-stable-pool-v5": {
     "contracts": [

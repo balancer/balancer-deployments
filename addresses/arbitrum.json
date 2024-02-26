@@ -704,7 +704,7 @@
         "address": "0xd60020Ec34Ccf9A4385f917DE8F6956B77853ABF"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230712-child-chain-gauge-checkpointer": {
     "contracts": [
