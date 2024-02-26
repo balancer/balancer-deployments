@@ -126,7 +126,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Base Root Gauge, for veBAL voting                      | [`20230911-base-root-gauge-factory`](./tasks/20230911-base-root-gauge-factory)                       |
 | Stakeless Gauge Checkpointer V2                        | [`20230915-stakeless-gauge-checkpointer-v2`](./tasks/20230915-stakeless-gauge-checkpointer-v2)       |
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./tasks/20231031-batch-relayer-v6)                                     |
-
+| ERC4626 Rate Provider Factory                          | [`20231102-erc4626-rate-provider-factory`](./tasks/20231102-erc4626-rate-provider-factory)           |
 ## Scripts
 
 These are deployments for script-like contracts (often called 'coordinators') which are typically granted some permission by Governance and then executed, after which they become useless.
