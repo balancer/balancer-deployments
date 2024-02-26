@@ -19,7 +19,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { deploy } from '@src';
 import { randomBytes } from 'ethers/lib/utils';
-import { DAY, MINUTE, SECOND, advanceTime, advanceToTimestamp, currentTimestamp, setNextBlockTimestamp } from '@helpers/time';
+import { DAY, MINUTE, advanceTime, currentTimestamp } from '@helpers/time';
 
 describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
   let task: Task;
