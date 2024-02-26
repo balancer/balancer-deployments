@@ -694,5 +694,31 @@
         "updateTokenRateCache(address)": "0x1b8cd7565ea9fba03d7a5f091e9d568dd674455569b4c72c379d25e9ba32d36c"
       }
     }
+  },
+  "20240223-composable-stable-pool-v6": {
+    "ComposableStablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,address[],uint256,address[],uint256[],bool,uint256,address,bytes32)": "0xaadc4fc342b9d37032270d8adad7e12029667a841f7202b364cc1addd24a3ebc",
+        "disable()": "0x3dd110fd101a1be6115ceb811a85535de6c9c019360c7d67c022c48a3dd685d9"
+      }
+    },
+    "ComposableStablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x287E4A89d03deCdF7ac372c7B5332AbCDb3D912A",
+      "actionIds": {
+        "disableRecoveryMode()": "0x8f33b1eaf9e2f2523d32b89a23d1a83e1225eb96ef489fde9b81bc44c7e207c1",
+        "enableRecoveryMode()": "0x73c3332de64a6f7b137bea3255a221d779cc0f170ea4892ff0581faf799230ff",
+        "pause()": "0x04221c483f49fe794f5ce394e0ffc086722e106b9fef863610ccfbe1a019b997",
+        "setAssetManagerPoolConfig(address,bytes)": "0xe2baca23794dbc02728408bd1d35a1819f58f0e598d3c004e7b0429144b843da",
+        "setSwapFeePercentage(uint256)": "0x22627da2e7670aed1292420d5f0a2a49a7bd5992e0aef001702aa3285b5979b3",
+        "setTokenRateCacheDuration(address,uint256)": "0xed896fdd237f2b79e8ae80a5e3432dbc85b53ff7a8ba91ea17ba7b2716aaee0a",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x86f2cd537c832d7823d7b51e7f52288e383427c8c41180561f0f8054bc216f56",
+        "stopAmplificationParameterUpdate()": "0x0c055dc6cd1d6558914ef49c536f751680f8c413a3563007992801443bcca7a5",
+        "unpause()": "0xd0d6f7e787daf1d2a410263e88c280721498432203c7bf5a5378158634cf6561",
+        "updateProtocolFeePercentageCache()": "0x9187594b83654bfb251ccb4533c48404ca136281c3729b90c69ddd0859e0cf18",
+        "updateTokenRateCache(address)": "0x498630c10c1b0dad33cc41f56c2186da11a12259cd4b65c8a5922a04c9e902a4"
+      }
+    }
   }
 }
