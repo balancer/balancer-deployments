@@ -486,5 +486,18 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20240223-composable-stable-pool-v6": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x47B489bf5836f83ABD928C316F8e39bC0587B020"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0x5d98909Aa2b3d964907B3735597F47E06b04D8b4"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
