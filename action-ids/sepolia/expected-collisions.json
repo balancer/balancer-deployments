@@ -138,5 +138,201 @@
       "signature": "set_delegation_status(address,address,bool)",
       "useAdaptor": true
     }
+  ],
+  "0xdc8b557d7b464894c525e5de06257694247b2b789b4948326752177399475439": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "add_reward(address,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "add_reward(address,address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xb6f59366d2aa97f8c51f5caa13a58d14c495bebc0eb0a0e28510abfca37a3a2e": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "claim_rewards()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards()",
+      "useAdaptor": true
+    }
+  ],
+  "0x8b9eff478b7309b9a7d94d1d412efe93bdb13fb2d10aaf5720ef2e62b78255b9": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "claim_rewards(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x1955a1320fc9f42b0922cfbd95a80125a5405e15605221bb7fabb26b8b96400e": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "claim_rewards(address,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claim_rewards(address,address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x18e453090a9493f46652183f2481aba603cdcb546380ec49b63ca94c66e4e3a4": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "claimable_tokens(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "claimable_tokens(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0xf40ea6655a4d362dc07ea4bd44a45b140953914b7fb570d01571a0113ed0f16b": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "deposit(uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit(uint256)",
+      "useAdaptor": true
+    }
+  ],
+  "0xebb91db92ed5cab426d18c44b88b939f8edc0867dee7c6183a1748f1929cab0e": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "deposit(uint256,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit(uint256,address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x4190fc8ffb7740e8eaa9f45bb3f1bb96644606d40c48ea1c2bacde6daa119f1f": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "deposit_reward_token(address,uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "deposit_reward_token(address,uint256)",
+      "useAdaptor": true
+    }
+  ],
+  "0x9e97ccce1d835516e8fbd06e4c9f8f7746593762c8d6346a45a57f4ba03ce926": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "killGauge()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "killGauge()",
+      "useAdaptor": true
+    }
+  ],
+  "0xa68f8859aea0e52f285bf8615e8d0b1c2421e59f342cfea2e496bb19738e86ea": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "set_reward_distributor(address,address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "set_reward_distributor(address,address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x9441a83056fd8a7562bc4257190480b77612a9df71e2ab381f9caecfa55a1232": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "set_rewards_receiver(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "set_rewards_receiver(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x45e4233e809912849663a4a9242094c0741101b98b3b48d84e2f4aaa512ce1d9": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "unkillGauge()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "unkillGauge()",
+      "useAdaptor": true
+    }
+  ],
+  "0x49e1492ab9c1843df63e654a11e9369ecf82a1bf370798fddfdfc8a59d46b1cb": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "user_checkpoint(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "user_checkpoint(address)",
+      "useAdaptor": true
+    }
+  ],
+  "0x4168d719ac96c4fb5e1b45bd6dba558e3f3b2125aa3d4523f2f419818453c3a4": [
+    {
+      "taskId": "20220822-mainnet-gauge-factory-v2",
+      "contractName": "LiquidityGaugeV5",
+      "signature": "withdraw(uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20230316-child-chain-gauge-factory-v2",
+      "contractName": "ChildChainGauge",
+      "signature": "withdraw(uint256)",
+      "useAdaptor": true
+    }
   ]
 }
