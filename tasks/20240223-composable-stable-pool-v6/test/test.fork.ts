@@ -475,7 +475,7 @@ describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
       expect(await currentTimestamp()).to.be.lt(factoryDeploymentTimestamp.add(MINUTE));
     });
 
-    it('can be paused 4 years after factory deployment', async () => {
+    it('can be paused until 4 years after factory deployment', async () => {
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'pause'), govMultisig.address);
       await advanceTime(EXPECTED_PAUSE_WINDOW - MINUTE);
@@ -483,7 +483,7 @@ describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
       expectEvent.inReceipt(await tx.wait(), 'PausedStateChanged', { paused: true });
     });
 
-    it('cannot be paused 4 years after factory deployment', async () => {
+    it('cannot be paused more than 4 years after factory deployment', async () => {
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'pause'), govMultisig.address);
       await advanceTime(EXPECTED_PAUSE_WINDOW + MINUTE);
