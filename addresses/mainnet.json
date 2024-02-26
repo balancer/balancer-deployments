@@ -1166,7 +1166,7 @@
         "address": "0x20356663C17D31549d1210379749E2aE36722D8f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230717-chainlink-rate-provider-factory": {
     "contracts": [
