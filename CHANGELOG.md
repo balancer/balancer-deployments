@@ -32,12 +32,12 @@
 - Deployed `AvalancheRootGaugeFactory` V2 to Mainnet.
 - Deployed `BalancerPoolDataQueries` to all networks.
 - Deployed `TimelockAuthorizer` to Goerli and Sepolia.
-- Deployed `ComposableStablePoolFactory` V5 to all networks.
 - Deployed `ChildChainGaugeCheckpointer` (Balancer relayer v5.1) to all networks except Ethereum.
 - Deployed `ChainlinkRateProviderFactory` to all networks.
 - Deployed `StakelessGaugeCheckpointer` V2 to Ethereum and Sepolia.
 - Deployed `BaseRootGaugeFactory` to Mainnet.
 - Deployed `BatchRelayerLibrary` V6 to all networks.
+- Deployed `ComposableStablePoolFactory` V6 to all networks.
 
 ### Deprecations
 
@@ -56,6 +56,7 @@
 - Deprecated `20230527-l2-gauge-checkpointer`.
 - Deprecated `20230529-avalanche-root-gauge-factory`.
 - Deprecated `20230731-stakeless-gauge-checkpointer`.
+- Deprecated `20230711-composable-stable-pool-v5`
 
 ### New Networks
 
