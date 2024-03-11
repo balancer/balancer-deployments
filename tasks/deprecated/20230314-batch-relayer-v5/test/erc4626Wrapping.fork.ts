@@ -7,7 +7,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest('ERC4626Wrapping', 'mainnet', 18412883, function () {
+describeForkTest.skip('ERC4626Wrapping', 'mainnet', 18412883, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;

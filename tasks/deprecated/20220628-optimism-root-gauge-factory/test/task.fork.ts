@@ -18,7 +18,7 @@ import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskM
 // We then place the gauge deployed for this test into the "Arbitrum" type.
 // In production a proper gauge type should be created for the gauges deployed by this factory.
 
-describeForkTest('OptimismRootGaugeFactory', 'mainnet', 14850000, function () {
+describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,

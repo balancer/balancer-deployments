@@ -14,7 +14,7 @@ import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '@helpe
 
 import { describeForkTest, getSigners, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
 
-describeForkTest('InvestmentPoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, wallet: SignerWithAddress, whale: SignerWithAddress;
   let pool: Contract, factory: Contract, vault: Contract, usdc: Contract, dai: Contract;
 

@@ -14,7 +14,7 @@ import { ZERO_ADDRESS } from '@helpers/constants';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('PolygonRootGaugeFactory', 'mainnet', 14600000, function () {
+describeForkTest.skip('PolygonRootGaugeFactory', 'mainnet', 14600000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,
