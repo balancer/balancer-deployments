@@ -13,7 +13,7 @@ import { impersonate } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { ANY_ADDRESS } from '@helpers/constants';
 
-describeForkTest('L2BalancerPseudoMinter', 'arbitrum', 70407500, function () {
+describeForkTest.skip('L2BalancerPseudoMinter', 'arbitrum', 70407500, function () {
   let vault: Contract, authorizer: Contract;
   let pseudoMinter: Contract;
   let admin: SignerWithAddress;

@@ -17,7 +17,7 @@ import { SwapKind } from '@helpers/models/types/types';
 import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
 
-describeForkTest('ComposableStablePool', 'mainnet', 16000000, function () {
+describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
   let task: Task;
 
   let factory: Contract;

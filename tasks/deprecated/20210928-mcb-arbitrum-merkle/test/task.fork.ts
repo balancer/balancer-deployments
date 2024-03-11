@@ -14,7 +14,7 @@ function encodeElement(address: string, balance: BigNumber): string {
   return ethers.utils.solidityKeccak256(['address', 'uint'], [address, balance]);
 }
 
-describeForkTest('MerkleRedeem', 'arbitrum', 1731663, function () {
+describeForkTest.skip('MerkleRedeem', 'arbitrum', 1731663, function () {
   let lp: SignerWithAddress, other: SignerWithAddress, whale: SignerWithAddress;
   let distributor: Contract, token: Contract;
 

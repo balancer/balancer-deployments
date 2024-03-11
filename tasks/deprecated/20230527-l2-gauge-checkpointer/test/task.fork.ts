@@ -14,7 +14,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 // This block number is before the manual weekly checkpoint. This ensures gauges will actually be checkpointed.
 // This test verifies the checkpointer against the manual transactions for the given period.
-describeForkTest('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
+describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {

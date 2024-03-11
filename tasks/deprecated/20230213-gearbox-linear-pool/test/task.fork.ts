@@ -16,7 +16,7 @@ export enum SwapKind {
   GivenOut,
 }
 
-describeForkTest('GearboxLinearPoolFactory', 'mainnet', 16636000, function () {
+describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let vault: Contract, mainToken: Contract;
   let factory: Contract;

@@ -19,7 +19,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { deploy } from '@src';
 
-describeForkTest('ComposableStablePool V3', 'mainnet', 16577000, function () {
+describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function () {
   let task: Task;
 
   let factory: Contract;
