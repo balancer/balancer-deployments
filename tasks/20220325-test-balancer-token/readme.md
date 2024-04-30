@@ -5,6 +5,5 @@ Deployment of the `TestBalancerToken`, for replicating the BAL token's access co
 ## Useful Files
 
 - [Base mainnet addresses](./output/base.json)
-- [Fantom mainnet addresses](./output/fantom.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`TestBalancerToken` artifact](./artifact/TestBalancerToken.json)

@@ -38,9 +38,5 @@
   "base": {
     "chainId": 8453,
     "block-explorer": "https://basescan.org"
-  },
-  "fantom": {
-    "chainId": 250,
-    "block-explorer": "https://ftmscan.com"
   }
 }
