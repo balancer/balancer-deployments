@@ -42,9 +42,6 @@ if (process.env.CI) {
       },
       "base": {
         "url": "${process.env.BASE_RPC_ENDPOINT}"
-      },
-      "fantom": {
-        "url": "${process.env.FANTOM_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {
