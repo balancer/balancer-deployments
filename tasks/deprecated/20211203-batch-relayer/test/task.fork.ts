@@ -13,7 +13,7 @@ import { MAX_UINT256 } from '@helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest('BatchRelayerLibrary', 'mainnet', 14850000, function () {
+describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;

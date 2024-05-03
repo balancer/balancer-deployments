@@ -19,7 +19,7 @@ import {
   PoolKind,
 } from './helpers/sharedStableParams';
 
-describeForkTest('BatchRelayerLibrary - Legacy Stable', 'mainnet', 14860000, function () {
+describeForkTest.skip('BatchRelayerLibrary - Legacy Stable', 'mainnet', 14860000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;

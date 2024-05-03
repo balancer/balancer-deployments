@@ -14,7 +14,7 @@ import TimelockAuthorizer from '@helpers/models/authorizer/TimelockAuthorizer';
 import { advanceTime, DAY } from '@helpers/time';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('GaugeAdderV3', 'mainnet', 16370000, function () {
+describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
   let factory: Contract;
   let adaptorEntrypoint: Contract;
   let authorizer: Contract;

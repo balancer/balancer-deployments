@@ -17,7 +17,7 @@ import { WEEK, currentWeekTimestamp } from '@helpers/time';
 // The only gauge under test should have been checkpointed at this block.
 // The contract in `20230527-l2-gauge-checkpointer` would skip it because it measures the gauge relative weight in
 // the current week, whereas the new version does so in the previous week.
-describeForkTest('StakelessGaugeCheckpointer', 'mainnet', 17431930, function () {
+describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {

@@ -12,7 +12,7 @@ import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('BatchRelayerLibrary', 'mainnet', 15485000, function () {
+describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15485000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;

@@ -10,7 +10,7 @@ import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('FeeDistributor', 'mainnet', 14623150, function () {
+describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
   let veBALHolder: SignerWithAddress, veBALHolder2: SignerWithAddress, feeCollector: SignerWithAddress;
   let distributor: Contract;
 

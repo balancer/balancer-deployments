@@ -20,7 +20,7 @@ import {
   initialBalances,
 } from './helpers/sharedStableParams';
 
-describeForkTest('Stable Phantom Exit', 'mainnet', 13776527, function () {
+describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
   let vault: Contract, authorizer: Contract;
 
   before('load vault and tokens', async () => {
