@@ -13,5 +13,4 @@ Deployment of `ComposableStablePoolFactory`, which allows creating Stable Pools 
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [BSC mainnet addresses](./output/bsc.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)

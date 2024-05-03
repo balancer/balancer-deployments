@@ -76,10 +76,6 @@ export default {
       },
     ],
   },
-  goerli: {
-    PreseededBoostCalls: [],
-    PreseededApprovalCalls: [],
-  },
   sepolia: {
     PreseededBoostCalls: [],
     PreseededApprovalCalls: [],

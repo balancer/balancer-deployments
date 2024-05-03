@@ -12,5 +12,4 @@ Deployment of the `UnbuttonAaveLinearPoolFactory`, for Aave Linear Pools where b
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`UnbuttonAaveLinearPoolFactory` artifact](./artifact/UnbuttonAaveLinearPoolFactory.json)

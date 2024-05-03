@@ -13,9 +13,6 @@ export default {
   mainnet: {
     GaugeController,
   },
-  goerli: {
-    GaugeController,
-  },
   sepolia: {
     GaugeController,
   },

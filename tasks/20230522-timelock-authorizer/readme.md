@@ -5,7 +5,6 @@ This Authorizer implementation allows defining a delay per action identifier. Us
 
 ## Useful Files
 
-- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`TimelockAuthorizer` artifact](./artifact/TimelockAuthorizer.json)
 - [`TimelockAuthorizerMigrator` artifact](./artifact/TimelockAuthorizerMigrator.json)

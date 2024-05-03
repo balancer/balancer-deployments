@@ -5,5 +5,4 @@ First deployment of the `EulerLinearPoolFactory`, for Linear Pools with an Euler
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`EulerLinearPoolFactory` artifact](./artifact/EulerLinearPoolFactory.json)

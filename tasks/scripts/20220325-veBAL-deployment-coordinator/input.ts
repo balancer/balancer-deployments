@@ -29,8 +29,4 @@ export default {
     activationScheduledTime: '1648465200', // Monday, March 28, 2022 11:00:00 AM
     thirdStageDelay: '691200', // 8 days
   },
-  kovan: {
-    activationScheduledTime: '1647459355',
-    thirdStageDelay: '600',
-  },
 };

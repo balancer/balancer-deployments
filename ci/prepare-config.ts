@@ -31,9 +31,6 @@ if (process.env.CI) {
       "zkevm": {
         "url": "${process.env.ZKEVM_RPC_ENDPOINT}"
       },
-      "goerli": {
-        "url": "${process.env.GOERLI_RPC_ENDPOINT}"
-      },
       "sepolia": {
         "url": "${process.env.SEPOLIA_RPC_ENDPOINT}"
       },

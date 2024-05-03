@@ -35,9 +35,7 @@ import {
   withRetries,
 } from './src/network';
 
-const THEGRAPHURLS: { [key: string]: string } = {
-  goerli: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-authorizer-goerli',
-};
+const THEGRAPHURLS: { [key: string]: string } = {};
 
 task('deploy', 'Run deployment task')
   .addParam('id', 'Deployment task ID')

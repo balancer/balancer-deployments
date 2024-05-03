@@ -8,7 +8,6 @@ Additionally, this version also supports the recipient implementing the `deposit
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`SingleRecipientGaugeFactory` artifact](./artifact/SingleRecipientGaugeFactory.json)
 - [`SingleRecipientGauge` artifact](./artifact/SingleRecipientGauge.json)

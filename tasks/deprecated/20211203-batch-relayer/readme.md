@@ -11,5 +11,4 @@ Deployment of the first `BalancerRelayer` using `BatchRelayerLibrary`, for combi
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Polygon mainnet address](./output/polygon.json)
 - [Arbitrum mainnet address](./output/arbitrum.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`BatchRelayerLibrary` artifact](./artifact/BatchRelayerLibrary.json)

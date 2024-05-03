@@ -117,16 +117,6 @@ jobs:
           FANTOM_RPC_ENDPOINT: ${{ secrets.FANTOM_RPC_ENDPOINT }}
         with:
           network-name: fantom
-  check-goerli-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Goerli Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
-        with:
-          network-name: goerli
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
@@ -238,16 +228,6 @@ jobs:
           FANTOM_RPC_ENDPOINT: ${{ secrets.FANTOM_RPC_ENDPOINT }}
         with:
           network-name: fantom
-  check-goerli-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Goerli Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
-        with:
-          network-name: goerli
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:

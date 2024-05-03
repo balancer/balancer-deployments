@@ -14,5 +14,4 @@ Also has a fix in the `ERC4626LinearPoolRebalancer` to handle tokens which requi
 - [Polygon mainnet addresses](./output/polygon.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`ERC4626LinearPoolFactory` artifact](./artifact/ERC4626LinearPoolFactory.json)

@@ -12,5 +12,4 @@ Deployment of the `MerkleOrchard`, for distributing tokens via Merkle Trees
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Polygon mainnet address](./output/polygon.json)
 - [Arbitrum mainnet address](./output/arbitrum.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`MerkleOrchard` artifact](./artifact/MerkleOrchard.json)

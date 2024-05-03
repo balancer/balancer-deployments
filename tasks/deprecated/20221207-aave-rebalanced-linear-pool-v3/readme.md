@@ -19,5 +19,4 @@ This is version 3 because it is the third generation of Aave Linear Pools, the o
 - [Optimism mainnet addresses](./output/optimism.json)
 - [BSC mainnet addresses](./output/bsc.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`AaveLinearPoolFactory` artifact](./artifact/AaveLinearPoolFactory.json)

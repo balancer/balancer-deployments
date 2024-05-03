@@ -18,12 +18,6 @@ export default {
       WeightedPoolFactoryTask.output({ network: 'mainnet' }).WeightedPoolFactory,
     ],
   },
-  goerli: {
-    InitialFactories: [
-      ComposableStablePoolFactoryTask.output({ network: 'goerli' }).ComposableStablePoolFactory,
-      WeightedPoolFactoryTask.output({ network: 'goerli' }).WeightedPoolFactory,
-    ],
-  },
   polygon: {
     InitialFactories: [
       ComposableStablePoolFactoryTask.output({ network: 'polygon' }).ComposableStablePoolFactory,

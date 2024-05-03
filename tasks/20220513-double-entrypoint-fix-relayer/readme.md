@@ -10,5 +10,4 @@ The relayer is mostly useful on mainnet, as it included mainnet hardcoded addres
 - [Polygon mainnet addresses](./output/polygon.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`DoubleEntrypointFixRelayer` artifact](./artifact/DoubleEntrypointFixRelayer.json)

@@ -15,6 +15,5 @@ Supersedes `20221122-composable-stable-pool-v2`, fixing the reentrancy issue des
 - [Optimism mainnet addresses](./output/optimism.json)
 - [BSC mainnet addresses](./output/bsc.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`ComposableStablePool` artifact](./artifact/ComposableStablePool.json)
 - [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)
