@@ -9,5 +9,4 @@ Deployment of the `GaugeAdder`, a helper contract which helps prevent some forms
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`GaugeAdder` artifact](./artifact/GaugeAdder.json)

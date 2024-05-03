@@ -17,6 +17,5 @@ Deployment of the fifth `BalancerRelayer` using `BatchRelayerLibrary`, for combi
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BatchRelayerLibrary` artifact](./artifact/BatchRelayerLibrary.json)

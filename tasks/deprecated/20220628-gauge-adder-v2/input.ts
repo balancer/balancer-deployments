@@ -13,7 +13,4 @@ export default {
   mainnet: {
     PreviousGaugeAdder: GaugeAdder.output({ network: 'mainnet' }).GaugeAdder,
   },
-  goerli: {
-    PreviousGaugeAdder: GaugeAdder.output({ network: 'goerli' }).GaugeAdder,
-  },
 };

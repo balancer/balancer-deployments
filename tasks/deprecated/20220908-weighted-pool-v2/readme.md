@@ -19,5 +19,4 @@ Deployment of the `WeightedPoolFactory`, which allows creating Weighted Pools wh
 - [Optimism mainnet addresses](./output/optimism.json)
 - [BSC mainnet addresses](./output/bsc.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)

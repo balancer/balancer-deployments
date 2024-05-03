@@ -6,5 +6,4 @@ Deployment of the `DistributionScheduler`, which can be used to schedule token d
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`DistributionScheduler` artifact](./artifact/DistributionScheduler.json)

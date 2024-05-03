@@ -9,5 +9,4 @@ Deployment of the `ChildChainGaugeRewardHelper`, a helper contract that can be u
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`ChildChainGaugeRewardHelper` artifact](./artifact/ChildChainGaugeRewardHelper.json)

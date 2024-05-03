@@ -19,10 +19,6 @@
     "chainId": 100,
     "block-explorer": "https://gnosisscan.io"
   },
-  "goerli": {
-    "chainId": 5,
-    "block-explorer": "https://goerli.etherscan.io"
-  },
   "optimism": {
     "chainId": 10,
     "block-explorer": "https://optimistic.etherscan.io"

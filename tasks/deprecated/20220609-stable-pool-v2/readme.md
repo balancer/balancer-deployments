@@ -16,5 +16,4 @@ Deployment of a new version of `StablePoolFactory` corresponding to the [Phase I
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`StablePoolFactory` artifact](./artifact/StablePoolFactory.json)

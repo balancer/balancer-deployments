@@ -28,7 +28,7 @@ export type TimelockAuthorizerDeploymentInputType = {
 const input: TimelockAuthorizerDeploymentInputType = {
   Authorizer,
   AuthorizerAdaptorEntrypoint,
-  networks: ['goerli', 'sepolia'],
+  networks: ['sepolia'],
 };
 
 // Include input files for each network inside global inputs.

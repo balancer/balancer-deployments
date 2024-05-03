@@ -9,6 +9,5 @@ Deployment of the `LiquidityGaugeFactory`, for liquidity gauges to be used with 
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`LiquidityGaugeV5` artifact](./artifact/LiquidityGaugeV5.json)
 - [`LiquidityGaugeFactory` artifact](./artifact/LiquidityGaugeFactory.json)

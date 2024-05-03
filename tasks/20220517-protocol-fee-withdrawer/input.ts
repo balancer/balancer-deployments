@@ -41,9 +41,6 @@ export default {
   base: {
     InitialDeniedTokens: [],
   },
-  goerli: {
-    InitialDeniedTokens: [],
-  },
   sepolia: {
     InitialDeniedTokens: [],
   },

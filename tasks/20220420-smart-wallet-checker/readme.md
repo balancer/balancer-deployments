@@ -5,6 +5,5 @@ Deployment of the `SmartWalletChecker`, responsible allowlisting select contract
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`SmartWalletChecker` artifact](./artifact/SmartWalletChecker.json)

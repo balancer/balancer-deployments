@@ -5,5 +5,4 @@ Deployment of the `SmartWalletCheckerCoordinator`, responsible for setting up th
 ## Useful Files
 
 - [Ethereum mainnet addresses](./output/mainnet.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`SmartWalletCheckerCoordinator` artifact](./artifact/SmartWalletCheckerCoordinator.json)

@@ -15,5 +15,4 @@ Redeployment of `ComposableStablePoolFactory`, which allows creating Stable Pool
 - [Optimism mainnet addresses](./output/optimism.json)
 - [BSC mainnet addresses](./output/bsc.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)

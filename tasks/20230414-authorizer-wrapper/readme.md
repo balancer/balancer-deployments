@@ -13,6 +13,5 @@ Deployment of the `AuthorizerWithAdaptorValidation`, which allows using the Auth
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`AuthorizerWithAdaptorValidation` artifact](./artifact/AuthorizerWithAdaptorValidation.json)

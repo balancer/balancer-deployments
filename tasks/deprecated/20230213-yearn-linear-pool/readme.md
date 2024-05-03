@@ -13,7 +13,6 @@ Also has a fix in the `YearnLinearPoolRebalancer` to handle tokens which require
 - [Polygon mainnet addresses](./output/polygon.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Optimism mainnet addresses](./output/optimism.json)
-- [Goerli testnet addresses](./output/goerli.json)
 - [`YearnLinearPoolFactory` artifact](./artifact/YearnLinearPoolFactory.json)
 - [`YearnLinearPool` artifact](./artifact/YearnLinearPool.json)
 - [`YearnLinearPoolRebalancer` artifact](./artifact/YearnLinearPoolRebalancer.json)

@@ -16,9 +16,6 @@ export default {
   kovan: {
     BAL: TestBALTask.output({ network: 'kovan' }).TestBalancerToken,
   },
-  goerli: {
-    BAL: TestBALTask.output({ network: 'goerli' }).TestBalancerToken,
-  },
   sepolia: {
     BAL: TestBALTask.output({ network: 'sepolia' }).TestBalancerToken,
   },

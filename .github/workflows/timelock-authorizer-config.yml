@@ -120,17 +120,6 @@ jobs:
         with:
           network-name: fantom
 
-  verify-goerli-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Goerli Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          GOERLI_RPC_ENDPOINT: ${{ secrets.GOERLI_RPC_ENDPOINT }}
-        with:
-          network-name: goerli
-
   verify-sepolia-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:

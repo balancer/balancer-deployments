@@ -110,10 +110,6 @@ This data is accessed via the [`local-networks-config`](https://www.npmjs.com/pa
     "bsc": {
       "url": "https://bsc.rpc.endpoint/myAPIKey",
       "verificationAPIKey": "bsc-etherscan-API-key"
-    },
-    "goerli": {
-      "url": "https://goerli.rpc.endpoint/myAPIKey",
-      "verificationAPIKey": "goerli-etherscan-API-key"
     }
   },
   "defaultConfig": {
