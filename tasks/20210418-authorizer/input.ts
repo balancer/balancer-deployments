@@ -3,9 +3,6 @@ export type AuthorizerDeployment = {
 };
 
 export default {
-  kovan: {
-    admin: '0xE0a171587b1Cae546E069A943EDa96916F5EE977',
-  },
   mainnet: {
     admin: '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f',
   },

@@ -13,9 +13,6 @@ export default {
   mainnet: {
     BAL: '0xba100000625a3754423978a60c9317c58a424e3D',
   },
-  kovan: {
-    BAL: TestBALTask.output({ network: 'kovan' }).TestBalancerToken,
-  },
   sepolia: {
     BAL: TestBALTask.output({ network: 'sepolia' }).TestBalancerToken,
   },

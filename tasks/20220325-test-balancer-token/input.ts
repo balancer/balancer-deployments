@@ -3,9 +3,6 @@ export type TestBalancerTokenDeployment = {
 };
 
 export default {
-  kovan: {
-    Admin: '0x77777512272eDA91589b62FC8506E607DEA0BB08',
-  },
   sepolia: {
     Admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
