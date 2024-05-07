@@ -107,16 +107,6 @@ jobs:
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
         with:
           network-name: base
-  check-fantom-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Fantom Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          FANTOM_RPC_ENDPOINT: ${{ secrets.FANTOM_RPC_ENDPOINT }}
-        with:
-          network-name: fantom
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
@@ -218,16 +208,6 @@ jobs:
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
         with:
           network-name: base
-  check-fantom-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Fantom Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          FANTOM_RPC_ENDPOINT: ${{ secrets.FANTOM_RPC_ENDPOINT }}
-        with:
-          network-name: fantom
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:

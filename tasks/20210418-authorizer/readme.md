@@ -15,6 +15,5 @@ This contract is expected to be eventually replaced by one with a) native suppor
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
-- [Fantom mainnet addresses](./output/fantom.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Authorizer` artifact](./artifact/Authorizer.json)
