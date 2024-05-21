@@ -33,4 +33,7 @@ export default {
   base: {
     admin: '0xC40DCFB13651e64C8551007aa57F9260827B6462',
   },
+  fraxtal: {
+    admin: '0x4f22C2784Cbd2B24a172566491Ee73fee1A63c2e',
+  },
 };

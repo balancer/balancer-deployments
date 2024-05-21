@@ -38,5 +38,9 @@
   "base": {
     "chainId": 8453,
     "block-explorer": "https://basescan.org"
+  },
+  "fraxtal": {
+    "chainId": 252,
+    "block-explorer": "https://fraxscan.com"
   }
 }

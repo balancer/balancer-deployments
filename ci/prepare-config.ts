@@ -39,6 +39,9 @@ if (process.env.CI) {
       },
       "base": {
         "url": "${process.env.BASE_RPC_ENDPOINT}"
+      },
+      "fraxtal": {
+        "url": "${process.env.FRAXTAL_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

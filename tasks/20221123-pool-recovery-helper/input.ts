@@ -54,10 +54,13 @@ export default {
   zkevm: {
     InitialFactories: [],
   },
-  sepolia: {
+  base: {
     InitialFactories: [],
   },
-  base: {
+  fraxtal: {
+    InitialFactories: [],
+  },
+  sepolia: {
     InitialFactories: [],
   },
 };

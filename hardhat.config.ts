@@ -447,6 +447,14 @@ export default {
           browserURL: 'https://basescan.org/',
         },
       },
+      {
+        network: 'fraxtal',
+        chainId: 252,
+        urls: {
+          apiURL: 'https://api.fraxscan.com/api',
+          browserURL: 'https://fraxscan.com/',
+        },
+      },
     ],
   },
 };

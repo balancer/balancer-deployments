@@ -13,5 +13,6 @@ Deployment of the `NoProtocolFeeLiquidityBootstrappingPool`, for Liquidity Boots
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`NoProtocolFeeLiquidityBootstrappingPoolFactory` artifact](./artifact/NoProtocolFeeLiquidityBootstrappingPoolFactory.json)
