@@ -276,7 +276,7 @@
         "address": "0x2Ba5fd37e71Ab2633602553BE7ad5A377D7ED31A"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230411-managed-pool-v2": {
     "contracts": [

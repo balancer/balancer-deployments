@@ -199,7 +199,7 @@
         "address": "0xac4b72c01072A52b73ca71105504F1372eFcCE0d"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230409-gearbox-linear-pool-v2": {
     "contracts": [
@@ -220,7 +220,7 @@
         "address": "0x32f03464FdF909FDf3798f87Ff3712b10c59bd86"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230409-yearn-linear-pool-v2": {
     "contracts": [
@@ -237,7 +237,7 @@
         "address": "0x02c9DCB975262719A61f9B40bDf0987eAD9Add3a"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -258,7 +258,7 @@
         "address": "0xbFD65c6160CFd638A85C645e6e6d8ACac5Dac935"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230411-managed-pool-v2": {
     "contracts": [

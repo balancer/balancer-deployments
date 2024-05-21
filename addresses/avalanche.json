@@ -86,7 +86,7 @@
         "address": "0x2E96068b3D5B5BAE3D7515da4A1D2E52d08A2647"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220916-batch-relayer-v4": {
     "contracts": [
@@ -252,7 +252,7 @@
         "address": "0xEd3E2F496cbCd8e212192fb8D1499842f04A0D19"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -273,7 +273,7 @@
         "address": "0xA826a114B0c7dB4d1FF4a4BE845a78998c64564C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230411-managed-pool-v2": {
     "contracts": [
