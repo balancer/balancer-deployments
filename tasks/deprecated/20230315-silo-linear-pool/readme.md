@@ -1,7 +1,7 @@
 # 2022-03-15 - Silo Linear Pool
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
-> This deployment has been deprecated in favor of a new version that uses create2 for pool deployments: [silo-linear-pool-v2](../../20230410-silo-linear-pool-v2/).
+> This deployment has been deprecated in favor of a new version that uses create2 for pool deployments: [silo-linear-pool-v2](../20230410-silo-linear-pool-v2/).
 
 First deployment of the `SiloLinearPoolFactory`, for Linear Pools with a Silo yield-bearing token (shareToken).
 Already fixes the reentrancy issue described in https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345.

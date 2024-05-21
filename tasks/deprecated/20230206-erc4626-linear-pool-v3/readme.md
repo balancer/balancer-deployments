@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This deployment was deprecated in favor of a new version which uses create2 for pool deployment: [erc4626-linear-pool-v4](../../20230409-erc4626-linear-pool-v4/).
+> This deployment was deprecated in favor of a new version which uses create2 for pool deployment: [erc4626-linear-pool-v4](../20230409-erc4626-linear-pool-v4/).
 
 Third deployment of the `ERC4626LinearPoolFactory`, for Linear Pools with a ERC4626 yield-bearing token.
 Supersedes `20220404-erc4626-linear-pool-v2`, fixing the reentrancy issue described in https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345.
