@@ -66,6 +66,7 @@ jobs:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
         run: yarn test

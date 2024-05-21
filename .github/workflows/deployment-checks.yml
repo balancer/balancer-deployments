@@ -107,6 +107,16 @@ jobs:
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
         with:
           network-name: base
+  check-fraxtal-deployments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Fraxtal Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
+        env:
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
+        with:
+          network-name: fraxtal
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
@@ -208,6 +218,16 @@ jobs:
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
         with:
           network-name: base
+  check-fraxtal-action-ids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Fraxtal Action IDs
+        uses: ./.github/actions/check-network-action-ids
+        env:
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.fraxtal_RPC_ENDPOINT }}
+        with:
+          network-name: fraxtal
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:
