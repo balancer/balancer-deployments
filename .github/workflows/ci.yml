@@ -69,4 +69,4 @@ jobs:
           FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
-        run: yarn test
+        run: yarn test --bail
