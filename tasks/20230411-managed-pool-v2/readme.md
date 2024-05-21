@@ -19,6 +19,7 @@ A Managed Pool is a Weighted Pool with mutable tokens and weights, designed to b
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ManagedPoolFactory` artifact](./artifact/ManagedPoolFactory.json)
 - [`ManagedPoolAddRemoveTokenLib` artifact](./artifact/ManagedPoolAddRemoveTokenLib.json)

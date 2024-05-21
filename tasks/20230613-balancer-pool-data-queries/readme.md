@@ -11,5 +11,6 @@ Deployment of the `BalancerPoolDataQueries` contract. It provides a way to perfo
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BalancerPoolDataQueries` artifact](./artifact/BalancerPoolDataQueries.json)

@@ -13,5 +13,6 @@ The main difference between the two is that the pseudo minter does not actually 
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`L2BalancerPseudoMinter` artifact](./artifact/L2BalancerPseudoMinter.json)

@@ -14,5 +14,6 @@ This version is the same in terms of functionality, but has a longer pause windo
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)

@@ -12,5 +12,6 @@ Deployment of the `GaugeWorkingBalanceHelper`, which reads the current and proje
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GaugeWorkingBalanceHelper` artifact](./artifact/GaugeWorkingBalanceHelper.json)
