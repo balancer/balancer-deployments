@@ -124,7 +124,7 @@ jobs:
       - name: Check Mode Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
-          MODE_RPC_ENDPOINT: ${{ secrets.mode_RPC_ENDPOINT }}
+          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
         with:
           network-name: mode
   check-sepolia-deployments:
@@ -235,7 +235,7 @@ jobs:
       - name: Check Fraxtal Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
-          FRAXTAL_RPC_ENDPOINT: ${{ secrets.fraxtal_RPC_ENDPOINT }}
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
         with:
           network-name: fraxtal
   check-mode-action-ids:
