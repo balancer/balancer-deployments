@@ -81,7 +81,7 @@ export default {
   },
   mode: {
     wstETH: ZERO_ADDRESS,
-    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'fraxtal' }).L2BalancerPseudoMinter,
+    BalancerMinter: L2BalancerPseudoMinter.output({ network: 'mode' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: true,
   },
 };
