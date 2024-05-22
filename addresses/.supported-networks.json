@@ -42,5 +42,9 @@
   "fraxtal": {
     "chainId": 252,
     "block-explorer": "https://fraxscan.com"
+  },
+  "mode": {
+    "chainId": 34443,
+    "block-explorer": "https://modescan.io"
   }
 }

@@ -44,6 +44,9 @@ export default {
   fraxtal: {
     InitialDeniedTokens: [],
   },
+  mode: {
+    InitialDeniedTokens: [],
+  },
   sepolia: {
     InitialDeniedTokens: [],
   },
