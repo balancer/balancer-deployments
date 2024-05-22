@@ -67,7 +67,7 @@
         "address": "0x809B79b53F18E9bc08A961ED4678B901aC93213a"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220425-unbutton-aave-linear-pool": {
     "contracts": [
@@ -94,7 +94,7 @@
         "address": "0x1802953277FD955f9a254B80Aa0582f193cF1d77"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220609-stable-pool-v2": {
     "contracts": [
@@ -130,7 +130,7 @@
         "address": "0xf7D5DcE55E6D47852F054697BAB6A1B48A00ddbd"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220908-weighted-pool-v2": {
     "contracts": [
@@ -364,7 +364,7 @@
         "address": "0x1AC55C31DaC78ca943CB8ebfCa5945ce09e036e2"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230411-managed-pool-v2": {
     "contracts": [

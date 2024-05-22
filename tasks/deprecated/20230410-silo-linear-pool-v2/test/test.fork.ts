@@ -17,7 +17,7 @@ export enum SwapKind {
   GivenOut,
 }
 
-describeForkTest('SiloLinearPoolFactory', 'mainnet', 16478568, function () {
+describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract, vault: Contract, usdc: Contract;
   let rebalancer: Contract;

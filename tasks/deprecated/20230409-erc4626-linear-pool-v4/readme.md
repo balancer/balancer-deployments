@@ -1,5 +1,9 @@
 # 2023-04-09 - ERC4626 Linear Pool V4
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> Linear pools have been deprecated in Balancer V2 together with boosted pools. Refer to [this article](https://medium.com/balancer-protocol/rate-manipulation-in-balancer-boosted-pools-technical-postmortem-53db4b642492) for reference.
+
 Fourth deployment of the `ERC4626LinearPoolFactory`, for Linear Pools with a ERC4626 yield-bearing token.
 Supersedes `20230206-erc4626-linear-pool-v3`, modifying the pool factory to use Create2 when deploying a new pool.
 

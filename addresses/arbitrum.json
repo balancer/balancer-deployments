@@ -191,7 +191,7 @@
         "address": "0xb08E16cFc07C684dAA2f93C70323BAdb2A6CBFd2"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220425-unbutton-aave-linear-pool": {
     "contracts": [
@@ -227,7 +227,7 @@
         "address": "0xbfD9769b061E57e478690299011A028194D66e3C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220609-stable-pool-v2": {
     "contracts": [
@@ -276,7 +276,7 @@
         "address": "0xA0DAbEBAAd1b243BBb243f933013d560819eB66f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20220817-aave-rebalanced-linear-pool": {
     "contracts": [
@@ -584,7 +584,7 @@
         "address": "0x3f53A862919ccFA023CB6AcE91378a79Fb0F6Bf5"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230409-yearn-linear-pool-v2": {
     "contracts": [
@@ -601,7 +601,7 @@
         "address": "0x1Fa7F727934226aedaB636D62a084931b97d366b"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -622,7 +622,7 @@
         "address": "0x19b1C92631405A0a9495ccbA0BeCF4f2e8e908bD"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED"
   },
   "20230411-managed-pool-v2": {
     "contracts": [

@@ -42,16 +42,26 @@
 
 ### Deprecations
 
+- Deprecated all linear pool types:
+  - `20230206-aave-rebalanced-linear-pool-v4`.
+  - `20230206-erc4626-linear-pool-v3`.
+  - `20230208-euler-linear-pool`
+  - `20230213-gearbox-linear-pool`.
+  - `20230213-yearn-linear-pool`.
+  - `20230315-silo-linear-pool`.
+  - `20230409-erc4626-linear-pool-v4`.
+  - `20230409-gearbox-linear-pool-v2`.
+  - `20230409-yearn-linear-pool-v2`.
+  - `20230410-aave-linear-pool-v5`
+  - `20230410-silo-linear-pool-v2`
+- Deprecated `20220413-child-chain-gauge-factory`.
+- Deprecated `20220527-child-chain-gauge-token-adder`.
+- Deprecated `20220812-child-chain-reward-helper`.
 - Deprecated `20221202-timelock-authorizer`.
 - Deprecated `20220916-batch-relayer-v4`.
 - Deprecated `20230109-gauge-adder-v3`.
-- Deprecated `20230206-aave-rebalanced-linear-pool-v4`.
 - Deprecated `20230206-composable-stable-pool-v3`.
-- Deprecated `20230206-erc4626-linear-pool-v3`.
 - Deprecated `20230206-weighted-pool-v3`.
-- Deprecated `20230213-gearbox-linear-pool`.
-- Deprecated `20230213-yearn-linear-pool`.
-- Deprecated `20230315-silo-linear-pool`.
 - Deprecated `20230320-composable-stable-pool-v4`.
 - Deprecated `20230316-avax-l2-balancer-pseudo-minter` and `20230316-avax-child-chain-gauge-factory-v2` (initial version for `L2BalancerPseudoMinter` and `ChildChainGaugeFactory` for Avalanche).
 - Deprecated `20230527-l2-gauge-checkpointer`.
