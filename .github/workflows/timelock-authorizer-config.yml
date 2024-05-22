@@ -120,6 +120,17 @@ jobs:
         with:
           network-name: fraxtal
 
+  verify-mode-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify Mode Timelock Authorizer Configuration
+        uses: ./.github/actions/verify-network-timelock-authorizer-config
+        env:
+          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+        with:
+          network-name: mode
+
   verify-sepolia-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:

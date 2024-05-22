@@ -13,6 +13,7 @@ This version simplifies the system to distribute BAL and allows veBAL boosts on 
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ChildChainGauge` artifact](./artifact/ChildChainGauge.json)
 - [`ChildChainGaugeFactory` artifact](./artifact/ChildChainGaugeFactory.json)

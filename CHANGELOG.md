@@ -8,7 +8,7 @@
 
 ### New Deployments
 
-- Deployed contracts to Fraxtal.
+- Deployed contracts to Fraxtal & Mode.
 - Deployed `TimelockAuthorizer` and `TimelockAuthorizerMigrator` to Goerli.
 - Deployed `BatchRelayerLibrary` V5 to all networks.
 - Deployed `L2BalancerPseudoMinter` to all networks except Ethereum.

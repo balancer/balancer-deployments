@@ -16,6 +16,7 @@ The proxy itself is the same as the [L1 proxy](../20220325-ve-delegation), excep
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`NullVotingEscrow` artifact](./artifact/NullVotingEscrow.json)
 - [`VotingEscrowDelegationProxy` artifact](./artifact/VotingEscrowDelegationProxy.json)

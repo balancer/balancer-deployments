@@ -12,5 +12,6 @@ Deployment of the `ProtocolIdRegistry` contract, which keeps track of valid part
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolIdRegistry` artifact](./artifact/ProtocolIdRegistry.json)
