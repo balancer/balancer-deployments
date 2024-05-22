@@ -60,6 +60,9 @@ export default {
   fraxtal: {
     InitialFactories: [],
   },
+  mode: {
+    InitialFactories: [],
+  },
   sepolia: {
     InitialFactories: [],
   },

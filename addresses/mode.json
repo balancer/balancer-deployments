@@ -1,0 +1,242 @@
+{
+  "20210418-authorizer": {
+    "contracts": [
+      {
+        "name": "Authorizer",
+        "address": "0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20210418-vault": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerHelpers",
+        "address": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20211202-no-protocol-fee-lbp": {
+    "contracts": [
+      {
+        "name": "NoProtocolFeeLiquidityBootstrappingPoolFactory",
+        "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
+      },
+      {
+        "name": "MockLiquidityBootstrappingPool",
+        "address": "0x197868C915E50cD7eB34EB2F56009E0BF9aa09EB"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220325-authorizer-adaptor": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptor",
+        "address": "0xf23b4DB826DbA14c0e857029dfF076b1c0264843"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220517-protocol-fee-withdrawer": {
+    "contracts": [
+      {
+        "name": "ProtocolFeesWithdrawer",
+        "address": "0x9Ac3E70dB606659Bf32D4BdFbb687AD193FD1F5B"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220721-balancer-queries": {
+    "contracts": [
+      {
+        "name": "BalancerQueries",
+        "address": "0x36caC20dd805d128c1a6Dd16eeA845C574b5A17C"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220725-protocol-fee-percentages-provider": {
+    "contracts": [
+      {
+        "name": "ProtocolFeePercentagesProvider",
+        "address": "0x85a80afee867aDf27B50BdB7b76DA70f1E853062"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20221123-pool-recovery-helper": {
+    "contracts": [
+      {
+        "name": "PoolRecoveryHelper",
+        "address": "0x4132f7AcC9dB7A6cF7BE2Dd3A9DC8b30C7E6E6c8"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20221124-authorizer-adaptor-entrypoint": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptorEntrypoint",
+        "address": "0x76578ecf9a141296Ec657847fb45B0585bCDa3a6"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230223-protocol-id-registry": {
+    "contracts": [
+      {
+        "name": "ProtocolIdRegistry",
+        "address": "0xb9F8AB3ED3F3aCBa64Bc6cd2DcA74B7F38fD7B88"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-child-chain-gauge-factory-v2": {
+    "contracts": [
+      {
+        "name": "ChildChainGauge",
+        "address": "0xE3881627B8DeeBCCF9c23B291430a549Fc0bE5F7"
+      },
+      {
+        "name": "ChildChainGaugeFactory",
+        "address": "0x4fb47126Fa83A8734991E41B942Ac29A3266C968"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-l2-balancer-pseudo-minter": {
+    "contracts": [
+      {
+        "name": "L2BalancerPseudoMinter",
+        "address": "0x5cF4928a3205728bd12830E1840F7DB85c62a4B9"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230316-l2-ve-delegation-proxy": {
+    "contracts": [
+      {
+        "name": "NullVotingEscrow",
+        "address": "0x9dd5Db2d38b50bEF682cE532bCca5DfD203915E1"
+      },
+      {
+        "name": "VotingEscrowDelegationProxy",
+        "address": "0x9805dcfD25e6De36bad8fe9D3Fe2c9b44B764102"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230320-weighted-pool-v4": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0xc3ccacE87f6d3A81724075ADcb5ddd85a8A1bB68"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0xCb528CFe5EfC65a77901d20B3E899Ecd9A8190b7"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230411-managed-pool-v2": {
+    "contracts": [
+      {
+        "name": "ManagedPoolAddRemoveTokenLib",
+        "address": "0x81cFAE226343B24BA12EC6521Db2C79E7aeeb310"
+      },
+      {
+        "name": "CircuitBreakerLib",
+        "address": "0xa523f47A933D5020b23629dDf689695AA94612Dc"
+      },
+      {
+        "name": "ManagedPoolAmmLib",
+        "address": "0x6817149cb753BF529565B4D023d7507eD2ff4Bc0"
+      },
+      {
+        "name": "ExternalWeightedMath",
+        "address": "0x6B5dA774890Db7B7b96C6f44e6a4b0F657399E2e"
+      },
+      {
+        "name": "RecoveryModeHelper",
+        "address": "0x7Ba29fE8E83dd6097A7298075C4AFfdBda3121cC"
+      },
+      {
+        "name": "ManagedPoolFactory",
+        "address": "0x043A2daD730d585C44FB79D2614F295D2d625412"
+      },
+      {
+        "name": "MockManagedPool",
+        "address": "0xB227B52B20a755B8b724c63E8Ac8d42Ff0FD64Fd"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230414-authorizer-wrapper": {
+    "contracts": [
+      {
+        "name": "AuthorizerWithAdaptorValidation",
+        "address": "0x013D4382F291be5688AFBcc741Ee8A24C66B2C92"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230613-balancer-pool-data-queries": {
+    "contracts": [
+      {
+        "name": "BalancerPoolDataQueries",
+        "address": "0x7A2535f5fB47b8e44c02Ef5D9990588313fe8F05"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230717-chainlink-rate-provider-factory": {
+    "contracts": [
+      {
+        "name": "ChainlinkRateProviderFactory",
+        "address": "0x96484f2aBF5e58b15176dbF1A799627B53F13B6d"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20231031-batch-relayer-v6": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x662112B8CB18889e81459b92CA0f894a2ef2c1B8"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0x4DdFc173C8F67808AE8F7913DccFfa6bdBFE5b0e"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0xb541765F540447646A9545E0A4800A0Bacf9E13D"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20240223-composable-stable-pool-v6": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x5DbAd78818D4c8958EfF2d5b95b28385A22113Cd"
+      },
+      {
+        "name": "MockComposableStablePool",
+        "address": "0xaFCFA565B8e00A3b3EB789dfa19261ed7DCA42C7"
+      }
+    ],
+    "status": "ACTIVE"
+  }
+}

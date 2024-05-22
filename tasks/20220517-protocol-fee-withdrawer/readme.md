@@ -16,5 +16,6 @@ See [the Double Entrypoint Fix Relayer](../20220513-double-entrypoint-fix-relaye
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeesWithdrawer` artifact](./artifact/ProtocolFeesWithdrawer.json)

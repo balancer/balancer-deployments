@@ -16,5 +16,6 @@ The adaptor may then be the admin for these systems and acts as a proxy forwardi
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`AuthorizerAdaptor` artifact](./artifact/AuthorizerAdaptor.json)

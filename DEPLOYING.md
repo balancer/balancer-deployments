@@ -126,6 +126,10 @@ This data is accessed via the [`local-networks-config`](https://www.npmjs.com/pa
     "fraxtal": {
       "url": "https://fraxtal.rpc.endpoint/myAPIKey",
       "verificationAPIKey": "fraxtal-etherscan-API-key"
+    },
+    "mode": {
+      "url": "https://mode.rpc.endpoint/myAPIKey",
+      "verificationAPIKey": "mode-etherscan-API-key"
     }
   },
   "defaultConfig": {
