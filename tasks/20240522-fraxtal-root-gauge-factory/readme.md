@@ -5,6 +5,5 @@ Uses the exact same code as [`OptimismRootGaugeFactory` V2](../20220823-optimism
 
 ## Useful Files
 
-- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`OptimismRootGauge` artifact](./artifact/OptimismRootGauge.json)
 - [`OptimismRootGaugeFactory` artifact](./artifact/OptimismRootGaugeFactory.json)
