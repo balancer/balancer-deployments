@@ -49,7 +49,7 @@ describeForkTest('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
     task = new Task('20240522-fraxtal-root-gauge-factory', TaskMode.TEST, getForkedNetwork(hre));
     ({ FraxtalBAL: fraxtalBAL, L1StandardBridge: fraxtalL1Bridge, GasLimit: gasLimit } = task.input());
     await task.run({ force: true });
-    factory = await task.deployedInstance('OptimismRootGaugeFactory');
+    factory = await task.deployedInstance('OptimisticRootGaugeFactory');
   });
 
   before('advance time', async () => {
@@ -134,7 +134,7 @@ describeForkTest('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
     const tx = await factory.create(recipient.address, weightCap);
     const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
 
-    gauge = await task.instanceAt('OptimismRootGauge', event.args.gauge);
+    gauge = await task.instanceAt('OptimisticRootGauge', event.args.gauge);
 
     expect(await factory.isGaugeFromFactory(gauge.address)).to.be.true;
 
@@ -180,6 +180,10 @@ describeForkTest('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
     expect(await gauge.getOptimismBal()).to.eq(fraxtalBAL);
   });
 
+  it('returns the correct network tag', async () => {
+    expect(await gauge.NETWORK()).to.eq('Fraxtal');
+  });
+
   it('vote for gauge', async () => {
     expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
@@ -215,10 +219,11 @@ describeForkTest('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
 
     await advanceTime(WEEK);
 
+    const bridgeCost = await gauge.getTotalBridgeCost();
+
     // The gauge should now mint and send all minted tokens to the Fraxtal bridge
-    // Optimism gauges are costless, and this version does not have a `getBridgeCost` function.
     const mintReceipt = await (
-      await adaptorEntrypoint.connect(admin).performAction(gauge.address, calldata, { value: 0 })
+      await adaptorEntrypoint.connect(admin).performAction(gauge.address, calldata, { value: bridgeCost })
     ).wait();
 
     const event = expectEvent.inIndirectReceipt(mintReceipt, gauge.interface, 'Checkpoint', {
@@ -290,9 +295,9 @@ describeForkTest('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
     const expectedEmissions = weightCap.mul(numberOfWeeks).mul(weeklyRate).div(FP_ONE);
 
+    const bridgeCost = await gauge.getTotalBridgeCost();
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    // Optimism gauges are costless, and this version does not have a `getBridgeCost` function.
-    const tx = await adaptorEntrypoint.connect(admin).performAction(gauge.address, calldata, { value: 0 });
+    const tx = await adaptorEntrypoint.connect(admin).performAction(gauge.address, calldata, { value: bridgeCost });
     const receipt = await tx.wait();
 
     await Promise.all(

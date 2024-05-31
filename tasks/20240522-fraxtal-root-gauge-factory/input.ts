@@ -6,6 +6,7 @@ export type FraxtalRootGaugeFactoryDeployment = {
   FraxtalBAL: string;
   L1StandardBridge: string;
   GasLimit: number;
+  Network: string;
 };
 
 const Tokens = new Task('00000000-tokens', TaskMode.READ_ONLY);
@@ -21,5 +22,6 @@ export default {
     L1StandardBridge: '0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2',
     // Value taken from TX sample directly.
     GasLimit: 200000,
+    Network: 'Fraxtal',
   },
 };
