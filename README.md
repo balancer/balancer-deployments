@@ -117,6 +117,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Stakeless Gauge Checkpointer V2                        | [`20230915-stakeless-gauge-checkpointer-v2`](./tasks/20230915-stakeless-gauge-checkpointer-v2)       |
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./tasks/20231031-batch-relayer-v6)                                     |
 | Composable Stable Pools V6                             | [`20240223-composable-stable-pool-v6`](./tasks/20240223-composable-stable-pool-v6)                   |
+| Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./tasks/20240522-fraxtal-root-gauge-factory)                 |
 
 ## Scripts
 
