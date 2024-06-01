@@ -101,6 +101,12 @@
       "contractName": "BaseRootGauge",
       "signature": "checkpoint()",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20240522-fraxtal-root-gauge-factory",
+      "contractName": "OptimisticRootGauge",
+      "signature": "checkpoint()",
+      "useAdaptor": true
     }
   ],
   "0x3bf29175652a3f0fac5abb715d0b7fe2e7b597e2e2eff555dac6b21a20a7c83e": [
@@ -365,6 +371,12 @@
       "contractName": "BaseRootGauge",
       "signature": "killGauge()",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20240522-fraxtal-root-gauge-factory",
+      "contractName": "OptimisticRootGauge",
+      "signature": "killGauge()",
+      "useAdaptor": true
     }
   ],
   "0xd0090a09f425bba74e6c801fba7c6d15b44147ab0bd319e40076ce07e95168b6": [
@@ -483,6 +495,12 @@
     {
       "taskId": "20230911-base-root-gauge-factory",
       "contractName": "BaseRootGauge",
+      "signature": "unkillGauge()",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20240522-fraxtal-root-gauge-factory",
+      "contractName": "OptimisticRootGauge",
       "signature": "unkillGauge()",
       "useAdaptor": true
     }
@@ -927,6 +945,12 @@
     {
       "taskId": "20230911-base-root-gauge-factory",
       "contractName": "BaseRootGauge",
+      "signature": "setRelativeWeightCap(uint256)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20240522-fraxtal-root-gauge-factory",
+      "contractName": "OptimisticRootGauge",
       "signature": "setRelativeWeightCap(uint256)",
       "useAdaptor": true
     }

@@ -21,5 +21,5 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.L1StandardBridge,
     input.FraxtalBAL,
   ]);
-  await task.save({ FraxtalRootGauge: implementation });
+  await task.save({ OptimisticRootGauge: implementation });
 };
