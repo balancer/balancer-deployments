@@ -7,5 +7,6 @@ It also has a `NETWORK` getter set in the factory, which helps to identify the t
 
 ## Useful Files
 
+- [Ethereum mainnet addresses](./output/mainnet.json)
 - [`OptimisticRootGauge` artifact](./artifact/OptimisticRootGauge.json)
 - [`OptimisticRootGaugeFactory` artifact](./artifact/OptimisticRootGaugeFactory.json)

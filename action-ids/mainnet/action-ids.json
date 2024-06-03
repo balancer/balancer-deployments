@@ -1499,5 +1499,24 @@
         "disable()": "0xf611f8b232e4be511caea74a4b9a6dea519d09225c9cf5d0e4a4bef44e006f71"
       }
     }
+  },
+  "20240522-fraxtal-root-gauge-factory": {
+    "OptimisticRootGaugeFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,uint256)": "0x99f3dcf8c4dffdc47610d89353111223e01a26cfeccb0546070160ee9fe9113d",
+        "setOptimismGasLimit(uint32)": "0x4bbd85ce5bc58f2d2870a53de3a232d7a8cbabfed59b8d57aecd51c16079099f"
+      }
+    },
+    "OptimisticRootGauge": {
+      "useAdaptor": true,
+      "actionIds": {
+        "checkpoint()": "0x3f63974a377ba4713661ede455bceda6686a0395f8b8ed8701ad1f13bb926c4d",
+        "initialize(address,uint256,string)": "0x44cf0c8e5d981076577be35e5abcf9066fe410a208ba7734b280176b488bf3b0",
+        "killGauge()": "0xec1d467d9ab03a0079c22a89037209f5763aec973897ea763e2cf25d71a5f12e",
+        "setRelativeWeightCap(uint256)": "0xae60dce27f51ce5815357b9f6b40f200557867f8222262a1646c005d09b7dfba",
+        "unkillGauge()": "0x076e9815202aa39577192023cfa569d6504b003183b2bc13cd0046523dfa23ea"
+      }
+    }
   }
 }
