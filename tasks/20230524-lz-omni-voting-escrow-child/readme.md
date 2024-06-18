@@ -11,6 +11,6 @@ Deployment of the `OmniVotingEscrowChild`, which receives veBAL balances in chil
 - [BSC mainnet addresses](./output/bsc.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
-- [Base mainnet addresses](./output/base.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [`OmniVotingEscrowChild` artifact](./artifact/OmniVotingEscrowChild.json)
+- [Source code](https://github.com/LayerZero-Labs/lz_gauges/tree/b76bce29b9ff122efdfbd8f4b18e698038cfb85a)
