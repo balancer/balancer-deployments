@@ -577,6 +577,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20230524-lz-omni-voting-escrow-child": {
+    "contracts": [
+      {
+        "name": "OmniVotingEscrowChild",
+        "address": "0xE241C6e48CA045C7f631600a0f1403b2bFea05ad"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20230525-l2-veboost-v2": {
     "contracts": [
       {
