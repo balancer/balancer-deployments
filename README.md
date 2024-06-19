@@ -105,6 +105,9 @@ Returns an object with all contracts from a deployment and their addresses.
 | Authorizer with Adaptor Validation                     | [`20230414-authorizer-wrapper`](./tasks/20230414-authorizer-wrapper)                                 |
 | Voting Escrow Remapper                                 | [`20230504-vebal-remapper`](./tasks/20230504-vebal-remapper)                                         |
 | Gauge Registrant V4                                    | [`20230519-gauge-adder-v4`](./tasks/20230519-gauge-adder-v4)                                         |
+| LayerZero OmniVotingEscrowChild (Base)                 | [`20230524-base-lz-omni-voting-escrow-child`](./tasks/20230524-base-lz-omni-voting-escrow-child)     |
+| LayerZero OmniVotingEscrow                             | [`20230524-mainnet-lz-omni-voting-escrow`](./tasks/20230524-mainnet-lz-omni-voting-escrow)           |
+| LayerZero OmniVotingEscrowChild                        | [`20230524-lz-omni-voting-escrow-child`](./tasks/20230524-lz-omni-voting-escrow-child)               |
 | L2 VeBoost V2                                          | [`20230525-l2-veboost-v2`](./tasks/20230525-l2-veboost-v2)                                           |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./tasks/20230526-zkevm-root-gauge-factory)                     |
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./tasks/20230526-gauge-working-balance-helper)             |

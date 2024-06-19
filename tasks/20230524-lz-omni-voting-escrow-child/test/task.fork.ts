@@ -6,14 +6,14 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
-import { OmniVotingChildEscrowDeployment } from '../input';
+import { OmniVotingEscrowChildDeployment } from '../input';
 
 describeForkTest('OmniVotingEscrowChild', 'arbitrum', 94050211, function () {
   let deployer: SignerWithAddress;
 
   let task: Task;
   let omniVotingEscrowChild: Contract, l2LayerZeroBridgeForwarder: Contract;
-  let input: OmniVotingChildEscrowDeployment;
+  let input: OmniVotingEscrowChildDeployment;
 
   const LM_MULTISIG = '0xc38c5f97B34E175FFd35407fc91a937300E33860';
 
@@ -26,7 +26,7 @@ describeForkTest('OmniVotingEscrowChild', 'arbitrum', 94050211, function () {
     task = new Task('20230524-lz-omni-voting-escrow-child', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     omniVotingEscrowChild = await task.deployedInstance('OmniVotingEscrowChild');
-    input = task.input() as OmniVotingChildEscrowDeployment;
+    input = task.input() as OmniVotingEscrowChildDeployment;
   });
 
   before('setup contracts', async () => {

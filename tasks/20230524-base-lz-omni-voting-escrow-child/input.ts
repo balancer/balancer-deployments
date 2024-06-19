@@ -1,6 +1,6 @@
 import { Task, TaskMode } from '@src';
 
-export type OmniVotingChildEscrowDeployment = {
+export type OmniVotingEscrowChildDeployment = {
   LayerZeroEndpoint: string;
   L2LayerZeroBridgeForwarder: string;
 };
