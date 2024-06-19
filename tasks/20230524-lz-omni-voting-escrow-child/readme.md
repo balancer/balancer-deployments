@@ -8,7 +8,6 @@ Deployment of the `OmniVotingEscrowChild`, which receives veBAL balances in chil
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Polygon mainnet addresses](./output/polygon.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
-- [BSC mainnet addresses](./output/bsc.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Polygon zkeVM mainnet addresses](./output/zkevm.json)
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
