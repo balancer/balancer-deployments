@@ -1102,6 +1102,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20230524-mainnet-lz-omni-voting-escrow": {
+    "contracts": [
+      {
+        "name": "OmniVotingEscrow",
+        "address": "0xE241C6e48CA045C7f631600a0f1403b2bFea05ad"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
       {
