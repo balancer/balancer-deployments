@@ -222,7 +222,7 @@ export default class Verifier {
   private getAbsoluteSourcePath(relativeSourcePath: string, input: CompilerInput): string {
     // We're not actually converting from relative to absolute but rather guessing: we'll extract the filename from the
     // relative path, and then look for a source name in the inputs that matches it.
-    const contractName = (relativeSourcePath.match(/.*\/(\w*)\.sol/) as RegExpMatchArray)[1];
+    const contractName = (relativeSourcePath.match(/.*\/([\w'-]+)\.sol/) as RegExpMatchArray)[1];
     return this.getContractSourceName(contractName, input);
   }
 
