@@ -44,7 +44,7 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.2"
     "@nomiclabs/hardhat-vyper": "npm:^3.0.5"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.5"
-    "@solidity-parser/parser": "npm:^0.14.5"
+    "@solidity-parser/parser": "npm:^0.18.0"
     "@types/async-retry": "npm:^1"
     "@types/chai": "npm:^4"
     "@types/lodash": "npm:^4.14.186"
@@ -1347,21 +1347,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solidity-parser/parser@npm:^0.14.5":
-  version: 0.14.5
-  resolution: "@solidity-parser/parser@npm:0.14.5"
-  dependencies:
-    antlr4ts: "npm:^0.5.0-alpha.4"
-  checksum: b8086c3e87d75a50fdb7928d5a656bf3cb72aae2d83d8963e85c7cc1bc3553ca1b4d9e36df961e5408ff712b506f3f733453d53ba3e472edd3d1394a018299cb
-  languageName: node
-  linkType: hard
-
 "@solidity-parser/parser@npm:^0.16.0":
   version: 0.16.0
   resolution: "@solidity-parser/parser@npm:0.16.0"
   dependencies:
     antlr4ts: "npm:^0.5.0-alpha.4"
   checksum: a5f610d93a4df7482d698ec63034ba5574eb5090201a204b2392664cb1277d7fb06caac04dea27ab3c183589a8e06e84942a44d01040699277fe07b481909b75
+  languageName: node
+  linkType: hard
+
+"@solidity-parser/parser@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "@solidity-parser/parser@npm:0.18.0"
+  checksum: 42c904be5c499026aa66cd226125dc753665d5c75a6d3c6f79b7f875fc302c04d06f4d48909c577b6a1ffd5fdf13e4b3bacc9d2dfe10f4c316eeb7da7be0fcd5
   languageName: node
   linkType: hard
 
