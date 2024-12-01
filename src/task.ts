@@ -487,9 +487,9 @@ export default class Task {
         .sort();
     };
 
-    const taskIds: string[] = [];
+    let taskIds: string[] = [];
     for (const versionRoot of VERSION_ROOTS) {
-      taskIds.concat(__versionTaskIds(versionRoot));
+      taskIds = taskIds.concat(__versionTaskIds(versionRoot));
     }
 
     return taskIds;
