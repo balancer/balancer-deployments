@@ -9,4 +9,4 @@ This version supports adding dynamic gauge types, and allows only one factory pe
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GaugeAdder` artifact](./artifact/GaugeAdder.json)
-- [Previous `GaugeAdder` deployment](../deprecated/20230109-gauge-adder-v3)
+- [Previous `GaugeAdder` deployment](../../deprecated/20230109-gauge-adder-v3)
