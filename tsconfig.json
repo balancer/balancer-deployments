@@ -1,6 +1,6 @@
 {
-  "include": ["tasks/**/test", "tasks/**/index.ts", "tasks/**/input.ts", "index.ts", "src", "addresses/**/*.json", "tasks/**/artifact/*.json", "tasks/**/output/*.json"],
-  "exclude": ["tasks/**/output/test.json"],
+  "include": ["*/tasks/**/test", "*/tasks/**/index.ts", "*/tasks/**/input.ts", "index.ts", "src", "addresses/**/*.json", "*/tasks/**/artifact/*.json", "*/tasks/**/output/*.json"],
+  "exclude": ["*/tasks/**/output/test.json"],
   "files": ["./hardhat.config.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
