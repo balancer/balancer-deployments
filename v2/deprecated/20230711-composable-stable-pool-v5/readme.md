@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED** ⚠️
 >
-> This version has been replaced for an updated version: [Composable Stable Pool V6](../../20240223-composable-stable-pool-v6). The new version has the same functionality, but larger pause and buffer windows; this version can still be used if pausing is deemed unnecessary for specific pools.
+> This version has been replaced for an updated version: [Composable Stable Pool V6](../../tasks/20240223-composable-stable-pool-v6). The new version has the same functionality, but larger pause and buffer windows; this version can still be used if pausing is deemed unnecessary for specific pools.
 
 Deployment of `ComposableStablePoolFactory`, which supersedes `20230320-composable-stable-pool-v4`.
 This version is resilient to abrupt changes in the value reported by the pool tokens' rate providers, and calculates

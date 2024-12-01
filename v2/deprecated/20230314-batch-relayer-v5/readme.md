@@ -1,7 +1,7 @@
 # 2023-03-14 - Batch Relayer V5
 
 > ⚠️ **DEPRECATED** ⚠️
-> This deployment has been deprecated in favor of a new version with more functionality: specifically, support for recovery mode exits and queries: [batch-relayer-v6](../../20231031-batch-relayer-v6/).
+> This deployment has been deprecated in favor of a new version with more functionality: specifically, support for recovery mode exits and queries: [batch-relayer-v6](../../tasks/20231031-batch-relayer-v6/).
 > V5 is still safe to use.
 
 Deployment of the fifth `BalancerRelayer` using `BatchRelayerLibrary`, for combining multiple operations (swaps, joins, etc.) in a single transaction.
