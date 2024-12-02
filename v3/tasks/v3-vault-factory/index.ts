@@ -21,75 +21,32 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const vaultAddress = await vaultFactory.getDeploymentAddress(input.salt);
 
-  // console.log('stage 1');
-  // await vaultFactory.createStage1(vaultAddress, input.vaultAdminCreationCode);
-
-  // console.log('stage 2');
-  // await vaultFactory.createStage2(input.vaultExtensionCreationCode);
-
-  // console.log('about to create');
-  // await vaultFactory.createStage3(input.salt, vaultAddress, input.vaultCreationCode);
-  // console.log('CREATED');
-
-  // const protocolFeeControllerAddress = await vaultFactory.protocolFeeController();
-  // const vaultExtensionAddress = await vaultFactory.vaultExtension();
-  // const vaultAdminAddress = await vaultFactory.vaultAdmin();
-
-  const protocolFeeController = await task.deployAndVerify('ProtocolFeeController', [vaultAddress], from, force);
-  const vaultAdmin = await task.deployAndVerify(
-    'VaultAdmin',
-    [vaultAddress, input.pauseWindowDuration, input.bufferPeriodDuration, input.minTradeAmount, input.minWrapAmount],
-    from,
-    force
-  );
-
-  const vaultExtension = await task.deployAndVerify('VaultExtension', [vaultAddress, vaultAdmin.address], from, force);
-
-  console.log('deploying proxy');
-  await vaultFactory.deployProxy(input.salt);
-
-  console.log('protocol fee controller vault: ', await protocolFeeController.vault());
-  console.log('vault extension vault: ', await vaultExtension.vault());
-
-  console.log('About to deploy vault at ', vaultAddress);
-
-  // ethers.utils.solidityPack(
-  //   ['bytes', 'bytes'],
-  //   [
-  //     input.vaultCreationCode,
-  //     ethers.utils.toUtf8Bytes(
-  //       ethers.utils.defaultAbiCoder.encode(
-  //         ['address', 'address', 'address'],
-  //         [vaultExtension.address, input.Authorizer, protocolFeeController.address]
-  //       )
-  //     ),
-  //   ]
-  // )
-
-  // console.log(input.vaultCreationCode);
-
-  await vaultFactory.createStage3(
+  await vaultFactory.create(
     input.salt,
+    vaultAddress,
     input.vaultCreationCode,
-    vaultExtension.address,
-    protocolFeeController.address,
-    { gasLimit: 30e6 }
+    input.vaultExtensionCreationCode,
+    input.vaultAdminCreationCode,
+    { gasLimit: 20e6 }
   );
-  console.log('vault deployed');
 
-  await task.verify('Vault', vaultAddress, [vaultExtension.address, input.Authorizer, protocolFeeController.address]);
-  // await task.verify('VaultExtension', vaultExtensionAddress, [vaultAddress, vaultAdminAddress]);
-  // await task.verify('VaultAdmin', vaultAdminAddress, [
-  //   vaultAddress,
-  //   input.pauseWindowDuration,
-  //   input.bufferPeriodDuration,
-  //   input.minTradeAmount,
-  //   input.minWrapAmount,
-  // ]);
-  // await task.verify('ProtocolFeeController', protocolFeeControllerAddress, [vaultAddress]);
+  const protocolFeeControllerAddress = await vaultFactory.protocolFeeController();
+  const vaultExtensionAddress = await vaultFactory.vaultExtension();
+  const vaultAdminAddress = await vaultFactory.vaultAdmin();
+
+  await task.verify('Vault', vaultAddress, [vaultExtensionAddress, input.Authorizer, protocolFeeControllerAddress]);
+  await task.verify('VaultExtension', vaultExtensionAddress, [vaultAddress, vaultAdminAddress]);
+  await task.verify('VaultAdmin', vaultAdminAddress, [
+    vaultAddress,
+    input.pauseWindowDuration,
+    input.bufferPeriodDuration,
+    input.minTradeAmount,
+    input.minWrapAmount,
+  ]);
+  await task.verify('ProtocolFeeController', protocolFeeControllerAddress, [vaultAddress]);
 
   await task.save({ Vault: vaultAddress });
-  await task.save({ VaultExtension: vaultExtension.address });
-  await task.save({ VaultAdmin: vaultAdmin.address });
-  await task.save({ ProtocolFeeController: protocolFeeController.address });
+  await task.save({ VaultExtension: vaultExtensionAddress });
+  await task.save({ VaultAdmin: vaultAdminAddress });
+  await task.save({ ProtocolFeeController: protocolFeeControllerAddress });
 };
