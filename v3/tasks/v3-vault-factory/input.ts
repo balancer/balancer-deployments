@@ -17,13 +17,15 @@ export type VaultDeployment = {
 const Authorizer = new Task('20210418-authorizer', TaskMode.READ_ONLY);
 const Vault = new Task('v3-vault-factory', TaskMode.READ_ONLY);
 
-const vaultArtifact = Vault.artifact('Vault', 'Vault.json');
+const vaultArtifact = Vault.artifact('Vault');
 const vaultCreationCode = vaultArtifact.bytecode;
 
-const vaultExtensionArtifact = Vault.artifact('VaultExtension', 'VaultExtension.json');
+console.log(vaultCreationCode);
+
+const vaultExtensionArtifact = Vault.artifact('VaultExtension');
 const vaultExtensionCreationCode = vaultExtensionArtifact.bytecode;
 
-const vaultAdminArtifact = Vault.artifact('VaultAdmin', 'VaultAdmin.json');
+const vaultAdminArtifact = Vault.artifact('VaultAdmin');
 const vaultAdminCreationCode = vaultAdminArtifact.bytecode;
 
 const salt = '0x000000000000000000000000000000000000000000000000000000000000BEEF';

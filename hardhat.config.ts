@@ -407,13 +407,27 @@ export default {
     timeout: 600000,
   },
   solidity: {
-    version: '0.7.1',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 9999,
+    compilers: [
+      {
+        version: '0.7.1',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 9999,
+          },
+        },
       },
-    },
+      {
+        version: '0.8.24',
+        settings: {
+          evmVersion: 'cancun',
+          optimizer: {
+            enabled: true,
+            runs: 9999,
+          },
+        },
+      },
+    ],
   },
   vyper: {
     compilers: [{ version: '0.3.1' }, { version: '0.3.3' }],

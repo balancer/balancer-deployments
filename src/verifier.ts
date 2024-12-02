@@ -85,7 +85,14 @@ export default class Verifier {
   ): Promise<EtherscanResponse> {
     const deployedBytecodeHex = await retrieveContractBytecode(address, this.network.provider, this.network.name);
     const deployedBytecode = new Bytecode(deployedBytecodeHex);
-    const buildInfos = await task.buildInfos();
+    let buildInfos: BuildInfo[];
+    try {
+      // First check if there's a specific file named like this.
+      buildInfos = [task.buildInfo(name)];
+    } catch {
+      // Otherwise search in every file.
+      buildInfos = task.buildInfos();
+    }
     const buildInfo = this.findBuildInfoWithContract(buildInfos, name);
     buildInfo.input = this.trimmedBuildInfoInput(name, buildInfo.input);
 

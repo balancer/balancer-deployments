@@ -11,7 +11,7 @@ describeForkTest('VaultFactory-V3', 'sepolia', 7151500, function () {
   before('run task', async () => {
     task = new Task('v3-vault-factory', TaskMode.TEST, getForkedNetwork(hre));
     const signers = await ethers.getSigners();
-    const from = signers[0];
+    const from = signers[4];
     await task.run({ force: true, from });
 
     vault = await task.deployedInstance('Vault');
