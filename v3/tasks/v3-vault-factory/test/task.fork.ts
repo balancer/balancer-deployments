@@ -40,6 +40,6 @@ describeForkTest('VaultFactory-V3', 'sepolia', 7151500, function () {
 
   it('checks min wrap amount', async () => {
     const vaultAdminAsVault = vaultAdmin.attach(vault.address);
-    expect(await vaultAdminAsVault.getMinimumWrapAmount()).to.be.equal(1e3);
+    expect(await vaultAdminAsVault.getMinimumWrapAmount()).to.be.equal(1e4);
   });
 });

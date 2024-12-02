@@ -66,11 +66,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   //   ]
   // )
 
+  // console.log(input.vaultCreationCode);
+
   await vaultFactory.createStage3(
     input.salt,
     input.vaultCreationCode,
     vaultExtension.address,
-    protocolFeeController.address
+    protocolFeeController.address,
+    { gasLimit: 30e6 }
   );
   console.log('vault deployed');
 
@@ -85,8 +88,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   // ]);
   // await task.verify('ProtocolFeeController', protocolFeeControllerAddress, [vaultAddress]);
 
-  // await task.save({ Vault: vaultAddress });
-  // await task.save({ VaultExtension: vaultExtensionAddress });
-  // await task.save({ VaultAdmin: vaultAdminAddress });
-  // await task.save({ ProtocolFeeController: protocolFeeControllerAddress });
+  await task.save({ Vault: vaultAddress });
+  await task.save({ VaultExtension: vaultExtension.address });
+  await task.save({ VaultAdmin: vaultAdmin.address });
+  await task.save({ ProtocolFeeController: protocolFeeController.address });
 };

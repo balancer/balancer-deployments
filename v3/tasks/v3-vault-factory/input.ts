@@ -20,7 +20,7 @@ const Vault = new Task('v3-vault-factory', TaskMode.READ_ONLY);
 const vaultArtifact = Vault.artifact('Vault');
 const vaultCreationCode = vaultArtifact.bytecode;
 
-console.log(vaultCreationCode);
+// console.log(vaultCreationCode);
 
 const vaultExtensionArtifact = Vault.artifact('VaultExtension');
 const vaultExtensionCreationCode = vaultExtensionArtifact.bytecode;
