@@ -21,10 +21,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const vaultAddress = await vaultFactory.getDeploymentAddress(input.salt);
 
-  await vaultFactory.createStage1(vaultAddress, input.vaultAdminCreationCode, input.vaultExtensionCreationCode);
+  console.log('stage 1');
+  await vaultFactory.createStage1(vaultAddress, input.vaultAdminCreationCode);
+
+  console.log('stage 2');
+  await vaultFactory.createStage2(input.vaultExtensionCreationCode);
 
   console.log('about to create');
-  await vaultFactory.createStage2(input.salt, vaultAddress, input.vaultCreationCode);
+  await vaultFactory.createStage3(input.salt, vaultAddress, input.vaultCreationCode);
   console.log('CREATED');
 
   const protocolFeeControllerAddress = await vaultFactory.protocolFeeController();
