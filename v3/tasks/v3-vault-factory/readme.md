@@ -1,4 +1,4 @@
-# V3 Vault - 11
+# V3 Vault
 
 Test deployment for Vault (with extension) from vault factory.
 
@@ -8,6 +8,4 @@ Test deployment for Vault (with extension) from vault factory.
 - [`Vault` artifact](./artifact/Vault.json)
 - [`VaultAdmin` artifact](./artifact/VaultAdmin.json)
 - [`VaultExtension` artifact](./artifact/VaultExtension.json)
-- [`Router` artifact](./artifact/Router.json)
-- [`BatchRouter` artifact](./artifact/BatchRouter.json)
-
+- [`VaultFactory` artifact](./artifact/VaultFactory.json)
