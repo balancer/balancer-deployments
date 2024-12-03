@@ -30,8 +30,8 @@ const salt = '0x000000000000000000000000000000000000000000000000000000000000BEEF
 
 export default {
   Authorizer,
-  pauseWindowDuration: 3 * MONTH * 12,
-  bufferPeriodDuration: MONTH,
+  pauseWindowDuration: 4 * MONTH * 12,
+  bufferPeriodDuration: 3 * MONTH,
   minTradeAmount: 1e6,
   minWrapAmount: 1e4,
   vaultCreationCode,

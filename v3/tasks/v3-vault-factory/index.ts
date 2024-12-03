@@ -21,18 +21,21 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const vaultAddress = await vaultFactory.getDeploymentAddress(input.salt);
 
-  await vaultFactory.create(
-    input.salt,
-    vaultAddress,
-    input.vaultCreationCode,
-    input.vaultExtensionCreationCode,
-    input.vaultAdminCreationCode,
-    { gasLimit: 20e6 }
-  );
+  // Skip deployment if it's already done
+  if ((await vaultFactory.isDeployed(vaultAddress)) === false) {
+    await vaultFactory.create(
+      input.salt,
+      vaultAddress,
+      input.vaultCreationCode,
+      input.vaultExtensionCreationCode,
+      input.vaultAdminCreationCode,
+      { gasLimit: 20e6 }
+    );
+  }
 
-  const protocolFeeControllerAddress = await vaultFactory.protocolFeeController();
-  const vaultExtensionAddress = await vaultFactory.vaultExtension();
-  const vaultAdminAddress = await vaultFactory.vaultAdmin();
+  const protocolFeeControllerAddress = await vaultFactory.deployedProtocolFeeControllers(vaultAddress);
+  const vaultExtensionAddress = await vaultFactory.deployedVaultExtensions(vaultAddress);
+  const vaultAdminAddress = await vaultFactory.deployedVaultAdmins(vaultAddress);
 
   await task.verify('Vault', vaultAddress, [vaultExtensionAddress, input.Authorizer, protocolFeeControllerAddress]);
   await task.verify('VaultExtension', vaultExtensionAddress, [vaultAddress, vaultAdminAddress]);
