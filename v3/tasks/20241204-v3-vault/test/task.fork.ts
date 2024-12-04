@@ -15,7 +15,7 @@ describeForkTest('VaultFactory-V3', 'sepolia', 7206300, function () {
   const expectedAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 
   before('run task', async () => {
-    task = new Task('v3-vault-factory', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20241204-v3-vault', TaskMode.TEST, getForkedNetwork(hre));
     deployer = await impersonate(deployerAddress, fp(100));
     await task.run({ force: true, from: deployer });
 
