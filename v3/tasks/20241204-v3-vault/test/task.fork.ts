@@ -6,7 +6,7 @@ import { MONTH, fromNow } from '@helpers/time';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 
-describeForkTest('VaultFactory-V3', 'sepolia', 7206300, function () {
+describeForkTest('VaultFactory-V3', 'mainnet', 21331800, function () {
   let task: Task;
   let vault: Contract, vaultExtension: Contract, vaultAdmin: Contract, protocolFeeController: Contract;
   let deployer: SignerWithAddress;
