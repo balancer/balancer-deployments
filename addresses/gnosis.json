@@ -508,5 +508,30 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20241204-v3-vault": {
+    "contracts": [
+      {
+        "name": "VaultFactory",
+        "address": "0xAc27df81663d139072E615855eF9aB0Af3FBD281"
+      },
+      {
+        "name": "Vault",
+        "address": "0xbA1333333333a1BA1108E8412f11850A5C319bA9"
+      },
+      {
+        "name": "VaultExtension",
+        "address": "0x0E8B07657D719B86e06bF0806D6729e3D528C9A9"
+      },
+      {
+        "name": "VaultAdmin",
+        "address": "0x35fFB749B273bEb20F40f35EdeB805012C539864"
+      },
+      {
+        "name": "ProtocolFeeController",
+        "address": "0xa731C23D7c95436Baaae9D52782f966E1ed07cc8"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
