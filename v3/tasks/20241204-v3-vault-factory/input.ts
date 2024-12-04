@@ -32,7 +32,7 @@ const targetVaultAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 export default {
   Authorizer,
   pauseWindowDuration: 4 * MONTH * 12,
-  bufferPeriodDuration: 3 * MONTH,
+  bufferPeriodDuration: 6 * MONTH,
   minTradeAmount: 1e6,
   minWrapAmount: 1e4,
   vaultCreationCode,

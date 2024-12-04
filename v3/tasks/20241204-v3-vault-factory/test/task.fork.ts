@@ -48,8 +48,8 @@ describeForkTest('VaultFactory-V3', 'sepolia', 7206300, function () {
     expect(await vaultAdmin.getMinimumPoolTokens()).to.be.equal(2);
     expect(await vaultAdmin.getMaximumPoolTokens()).to.be.equal(8);
     expect(await vaultAdmin.getPauseWindowEndTime()).to.be.equal(await fromNow(MONTH * 12 * 4));
-    expect(await vaultAdmin.getBufferPeriodDuration()).to.be.equal(MONTH * 3);
-    expect(await vaultAdmin.getBufferPeriodEndTime()).to.be.equal(await fromNow(MONTH * 12 * 4 + MONTH * 3));
+    expect(await vaultAdmin.getBufferPeriodDuration()).to.be.equal(MONTH * 6);
+    expect(await vaultAdmin.getBufferPeriodEndTime()).to.be.equal(await fromNow(MONTH * 12 * 4 + MONTH * 6));
   });
 
   it('checks extension', async () => {
