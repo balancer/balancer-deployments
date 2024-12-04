@@ -121,13 +121,14 @@ Returns an object with all contracts from a deployment and their addresses.
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./v2/tasks/20231031-batch-relayer-v6)                                     |
 | Composable Stable Pools V6                             | [`20240223-composable-stable-pool-v6`](./v2/tasks/20240223-composable-stable-pool-v6)                   |
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
+| V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
 
 ## Scripts
 
 These are deployments for script-like contracts (often called 'coordinators') which are typically granted some permission by Governance and then executed, after which they become useless.
 
-| Description                                         | Task ID                                                                                                       |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Description                                         | Task ID                                                                                                 |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Coordination of the veBAL deployment                | [`20220325-veBAL-deployment-coordinator`](./v2/scripts/20220325-veBAL-deployment-coordinator)           |
 | Coordination of setup of L2 gauges for veBAL system | [`20220415-veBAL-L2-gauge-setup-coordinator`](./v2/scripts/20220415-veBAL-L2-gauge-setup-coordinator)   |
 | Coordination of veBAL gauges fix (Option 1)         | [`20220418-veBAL-gauge-fix-coordinator`](./v2/scripts/20220418-veBAL-gauge-fix-coordinator)             |
@@ -145,8 +146,8 @@ These deployments have been deprecated because they're either outdated and have 
 
 Go to each deprecated deployment's readme file to learn more about why it is deprecated, and what the replacement deployment is (if any).
 
-| Description                                         | Task ID                                                                                                        |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------     |
+| Description                                         | Task ID                                                                                                  |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------     |
 | Weighted Pools of up to 8 tokens                    | [`20210418-weighted-pool`](./v2/deprecated/20210418-weighted-pool)                                       |
 | Stable Pools of up to 5 tokens                      | [`20210624-stable-pool`](./v2/deprecated/20210624-stable-pool)                                           |
 | Liquidity Bootstrapping Pools of up to 4 tokens     | [`20210721-liquidity-bootstrapping-pool`](./v2/deprecated/20210721-liquidity-bootstrapping-pool)         |
