@@ -11,7 +11,7 @@ export type VaultDeployment = {
   vaultExtensionCreationCode: string;
   vaultAdminCreationCode: string;
   salt: string;
-  expectedVaultAddress: string;
+  targetVaultAddress: string;
 };
 
 const Authorizer = new Task('20210418-authorizer', TaskMode.READ_ONLY);
@@ -26,7 +26,8 @@ const vaultExtensionCreationCode = vaultExtensionArtifact.bytecode;
 const vaultAdminArtifact = Vault.artifact('VaultAdmin');
 const vaultAdminCreationCode = vaultAdminArtifact.bytecode;
 
-const salt = '0x000000000000000000000000000000000000000000000000000000000000BEEF';
+const salt = '0x3877188e9e5da25b11fdb7f5e8d4fdddce2d22707ba04878a8e14700dd46fa82';
+const targetVaultAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 
 export default {
   Authorizer,
@@ -38,4 +39,5 @@ export default {
   vaultExtensionCreationCode,
   vaultAdminCreationCode,
   salt,
+  targetVaultAddress,
 };

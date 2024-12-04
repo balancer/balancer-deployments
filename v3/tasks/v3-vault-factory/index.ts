@@ -21,6 +21,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const vaultAddress = await vaultFactory.getDeploymentAddress(input.salt);
 
+  if (vaultAddress !== input.targetVaultAddress) {
+    throw Error('Incorrect target address');
+  }
+
   // Skip deployment if it's already done
   if ((await vaultFactory.isDeployed(vaultAddress)) === false) {
     await vaultFactory.create(

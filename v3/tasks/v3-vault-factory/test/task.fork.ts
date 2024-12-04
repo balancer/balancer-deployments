@@ -1,24 +1,32 @@
 import hre from 'hardhat';
-import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { MONTH, fromNow } from '@helpers/time';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { fp } from '@helpers/numbers';
 
-describeForkTest('VaultFactory-V3', 'sepolia', 7151500, function () {
+describeForkTest('VaultFactory-V3', 'sepolia', 7206300, function () {
   let task: Task;
   let vault: Contract, vaultExtension: Contract, vaultAdmin: Contract, protocolFeeController: Contract;
+  let deployer: SignerWithAddress;
+
+  const deployerAddress = '0x3877188e9e5DA25B11fDb7F5E8D4fDDDCE2d2270';
+  const expectedAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 
   before('run task', async () => {
     task = new Task('v3-vault-factory', TaskMode.TEST, getForkedNetwork(hre));
-    const signers = await ethers.getSigners();
-    const from = signers[4];
-    await task.run({ force: true, from });
+    deployer = await impersonate(deployerAddress, fp(100));
+    await task.run({ force: true, from: deployer });
 
     vault = await task.deployedInstance('Vault');
     vaultExtension = await task.deployedInstance('VaultExtension');
     vaultAdmin = await task.deployedInstance('VaultAdmin');
     protocolFeeController = await task.deployedInstance('ProtocolFeeController');
+  });
+
+  it('checks vault address', async () => {
+    expect(vault.address).to.be.eq(expectedAddress);
   });
 
   it('checks admin reference', async () => {
