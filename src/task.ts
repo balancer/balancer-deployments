@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path, { extname } from 'path';
 import { BuildInfo, CompilerOutputContract } from 'hardhat/types';
-import { Contract } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { getContractAddress } from '@ethersproject/address';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
@@ -24,6 +24,7 @@ import {
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from './network';
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
+import { getSigner } from './signers';
 
 // Maps to ../v2 and ../v3.
 const VERSION_ROOTS = ['v2', 'v3'].map((version) => path.resolve(__dirname, `../${version}`));
@@ -45,6 +46,17 @@ export enum TaskStatus {
   DEPRECATED,
   SCRIPT,
 }
+
+type DeployContractsInfo = {
+  populatedTransaction: ethers.PopulatedTransaction;
+  contracts: Record<string, string>;
+};
+
+type ContractInfo = {
+  name: string;
+  expectedAddress: string;
+  args: Array<Param>;
+};
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
@@ -107,6 +119,73 @@ export default class Task {
 
     await this.verify(name, instance.address, args, libs);
     return instance;
+  }
+
+  async deployFactoryContracts(
+    populatedDeployTransaction: ethers.PopulatedTransaction,
+    expectedContracts: Array<string>,
+    from?: SignerWithAddress,
+    force?: boolean
+  ): Promise<ethers.providers.TransactionReceipt | null> {
+    console.log('deployFactoryContracts');
+    if (this.mode == TaskMode.CHECK) {
+      // TODO
+      return null;
+    }
+
+    const output = this.output({ ensure: false });
+
+    if (force == false) {
+      let needsDeploy = false;
+      for (const name of expectedContracts) {
+        if (!output[name]) {
+          needsDeploy = true;
+        }
+
+        logger.info(`${name} already deployed at ${output[name]}`);
+      }
+
+      if (needsDeploy) {
+        logger.info('Some contracts were not deployed, re-deploying all contracts for this transaction...');
+      } else {
+        return null;
+      }
+    }
+
+    logger.success(`Deploy contracts using factory...`);
+    from = from || (await getSigner());
+    const receipt = await from!.sendTransaction(populatedDeployTransaction);
+
+    return await receipt.wait();
+  }
+
+  async saveAndVerifyFactoryContracts(
+    deployTransaction: ethers.providers.TransactionReceipt,
+    contractsInfo: Array<ContractInfo>
+  ): Promise<void> {
+    for (const contractInfo of contractsInfo) {
+      const instance = await this.instanceAt(contractInfo.name, contractInfo.expectedAddress);
+
+      this.save({ [contractInfo.name]: instance });
+      logger.success(`Contract ${contractInfo.name} attached at ${contractInfo.expectedAddress}`);
+
+      if (this.mode === TaskMode.LIVE) {
+        saveContractDeploymentTransactionHash(
+          contractInfo.expectedAddress,
+          deployTransaction.transactionHash,
+          this.network
+        );
+      }
+    }
+
+    if (this.mode !== TaskMode.LIVE) {
+      return;
+    }
+
+    for (const contractInfo of contractsInfo) {
+      const { name, expectedAddress, args } = contractInfo;
+      await this.verify(name, expectedAddress, args);
+    }
   }
 
   async deploy(

@@ -27,33 +27,53 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   // Skip deployment if it's already done
   if ((await vaultFactory.isDeployed(vaultAddress)) === false) {
-    await vaultFactory.create(
-      input.salt,
-      vaultAddress,
-      input.vaultCreationCode,
-      input.vaultExtensionCreationCode,
-      input.vaultAdminCreationCode,
-      { gasLimit: 17e6 }
+    const deployTransaction = await task.deployFactoryContracts(
+      await vaultFactory.populateTransaction.create(
+        input.salt,
+        vaultAddress,
+        input.vaultCreationCode,
+        input.vaultExtensionCreationCode,
+        input.vaultAdminCreationCode,
+        { gasLimit: 17e6 }
+      ),
+      ['Vault', 'VaultExtension', 'VaultAdmin', 'ProtocolFeeController'],
+      from,
+      force
     );
+
+    if (deployTransaction) {
+      const protocolFeeControllerAddress = await vaultFactory.deployedProtocolFeeControllers(vaultAddress);
+      const vaultExtensionAddress = await vaultFactory.deployedVaultExtensions(vaultAddress);
+      const vaultAdminAddress = await vaultFactory.deployedVaultAdmins(vaultAddress);
+
+      await task.saveAndVerifyFactoryContracts(deployTransaction, [
+        {
+          name: 'Vault',
+          expectedAddress: vaultAddress,
+          args: [vaultAddress, input.Authorizer, await vaultFactory.deployedProtocolFeeControllers(vaultAddress)],
+        },
+        {
+          name: 'VaultExtension',
+          expectedAddress: vaultExtensionAddress,
+          args: [vaultAddress, vaultAdminAddress],
+        },
+        {
+          name: 'VaultAdmin',
+          expectedAddress: vaultAdminAddress,
+          args: [
+            vaultAddress,
+            input.pauseWindowDuration,
+            input.bufferPeriodDuration,
+            input.minTradeAmount,
+            input.minWrapAmount,
+          ],
+        },
+        {
+          name: 'ProtocolFeeController',
+          expectedAddress: protocolFeeControllerAddress,
+          args: [vaultAddress],
+        },
+      ]);
+    }
   }
-
-  const protocolFeeControllerAddress = await vaultFactory.deployedProtocolFeeControllers(vaultAddress);
-  const vaultExtensionAddress = await vaultFactory.deployedVaultExtensions(vaultAddress);
-  const vaultAdminAddress = await vaultFactory.deployedVaultAdmins(vaultAddress);
-
-  await task.verify('Vault', vaultAddress, [vaultExtensionAddress, input.Authorizer, protocolFeeControllerAddress]);
-  await task.verify('VaultExtension', vaultExtensionAddress, [vaultAddress, vaultAdminAddress]);
-  await task.verify('VaultAdmin', vaultAdminAddress, [
-    vaultAddress,
-    input.pauseWindowDuration,
-    input.bufferPeriodDuration,
-    input.minTradeAmount,
-    input.minWrapAmount,
-  ]);
-  await task.verify('ProtocolFeeController', protocolFeeControllerAddress, [vaultAddress]);
-
-  await task.save({ Vault: vaultAddress });
-  await task.save({ VaultExtension: vaultExtensionAddress });
-  await task.save({ VaultAdmin: vaultAdminAddress });
-  await task.save({ ProtocolFeeController: protocolFeeControllerAddress });
 };
