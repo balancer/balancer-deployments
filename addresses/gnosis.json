@@ -533,5 +533,31 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20241205-v3-stable-pool": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x5006082D252c6315C3A83BD621927551a20F3b44"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-weighted-pool": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0xEB1eeaBF0126d813589C3D2CfeFFE410D9aE3863"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0xd43c36038250c66D46854e536Bf959fdDE5294c3"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
