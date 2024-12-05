@@ -1,4 +1,4 @@
-# V3 Composite Liquidity Router
+# 2024-12-05 - V3 Composite Liquidity Router
 
 Composite Liquidity Router deployment for V3.
 Contains `CompositeLiquidityRouter` for complex liquidity operations involving pools with ERC4626 wrappers and nested pools.
