@@ -1,4 +1,4 @@
-yarn hardhat deploy{
+{
   "_format": "hh-sol-artifact-1",
   "contractName": "WeightedPool",
   "sourceName": "contracts/WeightedPool.sol",
