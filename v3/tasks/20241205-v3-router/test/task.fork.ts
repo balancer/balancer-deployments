@@ -7,7 +7,7 @@ import { fp } from '@helpers/numbers';
 
 describeForkTest('Router-V3', 'mainnet', 21336200, function () {
   let task: Task;
-  let router: Contract, batchRouter: Contract, compositeLiquidityRouter: Contract, bufferRouter: Contract;
+  let router: Contract;
   let wethSigner: SignerWithAddress, alice: SignerWithAddress;
 
   const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
