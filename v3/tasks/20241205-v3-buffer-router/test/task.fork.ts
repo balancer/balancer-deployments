@@ -5,7 +5,7 @@ import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { MAX_UINT48 } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
-import input, { BufferRouterDeployment } from '../input';
+import { BufferRouterDeployment } from '../input';
 
 describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
   let task: Task;
