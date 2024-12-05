@@ -11,6 +11,10 @@
 - Deployed V3 Vault to Mainnet, Gnosis and Sepolia.
 - Deployed V3 Weighted Pool to Mainnet, Gnosis and Sepolia.
 - Deployed V3 Stable Pool to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Router to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Batch Router to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Composite Liquidity Router to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Buffer Router to Mainnet, Gnosis and Sepolia.
 
 - Deployed contracts to Fraxtal with veBAL support.
 - Deployed contracts to Mode without veBAL support.
