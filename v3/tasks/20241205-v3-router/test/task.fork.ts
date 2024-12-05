@@ -127,25 +127,24 @@ describeForkTest('Router-V3', 'mainnet', 21336200, function () {
     await expect(aliceTx).to.be.reverted;
   });
 
-  it('initialize pool', async () => {
-    const largeHolderSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
-    await BAL.connect(largeHolderSigner).transfer(alice.address, initialBalanceBAL);
-    await WETH.connect(largeHolderSigner).transfer(alice.address, initialBalanceWETH);
+  it('initialize pool with native ETH', async () => {
+    const bobSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
 
-    await BAL.connect(alice).approve(permit2.address, initialBalanceBAL);
-    await WETH.connect(alice).approve(permit2.address, initialBalanceWETH);
-    await permit2.connect(alice).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
-    await permit2.connect(alice).approve(input.WETH, router.address, initialBalanceWETH, maxUint(48));
+    await BAL.connect(bobSigner).approve(permit2.address, initialBalanceBAL);
+    await permit2.connect(bobSigner).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
 
     await router
-      .connect(alice)
+      .connect(bobSigner)
       .initialize(
         pool.address,
         [input.BAL, input.WETH],
         [initialBalanceBAL, initialBalanceWETH],
         0,
-        false,
-        ZERO_BYTES32
+        true,
+        ZERO_BYTES32,
+        {
+          value: ethers.utils.parseEther('1000.0'),
+        }
       );
   });
 });
