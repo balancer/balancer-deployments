@@ -33,7 +33,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
-      { gasLimit: 20e6 }
+      { gasLimit: 17e6 }
     );
   }
 
