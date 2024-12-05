@@ -628,5 +628,14 @@
         "stopAmplificationParameterUpdate()": "0x66a9e5de1de4dbcb0b1d3979ca06bd4bb8ba535a1f67873ed92779cfd976dcf0"
       }
     }
+  },
+  "20241205-v3-weighted-pool": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0x19073272231afac965e8df45941fc6a359b6063557f2d9dfe86cc2770735a50b",
+        "disable()": "0x0b57c528b17bebb5b75282268198cc2f48585d04488cdc16020206499ed61769"
+      }
+    }
   }
 }
