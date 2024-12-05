@@ -122,6 +122,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Composable Stable Pools V6                             | [`20240223-composable-stable-pool-v6`](./v2/tasks/20240223-composable-stable-pool-v6)                   |
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
+| V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 
 ## Scripts
 

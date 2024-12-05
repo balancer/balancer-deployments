@@ -1,0 +1,10 @@
+# V3 Weighted pool
+
+Deployment of the `WeightedPoolFactory` for Balancer V3.
+Pools from this factory use weighted math, which is best suited for uncorrelated assets (full price range).
+
+## Useful Files
+
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/25d73b3d091f5dde943ad6b7d90db9569222510d).
+- [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
+- [`WeightedPool` artifact](./artifact/WeightedPool.json)
