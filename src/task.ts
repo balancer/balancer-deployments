@@ -47,11 +47,6 @@ export enum TaskStatus {
   SCRIPT,
 }
 
-type DeployContractsInfo = {
-  populatedTransaction: ethers.PopulatedTransaction;
-  contracts: Record<string, string>;
-};
-
 type ContractInfo = {
   name: string;
   expectedAddress: string;
@@ -153,8 +148,10 @@ export default class Task {
     }
 
     logger.success(`Deploy contracts using factory...`);
+
     from = from || (await getSigner());
-    const receipt = await from!.sendTransaction(populatedDeployTransaction);
+
+    const receipt = await from?.sendTransaction(populatedDeployTransaction);
 
     return await receipt.wait();
   }
