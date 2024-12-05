@@ -35,9 +35,7 @@ describeForkTest('Router-V3', 'mainnet', 21336200, function () {
     input = task.input() as RouterDeployment;
 
     router = await task.deployedInstance('Router');
-
-    const permit2Task = new Task('00000000-permit2', TaskMode.READ_ONLY, getForkedNetwork(hre));
-    permit2 = await permit2Task.deployedInstance('IPermit2');
+    permit2 = await task.instanceAt('IPermit2', input.Permit2);
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     WETH = await testBALTokenTask.instanceAt('TestBalancerToken', input.WETH);
