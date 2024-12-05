@@ -9,7 +9,7 @@ import { BufferRouterDeployment } from '../input';
 
 describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
   let task: Task;
-  let bufferRouter: Contract, vault: Contract, permit2: Contract, usdc: Contract;
+  let bufferRouter: Contract, vault: Contract, vaultExtension: Contract, permit2: Contract, usdc: Contract;
   let wethSigner: SignerWithAddress, alice: SignerWithAddress, usdcWhale: SignerWithAddress;
 
   const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
@@ -39,6 +39,8 @@ describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
     const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
     vault = await vaultTask.deployedInstance('Vault');
     usdc = await testBALTokenTask.instanceAt('TestBalancerToken', USDC_ADDRESS);
+
+    vaultExtension = await vaultTask.deployedInstance('VaultExtension');
   });
 
   it('checks buffer router version', async () => {
@@ -67,15 +69,10 @@ describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
     await usdc.connect(usdcWhale).approve(permit2.address, initBalance);
     await permit2.connect(usdcWhale).approve(USDC_ADDRESS, bufferRouter.address, initBalance, MAX_UINT48);
 
-    // We need to call methods that don't exist in the vault.
-    const abi = [
-      'function isERC4626BufferInitialized(address) external view returns (bool)',
-      'function getERC4626BufferAsset(address) external view returns (address)',
-    ];
-    const vaultAsExtension = new ethers.Contract(vault.address, abi, usdcWhale);
-
     await bufferRouter.connect(usdcWhale).initializeBuffer(waUSDC_ADDRESS, 1000000e6, 0, 0);
-    expect(await vaultAsExtension.isERC4626BufferInitialized(waUSDC_ADDRESS)).to.be.true;
-    expect(await vaultAsExtension.getERC4626BufferAsset(waUSDC_ADDRESS)).to.be.eq(USDC_ADDRESS);
+
+    const extensionEntrypoint = vaultExtension.attach(vault.address);
+    expect(await extensionEntrypoint.isERC4626BufferInitialized(waUSDC_ADDRESS)).to.be.true;
+    expect(await extensionEntrypoint.getERC4626BufferAsset(waUSDC_ADDRESS)).to.be.eq(USDC_ADDRESS);
   });
 });
