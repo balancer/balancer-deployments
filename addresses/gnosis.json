@@ -534,6 +534,19 @@
     ],
     "status": "ACTIVE"
   },
+  "20241205-v3-stable-pool": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x5006082D252c6315C3A83BD621927551a20F3b44"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241205-v3-weighted-pool": {
     "contracts": [
       {
