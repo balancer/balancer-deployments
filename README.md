@@ -124,6 +124,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
 | V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 | V3 Stable Pool                                         | [`20241205-v3-stable-pool`](./v3/tasks/20241205-v3-stable-pool)                                         |
+| Vault Explorer                                         | [`20241205-v3-vault-explorer`](./v3/tasks/20241205-v3-vault-explorer)                                   |
 
 ## Scripts
 
