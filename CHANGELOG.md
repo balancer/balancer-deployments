@@ -9,6 +9,9 @@
 ### New Deployments
 
 - Deployed V3 Vault to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Weighted Pool to Mainnet, Gnosis and Sepolia.
+- Deployed V3 Stable Pool to Mainnet, Gnosis and Sepolia.
+
 - Deployed contracts to Fraxtal with veBAL support.
 - Deployed contracts to Mode without veBAL support.
 - Deployed `BatchRelayerLibrary` V5 to all networks.
