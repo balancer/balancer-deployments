@@ -7,6 +7,7 @@ import { fp, maxUint } from '@helpers/numbers';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
 import { RouterDeployment } from '../input';
+import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
 
 describeForkTest('Router-V3', 'mainnet', 21336200, function () {
   let task: Task;
@@ -128,13 +129,18 @@ describeForkTest('Router-V3', 'mainnet', 21336200, function () {
   });
 
   it('initialize pool with native ETH', async () => {
-    const bobSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
+    const bob = await getSigner();
+    await setBalance(bob.address, fp(10e8));
 
-    await BAL.connect(bobSigner).approve(permit2.address, initialBalanceBAL);
-    await permit2.connect(bobSigner).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
+    const largeHolderSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
+
+    BAL.connect(largeHolderSigner).transfer(bob.address, initialBalanceBAL);
+
+    await BAL.connect(bob).approve(permit2.address, initialBalanceBAL);
+    await permit2.connect(bob).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
 
     await router
-      .connect(bobSigner)
+      .connect(bob)
       .initialize(
         pool.address,
         [input.BAL, input.WETH],
