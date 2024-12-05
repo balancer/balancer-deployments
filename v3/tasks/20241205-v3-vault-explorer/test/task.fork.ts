@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { VaultExplorerDeployment } from '../input';
 
-describeForkTest('Vault Explorer', 'mainnet', 21336200, function () {
+describeForkTest('Vault Explorer', 'mainnet', 21336938, function () {
   let task: Task;
   let vault: Contract;
   let vaultExtension: Contract;
@@ -43,7 +43,7 @@ describeForkTest('Vault Explorer', 'mainnet', 21336200, function () {
     const poolTokens = (await extensionEntrypoint.getPoolTokens(mockPool.address)).map((token: string) =>
       token.toLowerCase()
     );
-    expect(poolTokens).to.be.deep.eq([input.WETH.toLowerCase(), input.BAL.toLowerCase()]);
+    expect(poolTokens).to.be.deep.eq([input.BAL.toLowerCase(), input.WETH.toLowerCase()]);
 
     const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.address)).map((token: string) =>
       token.toLowerCase()
