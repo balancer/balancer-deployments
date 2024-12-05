@@ -1,13 +1,10 @@
 import { Task, TaskMode } from '@src';
 
-export type RouterDeployment = {
+export type CompositeLiquidityRouter = {
   Vault: string;
   WETH: string;
   Permit2: string;
-  RouterVersion: string;
-  BatchRouterVersion: string;
   CompositeLiquidityRouterVersion: string;
-  BufferRouterVersion: string;
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
@@ -19,8 +16,5 @@ export default {
   Vault,
   WETH,
   Permit2,
-  RouterVersion: JSON.stringify({ name: 'Router', ...BaseVersion }),
-  BatchRouterVersion: JSON.stringify({ name: 'BatchRouter', ...BaseVersion }),
   CompositeLiquidityRouterVersion: JSON.stringify({ name: 'CompositeLiquidityRouter', ...BaseVersion }),
-  BufferRouterVersion: JSON.stringify({ name: 'BufferRouter', ...BaseVersion }),
 };
