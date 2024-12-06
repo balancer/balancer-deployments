@@ -86,5 +86,8 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@ethereumjs/evm": "^3.1.1"
   }
 }
