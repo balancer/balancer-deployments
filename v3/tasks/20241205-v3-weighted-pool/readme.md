@@ -1,4 +1,4 @@
-# V3 Weighted pool
+# 2024-12-05 - V3 Weighted pool
 
 Deployment of the `WeightedPoolFactory` for Balancer V3.
 Pools from this factory use weighted math, which is best suited for uncorrelated assets (full price range).

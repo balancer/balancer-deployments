@@ -1,4 +1,4 @@
-# V3 Stable pool
+# 2024-12-05 - V3 Stable pool
 
 Deployment of the `StablePoolFactory` for Balancer V3.
 Pools from this factory use stable math, inspired by Curve stable pools, which is best suited for correlated assets.

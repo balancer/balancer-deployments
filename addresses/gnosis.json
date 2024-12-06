@@ -534,6 +534,42 @@
     ],
     "status": "ACTIVE"
   },
+  "20241205-v3-batch-router": {
+    "contracts": [
+      {
+        "name": "BatchRouter",
+        "address": "0xe2fa4e1d17725e72dcdAfe943Ecf45dF4B9E285b"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-buffer-router": {
+    "contracts": [
+      {
+        "name": "BufferRouter",
+        "address": "0x86e67E115f96DF37239E0479441303De0de7bc2b"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-composite-liquidity-router": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0xC1A64500E035D9159C8826E982dFb802003227f0"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-router": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0x84813aA3e079A665C0B80F944427eE83cBA63617"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241205-v3-stable-pool": {
     "contracts": [
       {
@@ -543,6 +579,15 @@
       {
         "name": "MockStablePool",
         "address": "0x5006082D252c6315C3A83BD621927551a20F3b44"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-vault-explorer": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
     "status": "ACTIVE"
