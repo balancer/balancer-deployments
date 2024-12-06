@@ -2,6 +2,10 @@ import fs from 'fs';
 import path, { extname } from 'path';
 import { BuildInfo, CompilerOutputContract } from 'hardhat/types';
 import { Contract, ethers } from 'ethers';
+import { hexToBytes, Address } from '@ethereumjs/util';
+import { Chain, Common, Hardfork } from '@ethereumjs/common';
+import { EVM } from '@ethereumjs/evm';
+import { DefaultStateManager } from '@ethereumjs/statemanager';
 import { getContractAddress } from '@ethersproject/address';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
@@ -25,6 +29,8 @@ import { getContractDeploymentTransactionHash, saveContractDeploymentTransaction
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
 import { getSigner } from './signers';
+import { Block } from '@ethereumjs/evm/dist/cjs/types';
+import { zeroAddress } from 'ethereumjs-util';
 
 // Maps to ../v2 and ../v3.
 const VERSION_ROOTS = ['v2', 'v3'].map((version) => path.resolve(__dirname, `../${version}`));
@@ -119,13 +125,12 @@ export default class Task {
   async deployFactoryContracts(
     populatedDeployTransaction: ethers.PopulatedTransaction,
     expectedContracts: Array<string>,
+    needsDeploy: boolean,
     from?: SignerWithAddress,
     force?: boolean
-  ): Promise<ethers.providers.TransactionReceipt | null> {
-    console.log('deployFactoryContracts');
-    if (this.mode == TaskMode.CHECK) {
-      // TODO
-      return null;
+  ): Promise<ethers.providers.TransactionReceipt | undefined> {
+    if (!needsDeploy || this.mode == TaskMode.CHECK) {
+      return undefined;
     }
 
     const output = this.output({ ensure: false });
@@ -143,7 +148,7 @@ export default class Task {
       if (needsDeploy) {
         logger.info('Some contracts were not deployed, re-deploying all contracts for this transaction...');
       } else {
-        return null;
+        return undefined;
       }
     }
 
@@ -156,12 +161,41 @@ export default class Task {
     return await receipt.wait();
   }
 
+  // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
-    deployTransaction: ethers.providers.TransactionReceipt,
-    contractsInfo: Array<ContractInfo>
+    contractsInfo: Array<ContractInfo>,
+    deployTransaction?: ethers.providers.TransactionReceipt
   ): Promise<void> {
+    const { ethers } = await import('hardhat');
+
+    if (deployTransaction == null) {
+      const deployedAddress = this.output()[contractsInfo[0].name];
+      const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
+      deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
+    }
+
+    const evm = await this.createEVM();
+
     for (const contractInfo of contractsInfo) {
       const instance = await this.instanceAt(contractInfo.name, contractInfo.expectedAddress);
+
+      const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
+        evm,
+        deployTransaction,
+        this.artifact(contractInfo.name),
+        contractInfo.expectedAddress,
+        contractInfo.args
+      );
+
+      if (isDeployedBytecodeValid == false) {
+        throw Error(
+          `Contract ${contractInfo.name} at ${contractInfo.expectedAddress} does not match expected bytecode.`
+        );
+      }
+
+      if (this.mode === TaskMode.CHECK) {
+        continue;
+      }
 
       this.save({ [contractInfo.name]: instance });
       logger.success(`Contract ${contractInfo.name} attached at ${contractInfo.expectedAddress}`);
@@ -175,7 +209,7 @@ export default class Task {
       }
     }
 
-    if (this.mode !== TaskMode.LIVE) {
+    if (this.mode === TaskMode.CHECK) {
       return;
     }
 
@@ -183,6 +217,62 @@ export default class Task {
       const { name, expectedAddress, args } = contractInfo;
       await this.verify(name, expectedAddress, args);
     }
+  }
+
+  async createEVM(): Promise<EVM> {
+    const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Cancun });
+    const evm = await EVM.create({
+      common,
+    });
+    return evm;
+  }
+
+  async checkBytecodeAndSaveEVMState(
+    evm: EVM,
+    deployTransaction: ethers.providers.TransactionReceipt,
+    artifact: Artifact,
+    contractAddress: string,
+    args: Array<Param> = []
+  ): Promise<boolean> {
+    const { ethers } = await import('hardhat');
+
+    const runBytecode = hexToBytes(
+      ethers.utils.hexlify(
+        ethers.utils.concat([artifact.bytecode, new ethers.utils.Interface(artifact.abi).encodeDeploy(args)])
+      )
+    );
+
+    const block = await ethers.provider.getBlock(deployTransaction.blockNumber);
+    if (!block) {
+      throw Error(`Could not find block ${deployTransaction.blockNumber}`);
+    }
+
+    const res = await evm.runCode({
+      code: runBytecode,
+      to: Address.fromString(contractAddress),
+      block: {
+        header: {
+          number: BigInt(block.number),
+          timestamp: BigInt(block.timestamp),
+          cliqueSigner: () => Address.fromString(ethers.constants.AddressZero),
+          coinbase: Address.fromString(ethers.constants.AddressZero),
+          difficulty: BigInt(0),
+          gasLimit: block.gasLimit.toBigInt(),
+          prevRandao: hexToBytes(ethers.constants.HashZero),
+          baseFeePerGas: undefined,
+          getBlobGasPrice: () => undefined,
+        },
+      },
+    });
+
+    if (res.exceptionError) {
+      new Error(`computeDeployedBytecode failed: ${res.exceptionError}`);
+    }
+
+    await evm.stateManager.putContractCode(Address.fromString(contractAddress), res.returnValue);
+
+    const deployedCode = await ethers.provider.getCode(contractAddress);
+    return ethers.utils.hexValue(res.returnValue) == deployedCode;
   }
 
   async deploy(
