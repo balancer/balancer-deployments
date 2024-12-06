@@ -583,6 +583,15 @@
     ],
     "status": "ACTIVE"
   },
+  "20241205-v3-vault-explorer": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241205-v3-weighted-pool": {
     "contracts": [
       {
