@@ -128,6 +128,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Composite Liquidity Router                          | [`20241205-v3-composite-liquidity-router`](./v3/tasks/20241205-v3-composite-liquidity-router)           |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
+| V3 Vault Explorer                                      | [`20241205-v3-vault-explorer`](./v3/tasks/20241205-v3-vault-explorer)                                   |
 
 ## Scripts
 
