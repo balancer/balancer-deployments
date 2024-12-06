@@ -616,6 +616,42 @@
     ],
     "status": "ACTIVE"
   },
+  "20241205-v3-batch-router": {
+    "contracts": [
+      {
+        "name": "BatchRouter",
+        "address": "0xC85b652685567C1B074e8c0D4389f83a2E458b1C"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-buffer-router": {
+    "contracts": [
+      {
+        "name": "BufferRouter",
+        "address": "0xb5F3A41515457CC6E2716c62a011D260441CcfC9"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-composite-liquidity-router": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0xc6674C0c7694E9b990eAc939E74F8cc3DD39B4b0"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20241205-v3-router": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0x0BF61f706105EA44694f2e92986bD01C39930280"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241205-v3-stable-pool": {
     "contracts": [
       {
