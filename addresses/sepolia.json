@@ -686,5 +686,34 @@
       }
     ],
     "status": "ACTIVE"
+  },
+  "20241213-v3-hook-examples": {
+    "contracts": [
+      {
+        "name": "DirectionalFeeHookExample",
+        "address": "0xD68372e85d8a14Afa5fdb3d506bf765939aAf382"
+      },
+      {
+        "name": "FeeTakingHookExample",
+        "address": "0xbB1761AF481364A6BD7FdbDB8CfA23Abd85f0263"
+      },
+      {
+        "name": "ExitFeeHookExample",
+        "address": "0xea672a54f0AA38FC5F0a1A481467BeBFe3C71046"
+      },
+      {
+        "name": "LotteryHookExample",
+        "address": "0x2d8D157Fd6CF773624d97808D77081EE45caA7D4"
+      },
+      {
+        "name": "NftLiquidityPositionExample",
+        "address": "0xd06dD26c7209CfE0752725F068299bE69A7c9549"
+      },
+      {
+        "name": "VeBALFeeDiscountHookExample",
+        "address": "0xEDB47231A12bdf64b8D951dEd3351128f95B7e80"
+      }
+    ],
+    "status": "ACTIVE"
   }
 }
