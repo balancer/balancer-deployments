@@ -47,10 +47,11 @@ export function checkArtifact(task: Task): void {
     readmeLines = readmeContents.split('\n');
   }
 
-  const buildInfoDirectory = path.resolve(task.dir(), 'build-info');
-  if (existsSync(buildInfoDirectory) && statSync(buildInfoDirectory).isDirectory()) {
-    for (const buildInfoFileName of readdirSync(buildInfoDirectory)) {
-      const fileName = path.parse(buildInfoFileName).name;
+  const artifactDirectory = path.resolve(task.dir(), 'artifact');
+
+  if (existsSync(artifactDirectory) && statSync(artifactDirectory).isDirectory()) {
+    for (const artifactFileName of readdirSync(artifactDirectory)) {
+      const fileName = path.parse(artifactFileName).name;
       const contractName = fileName;
 
       const expectedArtifact = task.artifact(contractName, fileName);
