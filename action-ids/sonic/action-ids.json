@@ -1,0 +1,114 @@
+{
+  "20210418-vault": {
+    "Vault": {
+      "useAdaptor": false,
+      "actionIds": {
+        "batchSwap(uint8,(bytes32,uint256,uint256,uint256,bytes)[],address[],(address,bool,address,bool),int256[],uint256)": "0x1282ab709b2b70070f829c46bc36f76b32ad4989fecb2fcb09a1b3ce00bbfc30",
+        "deregisterTokens(bytes32,address[])": "0xe4f8ff74aa05a4d54a06e035d5e86947bc6474f8d7b166ebeb49fc9178d28551",
+        "exitPool(bytes32,address,address,(address[],uint256[],bytes,bool))": "0xc149e88b59429ded7f601ab52ecd62331cac006ae07c16543439ed138dcb8d34",
+        "flashLoan(address,address[],uint256[],bytes)": "0x96ebe854ca6ab6242ad127dcd7809576513b0c64571e515cedd7b8885612c82d",
+        "joinPool(bytes32,address,address,(address[],uint256[],bytes,bool))": "0x78ad1b68d148c070372f8643c4648efbb63c6a8a338f3c24714868e791367653",
+        "managePoolBalance((uint8,bytes32,address,uint256)[])": "0x7275fb98594b03dc36a7de69051058e9e2d05cabeb4fe7d9c87bc69f94d9d084",
+        "manageUserBalance((uint8,address,uint256,address,address)[])": "0xeba777d811cd36c06d540d7ff2ed18ed042fd67bbf7c9afcf88c818c7ee6b498",
+        "queryBatchSwap(uint8,(bytes32,uint256,uint256,uint256,bytes)[],address[],(address,bool,address,bool))": "0xf5f701b3adfba2adad8f16a8be5a989593e42a2caa84c5c6e60b22143db65a2f",
+        "registerPool(uint8)": "0x956dfce4343a6be4df20714d3dc413ef59e73fa9995d3d247e7c8d12efd33ac2",
+        "registerTokens(bytes32,address[],address[])": "0xad5bd4a1cc4243b4d772a8a55d24792c1f57cc45eb97ed1291b82d96125a7626",
+        "setAuthorizer(address)": "0x1cbb503dcc0f4acaedf71a098211ff8b15a220fc26a6974a8d9deaab040fa6e0",
+        "setPaused(bool)": "0xb5593fe09464f360ecf835d5b9319ce69900ae1b29d13844b73c250b1f5f92fb",
+        "setRelayerApproval(address,address,bool)": "0x0014a06d322ff07fcc02b12f93eb77bb76e28cdee4fc0670b9dec98d24bbfec8",
+        "swap((bytes32,uint8,address,address,uint256,bytes),(address,bool,address,bool),uint256,uint256)": "0x7b8a1d293670124924a0f532213753b89db10bde737249d4540e9a03657d1aff"
+      }
+    },
+    "ProtocolFeesCollector": {
+      "useAdaptor": false,
+      "actionIds": {
+        "setFlashLoanFeePercentage(uint256)": "0xbe2a180d5cc5d803a8eec4cea569989fc1c593d7eeadd1f262f360a68b0e842e",
+        "setSwapFeePercentage(uint256)": "0xb28b769768735d011b267f781c3be90bce51d5059ba015bc7a28b3e882fb2083",
+        "withdrawCollectedFees(address[],uint256[],address)": "0xb2b6e48fa160a7c887d9d7a68b6a9bb9d47d4953d33e07f3a39e175d75e97796"
+      }
+    }
+  },
+  "20241204-v3-vault": {
+    "VaultFactory": {
+      "useAdaptor": true,
+      "actionIds": {
+        "acceptOwnership()": "0xd72d5222f9ca7d87ca3a1856dadc99dc292fd3663175f229eee55dec1616f86c",
+        "create(bytes32,address,bytes,bytes,bytes)": "0x1cef07f36c28c45bdbc0c3bc07ab5b351ef3f60cc4705347c46234f5ec163cc8",
+        "renounceOwnership()": "0x40fc7077765059bec87d2c498f9e32932c02abf4a2938fe3b34eca819a1fa658",
+        "transferOwnership(address)": "0x4f96888c5e9c10789ae7f9e7daef08a84551242490f2c85137550dd24486b7f2"
+      }
+    },
+    "Vault": {
+      "useAdaptor": true,
+      "actionIds": {
+        "addLiquidity((address,address,uint256[],uint256,uint8,bytes))": "0x56676332242789b6fbdff4ebfb0ca42c4e9ac722dbe1e8cdd1575d6dff3cd5cb",
+        "erc4626BufferWrapOrUnwrap((uint8,uint8,address,uint256,uint256))": "0x12b2e533a353c203b3fd94c6183a284d82dcc6c1a6bd80e4ecb38367626bc9c1",
+        "removeLiquidity((address,address,uint256,uint256[],uint8,bytes))": "0xf37bfcc883542f81785a2c5f303e6fc035b25748db29c00a1146b03da697e62e",
+        "sendTo(address,address,uint256)": "0xe42db51fc0d1c341c88f3c7d0f9d80c62277f7570383bb1e478f5e6dde16fc3e",
+        "settle(address,uint256)": "0xdac00f2927f15fba5978ed77a47b96272b9ad093d7498ca7ea6d1e4235d96131",
+        "swap((uint8,address,address,address,uint256,uint256,bytes))": "0x30ffd5024e40916f1c823596da0d0a105810c5240e7f0e7df7b2428f74229b32",
+        "transfer(address,address,uint256)": "0x83028117f55e0734e24273366bbf7ccc5553c624875d2ead988d376668799cba",
+        "transferFrom(address,address,address,uint256)": "0xc01b583141a68ff455ba1b883ebb8dcc130e57f04ed0673a0452ab3e7a1b719f",
+        "unlock(bytes)": "0x69620514f45b8c03bf83f3975355e6772008628dabad13cb26095d12ba816c0d"
+      }
+    },
+    "VaultExtension": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,address,uint256)": "0x8151e5a7e6adcf57cb71f4ddb9aba0606dc453fa672e993285bfce0b9ba817c3",
+        "emitAuxiliaryEvent(bytes32,bytes)": "0x0051489d494adfabe1c44f014faa13c552ec455aaf4e76c28194d9b0b9294f04",
+        "initialize(address,address,address[],uint256[],uint256,bytes)": "0xe4bc7be809d19a2baec9865f7281dbbc91e62be1326c54609e0005c197289e10",
+        "quote(bytes)": "0x9d7e2ac42f31b38e2e545bdc700096c5791763a2534d463c3bb2727165ab66b2",
+        "quoteAndRevert(bytes)": "0x61902e1201c7c9b24fb207324d0684f979fd9c67d242a30dcfbdef00086785c1",
+        "registerPool(address,(address,uint8,address,bool)[],uint256,uint32,bool,(address,address,address),address,(bool,bool,bool,bool))": "0xe139f2cbd878d6a85c6123db73dbe9b2e7a3eabda52ac700942a56d47ac35b20",
+        "removeLiquidityRecovery(address,address,uint256,uint256[])": "0xf9ac4d46064afb44562cfa0b74dc70cc287cfbfa8ecc930beaa05cb2d31d3293"
+      }
+    },
+    "VaultAdmin": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addLiquidityToBuffer(address,uint256,uint256,uint256,address)": "0x159db75892a01a6ea494eba1f320aa9fafc3a6d538bfbd1267c16106b44fd2f8",
+        "collectAggregateFees(address)": "0xf6e8c86ccfb2b0b41ded0bbab5047b05134d523eccada9a4a3f5ef48ba7e2648",
+        "disableQuery()": "0x7b9f4d9b9d0380987936892409571a5e0b6e9b538806ac662699a305304bd15d",
+        "disableQueryPermanently()": "0x6832812101826d0b63748615617865e97f09b944c344d3bbd7d50b5be617eb16",
+        "disableRecoveryMode(address)": "0x03aef606b4b82495d96af41cf1ed84b739a1de2bfb37bc1c0cfde2c53cf096aa",
+        "enableQuery()": "0x130ac25c06d0a78c43cee16ed4147a8a2337d8dc08571f397ca9ac15e1fc2ec2",
+        "enableRecoveryMode(address)": "0xb1539e3ebdcf854dedf819f6232d1e447cfb129f7bf572e70295fb998bd8c85e",
+        "initializeBuffer(address,uint256,uint256,uint256,address)": "0x217e71e98b20fee55e5d71f3760f8131db2acc7b4e9bea081677dc023059b0bb",
+        "pausePool(address)": "0xae26501f09c96de9e98977fff0d65a23cb22db73a58ddef38127af1a616cf272",
+        "pauseVault()": "0x461c5a059d49bcf53ff00ff0d6fe644f40cc96ff9f6012e75ea70824dba5f886",
+        "pauseVaultBuffers()": "0xe80d721d89f2236e9428bfba076cbbbb355faeb9d9b97b49890ebcf930d05bc9",
+        "removeLiquidityFromBuffer(address,uint256,uint256,uint256)": "0x32bb9035d258f9dbda7de4645c41991aee679fbb5e02348725387148f3635cf1",
+        "removeLiquidityFromBufferHook(address,uint256,uint256,uint256,address)": "0x6e83a0d23866ba4d936ca5442cace6499f945ce19c22cb2a3c44db16763aa756",
+        "setAuthorizer(address)": "0x64e993ea552c3a1358e0c671e22276b9941a3828c157bc3cbf847f07b4fb68ab",
+        "setProtocolFeeController(address)": "0x2832f8d19df98187a279b09b8ed9735908c46640d892c836999ea12b31be0be3",
+        "setStaticSwapFeePercentage(address,uint256)": "0x535f82655cb6a856d1452d97dc8e7b3393044c974f85cfcdd2c1d304c08ce34c",
+        "unpausePool(address)": "0xa4443105bdb833cb364c9f76caa2adf3c6e62427cb693ffd6f1d8d7f44ad1bb5",
+        "unpauseVault()": "0xa3cc69d3a95a1b4020228f384f292c33a2db8f395442b06805d5195609d66b4e",
+        "unpauseVaultBuffers()": "0xf923c4af23349707476c28766c280b0178ab3c4ebfa546da8c25a546a066a2dc",
+        "updateAggregateSwapFeePercentage(address,uint256)": "0x81a758d918cc71e749149181139e5c82a9457ebe8b07e1118500d2f10278863a",
+        "updateAggregateYieldFeePercentage(address,uint256)": "0xadad8cf8848377f713bcad6d890e6bc7c52a1c27687cc734adcf4ac6563db121"
+      }
+    },
+    "ProtocolFeeController": {
+      "useAdaptor": false,
+      "actionIds": {
+        "collectAggregateFees(address)": "0x0178a103d18e69a338a34cf131b579596405e23c70774c64d1a9a8cbdcf261f4",
+        "collectAggregateFeesHook(address)": "0x12d24187c62d9589f92f53646b9544792d96196b7f31f4f7d4f6d17bee8eada4",
+        "registerPool(address,address,bool)": "0x31a1171951915b1e7ee9fde127a2ba578a4bf93badea23fb176645baa9800687",
+        "setGlobalProtocolSwapFeePercentage(uint256)": "0x31893078b6590802f57d29fae81f10113c336375df90db2aed0392af0c75d8d4",
+        "setGlobalProtocolYieldFeePercentage(uint256)": "0x3bc669a22fd5eb10a81a9ab00e0cab660e6f703d7ae9185597386bbd2e849e3f",
+        "setPoolCreatorSwapFeePercentage(address,uint256)": "0xdc295ec3c77e30f6a8b90dd90c8183a6ba987b85457c6a4311c74c4c9ac4b198",
+        "setPoolCreatorYieldFeePercentage(address,uint256)": "0x36681c237072d0ac843ed3f858fe4fc4ee3df24409fa45462d3ea8ab7fa2de5c",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x93100e2a70c799f7ba831633b6a5078fc649ca0c812caa633106f1948a819155",
+        "setProtocolYieldFeePercentage(address,uint256)": "0x131f9541f99a187d0a0db49756fb64345dec624e21579355e25b8b5a1b40b45c",
+        "updateProtocolSwapFeePercentage(address)": "0x01dc5c0a266b3874fd8c207276f0ea1313b1ec0bd196d6ec6f967379212ecea5",
+        "updateProtocolYieldFeePercentage(address)": "0xb489f8c13f0427ceced6c660e88ef3952d6d70e33e10afd4c5f3c80918aba039",
+        "withdrawPoolCreatorFees(address)": "0xcccb5d6fbf18066c67a7b5a10a8f899a28e6a689ec5b85b88cbeb6921a65f5f3",
+        "withdrawPoolCreatorFees(address,address)": "0xae1f7800884c24001d3740dc314979ac62a417e5eff8353b46f196d32dcf3cab",
+        "withdrawProtocolFees(address,address)": "0x4071255a8a5c23dae545fa9427571cfd2cbc2f7e623e863ec2c917ed09074e43",
+        "withdrawProtocolFeesForToken(address,address,address)": "0xf830de585800a430465649def91ee4e68e52ef19d8734b6836b9a2237853fc07"
+      }
+    }
+  }
+}

@@ -481,7 +481,7 @@ export default {
         network: 'sonic',
         chainId: 146,
         urls: {
-          apiURL: 'https://sonicscan.org/api',
+          apiURL: 'https://api.sonicscan.org/api',
           browserURL: 'https://sonicscan.org/',
         },
       },
