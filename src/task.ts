@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path, { extname } from 'path';
 import { BuildInfo, CompilerOutputContract } from 'hardhat/types';
-import { Contract } from 'ethers';
+import { Contract, ethers } from 'ethers';
+import { hexToBytes, Address } from '@ethereumjs/util';
+import { Chain, Common, Hardfork } from '@ethereumjs/common';
+import { EVM } from '@ethereumjs/evm';
 import { getContractAddress } from '@ethersproject/address';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
@@ -24,6 +27,7 @@ import {
 import { getContractDeploymentTransactionHash, saveContractDeploymentTransactionHash } from './network';
 import { getTaskActionIds } from './actionId';
 import { getArtifactFromContractOutput } from './artifact';
+import { getSigner } from './signers';
 
 // Maps to ../v2 and ../v3.
 const VERSION_ROOTS = ['v2', 'v3'].map((version) => path.resolve(__dirname, `../${version}`));
@@ -45,6 +49,12 @@ export enum TaskStatus {
   DEPRECATED,
   SCRIPT,
 }
+
+type ContractInfo = {
+  name: string;
+  expectedAddress: string;
+  args: Array<Param>;
+};
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
@@ -107,6 +117,154 @@ export default class Task {
 
     await this.verify(name, instance.address, args, libs);
     return instance;
+  }
+
+  async deployFactoryContracts(
+    populatedDeployTransaction: ethers.PopulatedTransaction,
+    expectedContracts: Array<string>,
+    needsDeploy: boolean,
+    from?: SignerWithAddress,
+    force?: boolean
+  ): Promise<ethers.providers.TransactionReceipt | undefined> {
+    if (!needsDeploy || this.mode == TaskMode.CHECK) {
+      return undefined;
+    }
+
+    const output = this.output({ ensure: false });
+
+    if (force == false) {
+      let needsDeploy = false;
+      for (const name of expectedContracts) {
+        if (!output[name]) {
+          needsDeploy = true;
+        }
+
+        logger.info(`${name} already deployed at ${output[name]}`);
+      }
+
+      if (needsDeploy) {
+        logger.info('Some contracts were not deployed, re-deploying all contracts for this transaction...');
+      } else {
+        return undefined;
+      }
+    }
+
+    logger.info(`Deploying contracts using factory...`);
+
+    from = from || (await getSigner());
+    const receipt = await from?.sendTransaction(populatedDeployTransaction);
+
+    return await receipt.wait();
+  }
+
+  // NOTE: contractsInfo must be sorted by deployment order
+  async saveAndVerifyFactoryContracts(
+    contractsInfo: Array<ContractInfo>,
+    deployTransaction?: ethers.providers.TransactionReceipt
+  ): Promise<void> {
+    const { ethers } = await import('hardhat');
+
+    if (deployTransaction == null) {
+      // All contracts are deployed by the one factory transaction, so we can find the transaction hash by the first element
+      const deployedAddress = this.output()[contractsInfo[0].name];
+      const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
+      deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
+    }
+
+    const evm = await this.createEVM();
+    for (const contractInfo of contractsInfo) {
+      const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
+        evm,
+        deployTransaction,
+        this.artifact(contractInfo.name),
+        contractInfo.expectedAddress,
+        contractInfo.args
+      );
+
+      if (isDeployedBytecodeValid && this.mode === TaskMode.CHECK) {
+        logger.success(`Verified contract '${contractInfo.name}' on network '${this.network}' of task '${this.id}'`);
+      }
+
+      if (isDeployedBytecodeValid == false) {
+        throw Error(
+          `Contract ${contractInfo.name} at ${contractInfo.expectedAddress} does not match expected bytecode with abi.`
+        );
+      }
+
+      if (this.mode === TaskMode.CHECK) {
+        continue;
+      }
+
+      const instance = await this.instanceAt(contractInfo.name, contractInfo.expectedAddress);
+      this.save({ [contractInfo.name]: instance });
+      logger.success(`Contract ${contractInfo.name} attached at ${contractInfo.expectedAddress}`);
+
+      if (this.mode === TaskMode.LIVE) {
+        saveContractDeploymentTransactionHash(
+          contractInfo.expectedAddress,
+          deployTransaction.transactionHash,
+          this.network
+        );
+      }
+
+      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args);
+    }
+  }
+
+  async createEVM(): Promise<EVM> {
+    const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Cancun });
+    const evm = await EVM.create({
+      common,
+    });
+    return evm;
+  }
+
+  async checkBytecodeAndSaveEVMState(
+    evm: EVM,
+    deployTransaction: ethers.providers.TransactionReceipt,
+    artifact: Artifact,
+    contractAddress: string,
+    args: Array<Param> = []
+  ): Promise<boolean> {
+    const { ethers } = await import('hardhat');
+
+    const runBytecode = hexToBytes(
+      ethers.utils.hexlify(
+        ethers.utils.concat([artifact.bytecode, new ethers.utils.Interface(artifact.abi).encodeDeploy(args)])
+      )
+    );
+
+    const block = await ethers.provider.getBlock(deployTransaction.blockNumber);
+    if (!block) {
+      throw Error(`Could not find block ${deployTransaction.blockNumber}`);
+    }
+
+    const res = await evm.runCode({
+      code: runBytecode,
+      to: Address.fromString(contractAddress),
+      block: {
+        header: {
+          number: BigInt(block.number),
+          timestamp: BigInt(block.timestamp),
+          cliqueSigner: () => Address.fromString(ethers.constants.AddressZero),
+          coinbase: Address.fromString(ethers.constants.AddressZero),
+          difficulty: BigInt(0),
+          gasLimit: block.gasLimit.toBigInt(),
+          prevRandao: hexToBytes(ethers.constants.HashZero),
+          baseFeePerGas: undefined,
+          getBlobGasPrice: () => undefined,
+        },
+      },
+    });
+
+    if (res.exceptionError) {
+      new Error(`computeDeployedBytecode failed: ${res.exceptionError}`);
+    }
+
+    await evm.stateManager.putContractCode(Address.fromString(contractAddress), res.returnValue);
+
+    const deployedCode = await ethers.provider.getCode(contractAddress);
+    return ethers.utils.hexValue(res.returnValue) == deployedCode;
   }
 
   async deploy(
