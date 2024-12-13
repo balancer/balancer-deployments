@@ -149,7 +149,7 @@ export default class Task {
       }
     }
 
-    logger.success(`Deploy contracts using factory...`);
+    logger.info(`Deploying contracts using factory...`);
 
     from = from || (await getSigner());
     const receipt = await from?.sendTransaction(populatedDeployTransaction);
