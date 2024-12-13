@@ -6,6 +6,7 @@ Contracts deployed in this task are mostly for educational and testing purposes;
 ## Useful Files
 
 - Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/2f088c6b8f66ad55885d257c1e3debe2a6e21e97).
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`DirectionalFeeHookExample` artifact](./artifact/DirectionalFeeHookExample.json)
 - [`ExitFeeHookExample` artifact](./artifact/ExitFeeHookExample.json)
 - [`FeeTakingHookExample` artifact](./artifact/FeeTakingHookExample.json)
