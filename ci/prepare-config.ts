@@ -45,6 +45,9 @@ if (process.env.CI) {
       },
       "mode": {
         "url": "${process.env.MODE_RPC_ENDPOINT}"
+      },
+      "sonic": {
+        "url": "${process.env.SONIC_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

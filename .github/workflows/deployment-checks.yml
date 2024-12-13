@@ -127,6 +127,16 @@ jobs:
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
         with:
           network-name: mode
+  check-sonic-deployments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Sonic Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
+        env:
+          SONIC_RPC_ENDPOINT: ${{ secrets.SONIC_RPC_ENDPOINT }}
+        with:
+          network-name: sonic
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
@@ -248,6 +258,16 @@ jobs:
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
         with:
           network-name: mode
+  check-sonic-action-ids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check Sonic Action IDs
+        uses: ./.github/actions/check-network-action-ids
+        env:
+          MODE_RPC_ENDPOINT: ${{ secrets.SONIC_RPC_ENDPOINT }}
+        with:
+          network-name: sonic
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:

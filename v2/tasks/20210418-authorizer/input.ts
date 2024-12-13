@@ -39,4 +39,7 @@ export default {
   mode: {
     admin: '0x4f22C2784Cbd2B24a172566491Ee73fee1A63c2e',
   },
+  sonic: {
+    admin: '0x6Daeb8BB06A7CF3475236C6c567029d333455E38',
+  },
 };
