@@ -25,6 +25,60 @@
     ],
     "status": "ACTIVE"
   },
+  "20220325-authorizer-adaptor": {
+    "contracts": [
+      {
+        "name": "AuthorizerAdaptor",
+        "address": "0xF24917fB88261a37Cc57F686eBC831a5c0B9fD39"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220721-balancer-queries": {
+    "contracts": [
+      {
+        "name": "BalancerQueries",
+        "address": "0x4B29DB997Ec0efDFEF13bAeE2a2D7783bCf67f17"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20220725-protocol-fee-percentages-provider": {
+    "contracts": [
+      {
+        "name": "ProtocolFeePercentagesProvider",
+        "address": "0x4d4DDc3e4479e42C4288F6B61554cAD9e41f4146"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230320-weighted-pool-v4": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x22f5b7FDD99076f1f20f8118854ce3984544D56d"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20230613-balancer-pool-data-queries": {
+    "contracts": [
+      {
+        "name": "BalancerPoolDataQueries",
+        "address": "0x2f4799933c34127e715839445EbC90D62CB3E4E6"
+      }
+    ],
+    "status": "ACTIVE"
+  },
+  "20240223-composable-stable-pool-v6": {
+    "contracts": [
+      {
+        "name": "ComposableStablePoolFactory",
+        "address": "0x993767E29726dDb7F5e8A751fAF54d4b83F3FC62"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
