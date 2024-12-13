@@ -16,4 +16,5 @@ Deployment of the `NoProtocolFeeLiquidityBootstrappingPool`, for Liquidity Boots
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
+- [`LiquidityBootstrappingPool` artifact](./artifact/LiquidityBootstrappingPool.json)
 - [`NoProtocolFeeLiquidityBootstrappingPoolFactory` artifact](./artifact/NoProtocolFeeLiquidityBootstrappingPoolFactory.json)
