@@ -131,6 +131,17 @@ jobs:
         with:
           network-name: mode
 
+  verify-sonic-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Verify Sonic Timelock Authorizer Configuration
+        uses: ./.github/actions/verify-network-timelock-authorizer-config
+        env:
+          SONIC_RPC_ENDPOINT: ${{ secrets.SONIC_RPC_ENDPOINT }}
+        with:
+          network-name: sonic
+
   verify-sepolia-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:

@@ -477,6 +477,14 @@ export default {
           browserURL: 'https://modescan.io',
         },
       },
+      {
+        network: 'sonic',
+        chainId: 146,
+        urls: {
+          apiURL: 'https://sonicscan.org/api',
+          browserURL: 'https://sonicscan.org/',
+        },
+      },
     ],
   },
 };
