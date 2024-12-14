@@ -84,4 +84,9 @@ export default {
     BalancerMinter: L2BalancerPseudoMinter.output({ network: 'mode' }).L2BalancerPseudoMinter,
     CanCallUserCheckpoint: true,
   },
+  sonic: {
+    wstETH: ZERO_ADDRESS,
+    BalancerMinter: ZERO_ADDRESS,
+    CanCallUserCheckpoint: true,
+  },
 };
