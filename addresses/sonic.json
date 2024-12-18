@@ -104,6 +104,23 @@
     ],
     "status": "ACTIVE"
   },
+  "20241216-batch-relayer-reliquary": {
+    "contracts": [
+      {
+        "name": "BatchRelayerLibrary",
+        "address": "0x1498437067d7bdDc4C9427964F073eE1AB4f50fC"
+      },
+      {
+        "name": "BatchRelayerQueryLibrary",
+        "address": "0x76E29E66800bD3172499d3aAAf41F15beBC6027E"
+      },
+      {
+        "name": "BalancerRelayer",
+        "address": "0x7b52D5ef006E59e3227629f97F182D6442380bb6"
+      }
+    ],
+    "status": "ACTIVE"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
