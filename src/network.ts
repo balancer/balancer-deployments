@@ -94,6 +94,7 @@ export function buildContractDeploymentAddressesEntries(tasks: Task[]): object {
       [task.id]: {
         contracts: [...taskEntries],
         status: TaskStatus[task.getStatus()],
+        version: task.version(),
       },
     };
   }
