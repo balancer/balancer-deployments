@@ -6,7 +6,8 @@
         "address": "0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210418-vault": {
     "contracts": [
@@ -23,7 +24,8 @@
         "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210418-weighted-pool": {
     "contracts": [
@@ -36,7 +38,8 @@
         "address": "0xA5bf2ddF098bb0Ef6d120C98217dD6B141c74EE0"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210624-stable-pool": {
     "contracts": [
@@ -45,7 +48,8 @@
         "address": "0xc66Ba2B6595D3613CCab350C886aCE23866EDe24"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210721-liquidity-bootstrapping-pool": {
     "contracts": [
@@ -54,7 +58,8 @@
         "address": "0x751A0bC0e3f75b38e01Cf25bFCE7fF36DE1C87DE"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210727-meta-stable-pool": {
     "contracts": [
@@ -67,7 +72,8 @@
         "address": "0x67d27634E44793fE63c467035E31ea8635117cd4"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210811-ldo-merkle": {
     "contracts": [
@@ -76,7 +82,8 @@
         "address": "0x884226c9f7b7205f607922E0431419276a64CF8f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210812-lido-relayer": {
     "contracts": [
@@ -85,7 +92,8 @@
         "address": "0xdcdbf71A870cc60C6F9B621E28a7D3Ffd6Dd4965"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20210812-wsteth-rate-provider": {
     "contracts": [
@@ -94,7 +102,8 @@
         "address": "0x72D07D7DcA67b8A406aD1Ec34ce969c90bFEE768"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210907-investment-pool": {
     "contracts": [
@@ -103,7 +112,8 @@
         "address": "0x48767F9F868a4A7b86A90736632F6E44C2df7fa9"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20211012-merkle-orchard": {
     "contracts": [
@@ -112,7 +122,8 @@
         "address": "0xdAE7e32ADc5d490a43cCba1f0c736033F2b4eFca"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20211202-no-protocol-fee-lbp": {
     "contracts": [
@@ -121,7 +132,8 @@
         "address": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20211203-batch-relayer": {
     "contracts": [
@@ -134,7 +146,8 @@
         "address": "0xAc9f49eF3ab0BbC929f7b1bb0A17E1Fca5786251"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20211208-aave-linear-pool": {
     "contracts": [
@@ -143,7 +156,8 @@
         "address": "0xD7FAD3bd59D6477cbe1BE7f646F7f1BA25b230f8"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20211208-stable-phantom-pool": {
     "contracts": [
@@ -152,7 +166,8 @@
         "address": "0xb08E16cFc07C684dAA2f93C70323BAdb2A6CBFd2"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220318-batch-relayer-v2": {
     "contracts": [
@@ -165,7 +180,8 @@
         "address": "0x51CC53375A8920aE54C0561E73a9d0423A74832e"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220325-authorizer-adaptor": {
     "contracts": [
@@ -174,7 +190,8 @@
         "address": "0x8F42aDBbA1B16EaAE3BB5754915E0D06059aDd75"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-bal-token-holder-factory": {
     "contracts": [
@@ -183,7 +200,8 @@
         "address": "0xB848f50141F3D4255b37aC288C25C109104F2158"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-balancer-token-admin": {
     "contracts": [
@@ -192,7 +210,8 @@
         "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-gauge-adder": {
     "contracts": [
@@ -201,7 +220,8 @@
         "address": "0xEd5ba579bB5D516263ff6E1C10fcAc1040075Fe2"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220325-gauge-controller": {
     "contracts": [
@@ -218,7 +238,8 @@
         "address": "0x239e55F427D44C3cc793f49bFB507ebe76638a2b"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-mainnet-gauge-factory": {
     "contracts": [
@@ -231,7 +252,8 @@
         "address": "0x4E7bBd911cf1EFa442BC1b2e9Ea01ffE785412EC"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220325-single-recipient-gauge-factory": {
     "contracts": [
@@ -244,7 +266,8 @@
         "address": "0x5D3d2D18148baAcE45D09254513BcF2C548C4480"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220325-ve-delegation": {
     "contracts": [
@@ -257,7 +280,8 @@
         "address": "0x6f5a2eE11E7a772AeB5114A20d0D7c0ff61EB8A0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-veBAL-deployment-coordinator": {
     "contracts": [
@@ -266,7 +290,8 @@
         "address": "0xeb151668006CD04DAdD098AFd0a82e78F77076c3"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220404-erc4626-linear-pool-v2": {
     "contracts": [
@@ -275,7 +300,8 @@
         "address": "0xE061bF85648e9FA7b59394668CfEef980aEc4c66"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220413-arbitrum-root-gauge-factory": {
     "contracts": [
@@ -288,7 +314,8 @@
         "address": "0x715C777C6149C31A75D0d29633bbBE0A14370bDC"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220413-polygon-root-gauge-factory": {
     "contracts": [
@@ -301,7 +328,8 @@
         "address": "0xe53D8f8aAaFD95FCc7196E393EC5a907Df44495E"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220415-veBAL-L2-gauge-setup-coordinator": {
     "contracts": [
@@ -310,7 +338,8 @@
         "address": "0xd13AFc362F619b840C8f4AaC1D957cE219eF37Ca"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220418-veBAL-gauge-fix-coordinator": {
     "contracts": [
@@ -319,7 +348,8 @@
         "address": "0xee47ef369CDa5a65639D7794b70a4d247826DdF3"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220420-fee-distributor": {
     "contracts": [
@@ -328,7 +358,8 @@
         "address": "0x26743984e3357eFC59f2fd6C1aFDC310335a61c9"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220420-smart-wallet-checker": {
     "contracts": [
@@ -337,7 +368,8 @@
         "address": "0x7869296Efd0a76872fEE62A058C8fBca5c1c826C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220421-smart-wallet-checker-coordinator": {
     "contracts": [
@@ -346,7 +378,8 @@
         "address": "0x26575A44755E0aaa969FDda1E4291Df22C5624Ea"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220425-unbutton-aave-linear-pool": {
     "contracts": [
@@ -355,7 +388,8 @@
         "address": "0x9588c26142e345f1A0d005CfC0C6DF29A8Fa010C"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220513-double-entrypoint-fix-relayer": {
     "contracts": [
@@ -364,7 +398,8 @@
         "address": "0xcA96C4f198d343E251b1a01F3EBA061ef3DA73C1"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
@@ -373,7 +408,8 @@
         "address": "0x5ef4c5352882b10893b70DbcaA0C000965bd23c5"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220530-preseeded-voting-escrow-delegation": {
     "contracts": [
@@ -382,7 +418,8 @@
         "address": "0xB496FF44746A8693A060FafD984Da41B253f6790"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220606-tribe-bal-minter-coordinator": {
     "contracts": [
@@ -391,7 +428,8 @@
         "address": "0x34ac9f7ebA9213C827fE5Abf5b09A16F4D0cC69b"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220609-stable-pool-v2": {
     "contracts": [
@@ -400,7 +438,8 @@
         "address": "0x8df6EfEc5547e31B0eb7d1291B511FF8a2bf987c"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220610-snx-recovery-coordinator": {
     "contracts": [
@@ -409,7 +448,8 @@
         "address": "0x56a1bAf2f7A163CE66067f0062DA60930dd0CB31"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220628-gauge-adder-v2": {
     "contracts": [
@@ -418,7 +458,8 @@
         "address": "0x2fFB7B215Ae7F088eC2530C7aa8E1B24E398f26a"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220628-optimism-root-gauge-factory": {
     "contracts": [
@@ -431,7 +472,8 @@
         "address": "0xcA734aD0b286EA7dD6367a504a48FB75cd12a97F"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220707-distribution-scheduler": {
     "contracts": [
@@ -440,7 +482,8 @@
         "address": "0xBd35248F8325DD1cB2bBf9D01E80A6bb99a792Dd"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220714-fee-distributor-v2": {
     "contracts": [
@@ -449,7 +492,8 @@
         "address": "0xD3cf852898b21fc233251427c2DC93d3d604F3BB"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220720-batch-relayer-v3": {
     "contracts": [
@@ -462,7 +506,8 @@
         "address": "0x886A3Ec7bcC508B8795990B60Fa21f85F9dB7948"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220721-balancer-queries": {
     "contracts": [
@@ -471,7 +516,8 @@
         "address": "0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220721-gauge-adder-migration-coordinator": {
     "contracts": [
@@ -480,7 +526,8 @@
         "address": "0x1B57f637Ce3408f1f834b0b70f9A595b062DAea7"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20220725-protocol-fee-percentages-provider": {
     "contracts": [
@@ -489,7 +536,8 @@
         "address": "0x97207B095e4D5C9a6e4cfbfcd2C3358E03B90c4A"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220817-aave-rebalanced-linear-pool": {
     "contracts": [
@@ -498,7 +546,8 @@
         "address": "0x6A0AC04f5C2A10297D5FA79FA6358837a8770041"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220822-mainnet-gauge-factory-v2": {
     "contracts": [
@@ -511,7 +560,8 @@
         "address": "0xf1665E19bc105BE4EDD3739F88315cC699cc5b65"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220823-arbitrum-root-gauge-factory-v2": {
     "contracts": [
@@ -524,7 +574,8 @@
         "address": "0x6337949cbC4825Bbd09242c811770F6F6fee9FfC"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220823-optimism-root-gauge-factory-v2": {
     "contracts": [
@@ -537,7 +588,8 @@
         "address": "0xBC230b1a66A138cD9cFC7b352390025978dFAdde"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220823-polygon-root-gauge-factory-v2": {
     "contracts": [
@@ -550,7 +602,8 @@
         "address": "0xfeb1A24C2752E53576133cdb718F25bC64eBDD52"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220906-composable-stable-pool": {
     "contracts": [
@@ -559,7 +612,8 @@
         "address": "0xf9ac7B9dF2b3454E841110CcE5550bD5AC6f875F"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220908-weighted-pool-v2": {
     "contracts": [
@@ -568,7 +622,8 @@
         "address": "0xcC508a455F5b0073973107Db6a878DdBDab957bC"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220916-batch-relayer-v4": {
     "contracts": [
@@ -581,7 +636,8 @@
         "address": "0x2536dfeeCB7A0397CF98eDaDA8486254533b1aFA"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221021-managed-pool": {
     "contracts": [
@@ -598,7 +654,8 @@
         "address": "0x9Ac3E70dB606659Bf32D4BdFbb687AD193FD1F5B"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221122-composable-stable-pool-v2": {
     "contracts": [
@@ -611,7 +668,8 @@
         "address": "0x373b347bc87998b151A5E9B6bB6ca692b766648a"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221123-pool-recovery-helper": {
     "contracts": [
@@ -620,7 +678,8 @@
         "address": "0x1b300C86980a5195bCF49bD419A068D98dC133Db"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221124-authorizer-adaptor-entrypoint": {
     "contracts": [
@@ -629,7 +688,8 @@
         "address": "0xf5dECDB1f3d1ee384908Fbe16D2F0348AE43a9eA"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221202-timelock-authorizer": {
     "contracts": [
@@ -642,7 +702,8 @@
         "address": "0x9E3cD0606Db55ac68845bB60121847823712ae05"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221205-veboost-v2": {
     "contracts": [
@@ -651,7 +712,8 @@
         "address": "0x67F8DF125B796B05895a6dc8Ecf944b9556ecb0B"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221207-aave-rebalanced-linear-pool-v3": {
     "contracts": [
@@ -672,7 +734,8 @@
         "address": "0x813E3fE1761f714c502d1d2d3a7CCEB33f37F59D"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230109-gauge-adder-migration-v2-to-v3": {
     "contracts": [
@@ -681,7 +744,8 @@
         "address": "0xE0f34c6AD719e6877062B7D97E12c61c096509AF"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20230109-gauge-adder-v3": {
     "contracts": [
@@ -690,7 +754,8 @@
         "address": "0x5efBb12F01f27F0E020565866effC1dA491E91A4"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230130-ta-transition-migrator": {
     "contracts": [
@@ -699,7 +764,8 @@
         "address": "0x76578ecf9a141296Ec657847fb45B0585bCDa3a6"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20230206-aave-rebalanced-linear-pool-v4": {
     "contracts": [
@@ -720,7 +786,8 @@
         "address": "0x331d50e0b00fc1C32742F151E56B9B616227E23E"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-composable-stable-pool-v3": {
     "contracts": [
@@ -733,7 +800,8 @@
         "address": "0x222bc81C6F3C17e9e9Aba47a12f55a1Dea42f163"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-erc4626-linear-pool-v3": {
     "contracts": [
@@ -750,7 +818,8 @@
         "address": "0xfeF969638C52899f91781f1Be594aF6f40B99BAd"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-weighted-pool-v3": {
     "contracts": [
@@ -763,7 +832,8 @@
         "address": "0x1576d472d82A72a1Ec7C57FcA770BD752D124A62"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230208-euler-linear-pool": {
     "contracts": [
@@ -780,7 +850,8 @@
         "address": "0xDEC02e6642e2c999aF429F5cE944653CAd15e093"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230213-gearbox-linear-pool": {
     "contracts": [
@@ -801,7 +872,8 @@
         "address": "0xa8b103A10A94f4f2D7Ed2FdCd5545E8075573307"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230213-yearn-linear-pool": {
     "contracts": [
@@ -818,7 +890,8 @@
         "address": "0x0a0fb4ff697de5ac5b6770cd8ee1b72af80b57cf"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230215-single-recipient-gauge-factory-v2": {
     "contracts": [
@@ -831,7 +904,8 @@
         "address": "0xb2007B8B7E0260042517f635CFd8E6dD2Dd7f007"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230217-gnosis-root-gauge-factory": {
     "contracts": [
@@ -844,7 +918,8 @@
         "address": "0x05277CE7D1e365d660624612d8b8b9B55bFD4518"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230222-merkle-orchard-v2": {
     "contracts": [
@@ -853,7 +928,8 @@
         "address": "0xE3881627B8DeeBCCF9c23B291430a549Fc0bE5F7"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230223-protocol-id-registry": {
     "contracts": [
@@ -862,7 +938,8 @@
         "address": "0xc3ccacE87f6d3A81724075ADcb5ddd85a8A1bB68"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230314-batch-relayer-v5": {
     "contracts": [
@@ -875,7 +952,8 @@
         "address": "0xfeA793Aa415061C483D2390414275AD314B3F621"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230315-silo-linear-pool": {
     "contracts": [
@@ -900,7 +978,8 @@
         "address": "0x395d8A1D9aD82B5ABE558F8AbbFe183B27138af4"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230320-composable-stable-pool-v4": {
     "contracts": [
@@ -913,7 +992,8 @@
         "address": "0x5537f945D8c3FCFDc1b8DECEEBD220FAD26aFdA8"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -926,7 +1006,8 @@
         "address": "0x8055b8C947De30130BC1Ec750C8F345a50006B23"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230409-erc4626-linear-pool-v4": {
     "contracts": [
@@ -943,7 +1024,8 @@
         "address": "0x9516a2d25958EdB8da246a320f2c7d94A0DBe25d"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230409-gearbox-linear-pool-v2": {
     "contracts": [
@@ -964,7 +1046,8 @@
         "address": "0x0d05Aac44aC7Dd3c7ba5d50Be93EB884A057d234"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230409-yearn-linear-pool-v2": {
     "contracts": [
@@ -981,7 +1064,8 @@
         "address": "0xAC5B4EF7eDe2F2843a704E96dcAA637F4BA3Dc3f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -1002,7 +1086,8 @@
         "address": "0x4cE277Df0FeB5B4d07a0ca2ADCf5326E4005239d"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230410-silo-linear-pool-v2": {
     "contracts": [
@@ -1027,7 +1112,8 @@
         "address": "0x74CBfAF94A3577c539a9dCEE9870A6349a33b34f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230411-managed-pool-v2": {
     "contracts": [
@@ -1060,7 +1146,8 @@
         "address": "0xD0cbF6765997b7CA7Be6440F5E305B2ec7B96065"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230414-authorizer-wrapper": {
     "contracts": [
@@ -1069,7 +1156,8 @@
         "address": "0x6048A8c631Fb7e77EcA533Cf9C29784e482391e7"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230504-vebal-remapper": {
     "contracts": [
@@ -1082,7 +1170,8 @@
         "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230519-gauge-adder-migration-v3-to-v4": {
     "contracts": [
@@ -1091,7 +1180,8 @@
         "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
       }
     ],
-    "status": "SCRIPT"
+    "status": "SCRIPT",
+    "version": "v2"
   },
   "20230519-gauge-adder-v4": {
     "contracts": [
@@ -1100,7 +1190,8 @@
         "address": "0x5DbAd78818D4c8958EfF2d5b95b28385A22113Cd"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230524-mainnet-lz-omni-voting-escrow": {
     "contracts": [
@@ -1109,7 +1200,8 @@
         "address": "0xE241C6e48CA045C7f631600a0f1403b2bFea05ad"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
@@ -1118,7 +1210,8 @@
         "address": "0xdAB2583911E872a00A851fB80dCC78a4B46BA57c"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230526-zkevm-root-gauge-factory": {
     "contracts": [
@@ -1131,7 +1224,8 @@
         "address": "0x45bF48D996d22afc9BC150DF7FB4d13A49088602"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230527-l2-gauge-checkpointer": {
     "contracts": [
@@ -1140,7 +1234,8 @@
         "address": "0x343688C5cB92115a52cA485af7f62B4B7A2e9CcC"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230529-avalanche-root-gauge-factory": {
     "contracts": [
@@ -1153,7 +1248,8 @@
         "address": "0xc57b4BE50BF6BBe5f6a4fE379DA342B32b37bF2f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
@@ -1162,7 +1258,8 @@
         "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230711-composable-stable-pool-v5": {
     "contracts": [
@@ -1175,7 +1272,8 @@
         "address": "0x20356663C17D31549d1210379749E2aE36722D8f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230717-chainlink-rate-provider-factory": {
     "contracts": [
@@ -1184,7 +1282,8 @@
         "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230731-stakeless-gauge-checkpointer": {
     "contracts": [
@@ -1193,7 +1292,8 @@
         "address": "0x0f08eEf2C785AA5e7539684aF04755dEC1347b7c"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230811-avalanche-root-gauge-factory-v2": {
     "contracts": [
@@ -1206,7 +1306,8 @@
         "address": "0x3Eae4a1c2E36870A006E816930d9f55DF0a72a13"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230911-base-root-gauge-factory": {
     "contracts": [
@@ -1219,7 +1320,8 @@
         "address": "0x9a4d642b9876231BB9062559521A48097abFe6CB"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230915-stakeless-gauge-checkpointer-v2": {
     "contracts": [
@@ -1228,7 +1330,8 @@
         "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20231031-batch-relayer-v6": {
     "contracts": [
@@ -1245,7 +1348,8 @@
         "address": "0x35Cea9e57A393ac66Aaa7E25C391D52C74B5648f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20240223-composable-stable-pool-v6": {
     "contracts": [
@@ -1258,7 +1362,8 @@
         "address": "0xF1C849190Ecfae64d0Bd0a0708708E1De906aaB5"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20240522-fraxtal-root-gauge-factory": {
     "contracts": [
@@ -1271,7 +1376,8 @@
         "address": "0x37302B98918382c43a176e5f3Bc7B11448cC6498"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20241204-v3-vault": {
     "contracts": [
@@ -1296,7 +1402,8 @@
         "address": "0xa731C23D7c95436Baaae9D52782f966E1ed07cc8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-batch-router": {
     "contracts": [
@@ -1305,7 +1412,8 @@
         "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-buffer-router": {
     "contracts": [
@@ -1314,7 +1422,8 @@
         "address": "0x9179C06629ef7f17Cb5759F501D89997FE0E7b45"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-composite-liquidity-router": {
     "contracts": [
@@ -1323,7 +1432,8 @@
         "address": "0x1CD776897ef4f647bf8241Ec69549e4A9cb1D608"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-router": {
     "contracts": [
@@ -1332,7 +1442,8 @@
         "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-stable-pool": {
     "contracts": [
@@ -1345,7 +1456,8 @@
         "address": "0x89Ef89Fd9a6ec73bcE588F309C1F65C406d2891C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-vault-explorer": {
     "contracts": [
@@ -1354,7 +1466,8 @@
         "address": "0x774cB66e2B2dB59A9daF175e9b2B7A142E17EB94"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-weighted-pool": {
     "contracts": [
@@ -1367,6 +1480,7 @@
         "address": "0x527d0E14acc53FB040DeBeae1cAb973D23FB3568"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

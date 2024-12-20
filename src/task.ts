@@ -402,6 +402,23 @@ export default class Task {
     throw Error(`Could not find a directory at ${VERSION_ROOTS}`);
   }
 
+  version(): string {
+    const taskDir = this.dir();
+
+    const isSubdir = (parent: string, dir: string) => {
+      const relative = path.relative(parent, dir);
+      return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+    };
+
+    for (const versionRoot of VERSION_ROOTS) {
+      if (isSubdir(versionRoot, taskDir)) {
+        return path.basename(versionRoot);
+      }
+    }
+
+    throw new Error('Unknown version');
+  }
+
   buildInfo(fileName: string): BuildInfo {
     const buildInfoDir = this._dirAt(this.dir(), 'build-info');
     const artifactFile = this._fileAt(buildInfoDir, `${extname(fileName) ? fileName : `${fileName}.json`}`);
