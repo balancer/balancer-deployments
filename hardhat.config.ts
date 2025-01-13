@@ -477,6 +477,14 @@ export default {
           browserURL: 'https://modescan.io',
         },
       },
+      {
+        network: 'monad_testnet',
+        chainId: 10143,
+        urls: {
+          apiURL: 'https://explorer.monad-testnet.category.xyz/api',
+          browserURL: 'https://explorer.monad-testnet.category.xyz/',
+        },
+      },
     ],
   },
 };

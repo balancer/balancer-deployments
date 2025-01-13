@@ -27,7 +27,7 @@ const vaultAdminArtifact = Vault.artifact('VaultAdmin');
 const vaultAdminCreationCode = vaultAdminArtifact.bytecode;
 
 const salt = '0x3877188e9e5da25b11fdb7f5e8d4fdddce2d22707ba04878a8e14700dd46fa82';
-const targetVaultAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
+const targetVaultAddress = '0xd07101ebD191C366D5A177cA67826014B0E42Ae3'; // For monad testnet
 
 export default {
   Authorizer,
