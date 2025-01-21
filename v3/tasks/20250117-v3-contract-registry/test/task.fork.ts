@@ -20,6 +20,7 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
   let registry: Contract;
   let vault: Contract;
   let factory: Contract;
+  let router: Contract;
   let authorizer: Contract;
 
   const deploymentId = '20250117-v3-contract-registry';
@@ -35,6 +36,9 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
 
     const poolTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
     factory = await poolTask.deployedInstance('WeightedPoolFactory');
+
+    const routerTask = new Task('20241205-v3-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    router = await routerTask.deployedInstance('Router');
 
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
@@ -80,6 +84,14 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
     result = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'WeightedPool');
     expect(result.contractAddress).to.eq(factory.address);
     expect(result.isActive).to.be.true;
+  });
+
+  it('has trusted router', async () => {
+    await registry.connect(admin).registerBalancerContract(ContractType.ROUTER, '20241205-v3-router', router.address);
+
+    expect(await registry.isActiveBalancerContract(ContractType.ROUTER, router.address)).to.be.true;
+    expect(await registry.isTrustedRouter(router.address)).to.be.true;
+    expect(await registry.isTrustedRouter(factory.address)).to.be.false;
   });
 
   it('handles unregistered contracts', async () => {
