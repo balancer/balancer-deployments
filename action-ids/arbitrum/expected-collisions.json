@@ -67,6 +67,12 @@
       "contractName": "MerkleRedeem",
       "signature": "renounceOwnership()",
       "useAdaptor": true
+    },
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "VaultFactory",
+      "signature": "renounceOwnership()",
+      "useAdaptor": true
     }
   ],
   "0x9bdc90c1a0da348c425f5a7f90163eaeec5bce689bdd65f6da637b5243714080": [
@@ -93,6 +99,12 @@
     {
       "taskId": "20210928-mcb-arbitrum-merkle",
       "contractName": "MerkleRedeem",
+      "signature": "transferOwnership(address)",
+      "useAdaptor": true
+    },
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "VaultFactory",
       "signature": "transferOwnership(address)",
       "useAdaptor": true
     }
