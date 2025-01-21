@@ -8,6 +8,8 @@ Pools from this factory use weighted math, which is best suited for uncorrelated
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/25d73b3d091f5dde943ad6b7d90db9569222510d).
 - [Ethereum mainnet addresses](./output/mainnet.json)
 - [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
 - [`WeightedPool` artifact](./artifact/WeightedPool.json)
