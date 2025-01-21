@@ -73,7 +73,7 @@
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
     "graphql-request": "^5.2.0",
-    "hardhat": "^2.22.6",
+    "hardhat": "^2.22.14",
     "hardhat-ignore-warnings": "^0.2.8",
     "hardhat-local-networks-config-plugin": "^0.0.6",
     "lodash.range": "^3.2.0",
