@@ -132,6 +132,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
+| V3 Stable Surge Pool                                   | [`20250121-v3-stable-surge`](./v3/tasks/20250121-v3-stable-surge)                                       |
 
 ## Scripts
 
