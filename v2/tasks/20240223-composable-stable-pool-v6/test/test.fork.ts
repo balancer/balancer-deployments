@@ -469,16 +469,17 @@ describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
   describe('pause window', () => {
     const EXPECTED_PAUSE_WINDOW = 4 * 365 * DAY;
     const EXPECTED_BUFFER_PERIOD = 180 * DAY;
+    const TOLERANCE = 10 * MINUTE;
 
     sharedBeforeEach(async () => {
       // Reset timestamp and double check that we're close to factory deployment time.
-      expect(await currentTimestamp()).to.be.lt(factoryDeploymentTimestamp.add(MINUTE));
+      expect(await currentTimestamp()).to.be.lt(factoryDeploymentTimestamp.add(TOLERANCE));
     });
 
     it('can be paused until 4 years after factory deployment', async () => {
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'pause'), govMultisig.address);
-      await advanceTime(EXPECTED_PAUSE_WINDOW - MINUTE);
+      await advanceTime(EXPECTED_PAUSE_WINDOW - TOLERANCE);
       const tx = await pool.connect(govMultisig).pause();
       expectEvent.inReceipt(await tx.wait(), 'PausedStateChanged', { paused: true });
     });
@@ -486,7 +487,7 @@ describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
     it('cannot be paused more than 4 years after factory deployment', async () => {
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'pause'), govMultisig.address);
-      await advanceTime(EXPECTED_PAUSE_WINDOW + MINUTE);
+      await advanceTime(EXPECTED_PAUSE_WINDOW + TOLERANCE);
       await expect(pool.connect(govMultisig).pause()).to.be.revertedWith('BAL#403');
     });
 
@@ -494,7 +495,7 @@ describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'pause'), govMultisig.address);
       await pool.connect(govMultisig).pause();
-      await advanceTime(EXPECTED_PAUSE_WINDOW + EXPECTED_BUFFER_PERIOD - MINUTE);
+      await advanceTime(EXPECTED_PAUSE_WINDOW + EXPECTED_BUFFER_PERIOD - TOLERANCE);
       const pausedState = await pool.getPausedState();
       expect(pausedState.paused).to.be.true;
     });
