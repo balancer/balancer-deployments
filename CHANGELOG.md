@@ -17,6 +17,7 @@
 - Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
+- Deployed V3 Balancer Registry to Sepolia.
 
 - Deployed contracts to Fraxtal with veBAL support.
 - Deployed contracts to Mode without veBAL support.
