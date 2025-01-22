@@ -743,5 +743,16 @@
         "disable()": "0x7c0130294f0e03f01aba8bab022bb25ff63245a75d2f2d2f6cc33d26ab6b23b9"
       }
     }
+  },
+  "20250117-v3-contract-registry": {
+    "BalancerContractRegistry": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addOrUpdateBalancerContractAlias(string,address)": "0x60a2ef69047937b5940390a44322b9128e99f13cc7eaeac791e6bca3b65ad799",
+        "deprecateBalancerContract(address)": "0xa3fd72c98bbcde7a3e85751ffc78de2e67452e827308cfaf88c54773b1b48152",
+        "deregisterBalancerContract(string)": "0x6f78f86ec09341fa2b6de133f8bccf6ab5a06ae84ae8f3c95727def5388d3786",
+        "registerBalancerContract(uint8,string,address)": "0xb0dd776cf1383eea90d999e40ddbd91c8fac7ce43670464721528c45aa9848a3"
+      }
+    }
   }
 }

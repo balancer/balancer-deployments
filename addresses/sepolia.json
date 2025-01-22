@@ -772,5 +772,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250117-v3-contract-registry": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistry",
+        "address": "0x115A6FC12312a01E0B63E51dFa97DAeb8dE9D2F0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

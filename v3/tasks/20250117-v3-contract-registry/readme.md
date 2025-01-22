@@ -5,4 +5,5 @@
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/00c76a926fde4ff2eb7d9d76fd3af3d4d9df1e21).
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`BalancerContractRegistry` artifact](./artifact/BalancerContractRegistry.json)
