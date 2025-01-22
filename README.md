@@ -130,6 +130,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Vault Explorer                                      | [`20241205-v3-vault-explorer`](./v3/tasks/20241205-v3-vault-explorer)                                   |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
+| V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
 
 ## Scripts
