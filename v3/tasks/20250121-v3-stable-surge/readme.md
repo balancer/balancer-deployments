@@ -7,6 +7,7 @@ They are also connected to the `StableSurgeHook`, which increases the swap fee i
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/1c9d6a2913eb2d1210019455b44192760d9beb03).
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePool` artifact](./artifact/StablePool.json)
 - [`StableSurgeHook` artifact](./artifact/StableSurgeHook.json)
 - [`StableSurgePoolFactory` artifact](./artifact/StableSurgePoolFactory.json)

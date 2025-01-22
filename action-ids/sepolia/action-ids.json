@@ -754,5 +754,41 @@
         "registerBalancerContract(uint8,string,address)": "0xb0dd776cf1383eea90d999e40ddbd91c8fac7ce43670464721528c45aa9848a3"
       }
     }
+  },
+  "20250121-v3-stable-surge": {
+    "StableSurgePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,bool,bool,bytes32)": "0x88da60faa26c22b86eef31f9842a2bbb05ea7bc9b93e1c69b15f3b5fb5b272f3",
+        "disable()": "0x91281e67be297d6172fab00c9e06e8cff81b6d6a436326cdcfd2cdae029df7b8"
+      }
+    },
+    "StableSurgeHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0x47f0d6dcabedc286b74bb46bd23c06b9612a4fad618a669badc5044cf39122c7",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0xa9e0bc40765b2d199caefa4075d36abd531ec557ec138cdfd25d3d1036d407a9",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0x8e880bd2e5af7f703340cba5610de93aa1bcb0d40b8bf0aab7747463abb0b48d",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xa505338f9c10640531347d4480b0009d80147ed62b2d866225ce51c52916206a",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0x07405baff4eba61ee508212c07377841c027868981659880d0d0a8fe18db5c49",
+        "onBeforeInitialize(uint256[],bytes)": "0xcc9cb1378e28a74ee83f8fc915ea90d6edf6db5f7614e0c3c0fda0cf00958cf6",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0x33f5f4b933539da748a412552face760bccf28d0e9421844a4aa86b8d98c55d2",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x228e1ecb5f3687d5287b2500c66eceb5b3b322dd60413f15aa950d3ef69fe604",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0x5b1a1cf122823ceb3641272b0f211e4ceab47d8c78cff99f90f341e5c52d8d27",
+        "setMaxSurgeFeePercentage(address,uint256)": "0x9e0713a20ea904536ae3595de15be6b2e0d33dfdf1e2fdf090dd16bb7d09de5f",
+        "setSurgeThresholdPercentage(address,uint256)": "0x35b23bc12c0716280dbc685ace6577f115b1da52fb0484f1307a6b3e98006ea5"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x132F4bAa39330d9062fC52d81dF72F601DF8C01f",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x2b1c1cf755b2258ee17059225aeece90f636587529713f1e204dea0e9450128b",
+        "emitTransfer(address,address,uint256)": "0x381a28be686c8f30457b46166277df1222bdfbac33a4fda07277823da264e4a1",
+        "incrementNonce()": "0x1e67f9bb3ad5504d9e909e3bbde7cd022f22070821383f1dbad5e5ef56a76491",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0xe8d4232755d5ac7e7131688c9dd86abe82281201f438d1cb4b08e52d1c732f00",
+        "stopAmplificationParameterUpdate()": "0x093b5314ebb2e139c41e0f78f326bc5406c6f86ba6aad79c650c0aa974620e40"
+      }
+    }
   }
 }
