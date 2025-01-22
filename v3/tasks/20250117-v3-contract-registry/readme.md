@@ -4,5 +4,5 @@
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/b5298876aa5bd230d8ad8672731971aabf448746).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/00c76a926fde4ff2eb7d9d76fd3af3d4d9df1e21).
 - [`BalancerContractRegistry` artifact](./artifact/BalancerContractRegistry.json)
