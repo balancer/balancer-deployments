@@ -218,4 +218,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Composable Stable Pools V5                          | [`20230711-composable-stable-pool-v5`](./v2/deprecated/20230711-composable-stable-pool-v5)               |
 | Composable Stable Pools V5 (ZKEVM)                  | [`20230711-zkevm-composable-stable-pool-v5`](./v2/deprecated/20230711-zkevm-composable-stable-pool-v5)   |
 | Stakeless Gauge Checkpointer                        | [`20230731-stakeless-gauge-checkpointer`](./v2/deprecated/20230731-stakeless-gauge-checkpointer)         |
-| V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/tasks/deprecated/20241205-v3-composite-liquidity-router) |
+| V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
