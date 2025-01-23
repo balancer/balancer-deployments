@@ -143,10 +143,14 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
   .addOptionalParam('id', 'Specific task ID')
   .addOptionalParam('name', 'Contract name')
   .addOptionalParam('address', 'Address of Pool created from a factory')
+  .addOptionalParam('factory', 'Name of pool factory (only if it is not `<contract>Factory`')
   .setAction(
-    async (args: { id: string; name: string; address?: string; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+    async (
+      args: { id: string; name: string; address?: string; factory?: string; verbose?: boolean },
+      hre: HardhatRuntimeEnvironment
+    ) => {
       async function saveActionIdsTask(
-        args: { id: string; name: string; address?: string; verbose?: boolean },
+        args: { id: string; name: string; address?: string; factory?: string; verbose?: boolean },
         hre: HardhatRuntimeEnvironment
       ) {
         Logger.setDefaults(false, args.verbose || false);
@@ -160,7 +164,7 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
             );
           }
           const task = new Task(args.id, TaskMode.READ_ONLY, hre.network.name);
-          await saveActionIds(task, args.name, args.address);
+          await saveActionIds(task, args.name, args.address, args.factory);
           return;
         }
 

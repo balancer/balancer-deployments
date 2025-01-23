@@ -788,7 +788,8 @@
         "incrementNonce()": "0x1e67f9bb3ad5504d9e909e3bbde7cd022f22070821383f1dbad5e5ef56a76491",
         "startAmplificationParameterUpdate(uint256,uint256)": "0xe8d4232755d5ac7e7131688c9dd86abe82281201f438d1cb4b08e52d1c732f00",
         "stopAmplificationParameterUpdate()": "0x093b5314ebb2e139c41e0f78f326bc5406c6f86ba6aad79c650c0aa974620e40"
-      }
+      },
+      "factoryName": "StableSurgePoolFactory"
     }
   }
 }
