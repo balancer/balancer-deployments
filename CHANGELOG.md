@@ -18,6 +18,7 @@
 - Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Balancer Contract Registry to Sepolia.
+- Deployed V3 Stable Surge Factory to Sepolia.
 
 - Deployed contracts to Fraxtal with veBAL support.
 - Deployed contracts to Mode without veBAL support.
