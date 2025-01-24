@@ -5,9 +5,9 @@ Contains `CompositeLiquidityRouter` for complex liquidity operations involving p
 
 This release has the following differences with respect to the [previous one](../../deprecated/20241205-v3-composite-liquidity-router/):
 - Allows individually choosing which tokens to wrap / unwrap for boosted pool operations, as opposed to wrapping / unwrapping automatically.
-- Excludes nested pools operations.
+- Excludes nested pool operations.
 
-Composite Liquidity Router V1 is still safe to use, although it's automatic wrap / unwrap mechanism is not well suited for pools with wrappers that are treated like regular tokens (e.g. `sDAI`).
+Composite Liquidity Router V1 is still safe to use, although its automatic wrap / unwrap mechanism is not well suited for pools with wrappers that are treated like regular tokens (e.g. `sDAI`).
 
 ## Useful Files
 
