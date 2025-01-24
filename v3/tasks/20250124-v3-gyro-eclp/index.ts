@@ -83,7 +83,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     };
 
     // This mimics the logic inside task.deploy
-    if (force || !task.output({ ensure: false })['MockGyro2CLPPool']) {
+    if (force || !task.output({ ensure: false })['MockGyroECLPPool']) {
       const poolCreationReceipt = await (
         await factory.create(
           newGyroECLPPoolParams.name,
@@ -103,10 +103,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       const mockPoolAddress = event.args.pool;
 
       await saveContractDeploymentTransactionHash(mockPoolAddress, poolCreationReceipt.transactionHash, task.network);
-      await task.save({ MockGyro2CLPPool: mockPoolAddress });
+      await task.save({ MockGyroECLPPool: mockPoolAddress });
     }
 
-    const mockPool = await task.instanceAt('Gyro2CLPPool', task.output()['MockGyro2CLPPool']);
+    const mockPool = await task.instanceAt('GyroECLPPool', task.output()['MockGyroECLPPool']);
 
     const poolParams = {
       name: newGyroECLPPoolParams.name,
@@ -117,6 +117,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     };
 
     // We are now ready to verify the Pool
-    await task.verify('Gyro2CLPPool', mockPool.address, [poolParams, input.Vault]);
+    await task.verify('GyroECLPPool', mockPool.address, [poolParams, input.Vault]);
   }
 };
