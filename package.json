@@ -40,6 +40,8 @@
     "lint:typescript": "NODE_NO_WARNINGS=1 eslint . --ext .ts --ignore-path ./.eslintignore  --max-warnings 0",
     "prepack": "yarn build",
     "test": "yarn build && hardhat test v*/**/test/*.ts",
+    "test:v2": "yarn build && hardhat test v2/**/test/*.ts",
+    "test:v3": "yarn build && hardhat test v3/**/test/*.ts",
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
   },
   "devDependencies": {

@@ -15,10 +15,14 @@ describeForkTest('StableSurge', 'mainnet', 21675100, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
 
+  const TASK_NAME = '20250121-v3-stable-surge';
+  const POOL_CONTRACT_NAME = 'StableSurgePool';
+  const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
+
   before('run task', async () => {
-    task = new Task('20250121-v3-stable-surge', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
-    factory = await task.deployedInstance('StableSurgePoolFactory');
+    factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
   });
 
   before('get vault and extension', async () => {
@@ -108,5 +112,19 @@ describeForkTest('StableSurge', 'mainnet', 21675100, function () {
   it('checks default surge threshold percentage', async () => {
     const hook = await task.deployedInstance('StableSurgeHook');
     expect(await hook.getDefaultSurgeThresholdPercentage()).to.be.eq(fp(0.3));
+  });
+
+  it('checks pool version', async () => {
+    const version = JSON.parse(await pool.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(POOL_CONTRACT_NAME);
+  });
+
+  it('checks factory version', async () => {
+    const version = JSON.parse(await factory.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
   });
 });
