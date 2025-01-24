@@ -800,5 +800,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250123-v3-composite-liquidity-router-v2": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
