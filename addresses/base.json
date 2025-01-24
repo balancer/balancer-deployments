@@ -484,7 +484,7 @@
         "address": "0xf23b4DB826DbA14c0e857029dfF076b1c0264843"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-router": {

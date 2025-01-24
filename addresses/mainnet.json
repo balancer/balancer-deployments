@@ -1432,7 +1432,7 @@
         "address": "0x1CD776897ef4f647bf8241Ec69549e4A9cb1D608"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-router": {

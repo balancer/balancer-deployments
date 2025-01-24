@@ -126,13 +126,13 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Pool                                         | [`20241205-v3-stable-pool`](./v3/tasks/20241205-v3-stable-pool)                                         |
 | V3 Router                                              | [`20241205-v3-router`](./v3/tasks/20241205-v3-router)                                                   |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
-| V3 Composite Liquidity Router                          | [`20241205-v3-composite-liquidity-router`](./v3/tasks/20241205-v3-composite-liquidity-router)           |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Vault Explorer                                      | [`20241205-v3-vault-explorer`](./v3/tasks/20241205-v3-vault-explorer)                                   |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
 | V3 Stable Surge Pool                                   | [`20250121-v3-stable-surge`](./v3/tasks/20250121-v3-stable-surge)                                       |
+| V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 
 ## Scripts
 
@@ -218,3 +218,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Composable Stable Pools V5                          | [`20230711-composable-stable-pool-v5`](./v2/deprecated/20230711-composable-stable-pool-v5)               |
 | Composable Stable Pools V5 (ZKEVM)                  | [`20230711-zkevm-composable-stable-pool-v5`](./v2/deprecated/20230711-zkevm-composable-stable-pool-v5)   |
 | Stakeless Gauge Checkpointer                        | [`20230731-stakeless-gauge-checkpointer`](./v2/deprecated/20230731-stakeless-gauge-checkpointer)         |
+| V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
