@@ -15,8 +15,11 @@ describeForkTest('GyroECLPPool', 'mainnet', 21689000, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
 
+  const TASK_NAME = '20250124-v3-gyro-eclp';
+  const POOL_CONTRACT_NAME = 'GyroECLPPool';
+
   before('run task', async () => {
-    task = new Task('20250124-v3-gyro-eclp', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     factory = await task.deployedInstance('GyroECLPPoolFactory');
   });
@@ -128,11 +131,18 @@ describeForkTest('GyroECLPPool', 'mainnet', 21689000, function () {
     ).wait();
 
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
-    pool = await task.instanceAt('GyroECLPPool', event.args.pool);
+    pool = await task.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
   });
 
   it('checks pool tokens', async () => {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
+  });
+
+  it('checks pool version', async () => {
+    const version = JSON.parse(await pool.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(POOL_CONTRACT_NAME);
   });
 });
