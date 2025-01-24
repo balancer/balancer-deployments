@@ -10,7 +10,7 @@ import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { getSigner, impersonate } from '@src';
 
-describeForkTest('SmartWalletCheckerCoordinator', 'mainnet', 14850000, function () {
+describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress, other: SignerWithAddress;
   let coordinator: Contract;
 

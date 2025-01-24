@@ -17,11 +17,12 @@ describeForkTest('GyroECLPPool', 'mainnet', 21689000, function () {
 
   const TASK_NAME = '20250124-v3-gyro-eclp';
   const POOL_CONTRACT_NAME = 'GyroECLPPool';
+  const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
-    factory = await task.deployedInstance('GyroECLPPoolFactory');
+    factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
   });
 
   before('setup contracts and parameters', async () => {
@@ -144,5 +145,12 @@ describeForkTest('GyroECLPPool', 'mainnet', 21689000, function () {
     expect(version.deployment).to.be.eq(TASK_NAME);
     expect(version.version).to.be.eq(1);
     expect(version.name).to.be.eq(POOL_CONTRACT_NAME);
+  });
+
+  it('checks factory version', async () => {
+    const version = JSON.parse(await factory.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
   });
 });

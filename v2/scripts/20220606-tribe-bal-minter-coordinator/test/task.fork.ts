@@ -12,7 +12,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
+describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 

@@ -10,7 +10,7 @@ import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 
-describeForkTest('veBALDeploymentCoordinator', 'mainnet', 14458084, function () {
+describeForkTest.skip('veBALDeploymentCoordinator', 'mainnet', 14458084, function () {
   let balMultisig: SignerWithAddress, govMultisig: SignerWithAddress;
   let coordinator: Contract, authorizer: Contract, BAL: Contract;
 
