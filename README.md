@@ -133,6 +133,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
 | V3 Stable Surge Pool                                   | [`20250121-v3-stable-surge`](./v3/tasks/20250121-v3-stable-surge)                                       |
 | V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
+| V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 
 ## Scripts
 
