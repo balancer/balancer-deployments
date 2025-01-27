@@ -1,15 +1,9 @@
-# 2024-12-13 - V3 Hook examples
+# 2025-01-25 - MEV Tax Hook
 
-Hook examples deployment, showcasing how to create and plug in simple hooks to pools.
-Contracts deployed in this task are mostly for educational and testing purposes; they are not meant to be used in a production environment.
+MEV Tax Hook deployment, which increases the dynamic swap fee of pools using it when priority gas fees spike beyond a configurable threshold.
+This contract is targeted for Base and L2 networks in general, where the priority gas fee determines the relative order of the transaction within a block.
 
 ## Useful Files
 
-- Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/2f088c6b8f66ad55885d257c1e3debe2a6e21e97).
-- [Sepolia testnet addresses](./output/sepolia.json)
-- [`DirectionalFeeHookExample` artifact](./artifact/DirectionalFeeHookExample.json)
-- [`ExitFeeHookExample` artifact](./artifact/ExitFeeHookExample.json)
-- [`FeeTakingHookExample` artifact](./artifact/FeeTakingHookExample.json)
-- [`LotteryHookExample` artifact](./artifact/LotteryHookExample.json)
-- [`NftLiquidityPositionExample` artifact](./artifact/NftLiquidityPositionExample.json)
-- [`VeBALFeeDiscountHookExample` artifact](./artifact/VeBALFeeDiscountHookExample.json)
+- Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/11ac09bcb60811403475b54285d8acaef917bd2c).
+- [`MevTaxHook` artifact](./artifact/MevTaxHook.json)
