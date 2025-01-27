@@ -809,5 +809,28 @@
         "disable()": "0xb727acbee552a86c8c0992226adaaf975968e97311fb0bbd5bca17a5859c2cdb"
       }
     }
+  },
+  "20250125-v3-mev-tax-hook": {
+    "MevTaxHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addMevTaxExemptSenders(address[])": "0x6fd63419d98e07374872ce865cbcde25afd543dd8a95109b09e1809be4ccd3fc",
+        "disableMevTax()": "0x80c7391c7671d6338ffca6c1700e43631f0620169c23a3d293088ee5a75b2cfe",
+        "enableMevTax()": "0xc6b94a703ebc25c0f275723682168227921f0a574d8829ae697443c1bac52802",
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0xcf0ace09b1e8f06147f023291b753bb344217335ea6965d4989a0ecd337e0f4f",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0x08b222d70ab71937fdebc7b985b6d0c0117f584cc99605d3a0552dad72123906",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0xf6c411fe44b319dcdc6ac3288d75077a93aa6d82c839a57b2f63ee9f41f120d5",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0x3dd7cd512173d2507a9eadc321a5490feeb8e238668656fba653242c9c15c6e6",
+        "onBeforeInitialize(uint256[],bytes)": "0x30ccd32cc0c770704b2d48c5d48de45a7bfc681f02a7f28ccb7911ec1b1e2516",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x278486b49f1e3ae4ca151d03f9a217d845923fcfe7d3876c98b94be5900a5c35",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0x85ae02bdc000bee5e76b64ade81f84a04642e912b4d5dce8b2287aff9c032aa3",
+        "removeMevTaxExemptSenders(address[])": "0x65bd721543378b4f11801b1c1b8c50d89f65f3e56179a687e29a3188bb8b701f",
+        "setDefaultMevTaxMultiplier(uint256)": "0x2c62a9ae62cdc27b63107b73467e3e04d24a4dea000879f37363a5239191fc10",
+        "setDefaultMevTaxThreshold(uint256)": "0x49e5fada07864303685ddd1ae1083a43c9507a7fc427b1229bc85d30ad9d27c8",
+        "setMaxMevSwapFeePercentage(uint256)": "0x3d596e7ad6912489bbc02fcd97bb7b80248ee2bb2ccd48d5af7d40ceb06b6216",
+        "setPoolMevTaxMultiplier(address,uint256)": "0x0607c71cb6f6cf60cf825e573665c143b8588dc19e38747cd28379ed147a6282",
+        "setPoolMevTaxThreshold(address,uint256)": "0x05f0ac0aa3bc2aa1a470d6deac2862866eab88670633beb12a945978ec2df1f8"
+      }
+    }
   }
 }
