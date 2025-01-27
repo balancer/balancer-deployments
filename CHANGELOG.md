@@ -8,17 +8,21 @@
 
 ### New Deployments
 
+#### V3
+
 - Deployed V3 Vault to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Weighted Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Stable Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Batch Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Composite Liquidity Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Balancer Contract Registry to Sepolia.
 - Deployed V3 Stable Surge Factory to Sepolia.
+- Deployed V3 Composite Liquidity Router (V2) to Sepolia.
+
+#### V2
 
 - Deployed contracts to Fraxtal with veBAL support.
 - Deployed contracts to Mode without veBAL support.
@@ -53,6 +57,12 @@
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
 
 ### Deprecations
+
+#### V3
+
+- Deprecated `20241205-v3-composite-liquidity-router`.
+
+#### V2
 
 - Deprecated all linear pool types:
   - `20230206-aave-rebalanced-linear-pool-v4`.
