@@ -838,5 +838,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250125-v3-mev-tax-hook": {
+    "contracts": [
+      {
+        "name": "MevTaxHook",
+        "address": "0x18B10Fe9eC4815C31C4AB04fA6f91dCe0695132F"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

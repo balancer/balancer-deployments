@@ -23,6 +23,7 @@
 - Deployed V3 Composite Liquidity Router (V2) to Sepolia.
 - Deployed V3 Gyro 2-CLP Pool to Sepolia.
 - Deployed V3 Gyro E-CLP Pool to Sepolia.
+- Deployed V3 MEV Tax Hook to Sepolia.
 
 #### V2
 
