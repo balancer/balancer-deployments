@@ -19,7 +19,6 @@
 - Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Balancer Contract Registry to Sepolia.
-- Deployed V3 Stable Surge Factory to Sepolia.
 - Deployed V3 Composite Liquidity Router (V2) to Sepolia.
 - Deployed V3 Gyro 2-CLP Pool to Sepolia.
 - Deployed V3 Gyro E-CLP Pool to Sepolia.
