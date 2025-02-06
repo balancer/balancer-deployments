@@ -66,7 +66,6 @@ describeForkTest('StableSurge', 'mainnet', 21788400, function () {
       },
       swapFeePercentage: fp(0.01),
       enableDonations: false,
-      disableUnbalancedLiquidity: false,
       salt: ONES_BYTES32,
     };
 
@@ -79,7 +78,6 @@ describeForkTest('StableSurge', 'mainnet', 21788400, function () {
         newStablePoolParams.roleAccounts,
         newStablePoolParams.swapFeePercentage,
         newStablePoolParams.enableDonations,
-        newStablePoolParams.disableUnbalancedLiquidity,
         newStablePoolParams.salt
       )
     ).wait();

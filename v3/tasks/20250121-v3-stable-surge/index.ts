@@ -57,7 +57,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       },
       swapFeePercentage: fp(0.01),
       enableDonations: false,
-      disableUnbalancedLiquidity: false,
       salt: ZERO_BYTES32,
     };
 
@@ -72,7 +71,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           newStablePoolParams.roleAccounts,
           newStablePoolParams.swapFeePercentage,
           newStablePoolParams.enableDonations,
-          newStablePoolParams.disableUnbalancedLiquidity,
           newStablePoolParams.salt
         )
       ).wait();
