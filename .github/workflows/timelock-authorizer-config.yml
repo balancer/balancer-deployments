@@ -13,7 +13,7 @@ jobs:
   verify-mainnet-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Mainnet Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -24,7 +24,7 @@ jobs:
   verify-polygon-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Polygon Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -35,7 +35,7 @@ jobs:
   verify-arbitrum-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Arbitrum Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -46,7 +46,7 @@ jobs:
   verify-optimism-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Optimism Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -57,7 +57,7 @@ jobs:
   verify-bsc-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Binance Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -68,7 +68,7 @@ jobs:
   verify-gnosis-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Gnosis Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -79,7 +79,7 @@ jobs:
   verify-avalanche-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Avalanche Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -90,7 +90,7 @@ jobs:
   verify-zkevm-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Polygon-ZkEvm Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -101,7 +101,7 @@ jobs:
   verify-base-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Base Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -112,7 +112,7 @@ jobs:
   verify-fraxtal-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Fraxtal Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -123,7 +123,7 @@ jobs:
   verify-mode-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Mode Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
@@ -134,7 +134,7 @@ jobs:
   verify-sepolia-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Verify Sepolia Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
