@@ -552,5 +552,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250123-v3-composite-liquidity-router-v2": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0x9dA18982a33FD0c7051B19F0d7C76F2d5E7e017c"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

@@ -12,6 +12,10 @@ Composite Liquidity Router V1 is still safe to use, although its automatic wrap 
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/68cc540d16270044fc4ac6fbdcb24c2cf4fc87bf).
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`CompositeLiquidityRouter` artifact](./artifact/CompositeLiquidityRouter.json)
 
