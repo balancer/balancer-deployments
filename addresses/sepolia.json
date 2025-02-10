@@ -825,20 +825,6 @@
     "status": "ACTIVE",
     "version": "v3"
   },
-  "20250124-v3-gyro-eclp": {
-    "contracts": [
-      {
-        "name": "GyroECLPPoolFactory",
-        "address": "0xaC06eD505b0d85e46Bf90590f835A12E5EAac86E"
-      },
-      {
-        "name": "MockGyroECLPPool",
-        "address": "0xB546909185ad4dD905D4eBCa3c3b1d46Db4E4c82"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
-  },
   "20250125-v3-mev-tax-hook": {
     "contracts": [
       {
