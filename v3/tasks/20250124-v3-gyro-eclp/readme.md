@@ -5,6 +5,6 @@ Pools from this factory use Gyroscope's E-CLP math, suitable for fungible concen
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/68cc540d16270044fc4ac6fbdcb24c2cf4fc87bf).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/b9920781c900538a1e291f4d3b3f38e23aa9e871).
 - [`GyroECLPPoolFactory` artifact](./artifact/GyroECLPPoolFactory.json)
 - [`GyroECLPPool` artifact](./artifact/GyroECLPPool.json)

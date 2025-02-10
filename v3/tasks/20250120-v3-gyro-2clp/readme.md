@@ -5,6 +5,6 @@ Pools from this factory use Gyroscope's 2-CLP math, suitable for fungible concen
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/68ff766d4565b0f8d0d3124cf9136204ada72789).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/b9920781c900538a1e291f4d3b3f38e23aa9e871).
 - [`Gyro2CLPPoolFactory` artifact](./artifact/Gyro2CLPPoolFactory.json)
 - [`Gyro2CLPPool` artifact](./artifact/Gyro2CLPPool.json)
