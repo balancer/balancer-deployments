@@ -20,7 +20,7 @@
     "/dist/{addresses,tasks}/**/*"
   ],
   "scripts": {
-    "build": "yarn compile",
+    "build": "NODE_OPTIONS=--no-deprecation yarn compile",
     "compile": "tsc && hardhat compile && rm -rf artifacts/build-info",
     "check": "yarn check-artifacts && yarn check-deployments",
     "check-artifacts": "hardhat check-artifacts",
@@ -47,12 +47,13 @@
   "devDependencies": {
     "@balancer-labs/v2-interfaces": "latest",
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
+    "@ethereumjs/common": "^4.4.0",
     "@ethersproject/contracts": "^5.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
     "@nomiclabs/hardhat-vyper": "^3.0.5",
-    "@nomiclabs/hardhat-waffle": "^2.0.5",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
     "@solidity-parser/parser": "^0.18.0",
     "@types/async-retry": "^1",
     "@types/chai": "^4",
@@ -70,7 +71,7 @@
     "eslint": "^8.26.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "ethereum-waffle": "^3.4.4",
+    "ethereum-waffle": "^4.0.10",
     "ethereumjs-util": "^7.1.5",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
@@ -80,16 +81,17 @@
     "hardhat-local-networks-config-plugin": "^0.0.6",
     "lodash.range": "^3.2.0",
     "mocha": "^10.2.0",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.3.2",
     "prettier": "^2.7.1",
     "prettier-plugin-solidity": "v1.0.0-alpha.59",
     "solhint": "^3.2.0",
     "solhint-plugin-prettier": "^0.0.4",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
-    "typescript": "^4.3.2"
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "@ethereumjs/evm": "^3.1.1"
-  }
+  },
+  "packageManager": "yarn@4.6.0"
 }

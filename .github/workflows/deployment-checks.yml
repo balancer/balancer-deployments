@@ -11,7 +11,7 @@ jobs:
   check-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Check Deployment Artifacts
@@ -20,7 +20,7 @@ jobs:
   check-mainnet-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Mainnet Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -30,7 +30,7 @@ jobs:
   check-polygon-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Polygon Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -40,7 +40,7 @@ jobs:
   check-arbitrum-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Arbitrum Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -50,7 +50,7 @@ jobs:
   check-optimism-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Optimism Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -60,7 +60,7 @@ jobs:
   check-bsc-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Binance Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -70,7 +70,7 @@ jobs:
   check-gnosis-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Gnosis Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -80,7 +80,7 @@ jobs:
   check-avalanche-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Avalanche Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -90,7 +90,7 @@ jobs:
   check-zkevm-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Polygon-ZkEvm Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -100,7 +100,7 @@ jobs:
   check-base-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Base Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -110,7 +110,7 @@ jobs:
   check-fraxtal-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Fraxtal Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -120,7 +120,7 @@ jobs:
   check-mode-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Mode Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -130,7 +130,7 @@ jobs:
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Sepolia Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
@@ -141,7 +141,7 @@ jobs:
   check-mainnet-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Mainnet Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -151,7 +151,7 @@ jobs:
   check-polygon-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Polygon Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -161,7 +161,7 @@ jobs:
   check-arbitrum-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Arbitrum Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -171,7 +171,7 @@ jobs:
   check-optimism-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Optimism Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -181,7 +181,7 @@ jobs:
   check-bsc-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Binance Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -191,7 +191,7 @@ jobs:
   check-gnosis-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Gnosis Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -201,7 +201,7 @@ jobs:
   check-avalanche-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Avalanche Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -211,7 +211,7 @@ jobs:
   check-zkevm-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Polygon-ZkEvm Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -221,7 +221,7 @@ jobs:
   check-base-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Base Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -231,7 +231,7 @@ jobs:
   check-fraxtal-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Fraxtal Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -241,7 +241,7 @@ jobs:
   check-mode-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Mode Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -251,7 +251,7 @@ jobs:
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check Sepolia Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
@@ -262,7 +262,7 @@ jobs:
   check-address-lookup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Prepare Config
@@ -273,7 +273,7 @@ jobs:
   check-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Prepare Config
@@ -284,7 +284,7 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-quiet-mode: 'yes'
