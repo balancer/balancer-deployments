@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { GyroECLPPoolDeployment } from '../input';
 
-describeForkTest('GyroECLPPool', 'mainnet', 21689000, function () {
+describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: GyroECLPPoolDeployment;
