@@ -6,5 +6,4 @@ This contract is targeted for Base and L2 networks in general, where the priorit
 ## Useful Files
 
 - Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/11ac09bcb60811403475b54285d8acaef917bd2c).
-- [Sepolia testnet addresses](./output/sepolia.json)
 - [`MevTaxHook` artifact](./artifact/MevTaxHook.json)
