@@ -755,24 +755,6 @@
       }
     }
   },
-  "20250120-v3-gyro-2clp": {
-    "Gyro2CLPPoolFactory": {
-      "useAdaptor": false,
-      "actionIds": {
-        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x75bd26b3ed6782283093606a98461cce7d9abfe27d81ccb2d037861211ff137e",
-        "disable()": "0xf90cbb7f598a837d59943bb133e449e10dfe8204958cecd172ce79df6fdf9a0e"
-      }
-    }
-  },
-  "20250124-v3-gyro-eclp": {
-    "GyroECLPPoolFactory": {
-      "useAdaptor": false,
-      "actionIds": {
-        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x96efece7b5b4d220154a560cf7c6e0163f7b630ddb0bf11304ce945b95ff3d04",
-        "disable()": "0xb727acbee552a86c8c0992226adaaf975968e97311fb0bbd5bca17a5859c2cdb"
-      }
-    }
-  },
   "20250125-v3-mev-tax-hook": {
     "MevTaxHook": {
       "useAdaptor": false,
