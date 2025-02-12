@@ -135,6 +135,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 | V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Tax Hook                                        | [`20250125-v3-mev-tax-hook`](./v3/tasks/20250125-v3-mev-tax-hook)                                       |
+| V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 
 ## Scripts
 
