@@ -134,7 +134,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Pool                                   | [`20250121-v3-stable-surge`](./v3/tasks/20250121-v3-stable-surge)                                       |
 | V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 | V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
-| V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250125-v3-mev-capture-hook)                               |
+| V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 
 ## Scripts
