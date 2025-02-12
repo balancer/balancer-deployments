@@ -8,3 +8,4 @@ There is nothing to deprecate, as the original Protocol Fee Controller was deplo
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0c38dc629386c401e3d6094981d7990f2fe0a379)
 - [`ProtocolFeeController` artifact](./artifact/ProtocolFeeController.json)
+- [`WeightedPool` artifact](./artifact/WeightedPool.json)
