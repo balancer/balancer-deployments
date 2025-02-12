@@ -58,13 +58,12 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
   });
 
   before('setup contracts and parameters', async () => {
-    const wethTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
-    const balTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+    const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
     const fork = getForkedNetwork(hre);
 
-    const WETH = wethTask.output({ network: fork }).WETH;
-    const BAL = balTask.output({ network: fork }).BAL;
+    const WETH = tokensTask.output({ network: fork }).WETH;
+    const BAL = tokensTask.output({ network: fork }).BAL;
 
     tokenConfig = [
       {
