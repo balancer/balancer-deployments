@@ -20,7 +20,7 @@
     "/dist/{addresses,tasks}/**/*"
   ],
   "scripts": {
-    "build": "NODE_OPTIONS=--no-deprecation yarn compile",
+    "build": "yarn compile",
     "compile": "tsc && hardhat compile && rm -rf artifacts/build-info",
     "check": "yarn check-artifacts && yarn check-deployments",
     "check-artifacts": "hardhat check-artifacts",
@@ -62,8 +62,8 @@
     "@types/mocha": "^10",
     "@types/node": "^14.14.31",
     "@types/node-fetch": "^2.6.2",
-    "@typescript-eslint/eslint-plugin": "^5.41.0",
-    "@typescript-eslint/parser": "^5.41.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "async-retry": "^1.3.3",
     "chai": "^4.3.6",
     "chalk": "^4.1.2",
@@ -88,7 +88,7 @@
     "solhint-plugin-prettier": "^0.0.4",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
-    "typescript": "^5.7.3"
+    "typescript": "^4.9.3"
   },
   "dependencies": {
     "@ethereumjs/evm": "^3.1.1"
