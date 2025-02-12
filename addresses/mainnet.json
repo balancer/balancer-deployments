@@ -1483,6 +1483,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250117-v3-contract-registry": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistry",
+        "address": "0xa1D0791a41318c775707C56eAe247AF81a05322C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {

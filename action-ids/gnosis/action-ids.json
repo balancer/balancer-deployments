@@ -672,5 +672,16 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250117-v3-contract-registry": {
+    "BalancerContractRegistry": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addOrUpdateBalancerContractAlias(string,address)": "0x96933475aa135d9d02d175e3f20f420fb65595ebeade476edf970dd5fddda874",
+        "deprecateBalancerContract(address)": "0xdb3b99d52cd97741d98d8cf58982c82a1c7caee958ed94e5fcf909ba57ef27bc",
+        "deregisterBalancerContract(string)": "0xa2ccd901b5d57e951d23051ad0a49e4127722628b5f0318468fae768fd6e4a02",
+        "registerBalancerContract(uint8,string,address)": "0xd7b567352ab1dc8647c52f123cd411b5b0d47dbd5a4c5a65d799d675cc6604f2"
+      }
+    }
   }
 }
