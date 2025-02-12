@@ -5,5 +5,5 @@ This contract is targeted for Base and L2 networks in general, where the priorit
 
 ## Useful Files
 
-- Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/11ac09bcb60811403475b54285d8acaef917bd2c).
+- Code [link](https://github.com/balancer/balancer-v3-monorepo/commit/0c38dc629386c401e3d6094981d7990f2fe0a379).
 - [`MevCaptureHook` artifact](./artifact/MevCaptureHook.json)
