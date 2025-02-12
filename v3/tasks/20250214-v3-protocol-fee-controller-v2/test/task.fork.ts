@@ -63,9 +63,9 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
 
     const fork = getForkedNetwork(hre);
 
-    const WETH = wethTask.output({network: fork}).WETH;
-    const BAL = balTask.output({network: fork}).BAL;
-    
+    const WETH = wethTask.output({ network: fork }).WETH;
+    const BAL = balTask.output({ network: fork }).BAL;
+
     tokenConfig = [
       {
         token: WETH,
