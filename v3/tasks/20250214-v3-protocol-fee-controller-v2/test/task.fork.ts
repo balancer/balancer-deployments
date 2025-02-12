@@ -20,6 +20,7 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
   const GLOBAL_YIELD_FEE_PERCENTAGE = fp(0.25);
 
   let task: Task;
+  let weightedTask: Task;
   let feeController: Contract;
   let authorizer: Contract;
   let vault: Contract;
@@ -49,7 +50,7 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
-    const weightedTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    weightedTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
     factory = await weightedTask.deployedInstance(FACTORY_CONTRACT_NAME);
 
     input = task.input() as ProtocolFeeControllerDeployment;
@@ -57,15 +58,23 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
   });
 
   before('setup contracts and parameters', async () => {
+    const wethTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+    const balTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+
+    const fork = getForkedNetwork(hre);
+
+    const WETH = wethTask.output({network: fork}).WETH;
+    const BAL = balTask.output({network: fork}).BAL;
+    
     tokenConfig = [
       {
-        token: input.WETH,
+        token: WETH,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -161,7 +170,7 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     ).wait();
 
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
-    pool = await task.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
+    pool = await weightedTask.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
   });
 
   it('checks pool deployment', async () => {
@@ -189,5 +198,12 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(yieldFeeEvent.args.pool).to.eq(pool.address);
     expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
     expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
+  });
+
+  it('checks pool aggregate fees', async () => {
+    const [aggregateSwapFeePercentage, aggregateYieldFeePercentage] = await pool.getAggregateFeePercentages();
+
+    expect(aggregateSwapFeePercentage).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
+    expect(aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
   });
 });
