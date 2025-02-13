@@ -36,11 +36,6 @@ export default class Verifier {
     libraries: Libraries = {},
     intent = 1
   ): Promise<string> {
-    if (await this.etherscanInstance.isVerified(address)) {
-      logger.info(`Contract ${name} already verified at ${this.etherscanInstance.getContractUrl(address)}`);
-      return this.etherscanInstance.getContractUrl(address);
-    }
-
     const response = await this.verify(task, name, address, constructorArguments, libraries);
 
     if (response.isSuccess()) {
