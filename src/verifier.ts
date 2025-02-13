@@ -1,50 +1,31 @@
 import fetch, { Response } from 'node-fetch';
-import { BuildInfo, CompilerInput, Network } from 'hardhat/types';
-
-import { getLongVersion } from '@nomiclabs/hardhat-etherscan/dist/src/solc/version';
-import { encodeArguments } from '@nomiclabs/hardhat-etherscan/dist/src/ABIEncoder';
-import { getLibraryLinks, Libraries } from '@nomiclabs/hardhat-etherscan/dist/src/solc/libraries';
-import { chainConfig } from '@nomiclabs/hardhat-etherscan/dist/src/ChainConfig';
-
-import hardhatConfig from '../hardhat.config';
-
-import {
-  Bytecode,
-  ContractInformation,
-  extractMatchingContractInformation,
-} from '@nomiclabs/hardhat-etherscan/dist/src/solc/bytecode';
-
-import { getEtherscanEndpoints, retrieveContractBytecode } from '@nomiclabs/hardhat-etherscan/dist/src/network/prober';
-
-import {
-  toVerifyRequest,
-  toCheckStatusRequest,
-  EtherscanVerifyRequest,
-} from '@nomiclabs/hardhat-etherscan/dist/src/etherscan/EtherscanVerifyContractRequest';
-
-import {
-  delay,
-  EtherscanResponse,
-  getVerificationStatus,
-} from '@nomiclabs/hardhat-etherscan/dist/src/etherscan/EtherscanService';
-
-import { EtherscanNetworkEntry } from '@nomiclabs/hardhat-etherscan/dist/src/types';
-
+import { BuildInfo, CompilerInput, Libraries, Network } from 'hardhat/types';
 import * as parser from '@solidity-parser/parser';
+import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
 
 import Task from './task';
 import logger from './logger';
+import hardhatConfig from '../hardhat.config';
 import { findContractSourceName, getAllFullyQualifiedNames } from './buildinfo';
+import { encodeArguments, sleep } from '@nomicfoundation/hardhat-verify/internal/utilities';
+import { EtherscanVerifyResponse } from '@nomicfoundation/hardhat-verify/internal/etherscan.types';
+import {
+  extractMatchingContractInformation,
+  getLibraryInformation,
+} from '@nomicfoundation/hardhat-verify/internal/solc/artifacts';
+import { Bytecode } from '@nomicfoundation/hardhat-verify/internal/solc/bytecode';
+import { ApiKey, ChainConfig } from '@nomicfoundation/hardhat-verify/types';
 
 const MAX_VERIFICATION_INTENTS = 3;
 
 export default class Verifier {
-  apiKey: string;
+  etherscanInstance: Etherscan;
   network: Network;
 
-  constructor(_network: Network, _apiKey: string) {
+  constructor(_network: Network, _apiKey: ApiKey | undefined, _chainConfig: ChainConfig) {
     this.network = _network;
-    this.apiKey = _apiKey;
+
+    this.etherscanInstance = Etherscan.fromChainConfig(_apiKey, _chainConfig);
   }
 
   async call(
@@ -57,34 +38,24 @@ export default class Verifier {
   ): Promise<string> {
     const response = await this.verify(task, name, address, constructorArguments, libraries);
 
-    if (response.isVerificationSuccess()) {
-      const etherscanEndpoints = await getEtherscanEndpoints(
-        this.network.provider,
-        this.network.name,
-        chainConfig,
-        hardhatConfig.etherscan.customChains ?? []
-      );
-
-      const contractURL = new URL(`/address/${address}#code`, etherscanEndpoints.urls.browserURL);
-      return contractURL.toString();
+    if (response.isSuccess()) {
+      return this.etherscanInstance.getContractUrl(address);
     } else if (intent < MAX_VERIFICATION_INTENTS && response.isBytecodeMissingInNetworkError()) {
       logger.info(`Could not find deployed bytecode in network, retrying ${intent++}/${MAX_VERIFICATION_INTENTS}...`);
-      delay(5000);
+      sleep(5000);
       return this.call(task, name, address, constructorArguments, libraries, intent++);
     } else {
       throw new Error(`The contract verification failed. Reason: ${response.message}`);
     }
   }
 
-  private async verify(
-    task: Task,
-    name: string,
-    address: string,
-    args: string | unknown[],
-    libraries: Libraries = {}
-  ): Promise<EtherscanResponse> {
-    const deployedBytecodeHex = await retrieveContractBytecode(address, this.network.provider, this.network.name);
-    const deployedBytecode = new Bytecode(deployedBytecodeHex);
+  private async verify(task: Task, name: string, address: string, args: string | unknown[], libraries: Libraries = {}) {
+    const deployedBytecode = await Bytecode.getDeployedContractBytecode(
+      address,
+      this.network.provider,
+      this.network.name
+    );
+
     let buildInfos: BuildInfo[];
     try {
       // First check if there's a specific file named like this.
@@ -97,98 +68,44 @@ export default class Verifier {
     buildInfo.input = this.trimmedBuildInfoInput(name, buildInfo.input);
 
     const sourceName = findContractSourceName(buildInfo, name);
-    const contractInformation = await extractMatchingContractInformation(sourceName, name, buildInfo, deployedBytecode);
+    const fullSourceName = `${sourceName}:${name}`;
+
+    const contractInformation = await extractMatchingContractInformation(fullSourceName, buildInfo, deployedBytecode);
     if (!contractInformation) throw Error('Could not find a bytecode matching the requested contract');
 
-    const { libraryLinks } = await getLibraryLinks(contractInformation, libraries);
-    contractInformation.libraryLinks = libraryLinks;
+    const libraryInformation = await getLibraryInformation(contractInformation, libraries);
+    buildInfo.input.settings.libraries = libraryInformation.libraries;
 
     const deployArgumentsEncoded =
       typeof args == 'string'
         ? args
         : await encodeArguments(
-            contractInformation.contract.abi,
+            contractInformation.contractOutput.abi,
             contractInformation.sourceName,
             contractInformation.contractName,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             args as any[]
           );
 
-    const solcFullVersion = await getLongVersion(contractInformation.solcVersion);
+    console.log('contractInformation.solcLongVersion', contractInformation.solcLongVersion);
 
-    const etherscanEndpoints = await getEtherscanEndpoints(
-      this.network.provider,
-      this.network.name,
-      chainConfig,
-      hardhatConfig.etherscan.customChains ?? []
-    );
-
-    const verificationStatus = await this.attemptVerification(
-      etherscanEndpoints,
-      contractInformation,
+    const { message: guid } = await this.etherscanInstance.verify(
       address,
-      this.apiKey,
-      buildInfo.input,
-      solcFullVersion,
+      JSON.stringify(buildInfo.input),
+      fullSourceName,
+      `v${contractInformation.solcLongVersion}`,
       deployArgumentsEncoded
     );
 
-    if (verificationStatus.isVerificationSuccess()) return verificationStatus;
-    throw new Error(`The contract verification failed. Reason: ${verificationStatus.message}`);
-  }
+    await sleep(1000);
 
-  private async attemptVerification(
-    etherscanEndpoints: EtherscanNetworkEntry,
-    contractInformation: ContractInformation,
-    contractAddress: string,
-    etherscanAPIKey: string,
-    compilerInput: CompilerInput,
-    solcFullVersion: string,
-    deployArgumentsEncoded: string
-  ): Promise<EtherscanResponse> {
-    compilerInput.settings.libraries = contractInformation.libraryLinks;
-    const request = toVerifyRequest({
-      apiKey: etherscanAPIKey,
-      contractAddress,
-      sourceCode: JSON.stringify(compilerInput),
-      sourceName: contractInformation.sourceName,
-      contractName: contractInformation.contractName,
-      compilerVersion: solcFullVersion,
-      constructorArguments: deployArgumentsEncoded,
-    });
+    const verificationStatus = await this.etherscanInstance.getVerificationStatus(guid);
 
-    const response = await this.verifyContract(etherscanEndpoints.urls.apiURL, request);
-    const pollRequest = toCheckStatusRequest({ apiKey: etherscanAPIKey, guid: response.message });
-
-    await delay(700);
-    const verificationStatus = await getVerificationStatus(etherscanEndpoints.urls.apiURL, pollRequest);
-
-    if (verificationStatus.isVerificationFailure() || verificationStatus.isVerificationSuccess()) {
+    if (verificationStatus.isFailure() || verificationStatus.isSuccess()) {
       return verificationStatus;
     }
 
     throw new Error(`The API responded with an unexpected message: ${verificationStatus.message}`);
-  }
-
-  private async verifyContract(url: string, req: EtherscanVerifyRequest): Promise<EtherscanResponse> {
-    const parameters = new URLSearchParams({ ...req });
-    const requestDetails = { method: 'post', body: parameters };
-
-    let response: Response;
-    try {
-      response = await fetch(url, requestDetails);
-    } catch (error: unknown) {
-      throw Error(`Failed to send verification request. Reason: ${(error as Error).message}`);
-    }
-
-    if (!response.ok) {
-      const responseText = await response.text();
-      throw Error(`Failed to send verification request.\nHTTP code: ${response.status}.\nResponse: ${responseText}`);
-    }
-
-    const etherscanResponse = new EtherscanResponse(await response.json());
-    if (!etherscanResponse.isOk()) throw Error(etherscanResponse.message);
-    return etherscanResponse;
   }
 
   private findBuildInfoWithContract(buildInfos: BuildInfo[], contractName: string): BuildInfo {
