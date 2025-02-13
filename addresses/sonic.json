@@ -6,7 +6,8 @@
         "address": "0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210418-vault": {
     "contracts": [
@@ -23,7 +24,8 @@
         "address": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-authorizer-adaptor": {
     "contracts": [
@@ -32,7 +34,8 @@
         "address": "0xF24917fB88261a37Cc57F686eBC831a5c0B9fD39"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220721-balancer-queries": {
     "contracts": [
@@ -41,7 +44,8 @@
         "address": "0x4B29DB997Ec0efDFEF13bAeE2a2D7783bCf67f17"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220725-protocol-fee-percentages-provider": {
     "contracts": [
@@ -50,7 +54,8 @@
         "address": "0x4d4DDc3e4479e42C4288F6B61554cAD9e41f4146"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -63,7 +68,8 @@
         "address": "0x5a69130b9C0c0d49bE785fF7b6f5d39776f1075f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
@@ -72,7 +78,8 @@
         "address": "0x2f4799933c34127e715839445EbC90D62CB3E4E6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20231031-batch-relayer-v6": {
     "contracts": [
@@ -89,7 +96,8 @@
         "address": "0xb5F8f253d0A6D4A18014cecA4253A2cEC6C98763"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20240223-composable-stable-pool-v6": {
     "contracts": [
@@ -102,7 +110,8 @@
         "address": "0xEcA0bc45Fc02Ab59941BDB0bc3718EfE6D3f09b3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20241216-batch-relayer-reliquary": {
     "contracts": [
@@ -119,7 +128,8 @@
         "address": "0x7b52D5ef006E59e3227629f97F182D6442380bb6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20241204-v3-vault": {
     "contracts": [
@@ -144,7 +154,8 @@
         "address": "0xa731C23D7c95436Baaae9D52782f966E1ed07cc8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-batch-router": {
     "contracts": [
@@ -153,7 +164,8 @@
         "address": "0x7761659F9e9834ad367e4d25E0306ba7A4968DAf"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-buffer-router": {
     "contracts": [
@@ -162,7 +174,8 @@
         "address": "0x532dA919D3EB5606b5867A6f505969c57F3A721b"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-composite-liquidity-router": {
     "contracts": [
@@ -171,7 +184,8 @@
         "address": "0xcf21664262774eBB2C2b559e13b47F6cA10F3E65"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED",
+    "version": "v3"
   },
   "20241205-v3-router": {
     "contracts": [
@@ -180,7 +194,8 @@
         "address": "0x6077b9801B5627a65A5eeE70697C793751D1a71c"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-stable-pool": {
     "contracts": [
@@ -193,7 +208,8 @@
         "address": "0x82F2d4c5BEaC74a1684C1792CaB67b04c7e5f6f3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-vault-explorer": {
     "contracts": [
@@ -202,7 +218,8 @@
         "address": "0x6F6CD1a69A19d45df0C300A57829b21713637300"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-weighted-pool": {
     "contracts": [
@@ -215,6 +232,17 @@
         "address": "0xE41C7F1bC019dd966072726A7ea3b617f3a475B3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250123-v3-composite-liquidity-router-v2": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
