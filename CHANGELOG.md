@@ -18,7 +18,7 @@
 - Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Stable Surge Pool Factory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base, Sonic and Sepolia.
 - Deployed V3 Balancer Contract Registry to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Balancer Contract Registry to Sepolia.
