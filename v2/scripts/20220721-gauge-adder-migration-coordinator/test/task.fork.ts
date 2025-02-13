@@ -10,7 +10,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, function () {
+describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 

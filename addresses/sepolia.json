@@ -6,7 +6,8 @@
         "address": "0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210418-vault": {
     "contracts": [
@@ -23,7 +24,8 @@
         "address": "0xdAE7e32ADc5d490a43cCba1f0c736033F2b4eFca"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20211202-no-protocol-fee-lbp": {
     "contracts": [
@@ -36,7 +38,8 @@
         "address": "0xe90472ffc41D7Ddf8E3B456bBA748e3F22c59C6f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-authorizer-adaptor": {
     "contracts": [
@@ -45,7 +48,8 @@
         "address": "0xdcdbf71A870cc60C6F9B621E28a7D3Ffd6Dd4965"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-bal-token-holder-factory": {
     "contracts": [
@@ -54,7 +58,8 @@
         "address": "0xEF454a7B3f965D3f6723E462405246f8Cd865425"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-balancer-token-admin": {
     "contracts": [
@@ -63,7 +68,8 @@
         "address": "0x7d2248F194755DCa9A1887099394F39476d28C9a"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-gauge-controller": {
     "contracts": [
@@ -80,7 +86,8 @@
         "address": "0x1783Cd84b3d01854A96B4eD5843753C2CcbD574A"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-test-balancer-token": {
     "contracts": [
@@ -89,7 +96,8 @@
         "address": "0xb19382073c7A0aDdbb56Ac6AF1808Fa49e377B75"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-ve-delegation": {
     "contracts": [
@@ -102,7 +110,8 @@
         "address": "0x9f7E65887413a8497b87bA2058cE6E4Ef4B37013"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220420-smart-wallet-checker": {
     "contracts": [
@@ -111,7 +120,8 @@
         "address": "0x230a59F4d9ADc147480f03B0D3fFfeCd56c3289a"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
@@ -120,7 +130,8 @@
         "address": "0x809B79b53F18E9bc08A961ED4678B901aC93213a"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220530-preseeded-voting-escrow-delegation": {
     "contracts": [
@@ -129,7 +140,8 @@
         "address": "0xb1a4FE1C6d25a0DDAb47431A92A723dd71d9021f"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220714-fee-distributor-v2": {
     "contracts": [
@@ -138,7 +150,8 @@
         "address": "0xA6971317Fb06c76Ef731601C64433a4846fCa707"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220721-balancer-queries": {
     "contracts": [
@@ -147,7 +160,8 @@
         "address": "0x1802953277FD955f9a254B80Aa0582f193cF1d77"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220725-protocol-fee-percentages-provider": {
     "contracts": [
@@ -156,7 +170,8 @@
         "address": "0xf7D5DcE55E6D47852F054697BAB6A1B48A00ddbd"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220822-mainnet-gauge-factory-v2": {
     "contracts": [
@@ -169,7 +184,8 @@
         "address": "0x2FF226CD12C80511a641A6101F071d853A4e5363"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221123-pool-recovery-helper": {
     "contracts": [
@@ -178,7 +194,8 @@
         "address": "0x1b6F057520B4e826271D47b8bdab98E35Af17E59"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221124-authorizer-adaptor-entrypoint": {
     "contracts": [
@@ -187,7 +204,8 @@
         "address": "0xb9aD3466cdd42015cc05d4804DC68D562b6a2065"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221205-veboost-v2": {
     "contracts": [
@@ -196,7 +214,8 @@
         "address": "0x927906bbAc747c13c75F6447FE8abb490EAB456C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230109-gauge-adder-v3": {
     "contracts": [
@@ -205,7 +224,8 @@
         "address": "0x1DF32616fb1bBaEd07f42F1a1EfD1D0E232AcB4a"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230215-single-recipient-gauge-factory-v2": {
     "contracts": [
@@ -218,7 +238,8 @@
         "address": "0x9a5ddDE7056ceFFb03D9962c4549Ac1C4ad1F985"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230223-protocol-id-registry": {
     "contracts": [
@@ -227,7 +248,8 @@
         "address": "0x6CaD2ea22BFA7F4C14Aae92E47F510Cd5C509bc7"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230314-batch-relayer-v5": {
     "contracts": [
@@ -240,7 +262,8 @@
         "address": "0x6d5342d716c13d9a3F072a2B11498624ADe27f90"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230316-child-chain-gauge-factory-v2": {
     "contracts": [
@@ -253,7 +276,8 @@
         "address": "0xC370cD86d5488c1788b62f11b09adb0C47F47440"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230316-l2-balancer-pseudo-minter": {
     "contracts": [
@@ -262,7 +286,8 @@
         "address": "0xb51f7fFc97CeDFb6922e8B9Bbf3eF7575fafD630"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230316-l2-ve-delegation-proxy": {
     "contracts": [
@@ -275,7 +300,8 @@
         "address": "0xD87F44Df0159DC78029AB9CA7D7e57E7249F5ACD"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230320-composable-stable-pool-v4": {
     "contracts": [
@@ -288,7 +314,8 @@
         "address": "0xA8D865FE1D68a405B29f884358468c9B52d4841d"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -301,7 +328,8 @@
         "address": "0xf7a7E1F48FA43cb7919Ff4Eb362c5bE78092dF4A"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230404-l2-layer0-bridge-forwarder": {
     "contracts": [
@@ -310,7 +338,8 @@
         "address": "0xc7E5ED1054A24Ef31D827E6F86caA58B3Bc168d7"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230409-erc4626-linear-pool-v4": {
     "contracts": [
@@ -327,7 +356,8 @@
         "address": "0x0c2EAd6F2Dc2A9385187023F4cec5925337B330f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230409-gearbox-linear-pool-v2": {
     "contracts": [
@@ -348,7 +378,8 @@
         "address": "0x112a7b7ca66E6963C49BC523A415F7D8CDB806B9"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230409-yearn-linear-pool-v2": {
     "contracts": [
@@ -365,7 +396,8 @@
         "address": "0x016B7366F76aa2794097798B90CF239796AEff8d"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -386,7 +418,8 @@
         "address": "0xE4EfD99f3C03778ba913Eb578C599329634e2bd7"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230410-silo-linear-pool-v2": {
     "contracts": [
@@ -411,7 +444,8 @@
         "address": "0xA149CF2D795AaB83a15673f5Beade9361e4e3F65"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230411-managed-pool-v2": {
     "contracts": [
@@ -444,7 +478,8 @@
         "address": "0xE458224CA8d6605c87b73E92aa5CB7A4e77770f3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230414-authorizer-wrapper": {
     "contracts": [
@@ -453,7 +488,8 @@
         "address": "0xb521dD5C8e13fE202626CaC98873FEA2b7760cE4"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230504-vebal-remapper": {
     "contracts": [
@@ -466,7 +502,8 @@
         "address": "0xF24917fB88261a37Cc57F686eBC831a5c0B9fD39"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230519-gauge-adder-v4": {
     "contracts": [
@@ -475,7 +512,8 @@
         "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230522-timelock-authorizer": {
     "contracts": [
@@ -488,7 +526,8 @@
         "address": "0xDe615cc5712B4954BeB613BCF32E61C137Cc64f9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
@@ -497,7 +536,8 @@
         "address": "0x2E4aBED3362A622C5f712bB183005A476b146bd3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
@@ -506,7 +546,8 @@
         "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230711-composable-stable-pool-v5": {
     "contracts": [
@@ -519,7 +560,8 @@
         "address": "0xE24Aba051aaeB07f981bD449f4B0b3250e08d4fB"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230712-child-chain-gauge-checkpointer": {
     "contracts": [
@@ -532,7 +574,8 @@
         "address": "0xBeA696c7761734d9e66f4F372EB35059C1aeD1e0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230717-chainlink-rate-provider-factory": {
     "contracts": [
@@ -541,7 +584,8 @@
         "address": "0xA8920455934Da4D853faac1f94Fe7bEf72943eF1"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230731-stakeless-gauge-checkpointer": {
     "contracts": [
@@ -550,7 +594,8 @@
         "address": "0x96484f2aBF5e58b15176dbF1A799627B53F13B6d"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230915-stakeless-gauge-checkpointer-v2": {
     "contracts": [
@@ -559,7 +604,8 @@
         "address": "0x268E2EE1413D768b6e2dc3F5a4ddc9Ae03d9AF42"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20231031-batch-relayer-v6": {
     "contracts": [
@@ -576,7 +622,8 @@
         "address": "0x7852fB9d0895e6e8b3EedA553c03F6e2F9124dF9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20240223-composable-stable-pool-v6": {
     "contracts": [
@@ -589,7 +636,8 @@
         "address": "0x7b0d669142FEDe0eB9065E3B9140a7c90a934a27"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20241204-v3-vault": {
     "contracts": [
@@ -614,7 +662,8 @@
         "address": "0xa731C23D7c95436Baaae9D52782f966E1ed07cc8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-batch-router": {
     "contracts": [
@@ -623,7 +672,8 @@
         "address": "0xC85b652685567C1B074e8c0D4389f83a2E458b1C"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-buffer-router": {
     "contracts": [
@@ -632,7 +682,8 @@
         "address": "0xb5F3A41515457CC6E2716c62a011D260441CcfC9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-composite-liquidity-router": {
     "contracts": [
@@ -641,7 +692,8 @@
         "address": "0xc6674C0c7694E9b990eAc939E74F8cc3DD39B4b0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "DEPRECATED",
+    "version": "v3"
   },
   "20241205-v3-router": {
     "contracts": [
@@ -650,7 +702,8 @@
         "address": "0x0BF61f706105EA44694f2e92986bD01C39930280"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-stable-pool": {
     "contracts": [
@@ -663,7 +716,8 @@
         "address": "0x7373C5b9610d43466395617c428eCAA5b47ac5AA"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-vault-explorer": {
     "contracts": [
@@ -672,7 +726,8 @@
         "address": "0xEB15EBBF9C1a4D7D243d57dE447Df0b97C40c324"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
   },
   "20241205-v3-weighted-pool": {
     "contracts": [
@@ -685,6 +740,75 @@
         "address": "0xFc253B433B7225AC7736EAbDF4115F7252aECb91"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20241213-v3-hook-examples": {
+    "contracts": [
+      {
+        "name": "DirectionalFeeHookExample",
+        "address": "0xD68372e85d8a14Afa5fdb3d506bf765939aAf382"
+      },
+      {
+        "name": "FeeTakingHookExample",
+        "address": "0xbB1761AF481364A6BD7FdbDB8CfA23Abd85f0263"
+      },
+      {
+        "name": "ExitFeeHookExample",
+        "address": "0xea672a54f0AA38FC5F0a1A481467BeBFe3C71046"
+      },
+      {
+        "name": "LotteryHookExample",
+        "address": "0x2d8D157Fd6CF773624d97808D77081EE45caA7D4"
+      },
+      {
+        "name": "NftLiquidityPositionExample",
+        "address": "0xd06dD26c7209CfE0752725F068299bE69A7c9549"
+      },
+      {
+        "name": "VeBALFeeDiscountHookExample",
+        "address": "0xEDB47231A12bdf64b8D951dEd3351128f95B7e80"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250117-v3-contract-registry": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistry",
+        "address": "0x115A6FC12312a01E0B63E51dFa97DAeb8dE9D2F0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250121-v3-stable-surge": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0xD516c344413B4282dF1E4082EAE6B1081F3b1932"
+      },
+      {
+        "name": "StableSurgeHook",
+        "address": "0x30CE53fA38a1399F0CA158b5c38362c80E423bA9"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xD8D88e186AA7cfa3929dF79ab5a5f02316e7d77B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250123-v3-composite-liquidity-router-v2": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

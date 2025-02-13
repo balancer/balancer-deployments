@@ -6,7 +6,8 @@
         "address": "0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20210418-vault": {
     "contracts": [
@@ -23,7 +24,8 @@
         "address": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20211202-no-protocol-fee-lbp": {
     "contracts": [
@@ -32,7 +34,8 @@
         "address": "0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220325-authorizer-adaptor": {
     "contracts": [
@@ -41,7 +44,8 @@
         "address": "0x41B953164995c11C81DA73D212ED8Af25741b7Ac"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
@@ -50,7 +54,8 @@
         "address": "0xD7FAD3bd59D6477cbe1BE7f646F7f1BA25b230f8"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220721-balancer-queries": {
     "contracts": [
@@ -59,7 +64,8 @@
         "address": "0x239e55F427D44C3cc793f49bFB507ebe76638a2b"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220725-protocol-fee-percentages-provider": {
     "contracts": [
@@ -68,7 +74,8 @@
         "address": "0xb08E16cFc07C684dAA2f93C70323BAdb2A6CBFd2"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20220817-aave-rebalanced-linear-pool": {
     "contracts": [
@@ -77,7 +84,8 @@
         "address": "0x2E96068b3D5B5BAE3D7515da4A1D2E52d08A2647"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220906-composable-stable-pool": {
     "contracts": [
@@ -86,7 +94,8 @@
         "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220908-weighted-pool-v2": {
     "contracts": [
@@ -95,7 +104,8 @@
         "address": "0xC128a9954e6c874eA3d62ce62B468bA073093F25"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20220916-batch-relayer-v4": {
     "contracts": [
@@ -108,7 +118,8 @@
         "address": "0x4574ccBcC09A00C9eE55fB92Fe353699A4fA800e"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221122-composable-stable-pool-v2": {
     "contracts": [
@@ -121,7 +132,8 @@
         "address": "0x373b347bc87998b151A5E9B6bB6ca692b766648a"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20221123-pool-recovery-helper": {
     "contracts": [
@@ -130,7 +142,8 @@
         "address": "0x3b8cA519122CdD8efb272b0D3085453404B25bD0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221124-authorizer-adaptor-entrypoint": {
     "contracts": [
@@ -139,7 +152,8 @@
         "address": "0xeb151668006CD04DAdD098AFd0a82e78F77076c3"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20221207-aave-rebalanced-linear-pool-v3": {
     "contracts": [
@@ -160,7 +174,8 @@
         "address": "0x1a505Ba1cA84D1A4dCF14c8E4866e556B060c974"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-aave-rebalanced-linear-pool-v4": {
     "contracts": [
@@ -181,7 +196,8 @@
         "address": "0x11884dA90FB4221b3aa288a7741C51eC4Fc43B2f"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-composable-stable-pool-v3": {
     "contracts": [
@@ -194,7 +210,8 @@
         "address": "0xB521E108c8aC5aD91Dc16d0001b7253D3B3beBC5"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230206-weighted-pool-v3": {
     "contracts": [
@@ -207,7 +224,8 @@
         "address": "0x463957510888720f1EA65B599e996aaD4264206A"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230314-batch-relayer-v5": {
     "contracts": [
@@ -220,7 +238,8 @@
         "address": "0x03F1ab8b19bcE21EB06C364aEc9e40322572a1e9"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230320-composable-stable-pool-v4": {
     "contracts": [
@@ -233,7 +252,8 @@
         "address": "0x7C53dBf28a23faB07E322fb35eC53A296f548a45"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230320-weighted-pool-v4": {
     "contracts": [
@@ -246,7 +266,8 @@
         "address": "0xE7eE2d64bCB1B2C915898E9DA0947DA1D413DCAF"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230404-l2-layer0-bridge-forwarder": {
     "contracts": [
@@ -255,7 +276,8 @@
         "address": "0x20AabBC59F3cE58e0ef931380d8Bf2A6fE681019"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230410-aave-linear-pool-v5": {
     "contracts": [
@@ -276,7 +298,8 @@
         "address": "0x2Ba5fd37e71Ab2633602553BE7ad5A377D7ED31A"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230411-managed-pool-v2": {
     "contracts": [
@@ -309,7 +332,8 @@
         "address": "0x710A461Ea47AE36C45CBA8Cb6ce964e8A5cb87eD"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230414-authorizer-wrapper": {
     "contracts": [
@@ -318,7 +342,8 @@
         "address": "0xAcf05BE5134d64d150d153818F8C67EE36996650"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230613-balancer-pool-data-queries": {
     "contracts": [
@@ -327,7 +352,8 @@
         "address": "0x6d3197d069F8F9f1Fe7e23665Bc64CB77ED8b089"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230711-composable-stable-pool-v5": {
     "contracts": [
@@ -340,7 +366,8 @@
         "address": "0x6bDa27339629e2d031F19555D3E44c205c31a13a"
       }
     ],
-    "status": "DEPRECATED"
+    "status": "DEPRECATED",
+    "version": "v2"
   },
   "20230712-child-chain-gauge-checkpointer": {
     "contracts": [
@@ -353,7 +380,8 @@
         "address": "0xF27D53f21d024643d50de50183932F17638229F6"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20230717-chainlink-rate-provider-factory": {
     "contracts": [
@@ -362,7 +390,8 @@
         "address": "0x6817149cb753BF529565B4D023d7507eD2ff4Bc0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20231031-batch-relayer-v6": {
     "contracts": [
@@ -379,7 +408,8 @@
         "address": "0xf41D6De4bbE9919d87BC1E5cc3335549e2A1A6c0"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   },
   "20240223-composable-stable-pool-v6": {
     "contracts": [
@@ -392,6 +422,7 @@
         "address": "0x513E5C8678996951FFA07EDB7217A1cF30CF8653"
       }
     ],
-    "status": "ACTIVE"
+    "status": "ACTIVE",
+    "version": "v2"
   }
 }

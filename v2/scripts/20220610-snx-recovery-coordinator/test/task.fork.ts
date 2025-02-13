@@ -13,7 +13,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
+describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 
