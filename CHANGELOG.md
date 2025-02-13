@@ -20,8 +20,8 @@
 - Deployed V3 Stable Surge Pool Factory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Balancer Contract Registry to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 MEV Capture Hook to Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
-- Deployed V3 Balancer Contract Registry to Sepolia.
 
 #### V2
 

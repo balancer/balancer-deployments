@@ -810,5 +810,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0x555148f7300D746F484a15D8A111467a61B39027"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
