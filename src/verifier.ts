@@ -11,6 +11,7 @@ import {
 } from '@nomicfoundation/hardhat-verify/internal/solc/artifacts';
 import { Bytecode } from '@nomicfoundation/hardhat-verify/internal/solc/bytecode';
 import { ApiKey, ChainConfig } from '@nomicfoundation/hardhat-verify/types';
+import logger from 'logger';
 
 const MAX_VERIFICATION_INTENTS = 3;
 
