@@ -84,8 +84,6 @@ export default class Verifier {
             args as any[]
           );
 
-    console.log('contractInformation.solcLongVersion', contractInformation.solcLongVersion);
-
     const { message: guid } = await this.etherscanInstance.verify(
       address,
       JSON.stringify(buildInfo.input),
