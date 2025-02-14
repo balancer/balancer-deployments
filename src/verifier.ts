@@ -1,14 +1,10 @@
-import fetch, { Response } from 'node-fetch';
 import { BuildInfo, CompilerInput, Libraries, Network } from 'hardhat/types';
 import * as parser from '@solidity-parser/parser';
 import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
 
 import Task from './task';
-import logger from './logger';
-import hardhatConfig from '../hardhat.config';
 import { findContractSourceName, getAllFullyQualifiedNames } from './buildinfo';
 import { encodeArguments, sleep } from '@nomicfoundation/hardhat-verify/internal/utilities';
-import { EtherscanVerifyResponse } from '@nomicfoundation/hardhat-verify/internal/etherscan.types';
 import {
   extractMatchingContractInformation,
   getLibraryInformation,
