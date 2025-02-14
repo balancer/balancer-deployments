@@ -48,10 +48,11 @@
     "@balancer-labs/v2-interfaces": "latest",
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
     "@ethereumjs/common": "^4.4.0",
+    "@ethereumjs/evm": "^3.1.1",
     "@ethersproject/contracts": "^5.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
+    "@nomicfoundation/hardhat-verify": "^2.0.12",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
-    "@nomiclabs/hardhat-etherscan": "^3.1.2",
     "@nomiclabs/hardhat-vyper": "^3.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.6",
     "@solidity-parser/parser": "^0.18.0",
@@ -89,9 +90,6 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "@ethereumjs/evm": "^3.1.1"
   },
   "packageManager": "yarn@4.6.0"
 }
