@@ -789,5 +789,23 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xe7ddece45a1e385ed638e7cc044af389f26d882cd63a35b17a3c5b015f071847",
+        "disable()": "0x2ea4babc204130b637ca661e7ca305176a05309d04b93a81d9209612873953c7"
+      }
+    }
+  },
+  "20250124-v3-gyro-eclp": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x6e3e01d7056299be2c158797e5edc32f295a2146487e7b8204c9ecb23159a863",
+        "disable()": "0x5a8ddf45804c7251b50e6296f907a2ac8b828640ff596bc827d4bd4745236f53"
+      }
+    }
   }
 }
