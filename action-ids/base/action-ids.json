@@ -534,5 +534,23 @@
         "registerBalancerContract(uint8,string,address)": "0x6c32ca35628dd90c860faff8e24fa89e8ccb7546536eefc8365ceceb013efad1"
       }
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xf9bd09afbb191ce5916ea86d2bd0d70104150c78765bcd198c166fd5109ee60a",
+        "disable()": "0x209075578b0c6819e5f117c0e9c4cafdfb4bac956e8ea969ff11fb444cd95b08"
+      }
+    }
+  },
+  "20250124-v3-gyro-eclp": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x2dab5afe1d045abb511bda544f726f7577b2dbe37485aa9f0981546d368c61e8",
+        "disable()": "0x438c1c430f94d84d2f73f3f908259eecc519e4505349a103a768d55c3ee01c93"
+      }
+    }
   }
 }

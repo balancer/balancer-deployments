@@ -783,6 +783,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250120-v3-gyro-2clp": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x5aD57d8BC854449bb85D7EA8B164f1cE266EC5a4"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0x20f51c612c5fc55B499211714F2521Eb9CfC16AF"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {
@@ -806,6 +820,20 @@
       {
         "name": "CompositeLiquidityRouter",
         "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x2255b6a03A6eDd0D6CC670864F297869063FE00F"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0x3fd24ad07239dd1F03A57aB3a2deB4a2c3A4b3Bb"
       }
     ],
     "status": "ACTIVE",

@@ -9,7 +9,7 @@ import { Gyro2CLPPoolDeployment } from './input';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as Gyro2CLPPoolDeployment;
 
-  const args = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion];
+  const args = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, { gasLimit: 17e6 }];
   const factory = await task.deployAndVerify('Gyro2CLPPoolFactory', args, from, force);
 
   if (task.mode === TaskMode.LIVE) {
