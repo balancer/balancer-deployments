@@ -205,4 +205,10 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(aggregateSwapFeePercentage).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
     expect(aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
   });
+
+  it('has new getters', async () => {
+    expect(await feeController.isPoolRegistered(pool.address)).to.be.true;
+    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.address)).to.eq(0);
+    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.address)).to.eq(0);
+  });
 });
