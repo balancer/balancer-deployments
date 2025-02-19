@@ -1,26 +1,24 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
 import { expect } from 'chai';
-import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { BigNumber, Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { bn, fp, maxUint } from '@helpers/numbers';
-import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { AggregatorRouterDeployment } from '../input';
+import { bn, fp } from '@helpers/numbers';
+import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';
-import * as expectEvent from '@helpers/expectEvent';
 
 describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
   let task: Task;
   let aggregatorRouter: Contract;
   let pool: Contract;
-  let rplWhale: SignerWithAddress, zero: SignerWithAddress;
-  let XRPL: Contract, RPL: Contract;
+  let rsEthWhale: SignerWithAddress, zero: SignerWithAddress;
+  let rsETH: Contract, hgETH: Contract;
 
   // Using a vanilla pool for simplicity.
-  const XRPL_RPL_POOL = '0x90cdc7476f74f124466caa70a084887f2a41677e';
-  const XRPL_ADDRESS = '0x1db1afd9552eeb28e2e36597082440598b7f1320';
-  const RPL_ADDRESS = '0xd33526068d116ce69f19a9ee46f0bd304f21a51f';
-  const RPL_WHALE = '0x57757e3d981446d585af0d9ae4d7df6d64647806';
+  const RSETH_HGETH_POOL = '0x6649a010cbcf5742e7a13a657df358556b3e55cf';
+  const RSETH_ADDRESS = '0xa1290d69c65a6fe4df752f95823fae25cb99e5a7';
+  const HGETH_ADDRESS = '0xc824a08db624942c5e5f330d56530cd1598859fd';
+  const RSETH_WHALE = '0x43594da5d6a03b2137a04df5685805c676def7cb';
 
   const versionNumber = 1;
   const deploymentId = '20250218-v3-aggregator-router';
@@ -33,16 +31,16 @@ describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
 
     const testTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
 
-    XRPL = await testTokenTask.instanceAt('TestBalancerToken', XRPL_ADDRESS);
-    RPL = await testTokenTask.instanceAt('TestBalancerToken', RPL_ADDRESS);
+    rsETH = await testTokenTask.instanceAt('TestBalancerToken', RSETH_ADDRESS);
+    hgETH = await testTokenTask.instanceAt('TestBalancerToken', HGETH_ADDRESS);
 
-    rplWhale = await impersonate(RPL_WHALE, fp(10));
+    rsEthWhale = await impersonate(RSETH_WHALE, fp(10));
     zero = await impersonate(ZERO_ADDRESS, fp(10));
   });
 
   before('gets pool contract', async () => {
     const stablePoolTask = new Task('20241205-v3-stable-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
-    pool = await stablePoolTask.instanceAt('StablePool', XRPL_RPL_POOL);
+    pool = await stablePoolTask.instanceAt('StablePool', RSETH_HGETH_POOL);
   });
 
   it('checks router version', async () => {
@@ -52,76 +50,38 @@ describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
     expect(routerVersion.deployment).to.be.eq(deploymentId);
   });
 
-  describe('swap', async () => {
-    const rplAmountIn = fp(100);
-    let expectedAmountOut: BigNumber;
+  it('performs swap', async () => {
+    const rplAmountIn = fp(1);
+    // Query result
+    const expectedAmountOut = await aggregatorRouter
+      .connect(zero)
+      .callStatic.querySwapSingleTokenExactIn(
+        pool.address,
+        RSETH_ADDRESS,
+        HGETH_ADDRESS,
+        rplAmountIn,
+        rsEthWhale.address,
+        '0x'
+      );
 
-    sharedBeforeEach('query', async () => {
-      expectedAmountOut = await aggregatorRouter
-        .connect(zero)
-        .callStatic.querySwapSingleTokenExactIn(
-          pool.address,
-          RPL_ADDRESS,
-          XRPL_ADDRESS,
-          rplAmountIn,
-          rplWhale.address,
-          '0x'
-        );
-      console.log('expected amount out: ', expectedAmountOut);
+    const hgEthBalanceBefore: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
 
-      await RPL.connect(rplWhale).transfer(await aggregatorRouter.getVault(), rplAmountIn);
+    // Pay token in upfront and swap
+    await rsETH.connect(rsEthWhale).transfer(await aggregatorRouter.getVault(), rplAmountIn);
+    await aggregatorRouter
+      .connect(rsEthWhale)
+      .swapSingleTokenExactIn(
+        pool.address,
+        RSETH_ADDRESS,
+        HGETH_ADDRESS,
+        rplAmountIn,
+        expectedAmountOut.sub(1),
+        (await currentTimestamp()).add(bn(DAY)),
+        '0x'
+      );
 
-      const actualAmountOut = await aggregatorRouter
-        .connect(rplWhale)
-        .callStatic.swapSingleTokenExactIn(
-          pool.address,
-          RPL_ADDRESS,
-          XRPL_ADDRESS,
-          rplAmountIn,
-          0,
-          (await currentTimestamp()).add(bn(DAY)),
-          '0x'
-        );
+    const hgEthBalanceAfter: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
 
-      console.log('actual amount out: ', actualAmountOut);
-    });
-
-    it('performs swap', async () => {
-      const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
-      const vault = await vaultTask.deployedInstance('Vault');
-
-      const xRplBalanceBefore: BigNumber = await XRPL.balanceOf(rplWhale.address);
-
-      console.log('about to query');
-
-      console.log('about to transfer');
-
-      await RPL.connect(rplWhale).transfer(await aggregatorRouter.getVault(), rplAmountIn);
-
-      console.log('about to swap; amount out: ', expectedAmountOut);
-
-      const tx = await aggregatorRouter
-        .connect(rplWhale)
-        .swapSingleTokenExactIn(
-          pool.address,
-          RPL_ADDRESS,
-          XRPL_ADDRESS,
-          rplAmountIn,
-          0,
-          (await currentTimestamp()).add(bn(DAY)),
-          '0x'
-        );
-      const receipt = await tx.wait();
-      const event = expectEvent.inIndirectReceipt(receipt, vault.interface, 'Swap');
-      console.log('swap event: ', event);
-      console.log('Swapped');
-
-      const xRplBalanceAfter: BigNumber = await XRPL.balanceOf(rplWhale.address);
-      console.log('balance before: ', xRplBalanceBefore);
-      console.log('amount out: ', expectedAmountOut);
-      console.log('balance after: ', xRplBalanceAfter);
-
-      expect(xRplBalanceAfter).to.be.eq(xRplBalanceBefore.add(expectedAmountOut));
-    });
+    expect(hgEthBalanceAfter).to.be.eq(hgEthBalanceBefore.add(expectedAmountOut));
   });
 });

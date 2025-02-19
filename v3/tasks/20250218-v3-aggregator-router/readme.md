@@ -1,15 +1,10 @@
-# 2024-12-05 - V3 Router
+# 2025-02-18 - V3 Aggregator Router
 
-Base Router deployment for V3.
-Contains `Router` for basic, single step operations (e.g., pool initialization, add, remove, swap).
+Aggregator Router deployment for V3.
+Contains `AggregatorRouter` for basic swap operations (exact in / exact out) where the sender pays the required amounts in upfront to the Vault, avoiding any kind of token approval requirements.
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/74d7068fb21565741427cdabfa4f1b539a4bddaa).
-- [Ethereum mainnet addresses](./output/mainnet.json)
-- [Gnosis mainnet addresses](./output/gnosis.json)
-- [Arbitrum mainnet addresses](./output/arbitrum.json)
-- [Base mainnet addresses](./output/base.json)
-- [Sepolia testnet addresses](./output/sepolia.json)
-- [`Router` artifact](./artifact/Router.json)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/3995e9542c7fbefe8988f05a73e94ea0b9e21710).
+- [`AggregatorRouter` artifact](./artifact/AggregatorRouter.json)
 
