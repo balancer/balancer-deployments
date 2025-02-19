@@ -1,154 +1,127 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { fp, maxUint } from '@helpers/numbers';
-import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
+import { bn, fp, maxUint } from '@helpers/numbers';
+import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
+import { AggregatorRouterDeployment } from '../input';
+import { currentTimestamp, DAY } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
-import { RouterDeployment } from '../input';
-import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
 
-describeForkTest('AggregatorRouter-V3', 'mainnet', 21873500, function () {
+describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
   let task: Task;
-  let router: Contract, permit2: Contract;
-  let factory: Contract, pool: Contract;
-  let wethSigner: SignerWithAddress, alice: SignerWithAddress;
-  let input: RouterDeployment;
-  let WETH: Contract, BAL: Contract;
+  let aggregatorRouter: Contract;
+  let pool: Contract;
+  let rplWhale: SignerWithAddress, zero: SignerWithAddress;
+  let XRPL: Contract, RPL: Contract;
 
-  const LARGE_TOKEN_HOLDER = '0xBA12222222228d8Ba445958a75a0704d566BF2C8';
-
-  const initialBalanceWETH = fp(1e2);
-  const initialBalanceBAL = fp(1e5);
+  // Using a vanilla pool for simplicity.
+  const XRPL_RPL_POOL = '0x90cdc7476f74f124466caa70a084887f2a41677e';
+  const XRPL_ADDRESS = '0x1db1afd9552eeb28e2e36597082440598b7f1320';
+  const RPL_ADDRESS = '0xd33526068d116ce69f19a9ee46f0bd304f21a51f';
+  const RPL_WHALE = '0x57757e3d981446d585af0d9ae4d7df6d64647806';
 
   const versionNumber = 1;
   const deploymentId = '20250218-v3-aggregator-router';
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let tokenConfig: any[];
 
   before('run task', async () => {
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
 
-    input = task.input() as RouterDeployment;
+    aggregatorRouter = await task.deployedInstance('AggregatorRouter');
 
-    router = await task.deployedInstance('Router');
-    permit2 = await task.instanceAt('IPermit2', input.Permit2);
+    const testTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
 
-    const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
-    WETH = await testBALTokenTask.instanceAt('TestBalancerToken', input.WETH);
-    BAL = await testBALTokenTask.instanceAt('TestBalancerToken', input.BAL);
+    XRPL = await testTokenTask.instanceAt('TestBalancerToken', XRPL_ADDRESS);
+    RPL = await testTokenTask.instanceAt('TestBalancerToken', RPL_ADDRESS);
 
-    wethSigner = await impersonate(WETH.address, fp(10e8));
-    alice = await getSigner();
+    rplWhale = await impersonate(RPL_WHALE, fp(10));
+    zero = await impersonate(ZERO_ADDRESS, fp(10));
   });
 
-  before('setup contracts and parameters', async () => {
-    tokenConfig = [
-      {
-        token: input.WETH,
-        tokenType: 0,
-        rateProvider: ZERO_ADDRESS,
-        paysYieldFees: false,
-      },
-      {
-        token: input.BAL,
-        tokenType: 0,
-        rateProvider: ZERO_ADDRESS,
-        paysYieldFees: false,
-      },
-    ].sort(function (a, b) {
-      return a.token.toLowerCase().localeCompare(b.token.toLowerCase());
-    });
-  });
-
-  before('deploys pool', async () => {
-    const task = new Task('20241205-v3-weighted-pool', TaskMode.TEST, getForkedNetwork(hre));
-    await task.run({ force: true });
-    factory = await task.deployedInstance('WeightedPoolFactory');
-
-    const newWeightedPoolParams = {
-      name: 'Mock Weighted Pool',
-      symbol: 'TEST',
-      tokens: tokenConfig,
-      normalizedWeights: [fp(0.8), fp(0.2)],
-      roleAccounts: {
-        pauseManager: ZERO_ADDRESS,
-        swapFeeManager: ZERO_ADDRESS,
-        poolCreator: ZERO_ADDRESS,
-      },
-      swapFeePercentage: fp(0.01),
-      hooksAddress: ZERO_ADDRESS,
-      enableDonations: false,
-      disableUnbalancedLiquidity: false,
-      salt: ONES_BYTES32,
-    };
-
-    const poolCreationReceipt = await (
-      await factory.create(
-        newWeightedPoolParams.name,
-        newWeightedPoolParams.symbol,
-        newWeightedPoolParams.tokens,
-        newWeightedPoolParams.normalizedWeights,
-        newWeightedPoolParams.roleAccounts,
-        newWeightedPoolParams.swapFeePercentage,
-        newWeightedPoolParams.hooksAddress,
-        newWeightedPoolParams.enableDonations,
-        newWeightedPoolParams.disableUnbalancedLiquidity,
-        newWeightedPoolParams.salt
-      )
-    ).wait();
-
-    const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
-    pool = await task.instanceAt('WeightedPool', event.args.pool);
+  before('gets pool contract', async () => {
+    const stablePoolTask = new Task('20241205-v3-stable-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    pool = await stablePoolTask.instanceAt('StablePool', XRPL_RPL_POOL);
   });
 
   it('checks router version', async () => {
-    const routerVersion = JSON.parse(await router.version());
-    expect(routerVersion.name).to.be.eq('Router');
+    const routerVersion = JSON.parse(await aggregatorRouter.version());
+    expect(routerVersion.name).to.be.eq('AggregatorRouter');
     expect(routerVersion.version).to.be.eq(versionNumber);
     expect(routerVersion.deployment).to.be.eq(deploymentId);
   });
 
-  it('checks router WETH', async () => {
-    const wethTx = wethSigner.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+  describe('swap', async () => {
+    const rplAmountIn = fp(100);
+    let expectedAmountOut: BigNumber;
+
+    sharedBeforeEach('query', async () => {
+      expectedAmountOut = await aggregatorRouter
+        .connect(zero)
+        .callStatic.querySwapSingleTokenExactIn(
+          pool.address,
+          RPL_ADDRESS,
+          XRPL_ADDRESS,
+          rplAmountIn,
+          rplWhale.address,
+          '0x'
+        );
+      console.log('expected amount out: ', expectedAmountOut);
+
+      await RPL.connect(rplWhale).transfer(await aggregatorRouter.getVault(), rplAmountIn);
+
+      const actualAmountOut = await aggregatorRouter
+        .connect(rplWhale)
+        .callStatic.swapSingleTokenExactIn(
+          pool.address,
+          RPL_ADDRESS,
+          XRPL_ADDRESS,
+          rplAmountIn,
+          0,
+          (await currentTimestamp()).add(bn(DAY)),
+          '0x'
+        );
+
+      console.log('actual amount out: ', actualAmountOut);
     });
-    await expect(wethTx).to.not.be.reverted;
 
-    const aliceTx = alice.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+    it('performs swap', async () => {
+      const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
+      const vault = await vaultTask.deployedInstance('Vault');
+
+      const xRplBalanceBefore: BigNumber = await XRPL.balanceOf(rplWhale.address);
+
+      console.log('about to query');
+
+      console.log('about to transfer');
+
+      await RPL.connect(rplWhale).transfer(await aggregatorRouter.getVault(), rplAmountIn);
+
+      console.log('about to swap; amount out: ', expectedAmountOut);
+
+      const tx = await aggregatorRouter
+        .connect(rplWhale)
+        .swapSingleTokenExactIn(
+          pool.address,
+          RPL_ADDRESS,
+          XRPL_ADDRESS,
+          rplAmountIn,
+          0,
+          (await currentTimestamp()).add(bn(DAY)),
+          '0x'
+        );
+      const receipt = await tx.wait();
+      const event = expectEvent.inIndirectReceipt(receipt, vault.interface, 'Swap');
+      console.log('swap event: ', event);
+      console.log('Swapped');
+
+      const xRplBalanceAfter: BigNumber = await XRPL.balanceOf(rplWhale.address);
+      console.log('balance before: ', xRplBalanceBefore);
+      console.log('amount out: ', expectedAmountOut);
+      console.log('balance after: ', xRplBalanceAfter);
+
+      expect(xRplBalanceAfter).to.be.eq(xRplBalanceBefore.add(expectedAmountOut));
     });
-    await expect(aliceTx).to.be.reverted;
-  });
-
-  it('initialize pool with native ETH', async () => {
-    const bob = await getSigner();
-    await setBalance(bob.address, fp(10e8));
-
-    const largeHolderSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
-
-    BAL.connect(largeHolderSigner).transfer(bob.address, initialBalanceBAL);
-
-    await BAL.connect(bob).approve(permit2.address, initialBalanceBAL);
-    await permit2.connect(bob).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
-
-    await router
-      .connect(bob)
-      .initialize(
-        pool.address,
-        [input.BAL, input.WETH],
-        [initialBalanceBAL, initialBalanceWETH],
-        0,
-        true,
-        ZERO_BYTES32,
-        {
-          value: ethers.utils.parseEther('1000.0'),
-        }
-      );
   });
 });
