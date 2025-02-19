@@ -41,4 +41,8 @@ describeForkTest('MevCaptureHook', 'mainnet', 21882500, function () {
   it('returns default mev tax threshold', async () => {
     expect(await mevCaptureHook.getDefaultMevTaxThreshold()).to.be.eq(bn('300000000'));
   });
+
+  it('is enabled by default', async () => {
+    expect(await mevCaptureHook.isMevTaxEnabled()).to.be.true;
+  });
 });
