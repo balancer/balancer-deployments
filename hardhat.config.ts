@@ -1,6 +1,7 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-vyper';
 import '@nomiclabs/hardhat-waffle';
+import '@nomicfoundation/hardhat-verify';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
 import 'tsconfig-paths/register';
@@ -34,6 +35,7 @@ import {
   saveTimelockAuthorizerConfig,
   withRetries,
 } from './src/network';
+import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
 
 const THEGRAPHURLS: { [key: string]: string } = {};
 
@@ -47,7 +49,17 @@ task('deploy', 'Run deployment task')
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
-      const verifier = apiKey ? new Verifier(hre.network, apiKey) : undefined;
+      const verifier = apiKey
+        ? new Verifier(
+            hre.network,
+            apiKey,
+            await Etherscan.getCurrentChainConfig(
+              hre.network.name,
+              hre.network.provider,
+              hre.config.etherscan.customChains
+            )
+          )
+        : undefined;
       await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).run(args);
     }
   );
@@ -67,7 +79,17 @@ task('verify-contract', `Verify a task's deployment on a block explorer`)
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
-      const verifier = apiKey ? new Verifier(hre.network, apiKey) : undefined;
+      const verifier = apiKey
+        ? new Verifier(
+            hre.network,
+            apiKey,
+            await Etherscan.getCurrentChainConfig(
+              hre.network.name,
+              hre.network.provider,
+              hre.config.etherscan.customChains
+            )
+          )
+        : undefined;
 
       // Contracts can only be verified in Live mode
       await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).verify(args.name, args.address, args.args);
