@@ -197,6 +197,16 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(yieldFeeEvent.args.pool).to.eq(pool.address);
     expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
     expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
+
+    const poolCreatorEvent = expectEvent.inIndirectReceipt(
+      poolCreationReceipt,
+      feeController.interface,
+      'PoolRegisteredWithFeeController'
+    );
+
+    expect(poolCreatorEvent.args.pool).to.eq(pool.address);
+    expect(poolCreatorEvent.args.poolCreator).to.eq(ZERO_ADDRESS);
+    expect(poolCreatorEvent.args.protocolFeeExempt).to.be.false;
   });
 
   it('checks pool aggregate fees', async () => {
