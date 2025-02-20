@@ -572,5 +572,25 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0x7A2535f5fB47b8e44c02Ef5D9990588313fe8F05"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250218-v3-aggregator-router": {
+    "contracts": [
+      {
+        "name": "AggregatorRouter",
+        "address": "0x013D4382F291be5688AFBcc741Ee8A24C66B2C92"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

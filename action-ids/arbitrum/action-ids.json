@@ -969,5 +969,28 @@
         "registerBalancerContract(uint8,string,address)": "0xd222e876fa09fc854125c959257507aa6ad490d65a8b94721974e7cc8953f739"
       }
     }
+  },
+  "20250212-v3-mev-capture-hook": {
+    "MevCaptureHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addMevTaxExemptSenders(address[])": "0x2594f5a46f6da91ea442cd09413ab4bc57759f2c94b5e17f467f1e6085fc8deb",
+        "disableMevTax()": "0x1be8a00a0c49d818a38d8a545c01333a30401bb4f5e68563df2a1d7ec4caf83a",
+        "enableMevTax()": "0x8dbec8f249fd06678c67483c4662e1d9b00e4437dbcc26c5366b856eb2e2ae19",
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0xca3dc64589b91a02b4d868f3336f214b0f33d4252dd45c8e7662e56fe65a016b",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0xf5d82f8dd3852f79c9a0367bc95e0cfdf9ae95a3c76b64677d4aaf46743b8e58",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0x8437294dff7c9d91a9f02b1b77521c83cb8bd894fe5dbf6e48b0a965feede28b",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0x451443e9722ec384b154d534ed196d9fd5eabbfa8d8578959b3e87374138cfab",
+        "onBeforeInitialize(uint256[],bytes)": "0xe375bf41109fdb058dd8d77988a100bf4adedb9f9a5152c77e6a5dcd609bd1e0",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x168625038ed8222c5d743e59dc2dce4a39be052b8aa3fb0de6add7af78b1bbbc",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0xec1143eeaa45781c6aa4441d9a26a62914b489ce73e69ce81d740cc21d0aebb1",
+        "removeMevTaxExemptSenders(address[])": "0x9b957330aa5799272cc0b955faaf7999d56f7943f6bda78e9094fbc1d531166e",
+        "setDefaultMevTaxMultiplier(uint256)": "0x2e773980b61b8333a36a85419ff5714e0f7de85b14e0a9b3b9ba6b672e27aeeb",
+        "setDefaultMevTaxThreshold(uint256)": "0x99cbac78d811203dbd7dd4b6eb0e1129c4fce82fefcc8c0f955985bd625e9e98",
+        "setMaxMevSwapFeePercentage(uint256)": "0xd1dc721609b6135d1ddec35c7fe9ea1e7dcd32bad6119c8afad304b3217804eb",
+        "setPoolMevTaxMultiplier(address,uint256)": "0x2f085f56f8be386eda2ab4eec9de804e0b6d4579493ce682a6c20bcc94680412",
+        "setPoolMevTaxThreshold(address,uint256)": "0x3f7036f2c3b4fef04bb7be2aef12e6efbebec9af804a9bd2b54237c10ee45b8a"
+      }
+    }
   }
 }
