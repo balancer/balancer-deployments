@@ -197,6 +197,16 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(yieldFeeEvent.args.pool).to.eq(pool.address);
     expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
     expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
+
+    const poolCreatorEvent = expectEvent.inIndirectReceipt(
+      poolCreationReceipt,
+      feeController.interface,
+      'PoolRegisteredWithFeeController'
+    );
+
+    expect(poolCreatorEvent.args.pool).to.eq(pool.address);
+    expect(poolCreatorEvent.args.poolCreator).to.eq(ZERO_ADDRESS);
+    expect(poolCreatorEvent.args.protocolFeeExempt).to.be.false;
   });
 
   it('checks pool aggregate fees', async () => {
@@ -204,5 +214,11 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
 
     expect(aggregateSwapFeePercentage).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
     expect(aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
+  });
+
+  it('has new getters', async () => {
+    expect(await feeController.isPoolRegistered(pool.address)).to.be.true;
+    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.address)).to.eq(0);
+    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.address)).to.eq(0);
   });
 });
