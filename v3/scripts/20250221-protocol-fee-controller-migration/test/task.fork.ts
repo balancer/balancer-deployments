@@ -249,9 +249,7 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
     const WETH = tokensTask.output({ network: fork }).WETH;
     const BAL = tokensTask.output({ network: fork }).BAL;
 
-
-    let tokenConfig: any[];
-    tokenConfig = [
+    const tokenConfig = [
       {
         token: WETH,
         tokenType: 0,
@@ -268,49 +266,57 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
       return a.token.toLowerCase().localeCompare(b.token.toLowerCase());
     });
 
-      const newWeightedPoolParams = {
-        name: 'Mock Weighted Pool',
-        symbol: 'TEST',
-        tokens: tokenConfig,
-        normalizedWeights: [fp(0.8), fp(0.2)],
-        roleAccounts: {
-          pauseManager: ZERO_ADDRESS,
-          swapFeeManager: ZERO_ADDRESS,
-          poolCreator: admin.address,
-        },
-        swapFeePercentage: fp(0.01),
-        hooksAddress: ZERO_ADDRESS,
-        enableDonations: false,
-        disableUnbalancedLiquidity: false,
-        salt: ONES_BYTES32,
-      };
-  
-      const poolCreationReceipt = await (
-        await factory.create(
-          newWeightedPoolParams.name,
-          newWeightedPoolParams.symbol,
-          newWeightedPoolParams.tokens,
-          newWeightedPoolParams.normalizedWeights,
-          newWeightedPoolParams.roleAccounts,
-          newWeightedPoolParams.swapFeePercentage,
-          newWeightedPoolParams.hooksAddress,
-          newWeightedPoolParams.enableDonations,
-          newWeightedPoolParams.disableUnbalancedLiquidity,
-          newWeightedPoolParams.salt
-        )
-      ).wait();
+    const newWeightedPoolParams = {
+      name: 'Mock Weighted Pool',
+      symbol: 'TEST',
+      tokens: tokenConfig,
+      normalizedWeights: [fp(0.8), fp(0.2)],
+      roleAccounts: {
+        pauseManager: ZERO_ADDRESS,
+        swapFeeManager: ZERO_ADDRESS,
+        poolCreator: admin.address,
+      },
+      swapFeePercentage: fp(0.01),
+      hooksAddress: ZERO_ADDRESS,
+      enableDonations: false,
+      disableUnbalancedLiquidity: false,
+      salt: ONES_BYTES32,
+    };
 
-      const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
-      testPoolWithCreator = await migrationTask.instanceAt('WeightedPool', event.args.pool);
+    const poolCreationReceipt = await (
+      await factory.create(
+        newWeightedPoolParams.name,
+        newWeightedPoolParams.symbol,
+        newWeightedPoolParams.tokens,
+        newWeightedPoolParams.normalizedWeights,
+        newWeightedPoolParams.roleAccounts,
+        newWeightedPoolParams.swapFeePercentage,
+        newWeightedPoolParams.hooksAddress,
+        newWeightedPoolParams.enableDonations,
+        newWeightedPoolParams.disableUnbalancedLiquidity,
+        newWeightedPoolParams.salt
+      )
+    ).wait();
+
+    const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
+    testPoolWithCreator = await migrationTask.instanceAt('WeightedPool', event.args.pool);
   });
 
   it('sets a pool creator fee', async () => {
     // "old" is the current one.
-    await oldFeeController.connect(admin).setPoolCreatorSwapFeePercentage(testPoolWithCreator.address, POOL_CREATOR_SWAP_FEE);
-    await oldFeeController.connect(admin).setPoolCreatorYieldFeePercentage(testPoolWithCreator.address, POOL_CREATOR_YIELD_FEE);
+    await oldFeeController
+      .connect(admin)
+      .setPoolCreatorSwapFeePercentage(testPoolWithCreator.address, POOL_CREATOR_SWAP_FEE);
+    await oldFeeController
+      .connect(admin)
+      .setPoolCreatorYieldFeePercentage(testPoolWithCreator.address, POOL_CREATOR_YIELD_FEE);
 
-    expect(await oldFeeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(POOL_CREATOR_SWAP_FEE);
-    expect(await oldFeeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(POOL_CREATOR_YIELD_FEE);
+    expect(await oldFeeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(
+      POOL_CREATOR_SWAP_FEE
+    );
+    expect(await oldFeeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(
+      POOL_CREATOR_YIELD_FEE
+    );
   });
 
   it('migrates the pool to a new controller', async () => {
@@ -328,7 +334,11 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
   });
 
   it('copies the pool creator percentages', async () => {
-    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(POOL_CREATOR_SWAP_FEE);
-    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(POOL_CREATOR_YIELD_FEE);
+    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(
+      POOL_CREATOR_SWAP_FEE
+    );
+    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(
+      POOL_CREATOR_YIELD_FEE
+    );
   });
 });

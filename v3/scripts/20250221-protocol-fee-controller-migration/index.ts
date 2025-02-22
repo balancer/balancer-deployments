@@ -10,6 +10,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   await task.deployAndVerify('ProtocolFeeControllerMigration', args, from, force);
 
   // Deploy a version of the WeightedPoolFactory that allows pool creators.
-  const factoryArgs = [input.Vault, 0, "", ""];
+  const factoryArgs = [input.Vault, 0, '', ''];
   await task.deployAndVerify('WeightedPoolFactory', factoryArgs, from, force);
 };
