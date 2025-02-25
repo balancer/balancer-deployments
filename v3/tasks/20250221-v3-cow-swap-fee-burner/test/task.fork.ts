@@ -50,8 +50,8 @@ describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
   it('burn tokens', async () => {
     expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Nonexistent);
 
-    let initBalance = 1000000e6;
-    let minAmountOut = initBalance / 2;
+    const initBalance = 1000000e6;
+    const minAmountOut = initBalance / 2;
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant burn role to admin
