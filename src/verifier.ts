@@ -62,7 +62,6 @@ export default class Verifier {
       buildInfos = task.buildInfos();
     }
     const buildInfo = this.findBuildInfoWithContract(buildInfos, name);
-    buildInfo.input = this.trimmedBuildInfoInput(name, buildInfo.input);
 
     const sourceName = findContractSourceName(buildInfo, name);
     const fullSourceName = `${sourceName}:${name}`;
@@ -113,72 +112,5 @@ export default class Verifier {
     } else {
       return found;
     }
-  }
-
-  // Trims the inputs of the build info to only keep imported files, avoiding submitting unnecessary source files for
-  // verification (e.g. mocks). This is required because Hardhat compiles entire projects at once, resulting in a single
-  // huge build info.
-  private trimmedBuildInfoInput(contractName: string, input: CompilerInput): CompilerInput {
-    // First we find all sources imported from our contract
-    const sourceName = this.getContractSourceName(contractName, input);
-    const importedSourceNames = this.getContractImportedSourceNames(
-      sourceName,
-      input,
-      new Set<string>().add(sourceName)
-    );
-
-    // Then, we keep only those inputs. This method also preserves the order of the files, which may be important in
-    // some versions of solc.
-    return {
-      ...input,
-      sources: Object.keys(input.sources)
-        .filter((source) => importedSourceNames.has(source))
-        .map((source) => ({ [source]: input.sources[source] }))
-        .reduce((previous, current) => Object.assign(previous, current), {}),
-    };
-  }
-
-  private getAbsoluteSourcePath(relativeSourcePath: string, input: CompilerInput): string {
-    // We're not actually converting from relative to absolute but rather guessing: we'll extract the filename from the
-    // relative path, and then look for a source name in the inputs that matches it.
-    const contractName = (relativeSourcePath.match(/.*\/([\w'-]+)\.sol/) as RegExpMatchArray)[1];
-    return this.getContractSourceName(contractName, input);
-  }
-
-  private getContractSourceName(contractName: string, input: CompilerInput): string {
-    const absoluteSourcePath = Object.keys(input.sources).find((absoluteSourcePath) =>
-      absoluteSourcePath.includes(`/${contractName}.sol`)
-    );
-
-    if (absoluteSourcePath === undefined) {
-      throw new Error(`Could not find source name for ${contractName}`);
-    }
-
-    return absoluteSourcePath;
-  }
-
-  private getContractImportedSourceNames(
-    sourceName: string,
-    input: CompilerInput,
-    previousSourceNames: Set<string>
-  ): Set<string> {
-    const ast = parser.parse(input.sources[sourceName].content);
-    parser.visit(ast, {
-      ImportDirective: (node) => {
-        // Imported paths might be relative, so we convert them to absolute
-        const importedSourceName = this.getAbsoluteSourcePath(node.path, input);
-
-        if (!previousSourceNames.has(importedSourceName)) {
-          // New source!
-          previousSourceNames = this.getContractImportedSourceNames(
-            importedSourceName,
-            input,
-            new Set(previousSourceNames).add(importedSourceName)
-          );
-        }
-      },
-    });
-
-    return previousSourceNames;
   }
 }
