@@ -65,7 +65,7 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21917206, function () {
       );
   });
 
-  it('deploys contract', async () => {
+  it('returns default parameters', async () => {
     expect(await feeSweeper.getVault()).to.eq(input.Vault);
     expect(await feeSweeper.getFeeRecipient()).to.eq(input.FeeRecipient);
   });
