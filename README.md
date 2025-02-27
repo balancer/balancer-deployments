@@ -137,6 +137,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
+| V3 Protocol Fee Sweeper                                | [`20250228-v3-protocol-fee-sweeper`](./v3/tasks/20250228-v3-protocol-fee-sweeper)                       |
 
 ## Scripts
 
