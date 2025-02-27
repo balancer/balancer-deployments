@@ -5,6 +5,6 @@ import { Task, TaskRunOptions } from '@src';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as CowSwapFeeBurnerDeployment;
 
-  const routerArgs = [input.Vault, input.ComposableCow, input.CowVaultRelayer, input.AppData];
+  const routerArgs = [input.Vault, input.ComposableCow, input.CowVaultRelayer, input.AppData, input.Version];
   await task.deployAndVerify('CowSwapFeeBurner', routerArgs, from, force);
 };
