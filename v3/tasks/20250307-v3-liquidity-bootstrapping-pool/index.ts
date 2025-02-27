@@ -6,6 +6,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const input = task.input() as LBPoolFactoryDeployment;
 
   const args = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, input.Router];
-  
+
   await task.deployAndVerify('LBPoolFactory', args, from, force);
 };

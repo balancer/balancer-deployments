@@ -23,7 +23,6 @@ describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
   const INITIAL_BAL = fp(26667);
   const INITIAL_WETH = fp(8);
 
-  let vault: Contract;
   let factory: Contract;
   let pool: Contract;
   let trustedRouter: Contract;
@@ -48,16 +47,13 @@ describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
     const routerTask = new Task('20241205-v3-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
     trustedRouter = await routerTask.deployedInstance('Router');
 
-    const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
-    vault = await vaultTask.deployedInstance('Vault');
-
     const permit2Task = new Task('00000000-permit2', TaskMode.READ_ONLY);
     const permit2Address = permit2Task.output({ network: 'mainnet' }).Permit2;
     permit2 = await task.instanceAt('IPermit2', permit2Address);
 
     admin = await getSigner(0);
     whale = await impersonate(TOKEN_HOLDER, fp(10e8));
-    
+
     const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
     const fork = getForkedNetwork(hre);
@@ -106,16 +102,10 @@ describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
       startTime: startTime.add(HOUR),
       endTime: startTime.add(DAY),
       blockProjectTokenSwapsIn: false,
-    }
+    };
 
     const poolCreationReceipt = await (
-      await factory.create(
-        'Mock LBP',
-        'LBP-TEST',
-        newLBPParams,
-        SWAP_FEE,
-        ONES_BYTES32
-      )
+      await factory.create('Mock LBP', 'LBP-TEST', newLBPParams, SWAP_FEE, ONES_BYTES32)
     ).wait();
 
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
@@ -159,16 +149,14 @@ describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
     await wethToken.connect(admin).approve(permit2.address, INITIAL_WETH);
     await permit2.connect(admin).approve(WETH, trustedRouter.address, INITIAL_WETH, maxUint(48));
 
-    await trustedRouter
-      .connect(admin)
-      .initialize(
-        pool.address,
-        [BAL, WETH],
-        [INITIAL_BAL, INITIAL_WETH],
-        0,
-        false, // wethIsETH - LBPool doesn't support native ETH
-        ZERO_BYTES32,
-      );
+    await trustedRouter.connect(admin).initialize(
+      pool.address,
+      [BAL, WETH],
+      [INITIAL_BAL, INITIAL_WETH],
+      0,
+      false, // wethIsETH - LBPool doesn't support native ETH
+      ZERO_BYTES32
+    );
   });
 
   it('starts the sale', async () => {
