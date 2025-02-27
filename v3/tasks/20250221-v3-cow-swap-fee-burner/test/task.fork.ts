@@ -95,7 +95,7 @@ describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
       sellAmount: initBalance,
       buyAmount: minAmountOut,
       validTo: block.timestamp + FIVE_MINUTES,
-      appData: input.AppData,
+      appData: input.AppDataHash,
       feeAmount: 0,
       kind: ethers.utils.keccak256(ethers.utils.toUtf8Bytes('sell')),
       partiallyFillable: true,
