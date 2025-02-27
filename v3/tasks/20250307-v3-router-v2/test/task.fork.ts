@@ -119,6 +119,11 @@ describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
     expect(routerVersion.deployment).to.be.eq(TASK_NAME);
   });
 
+  it('checks new getters', async () => {
+    expect(await router.getPermit2()).to.eq(permit2.address);
+    expect(await router.getWeth()).to.eq(input.WETH);
+  });
+
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
       to: router.address,
