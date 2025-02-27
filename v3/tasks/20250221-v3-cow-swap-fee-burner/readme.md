@@ -4,5 +4,5 @@ Contains `CowSwapFeeBurner` for burning the protocol fee via CoW Protocol. The c
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/4df25be3bab3f1a0e8247d47dd5aaa3bc95788f2).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0845e3c103630c60feb756e9fc98a1ecc40535a1).
 - [`CowSwapFeeBurner` artifact](./artifact/CowSwapFeeBurner.json)
