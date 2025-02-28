@@ -33,7 +33,6 @@ const Version = JSON.stringify({
   deployment: '20250221-v3-cow-swap-fee-burner',
 });
 
-console.log('Vault:', Version);
 
 export default {
   Vault,
