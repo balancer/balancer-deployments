@@ -812,5 +812,16 @@
         "setPoolMevTaxThreshold(address,uint256)": "0x5616d762d6bc126d722caddb0ebabf898bead04c5e5ef93f470115c1081cbba2"
       }
     }
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "CowSwapFeeBurner": {
+      "useAdaptor": false,
+      "actionIds": {
+        "burn(address,address,uint256,address,uint256,address,uint256)": "0xf8fe910cd5920f9a20ca833cbf958856fff1d797e4e86126deea1036d5c47253",
+        "cancelOrder(address,address)": "0xe692031c5ac7a0cb92d31931d18384aa41645adfb4851685393014452c030910",
+        "emergencyCancelOrder(address,address)": "0xe76ac0e5e8a54359bd9919b995cb1005bbc2724c591c81fc3f3c28eff9603867",
+        "retryOrder(address,uint256,uint256)": "0x00232cccf46374b9e65a728e95d07a29291f58cd82ee6ade48138d8b0a6849e9"
+      }
+    }
   }
 }
