@@ -992,5 +992,18 @@
         "setPoolMevTaxThreshold(address,uint256)": "0x3f7036f2c3b4fef04bb7be2aef12e6efbebec9af804a9bd2b54237c10ee45b8a"
       }
     }
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0xd9879ff02df7341c3700cab1932c18d332c98a67cd4c9d0ca39d43771e0a63ef",
+        "recoverProtocolFees(address[])": "0x2151e5bf65eeb913ed73e6c192c22e55918a58fb4e82148c4d43e411afab7e95",
+        "removeProtocolFeeBurner(address)": "0x4eb9beba0cc73614ddb49fd7bd265c0b4b6f5b32d22d3e998f564a7e4a778e13",
+        "setFeeRecipient(address)": "0x73e5fafa3b8190d7e557f6f122c6162b1ed9dc9db45c5b4799a51f67d8c673ba",
+        "setTargetToken(address)": "0x04ad3bcb5059de4a776a32ba1566d3663f7fdfbfe6f9d586252a86a0d3d019e2",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x87be93afebd07695507f864bdc3acd218608d59e5a1efb451bb946c29492977e"
+      }
+    }
   }
 }
