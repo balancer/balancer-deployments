@@ -570,5 +570,16 @@
         "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0xcc58c158f60f8590f5c29f5d8011ea04dc0f5c99d5570323f9d01cbd10cccbea"
       }
     }
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "CowSwapFeeBurner": {
+      "useAdaptor": false,
+      "actionIds": {
+        "burn(address,address,uint256,address,uint256,address,uint256)": "0x92e4be06c4f8a949c6b6b835439571e9e454f57e7585734aa3fcbe9f3008aa83",
+        "cancelOrder(address,address)": "0xc8db914c03d0b22fd88d4a6a7d6310adb91800fddef8f47df1bef97a2a51e884",
+        "emergencyCancelOrder(address,address)": "0x606b293b8ac13609d7e3d6a75f8261690f6628069a236692e32677dd03098cb8",
+        "retryOrder(address,uint256,uint256)": "0xa93c3f660f6c3f2fc8963c7bc7850c3572349b1ecc6c3dcd8fdd1bcc69b56f07"
+      }
+    }
   }
 }
