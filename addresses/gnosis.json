@@ -722,5 +722,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250307-v3-router-v2": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
