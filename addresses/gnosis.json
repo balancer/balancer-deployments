@@ -713,6 +713,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250221-v3-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0xAE563E3f8219521950555F5962419C8919758Ea2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250228-v3-protocol-fee-sweeper": {
     "contracts": [
       {
