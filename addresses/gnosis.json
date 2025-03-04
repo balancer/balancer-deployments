@@ -733,6 +733,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250307-v3-liquidity-bootstrapping-pool": {
+    "contracts": [
+      {
+        "name": "LBPoolFactory",
+        "address": "0x6eE18fbb1BBcC5CF700cD75ea1aef2bb21e3cB3F"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xc08dDF053003efa63eC7CA1B0ecd4024445A5c51"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250307-v3-router-v2": {
     "contracts": [
       {
