@@ -38,7 +38,7 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
   }
 
   before('run task', async () => {
-    task = new Task('20250221-balancer-registry-initializer', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20250314-balancer-registry-initializer', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     registryInitializer = await task.deployedInstance('BalancerContractRegistryInitializer');
   });
