@@ -50,7 +50,7 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     const registryTask = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, getForkedNetwork(hre));
     registry = await registryTask.deployedInstance('BalancerContractRegistry');
 
-    const routerTask = new Task('20241205-v3-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     router = await routerTask.deployedInstance('Router');
 
     const batchRouterTask = new Task('20241205-v3-batch-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
@@ -129,6 +129,10 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'StablePool');
     expect(contractAddress).to.eq(stablePoolFactory.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'Router');
+    expect(contractAddress).to.eq(router.address);
     expect(isActive).to.be.true;
   });
 

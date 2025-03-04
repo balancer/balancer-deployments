@@ -19,9 +19,11 @@ export type BalancerContractRegistryInitializerDeployment = {
   StableSurgePoolFactory: string;
   WeightedPoolAlias: string;
   StablePoolAlias: string;
+  RouterAlias: string;
+  BatchRouterAlias: string;
 };
 
-const RouterName = '20241205-v3-router';
+const RouterName = '20250307-v3-router-v2';
 const BatchRouterName = '20241205-v3-batch-router';
 const BufferRouterName = '20241205-v3-buffer-router';
 const CompositeLiquidityRouterName = '20250123-v3-composite-liquidity-router-v2';
@@ -42,6 +44,8 @@ const StableSurgePoolFactory = new Task(StableSurgePoolName, TaskMode.READ_ONLY)
 
 const WeightedPoolAlias = 'WeightedPool';
 const StablePoolAlias = 'StablePool';
+const RouterAlias = 'Router';
+const BatchRouterAlias = 'BatchRouter';
 
 export default {
   Vault,
@@ -62,4 +66,6 @@ export default {
   StableSurgePoolFactory,
   WeightedPoolAlias,
   StablePoolAlias,
+  RouterAlias,
+  BatchRouterAlias,
 };

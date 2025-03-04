@@ -11,8 +11,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     [input.Router, input.BatchRouter, input.BufferRouter, input.CompositeLiquidityRouter],
     [input.WeightedPoolName, input.StablePoolName, input.StableSurgePoolName],
     [input.WeightedPoolFactory, input.StablePoolFactory, input.StableSurgePoolFactory],
-    [input.WeightedPoolAlias, input.StablePoolAlias],
-    [input.WeightedPoolFactory, input.StablePoolFactory],
+    [input.WeightedPoolAlias, input.StablePoolAlias, input.RouterAlias, input.BatchRouterAlias],
+    [input.WeightedPoolFactory, input.StablePoolFactory, input.Router, input.BatchRouter],
   ];
 
   await task.deployAndVerify('BalancerContractRegistryInitializer', args, from, force);
