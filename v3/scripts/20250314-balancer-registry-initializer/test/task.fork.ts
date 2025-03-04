@@ -72,7 +72,11 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     const stableSurgePoolTask = new Task('20250121-v3-stable-surge', TaskMode.READ_ONLY, getForkedNetwork(hre));
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
 
-    const lbpFactoryTask = new Task('20250307-v3-liquidity-bootstrapping-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const lbpFactoryTask = new Task(
+      '20250307-v3-liquidity-bootstrapping-pool',
+      TaskMode.READ_ONLY,
+      getForkedNetwork(hre)
+    );
     lbpFactory = await lbpFactoryTask.deployedInstance('LBPoolFactory');
   });
 
