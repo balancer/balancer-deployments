@@ -23,6 +23,7 @@
 - Deployed V3 Aggregator Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 MEV Capture Hook to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Protocol Fee Sweeper to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Cow Swap Fee Burner to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 

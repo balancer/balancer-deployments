@@ -10,5 +10,10 @@ There were also other changes to the Router contract and inheritance hierarchy s
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/577b86c7aec06c01e5f57bf20d4a0f728ce249b2).
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`Router` artifact](./artifact/Router.json)
 
