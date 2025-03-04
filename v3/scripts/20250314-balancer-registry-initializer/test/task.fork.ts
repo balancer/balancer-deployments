@@ -24,6 +24,7 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
   let weightedPoolFactory: Contract;
   let stablePoolFactory: Contract;
   let stableSurgePoolFactory: Contract;
+  let lbpFactory: Contract;
 
   let task: Task;
 
@@ -70,6 +71,9 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
 
     const stableSurgePoolTask = new Task('20250121-v3-stable-surge', TaskMode.READ_ONLY, getForkedNetwork(hre));
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
+
+    const lbpFactoryTask = new Task('20250307-v3-liquidity-bootstrapping-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    lbpFactory = await lbpFactoryTask.deployedInstance('LBPoolFactory');
   });
 
   before('grant permissions', async () => {
@@ -119,6 +123,9 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     _validateInfo(info);
 
     info = await registry.getBalancerContractInfo(stableSurgePoolFactory.address);
+    _validateInfo(info);
+
+    info = await registry.getBalancerContractInfo(lbpFactory.address);
     _validateInfo(info);
   });
 

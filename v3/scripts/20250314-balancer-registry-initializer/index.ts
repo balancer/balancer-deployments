@@ -9,8 +9,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.BalancerContractRegistry,
     [input.RouterName, input.BatchRouterName, input.BufferRouterName, input.CompositeLiquidityRouterName],
     [input.Router, input.BatchRouter, input.BufferRouter, input.CompositeLiquidityRouter],
-    [input.WeightedPoolName, input.StablePoolName, input.StableSurgePoolName],
-    [input.WeightedPoolFactory, input.StablePoolFactory, input.StableSurgePoolFactory],
+    [input.WeightedPoolName, input.StablePoolName, input.StableSurgePoolName, input.LBPoolName],
+    [input.WeightedPoolFactory, input.StablePoolFactory, input.StableSurgePoolFactory, input.LBPoolFactory],
     [input.WeightedPoolAlias, input.StablePoolAlias, input.RouterAlias, input.BatchRouterAlias],
     [input.WeightedPoolFactory, input.StablePoolFactory, input.Router, input.BatchRouter],
   ];
