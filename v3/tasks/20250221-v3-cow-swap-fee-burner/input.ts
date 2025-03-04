@@ -9,17 +9,9 @@ export type CowSwapFeeBurnerDeployment = {
 };
 
 // NOTE: AppDataHash was encoded here: https://explorer.cow.fi/appdata?tab=encode
-// AppData:
-// {
-//   "appCode": "{\"name\":\"CowSwapFeeBurner\",\"version\":1,\"deployment\":\"20250221-v3-cow-swap-fee-burner\"}",
-//   "metadata": {
-//     "hooks": {
-//       "version": "0.1.0"
-//     }
-//   },
-//   "version": "1.3.0"
-// }
-const AppDataHash = '0xc800f61d18fc71c6da4c62377e0b2e94eddde7f5bdcd978d0aa501098e30f427';
+// - App code: `CowSwapFeeBurner-V1`
+// - App Data String: `{"appCode":"CowSwapFeeBurner-V1","metadata":{"hooks":{"version":"0.1.0"}},"version":"1.3.0"}`
+const AppDataHash = '0xa1d3c92b8e24bc826f9023b7ec18ca1387849e8eeb3016602d49a07c49200c3d';
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 // ComposableCow and CowVaultRelayer have the same address in every chain.
