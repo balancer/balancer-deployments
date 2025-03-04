@@ -156,6 +156,7 @@ These are deployments for script-like contracts (often called 'coordinators') wh
 | Coordination of the Gauge Adder migration V2 --> V3 | [`20230109-gauge-adder-migration-v2-to-v3`](./v2/scripts/20230109-gauge-adder-migration-v2-to-v3)       |
 | Timelock authorizer transition permission migration | [`20230130-ta-transition-migrator`](./v2/scripts/20230130-ta-transition-migrator)                       |
 | Coordination of the Gauge Adder migration V3 --> V4 | [`20230519-gauge-adder-migration-v3-to-v4`](./v2/scripts/20230519-gauge-adder-migration-v3-to-v4)       |
+| Protocol Fee Controller Migration                   | [`20250221-protocol-fee-controller-migration`](./v3/scripts/20250221-protocol-fee-controller-migration) |
 
 ## Deprecated Deployments
 
