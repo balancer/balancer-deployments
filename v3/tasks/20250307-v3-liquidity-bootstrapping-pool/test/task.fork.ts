@@ -8,7 +8,7 @@ import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
 
-describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
+describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
   const POOL_CONTRACT_NAME = 'LBPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
@@ -44,7 +44,7 @@ describeForkTest('LBPool-V3', 'mainnet', 21932190, function () {
     await task.run({ force: true });
     factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
 
-    const routerTask = new Task('20241205-v3-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     trustedRouter = await routerTask.deployedInstance('Router');
 
     const permit2Task = new Task('00000000-permit2', TaskMode.READ_ONLY);

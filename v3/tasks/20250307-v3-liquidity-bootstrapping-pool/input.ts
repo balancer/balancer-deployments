@@ -11,7 +11,7 @@ export type LBPoolFactoryDeployment = {
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 // Router used to add/remove liquidity.
-const TrustedRouter = new Task('20241205-v3-router', TaskMode.READ_ONLY);
+const TrustedRouter = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY);
 
 const BaseVersion = { version: 1, deployment: '20250307-v3-liquidity-bootstrapping-pool' };
 
