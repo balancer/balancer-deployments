@@ -706,5 +706,29 @@
         "setPoolMevTaxThreshold(address,uint256)": "0x3f84bf8717f203b1904298223d01e0c4430a79216b8956cb963c4270fdf8804d"
       }
     }
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0x0d1d3599991fd379b951f5d4c3238e932665ae928243cde1126321629f8245e7",
+        "recoverProtocolFees(address[])": "0xabdc253498aa6d23ccfb32ef34ee1ddc06059036b212ce2868de59056885ec7b",
+        "removeProtocolFeeBurner(address)": "0x95697714cd2317865e25ca2eb6f88936098ad32a6b94e9d7d8882fa0aaf70be5",
+        "setFeeRecipient(address)": "0x63eb353a32fd1d8dd402f2f31e083610d9a801278165b1719f8d3926c1d3a88e",
+        "setTargetToken(address)": "0x33fd01b9d417570ae7f778cdad13289a6b3be01b7cd185160c1192f179fdbf7f",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0xa416691cb28def2fe33e6860b33636e69616f4ff9d71ff477f11499a30886356"
+      }
+    }
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "CowSwapFeeBurner": {
+      "useAdaptor": false,
+      "actionIds": {
+        "burn(address,address,uint256,address,uint256,address,uint256)": "0x550dbb0ba7b87f6c77a30b7559b4078dafbd6c35c257adc9bfa42c4a8042c0e8",
+        "cancelOrder(address,address)": "0x5a8ff4e96aec20c15090bab4dfb2044c26640b11397719826f3fae35af71f6fd",
+        "emergencyCancelOrder(address,address)": "0xc2a80baf0ed1f066df5b19750ecdcaf84afdfd8442e8eaf892b2db94c7455c78",
+        "retryOrder(address,uint256,uint256)": "0x9a8caba945fa103f13d5bc9ef3c72c37f4a107088b1b3cef27bdf55cd6cf6cf7"
+      }
+    }
   }
 }

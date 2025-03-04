@@ -712,5 +712,35 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0xAE563E3f8219521950555F5962419C8919758Ea2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x1bcA39b01F451b0a05D7030e6e6981a73B716b1C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250307-v3-router-v2": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

@@ -7,4 +7,9 @@ It does this for each pool by withdrawing tokens from the Protocol Fee Controlle
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/79dcd5e045c0e3c30951d338cbac7d41f61f05e8)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeSweeper` artifact](./artifact/ProtocolFeeSweeper.json)
