@@ -154,7 +154,7 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
       [BAL, WETH],
       [INITIAL_BAL, INITIAL_WETH],
       0,
-      false, // wethIsETH - LBPool doesn't support native ETH
+      false, // wethIsETH
       ZERO_BYTES32
     );
   });

@@ -1,5 +1,5 @@
 import { Task, TaskMode } from '@src';
-import { MONTH } from '@helpers/time';
+import { YEAR } from '@helpers/time';
 
 export type LBPoolFactoryDeployment = {
   Vault: string;
@@ -18,7 +18,7 @@ const BaseVersion = { version: 1, deployment: '20250307-v3-liquidity-bootstrappi
 export default {
   Vault,
   Router: TrustedRouter,
-  PauseWindowDuration: 3 * MONTH,
+  PauseWindowDuration: 4 * YEAR,
   FactoryVersion: JSON.stringify({ name: 'LBPoolFactory', ...BaseVersion }),
   PoolVersion: JSON.stringify({ name: 'LBPool', ...BaseVersion }),
 };
