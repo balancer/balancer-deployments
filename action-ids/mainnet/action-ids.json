@@ -1723,5 +1723,14 @@
         "retryOrder(address,uint256,uint256)": "0xb21f18865fc8d371e2cd65e0fc923f0469bfd9a106728f4466f5e3535fa0eeed"
       }
     }
+  },
+  "20250307-v3-liquidity-bootstrapping-pool": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32)": "0xc54d41d710ec3c30a3b7eb44d80f531f90f79a950a8b6dbc2fe5364062116bc5",
+        "disable()": "0xcaf85986241f9906113741c5e12e9d1d7a67832f717d4ed507beb522e69334b1"
+      }
+    }
   }
 }
