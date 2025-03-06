@@ -87,6 +87,11 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(await feeController.vault()).to.eq(input.Vault);
   });
 
+  it('has correct initial fees', async () => {
+    expect(await feeController.getGlobalProtocolSwapFeePercentage()).to.eq(input.InitialGlobalProtocolSwapFee);
+    expect(await feeController.getGlobalProtocolYieldFeePercentage()).to.eq(input.InitialGlobalProtocolYieldFee);
+  });
+
   it('grants permissions', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 

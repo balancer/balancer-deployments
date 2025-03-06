@@ -139,6 +139,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
 | V3 Protocol Fee Sweeper                                | [`20250228-v3-protocol-fee-sweeper`](./v3/tasks/20250228-v3-protocol-fee-sweeper)                       |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
+| V3 Liquidity Bootstrapping Pool                        | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/tasks/20250307-v3-liquidity-bootstrapping-pool)       |
 
 ## Scripts
 
