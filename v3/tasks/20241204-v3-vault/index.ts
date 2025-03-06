@@ -31,7 +31,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
-      { gasLimit: 17e6 }
+      { gasLimit: 15e6 }
     ),
     ['Vault', 'VaultExtension', 'VaultAdmin', 'ProtocolFeeController'],
     (await vaultFactory.isDeployed(vaultAddress)) === false,
