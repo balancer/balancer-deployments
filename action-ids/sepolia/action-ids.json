@@ -845,5 +845,28 @@
         "disable()": "0xb490583a5207c0875ec6bcc27ce2607b53142dc2ad5852e8476477429ff06260"
       }
     }
+  },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "ProtocolFeeController": {
+      "useAdaptor": false,
+      "actionIds": {
+        "collectAggregateFees(address)": "0x25a9d8a2983f9dd4456fa536b66ec866761c4b63efdc7f93163c3edbe19be569",
+        "collectAggregateFeesHook(address)": "0x02ff3e542a6b8f9ec4c75a2b0b0d94b7979388bfb4ca75cc4dda518726438493",
+        "migratePool(address)": "0xa5be5932f1da5a07ce7200b8ca3cea61c7bb827d591ba228504814a963c0d81b",
+        "registerPool(address,address,bool)": "0xf864378771aaac3e3b220f2d1bd5a86afe0957a07c386448680354b078159590",
+        "setGlobalProtocolSwapFeePercentage(uint256)": "0xb64ac42e625b66b751a3943291e8fab5dba13ccc3006b91111b6e1bca0219bf7",
+        "setGlobalProtocolYieldFeePercentage(uint256)": "0xd0f586d1d5a2e6a6febd715d301ca545c59a83fd0d4f3c63749914cc3fb75707",
+        "setPoolCreatorSwapFeePercentage(address,uint256)": "0x7a71042892192d4a6913c928d7e327d8c00f94cedd56823e37aeb301ad0d0f4a",
+        "setPoolCreatorYieldFeePercentage(address,uint256)": "0xe7014ee328d5a0f9ae7545cce3464896a3a17c06d1cd5b44701ae733e85a569b",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x75c9f413511191a99db550b2d50542216086f713ae95c8feb96b07e65f2e3c7c",
+        "setProtocolYieldFeePercentage(address,uint256)": "0xc57a97b4b44f716f87c9b1144346046e6572175bd78d11cbb72159f7274c28fa",
+        "updateProtocolSwapFeePercentage(address)": "0x86c246f330adf6aab5470d986b82f2543a960b051233d687f05c44d169239571",
+        "updateProtocolYieldFeePercentage(address)": "0xf2aca16590c522d1330e4fe4d4e23d233a9ff80b05aa5c31aa60ae4f8a3c2173",
+        "withdrawPoolCreatorFees(address)": "0xf842505de3e9f4f2cb620638b8e8b7a155dd8f3abdd33cc1a870073d6af38760",
+        "withdrawPoolCreatorFees(address,address)": "0x77f6d38da5dff993ea8d44ae226612b2ba51ea3c44fbe04aa01cb080b5996072",
+        "withdrawProtocolFees(address,address)": "0x8d267109edbfad5fcd7140a77941385fa8e59561c2d378fa8c8d26bc8d74aca8",
+        "withdrawProtocolFeesForToken(address,address,address)": "0xf489956ed3a8dd00249abca47f304d128e3b1efd58ccde48fcbafc3e48d510c8"
+      }
+    }
   }
 }
