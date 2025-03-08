@@ -5,5 +5,10 @@ import { Task, TaskRunOptions } from '@src';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as ProtocolFeeControllerDeployment;
 
-  await task.deployAndVerify('ProtocolFeeController', [input.Vault], from, force);
+  await task.deployAndVerify(
+    'ProtocolFeeController',
+    [input.Vault, input.InitialGlobalProtocolSwapFee, input.InitialGlobalProtocolYieldFee],
+    from,
+    force
+  );
 };

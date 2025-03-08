@@ -6,5 +6,5 @@ There is nothing to deprecate, as the original Protocol Fee Controller was deplo
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0c38dc629386c401e3d6094981d7990f2fe0a379)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/77290600e9c896707c26d2a353ecfe82d97fa5b9)
 - [`ProtocolFeeController` artifact](./artifact/ProtocolFeeController.json)
