@@ -1531,6 +1531,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeController",
+        "address": "0x212F884252792ebaaA811FB0678444b21c7C2879"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250218-v3-aggregator-router": {
     "contracts": [
       {
