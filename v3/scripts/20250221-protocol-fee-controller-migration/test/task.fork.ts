@@ -9,8 +9,9 @@ import { describeForkTest, getSigner, getForkedNetwork, impersonate } from '@src
 import { Task, TaskMode } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import * as expectEvent from '@helpers/expectEvent';
+import { ProtocolFeeControllerMigrationDeployment } from "./input";
 
-describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function () {
+describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function () {
   const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
 
   const POOL_CREATOR_SWAP_FEE = fp(0.1);
@@ -24,7 +25,6 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
   let oldFeeController: Contract;
   let feeController: Contract;
   let vaultAsExtension: Contract;
-  let feeControllerTask: Task;
   let migrationTask: Task;
 
   let admin: SignerWithAddress;
@@ -35,6 +35,7 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
   let testPool: string;
   let testPoolWithCreator: Contract;
   let finalizePermission;
+  let input: ProtocolFeeControllerMigrationDeployment;
 
   before('run task', async () => {
     const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
@@ -43,18 +44,13 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
     oldFeeController = await vaultTask.deployedInstance('ProtocolFeeController');
 
-    feeControllerTask = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.TEST, getForkedNetwork(hre));
-    await feeControllerTask.run({ force: true });
-
-    feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
-
     migrationTask = new Task('20250221-protocol-fee-controller-migration', TaskMode.TEST, getForkedNetwork(hre));
     await migrationTask.run({ force: true });
 
     migration = await migrationTask.deployedInstance('ProtocolFeeControllerMigration');
 
-    // Set the new protocol fee controller after the fact - TEMPORARY - because it wasn't deployed yet.
-    migration.setNewFeeController(feeController.address);
+    input = migrationTask.input() as ProtocolFeeControllerMigrationDeployment;
+    feeController = await migrationTask.instanceAt('ProtocolFeeController', input.ProtocolFeeController);
   });
 
   before('setup contracts', async () => {
@@ -223,21 +219,6 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
     expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.address)).to.be.false;
   });
 
-  it('sets up for a second migration', async () => {
-    // Make a *new* fee controller.
-    oldFeeController = feeController;
-
-    await feeControllerTask.run({ force: true });
-
-    feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
-
-    // Make a new migrator.
-    await migrationTask.run({ force: true });
-
-    migration = await migrationTask.deployedInstance('ProtocolFeeControllerMigration');
-    migration.setNewFeeController(feeController.address);
-  });
-
   it('deploys a pool with a creator', async () => {
     // Special version that allows pool creators.
     const factory = await migrationTask.deployedInstance('WeightedPoolFactory');
@@ -303,29 +284,42 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 21897262, function
   });
 
   it('sets a pool creator fee', async () => {
-    // "old" is the current one.
-    await oldFeeController
+    await feeController
       .connect(admin)
       .setPoolCreatorSwapFeePercentage(testPoolWithCreator.address, POOL_CREATOR_SWAP_FEE);
-    await oldFeeController
+    await feeController
       .connect(admin)
       .setPoolCreatorYieldFeePercentage(testPoolWithCreator.address, POOL_CREATOR_YIELD_FEE);
 
-    expect(await oldFeeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(
+    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.address)).to.eq(
       POOL_CREATOR_SWAP_FEE
     );
-    expect(await oldFeeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(
+    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.address)).to.eq(
       POOL_CREATOR_YIELD_FEE
     );
   });
 
-  it('migrates the pool to a new controller', async () => {
-    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(oldFeeController.address);
+  it('sets up for a second migration', async () => {
+    oldFeeController = feeController;
+
+    const feeControllerTask = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.TEST, getForkedNetwork(hre));
+    await feeControllerTask.run({ force: true });
+
+    feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
+
+    migrationTask = new Task('20250221-protocol-fee-controller-migration', TaskMode.TEST, getForkedNetwork(hre));
+    await migrationTask.deployAndVerify('ProtocolFeeControllerMigration', [input.Vault, feeController.address], {force: true});
+
+    migration = await migrationTask.deployedInstance('ProtocolFeeControllerMigration');
 
     // Need to grant permissions to the new migration
     await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.address);
     finalizePermission = await actionId(migration, 'finalizeMigration');
     await authorizer.connect(govMultisig).grantRole(finalizePermission, admin.address);
+  });
+
+  it('migrates the pool to a new controller', async () => {
+    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(oldFeeController.address);
 
     await migration.migratePools([testPoolWithCreator.address]);
     await migration.connect(admin).finalizeMigration();
