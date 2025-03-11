@@ -9,7 +9,7 @@ import { describeForkTest, getSigner, getForkedNetwork, impersonate } from '@src
 import { Task, TaskMode } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import * as expectEvent from '@helpers/expectEvent';
-import { ProtocolFeeControllerMigrationDeployment } from "./input";
+import { ProtocolFeeControllerMigrationDeployment } from './input';
 
 describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function () {
   const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
@@ -306,11 +306,12 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
     await feeControllerTask.run({ force: true });
 
     feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
-
-    migrationTask = new Task('20250221-protocol-fee-controller-migration', TaskMode.TEST, getForkedNetwork(hre));
-    await migrationTask.deployAndVerify('ProtocolFeeControllerMigration', [input.Vault, feeController.address], {force: true});
-
-    migration = await migrationTask.deployedInstance('ProtocolFeeControllerMigration');
+    migration = await migrationTask.deploy(
+      'ProtocolFeeControllerMigration',
+      [input.Vault, feeController.address],
+      admin,
+      true // force
+    );
 
     // Need to grant permissions to the new migration
     await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.address);
