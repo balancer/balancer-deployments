@@ -603,6 +603,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250221-protocol-fee-controller-migration": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeControllerMigration",
+        "address": "0x1b6F057520B4e826271D47b8bdab98E35Af17E59"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
   "20250221-v3-cow-swap-fee-burner": {
     "contracts": [
       {
