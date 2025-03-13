@@ -28,6 +28,7 @@
 - Deployed V3 Liquidity Bootstrapping Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Protocol Fee Controller V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 
 #### V2
 
