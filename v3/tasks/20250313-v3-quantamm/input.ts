@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import { bn } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { BigNumber } from 'ethers';
+import { getSigner } from '@src';
 
 export type QuantAMMDeploymentInputParams = {
   Vault: string;
@@ -136,12 +137,9 @@ export async function createPoolParams(
   const intNormalizedWeights = [...normalizedWeights];
 
   const poolDetails = [['Overview', 'Adaptability', 'number', '5']];
-
+  const signer = await getSigner();
   const salt = ethers.utils.keccak256(
-    ethers.utils.defaultAbiCoder.encode(
-      ['address', 'uint256'],
-      [await ethers.provider.getSigner().getAddress(), Math.floor(Date.now() / 1000)]
-    )
+    ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [signer.address, Math.floor(Date.now() / 1000)])
   );
 
   const poolSettings: PoolSettings = {
@@ -154,7 +152,7 @@ export async function createPoolParams(
     absoluteWeightGuardRail: bn('200000000000000000'),
     maxTradeSizeRatio: bn('300000000000000000'),
     ruleParameters: parameters,
-    poolManager: await ethers.provider.getSigner().getAddress(),
+    poolManager: signer.address,
   };
 
   return {
