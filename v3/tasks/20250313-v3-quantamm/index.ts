@@ -1,4 +1,3 @@
-
 import * as expectEvent from '@helpers/expectEvent';
 import hre from 'hardhat';
 import { saveContractDeploymentTransactionHash } from '@src';
@@ -8,17 +7,32 @@ import { QuantAMMDeploymentInputParams, createPoolParams } from './input';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as QuantAMMDeploymentInputParams;
 
-  const chainlinkEthOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkFeedETH], from, force);
-  
-  const chainlinkBtcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkDataFeedBTC], from, force);
+  const chainlinkEthOracleWrapper = await task.deployAndVerify(
+    'ChainlinkOracle',
+    [input.ChainlinkFeedETH],
+    from,
+    force
+  );
+
+  const chainlinkBtcOracleWrapper = await task.deployAndVerify(
+    'ChainlinkOracle',
+    [input.ChainlinkDataFeedBTC],
+    from,
+    force
+  );
   await task.save({ ChainlinkBtcOracle: chainlinkBtcOracleWrapper });
-  
-  const chainlinkUsdcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkDataFeedUSDC], from, force);
+
+  const chainlinkUsdcOracleWrapper = await task.deployAndVerify(
+    'ChainlinkOracle',
+    [input.ChainlinkDataFeedUSDC],
+    from,
+    force
+  );
   await task.save({ ChainlinkUsdcOracle: chainlinkUsdcOracleWrapper });
 
-  const accounts = await hre.ethers.getSigners() as string[];
-  
-  const updateWeightRunnerArgs = [accounts[0], chainlinkEthOracleWrapper.address]
+  const accounts = (await hre.ethers.getSigners()) as unknown as string[];
+
+  const updateWeightRunnerArgs = [accounts[0], chainlinkEthOracleWrapper.address];
   const updateWeightRunner = await task.deployAndVerify('UpdateWeightRunner', updateWeightRunnerArgs, from, force);
   await task.save({ UpdateWeightRunner: updateWeightRunner });
 
@@ -26,14 +40,21 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const antiMomentumUpdateRule = await task.deployAndVerify('AntimomentumUpdateRule', ruleArgs, from, force);
   await task.save({ AntimomentumUpdateRule: antiMomentumUpdateRule });
-  
-  const momentumUpdateRule = await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
-  const powerChannelUpdateRule = await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
-  const channelFollowingUpdateRule = await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);
-  const differenceMomentumUpdateRule = await task.deployAndVerify('DifferenceMomentumUpdateRule', ruleArgs, from, force);
-  const minimumVarianceUpdateRule = await task.deployAndVerify('MinimumVarianceUpdateRule', ruleArgs, from, force);
 
-  const factoryArgs = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, updateWeightRunner.address];
+  await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
+  await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
+  await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);
+
+  await task.deployAndVerify('DifferenceMomentumUpdateRule', ruleArgs, from, force);
+  await task.deployAndVerify('MinimumVarianceUpdateRule', ruleArgs, from, force);
+
+  const factoryArgs = [
+    input.Vault,
+    input.PauseWindowDuration,
+    input.FactoryVersion,
+    input.PoolVersion,
+    updateWeightRunner.address,
+  ];
 
   const factory = await task.deployAndVerify('QuantAMMWeightedPoolFactory', factoryArgs, from, force);
 
@@ -53,11 +74,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['QuantAMMWeightedPool']) {
-      const poolCreationReceipt = await (
-        await factory.create(
-          params
-        )
-      ).wait();
+      const poolCreationReceipt = await (await factory.create(params)).wait();
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const mockPoolAddress = event.args.pool;
 
@@ -81,4 +98,3 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     await task.verify('QuantAMMWeightedPool', mockPool.address, [poolParams, input.Vault]);
   }
 };
-
