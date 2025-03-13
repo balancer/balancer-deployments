@@ -8,18 +8,25 @@ import { QuantAMMDeploymentInputParams, createPoolParams } from './input';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as QuantAMMDeploymentInputParams;
 
-  const chainlinkEthOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedETH], from, force);
-  const chainlinkBtcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedBTC], from, force);
-  const chainlinkUsdcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedUSDC], from, force);
+  const chainlinkEthOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkFeedETH], from, force);
   
+  const chainlinkBtcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkDataFeedBTC], from, force);
+  await task.save({ ChainlinkBtcOracle: chainlinkBtcOracleWrapper });
+  
+  const chainlinkUsdcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkDataFeedUSDC], from, force);
+  await task.save({ ChainlinkUsdcOracle: chainlinkUsdcOracleWrapper });
+
   const accounts = await hre.ethers.getSigners() as string[];
   
   const updateWeightRunnerArgs = [accounts[0], chainlinkEthOracleWrapper.address]
   const updateWeightRunner = await task.deployAndVerify('UpdateWeightRunner', updateWeightRunnerArgs, from, force);
+  await task.save({ UpdateWeightRunner: updateWeightRunner });
 
   const ruleArgs = [updateWeightRunner.address];
 
   const antiMomentumUpdateRule = await task.deployAndVerify('AntimomentumUpdateRule', ruleArgs, from, force);
+  await task.save({ AntimomentumUpdateRule: antiMomentumUpdateRule });
+  
   const momentumUpdateRule = await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
   const powerChannelUpdateRule = await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
   const channelFollowingUpdateRule = await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);

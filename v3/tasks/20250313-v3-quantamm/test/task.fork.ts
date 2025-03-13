@@ -28,12 +28,21 @@ describeForkTest('QuantAMMPool', 'mainnet', 21818600, function () {
     });
 
     before('setup contracts and parameters', async () => {
-      //TODO do we initiate a complete stack or do we take addreses from the index deploy
-      
+      let chainlinkBtcOracleWrapper: Contract;
+      let chainlinkUsdcOracleWrapper: Contract;
+      let antiMomentumUpdateRule: Contract;
+      chainlinkBtcOracleWrapper = await task.deployedInstance("ChainlinkBtcOracle");
+      chainlinkUsdcOracleWrapper = await task.deployedInstance("ChainlinkUsdcOracle");
+      antiMomentumUpdateRule = await task.deployedInstance("AntimomentumUpdateRule");
       input = task.input() as QuantAMMDeploymentInputParams;
-      params = await createPoolParams("", "", "", "", "");
+
+      params = await createPoolParams(input.USDC, 
+        chainlinkUsdcOracleWrapper.address, 
+        input.WBTC, 
+        chainlinkBtcOracleWrapper.address, 
+        antiMomentumUpdateRule.address);
     });
-    
+
     it('deploys pool', async () => {
       params.name = "DO NOT USE TEST QuantAMM POOL";
       params.symbol = "TEST";

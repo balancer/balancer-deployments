@@ -11,9 +11,9 @@ export type QuantAMMDeploymentInputParams = {
   WBTC: string;
   FactoryVersion: string;
   PoolVersion: string;
-  ChainlinkSepoliaDataFeedETH: string;
-  ChainlinkSepoliaDataFeedUSDC: string;
-  ChainlinkSepoliaDataFeedBTC: string;
+  ChainlinkFeedETH: string;
+  ChainlinkDataFeedUSDC: string;
+  ChainlinkDataFeedBTC: string;
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
@@ -24,6 +24,15 @@ const ChainlinkSepoliaDataFeedETH = "0x694AA1769357215DE4FAC081bf1f309aDC325306"
 const ChainlinkSepoliaDataFeedUSDC = "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E";
 const ChainlinkSepoliaDataFeedBTC = "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43";
 
+//https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1&search=eth+%2F+usd
+const ChainlinkMainnetDataFeedETH = "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419";
+
+//https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1&search=usdc+%2F+usd
+const ChainlinkMainnetDataFeedUSDC = "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6";
+
+//https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1&search=btc+%2F+usd
+const ChainlinkMainnetDataFeedBTC = "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43";
+
 const BaseVersion = { version: 1, deployment: '20250312-v3-quantamm' };
 
 export default {
@@ -33,9 +42,16 @@ export default {
   WBTC,
   FactoryVersion: JSON.stringify({ name: 'QuantAMMWeightedPool', ...BaseVersion }),
   PoolVersion: JSON.stringify({ name: 'QuantAMMWeightedPool', ...BaseVersion }),
-  ChainlinkSepoliaDataFeedETH,
-  ChainlinkSepoliaDataFeedUSDC,
-  ChainlinkSepoliaDataFeedBTC,
+  sepolia:{
+    ChainlinkSepoliaDataFeedETH,
+    ChainlinkSepoliaDataFeedUSDC,
+    ChainlinkSepoliaDataFeedBTC,
+  },
+  mainnet:{
+    ChainlinkFeedETH: ChainlinkMainnetDataFeedETH,
+    ChainlinkDataFeedUSDC: ChainlinkMainnetDataFeedUSDC,
+    ChainlinkDataFeedBTC: ChainlinkMainnetDataFeedBTC,
+  }
 };
 
 
