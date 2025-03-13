@@ -8,7 +8,7 @@ The QuantAMMWeightedPoolFactory is a factory for those pools and uses the V2 spl
 
 ## Useful Files
 
-- [Code](https://github.com/QuantAMMProtocol/QuantAMM-V1).
+- [Code](https://github.com/QuantAMMProtocol/QuantAMM-V1/commit/5c91f5ff35b03f76495afb12d38de64f4d37f5b1).
 - [`AntiMomentumUpdateRule` artifact](./artifact/AntiMomentumUpdateRule.json)
 - [`ChannelFollowingUpdateRule` artifact](./artifact/ChannelFollowingUpdateRule.json)
 - [`PowerChannelUpdateRule` artifact](./artifact/PowerChannelUpdateRule.json)
