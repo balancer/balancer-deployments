@@ -2,7 +2,7 @@
 
 Deployment of the `QuantAMM` infrastructure for Balancer V3.
 
-The update weight runner orchestrates calling registred rules for pools. These rules determine weight vectors for target pools using chainlink oracles. The update weight runner then sets these weights on the pools. 
+The update weight runner orchestrates calling registered rules for pools. These rules determine weight vectors for target pools using chainlink oracles. The update weight runner then sets these weights on the pools. 
 
 The QuantAMMWeightedPoolFactory is a factory for those pools and uses the V2 split factory method. 
 
