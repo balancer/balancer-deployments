@@ -1,6 +1,6 @@
 
 import * as expectEvent from '@helpers/expectEvent';
-
+import hre from 'hardhat';
 import { saveContractDeploymentTransactionHash } from '@src';
 import { Task, TaskMode, TaskRunOptions } from '@src';
 import { QuantAMMDeploymentInputParams, createPoolParams } from './input';
@@ -8,20 +8,27 @@ import { QuantAMMDeploymentInputParams, createPoolParams } from './input';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as QuantAMMDeploymentInputParams;
 
-  const args = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion];
-  const chainlinkEthOracleWrapper = await task.deployAndVerify('ChainlinkOracle', args, from, force);
-  const chainlinkBtcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', args, from, force);
-  const chainlinkUsdcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', args, from, force);
-  const updateWeightRunner = await task.deployAndVerify('UpdateWeightRunner', args, from, force);
-
-  const antiMomentumUpdateRule = await task.deployAndVerify('AntimomentumUpdateRule', args, from, force);
-  const momentumUpdateRule = await task.deployAndVerify('MomentumUpdateRule', args, from, force);
-  const powerChannelUpdateRule = await task.deployAndVerify('PowerChannelUpdateRule', args, from, force);
-  const channelFollowingUpdateRule = await task.deployAndVerify('ChannelFollowingUpdateRule', args, from, force);
-  const differenceMomentumUpdateRule = await task.deployAndVerify('DifferenceMomentumUpdateRule', args, from, force);
-  const minimumVarianceUpdateRule = await task.deployAndVerify('MinimumVarianceUpdateRule', args, from, force);
+  const chainlinkEthOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedETH], from, force);
+  const chainlinkBtcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedBTC], from, force);
+  const chainlinkUsdcOracleWrapper = await task.deployAndVerify('ChainlinkOracle', [input.ChainlinkSepoliaDataFeedUSDC], from, force);
   
-  const factory = await task.deployAndVerify('QuantAMMWeightedPoolFactory', args, from, force);
+  const accounts = await hre.ethers.getSigners() as string[];
+  
+  const updateWeightRunnerArgs = [accounts[0], chainlinkEthOracleWrapper.address]
+  const updateWeightRunner = await task.deployAndVerify('UpdateWeightRunner', updateWeightRunnerArgs, from, force);
+
+  const ruleArgs = [updateWeightRunner.address];
+
+  const antiMomentumUpdateRule = await task.deployAndVerify('AntimomentumUpdateRule', ruleArgs, from, force);
+  const momentumUpdateRule = await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
+  const powerChannelUpdateRule = await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
+  const channelFollowingUpdateRule = await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);
+  const differenceMomentumUpdateRule = await task.deployAndVerify('DifferenceMomentumUpdateRule', ruleArgs, from, force);
+  const minimumVarianceUpdateRule = await task.deployAndVerify('MinimumVarianceUpdateRule', ruleArgs, from, force);
+
+  const factoryArgs = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, updateWeightRunner.address];
+
+  const factory = await task.deployAndVerify('QuantAMMWeightedPoolFactory', factoryArgs, from, force);
 
   if (task.mode === TaskMode.LIVE) {
     //rule is registered during pool creation, needs oracles to be valid

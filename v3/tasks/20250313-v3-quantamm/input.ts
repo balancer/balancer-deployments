@@ -11,6 +11,9 @@ export type QuantAMMDeploymentInputParams = {
   WBTC: string;
   FactoryVersion: string;
   PoolVersion: string;
+  ChainlinkSepoliaDataFeedETH: string;
+  ChainlinkSepoliaDataFeedUSDC: string;
+  ChainlinkSepoliaDataFeedBTC: string;
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
