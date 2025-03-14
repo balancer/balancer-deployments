@@ -92,12 +92,6 @@ export default class Task {
     return this.instanceAt(name, address);
   }
 
-  async deployedInstanceDifferentArtifact(name: string, artifactName: string): Promise<Contract> {
-    const address = this.output()[name];
-    if (!address) throw Error(`Could not find deployed address for ${name}`);
-    return this.instanceAt(artifactName, address);
-  }
-
   async inputInstance(artifactName: string, inputName: string): Promise<Contract> {
     const rawInput = this.rawInput();
     const input = rawInput[inputName];
