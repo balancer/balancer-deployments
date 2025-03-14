@@ -58,8 +58,6 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
       salt,
       sender.address
     );
-    console.log(params);
-    console.log('params gotten');
   });
 
   it('deploys pool', async () => {

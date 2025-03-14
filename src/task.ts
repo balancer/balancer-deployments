@@ -87,14 +87,12 @@ export default class Task {
   }
 
   async deployedInstance(name: string): Promise<Contract> {
-    console.log(this.output());
     const address = this.output()[name];
     if (!address) throw Error(`Could not find deployed address for ${name}`);
     return this.instanceAt(name, address);
   }
 
   async deployedInstanceDifferentArtifact(name: string, artifactName: string): Promise<Contract> {
-    console.log(this.output());
     const address = this.output()[name];
     if (!address) throw Error(`Could not find deployed address for ${name}`);
     return this.instanceAt(artifactName, address);
@@ -102,7 +100,6 @@ export default class Task {
 
   async inputInstance(artifactName: string, inputName: string): Promise<Contract> {
     const rawInput = this.rawInput();
-    console.log(rawInput);
     const input = rawInput[inputName];
     if (!this._isTask(input)) throw Error(`Cannot access to non-task input ${inputName}`);
     const task = input as Task;
