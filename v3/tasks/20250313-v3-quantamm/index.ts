@@ -9,6 +9,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const input = task.input() as QuantAMMDeploymentInputParams;
   console.log('input gotten');
   console.log(input);
+  
   const chainlinkEthOracleWrapper = await task.deployAndVerify(
     'ChainlinkOracle',
     [input.ChainlinkFeedETH],
@@ -23,6 +24,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     from,
     force
   );
+
   await task.save({ ChainlinkBtcOracle: chainlinkBtcOracleWrapper });
 
   console.log('Deployed ChainlinkBtcOracle');
@@ -35,18 +37,19 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   await task.save({ ChainlinkUsdcOracle: chainlinkUsdcOracleWrapper });
 
   console.log('Deployed ChainlinkUsdcOracle');
-  const accounts = (await hre.ethers.getSigners()) as unknown as string[];
+  const accounts = await hre.ethers.getSigners();
 
   console.log('accounts gotten');
-  const updateWeightRunnerArgs = [accounts[0], chainlinkEthOracleWrapper.address];
+  const updateWeightRunnerArgs = [accounts[0].address, chainlinkEthOracleWrapper.address];
+  console.log('updateWeightRunnerArgs gotten');
+  console.log(updateWeightRunnerArgs);
   const updateWeightRunner = await task.deployAndVerify('UpdateWeightRunner', updateWeightRunnerArgs, from, force);
   await task.save({ UpdateWeightRunner: updateWeightRunner });
 
   console.log('Deployed UpdateWeightRunner');
   const ruleArgs = [updateWeightRunner.address];
 
-  const antiMomentumUpdateRule = await task.deployAndVerify('AntimomentumUpdateRule', ruleArgs, from, force);
-  await task.save({ AntimomentumUpdateRule: antiMomentumUpdateRule });
+  const antiMomentumUpdateRule = await task.deployAndVerify('AntiMomentumUpdateRule', ruleArgs, from, force);
 
   console.log('Deployed AntimomentumUpdateRule');
   await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
@@ -77,7 +80,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     await updateWeightRunner.addOracle(chainlinkUsdcOracleWrapper.address);
 
     const salt = ethers.utils.keccak256(
-      ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [accounts[0], Math.floor(Date.now() / 1000)])
+      ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [accounts[0].address, Math.floor(Date.now() / 1000)])
     );
 
     const params = await createPoolParams(
@@ -86,7 +89,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.WBTC,
       chainlinkBtcOracleWrapper.address,
       antiMomentumUpdateRule.address,
-      accounts[0],
+      accounts[0].address,
       salt
     );
 
