@@ -973,11 +973,35 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x88ED12A90142fDBFe2a28f7d5b48927254C7e760"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0x875BED625E44D1cd03e512beBae085A440106529"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250212-v3-mev-capture-hook": {
     "contracts": [
       {
         "name": "MevCaptureHook",
         "address": "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeController",
+        "address": "0x4638ab64022927C9bD5947607459D13f57f1551C"
       }
     ],
     "status": "ACTIVE",
@@ -991,6 +1015,16 @@
       }
     ],
     "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeControllerMigration",
+        "address": "0xdDea349828096DcdC0Cc5B7Db5F924f146AadD90"
+      }
+    ],
+    "status": "SCRIPT",
     "version": "v3"
   },
   "20250221-v3-cow-swap-fee-burner": {
@@ -1035,6 +1069,16 @@
       }
     ],
     "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250314-balancer-registry-initializer": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x687b8C9b41E01Be8B591725fac5d5f52D0564d79"
+      }
+    ],
+    "status": "SCRIPT",
     "version": "v3"
   }
 }
