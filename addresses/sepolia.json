@@ -894,5 +894,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250314-balancer-registry-initializer": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x6B7C56698bEb33E1f0226e73C5D417e575315106"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
   }
 }
