@@ -28,9 +28,15 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   });
 
   before('setup contracts and parameters', async () => {
-    const chainlinkBtcOracleWrapper: Contract = await task.instanceAt('ChainlinkOracle', task.output().ChainlinkBtcOracle);
-    const chainlinkUsdcOracleWrapper: Contract = await task.instanceAt('ChainlinkOracle', task.output().ChainlinkUsdcOracle);
-    
+    const chainlinkBtcOracleWrapper: Contract = await task.instanceAt(
+      'ChainlinkOracle',
+      task.output().ChainlinkBtcOracle
+    );
+    const chainlinkUsdcOracleWrapper: Contract = await task.instanceAt(
+      'ChainlinkOracle',
+      task.output().ChainlinkUsdcOracle
+    );
+
     const antiMomentumUpdateRule: Contract = await task.deployedInstance('AntiMomentumUpdateRule');
     const updateWeightRunner = await task.deployedInstance('UpdateWeightRunner');
 
