@@ -622,5 +622,14 @@
         "migratePools(address[])": "0x8c8aaef94887d0b21bb3337531084db882c8c20fdc0c70bac758746dd38bf477"
       }
     }
+  },
+  "20250124-v3-gyro-eclp": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x2adde6dbf566f3f89c06f38e6dd3cf8e59c0d3cb25a919402644b7bc624d5af7",
+        "disable()": "0x9a2847fdb9a96a453c9e5f3eda469d4f53b4e5616cbf9c20f6c820d30a30e40c"
+      }
+    }
   }
 }

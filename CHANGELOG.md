@@ -30,6 +30,7 @@
 - Deployed V3 Protocol Fee Controller V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 GyroECLPFactory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 
 #### V2
 

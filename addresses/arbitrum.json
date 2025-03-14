@@ -973,6 +973,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x88ED12A90142fDBFe2a28f7d5b48927254C7e760"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0x875BED625E44D1cd03e512beBae085A440106529"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250212-v3-mev-capture-hook": {
     "contracts": [
       {
