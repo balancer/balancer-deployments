@@ -22,11 +22,11 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
     deployer = await impersonate(deployerAddress, fp(100));
     await task.run({ force: true, from: deployer });
 
-    input = task.input() as VaultFactoryDeployment;
-
     vault = await task.deployedInstance('Vault');
     vaultExtension = await task.deployedInstance('VaultExtension');
     vaultAdmin = await task.deployedInstance('VaultAdmin');
+
+    input = task.input() as VaultFactoryDeployment;
   });
 
   it('checks vault address', async () => {

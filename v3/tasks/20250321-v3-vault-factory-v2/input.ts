@@ -32,8 +32,8 @@ const vaultAdminCreationCode = vaultAdminArtifact.bytecode;
 const salt = '0x3877188e9e5da25b11fdb7f5e8d4fdddce2d22707ba04878a8e14700dd46fa82';
 const targetVaultAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 
-const initialGlobalProtocolSwapFee = fp(0.5);
-const initialGlobalProtocolYieldFee = fp(0.1);
+const initialGlobalProtocolSwapFee = fp(0.5); // 50%
+const initialGlobalProtocolYieldFee = fp(0.1); // 10%
 
 export default {
   Authorizer,
