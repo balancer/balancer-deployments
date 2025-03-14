@@ -1,7 +1,6 @@
 import { MONTH } from '@helpers/time';
 import { Task, TaskMode } from '@src';
-import { ethers } from 'ethers';
-import { bn } from '@helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { BigNumber } from 'ethers';
 
@@ -32,7 +31,7 @@ const ChainlinkMainnetDataFeedUSDC = '0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6
 //https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1&search=btc+%2F+usd
 const ChainlinkMainnetDataFeedBTC = '0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43';
 
-const BaseVersion = { version: 1, deployment: '20250312-v3-quantamm' };
+const BaseVersion = { version: 1, deployment: '20250313-v3-quantamm' };
 
 export default {
   Vault,
@@ -62,7 +61,7 @@ type PoolRoleAccounts = {
 type TokenConfig = {
   token: string;
   rateProvider?: string;
-  tokenType: string;
+  tokenType: number;
 };
 
 type PoolSettings = {
@@ -89,36 +88,35 @@ export type CreationNewPoolParams = {
   enableDonation: boolean;
   disableUnbalancedLiquidity: boolean;
   salt: string;
-  initialWeights: BigNumber[];
-  poolSettings: PoolSettings;
-  initialMovingAverages: BigNumber[];
-  initialIntermediateValues: BigNumber[];
-  oracleStalenessThreshold: number;
-  poolRegistry: number;
+  _initialWeights: BigNumber[];
+  _poolSettings: PoolSettings;
+  _initialMovingAverages: BigNumber[];
+  _initialIntermediateValues: BigNumber[];
+  _oracleStalenessThreshold: BigNumber;
+  poolRegistry: BigNumber;
   poolDetails: string[][];
 };
 
 export async function createPoolParams(
-  usdcAddress: string,
+  usdcContract: string,
   usdcOracle: string,
-  wbtcAddress: string,
+  wtbcContract: string,
   wbtcOracle: string,
   ruleAddress: string,
   salt: string,
-  sender:string
+  sender: string
 ): Promise<CreationNewPoolParams> {
   const tokens = [
-    usdcAddress, // USDC Sepolia
-    wbtcAddress, // WBTC Sepolia
+    usdcContract, // USDC Sepolia
+    wtbcContract, // WBTC Sepolia
   ];
 
   const rateProviders: string[] = [];
-  const roleAccounts: PoolRoleAccounts = {} as PoolRoleAccounts;
 
   const tokenConfig: TokenConfig[] = tokens.map((token, i) => ({
     token,
     rateProvider: rateProviders[i] || ZERO_ADDRESS,
-    tokenType: rateProviders[i] ? 'WITH_RATE' : 'STANDARD',
+    tokenType: 0,
   }));
 
   const sortedTokenConfig = tokenConfig.sort((a, b) => a.token.localeCompare(b.token));
@@ -134,7 +132,7 @@ export async function createPoolParams(
     [wbtcOracle], // WBTC
   ];
 
-  const normalizedWeights = [bn('500000000000000000'), bn('500000000000000000')];
+  const normalizedWeights = [fp(0.5), fp(0.5)];
   const intNormalizedWeights = [...normalizedWeights];
 
   const poolDetails = [['Overview', 'Adaptability', 'number', '5']];
@@ -145,9 +143,9 @@ export async function createPoolParams(
     oracles,
     updateInterval: 60,
     lambda: lambdas,
-    epsilonMax: bn('200000000000000000'),
-    absoluteWeightGuardRail: bn('200000000000000000'),
-    maxTradeSizeRatio: bn('300000000000000000'),
+    epsilonMax: fp(0.01),
+    absoluteWeightGuardRail: fp(0.01),
+    maxTradeSizeRatio: fp(0.01),
     ruleParameters: parameters,
     poolManager: sender,
   };
@@ -157,18 +155,23 @@ export async function createPoolParams(
     symbol: 'test',
     tokens: sortedTokenConfig,
     normalizedWeights,
-    roleAccounts,
-    swapFeePercentage: bn('20000000000000000'),
-    poolHooksContract: ethers.constants.AddressZero,
-    enableDonation: true,
+
+    roleAccounts: {
+      pauseManager: ZERO_ADDRESS,
+      swapFeeManager: ZERO_ADDRESS,
+      poolCreator: ZERO_ADDRESS,
+    },
+    swapFeePercentage: fp(0.01),
+    poolHooksContract: ZERO_ADDRESS,
+    enableDonation: false,
     disableUnbalancedLiquidity: false,
     salt: salt,
-    initialWeights: intNormalizedWeights,
-    poolSettings,
-    initialMovingAverages: intermediateValueStubs,
-    initialIntermediateValues: intermediateValueStubs,
-    oracleStalenessThreshold: 3600,
-    poolRegistry: 16,
+    _initialWeights: intNormalizedWeights,
+    _poolSettings: poolSettings,
+    _initialMovingAverages: intermediateValueStubs,
+    _initialIntermediateValues: intermediateValueStubs,
+    _oracleStalenessThreshold: bn('3600'),
+    poolRegistry: bn('16'),
     poolDetails,
   };
 }

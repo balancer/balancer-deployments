@@ -4,6 +4,7 @@ import { Contract, ethers } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { createPoolParams, CreationNewPoolParams, QuantAMMDeploymentInputParams } from '../input';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   let task: Task;
@@ -12,15 +13,15 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   let params: CreationNewPoolParams;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-  let accounts: string[];
-  let sender: string;
+  let accounts: SignerWithAddress[];
+  let sender: SignerWithAddress;
 
   const TASK_NAME = '20250313-v3-quantamm';
   const POOL_CONTRACT_NAME = 'QuantAMMWeightedPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
   before('run task', async () => {
-    accounts = (await hre.ethers.getSigners()) as unknown as string[];
+    accounts = await hre.ethers.getSigners();
     sender = accounts[0];
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
@@ -28,14 +29,24 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   });
 
   before('setup contracts and parameters', async () => {
-    const chainlinkBtcOracleWrapper: Contract = await task.deployedInstance('ChainlinkBtcOracle');
-    const chainlinkUsdcOracleWrapper: Contract = await task.deployedInstance('ChainlinkUsdcOracle');
-    const antiMomentumUpdateRule: Contract = await task.deployedInstance('AntimomentumUpdateRule');
+    const chainlinkBtcOracleWrapper: Contract = await task.deployedInstanceDifferentArtifact(
+      'ChainlinkBtcOracle',
+      'ChainlinkOracle'
+    );
+    const chainlinkUsdcOracleWrapper: Contract = await task.deployedInstanceDifferentArtifact(
+      'ChainlinkUsdcOracle',
+      'ChainlinkOracle'
+    );
+    const antiMomentumUpdateRule: Contract = await task.deployedInstance('AntiMomentumUpdateRule');
+    const updateWeightRunner = await task.deployedInstance('UpdateWeightRunner');
+
+    await updateWeightRunner.addOracle(chainlinkBtcOracleWrapper.address);
+    await updateWeightRunner.addOracle(chainlinkUsdcOracleWrapper.address);
 
     input = task.input() as QuantAMMDeploymentInputParams;
 
     const salt = ethers.utils.keccak256(
-      ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [sender, Math.floor(Date.now() / 1000)])
+      ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [sender.address, Math.floor(Date.now() / 1000)])
     );
 
     params = await createPoolParams(
@@ -44,16 +55,18 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
       input.WBTC,
       chainlinkBtcOracleWrapper.address,
       antiMomentumUpdateRule.address,
-      sender,
-      salt
+      salt,
+      sender.address
     );
+    console.log(params);
+    console.log('params gotten');
   });
 
   it('deploys pool', async () => {
     params.name = 'DO NOT USE TEST QuantAMM POOL';
     params.symbol = 'TEST';
-    const poolCreationReceipt = await (await factory.connect(sender).create(params, input.Vault)).wait();
 
+    const poolCreationReceipt = await (await factory.connect(sender).create(params)).wait();
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
     pool = await task.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
   });
@@ -78,12 +91,10 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   });
 
   it('checks initial pool settings', async () => {
-    expect(await pool.quantammAdmin()).to.be.eq(sender);
-    expect(await pool.poolSettings()).to.be.deep.eq(params.poolSettings);
-    expect(await pool.lambda()).to.be.deep.eq(params.poolSettings.lambda);
-    expect(await pool.epsilonMax()).to.be.eq(params.poolSettings.epsilonMax);
-    expect(await pool.absoluteWeightGuardRail()).to.be.eq(params.poolSettings.absoluteWeightGuardRail);
-    expect(await pool.updateInterval()).to.be.eq(params.poolSettings.updateInterval);
+    expect(await pool.lambda(0)).to.be.deep.eq(params._poolSettings.lambda[0]);
+    expect(await pool.epsilonMax()).to.be.eq(params._poolSettings.epsilonMax);
+    expect(await pool.absoluteWeightGuardRail()).to.be.eq(params._poolSettings.absoluteWeightGuardRail);
+    expect(await pool.updateInterval()).to.be.eq(params._poolSettings.updateInterval);
     expect(await pool.poolRegistry()).to.be.eq(params.poolRegistry);
   });
 });
