@@ -160,7 +160,8 @@ export default class Task {
   // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
-    deployTransaction?: ethers.providers.TransactionReceipt
+    deployTransaction?: ethers.providers.TransactionReceipt,
+    vaultTask?: Task
   ): Promise<void> {
     const { ethers } = await import('hardhat');
 
@@ -171,12 +172,14 @@ export default class Task {
       deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
     }
 
+    const artifactSource = vaultTask === undefined ? this : vaultTask;
+
     const evm = await this.createEVM();
     for (const contractInfo of contractsInfo) {
       const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
         evm,
         deployTransaction,
-        this.artifact(contractInfo.name),
+        artifactSource.artifact(contractInfo.name),
         contractInfo.expectedAddress,
         contractInfo.args
       );
@@ -210,61 +213,6 @@ export default class Task {
       await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args);
     }
   }
-
-    // NOTE: contractsInfo must be sorted by deployment order
-    async saveAndVerifyFactoryContractsWithTask(
-      contractsInfo: Array<ContractInfo>,
-      vaultTask: Task,
-      deployTransaction?: ethers.providers.TransactionReceipt
-    ): Promise<void> {
-      const { ethers } = await import('hardhat');
-  
-      if (deployTransaction == null) {
-        // All contracts are deployed by the one factory transaction, so we can find the transaction hash by the first element
-        const deployedAddress = this.output()[contractsInfo[0].name];
-        const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
-        deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
-      }
-  
-      const evm = await this.createEVM();
-      for (const contractInfo of contractsInfo) {
-        const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
-          evm,
-          deployTransaction,
-          vaultTask.artifact(contractInfo.name),
-          contractInfo.expectedAddress,
-          contractInfo.args
-        );
-  
-        if (isDeployedBytecodeValid && this.mode === TaskMode.CHECK) {
-          logger.success(`Verified contract '${contractInfo.name}' on network '${this.network}' of task '${this.id}'`);
-        }
-  
-        if (isDeployedBytecodeValid == false) {
-          throw Error(
-            `Contract ${contractInfo.name} at ${contractInfo.expectedAddress} does not match expected bytecode with abi.`
-          );
-        }
-  
-        if (this.mode === TaskMode.CHECK) {
-          continue;
-        }
-  
-        const instance = await this.instanceAt(contractInfo.name, contractInfo.expectedAddress);
-        this.save({ [contractInfo.name]: instance });
-        logger.success(`Contract ${contractInfo.name} attached at ${contractInfo.expectedAddress}`);
-  
-        if (this.mode === TaskMode.LIVE) {
-          saveContractDeploymentTransactionHash(
-            contractInfo.expectedAddress,
-            deployTransaction.transactionHash,
-            this.network
-          );
-        }
-  
-        await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args);
-      }
-    }
 
   async createEVM(): Promise<EVM> {
     const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Cancun });

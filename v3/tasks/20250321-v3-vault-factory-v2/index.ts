@@ -59,7 +59,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 
   // NOTE: contractsInfo must be sorted by deployment order
-  await task.saveAndVerifyFactoryContractsWithTask(
+  await task.saveAndVerifyFactoryContracts(
     [
       {
         name: 'VaultAdmin',
@@ -83,7 +83,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.address],
       },
     ],
-    vaultTask,
-    deployTransaction
+    deployTransaction,
+    vaultTask
   );
 };
