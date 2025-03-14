@@ -220,8 +220,9 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
   });
 
   it('deploys a pool with a creator', async () => {
-    // Special version that allows pool creators.
-    const factory = await migrationTask.deployedInstance('WeightedPoolFactory');
+    // Deploy a version of the WeightedPoolFactory that allows pool creators.
+    const factoryArgs = [input.Vault, 0, '', ''];
+    const factory = await migrationTask.deploy('WeightedPoolFactory', factoryArgs, admin, true);
 
     const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY, getForkedNetwork(hre));
 

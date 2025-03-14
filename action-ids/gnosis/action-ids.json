@@ -762,5 +762,14 @@
         "withdrawProtocolFeesForToken(address,address,address)": "0x7c0fa8c5add2fab51cc64b00dc8278f6829e8235e9ac804973fc336736b88ba6"
       }
     }
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "ProtocolFeeControllerMigration": {
+      "useAdaptor": false,
+      "actionIds": {
+        "finalizeMigration()": "0x522351475deb850093dc3f48122e83134d8eca074fc3385c06fd4f16904e046d",
+        "migratePools(address[])": "0xeebbba261ff01c78dfb8d0ca3998caeb6a29762281eb4bb355fba072716234aa"
+      }
+    }
   }
 }

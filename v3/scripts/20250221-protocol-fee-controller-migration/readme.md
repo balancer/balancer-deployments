@@ -7,5 +7,10 @@ We then simulate a second migration, this time using the full infrastructure in 
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/40b4cd30889103dd17c0d87bc7d3d397823b65a0).
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeControllerMigration` artifact](./artifact/ProtocolFeeControllerMigration.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
