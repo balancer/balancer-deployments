@@ -13,6 +13,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     from,
     force
   );
+  
+  await task.save({ ChainlinkEthOracle: chainlinkEthOracleWrapper });
 
   const chainlinkBtcOracleWrapper = await task.deployAndVerify(
     'ChainlinkOracle',
