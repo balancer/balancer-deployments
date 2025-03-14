@@ -11,7 +11,6 @@ describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   let factory: Contract, pool: Contract;
   let input: QuantAMMDeploymentInputParams;
   let params: CreationNewPoolParams;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   let accounts: SignerWithAddress[];
   let sender: SignerWithAddress;
