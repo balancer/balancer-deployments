@@ -1,11 +1,11 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { createPoolParams, CreationNewPoolParams, QuantAMMDeploymentInputParams } from '../input';
 
-describeForkTest('QuantAMMPool', 'mainnet', 21818600, function () {
+describeForkTest('QuantAMMPool', 'sepolia', 7894343, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: QuantAMMDeploymentInputParams;
@@ -34,12 +34,18 @@ describeForkTest('QuantAMMPool', 'mainnet', 21818600, function () {
 
     input = task.input() as QuantAMMDeploymentInputParams;
 
+    const salt = ethers.utils.keccak256(
+      ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [sender, Math.floor(Date.now() / 1000)])
+    );
+
     params = await createPoolParams(
       input.USDC,
       chainlinkUsdcOracleWrapper.address,
       input.WBTC,
       chainlinkBtcOracleWrapper.address,
-      antiMomentumUpdateRule.address
+      antiMomentumUpdateRule.address,
+      sender,
+      salt
     );
   });
 

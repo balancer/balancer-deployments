@@ -4,7 +4,6 @@ import { ethers } from 'ethers';
 import { bn } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { BigNumber } from 'ethers';
-import { getSigner } from '@src';
 
 export type QuantAMMDeploymentInputParams = {
   Vault: string;
@@ -19,8 +18,6 @@ export type QuantAMMDeploymentInputParams = {
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
-const USDC = new Task('00000000-tokens', TaskMode.READ_ONLY);
-const WBTC = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
 const ChainlinkSepoliaDataFeedETH = '0x694AA1769357215DE4FAC081bf1f309aDC325306';
 const ChainlinkSepoliaDataFeedUSDC = '0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E';
@@ -40,19 +37,21 @@ const BaseVersion = { version: 1, deployment: '20250312-v3-quantamm' };
 export default {
   Vault,
   PauseWindowDuration: 4 * 12 * MONTH,
-  USDC,
-  WBTC,
-  FactoryVersion: JSON.stringify({ name: 'QuantAMMWeightedPool', ...BaseVersion }),
+  FactoryVersion: JSON.stringify({ name: 'QuantAMMWeightedPoolFactory', ...BaseVersion }),
   PoolVersion: JSON.stringify({ name: 'QuantAMMWeightedPool', ...BaseVersion }),
   sepolia: {
     ChainlinkSepoliaDataFeedETH,
     ChainlinkSepoliaDataFeedUSDC,
     ChainlinkSepoliaDataFeedBTC,
+    USDC: '0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8',
+    WBTC: '0x29f2D40B0605204364af54EC677bD022dA425d03',
   },
   mainnet: {
     ChainlinkFeedETH: ChainlinkMainnetDataFeedETH,
     ChainlinkDataFeedUSDC: ChainlinkMainnetDataFeedUSDC,
     ChainlinkDataFeedBTC: ChainlinkMainnetDataFeedBTC,
+    USDC: 'TODO',
+    WBTC: 'TODO',
   },
 };
 
@@ -104,7 +103,9 @@ export async function createPoolParams(
   usdcOracle: string,
   wbtcAddress: string,
   wbtcOracle: string,
-  ruleAddress: string
+  ruleAddress: string,
+  salt: string,
+  sender:string
 ): Promise<CreationNewPoolParams> {
   const tokens = [
     usdcAddress, // USDC Sepolia
@@ -137,10 +138,6 @@ export async function createPoolParams(
   const intNormalizedWeights = [...normalizedWeights];
 
   const poolDetails = [['Overview', 'Adaptability', 'number', '5']];
-  const signer = await getSigner();
-  const salt = ethers.utils.keccak256(
-    ethers.utils.defaultAbiCoder.encode(['address', 'uint256'], [signer.address, Math.floor(Date.now() / 1000)])
-  );
 
   const poolSettings: PoolSettings = {
     assets: tokens,
@@ -152,7 +149,7 @@ export async function createPoolParams(
     absoluteWeightGuardRail: bn('200000000000000000'),
     maxTradeSizeRatio: bn('300000000000000000'),
     ruleParameters: parameters,
-    poolManager: signer.address,
+    poolManager: sender,
   };
 
   return {
@@ -165,7 +162,7 @@ export async function createPoolParams(
     poolHooksContract: ethers.constants.AddressZero,
     enableDonation: true,
     disableUnbalancedLiquidity: false,
-    salt,
+    salt: salt,
     initialWeights: intNormalizedWeights,
     poolSettings,
     initialMovingAverages: intermediateValueStubs,
