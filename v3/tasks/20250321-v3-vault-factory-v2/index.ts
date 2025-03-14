@@ -55,7 +55,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const vaultAdminAddress = await vaultFactory.deployedVaultAdmins(vaultAddress);
   const vaultExtensionAddress = await vaultFactory.deployedVaultExtensions(vaultAddress);
 
-  await task.saveAndVerifyFactoryContracts(
+  // Pass this in, since the artifacts are not included in this task.
+  const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
+
+  // NOTE: contractsInfo must be sorted by deployment order
+  await task.saveAndVerifyFactoryContractsWithTask(
     [
       {
         name: 'VaultAdmin',
@@ -79,6 +83,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.address],
       },
     ],
+    vaultTask,
     deployTransaction
   );
 };
