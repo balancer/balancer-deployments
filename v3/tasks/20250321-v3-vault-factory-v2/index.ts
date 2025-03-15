@@ -31,7 +31,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const args = [vaultAddress, input.InitialGlobalProtocolSwapFee, input.InitialGlobalProtocolYieldFee];
 
   const protocolFeeController = await deploy(feeControllerTask.artifact('ProtocolFeeController'), args, from);
-  task.save({ ProtocolFeeController: protocolFeeController.address });
+  task.save({ ProtocolFeeController: protocolFeeController });
 
   await feeControllerTask.verify('ProtocolFeeController', protocolFeeController.address, args);
 
