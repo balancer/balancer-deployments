@@ -161,7 +161,7 @@ export default class Task {
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
     deployTransaction?: ethers.providers.TransactionReceipt,
-    vaultTask?: Task
+    externalTask?: Task
   ): Promise<void> {
     const { ethers } = await import('hardhat');
 
@@ -172,7 +172,9 @@ export default class Task {
       deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
     }
 
-    const artifactSource = vaultTask === undefined ? this : vaultTask;
+    // Pass in an external task if the artifacts are not in the present task.
+    // For instance, vault-factory-v2, where for safety we don't want to duplicate the artifacts.
+    const artifactSource = externalTask === undefined ? this : externalTask;
 
     const evm = await this.createEVM();
     for (const contractInfo of contractsInfo) {
