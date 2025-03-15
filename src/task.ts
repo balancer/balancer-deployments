@@ -160,7 +160,8 @@ export default class Task {
   // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
-    deployTransaction?: ethers.providers.TransactionReceipt
+    deployTransaction?: ethers.providers.TransactionReceipt,
+    externalTask?: Task
   ): Promise<void> {
     const { ethers } = await import('hardhat');
 
@@ -171,12 +172,16 @@ export default class Task {
       deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
     }
 
+    // Pass in an external task if the artifacts are not in the present task.
+    // For instance, vault-factory-v2, where for safety we don't want to duplicate the artifacts.
+    const artifactSource = externalTask === undefined ? this : externalTask;
+
     const evm = await this.createEVM();
     for (const contractInfo of contractsInfo) {
       const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
         evm,
         deployTransaction,
-        this.artifact(contractInfo.name),
+        artifactSource.artifact(contractInfo.name),
         contractInfo.expectedAddress,
         contractInfo.args
       );
