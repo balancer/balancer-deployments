@@ -262,5 +262,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0xf023731dD8758D7C869af10005e6380Cb57775a9"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0x6B24DBf13A326540ba5ef3e5d4e27C496838DF7F"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
