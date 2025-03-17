@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { StablePoolDeployment } from '../input';
 
-describeForkTest('StablePool-V3', 'mainnet', 21336200, function () {
+describeForkTest.skip('StablePool-V3', 'mainnet', 21336200, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: StablePoolDeployment;

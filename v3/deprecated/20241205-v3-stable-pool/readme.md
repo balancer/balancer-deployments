@@ -1,5 +1,11 @@
 # 2024-12-05 - V3 Stable pool
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> The stable pool was superseded by this [updated version](../../tasks/20250324-v3-stable-pool-v2/).
+
+The original pool is still safe to use; V2 just includes new functionality.
+
 Deployment of the `StablePoolFactory` for Balancer V3.
 Pools from this factory use stable math, inspired by Curve stable pools, which is best suited for correlated assets.
 

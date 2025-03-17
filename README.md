@@ -123,7 +123,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
 | V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
-| V3 Stable Pool                                         | [`20241205-v3-stable-pool`](./v3/tasks/20241205-v3-stable-pool)                                         |
 | V3 Router                                              | [`20241205-v3-router`](./v3/tasks/20241205-v3-router)                                                   |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
@@ -140,6 +139,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Sweeper                                | [`20250228-v3-protocol-fee-sweeper`](./v3/tasks/20250228-v3-protocol-fee-sweeper)                       |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
 | V3 Liquidity Bootstrapping Pool                        | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/tasks/20250307-v3-liquidity-bootstrapping-pool)       |
+| V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 
 ## Scripts
 
@@ -229,3 +229,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Stakeless Gauge Checkpointer                        | [`20230731-stakeless-gauge-checkpointer`](./v2/deprecated/20230731-stakeless-gauge-checkpointer)         |
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Cow Swap Fee Burner                              | [`20250221-v3-cow-swap-fee-burner`](./v3/tasks/20250221-v3-cow-swap-fee-burner)                          |
+| V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
