@@ -9,7 +9,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { RouterDeployment } from '../input';
 import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
 
-describeForkTest('Router-V3', 'mainnet', 21336200, function () {
+describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
   let task: Task;
   let router: Contract, permit2: Contract;
   let factory: Contract, pool: Contract;

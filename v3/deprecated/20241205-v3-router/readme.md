@@ -1,5 +1,11 @@
 # 2024-12-05 - V3 Router
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This router was superseded by this [updated version](../../tasks/20250307-v3-router-v2/).
+
+Note that the original router is still *safe* to use.
+
 Base Router deployment for V3.
 Contains `Router` for basic, single step operations (e.g., pool initialization, add, remove, swap).
 
