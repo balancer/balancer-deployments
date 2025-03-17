@@ -76,8 +76,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.WBTC,
       chainlinkBtcOracleWrapper.address,
       antiMomentumUpdateRule.address,
-      accountAddress,
-      salt
+      salt,
+      accountAddress
     );
 
     // This mimics the logic inside task.deploy
