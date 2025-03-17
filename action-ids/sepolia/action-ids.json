@@ -789,5 +789,102 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250212-v3-mev-capture-hook": {
+    "MevCaptureHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addMevTaxExemptSenders(address[])": "0x0a8ef7b5b514645239334eb6b4e8cac7bc15e1209952c08484757f353207791c",
+        "disableMevTax()": "0x66838ea94141b22fcf6ffa045477504c85b5f9eec3fae8223c89df40f26587c0",
+        "enableMevTax()": "0x736a419b75c05c7c01c741f0ba5859395891b0d792bbcddd2a29b0a53ee17321",
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0xaa7923709bb9d3abfde7ec33bf9d2cca6b6939b696d4b48b0262b1795b808040",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0xb3eb8affaf8fb0a7eb0fb17e701643cff2e6ba7e3182c36fd1fcef46b59d5cb7",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0xc553d3645feecaff4aecf71c1a9fd7254c03695416e13fe5ca34f1ed648016f2",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xfd106248453febb0c410fea2cd406be19bf1ea294e336d09b5bcd2db511b3a9a",
+        "onBeforeInitialize(uint256[],bytes)": "0x333a2bc1db159cba92119446003de672b58ae4d38fad291a91d53968c6a04051",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0xe46598ec2a6a33755cd726439ec46e97013907d0aa3cf2c608d1293641e2536b",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0xf5e345e4f41fd306d65cdd819d54db4ca1a7a7ff51a374eec1f12240489dd8a1",
+        "removeMevTaxExemptSenders(address[])": "0x60855b497b5979e9a78c77ab751b75139da1faadd865c3749b3b198ef10db094",
+        "setDefaultMevTaxMultiplier(uint256)": "0xaf007f1fefb57a356b234d0b7fd635cc9a8851b6e12816b166e0c18af793afb1",
+        "setDefaultMevTaxThreshold(uint256)": "0x483a2df9bcdb8108987c95aa11d7623df3fe50da78f1261e848c3dff24790817",
+        "setMaxMevSwapFeePercentage(uint256)": "0x39ba9a27e06b1f1037a4fff6dc04a93e2d711f808dabff7b3f486040f227e189",
+        "setPoolMevTaxMultiplier(address,uint256)": "0x0500635a2a1b26ffd7b3e9f76d228d1c2f12cffb17301cc0c1b3314a5fd44192",
+        "setPoolMevTaxThreshold(address,uint256)": "0x5616d762d6bc126d722caddb0ebabf898bead04c5e5ef93f470115c1081cbba2"
+      }
+    }
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0x8f9d72a5459e593417ffcecd71cdef40591349312b29a061610ef99771d10869",
+        "recoverProtocolFees(address[])": "0xcae12ac26dca1ceba57920a2167322a29e6d38d16be1ee966b56478451f9e757",
+        "removeProtocolFeeBurner(address)": "0x96b682af52c078b79d32844fb1a1920276d7ce5e1b464bf6010b559ed75add91",
+        "setFeeRecipient(address)": "0x545824ee434391648961ab05f7c685498d6329f0025d18fcf35847096d0741bd",
+        "setTargetToken(address)": "0xdfca92c35382073b3a4d99c1bd97027b16da746ca06f486af15a2df64a864fe2",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x612d3dfe6957b8b8fb1be52d61747393b102604371dfed06aa8e1e34ed63f9cc"
+      }
+    }
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "CowSwapFeeBurner": {
+      "useAdaptor": false,
+      "actionIds": {
+        "burn(address,address,uint256,address,uint256,address,uint256)": "0xaa50bbd987485834066c55b007c8789c9c66bcdfb30f3671cbc79009fc293649",
+        "cancelOrder(address,address)": "0xdf6e92ee3838542591ef88c45c623c224acc04dba7c4c8717cea527a62cae030",
+        "emergencyCancelOrder(address,address)": "0xe469dbca1d7d0527cffb39b6a0f9778cd6f14669ee79b4e340c5c25862280e42",
+        "retryOrder(address,uint256,uint256)": "0x019073176f331d8c6dac59ff4f29a55dadb139b7bcf459f1804723ccaa29d2ef"
+      }
+    }
+  },
+  "20250307-v3-liquidity-bootstrapping-pool": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32)": "0x0d536dfc8142d8485b393a88d89c31801b5ae473867905fb806b15c48b5be0ff",
+        "disable()": "0xb490583a5207c0875ec6bcc27ce2607b53142dc2ad5852e8476477429ff06260"
+      }
+    }
+  },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "ProtocolFeeController": {
+      "useAdaptor": false,
+      "actionIds": {
+        "collectAggregateFees(address)": "0x25a9d8a2983f9dd4456fa536b66ec866761c4b63efdc7f93163c3edbe19be569",
+        "collectAggregateFeesHook(address)": "0x02ff3e542a6b8f9ec4c75a2b0b0d94b7979388bfb4ca75cc4dda518726438493",
+        "migratePool(address)": "0xa5be5932f1da5a07ce7200b8ca3cea61c7bb827d591ba228504814a963c0d81b",
+        "registerPool(address,address,bool)": "0xf864378771aaac3e3b220f2d1bd5a86afe0957a07c386448680354b078159590",
+        "setGlobalProtocolSwapFeePercentage(uint256)": "0xb64ac42e625b66b751a3943291e8fab5dba13ccc3006b91111b6e1bca0219bf7",
+        "setGlobalProtocolYieldFeePercentage(uint256)": "0xd0f586d1d5a2e6a6febd715d301ca545c59a83fd0d4f3c63749914cc3fb75707",
+        "setPoolCreatorSwapFeePercentage(address,uint256)": "0x7a71042892192d4a6913c928d7e327d8c00f94cedd56823e37aeb301ad0d0f4a",
+        "setPoolCreatorYieldFeePercentage(address,uint256)": "0xe7014ee328d5a0f9ae7545cce3464896a3a17c06d1cd5b44701ae733e85a569b",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x75c9f413511191a99db550b2d50542216086f713ae95c8feb96b07e65f2e3c7c",
+        "setProtocolYieldFeePercentage(address,uint256)": "0xc57a97b4b44f716f87c9b1144346046e6572175bd78d11cbb72159f7274c28fa",
+        "updateProtocolSwapFeePercentage(address)": "0x86c246f330adf6aab5470d986b82f2543a960b051233d687f05c44d169239571",
+        "updateProtocolYieldFeePercentage(address)": "0xf2aca16590c522d1330e4fe4d4e23d233a9ff80b05aa5c31aa60ae4f8a3c2173",
+        "withdrawPoolCreatorFees(address)": "0xf842505de3e9f4f2cb620638b8e8b7a155dd8f3abdd33cc1a870073d6af38760",
+        "withdrawPoolCreatorFees(address,address)": "0x77f6d38da5dff993ea8d44ae226612b2ba51ea3c44fbe04aa01cb080b5996072",
+        "withdrawProtocolFees(address,address)": "0x8d267109edbfad5fcd7140a77941385fa8e59561c2d378fa8c8d26bc8d74aca8",
+        "withdrawProtocolFeesForToken(address,address,address)": "0xf489956ed3a8dd00249abca47f304d128e3b1efd58ccde48fcbafc3e48d510c8"
+      }
+    }
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "ProtocolFeeControllerMigration": {
+      "useAdaptor": false,
+      "actionIds": {
+        "finalizeMigration()": "0x8c292d8e1af8e556f1aa3edc7a1214d5e14b9fb1afa68649633af554a5a6b881",
+        "migratePools(address[])": "0x5da11bd4a075f242f7d1c1b44155f4fb690bd3476a3bc58330904891b1ca3e49"
+      }
+    }
+  },
+  "20250124-v3-gyro-eclp": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0xb65bdf7da5cafb380422dd0bcc1e3acbf2689f83df52b72eebd84ff0b3668109",
+        "disable()": "0x6e249c4893ceac00437225ee187ea2b943b82aa8b7c566877cca2f96b7fae837"
+      }
+    }
   }
 }

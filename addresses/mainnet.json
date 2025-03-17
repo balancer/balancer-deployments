@@ -1520,5 +1520,113 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0xE9B0a3bc48178D7FE2F5453C8bc1415d73F966d0"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0xe912C791f7c4b6323EfBA294F66C0dE93c50eB5F"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0x1bcA39b01F451b0a05D7030e6e6981a73B716b1C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeController",
+        "address": "0x212F884252792ebaaA811FB0678444b21c7C2879"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250218-v3-aggregator-router": {
+    "contracts": [
+      {
+        "name": "AggregatorRouter",
+        "address": "0x309abcAeFa19CA6d34f0D8ff4a4103317c138657"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeControllerMigration",
+        "address": "0x75635f85600Fc357906417f6b78AAf8755d2888D"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x0E800D8d2E8b4694610AEdc385Aa6D763492B106"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0xd22eecBB495380Ef52b1CCeF1cA594979885D484"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250307-v3-liquidity-bootstrapping-pool": {
+    "contracts": [
+      {
+        "name": "LBPoolFactory",
+        "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xdBB8aD38C990Bd4ca2c88A6E6CfDF5045B0d4FB0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250307-v3-router-v2": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0xAE563E3f8219521950555F5962419C8919758Ea2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250314-balancer-registry-initializer": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x91F17800Ca7DD29f2124D9D9eA8D4794693192C7"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
   }
 }

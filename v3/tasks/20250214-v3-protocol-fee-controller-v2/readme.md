@@ -6,5 +6,10 @@ There is nothing to deprecate, as the original Protocol Fee Controller was deplo
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0c38dc629386c401e3d6094981d7990f2fe0a379)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/77290600e9c896707c26d2a353ecfe82d97fa5b9)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeController` artifact](./artifact/ProtocolFeeController.json)

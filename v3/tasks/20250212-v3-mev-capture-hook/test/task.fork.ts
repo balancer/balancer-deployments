@@ -2,8 +2,9 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import { bn } from '@helpers/numbers';
 
-describeForkTest('MevCaptureHook', 'mainnet', 21832752, function () {
+describeForkTest('MevCaptureHook', 'mainnet', 21882500, function () {
   let task: Task;
   let mevCaptureHook: Contract;
 
@@ -31,5 +32,17 @@ describeForkTest('MevCaptureHook', 'mainnet', 21832752, function () {
     const registryTask = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const registry = await registryTask.deployedInstance('BalancerContractRegistry');
     expect(await mevCaptureHook.getBalancerContractRegistry()).to.be.eq(registry.address);
+  });
+
+  it('returns default mev tax multiplier', async () => {
+    expect(await mevCaptureHook.getDefaultMevTaxMultiplier()).to.be.eq(bn('1500000000000000000000000'));
+  });
+
+  it('returns default mev tax threshold', async () => {
+    expect(await mevCaptureHook.getDefaultMevTaxThreshold()).to.be.eq(bn('300000000'));
+  });
+
+  it('is enabled by default', async () => {
+    expect(await mevCaptureHook.isMevTaxEnabled()).to.be.true;
   });
 });
