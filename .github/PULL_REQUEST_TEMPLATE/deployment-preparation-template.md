@@ -14,8 +14,9 @@
 
 - [ ] Old task was moved to `deprecated/` directory
 - [ ] Deployments `README` is updated: old task is moved to the 'deprecated' section, and links are updated with the `deprecated/` prefix
-- [ ] Old task imports in `index.ts`, `input.ts` and fork tests are updated
+- [ ] Old task fork test is skipped
 - [ ] Old task `README` is updated with a warning sign, a link to the replacement task and a short description <!-- Explain why it was deprecated -->
+- [ ] Addresses are rebuilt to reflect contract status
 
 ## Code checklist:
 
