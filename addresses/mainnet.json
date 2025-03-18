@@ -1442,7 +1442,7 @@
         "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
