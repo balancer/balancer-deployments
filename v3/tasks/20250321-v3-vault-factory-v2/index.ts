@@ -30,10 +30,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const feeControllerTask = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY);
   const args = [vaultAddress, input.InitialGlobalProtocolSwapFee, input.InitialGlobalProtocolYieldFee];
 
-  const protocolFeeController = await deploy(feeControllerTask.artifact('ProtocolFeeController'), args, from);
-  task.save({ ProtocolFeeController: protocolFeeController });
-
-  await feeControllerTask.verify('ProtocolFeeController', protocolFeeController.address, args);
+  const protocolFeeController = await task.deployAndVerify('ProtocolFeeController', args, from, force);
 
   // Deploy the Vault contracts.
   const deployTransaction = await task.deployFactoryContracts(
