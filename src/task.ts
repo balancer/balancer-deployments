@@ -85,7 +85,6 @@ export default class Task {
   }
 
   async instanceAt(name: string, address: string): Promise<Contract> {
-    await this.saveInInternalEVMState(address);
     return instanceAt(this.artifact(name), address);
   }
 
