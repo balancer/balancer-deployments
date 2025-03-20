@@ -61,6 +61,7 @@ type ContractInfo = {
 export default class Task {
   id: string;
   mode: TaskMode;
+  evm: Promise<EVM>;
 
   _network?: Network;
   _verifier?: Verifier;
@@ -71,6 +72,7 @@ export default class Task {
     this.mode = mode;
     this._network = network;
     this._verifier = verifier;
+    this.evm = this.createEVM();
   }
 
   get network(): string {
@@ -161,7 +163,8 @@ export default class Task {
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
     deployTransaction?: ethers.providers.TransactionReceipt,
-    externalTask?: Task
+    externalTask?: Task,
+    factoryAddress?: string
   ): Promise<void> {
     const { ethers } = await import('hardhat');
 
@@ -176,14 +179,13 @@ export default class Task {
     // For instance, vault-factory-v2, where for safety we don't want to duplicate the artifacts.
     const artifactSource = externalTask === undefined ? this : externalTask;
 
-    const evm = await this.createEVM();
     for (const contractInfo of contractsInfo) {
       const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
-        evm,
         deployTransaction,
         artifactSource.artifact(contractInfo.name),
         contractInfo.expectedAddress,
-        contractInfo.args
+        contractInfo.args,
+        factoryAddress
       );
 
       if (isDeployedBytecodeValid && this.mode === TaskMode.CHECK) {
@@ -224,12 +226,13 @@ export default class Task {
     return evm;
   }
 
+  // NOTE: If a contract is deployed by a factory, we must set the factoryAddress in the function arguments.
   async checkBytecodeAndSaveEVMState(
-    evm: EVM,
     deployTransaction: ethers.providers.TransactionReceipt,
     artifact: Artifact,
     contractAddress: string,
-    args: Array<Param> = []
+    args: Array<Param> = [],
+    factoryAddress?: string
   ): Promise<boolean> {
     const { ethers } = await import('hardhat');
 
@@ -244,9 +247,12 @@ export default class Task {
       throw Error(`Could not find block ${deployTransaction.blockNumber}`);
     }
 
+    const evm = await this.evm;
     const res = await evm.runCode({
       code: runBytecode,
       to: Address.fromString(contractAddress),
+      caller: factoryAddress ? Address.fromString(factoryAddress) : Address.fromString(deployTransaction.from),
+      origin: Address.fromString(deployTransaction.from),
       block: {
         header: {
           number: BigInt(block.number),
@@ -294,6 +300,8 @@ export default class Task {
       this.save({ [name]: instance });
       logger.success(`Deployed ${name} at ${instance.address}`);
 
+      await this.saveInInternalEVMState(instance.address);
+
       if (this.mode === TaskMode.LIVE) {
         saveContractDeploymentTransactionHash(instance.address, instance.deployTransaction.hash, this.network);
       }
@@ -303,6 +311,16 @@ export default class Task {
     }
 
     return instance;
+  }
+
+  async saveInInternalEVMState(address: string): Promise<void> {
+    const { ethers } = await import('hardhat');
+    const evm = await this.evm;
+
+    await evm.stateManager.putContractCode(
+      Address.fromString(address),
+      hexToBytes(await ethers.provider.getCode(address))
+    );
   }
 
   async verify(

@@ -1,5 +1,5 @@
 import { VaultFactoryDeployment } from './input';
-import { deploy, Task, TaskMode, TaskRunOptions } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ethers } from 'hardhat';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -27,13 +27,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   // Deploy the ProtocolFeeController from the artifact, as it won't be there yet on new chains.
   // Must be AFTER the VaultFactory, or the deployer account nonce will be incorrect.
-  const feeControllerTask = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY);
+  new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY);
   const args = [vaultAddress, input.InitialGlobalProtocolSwapFee, input.InitialGlobalProtocolYieldFee];
 
-  const protocolFeeController = await deploy(feeControllerTask.artifact('ProtocolFeeController'), args, from);
-  task.save({ ProtocolFeeController: protocolFeeController });
-
-  await feeControllerTask.verify('ProtocolFeeController', protocolFeeController.address, args);
+  const protocolFeeController = await task.deployAndVerify('ProtocolFeeController', args, from, force);
 
   // Deploy the Vault contracts.
   const deployTransaction = await task.deployFactoryContracts(
