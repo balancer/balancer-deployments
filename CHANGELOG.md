@@ -71,6 +71,8 @@
 #### V3
 
 - Deprecated `20241205-v3-composite-liquidity-router`.
+- Deprecated `20241205-v3-router`.
+- Deprecated `20241205-v3-stable-pool`.
 
 #### V2
 

@@ -702,7 +702,7 @@
         "address": "0x0BF61f706105EA44694f2e92986bD01C39930280"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -716,7 +716,7 @@
         "address": "0x7373C5b9610d43466395617c428eCAA5b47ac5AA"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
