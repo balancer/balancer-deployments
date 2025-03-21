@@ -1628,5 +1628,19 @@
     ],
     "status": "SCRIPT",
     "version": "v3"
+  },
+  "20250324-v3-stable-pool-v2": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0xe42C2E153BB0A8899b59C73F5Ff941f9742F1197"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x95BC5CA62Ed018b5206342479ded82e18e46dcbf"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
