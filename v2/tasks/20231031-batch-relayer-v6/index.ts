@@ -15,7 +15,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const relayerLibrary = await task.deployAndVerify('BatchRelayerLibrary', relayerLibraryArgs, from, force);
 
   // The relayer library automatically also deploys the query library, and then the relayer itself: we must verify them
-  const relayer: Contract = await task.instanceAt('BalancerRelayer', relayerLibrary.getEntrypoint());
+  const relayer: Contract = await task.instanceAt('BalancerRelayer', await relayerLibrary.getEntrypoint());
   const queryLibrary: string = await relayer.getQueryLibrary();
   const relayerAddress = await relayer.address;
 
