@@ -25,11 +25,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     throw Error('Incorrect target address');
   }
 
-  // Deploy the ProtocolFeeController from the artifact, as it won't be there yet on new chains.
+  // Deploy the ProtocolFeeController, as it won't be there yet on new chains.
   // Must be AFTER the VaultFactory, or the deployer account nonce will be incorrect.
-  new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY);
   const args = [vaultAddress, input.InitialGlobalProtocolSwapFee, input.InitialGlobalProtocolYieldFee];
-
   const protocolFeeController = await task.deployAndVerify('ProtocolFeeController', args, from, force);
 
   // Deploy the Vault contracts.
@@ -41,7 +39,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
-      { gasLimit: 17e6 }
+      { gasLimit: 15e6 }
     ),
     ['Vault', 'VaultExtension', 'VaultAdmin'],
     (await vaultFactory.isDeployed(vaultAddress)) === false,
