@@ -29,8 +29,8 @@ const vaultExtensionCreationCode = vaultExtensionArtifact.bytecode;
 const vaultAdminArtifact = Vault.artifact('VaultAdmin');
 const vaultAdminCreationCode = vaultAdminArtifact.bytecode;
 
-const salt = '0x3877188e9e5da25b11fdb7f5e8d4fdddce2d22707ba04878a8e14700dd46fa82';
-const targetVaultAddress = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
+const salt = '0xeb12e16955efe9c728b5cccf8cf188af4ae92f94cb0d78275d7d3c022087ffd4';
+const targetVaultAddress = '0xba1333333333cbcdB5D83c2e5d1D898E07eD00Dc';
 
 const initialGlobalProtocolSwapFee = fp(0.5); // 50%
 const initialGlobalProtocolYieldFee = fp(0.1); // 10%

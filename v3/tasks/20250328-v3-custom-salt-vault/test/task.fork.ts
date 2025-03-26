@@ -15,7 +15,7 @@ describeForkTest('V3-CustomSalt-Vault', 'avalanche', 20993984, function () {
   let deployer: SignerWithAddress;
   let input: VaultFactoryDeployment;
 
-  const deployerAddress = '0x3877188e9e5DA25B11fDb7F5E8D4fDDDCE2d2270';
+  const deployerAddress = '0xeb12e16955efe9c728b5cccf8cf188af4ae92f94';
 
   before('run task', async () => {
     task = new Task('20250328-v3-custom-salt-vault', TaskMode.TEST, getForkedNetwork(hre));
