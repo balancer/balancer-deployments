@@ -1,6 +1,6 @@
 # 2025-03-28 - V3 Vault Factory with a custom salt
 
-This is meant to be a one-off task to support Vault deployment on Avalanche. Since the VaultFactory must be deployed from a specific account, any mistake would result in a different Vault address. To keep a similar Vault address (same number of threes), we mined a new salt to work with a fresh deployer account.
+This is meant to be a one-off task to support Vault deployment on Avalanche. Since the VaultFactory must be deployed from a specific account, any mistake would result in a random Vault address. To keep a similar Vault address (same number of threes as the canonical address deployed to mainnet), we mined a new salt to work with a fresh deployer account.
 
 ## Useful Files
 
