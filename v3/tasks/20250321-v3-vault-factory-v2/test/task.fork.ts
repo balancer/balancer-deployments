@@ -15,7 +15,7 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
   let deployer: SignerWithAddress;
   let input: VaultFactoryDeployment;
 
-  const deployerAddress = '0x3877188e9e5DA25B11fDb7F5E8D4fDDDCE2d2270';
+  const deployerAddress = '0xeb12e16955efe9c728b5cccf8cf188af4ae92f94';
 
   before('run task', async () => {
     task = new Task('20250321-v3-vault-factory-v2', TaskMode.TEST, getForkedNetwork(hre));
