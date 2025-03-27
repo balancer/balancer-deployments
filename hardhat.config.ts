@@ -503,6 +503,14 @@ export default {
           browserURL: 'https://modescan.io',
         },
       },
+      {
+        network: 'holesky',
+        chainId: 17000,
+        urls: {
+          apiURL: 'https://api-holesky.etherscan.io/api',
+          browserURL: 'https://holesky.etherscan.io/',
+        },
+      },
     ],
   },
 };
