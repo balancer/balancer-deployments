@@ -300,8 +300,6 @@ export default class Task {
       this.save({ [name]: instance });
       logger.success(`Deployed ${name} at ${instance.address}`);
 
-      await this.saveInInternalEVMState(instance.address);
-
       if (this.mode === TaskMode.LIVE) {
         saveContractDeploymentTransactionHash(instance.address, instance.deployTransaction.hash, this.network);
       }
@@ -309,6 +307,8 @@ export default class Task {
       logger.info(`${name} already deployed at ${output[name]}`);
       instance = await this.instanceAt(name, output[name]);
     }
+
+    await this.saveInInternalEVMState(instance.address);
 
     return instance;
   }
