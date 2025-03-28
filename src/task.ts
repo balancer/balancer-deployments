@@ -214,7 +214,7 @@ export default class Task {
         );
       }
 
-      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args);
+      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
     }
   }
 
@@ -327,15 +327,18 @@ export default class Task {
     name: string,
     address: string,
     constructorArguments: string | unknown[],
-    libs?: Libraries
+    libs?: Libraries,
+    externalTask?: Task
   ): Promise<void> {
     if (this.mode !== TaskMode.LIVE) {
       return;
     }
 
+    const task = externalTask === undefined ? this : externalTask;
+
     try {
       if (!this._verifier) return logger.warn('Skipping contract verification, no verifier defined');
-      const url = await this._verifier.call(this, name, address, constructorArguments, libs);
+      const url = await this._verifier.call(task, name, address, constructorArguments, libs);
       logger.success(`Verified contract ${name} at ${url}`);
     } catch (error) {
       logger.error(`Failed trying to verify ${name} at ${address}: ${error}`);
