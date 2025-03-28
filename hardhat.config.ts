@@ -503,14 +503,6 @@ export default {
           browserURL: 'https://modescan.io',
         },
       },
-      {
-        network: 'avalanche',
-        chainId: 43114,
-        urls: {
-          apiURL: 'https://api.snowtrace.io/api',
-          browserURL: 'https://snowtrace.io',
-        },
-      },
     ],
   },
 };
