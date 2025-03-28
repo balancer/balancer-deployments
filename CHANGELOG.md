@@ -10,28 +10,28 @@
 
 #### V3
 
-- Deployed V3 Vault to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Weighted Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Stable Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Batch Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Vault to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Weighted Pool to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Stable Pool to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Router to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Batch Router to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 - Deployed V3 Stable Surge Pool Factory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Balancer Contract Registry to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Aggregator Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Balancer Contract Registry to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Aggregator Router to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 - Deployed V3 MEV Capture Hook to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Protocol Fee Sweeper to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Protocol Fee Sweeper to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 Router (V2) to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 - Deployed V3 Cow Swap Fee Burner to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Liquidity Bootstrapping Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Liquidity Bootstrapping Pool to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 - Deployed V3 Hook Examples to Sepolia.
-- Deployed V3 Protocol Fee Controller V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Protocol Fee Controller V2 to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 GyroECLPFactory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 StablePoolFactory V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 GyroECLPFactory to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
+- Deployed V3 StablePoolFactory V2 to Mainnet, Gnosis, Arbitrum, Base, Avalanche and Sepolia.
 
 #### V2
 
