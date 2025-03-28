@@ -18,6 +18,9 @@ export default {
   base: {
     FeeRecipient: MaxiOmniMultisig,
   },
+  avalanche: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
   gnosis: {
     FeeRecipient: MaxiOmniMultisig,
   },
