@@ -14,6 +14,7 @@ There were also other changes to the Router contract and inheritance hierarchy s
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Router` artifact](./artifact/Router.json)
 

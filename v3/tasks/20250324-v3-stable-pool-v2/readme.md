@@ -12,5 +12,6 @@ This version increases the maximum amplification parameter from 5,000 to 50,000.
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePoolFactory` artifact](./artifact/StablePoolFactory.json)
