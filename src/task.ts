@@ -117,7 +117,7 @@ export default class Task {
 
     const instance = await this.deploy(name, args, from, force, libs);
 
-    await this.verify(name, instance.address, args, undefined, libs);
+    await this.verify(name, instance.address, args, libs);
     return instance;
   }
 
@@ -214,7 +214,7 @@ export default class Task {
         );
       }
 
-      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, externalTask);
+      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
     }
   }
 
@@ -327,8 +327,8 @@ export default class Task {
     name: string,
     address: string,
     constructorArguments: string | unknown[],
-    externalTask?: Task,
-    libs?: Libraries
+    libs?: Libraries,
+    externalTask?: Task
   ): Promise<void> {
     if (this.mode !== TaskMode.LIVE) {
       return;
