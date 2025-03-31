@@ -194,7 +194,7 @@
         "address": "0x6077b9801B5627a65A5eeE70697C793751D1a71c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -208,7 +208,7 @@
         "address": "0x82F2d4c5BEaC74a1684C1792CaB67b04c7e5f6f3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
@@ -292,6 +292,20 @@
       {
         "name": "Router",
         "address": "0x93db4682A40721e7c698ea0a842389D10FA8Dae5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250324-v3-stable-pool-v2": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x482eE54595f79B6BA34b75754A4983134148Affb"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xbe39DE031d01659aa6123deA530ffA3af7A53e58"
       }
     ],
     "status": "ACTIVE",
