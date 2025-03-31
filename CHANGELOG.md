@@ -31,6 +31,7 @@
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 GyroECLPFactory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 StablePoolFactory V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 
 #### V2
 
@@ -71,6 +72,8 @@
 #### V3
 
 - Deprecated `20241205-v3-composite-liquidity-router`.
+- Deprecated `20241205-v3-router`.
+- Deprecated `20241205-v3-stable-pool`.
 
 #### V2
 

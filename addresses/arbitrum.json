@@ -894,7 +894,7 @@
         "address": "0x0f08eEf2C785AA5e7539684aF04755dEC1347b7c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -908,7 +908,7 @@
         "address": "0xC8B43aa1C60c4caE0ACBf3db9C79e407E09b13dA"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
@@ -1079,6 +1079,20 @@
       }
     ],
     "status": "SCRIPT",
+    "version": "v3"
+  },
+  "20250324-v3-stable-pool-v2": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x44d33798dddCdAbc93Fe6a40C80588033Dc502d3"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xcb2840553945dBc776d98DABC141f9b2CceC3c30"
+      }
+    ],
+    "status": "ACTIVE",
     "version": "v3"
   }
 }
