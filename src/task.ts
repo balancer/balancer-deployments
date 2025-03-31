@@ -382,6 +382,8 @@ export default class Task {
       );
     }
 
+    await this.saveInInternalEVMState(deployedAddress);
+
     // We need to return an instance so that the task may carry on, potentially using this as input of future
     // deployments.
     return this.instanceAt(name, deployedAddress);
