@@ -11,6 +11,7 @@ Contains `BatchRouter` for complex multi-hop swaps (supports single token add / 
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BatchRouter` artifact](./artifact/BatchRouter.json)
 
