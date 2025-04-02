@@ -837,6 +837,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0x3630D26E51c03026f4f063d69d65F8E234eEAf5b"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250214-v3-protocol-fee-controller-v2": {
     "contracts": [
       {
