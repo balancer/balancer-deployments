@@ -10,5 +10,6 @@ This contract is targeted for Base and L2 networks in general, where the priorit
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`MevCaptureHook` artifact](./artifact/MevCaptureHook.json)

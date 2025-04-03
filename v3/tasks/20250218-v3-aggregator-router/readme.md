@@ -9,6 +9,8 @@ Contains `AggregatorRouter` for basic swap operations (exact in / exact out) whe
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`AggregatorRouter` artifact](./artifact/AggregatorRouter.json)
 

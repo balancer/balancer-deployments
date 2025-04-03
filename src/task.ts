@@ -61,6 +61,7 @@ type ContractInfo = {
 export default class Task {
   id: string;
   mode: TaskMode;
+  evm: Promise<EVM>;
 
   _network?: Network;
   _verifier?: Verifier;
@@ -71,6 +72,7 @@ export default class Task {
     this.mode = mode;
     this._network = network;
     this._verifier = verifier;
+    this.evm = this.createEVM();
   }
 
   get network(): string {
@@ -160,7 +162,9 @@ export default class Task {
   // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
-    deployTransaction?: ethers.providers.TransactionReceipt
+    deployTransaction?: ethers.providers.TransactionReceipt,
+    externalTask?: Task,
+    factoryAddress?: string
   ): Promise<void> {
     const { ethers } = await import('hardhat');
 
@@ -171,14 +175,17 @@ export default class Task {
       deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
     }
 
-    const evm = await this.createEVM();
+    // Pass in an external task if the artifacts are not in the present task.
+    // For instance, vault-factory-v2, where for safety we don't want to duplicate the artifacts.
+    const artifactSource = externalTask === undefined ? this : externalTask;
+
     for (const contractInfo of contractsInfo) {
       const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
-        evm,
         deployTransaction,
-        this.artifact(contractInfo.name),
+        artifactSource.artifact(contractInfo.name),
         contractInfo.expectedAddress,
-        contractInfo.args
+        contractInfo.args,
+        factoryAddress
       );
 
       if (isDeployedBytecodeValid && this.mode === TaskMode.CHECK) {
@@ -207,7 +214,7 @@ export default class Task {
         );
       }
 
-      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args);
+      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
     }
   }
 
@@ -219,12 +226,13 @@ export default class Task {
     return evm;
   }
 
+  // NOTE: If a contract is deployed by a factory, we must set the factoryAddress in the function arguments.
   async checkBytecodeAndSaveEVMState(
-    evm: EVM,
     deployTransaction: ethers.providers.TransactionReceipt,
     artifact: Artifact,
     contractAddress: string,
-    args: Array<Param> = []
+    args: Array<Param> = [],
+    factoryAddress?: string
   ): Promise<boolean> {
     const { ethers } = await import('hardhat');
 
@@ -239,9 +247,12 @@ export default class Task {
       throw Error(`Could not find block ${deployTransaction.blockNumber}`);
     }
 
+    const evm = await this.evm;
     const res = await evm.runCode({
       code: runBytecode,
       to: Address.fromString(contractAddress),
+      caller: factoryAddress ? Address.fromString(factoryAddress) : Address.fromString(deployTransaction.from),
+      origin: Address.fromString(deployTransaction.from),
       block: {
         header: {
           number: BigInt(block.number),
@@ -297,22 +308,37 @@ export default class Task {
       instance = await this.instanceAt(name, output[name]);
     }
 
+    await this.saveInInternalEVMState(instance.address);
+
     return instance;
+  }
+
+  async saveInInternalEVMState(address: string): Promise<void> {
+    const { ethers } = await import('hardhat');
+    const evm = await this.evm;
+
+    await evm.stateManager.putContractCode(
+      Address.fromString(address),
+      hexToBytes(await ethers.provider.getCode(address))
+    );
   }
 
   async verify(
     name: string,
     address: string,
     constructorArguments: string | unknown[],
-    libs?: Libraries
+    libs?: Libraries,
+    externalTask?: Task
   ): Promise<void> {
     if (this.mode !== TaskMode.LIVE) {
       return;
     }
 
+    const task = externalTask === undefined ? this : externalTask;
+
     try {
       if (!this._verifier) return logger.warn('Skipping contract verification, no verifier defined');
-      const url = await this._verifier.call(this, name, address, constructorArguments, libs);
+      const url = await this._verifier.call(task, name, address, constructorArguments, libs);
       logger.success(`Verified contract ${name} at ${url}`);
     } catch (error) {
       logger.error(`Failed trying to verify ${name} at ${address}: ${error}`);
@@ -355,6 +381,8 @@ export default class Task {
         `The build info and inputs for contract '${name}' on network '${this.network}' of task '${this.id}' does not match the data used to deploy address ${deployedAddress}`
       );
     }
+
+    await this.saveInInternalEVMState(deployedAddress);
 
     // We need to return an instance so that the task may carry on, potentially using this as input of future
     // deployments.

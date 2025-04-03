@@ -10,24 +10,27 @@
 
 #### V3
 
-- Deployed V3 Vault to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Weighted Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Stable Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Batch Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Buffer Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Vault Explorer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Vault to all networks.
+- Deployed V3 Weighted Pool to all networks.
+- Deployed V3 Batch Router to all networks.
+- Deployed V3 Buffer Router to all networks.
+- Deployed V3 Vault Explorer to all networks.
 - Deployed V3 Stable Surge Pool Factory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Composite Liquidity Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Balancer Contract Registry to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Aggregator Router to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 MEV Capture Hook to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Protocol Fee Sweeper to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Router (V2) to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Composite Liquidity Router (V2) to all networks.
+- Deployed V3 Balancer Contract Registry to all networks.
+- Deployed V3 Aggregator Router to all networks.
+- Deployed V3 MEV Capture Hook to Mainnet, Gnosis, Arbitrum, Base, Optimism and Sepolia.
+- Deployed V3 Protocol Fee Sweeper to all networks.
+- Deployed V3 Router (V2) to all networks.
 - Deployed V3 Cow Swap Fee Burner to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Liquidity Bootstrapping Pool to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Liquidity Bootstrapping Pool to all networks.
 - Deployed V3 Hook Examples to Sepolia.
-- Deployed V3 Protocol Fee Controller V2 to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Protocol Fee Controller V2 to all networks.
+- Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 GyroECLPFactory to all networks.
+- Deployed V3 Gyro2CLPFactory to all networks.
+- Deployed V3 StablePoolFactory V2 to all networks.
 
 #### V2
 
@@ -68,6 +71,8 @@
 #### V3
 
 - Deprecated `20241205-v3-composite-liquidity-router`.
+- Deprecated `20241205-v3-router`.
+- Deprecated `20241205-v3-stable-pool`.
 
 #### V2
 

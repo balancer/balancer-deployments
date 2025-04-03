@@ -1442,7 +1442,7 @@
         "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -1456,7 +1456,7 @@
         "address": "0x89Ef89Fd9a6ec73bcE588F309C1F65C406d2891C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
@@ -1493,6 +1493,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250120-v3-gyro-2clp": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0xb96524227c4B5Ab908FC3d42005FE3B07abA40E9"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0x4ffECD2dab8703a74BD13Ba10BcE3419B9f5fA80"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {
@@ -1516,6 +1530,20 @@
       {
         "name": "CompositeLiquidityRouter",
         "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0xE9B0a3bc48178D7FE2F5453C8bc1415d73F966d0"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0xe912C791f7c4b6323EfBA294F66C0dE93c50eB5F"
       }
     ],
     "status": "ACTIVE",
@@ -1549,6 +1577,16 @@
       }
     ],
     "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeControllerMigration",
+        "address": "0x75635f85600Fc357906417f6b78AAf8755d2888D"
+      }
+    ],
+    "status": "SCRIPT",
     "version": "v3"
   },
   "20250221-v3-cow-swap-fee-burner": {
@@ -1590,6 +1628,30 @@
       {
         "name": "Router",
         "address": "0xAE563E3f8219521950555F5962419C8919758Ea2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250314-balancer-registry-initializer": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x91F17800Ca7DD29f2124D9D9eA8D4794693192C7"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
+  "20250324-v3-stable-pool-v2": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0xe42C2E153BB0A8899b59C73F5Ff941f9742F1197"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x95BC5CA62Ed018b5206342479ded82e18e46dcbf"
       }
     ],
     "status": "ACTIVE",

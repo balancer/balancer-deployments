@@ -1048,5 +1048,52 @@
         "withdrawProtocolFeesForToken(address,address,address)": "0x610537725ddaed423abcb2b23d9191781b990fceb0f445f4bfe56f049514ff4c"
       }
     }
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "ProtocolFeeControllerMigration": {
+      "useAdaptor": false,
+      "actionIds": {
+        "finalizeMigration()": "0xf2e99293214bb798dd007d998933c26df87063dcace3335292200398836b4327",
+        "migratePools(address[])": "0xfe18fcf002cb32980254e2e611de6b99756f16047b4a767bc36fc6f51156462f"
+      }
+    }
+  },
+  "20250124-v3-gyro-eclp": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x178ed7c0c45dcb7e5e48c818415c4d5bb035d685fd25cbacedb1153a90b402ff",
+        "disable()": "0x95095549d7b771b285d8bc313117157a9c18db08596228d492e3fbc7c5dc751b"
+      }
+    }
+  },
+  "20250324-v3-stable-pool-v2": {
+    "StablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x08534c968e72676777d853339d072b15f60871ecdc3da079ad90641fad669dfe",
+        "disable()": "0x54d04f96e1384dacfbc4bb06d4876678ad3ba07c255782bd693bc9df4b367e24"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xcb2840553945dBc776d98DABC141f9b2CceC3c30",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0xf7ee6b1a49d7171018942ece36ab642194d01e66f9ce7a7f24e774f31232a1db",
+        "emitTransfer(address,address,uint256)": "0xb24aa5113342f8d106cd54f15f8f29431c0d3bdc7fcea9d7cfc173593f1e148e",
+        "incrementNonce()": "0x7b1fd2816c92ee01e563554b5fc647b9b4f6ee8a158f10d3c43caa35207276d0",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x87a1189b28fdc95169083fce17ba16e458982e97d3f968f5f016cb760ad6e446",
+        "stopAmplificationParameterUpdate()": "0x682ce9b36d460cdaea0f8e912dccfe5e5efc5cfaebbc80ec3b46a1a3fbebd902"
+      }
+    }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x7782aa3c59972e2459d74ef5572e9aa6fb040fc24e7b7045d4d5dd8112913eb4",
+        "disable()": "0x8962b605c4877aadeecae387492d3bc0bfb2f52c30aa0633200cf1e8c3238f3c"
+      }
+    }
   }
 }
