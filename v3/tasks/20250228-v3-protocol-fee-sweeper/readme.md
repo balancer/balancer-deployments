@@ -12,5 +12,6 @@ It does this for each pool by withdrawing tokens from the Protocol Fee Controlle
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeSweeper` artifact](./artifact/ProtocolFeeSweeper.json)
