@@ -142,7 +142,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 | V3 Vault Factory with custom salt (for Avalanche)      | [`20250328-v3-custom-salt-vault`](./v3/tasks/20250328-v3-custom-salt-vault)                             |
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
-| V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-factory-v2`](./v3/tasks/20250404-v3-stable-surge-factory-v2)                 |
+| V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 
 ## Scripts
 

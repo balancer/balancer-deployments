@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { StableSurgePoolDeployment } from '../input';
 
-describeForkTest.skip('StableSurgeV2', 'mainnet', 22190000, function () {
+describeForkTest.skip('StableSurgePoolFactoryV2', 'mainnet', 22190000, function () {
   let task: Task;
   let factory: Contract, pool: Contract, vault: Contract, vaultExtension: Contract;
   let input: StableSurgePoolDeployment;
@@ -15,7 +15,7 @@ describeForkTest.skip('StableSurgeV2', 'mainnet', 22190000, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
 
-  const TASK_NAME = '20250404-v3-stable-surge-factory-v2';
+  const TASK_NAME = '20250404-v3-stable-surge-pool-factory-v2';
   const POOL_CONTRACT_NAME = 'StableSurgePool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
   const CONTRACT_VERSION_NUMBER = 2;
@@ -125,9 +125,5 @@ describeForkTest.skip('StableSurgeV2', 'mainnet', 22190000, function () {
     expect(version.deployment).to.be.eq(TASK_NAME);
     expect(version.version).to.be.eq(CONTRACT_VERSION_NUMBER);
     expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
-  });
-
-  it('checks hook version', async () => {
-
   });
 });

@@ -1,4 +1,3 @@
-import { fp } from '@helpers/numbers';
 import { MONTH } from '@helpers/time';
 import { Task, TaskMode } from '@src';
 
@@ -17,7 +16,7 @@ const StableSurgeHook = new Task('20250403-v3-stable-surge-hook-v2', TaskMode.RE
 const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
 const BAL = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
-const BaseVersion = { version: 2, deployment: '20250404-v3-stable-surge-factory-v2' };
+const BaseVersion = { version: 2, deployment: '20250404-v3-stable-surge-pool-factory-v2' };
 
 export default {
   Vault,
