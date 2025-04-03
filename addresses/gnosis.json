@@ -665,6 +665,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250120-v3-gyro-2clp": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x7fA49Df302a98223d98D115fc4FCD275576f6faA"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0x69956192944017d04cbEcC29a42c684D675540E7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {
