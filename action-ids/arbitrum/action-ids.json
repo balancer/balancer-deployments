@@ -1086,5 +1086,14 @@
         "stopAmplificationParameterUpdate()": "0x682ce9b36d460cdaea0f8e912dccfe5e5efc5cfaebbc80ec3b46a1a3fbebd902"
       }
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x7782aa3c59972e2459d74ef5572e9aa6fb040fc24e7b7045d4d5dd8112913eb4",
+        "disable()": "0x8962b605c4877aadeecae387492d3bc0bfb2f52c30aa0633200cf1e8c3238f3c"
+      }
+    }
   }
 }
