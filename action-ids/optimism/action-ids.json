@@ -918,5 +918,14 @@
         "setPoolMevTaxThreshold(address,uint256)": "0xbabd8d0518fe172da1126b04ea7be5352fbe365b36605c4067341064ebc28a86"
       }
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x5eecc243f59003e2974113b74b2b6b1ee403f9450389376a9da52780262f6cae",
+        "disable()": "0xb01db316b35cf20a130fad715a1dd1fd078958d7409909b6bf28ff322c99006d"
+      }
+    }
   }
 }
