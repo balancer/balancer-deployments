@@ -812,7 +812,7 @@
         "address": "0xD8D88e186AA7cfa3929dF79ab5a5f02316e7d77B"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
