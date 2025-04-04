@@ -1640,7 +1640,7 @@
         "address": "0x91F17800Ca7DD29f2124D9D9eA8D4794693192C7"
       }
     ],
-    "status": "SCRIPT",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250324-v3-stable-pool-v2": {
