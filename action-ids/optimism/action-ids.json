@@ -927,5 +927,21 @@
         "disable()": "0xb01db316b35cf20a130fad715a1dd1fd078958d7409909b6bf28ff322c99006d"
       }
     }
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "StableSurgeHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "onAfterInitialize(uint256[],uint256,bytes)": "0x3e4e134dc34bcd091860bbaa1ff01545e57725de437ae7d2976a2121be5ac8e2",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xf5d4d7751376cfad47d9e0aa99a1cee4ed919ab14b5428ad21e9da4d2a5e76d6",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0xd7bcbb24aee8374693210bf56047d718c1592123c84317977506a7965e18f4a0",
+        "onBeforeInitialize(uint256[],bytes)": "0x02031f4d8126da07df55cb541a4910c7e6a6f70b14f5d6ae7904966d07b30f68",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0x7aa9ce750084c7069bc9efb5a1a7e468cddc72e187c8f16a55610c179ebe880e",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0xb422b0a1d868ce25243c6a0207f0822bd384dcdb5d50da6e163ea9d18cb355cb",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0xc3fdd7b4c0ebd684cbe780a6056a26d9090c3df3c46b3f11c6ae7b1d8ff6d284",
+        "setMaxSurgeFeePercentage(address,uint256)": "0x03e6a9de1a91717d836d86a8f70e57e100ecd22520384bd081238f063e503996",
+        "setSurgeThresholdPercentage(address,uint256)": "0x1d1506ec636bdb5b6fad1a2ef33ee5dca321fd2da12b241f38aa4253e4970d17"
+      }
+    }
   }
 }

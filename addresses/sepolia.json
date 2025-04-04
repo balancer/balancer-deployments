@@ -812,7 +812,7 @@
         "address": "0xD8D88e186AA7cfa3929dF79ab5a5f02316e7d77B"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
@@ -942,6 +942,16 @@
       {
         "name": "MockStablePool",
         "address": "0x1C72b94E0e291dEe39a239E6e9C47625b14dEA71"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgeHook",
+        "address": "0x7dfca838fD5fCd70f876431D41CaA3E3E2ea1520"
       }
     ],
     "status": "ACTIVE",
