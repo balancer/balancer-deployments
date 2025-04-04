@@ -31,6 +31,7 @@
 - Deployed V3 GyroECLPFactory to all networks.
 - Deployed V3 Gyro2CLPFactory to all networks.
 - Deployed V3 StablePoolFactory V2 to all networks.
+- Deployed V3 StableSurgeHook V2 to all networks.
 
 #### V2
 
