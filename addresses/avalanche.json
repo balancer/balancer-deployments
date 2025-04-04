@@ -506,7 +506,7 @@
         "address": "0x6B5dA774890Db7B7b96C6f44e6a4b0F657399E2e"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-weighted-pool": {
