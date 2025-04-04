@@ -125,7 +125,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
-| V3 Vault Explorer                                      | [`20241205-v3-vault-explorer`](./v3/tasks/20241205-v3-vault-explorer)                                   |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
@@ -142,6 +141,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Vault Factory V2, and Vault contracts               | [`20250321-v3-vault-factory-v2`](./v3/tasks/20250321-v3-vault-factory-v2)                               |
 | V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 | V3 Vault Factory with custom salt (for Avalanche)      | [`20250328-v3-custom-salt-vault`](./v3/tasks/20250328-v3-custom-salt-vault)                             |
+| V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
 
 ## Scripts
 
@@ -232,3 +232,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
+| V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
