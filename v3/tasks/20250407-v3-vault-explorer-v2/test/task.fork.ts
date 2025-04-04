@@ -4,7 +4,6 @@ import { Contract } from 'ethers';
 import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
 
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
-import { VaultExplorerV2Deployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 import { MAX_UINT48 } from '@helpers/constants';
@@ -27,7 +26,6 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
   let explorer: Contract;
   let permit2: Contract;
   let usdc: Contract;
-  let input: VaultExplorerV2Deployment;
   let usdcWhale: SignerWithAddress;
   let govMultisig: SignerWithAddress;
   let admin: SignerWithAddress;
@@ -36,6 +34,8 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
   let adminEntrypoint: Contract;
 
   let snapshot: SnapshotRestorer;
+  let BAL: string;
+  let WETH: string;
 
   before('run task', async () => {
     task = new Task('20250407-v3-vault-explorer-v2', TaskMode.TEST, getForkedNetwork(hre));
@@ -44,8 +44,6 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
   });
 
   before('setup contracts and parameters', async () => {
-    input = task.input() as VaultExplorerV2Deployment;
-
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
@@ -69,6 +67,10 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     usdc = await testBALTokenTask.instanceAt('TestBalancerToken', USDC_ADDRESS);
+
+    const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    BAL = tokensTask.output().BAL.toLowerCase();
+    WETH = tokensTask.output().WETH.toLowerCase();
   });
 
   before('setup accounts and permissions', async () => {
@@ -92,7 +94,7 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
 
   it('checks pool tokens', async () => {
     const poolTokens = (await mockPool.getTokens()).map((token: string) => token.toLowerCase());
-    expect(poolTokens).to.be.deep.eq([input.BAL.toLowerCase(), input.WETH.toLowerCase()]);
+    expect(poolTokens).to.be.deep.eq([BAL, WETH]);
 
     const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.address)).map((token: string) =>
       token.toLowerCase()
