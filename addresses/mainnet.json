@@ -1656,5 +1656,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgeHook",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
