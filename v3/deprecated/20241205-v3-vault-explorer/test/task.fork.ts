@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { VaultExplorerDeployment } from '../input';
 
-describeForkTest('Vault Explorer', 'mainnet', 21336938, function () {
+describeForkTest.skip('Vault Explorer', 'mainnet', 21336938, function () {
   let task: Task;
   let vault: Contract;
   let vaultExtension: Contract;
@@ -13,7 +13,7 @@ describeForkTest('Vault Explorer', 'mainnet', 21336938, function () {
   let input: VaultExplorerDeployment;
 
   before('run task', async () => {
-    task = new Task('v3-vault-explorer', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20241205-v3-vault-explorer', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     explorer = await task.deployedInstance('VaultExplorer');
   });
