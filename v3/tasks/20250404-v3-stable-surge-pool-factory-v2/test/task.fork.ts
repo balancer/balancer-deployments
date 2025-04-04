@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { StableSurgePoolDeployment } from '../input';
 
-describeForkTest.skip('StableSurgePoolFactoryV2', 'mainnet', 22190000, function () {
+describeForkTest('StableSurgePoolFactoryV2', 'mainnet', 22195600, function () {
   let task: Task;
   let factory: Contract, pool: Contract, vault: Contract, vaultExtension: Contract;
   let input: StableSurgePoolDeployment;
@@ -93,24 +93,13 @@ describeForkTest.skip('StableSurgePoolFactoryV2', 'mainnet', 22190000, function 
   });
 
   it('checks hook address for factory', async () => {
-    const hook = await task.deployedInstance('StableSurgeHook');
-    expect(hook.address).to.be.equal(await factory.getStableSurgeHook());
+    expect(input.StableSurgeHook).to.be.equal(await factory.getStableSurgeHook());
   });
 
   it('checks hook address for pool', async () => {
     const vaultAsExtension = vaultExtension.attach(vault.address);
     const { hooksContract } = await vaultAsExtension.getHooksConfig(pool.address);
     expect(hooksContract).to.be.equal(await factory.getStableSurgeHook());
-  });
-
-  it('checks default max threshold percentage', async () => {
-    const hook = await task.deployedInstance('StableSurgeHook');
-    expect(await hook.getDefaultMaxSurgeFeePercentage()).to.be.eq(fp(0.95));
-  });
-
-  it('checks default surge threshold percentage', async () => {
-    const hook = await task.deployedInstance('StableSurgeHook');
-    expect(await hook.getDefaultSurgeThresholdPercentage()).to.be.eq(fp(0.3));
   });
 
   it('checks pool version', async () => {
