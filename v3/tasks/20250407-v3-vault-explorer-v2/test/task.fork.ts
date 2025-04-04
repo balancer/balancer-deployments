@@ -62,7 +62,10 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
 
     const routerTask = new Task('20241205-v3-buffer-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
     bufferRouter = await routerTask.deployedInstance('BufferRouter');
-    permit2 = await routerTask.instanceAt('IPermit2', input.Permit2);
+
+    const permit2Task = new Task('00000000-permit2', TaskMode.READ_ONLY);
+    const permit2Address = permit2Task.output({ network: 'mainnet' }).Permit2;
+    permit2 = await routerTask.instanceAt('IPermit2', permit2Address);
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     usdc = await testBALTokenTask.instanceAt('TestBalancerToken', USDC_ADDRESS);
