@@ -1522,7 +1522,7 @@
         "address": "0xc05ff9851c2a000F3C319D2986D8712317583B79"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
