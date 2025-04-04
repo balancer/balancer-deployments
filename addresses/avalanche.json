@@ -674,5 +674,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250404-v3-stable-surge-pool-factory-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x311334883921Fb1b813826E585dF1C2be4358615"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x855DfB67dD58491E488ec00dAdE740988B5d8247"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
