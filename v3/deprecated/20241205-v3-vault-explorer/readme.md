@@ -1,5 +1,9 @@
 # 2024-12-05 - V3 Vault Explorer
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> The original Vault explorer was superseded by this [updated version](../../tasks/20250407-v3-vault-explorer-v2/).
+
 Deployment of `VaultExplorer`, a "window" on the V3 Vault that provides easy access to view functions across all Vault contracts for off-chain utilities like Etherscan. Since the Vault implements the Proxy pattern to fit within the EVM bytecode requirements, most functions are on extension contracts that cannot be called directly. The `VaultExplorer` is a wrapper contract that exposes all permissionless view functions (plus `collectAggregateFees`).
 
 ## Useful Files

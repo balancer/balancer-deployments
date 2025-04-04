@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { VaultExplorerDeployment } from '../input';
 
-describeForkTest('Vault Explorer', 'mainnet', 21336938, function () {
+describeForkTest.skip('Vault Explorer', 'mainnet', 21336938, function () {
   let task: Task;
   let vault: Contract;
   let vaultExtension: Contract;
