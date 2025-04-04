@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, function () {
+describeForkTest.skip('BalancerContractRegistryInitializer', 'mainnet', 21862412, function () {
   let govMultisig: SignerWithAddress;
   let registryInitializer: Contract;
   let registry: Contract;
