@@ -161,7 +161,7 @@ These are deployments for script-like contracts (often called 'coordinators') wh
 | Timelock authorizer transition permission migration | [`20230130-ta-transition-migrator`](./v2/scripts/20230130-ta-transition-migrator)                       |
 | Coordination of the Gauge Adder migration V3 --> V4 | [`20230519-gauge-adder-migration-v3-to-v4`](./v2/scripts/20230519-gauge-adder-migration-v3-to-v4)       |
 | Protocol Fee Controller Migration                   | [`20250221-protocol-fee-controller-migration`](./v3/scripts/20250221-protocol-fee-controller-migration) |
-| Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/scripts/20250314-balancer-registry-initializer)         |
+| Balancer Contract Registry Initializer (V2)         | [`20250411-balancer-registry-initializer-v2`](./v3/scripts/20250411-balancer-registry-initializer-v2)   |
 
 ## Deprecated Deployments
 
@@ -233,8 +233,6 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
-<<<<<<< HEAD
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
-=======
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
->>>>>>> master
+| Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |
