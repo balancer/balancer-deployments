@@ -30,7 +30,7 @@
 - Deployed V3 Gyro E-CLP Factory to all networks.
 - Deployed V3 Gyro 2-CLP Factory to all networks.
 - Deployed V3 Stable Pool Factory V2 to all networks.
-- Deployed V3 Stable Surg Hook V2 to all networks.
+- Deployed V3 Stable Surge Hook V2 to all networks.
 - Deployed V3 Stable Surge Pool Factory V2 to all networks.
 - Deployed V3 Vault Explorer V2 to all networks.
 
