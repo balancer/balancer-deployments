@@ -930,7 +930,7 @@
         "address": "0x6B7C56698bEb33E1f0226e73C5D417e575315106"
       }
     ],
-    "status": "SCRIPT",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250324-v3-stable-pool-v2": {
