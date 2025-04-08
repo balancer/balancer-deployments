@@ -132,7 +132,12 @@ export default class Verifier {
     return {
       ...input,
       sources: Object.keys(input.sources)
-        .filter((source) => importedSourceNames.has(source))
+        .filter(
+          (source) =>
+            importedSourceNames.has(source) ||
+            source === '@openzeppelin/contracts/token/ERC20/IERC20.sol' ||
+            source === '@openzeppelin/contracts/utils/introspection/IERC165.sol'
+        )
         .map((source) => ({ [source]: input.sources[source] }))
         .reduce((previous, current) => Object.assign(previous, current), {}),
     };

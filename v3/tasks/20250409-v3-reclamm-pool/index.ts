@@ -13,9 +13,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const factory = await task.deployAndVerify('ReClammPoolFactory', args, from, force);
 
   // ReClamm parameters.
-  const PRICE_SHIFT_DAILY_RATE = 100e16; // 100%
+  const PRICE_SHIFT_DAILY_RATE = fp(1); // 100%
   const FOURTH_ROOT_PRICE_RATIO = fp(1.41421356); // Price Range of 4 (fourth root is 1.41)
-  const CENTEREDNESS_MARGIN = 20e16; // 20%
+  const CENTEREDNESS_MARGIN = fp(0.2); // 20%
 
   if (task.mode === TaskMode.LIVE) {
     const tokenConfig = [
