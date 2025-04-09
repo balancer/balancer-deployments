@@ -13,6 +13,7 @@ This version uses the BaseSplitCodeFactory to help with deployment on networks w
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GyroECLPPoolFactory` artifact](./artifact/GyroECLPPoolFactory.json)
 - [`GyroECLPPool` artifact](./artifact/GyroECLPPool.json)
