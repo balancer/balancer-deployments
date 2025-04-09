@@ -12,6 +12,5 @@ There is nothing to deprecate, as the original Protocol Fee Controller was deplo
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeController` artifact](./artifact/ProtocolFeeController.json)

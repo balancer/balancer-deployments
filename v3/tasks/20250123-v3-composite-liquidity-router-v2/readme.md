@@ -17,7 +17,6 @@ Composite Liquidity Router V1 is still safe to use, although its automatic wrap 
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`CompositeLiquidityRouter` artifact](./artifact/CompositeLiquidityRouter.json)
 

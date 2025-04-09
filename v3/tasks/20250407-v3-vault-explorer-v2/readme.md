@@ -12,6 +12,5 @@ This version adds missing getters for buffer assets, and also `enableRecoveryMod
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
-- [Optimism mainnet addresses](./output/optimism.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`VaultExplorer` artifact](./artifact/VaultExplorer.json)
