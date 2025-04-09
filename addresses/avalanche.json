@@ -452,15 +452,5 @@
     ],
     "status": "ACTIVE",
     "version": "v2"
-  },
-  "20241205-v3-vault-explorer": {
-    "contracts": [
-      {
-        "name": "VaultExplorer",
-        "address": "0x6B5dA774890Db7B7b96C6f44e6a4b0F657399E2e"
-      }
-    ],
-    "status": "DEPRECATED",
-    "version": "v3"
   }
 }
