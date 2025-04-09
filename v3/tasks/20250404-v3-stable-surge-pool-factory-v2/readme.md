@@ -16,6 +16,7 @@ It also splits the deployment of the hook out of the factory deployment, allowin
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePool` artifact](./artifact/StablePool.json)
 - [`StableSurgePoolFactory` artifact](./artifact/StableSurgePoolFactory.json)

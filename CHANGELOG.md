@@ -14,11 +14,10 @@
 - Deployed V3 Weighted Pool to all networks.
 - Deployed V3 Batch Router to all networks.
 - Deployed V3 Buffer Router to all networks.
-- Deployed V3 Stable Surge Pool Factory to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Composite Liquidity Router (V2) to all networks.
 - Deployed V3 Balancer Contract Registry to all networks.
 - Deployed V3 Aggregator Router to all networks.
-- Deployed V3 MEV Capture Hook to Mainnet, Gnosis, Arbitrum, Base, Optimism and Sepolia.
+- Deployed V3 MEV Capture Hook to all networks.
 - Deployed V3 Protocol Fee Sweeper to all networks.
 - Deployed V3 Router (V2) to all networks.
 - Deployed V3 Cow Swap Fee Burner to Mainnet, Gnosis, Arbitrum, Base and Sepolia.

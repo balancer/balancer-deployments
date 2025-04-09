@@ -10,5 +10,6 @@ Deployment of the `StableSurgeHook` as a standalone contract, which can be plugg
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StableSurgeHook` artifact](./artifact/StableSurgeHook.json)
