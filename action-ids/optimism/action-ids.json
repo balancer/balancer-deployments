@@ -943,5 +943,16 @@
         "setSurgeThresholdPercentage(address,uint256)": "0x1d1506ec636bdb5b6fad1a2ef33ee5dca321fd2da12b241f38aa4253e4970d17"
       }
     }
+  },
+  "20250117-v3-contract-registry": {
+    "BalancerContractRegistry": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addOrUpdateBalancerContractAlias(string,address)": "0x978d0476f95beb8e55f9ac7f0e2f7d9dbdef1d74308f521f9ceee2e40a93669d",
+        "deprecateBalancerContract(address)": "0xdeafd9c07934710704a72d271797d3e0f5b07ef3754bd2ffe5aec00061658f21",
+        "deregisterBalancerContract(string)": "0xf6813e23f064d35b64dc91070883edf27613a4881c9b1ce82ae9bc2cbd1a1f29",
+        "registerBalancerContract(uint8,string,address)": "0x99ca15d5716ec66b32e8ec8aa85541c3c8879d3a1c16a2b18ec3a9304f5b4bc7"
+      }
+    }
   }
 }
