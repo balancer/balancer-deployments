@@ -2,7 +2,7 @@ import { VaultDeployment } from './input';
 import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ethers } from 'hardhat';
 
-const skipCheckNetworkList = ['avalanche', 'optimism'];
+const skipCheckNetworkList = ['optimism'];
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
@@ -38,7 +38,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
-      { gasLimit: 17e6 }
+      { gasLimit: 16e6 }
     ),
     ['Vault', 'VaultExtension', 'VaultAdmin', 'ProtocolFeeController'],
     (await vaultFactory.isDeployed(vaultAddress)) === false,
