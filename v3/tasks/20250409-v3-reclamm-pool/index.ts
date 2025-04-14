@@ -14,8 +14,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   // ReClamm parameters.
   const PRICE_SHIFT_DAILY_RATE = 100e16; // 100%
-  const FOURTH_ROOT_PRICE_RATIO = fp(1.41421356); // Price Range of 4 (fourth root is 1.41)
   const CENTEREDNESS_MARGIN = 20e16; // 20%
+  const INITIAL_MIN_PRICE = 1000e18;
+  const INITIAL_MAX_PRICE = 4000e18;
+  const INITIAL_TARGET_PRICE = 2500e18;
 
   if (task.mode === TaskMode.LIVE) {
     const tokenConfig = [
@@ -46,7 +48,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       },
       swapFeePercentage: fp(0.01),
       priceShiftDailyRate: PRICE_SHIFT_DAILY_RATE,
-      fourthRootPriceRatio: FOURTH_ROOT_PRICE_RATIO,
+      initialMinPrice: INITIAL_MIN_PRICE,
+      initialMaxPrice: INITIAL_MAX_PRICE,
+      initialTargetPrice: INITIAL_TARGET_PRICE,
       centerednessMargin: CENTEREDNESS_MARGIN,
       salt: ZERO_BYTES32,
     };
@@ -60,8 +64,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           newReClammPoolParams.tokens,
           newReClammPoolParams.roleAccounts,
           newReClammPoolParams.swapFeePercentage,
+          newReClammPoolParams.initialMinPrice,
+          newReClammPoolParams.initialMaxPrice,
+          newReClammPoolParams.initialTargetPrice,
           newReClammPoolParams.priceShiftDailyRate,
-          newReClammPoolParams.fourthRootPriceRatio,
           newReClammPoolParams.centerednessMargin,
           newReClammPoolParams.salt
         )
@@ -80,8 +86,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       symbol: newReClammPoolParams.symbol,
       version: await factory.getPoolVersion(),
       priceShiftDailyRate: newReClammPoolParams.priceShiftDailyRate,
-      fourthRootPriceRatio: newReClammPoolParams.fourthRootPriceRatio,
       centerednessMargin: newReClammPoolParams.centerednessMargin,
+      initialMinPrice: newReClammPoolParams.initialMinPrice,
+      initialMaxPrice: newReClammPoolParams.initialMaxPrice,
+      initialTargetPrice: newReClammPoolParams.initialTargetPrice,
     };
 
     // We are now ready to verify the Pool

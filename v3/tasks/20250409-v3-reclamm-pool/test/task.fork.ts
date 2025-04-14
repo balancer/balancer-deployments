@@ -7,14 +7,16 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest('V3-ReClammPool', 'mainnet', 22217900, function () {
+describeForkTest('V3-ReClammPool', 'mainnet', 22269700, function () {
   const TASK_NAME = '20250409-v3-reclamm-pool';
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
   const PRICE_SHIFT_DAILY_RATE = bn(100e16); // 100%
-  const FOURTH_ROOT_PRICE_RATIO = fp(1.41421356); // Price Range of 4 (fourth root is 1.41)
   const CENTEREDNESS_MARGIN = bn(20e16); // 20%
+  const INITIAL_MIN_PRICE = fp(1000);
+  const INITIAL_MAX_PRICE = fp(4000);
+  const INITIAL_TARGET_PRICE = fp(2500);
 
   const SWAP_FEE_PERCENTAGE = bn(1e16); // 1%
 
@@ -63,8 +65,10 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22217900, function () {
           poolCreator: ZERO_ADDRESS,
         },
         SWAP_FEE_PERCENTAGE,
+        INITIAL_MIN_PRICE,
+        INITIAL_MAX_PRICE,
+        INITIAL_TARGET_PRICE,
         PRICE_SHIFT_DAILY_RATE,
-        FOURTH_ROOT_PRICE_RATIO,
         CENTEREDNESS_MARGIN,
         ONES_BYTES32
       )
