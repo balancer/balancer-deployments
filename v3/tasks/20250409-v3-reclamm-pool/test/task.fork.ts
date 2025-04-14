@@ -5,20 +5,20 @@ import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
-import { bn, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 
 describeForkTest('V3-ReClammPool', 'mainnet', 22269700, function () {
   const TASK_NAME = '20250409-v3-reclamm-pool';
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
-  const PRICE_SHIFT_DAILY_RATE = bn(100e16); // 100%
-  const CENTEREDNESS_MARGIN = bn(20e16); // 20%
+  const PRICE_SHIFT_DAILY_RATE = fp(1); // 100%
+  const CENTEREDNESS_MARGIN = fp(0.2); // 20%
   const INITIAL_MIN_PRICE = fp(1000);
   const INITIAL_MAX_PRICE = fp(4000);
   const INITIAL_TARGET_PRICE = fp(2500);
 
-  const SWAP_FEE_PERCENTAGE = bn(1e16); // 1%
+  const SWAP_FEE_PERCENTAGE = fp(0.01); // 1%
 
   let task: Task;
   let factory: Contract, pool: Contract;

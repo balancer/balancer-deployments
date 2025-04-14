@@ -36,6 +36,7 @@ import {
   withRetries,
 } from './src/network';
 import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
+import { bn } from '@helpers/numbers';
 
 const THEGRAPHURLS: { [key: string]: string } = {};
 
