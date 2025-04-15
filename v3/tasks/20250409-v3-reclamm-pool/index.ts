@@ -13,11 +13,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const factory = await task.deployAndVerify('ReClammPoolFactory', args, from, force);
 
   // ReClamm parameters.
-  const PRICE_SHIFT_DAILY_RATE = 100e16; // 100%
-  const CENTEREDNESS_MARGIN = 20e16; // 20%
-  const INITIAL_MIN_PRICE = 1000e18;
-  const INITIAL_MAX_PRICE = 4000e18;
-  const INITIAL_TARGET_PRICE = 2500e18;
+  const PRICE_SHIFT_DAILY_RATE = fp(1); // 100%
+  const CENTEREDNESS_MARGIN = fp(0.2); // 20%
+  const INITIAL_MIN_PRICE = fp(1000);
+  const INITIAL_MAX_PRICE = fp(4000);
+  const INITIAL_TARGET_PRICE = fp(2500);
 
   if (task.mode === TaskMode.LIVE) {
     const tokenConfig = [
