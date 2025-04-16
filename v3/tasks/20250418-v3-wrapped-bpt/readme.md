@@ -4,6 +4,6 @@ Deployment of `WrappedBalancerPoolTokenFactory`, a method of creating "staked" B
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/5158208b9a02259ee54676c9a85846104978c556)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0d2de793ea4da7b0750f56ea01c8ea9788801f64)
 - [`WrappedBalancerPoolTokenFactory` artifact](./artifact/WrappedBalancerPoolTokenFactory.json)
 - [`WrappedBalancerPoolToken` artifact](./artifact/WrappedBalancerPoolToken.json)
