@@ -3,15 +3,15 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import { WrappedBPTDeployment } from '../input';
 
 describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
-  const BPT = '0x96F6eEB4D008e55DCB30Ad80e94e82D1158291e0';
-
   let task: Task;
   let vault: Contract;
   let vaultExtension: Contract;
   let extensionEntrypoint: Contract;
   let bptFactory: Contract;
+  let input: WrappedBPTDeployment;
 
   before('run task', async () => {
     task = new Task('20250418-v3-wrapped-bpt', TaskMode.TEST, getForkedNetwork(hre));
@@ -24,6 +24,8 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     extensionEntrypoint = vaultExtension.attach(vault.address);
+
+    input = task.input() as WrappedBPTDeployment;
   });
 
   it('has Vault address', async () => {
@@ -31,8 +33,10 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
   });
 
   it('can wrap BPT', async () => {
-    // Ensure it is initialized.
-    expect(await extensionEntrypoint.isPoolInitialized(BPT)).to.be.true;
+    const BPT = input.MockStablePool;
+
+    // Ensure it is registered.
+    expect(await extensionEntrypoint.isPoolRegistered(BPT)).to.be.true;
 
     // Create a wrapped token.
     await bptFactory.createWrappedToken(BPT);
