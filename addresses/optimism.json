@@ -978,5 +978,29 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250407-v3-vault-explorer-v2": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0xEAedc32a51c510d35ebC11088fD5fF2b47aACF2E"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250418-v3-wrapped-bpt": {
+    "contracts": [
+      {
+        "name": "WrappedBalancerPoolTokenFactory",
+        "address": "0x18CC3C68A5e64b40c846Aa6E45312cbcBb94f71b"
+      },
+      {
+        "name": "MockWrappedBalancerPoolToken",
+        "address": "0x6E25b0eB7E089482E17a17fA32163EF48f2760f9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

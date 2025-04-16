@@ -457,23 +457,23 @@
     "contracts": [
       {
         "name": "VaultFactory",
-        "address": "0x395d06552855BeC7Ea2A4d218CD5C340Cce1BA86"
+        "address": "0xAc27df81663d139072E615855eF9aB0Af3FBD281"
       },
       {
         "name": "ProtocolFeeController",
-        "address": "0x8de13A85136982F7a0F9E6836e98803de138fb88"
+        "address": "0xa731C23D7c95436Baaae9D52782f966E1ed07cc8"
       },
       {
         "name": "VaultAdmin",
-        "address": "0x73F136bD5353F067efF3E2E1dA552f132E88Ef06"
+        "address": "0x35fFB749B273bEb20F40f35EdeB805012C539864"
       },
       {
         "name": "VaultExtension",
-        "address": "0x147c1DeCf8eea08BF7F5F71033076547d2BaaEe7"
+        "address": "0x0E8B07657D719B86e06bF0806D6729e3D528C9A9"
       },
       {
         "name": "Vault",
-        "address": "0xba1333333333cbcdB5D83c2e5d1D898E07eD00Dc"
+        "address": "0xbA1333333333a1BA1108E8412f11850A5C319bA9"
       }
     ],
     "status": "ACTIVE",
@@ -483,7 +483,7 @@
     "contracts": [
       {
         "name": "BatchRouter",
-        "address": "0xa523f47A933D5020b23629dDf689695AA94612Dc"
+        "address": "0xc9b36096f5201ea332Db35d6D195774ea0D5988f"
       }
     ],
     "status": "ACTIVE",
@@ -493,31 +493,21 @@
     "contracts": [
       {
         "name": "BufferRouter",
-        "address": "0x6817149cb753BF529565B4D023d7507eD2ff4Bc0"
+        "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
       }
     ],
     "status": "ACTIVE",
-    "version": "v3"
-  },
-  "20241205-v3-vault-explorer": {
-    "contracts": [
-      {
-        "name": "VaultExplorer",
-        "address": "0x6B5dA774890Db7B7b96C6f44e6a4b0F657399E2e"
-      }
-    ],
-    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-weighted-pool": {
     "contracts": [
       {
         "name": "WeightedPoolFactory",
-        "address": "0x7Ba29fE8E83dd6097A7298075C4AFfdBda3121cC"
+        "address": "0xD961E30156C2E0D0d925A0De45f931CB7815e970"
       },
       {
         "name": "MockWeightedPool",
-        "address": "0x1d45ba673A0B0918236642A5447b5a6429431878"
+        "address": "0xD2643c05FA9590Ec80b6a6866f4B9C73CA60cc0C"
       }
     ],
     "status": "ACTIVE",
@@ -527,7 +517,7 @@
     "contracts": [
       {
         "name": "BalancerContractRegistry",
-        "address": "0xA8920455934Da4D853faac1f94Fe7bEf72943eF1"
+        "address": "0x86e67E115f96DF37239E0479441303De0de7bc2b"
       }
     ],
     "status": "ACTIVE",
@@ -537,11 +527,11 @@
     "contracts": [
       {
         "name": "Gyro2CLPPoolFactory",
-        "address": "0x8e3fEaAB11b7B351e3EA1E01247Ab6ccc847dD52"
+        "address": "0xe2fa4e1d17725e72dcdAfe943Ecf45dF4B9E285b"
       },
       {
         "name": "MockGyro2CLPPool",
-        "address": "0xe997Fb113001d357aEF75FcC0e9c4Af3130E1BEb"
+        "address": "0x9E20Af4c055e368CA3618d50bcB132027BED3372"
       }
     ],
     "status": "ACTIVE",
@@ -551,7 +541,7 @@
     "contracts": [
       {
         "name": "CompositeLiquidityRouter",
-        "address": "0x96484f2aBF5e58b15176dbF1A799627B53F13B6d"
+        "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
     "status": "ACTIVE",
@@ -561,11 +551,21 @@
     "contracts": [
       {
         "name": "GyroECLPPoolFactory",
-        "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
+        "address": "0x268E2EE1413D768b6e2dc3F5a4ddc9Ae03d9AF42"
       },
       {
         "name": "MockGyroECLPPool",
-        "address": "0x65Db596A0C279dDfcBB3BA9B89c696D25A9F1936"
+        "address": "0xDac98631B5bee0E86dc3727DaD767e9bD251c729"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0x6eaD84Af26E997D27998Fc9f8614e8a19BB93938"
       }
     ],
     "status": "ACTIVE",
@@ -575,7 +575,7 @@
     "contracts": [
       {
         "name": "ProtocolFeeController",
-        "address": "0x8de13A85136982F7a0F9E6836e98803de138fb88"
+        "address": "0x3630D26E51c03026f4f063d69d65F8E234eEAf5b"
       }
     ],
     "status": "ACTIVE",
@@ -585,7 +585,7 @@
     "contracts": [
       {
         "name": "AggregatorRouter",
-        "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
+        "address": "0x4b979eD48F982Ba0baA946cB69c1083eB799729c"
       }
     ],
     "status": "ACTIVE",
@@ -595,7 +595,7 @@
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
-        "address": "0x662112B8CB18889e81459b92CA0f894a2ef2c1B8"
+        "address": "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9"
       }
     ],
     "status": "ACTIVE",
@@ -605,11 +605,11 @@
     "contracts": [
       {
         "name": "LBPoolFactory",
-        "address": "0x25EA7b202CD8447e8E6F4A7C59b19C66DfEf1925"
+        "address": "0x3BEb058DE1A25dd24223fd9e1796df8589429AcE"
       },
       {
         "name": "MockLBPool",
-        "address": "0x22687A3c43ab2Ee784Ee77efd3658db2DD83Ef94"
+        "address": "0x4BdEA6CdcD01422f514363245B74BC2212Fd2aa4"
       }
     ],
     "status": "ACTIVE",
@@ -619,7 +619,7 @@
     "contracts": [
       {
         "name": "Router",
-        "address": "0x4bdCc2fb18AEb9e2d281b0278D946445070EAda7"
+        "address": "0xF39CA6ede9BF7820a952b52f3c94af526bAB9015"
       }
     ],
     "status": "ACTIVE",
@@ -629,37 +629,11 @@
     "contracts": [
       {
         "name": "StablePoolFactory",
-        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+        "address": "0xEAedc32a51c510d35ebC11088fD5fF2b47aACF2E"
       },
       {
         "name": "MockStablePool",
-        "address": "0x23821B549ef67Eb3b0CDB581D19305BA9aD1Cf74"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
-  },
-  "20250328-v3-custom-salt-vault": {
-    "contracts": [
-      {
-        "name": "VaultFactory",
-        "address": "0x395d06552855BeC7Ea2A4d218CD5C340Cce1BA86"
-      },
-      {
-        "name": "ProtocolFeeController",
-        "address": "0x8de13A85136982F7a0F9E6836e98803de138fb88"
-      },
-      {
-        "name": "VaultAdmin",
-        "address": "0x73F136bD5353F067efF3E2E1dA552f132E88Ef06"
-      },
-      {
-        "name": "VaultExtension",
-        "address": "0x147c1DeCf8eea08BF7F5F71033076547d2BaaEe7"
-      },
-      {
-        "name": "Vault",
-        "address": "0xba1333333333cbcdB5D83c2e5d1D898E07eD00Dc"
+        "address": "0xF0F873D737085663645d57c6dE2D952887Ff4700"
       }
     ],
     "status": "ACTIVE",
@@ -669,7 +643,7 @@
     "contracts": [
       {
         "name": "StableSurgeHook",
-        "address": "0xaD89051bEd8d96f045E8912aE1672c6C0bF8a85E"
+        "address": "0x86705Ee19c0509Ff68F1118C55ee2ebdE383D122"
       }
     ],
     "status": "ACTIVE",
@@ -679,11 +653,35 @@
     "contracts": [
       {
         "name": "StableSurgePoolFactory",
-        "address": "0x311334883921Fb1b813826E585dF1C2be4358615"
+        "address": "0x18CC3C68A5e64b40c846Aa6E45312cbcBb94f71b"
       },
       {
         "name": "MockStablePool",
-        "address": "0x855DfB67dD58491E488ec00dAdE740988B5d8247"
+        "address": "0x2FCDF727B44956E32a543C43134f781A7de0aAC7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250407-v3-vault-explorer-v2": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0x4Cb42fc3b5fb9392Ce0772C3A540E4AE4da4Ac4d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250418-v3-wrapped-bpt": {
+    "contracts": [
+      {
+        "name": "WrappedBalancerPoolTokenFactory",
+        "address": "0x201efd508c8DfE9DE1a13c2452863A78CB2a86Cc"
+      },
+      {
+        "name": "MockWrappedBalancerPoolToken",
+        "address": "0x3234658811D726835547FAE1dEfF3892a0D9D9A1"
       }
     ],
     "status": "ACTIVE",
