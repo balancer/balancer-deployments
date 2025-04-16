@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
-import { WrappedBPTDeployment } from '../input';
 
 describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
   const BPT = '0x96F6eEB4D008e55DCB30Ad80e94e82D1158291e0';
@@ -14,14 +13,10 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
   let extensionEntrypoint: Contract;
   let bptFactory: Contract;
 
-  let input: WrappedBPTDeployment;
-
   before('run task', async () => {
     task = new Task('20250418-v3-wrapped-bpt', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     bptFactory = await task.deployedInstance('WrappedBalancerPoolTokenFactory');
-
-    input = task.input() as WrappedBPTDeployment;
   });
 
   before('setup contracts', async () => {
@@ -32,7 +27,7 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
   });
 
   it('has Vault address', async () => {
-    expect(await bptFactory.getVault()).eq(input.Vault);
+    expect(await bptFactory.getVault()).eq(vault.address);
   });
 
   it('can wrap BPT', async () => {
