@@ -1793,5 +1793,30 @@
         "stopAmplificationParameterUpdate()": "0x0a095a996507c13952d3a5b1b925c33f16dfa0b0fd1f3911267a7d4db8d7746e"
       }
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x1188b4f8eedc4c1528ed7690a80496672968653bd278a0d98438035e3e8d7db6",
+        "disable()": "0x54ed747f10bf74fca2a1110cb69c6328e2fb5025039aede2933d04dfc21abd11"
+      }
+    }
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "StableSurgeHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "onAfterInitialize(uint256[],uint256,bytes)": "0x251da95d8d12caf48bff652a604c56ff6f9854b21181598dd9387bb26bdacc2f",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xc21daf12a45045f920a6ce9cdd41a9f71445d6c93f5e1a9f362e0be5cb643639",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0x14d52e48cbd25d023029670b8f4ee80e48740ef85b879e145938c5bd05564aa1",
+        "onBeforeInitialize(uint256[],bytes)": "0x1f46c12f77114d55a22cc7b88fad7663fa1e9ab7c8ecdfa35d30447cd263e7f3",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0xf9fc83e2c310e1cba565db8078a1b3f697139929b18be6723d73d8bdb2a09e26",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x00b97604759253213d8fbefa13cd5529c4a7857f97a9dbda0cc5a134cc5daa9b",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0xd7b621be69c01817c152efed0931295c3a6ef619ac3cf14574292190e9060d7a",
+        "setMaxSurgeFeePercentage(address,uint256)": "0xf38ecb07c88c5307ae7e207ff9f96c7707a6093a6abb7c5c61020119536cc236",
+        "setSurgeThresholdPercentage(address,uint256)": "0x2b49aa01d0b0251c5fa59f092390a988da3dbdc3609dc3c4bc36a4491da73681"
+      }
+    }
   }
 }

@@ -800,5 +800,30 @@
         "stopAmplificationParameterUpdate()": "0x75ec2623175569519fdd26484797f97ea78036aa5caf0efa9d2c2a34a82eb41d"
       }
     }
+  },
+  "20250120-v3-gyro-2clp": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xa3c28cca28f1d0e9167782ab925a6b6318d38fe55610ff384fea6f4bfe42f2a5",
+        "disable()": "0x7949fb1573bd2626186b70a6d475351a5f6effad72cd82900248d5a3308c0f64"
+      }
+    }
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "StableSurgeHook": {
+      "useAdaptor": false,
+      "actionIds": {
+        "onAfterInitialize(uint256[],uint256,bytes)": "0xd0e20a818f50f315396e027346fbca66d77112b3a025c0828061cd2e5ca71511",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xfb44aaefe0977507ac6ac9e41da124e0ca0a69fac5fc18e6680f68a4953e32d6",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0xe102a0d9ee0c613cd4b924dab78eede48809ab5ceffd3db6f1ab9236915c57f0",
+        "onBeforeInitialize(uint256[],bytes)": "0xda0dfed1333b7daae070d5e83e5133153ad9065a9f187d836a7fb856c4b9dedd",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0x4c1a70b86ddaac9697de8abd4dafb6c9d9710393c65464b01999c03dd5f1b295",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x2071cc8e4a8cdc93a74fa3a848b75adc910004fd9a4233351ae59b3593f1c6ce",
+        "onRegister(address,address,(address,uint8,address,bool)[],(bool,bool,bool,bool))": "0xe603323272667f8020e3eeef54a04dda5e8928181fc9667c2ee4667aa766886a",
+        "setMaxSurgeFeePercentage(address,uint256)": "0x6648ca4015a562c4110635d0f2f8f402af08c32926b73b04307f778a4662ea47",
+        "setSurgeThresholdPercentage(address,uint256)": "0xa9902a51b5285acf6244965666f9096d34561241355f4bd05e099f319fe8fde1"
+      }
+    }
   }
 }

@@ -472,7 +472,7 @@ export default {
   etherscan: {
     customChains: [
       {
-        network: 'zkemv',
+        network: 'zkevm',
         chainId: 1101,
         urls: {
           apiURL: 'https://api-zkevm.polygonscan.com/api',
@@ -504,11 +504,11 @@ export default {
         },
       },
       {
-        network: 'sonic',
-        chainId: 146,
+        network: 'avalanche',
+        chainId: 43114,
         urls: {
-          apiURL: 'https://api.sonicscan.org/api',
-          browserURL: 'https://sonicscan.org/',
+          apiURL: 'https://api.snowscan.xyz/api',
+          browserURL: 'https://snowscan.xyz/',
         },
       },
     ],

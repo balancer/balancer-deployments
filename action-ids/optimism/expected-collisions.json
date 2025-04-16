@@ -124,5 +124,215 @@
       "signature": "create(address)",
       "useAdaptor": true
     }
+  ],
+  "0x99f2c4abb870753989c44aef2c45359982b4adc570cfd9b8cdbf98eb905166b9": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "collectAggregateFees(address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "collectAggregateFees(address)",
+      "useAdaptor": false
+    }
+  ],
+  "0x77942705d5d9a5859d470100ad5053209d0399f146eeaceda689e8803c67e6fc": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "collectAggregateFeesHook(address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "collectAggregateFeesHook(address)",
+      "useAdaptor": false
+    }
+  ],
+  "0xb0a3af0a5529d2ea46992a0974a7a1b0732b5dad5eae85cb099ca4d6a825849d": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "registerPool(address,address,bool)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "registerPool(address,address,bool)",
+      "useAdaptor": false
+    }
+  ],
+  "0xd017dd98988dd56fee1d44cadb00bc6b14886626da16e19060a3cc92acf4040f": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setGlobalProtocolSwapFeePercentage(uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setGlobalProtocolSwapFeePercentage(uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0xf3c486bff37d26d70d9ec35e95f59a3967efeae2006b151df3f925ace3fe8ed9": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setGlobalProtocolYieldFeePercentage(uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setGlobalProtocolYieldFeePercentage(uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0xc4c1e7c74d67cd92f4df0f28ed4b1b14aa91b4186fbaf0fdd565c2f2e9294b61": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setPoolCreatorSwapFeePercentage(address,uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setPoolCreatorSwapFeePercentage(address,uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0x9516bde17a8f08d51078af4c849475b87486a592ca277ce2cb0a4fdb058d4dfc": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setPoolCreatorYieldFeePercentage(address,uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setPoolCreatorYieldFeePercentage(address,uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0x8e3e36d73cffa78076df8f76db769150ec14a9939c8a8c2999a4e594c8446490": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setProtocolSwapFeePercentage(address,uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setProtocolSwapFeePercentage(address,uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0x3fef70c8097cce35392087a74737d4861f412ec73028383037541fcc8ce240aa": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "setProtocolYieldFeePercentage(address,uint256)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "setProtocolYieldFeePercentage(address,uint256)",
+      "useAdaptor": false
+    }
+  ],
+  "0xf2157d32e7c8873f0f5b9dc3477aa27a5ae48367485e498b600f037aba46d7ba": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "updateProtocolSwapFeePercentage(address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "updateProtocolSwapFeePercentage(address)",
+      "useAdaptor": false
+    }
+  ],
+  "0xe21f4388cd2254f4d6a417404c8a2ca64fd63c7868a3b53bfc2efda6631bd91a": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "updateProtocolYieldFeePercentage(address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "updateProtocolYieldFeePercentage(address)",
+      "useAdaptor": false
+    }
+  ],
+  "0xa4ad09ac3be18bb697f4c06655e25bfd7278d9ce6b8362911c5e4044d75c4ad8": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawPoolCreatorFees(address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawPoolCreatorFees(address)",
+      "useAdaptor": false
+    }
+  ],
+  "0x4b121082d1f34fbfcc22ebf2bda0daa2f28ce0d445a5420909dfd17b33641df8": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawPoolCreatorFees(address,address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawPoolCreatorFees(address,address)",
+      "useAdaptor": false
+    }
+  ],
+  "0x9b50ab496733616199be03f9adb07dedbc053ee47e3f069d57a7b1db51480332": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawProtocolFees(address,address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawProtocolFees(address,address)",
+      "useAdaptor": false
+    }
+  ],
+  "0xd8f952fca9feeca8075fa8cf14298353b4b424103a602b3879b031c57cf6def7": [
+    {
+      "taskId": "20241204-v3-vault",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawProtocolFeesForToken(address,address,address)",
+      "useAdaptor": false
+    },
+    {
+      "taskId": "20250214-v3-protocol-fee-controller-v2",
+      "contractName": "ProtocolFeeController",
+      "signature": "withdrawProtocolFeesForToken(address,address,address)",
+      "useAdaptor": false
+    }
   ]
 }

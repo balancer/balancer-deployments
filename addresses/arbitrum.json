@@ -918,7 +918,7 @@
         "address": "0x22625eEDd92c81a219A83e1dc48f88d54786B017"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-weighted-pool": {
@@ -945,6 +945,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250120-v3-gyro-2clp": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x65A22Ec32c37835Ad5E77Eb6f7452Ac59E113a9F"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0xCa3372c28438D0905C96A01d834F5c14a34EE295"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {
@@ -960,7 +974,7 @@
         "address": "0xfF4365FDb4b77B4D193F9Be42544c433D8223e63"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
@@ -1090,6 +1104,40 @@
       {
         "name": "MockStablePool",
         "address": "0xcb2840553945dBc776d98DABC141f9b2CceC3c30"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgeHook",
+        "address": "0x7c1b7A97BfAcD39975dE53e989A16c7BC4C78275"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250404-v3-stable-surge-pool-factory-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x201efd508c8DfE9DE1a13c2452863A78CB2a86Cc"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xe8788E22e04d82e0A2b0daE6DFa80B9627060597"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250407-v3-vault-explorer-v2": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0xB9d01CA61b9C181dA1051bFDd28e1097e920AB14"
       }
     ],
     "status": "ACTIVE",

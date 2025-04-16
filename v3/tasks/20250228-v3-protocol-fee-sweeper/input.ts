@@ -18,6 +18,12 @@ export default {
   base: {
     FeeRecipient: MaxiOmniMultisig,
   },
+  avalanche: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
+  optimism: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
   gnosis: {
     FeeRecipient: MaxiOmniMultisig,
   },
