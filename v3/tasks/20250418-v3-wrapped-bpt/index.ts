@@ -5,7 +5,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const input = task.input() as WrappedBPTDeployment;
 
   const factory = await task.deployAndVerify('WrappedBalancerPoolTokenFactory', [input.Vault], from, force);
-  console.log('mock stable pool address: ', input.MockStablePool);
 
   if (task.mode === TaskMode.LIVE) {
     // This mimics the logic inside task.deploy
