@@ -5,5 +5,12 @@ Deployment of `WrappedBalancerPoolTokenFactory`, a method of creating "staked" B
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/0d2de793ea4da7b0750f56ea01c8ea9788801f64)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`WrappedBalancerPoolTokenFactory` artifact](./artifact/WrappedBalancerPoolTokenFactory.json)
 - [`WrappedBalancerPoolToken` artifact](./artifact/WrappedBalancerPoolToken.json)
