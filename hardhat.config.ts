@@ -511,6 +511,14 @@ export default {
           browserURL: 'https://snowscan.xyz/',
         },
       },
+      {
+        network: 'sonic',
+        chainId: 146,
+        urls: {
+          apiURL: 'https://api.sonicscan.org/api',
+          browserURL: 'https://sonicscan.org/',
+        },
+      },
     ],
   },
 };
