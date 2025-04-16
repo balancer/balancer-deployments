@@ -142,6 +142,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
 | V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
+| V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
 
 ## Scripts
 
@@ -232,8 +233,5 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
-<<<<<<< HEAD
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
-=======
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
->>>>>>> master
