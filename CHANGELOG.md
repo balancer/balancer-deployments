@@ -32,6 +32,7 @@
 - Deployed V3 Stable Surge Hook V2 to all networks.
 - Deployed V3 Stable Surge Pool Factory V2 to all networks.
 - Deployed V3 Vault Explorer V2 to all networks.
+- Deployed V3 Wrapped BPT Factory to all networks.
 
 #### V2
 
