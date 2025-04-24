@@ -95,7 +95,12 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   before('grant permissions', async () => {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.address);
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(registry, 'registerBalancerContract'), registryInitializer.address);
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(registry, 'addOrUpdateBalancerContractAlias'), registryInitializer.address);
   });
 
   it('is initializing the correct registry', async () => {
@@ -118,10 +123,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   it('does not hold permission to add aliases', async () => {
     const permission = await actionId(registry, 'addOrUpdateBalancerContractAlias');
     expect(await authorizer.hasRole(permission, registryInitializer.address)).to.be.false;
-  });
-
-  it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.address)).to.be.false;
   });
 
   it('has registered the routers', async () => {
