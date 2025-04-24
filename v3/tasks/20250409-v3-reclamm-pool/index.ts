@@ -13,11 +13,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const factory = await task.deployAndVerify('ReClammPoolFactory', args, from, force);
 
   // ReClamm parameters.
-  const PRICE_SHIFT_DAILY_RATE = 100e16; // 100%
-  const CENTEREDNESS_MARGIN = 20e16; // 20%
-  const INITIAL_MIN_PRICE = 1000e18;
-  const INITIAL_MAX_PRICE = 4000e18;
-  const INITIAL_TARGET_PRICE = 2500e18;
+  const DAILY_PRICE_SHIFT_EXPONENT = fp(1); // 100%
+  const CENTEREDNESS_MARGIN = fp(0.2); // 20%
+  const INITIAL_MIN_PRICE = fp(1000);
+  const INITIAL_MAX_PRICE = fp(4000);
+  const INITIAL_TARGET_PRICE = fp(2500);
 
   if (task.mode === TaskMode.LIVE) {
     const tokenConfig = [
@@ -47,7 +47,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         poolCreator: ZERO_ADDRESS,
       },
       swapFeePercentage: fp(0.01),
-      priceShiftDailyRate: PRICE_SHIFT_DAILY_RATE,
+      dailyPriceShiftExponent: DAILY_PRICE_SHIFT_EXPONENT,
       initialMinPrice: INITIAL_MIN_PRICE,
       initialMaxPrice: INITIAL_MAX_PRICE,
       initialTargetPrice: INITIAL_TARGET_PRICE,
@@ -67,7 +67,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           newReClammPoolParams.initialMinPrice,
           newReClammPoolParams.initialMaxPrice,
           newReClammPoolParams.initialTargetPrice,
-          newReClammPoolParams.priceShiftDailyRate,
+          newReClammPoolParams.dailyPriceShiftExponent,
           newReClammPoolParams.centerednessMargin,
           newReClammPoolParams.salt
         )
@@ -85,7 +85,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: newReClammPoolParams.name,
       symbol: newReClammPoolParams.symbol,
       version: await factory.getPoolVersion(),
-      priceShiftDailyRate: newReClammPoolParams.priceShiftDailyRate,
+      dailyPriceShiftExponent: newReClammPoolParams.dailyPriceShiftExponent,
       centerednessMargin: newReClammPoolParams.centerednessMargin,
       initialMinPrice: newReClammPoolParams.initialMinPrice,
       initialMaxPrice: newReClammPoolParams.initialMaxPrice,
