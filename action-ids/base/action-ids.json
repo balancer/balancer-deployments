@@ -676,5 +676,14 @@
         "setSurgeThresholdPercentage(address,uint256)": "0xccde3eb1bbf6269f3b1ff650d0e3bf089ad0a119c82f5e48db9761d64a346c77"
       }
     }
+  },
+  "20250409-v3-reclamm-pool": {
+    "ReClammPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(address,address,address),uint256,uint256,uint256,uint256,uint256,uint64,bytes32)": "0xfc73eaec8804093ac597c0deb3223814ca90a9cabafa68570f14bbfc191068ed",
+        "disable()": "0xec1b8403905b9406277d10645cbc70d4ed9e4d6eb2008f43a328557cfaedac4d"
+      }
+    }
   }
 }
