@@ -4,5 +4,5 @@ Deployment of `ReClammPoolFactory`, a new pool type that implements concentrated
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/reclamm/commit/a53760204d76a3f32b2dcb2bfa5f3c89cb67b0ba)
+- [Code](https://github.com/balancer/reclamm/commit/acb1347fa1feb1dc21ed812204459d7e5e38817a)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)

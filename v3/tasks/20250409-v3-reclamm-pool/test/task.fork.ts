@@ -7,12 +7,12 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest('V3-ReClammPool', 'mainnet', 22269700, function () {
+describeForkTest('V3-ReClammPool', 'mainnet', 22340700, function () {
   const TASK_NAME = '20250409-v3-reclamm-pool';
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
-  const PRICE_SHIFT_DAILY_RATE = bn(100e16); // 100%
+  const DAILY_PRICE_SHIFT_EXPONENT = bn(100e16); // 100%
   const CENTEREDNESS_MARGIN = bn(20e16); // 20%
   const INITIAL_MIN_PRICE = fp(1000);
   const INITIAL_MAX_PRICE = fp(4000);
@@ -68,7 +68,7 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22269700, function () {
         INITIAL_MIN_PRICE,
         INITIAL_MAX_PRICE,
         INITIAL_TARGET_PRICE,
-        PRICE_SHIFT_DAILY_RATE,
+        DAILY_PRICE_SHIFT_EXPONENT,
         CENTEREDNESS_MARGIN,
         ONES_BYTES32
       )
