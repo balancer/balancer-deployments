@@ -980,5 +980,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250418-v3-wrapped-bpt": {
+    "contracts": [
+      {
+        "name": "WrappedBalancerPoolTokenFactory",
+        "address": "0xE47e1b8640e18F77BEC160D2Bb2481F65e580730"
+      },
+      {
+        "name": "MockWrappedBalancerPoolToken",
+        "address": "0xeC2C01AE8BE49D9335157e2e0680c686e2629Bfb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
