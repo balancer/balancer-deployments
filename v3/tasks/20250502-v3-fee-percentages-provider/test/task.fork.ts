@@ -15,7 +15,7 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     ERC4626,
   }
 
-  const TASK_NAME = '20250502-v3-protocol-fee-percentages-provider';
+  const TASK_NAME = '20250502-v3-fee-percentages-provider';
   const CONTRACT_NAME = 'ProtocolFeePercentagesProvider';
 
   const PROTOCOL_SWAP_FEE = fp(0.0523);
