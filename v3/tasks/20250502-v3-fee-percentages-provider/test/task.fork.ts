@@ -5,6 +5,7 @@ import { ProtocolFeePercentagesProviderDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { fp } from '@helpers/numbers';
+import { actionId } from '@helpers/models/misc/actions';
 
 describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
   enum ContractType {
@@ -70,30 +71,21 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     // Allow adding the factory to the contract.
     await authorizer
       .connect(govMultisig)
-      .grantRole(await registry.getActionId(registry.interface.getSighash('registerBalancerContract')), admin.address);
+      .grantRole(await actionId(registry, 'registerBalancerContract'), admin.address);
 
     // Let the admin set factory fees.
     await authorizer
       .connect(govMultisig)
-      .grantRole(
-        await feeHelper.getActionId(feeHelper.interface.getSighash('setFactorySpecificProtocolFeePercentages')),
-        admin.address
-      );
+      .grantRole(await actionId(feeHelper, 'setFactorySpecificProtocolFeePercentages'), admin.address);
 
     // Let the fee helper set the actual fees.
     await authorizer
       .connect(govMultisig)
-      .grantRole(
-        await feeController.getActionId(feeController.interface.getSighash('setProtocolSwapFeePercentage')),
-        feeHelper.address
-      );
+      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.address);
 
     await authorizer
       .connect(govMultisig)
-      .grantRole(
-        await feeController.getActionId(feeController.interface.getSighash('setProtocolYieldFeePercentage')),
-        feeHelper.address
-      );
+      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.address);
   });
 
   before('add contract to registry', async () => {
