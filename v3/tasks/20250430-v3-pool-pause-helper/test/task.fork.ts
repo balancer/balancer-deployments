@@ -48,7 +48,7 @@ describeForkTest('PoolPauseHelper', 'mainnet', 22348940, function () {
   before('grant permissions', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    // Grant the sweeper permission to withdraw fees.
+    // Grant the helper permission to pause pools.
     await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.address);
 
     // Grant permission to call add and pause on the helper.
