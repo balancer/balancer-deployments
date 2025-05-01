@@ -30,6 +30,8 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
   let authorizer: Contract;
   let registry: Contract;
   let feeController: Contract;
+  let vault: Contract;
+  let vaultExtension: Contract;
   let pool: Contract;
 
   let admin: SignerWithAddress;
@@ -43,6 +45,10 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
   });
 
   before('setup contracts', async () => {
+    const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    vault = await vaultTask.deployedInstance('Vault');
+    vaultExtension = await vaultTask.deployedInstance('VaultExtension');
+
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
@@ -53,12 +59,9 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     const registryTask = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, getForkedNetwork(hre));
     registry = await registryTask.deployedInstance('BalancerContractRegistry');
 
-    const feeControllerTask = new Task(
-      '20250214-v3-protocol-fee-controller-v2',
-      TaskMode.READ_ONLY,
-      getForkedNetwork(hre)
-    );
-    feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
+    const vaultAsExtension = vaultExtension.attach(vault.address);
+    const feeControllerAddress = await vaultAsExtension.getProtocolFeeController();
+    feeController = await task.instanceAt('ProtocolFeeController', feeControllerAddress);
 
     input = task.input() as ProtocolFeePercentagesProviderDeployment;
 
@@ -95,7 +98,7 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
   });
 
   it('stores the contracts', async () => {
-    expect(await feeHelper.getProtocolFeeController()).to.eq(input.ProtocolFeeController);
+    expect(await feeHelper.getProtocolFeeController()).to.eq(feeController.address);
     expect(await feeHelper.getBalancerContractRegistry()).to.eq(input.BalancerContractRegistry);
     expect(await feeHelper.getVault()).to.eq(input.Vault);
   });
