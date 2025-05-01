@@ -4,5 +4,5 @@ Deployment of `ProtocolFeePercentagesProvider`, a helper contract to set protoco
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/e0dd7bc22ddf5ed24412b8c60ed8ebf977ec7e28)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/fa386c4c675bac0512ade9e565f4e437bc06dcb9)
 - [`ProtocolFeePercentagesProvider` artifact](./artifact/ProtocolFeePercentagesProvider.json)
