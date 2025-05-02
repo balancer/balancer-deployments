@@ -9,4 +9,11 @@ This version can unwrap tokens on demand before calling the burner.
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/fa386c4c675bac0512ade9e565f4e437bc06dcb9)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeSweeper` artifact](./artifact/ProtocolFeeSweeper.json)
