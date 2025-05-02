@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, function () {
+describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, function () {
   let govMultisig: SignerWithAddress;
   let registryInitializer: Contract;
   let registry: Contract;
@@ -25,6 +25,8 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
   let stablePoolFactory: Contract;
   let stableSurgePoolFactory: Contract;
   let lbpFactory: Contract;
+  let gyro2CLPFactory: Contract;
+  let gyroECLPFactory: Contract;
 
   let task: Task;
 
@@ -39,7 +41,7 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
   }
 
   before('run task', async () => {
-    task = new Task('20250314-balancer-registry-initializer', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20250411-balancer-registry-initializer-v2', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     registryInitializer = await task.deployedInstance('BalancerContractRegistryInitializer');
   });
@@ -66,10 +68,14 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     const weightedPoolTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
     weightedPoolFactory = await weightedPoolTask.deployedInstance('WeightedPoolFactory');
 
-    const stablePoolTask = new Task('20241205-v3-stable-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const stablePoolTask = new Task('20250324-v3-stable-pool-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     stablePoolFactory = await stablePoolTask.deployedInstance('StablePoolFactory');
 
-    const stableSurgePoolTask = new Task('20250121-v3-stable-surge', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const stableSurgePoolTask = new Task(
+      '20250404-v3-stable-surge-pool-factory-v2',
+      TaskMode.READ_ONLY,
+      getForkedNetwork(hre)
+    );
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
 
     const lbpFactoryTask = new Task(
@@ -78,12 +84,23 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
       getForkedNetwork(hre)
     );
     lbpFactory = await lbpFactoryTask.deployedInstance('LBPoolFactory');
+
+    const gyro2CLPTask = new Task('20250120-v3-gyro-2clp', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    gyro2CLPFactory = await gyro2CLPTask.deployedInstance('Gyro2CLPPoolFactory');
+
+    const gyroECLPTask = new Task('20250124-v3-gyro-eclp', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    gyroECLPFactory = await gyroECLPTask.deployedInstance('GyroECLPPoolFactory');
   });
 
   before('grant permissions', async () => {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.address);
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(registry, 'registerBalancerContract'), registryInitializer.address);
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(registry, 'addOrUpdateBalancerContractAlias'), registryInitializer.address);
   });
 
   it('is initializing the correct registry', async () => {
@@ -108,10 +125,6 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     expect(await authorizer.hasRole(permission, registryInitializer.address)).to.be.false;
   });
 
-  it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.address)).to.be.false;
-  });
-
   it('has registered the routers', async () => {
     expect(await registry.isTrustedRouter(router.address)).to.be.true;
     expect(await registry.isTrustedRouter(batchRouter.address)).to.be.true;
@@ -131,6 +144,12 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
 
     info = await registry.getBalancerContractInfo(lbpFactory.address);
     _validateInfo(info);
+
+    info = await registry.getBalancerContractInfo(gyro2CLPFactory.address);
+    _validateInfo(info);
+
+    info = await registry.getBalancerContractInfo(gyroECLPFactory.address);
+    _validateInfo(info);
   });
 
   it('has registered the aliases', async () => {
@@ -142,8 +161,24 @@ describeForkTest('BalancerContractRegistryInitializer', 'mainnet', 21862412, fun
     expect(contractAddress).to.eq(stablePoolFactory.address);
     expect(isActive).to.be.true;
 
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'StableSurgePool');
+    expect(contractAddress).to.eq(stableSurgePoolFactory.address);
+    expect(isActive).to.be.true;
+
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'Router');
     expect(contractAddress).to.eq(router.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'BatchRouter');
+    expect(contractAddress).to.eq(batchRouter.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'Gyro2CLP');
+    expect(contractAddress).to.eq(gyro2CLPFactory.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'GyroECLP');
+    expect(contractAddress).to.eq(gyroECLPFactory.address);
     expect(isActive).to.be.true;
   });
 
