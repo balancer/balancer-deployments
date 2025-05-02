@@ -888,7 +888,7 @@
         "address": "0x86e67E115f96DF37239E0479441303De0de7bc2b"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-liquidity-bootstrapping-pool": {

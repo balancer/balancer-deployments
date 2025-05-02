@@ -896,7 +896,7 @@
         "address": "0x5E69888b605a181A5615aC1b3C8937aFA2913d15"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-liquidity-bootstrapping-pool": {
