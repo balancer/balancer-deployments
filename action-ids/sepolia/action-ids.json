@@ -931,5 +931,35 @@
         "setSurgeThresholdPercentage(address,uint256)": "0x14b4a26f2b2aa47014821d881b9c1f07c608a089c082f202467e84a2ffe206e3"
       }
     }
+  },
+  "20250409-v3-reclamm-pool": {
+    "ReClammPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(address,address,address),uint256,uint256,uint256,uint256,uint256,uint64,bytes32)": "0x840f5f26db64774b4add53d5541985656c5a183dbbaf3e6c3b32fe1a84bbbfda",
+        "disable()": "0xee412f077534d2a3d6403823b7f097c09ddd57fb1025f7545f975f028037a2fa"
+      }
+    },
+    "ReClammPool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x15aAae20c42ed7877b41F99ED8c70f084Ff5aCec",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0xc4fcbc8608506748baaf6a3f669ef32e0882c0650435894d35857825736d7c6d",
+        "emitTransfer(address,address,uint256)": "0x26aa681a01100987716be21b5b58ea755a68e881bc13e7d44de78b1519f66423",
+        "incrementNonce()": "0x9d1696c0987094e25fc75ce6acb54d1ba9b5d2997fc936b5261e9875f3eb0b15",
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0x553b822bc68e2a719d53c3ecfc5fa6e3b6fe8d4e7a063221fa6dbe2bc733f0e5",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0x2b28ee2de169f31016fa88d0726b5deda0899a602f3b38370d40bb5953d7ef5a",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0x8f36115ce997c1324d946a9b9fb920ffb262e15527cc4ea012653ea616e42e37",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0x3ae1577744714b5af27c3a7e096f14a4020adee09c74b45b7b91c05af8ebe87d",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0x31542c6c1a6204774881dd73c67176a325cdcc7734d45495a762785051a26ef5",
+        "onBeforeInitialize(uint256[],bytes)": "0x365a28cc5609c3a70e208186d434a0be7c03a5ac55542ed177f6775fd7f41b33",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0x1da9526d9c91ecc74ce304702f4d9b5d90223c524daf7e2f94cf93e5f3033b84",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x02dcdd8de5705551e063268e524d651ce8881dc3f2ff6ac741e2cdb942372587",
+        "onSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes))": "0xdc84d1b192e564e47e9650ebef5113619ca92264f2c12326a7761147fcedbba9",
+        "setCenterednessMargin(uint256)": "0xd7dd7e021201fcc7a76fc55c8a576e974e302c2d9996649ff37f89ccdd084d63",
+        "setDailyPriceShiftExponent(uint256)": "0x32e4be66b5463bbd6da629ebb12891a5690b868a067472fc1f0fa79199c0b599",
+        "setPriceRatioState(uint256,uint256,uint256)": "0xe283117371108df3328600b079aa285e28b5994661e526ec1426d2c80f40eb3a"
+      }
+    }
   }
 }
