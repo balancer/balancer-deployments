@@ -661,5 +661,19 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0x3fd519782081e20b432927e2b6aec3fd85ab40105ec9af9e5f579dddf1d9b4d0",
+        "recoverProtocolFees(address[])": "0xa0d9813d03b2498a65a602672b1a1962d67c7f8a4e4fafaba0b34e8ce5d64dfc",
+        "removeProtocolFeeBurner(address)": "0xbbe9b9dc1f477aeb25af1922d1814cf17d5f2f12d3e396fc58739745be00fcc3",
+        "setFeeRecipient(address)": "0x689453b3cd7860fee6b85c8f2864279ebf437e5258787fa7196a5b11fc5145c2",
+        "setTargetToken(address)": "0x7e2a331676d7c8f4b56b77d3d42b4e150c1b860db0ded2b4839aa8d9b7fb7db0",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x56bec12b93b41e25525d94ad33219973ebd07435c70d646ed8de38740b32b062",
+        "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0xb00c6b1b735e7187175763c9d5ca79c75662399946b352289e53d53cadbc750e"
+      }
+    }
   }
 }

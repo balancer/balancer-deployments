@@ -994,5 +994,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x0f3615e60b1D23a5DD98CE74865FAA79A6d9aF70"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

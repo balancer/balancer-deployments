@@ -931,5 +931,19 @@
         "setSurgeThresholdPercentage(address,uint256)": "0x14b4a26f2b2aa47014821d881b9c1f07c608a089c082f202467e84a2ffe206e3"
       }
     }
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0x88e3b3a7083814505527917c6ad1a67350ba3537ed43ef2b334b9d2372f964ea",
+        "recoverProtocolFees(address[])": "0xaaa315f9bceba607afa6fb317e8e1647d266ba51d74c93bb80c930da7a25560a",
+        "removeProtocolFeeBurner(address)": "0x0e8109fd4e88e22b6b0b5a9d1a3bfd79babc6b42cc5f2eb9c86e2db37368abe9",
+        "setFeeRecipient(address)": "0x3fc8b09e318daa57c0fb3e15ee546c52b0fe066332d224f2943cf0e1c45a7a72",
+        "setTargetToken(address)": "0xb78defcf87ddb0fbe8530f50dbae752015e0c26eea2adacef9dda2182ed4e0e7",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x3ef46a9040f7426a28e45acd44f9aca7ef6f9b095e57172fe512b924baeff0db",
+        "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0x969ee9b43fb3bcc318487b479acfac76674487c4b1674d4bc7513ceb9614da4f"
+      }
+    }
   }
 }
