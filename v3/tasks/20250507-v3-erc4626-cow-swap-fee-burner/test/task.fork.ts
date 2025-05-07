@@ -51,7 +51,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     expect(await usdc.balanceOf(feeSweeperSigner.address)).to.equal(0);
   });
 
-  it('burn tokens', async () => {
+  it('can burn tokens', async () => {
     expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Nonexistent);
 
     const erc4626Interface = [
