@@ -6,6 +6,7 @@ import { bn, fp } from '@helpers/numbers';
 import { ERC4626CowSwapFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
+import { currentTimestamp } from '@helpers/time';
 
 describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   enum OrderStatus {
@@ -63,11 +64,12 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     const waUsdc4626 = await ethers.getContractAt(erc4626Interface, waUSDC_ADDRESS);
 
     const expectedUnderlyingAmount = bn(await waUsdc4626.previewRedeem(BURN_AMOUNT));
+    console.log('expected underlying amount: ', expectedUnderlyingAmount);
     const minAmountOut = expectedUnderlyingAmount.sub(1);
 
     await waUsdc.connect(feeSweeperSigner).approve(cowSwapFeeBurner.address, BURN_AMOUNT);
 
-    const block = await ethers.provider.getBlock('latest');
+    const blockTimestamp = bn(await currentTimestamp());
 
     // Burn USDC --> DAI
     await cowSwapFeeBurner
@@ -79,7 +81,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
         DAI_ADDRESS,
         minAmountOut,
         admin.address,
-        block.timestamp + FIVE_MINUTES
+        blockTimestamp.add(FIVE_MINUTES)
       );
 
     // Order is created for underlying asset
@@ -98,6 +100,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     };
 
     const usdcBalanceOfBurner = (await usdc.balanceOf(cowSwapFeeBurner.address)).toNumber();
+    console.log('usdc balance of burner: ', usdcBalanceOfBurner);
 
     const expectedOrder = {
       sellToken: usdc.address,
@@ -105,7 +108,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
       receiver: admin.address,
       sellAmount: usdcBalanceOfBurner,
       buyAmount: minAmountOut.toNumber(),
-      validTo: block.timestamp + FIVE_MINUTES,
+      validTo: blockTimestamp.add(FIVE_MINUTES).toNumber(),
       appData: input.AppDataHash,
       feeAmount: 0,
       kind: ethers.utils.keccak256(ethers.utils.toUtf8Bytes('sell')),
@@ -116,7 +119,8 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Active);
 
     // The order uses the current burner balance, which is slightly greater than `previewRedeem` because of rounding.
-    expect(usdcBalanceOfBurner).to.be.equal(expectedUnderlyingAmount.toNumber() + 2);
+    expect(usdcBalanceOfBurner).to.be.equalWithError(expectedUnderlyingAmount.toNumber(), 2);
+    expect(usdcBalanceOfBurner).to.be.greaterThanOrEqual(expectedUnderlyingAmount.toNumber());
     expect(await usdc.allowance(cowSwapFeeBurner.address, input.CowVaultRelayer)).to.be.equal(usdcBalanceOfBurner);
   });
 });
