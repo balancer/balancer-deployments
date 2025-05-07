@@ -32,7 +32,9 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   before('run task', async () => {
     task = new Task('20250507-v3-erc4626-cow-swap-fee-burner', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
+  });
 
+  before('setup contracts and signers', async () => {
     cowSwapFeeBurner = await task.deployedInstance('ERC4626CowSwapFeeBurner');
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
