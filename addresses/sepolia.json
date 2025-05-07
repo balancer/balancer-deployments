@@ -1004,5 +1004,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250507-v3-erc4626-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x60afAC111365663C03B8a193926342D2D4715f03"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
