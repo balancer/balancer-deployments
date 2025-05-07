@@ -64,7 +64,6 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     const waUsdc4626 = await ethers.getContractAt(erc4626Interface, waUSDC_ADDRESS);
 
     const expectedUnderlyingAmount = bn(await waUsdc4626.previewRedeem(BURN_AMOUNT));
-    console.log('expected underlying amount: ', expectedUnderlyingAmount);
     const minAmountOut = expectedUnderlyingAmount.sub(1);
 
     await waUsdc.connect(feeSweeperSigner).approve(cowSwapFeeBurner.address, BURN_AMOUNT);
@@ -100,7 +99,6 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     };
 
     const usdcBalanceOfBurner = (await usdc.balanceOf(cowSwapFeeBurner.address)).toNumber();
-    console.log('usdc balance of burner: ', usdcBalanceOfBurner);
 
     const expectedOrder = {
       sellToken: usdc.address,
