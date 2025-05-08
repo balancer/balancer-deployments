@@ -33,6 +33,7 @@
 - Deployed V3 Vault Explorer V2 to all networks.
 - Deployed V3 Wrapped BPT Factory to all networks.
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
+- Deployed V3 ERC4626 Cow Swap Fee Burner to all networks.
 
 #### V2
 
