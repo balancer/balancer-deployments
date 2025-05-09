@@ -9,6 +9,7 @@
 - [ ] `build-info` is updated with artifacts compiled at the specified commit
 - [ ] Artifacts are generated from `build-info`
 - [ ] New task has a working fork test <!-- This implies index and input scripts are correct -->
+- [ ] Maxis have been informed of any required governance actions
 
 ## Deprecating old tasks checklist: <!-- Only if applicable -->
 
