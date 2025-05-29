@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest('V3-ReClammPool', 'mainnet', 22340700, function () {
+describeForkTest('V3-ReClammPool', 'mainnet', 22590000, function () {
   const TASK_NAME = '20250409-v3-reclamm-pool';
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
@@ -54,6 +54,14 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22340700, function () {
   });
 
   it('deploys pool', async () => {
+    const priceParams = {
+      initialMinPrice: INITIAL_MIN_PRICE,
+      initialMaxPrice: INITIAL_MAX_PRICE,
+      initialTargetPrice: INITIAL_TARGET_PRICE,
+      tokenAPriceIncludesRate: false,
+      tokenBPriceIncludesRate: false,
+    };
+
     const poolCreationReceipt = await (
       await factory.create(
         'Mock ReClamm Pool',
@@ -65,9 +73,7 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22340700, function () {
           poolCreator: ZERO_ADDRESS,
         },
         SWAP_FEE_PERCENTAGE,
-        INITIAL_MIN_PRICE,
-        INITIAL_MAX_PRICE,
-        INITIAL_TARGET_PRICE,
+        priceParams,
         DAILY_PRICE_SHIFT_EXPONENT,
         CENTEREDNESS_MARGIN,
         ONES_BYTES32

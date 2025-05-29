@@ -57,6 +57,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['MockReClammPool']) {
+      const priceParams = {
+        initialMinPrice: newReClammPoolParams.initialMinPrice,
+        initialMaxPrice: newReClammPoolParams.initialMaxPrice,
+        initialTargetPrice: newReClammPoolParams.initialTargetPrice,
+        tokenAPriceIncludesRate: false,
+        tokenBPriceIncludesRate: false,
+      };
+
       const poolCreationReceipt = await (
         await factory.create(
           newReClammPoolParams.name,
@@ -64,9 +72,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           newReClammPoolParams.tokens,
           newReClammPoolParams.roleAccounts,
           newReClammPoolParams.swapFeePercentage,
-          newReClammPoolParams.initialMinPrice,
-          newReClammPoolParams.initialMaxPrice,
-          newReClammPoolParams.initialTargetPrice,
+          priceParams,
           newReClammPoolParams.dailyPriceShiftExponent,
           newReClammPoolParams.centerednessMargin,
           newReClammPoolParams.salt
