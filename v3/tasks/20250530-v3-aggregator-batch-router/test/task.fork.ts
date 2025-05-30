@@ -22,7 +22,7 @@ describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
   const RSETH_WHALE = '0x43594da5d6a03b2137a04df5685805c676def7cb';
 
   const versionNumber = 1;
-  const deploymentId = '20250507-v3-aggregator-batch-router';
+  const deploymentId = '20250530-v3-aggregator-batch-router';
 
   before('run task', async () => {
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));
