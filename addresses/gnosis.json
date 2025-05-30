@@ -876,5 +876,25 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x5939ab16fDf1991B0EF603c639B6b501A7841fAB"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-erc4626-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x7D92FCDC8Aa56057D5E318B2881F2167c67FdAfA"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
