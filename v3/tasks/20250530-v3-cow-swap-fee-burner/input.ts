@@ -20,7 +20,7 @@ const ComposableCow = '0xfdaFc9d1902f4e0b84f65F49f244b32b31013b74';
 const CowVaultRelayer = '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110';
 const Version = JSON.stringify({
   name: 'CowSwapFeeBurner',
-  version: 1,
+  version: 2,
   deployment: '20250530-v3-cow-swap-fee-burner',
 });
 
