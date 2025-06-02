@@ -1,14 +1,13 @@
 import hre, { ethers } from 'hardhat';
 import { Contract } from 'ethers';
-import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { CowSwapFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Address } from 'ethereumjs-util';
 
-describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
+describeForkTest('CowSwapFeeBurner', 'mainnet', 22617970, function () {
   enum OrderStatus {
     Nonexistent,
     Active,
@@ -23,11 +22,10 @@ describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
   let usdc: Contract;
   let protocolFeeSweeper: Contract;
   let protocolFeeSweeperSigner: SignerWithAddress;
-  let owner: SignerWithAddress;
 
   const waUSDC_ADDRESS = '0x73edDFa87C71ADdC275c2b9890f5c3a8480bC9E6';
   const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
-  const USDC_WHALE = '0x43e95f5b0cc69Dd9d2CB4c0b39A36E545156B9Aa';
+  const USDC_WHALE = '0x37305B1cD40574E4C5Ce33f8e8306Be057fD7341';
   const RECIPIENT = '0xc8a2A4AF1cDCC3e19175dE91C767C1868ffF4564';
   const FIVE_MINUTES = 5 * 60;
 
@@ -51,7 +49,6 @@ describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
 
     protocolFeeSweeperSigner = await impersonate(input.ProtocolFeeSweeper, fp(10));
     usdcWhale = await impersonate(USDC_WHALE, fp(10));
-    owner = await impersonate(input.InitialOwner, fp(10));
   });
 
   it('check owner', async () => {
