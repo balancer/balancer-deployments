@@ -1,4 +1,4 @@
-# 2025-05-40 - V3 Balancer Fee Burner
+# 2025-05-30 - V3 Balancer Fee Burner
 
 Contains the `BalancerFeeBurner` contract, which is used to burn protocol fees through Balancer V3. The owner can define a swap path for each token.
 
