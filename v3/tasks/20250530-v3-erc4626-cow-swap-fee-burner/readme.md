@@ -7,4 +7,5 @@ If the underlying asset is the target token, the redeemed assets are forwarded d
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/84cfb0d9d0bd024f92c7a95c64ab7ab8b4c12f4b).
+- [`ERC4626CowSwapFeeBurner` artifact](./artifact/ERC4626CowSwapFeeBurner.json)
