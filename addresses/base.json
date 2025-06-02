@@ -658,7 +658,7 @@
         "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-liquidity-bootstrapping-pool": {
@@ -752,6 +752,26 @@
       {
         "name": "MockWrappedBalancerPoolToken",
         "address": "0x3Eae4a1c2E36870A006E816930d9f55DF0a72a13"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0xe2fa4e1d17725e72dcdAfe943Ecf45dF4B9E285b"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-erc4626-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0xC1A64500E035D9159C8826E982dFb802003227f0"
       }
     ],
     "status": "ACTIVE",

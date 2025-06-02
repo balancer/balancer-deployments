@@ -10,17 +10,19 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const inputRoles = [...input.Roles, ...input.DelayedRoles];
 
-  // Filter excluded roles in inputs file from on-chain roles.
-  const onChainRoles = (await getTransitionRoles('mainnet', TRANSITION_START_BLOCK, TRANSITION_END_BLOCK)).filter(
-    (role) => !excludedRoles.find((excludedRole) => isRoleEqual(excludedRole, role))
-  );
+  if (task.mode !== TaskMode.CHECK) {
+    // Filter excluded roles in inputs file from on-chain roles.
+    const onChainRoles = (await getTransitionRoles('mainnet', TRANSITION_START_BLOCK, TRANSITION_END_BLOCK)).filter(
+      (role) => !excludedRoles.find((excludedRole) => isRoleEqual(excludedRole, role))
+    );
 
-  const onchainInputMatch = onChainRoles.every((cRole) => inputRoles.find((iRole) => isRoleEqual(cRole, iRole)));
-  const inputOnchainMatch = inputRoles.every((iRole) => onChainRoles.find((cRole) => isRoleEqual(iRole, cRole)));
-  const rolesMatch = onChainRoles.length === inputRoles.length && onchainInputMatch && inputOnchainMatch;
+    const onchainInputMatch = onChainRoles.every((cRole) => inputRoles.find((iRole) => isRoleEqual(cRole, iRole)));
+    const inputOnchainMatch = inputRoles.every((iRole) => onChainRoles.find((cRole) => isRoleEqual(iRole, cRole)));
+    const rolesMatch = onChainRoles.length === inputRoles.length && onchainInputMatch && inputOnchainMatch;
 
-  if (!rolesMatch) {
-    throw new Error('Input permissions do not match on-chain roles granted to old authorizer');
+    if (!rolesMatch) {
+      throw new Error('Input permissions do not match on-chain roles granted to old authorizer');
+    }
   }
 
   const args = [input.OldAuthorizer, input.NewAuthorizer, inputRoles];
