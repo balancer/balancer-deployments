@@ -33,7 +33,7 @@
 - Deployed V3 Vault Explorer V2 to all networks.
 - Deployed V3 Wrapped BPT Factory to all networks.
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
-- Deployed V3 ERC4626 Cow Swap Fee Burner to all networks.
+- Deployed V3 ERC4626 Cow Swap Fee Burner V2 to all networks.
 
 #### V2
 
@@ -79,6 +79,7 @@
 - Deprecated `20250121-v3-stable-surge`.
 - Deprecated `20241205-v3-vault-explorer`.
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
+- Deprecated `20250221-v3-cow-swap-fee-burner`.
 
 #### V2
 
