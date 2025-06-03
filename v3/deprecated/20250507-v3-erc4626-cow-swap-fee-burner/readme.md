@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`ERC4626CowSwapFeeBurner` V2](../../tasks/20250530-v3-erc4626-cow-swap-fee-burner-v2/), which allows unwrapping tokens before burning them.
+> This version was superseded by [`ERC4626CowSwapFeeBurner` V2](../../tasks/20250530-v3-erc4626-cow-swap-fee-burner-v2/), which has new authorization logic based on owner and a fixed bug with an incorrect status.
 
 Contains `ERC4626CowSwapFeeBurner` for burning protocol fees collected as ERC4626 tokens, via the CoW Protocol.
 
