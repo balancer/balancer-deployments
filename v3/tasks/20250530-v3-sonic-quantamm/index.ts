@@ -49,6 +49,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       salt,
       accountAddress
     );
+    console.log('input', input);
+    console.log('params', params);
 
     if (force || !task.output({ ensure: false })['QuantAMMWeightedPool']) {
       const poolCreationReceipt = await (await factory.create(params)).wait();
