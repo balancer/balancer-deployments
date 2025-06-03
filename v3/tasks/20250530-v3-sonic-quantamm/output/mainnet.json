@@ -1,0 +1,9 @@
+{
+  "MomentumUpdateRule": "0xB8688e8B06682ebef4e8ceAeEc2DAf57fC662f1B",
+  "ChannelFollowingUpdateRule": "0x6f2bD10b9b17E80e5BCd49158890561f053Ed2EB",
+  "DifferenceMomentumUpdateRule": "0x8905b91b301677e674cF964Fbc4Ac3844EF79620",
+  "MinimumVarianceUpdateRule": "0x4FFE46130bCBb16BF5EDc4bBaa06f158921764C2",
+  "PowerChannelUpdateRule": "0x62B9eC6A5BBEBe4F5C5f46C8A8880df857004295",
+  "QuantAMMWeightedPoolFactory": "0xD5c43063563f9448cE822789651662cA7DcD5773",
+  "QuantAMMWeightedPool": "0x6B61D8680C4F9E560c8306807908553f95c749C5"
+}
