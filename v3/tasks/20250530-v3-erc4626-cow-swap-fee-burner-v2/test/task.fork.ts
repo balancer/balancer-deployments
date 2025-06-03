@@ -31,7 +31,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   const BURN_AMOUNT = 999e6;
 
   before('run task', async () => {
-    task = new Task('20250507-v3-erc4626-cow-swap-fee-burner', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task('20250530-v3-erc4626-cow-swap-fee-burner-v2', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
   });
 
@@ -52,6 +52,10 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     // Only the fee sweeper can call `burn`, so we mock it as a signer with funds.
     waUsdc.connect(waUsdcWhale).transfer(feeSweeperSigner.address, BURN_AMOUNT);
     expect(await usdc.balanceOf(feeSweeperSigner.address)).to.equal(0);
+  });
+
+  it('check owner', async () => {
+    expect(await cowSwapFeeBurner.owner()).to.equal(input.InitialOwner);
   });
 
   it('can burn tokens', async () => {

@@ -1012,7 +1012,7 @@
         "address": "0x60afAC111365663C03B8a193926342D2D4715f03"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   }
 }

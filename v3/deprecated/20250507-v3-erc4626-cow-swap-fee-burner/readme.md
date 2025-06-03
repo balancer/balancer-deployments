@@ -1,5 +1,9 @@
 # 2025-05-07 - V3 ERC4626 Cow Swap Fee Burner
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version was superseded by [`ERC4626CowSwapFeeBurner` V2](../../tasks/20250530-v3-erc4626-cow-swap-fee-burner-v2/), which allows unwrapping tokens before burning them.
+
 Contains `ERC4626CowSwapFeeBurner` for burning protocol fees collected as ERC4626 tokens, via the CoW Protocol.
 
 The contract first unwraps the tokens and creates burn orders for the underlying assets, which are asynchronously executed through CoW Protocol.

@@ -704,7 +704,7 @@
         "address": "0x0b11209B8c5E821b18dED147583b8978c3E63911"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   }
 }
