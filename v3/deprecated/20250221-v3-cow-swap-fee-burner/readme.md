@@ -1,6 +1,6 @@
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`CowSwapFeeBurner` V2](../../tasks/20250530-v3-cow-swap-fee-burner-v2/).
+> This version was superseded by [`CowSwapFeeBurner` V2](../../tasks/20250530-v3-cow-swap-fee-burner-v2/), which has new authorization logic based on owner.
 
 
 # 2025-02-21 - V3 Cow Swap Fee Burner
