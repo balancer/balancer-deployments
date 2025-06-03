@@ -129,7 +129,7 @@ describeForkTest('LBPMigrationRouter', 'mainnet', 22624604, function () {
       ZERO_BYTES32
     );
 
-    const weightedPool = lbpMigrationRouter.migrateLiquidity(
+    const migrateReceipt = await lbpMigrationRouter.migrateLiquidity(
       pool.address,
       [INITIAL_BAL.div(2), INITIAL_WETH.div(2)],
       0,
@@ -150,5 +150,8 @@ describeForkTest('LBPMigrationRouter', 'mainnet', 22624604, function () {
         salt: ONES_BYTES32,
       }
     );
+
+    const migrationEvent = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
+    //TODO: Check the migration event
   });
 });
