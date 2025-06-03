@@ -7,7 +7,7 @@ import { CowSwapFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 
-describeForkTest('CowSwapFeeBurner', 'mainnet', 21896824, function () {
+describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
   enum OrderStatus {
     Nonexistent,
     Active,

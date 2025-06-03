@@ -1,3 +1,8 @@
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version was superseded by [`CowSwapFeeBurner` V2](../../tasks/20250530-v3-cow-swap-fee-burner-v2/).
+
+
 # 2025-02-21 - V3 Cow Swap Fee Burner
 
 Contains `CowSwapFeeBurner` for burning the protocol fee via CoW Protocol. The contract creates burn orders, which are asynchronously executed through CoW Protocol.
