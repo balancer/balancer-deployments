@@ -53,7 +53,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     console.log('params', params);
 
     if (force || !task.output({ ensure: false })['QuantAMMWeightedPool']) {
-      const poolCreationReceipt = await (await factory.create(params)).wait();
+      const poolCreationReceipt = await (await factory.create(params, { gasLimit: 15e6 })).wait();
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const safeHavenPoolAddress = event.args.pool;
       console.log('mockPoolAddress', safeHavenPoolAddress);

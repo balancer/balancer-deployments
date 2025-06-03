@@ -167,10 +167,10 @@ export async function createPoolParams(
   ];
 
   const normalizedWeights = [
-    bn('439096623000000000'),
-    bn('462022194000000000'),
-    bn('98881183000000000'),
-    bn('98881183000000000'),
+    bn('396269268000000000'),
+    bn('30000000000000000'),
+    bn('30000000000000000'),
+    bn('543730732000000000'),
   ];
   //const normalizedWeights = [bn('0.439096623000000000'), bn('0.462022194000000000'), fp('0.098881183000000000')];
   const intNormalizedWeights = [...normalizedWeights];

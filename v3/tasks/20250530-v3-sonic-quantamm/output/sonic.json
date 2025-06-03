@@ -4,5 +4,6 @@
   "DifferenceMomentumUpdateRule": "0x823DDae390E22BE3c3a5a99ca57CAED01B1f274B",
   "MinimumVarianceUpdateRule": "0x7841b512b72e0c726da5Fb84Ef05B0e660409781",
   "PowerChannelUpdateRule": "0x7B47AAB030D10F1bEACFb8BCd7BbADfb028d5F5D",
-  "QuantAMMWeightedPoolFactory": "0x60006d255569b36a3d494e83D182b57acd04D484"
+  "QuantAMMWeightedPoolFactory": "0x60006d255569b36a3d494e83D182b57acd04D484",
+  "QuantAMMWeightedPool": "0xe40b5d08f4baC11dc93B7302FE0870B77C1B9E99"
 }
