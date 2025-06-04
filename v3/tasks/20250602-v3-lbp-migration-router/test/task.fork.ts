@@ -15,7 +15,6 @@ describeForkTest('LBPMigrationRouter', 'mainnet', 22624604, function () {
   const SWAP_FEE = fp(0.01);
 
   const TOKEN_HOLDER = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
-  const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
 
   const INITIAL_BAL = fp(26667);
   const INITIAL_WETH = fp(8);
