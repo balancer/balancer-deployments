@@ -1722,7 +1722,7 @@
         "address": "0x45fB5aF0a1aD80Ea16C803146eb81844D9972373"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
