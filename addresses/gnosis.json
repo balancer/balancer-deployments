@@ -896,15 +896,5 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
-  },
-  "20250530-v3-cow-swap-fee-burner-v2": {
-    "contracts": [
-      {
-        "name": "CowSwapFeeBurner",
-        "address": "0x397BC40Ba584E651f4f5Cf4Ae089F0130569a1c7"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
   }
 }
