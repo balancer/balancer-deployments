@@ -32,8 +32,6 @@ describeForkTest('LBPMigrationRouter', 'mainnet', 22624604, function () {
   let whale: SignerWithAddress;
   let excessReceiver: SignerWithAddress;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let tokenConfig: any[];
   let WETH: string;
   let BAL: string;
 
@@ -69,23 +67,6 @@ describeForkTest('LBPMigrationRouter', 'mainnet', 22624604, function () {
 
     balToken = await task.instanceAt('IERC20', BAL);
     wethToken = await task.instanceAt('IERC20', WETH);
-
-    tokenConfig = [
-      {
-        token: WETH,
-        tokenType: 0,
-        rateProvider: ZERO_ADDRESS,
-        paysYieldFees: false,
-      },
-      {
-        token: BAL,
-        tokenType: 0,
-        rateProvider: ZERO_ADDRESS,
-        paysYieldFees: false,
-      },
-    ].sort(function (a, b) {
-      return a.token.toLowerCase().localeCompare(b.token.toLowerCase());
-    });
   });
 
   it('migrate LBP', async () => {
