@@ -14,7 +14,8 @@ export type CowSwapFeeBurnerDeployment = {
 // - App Data String: `{"appCode":"CowSwapFeeBurner-V2","metadata":{"hooks":{"version":"0.1.0"}},"version":"1.3.0"}`
 const AppDataHash = '0x88745ca0e311940750ba181641eec0b17adc53e3d3ae3359a5a23e84bf2ba0a9';
 
-const ProtocolFeeSweeper = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY);
+// At the time of deployment this is still the version being used.
+const ProtocolFeeSweeper = new Task('20250228-v3-protocol-fee-sweeper', TaskMode.READ_ONLY);
 // ComposableCow and CowVaultRelayer have the same address in every chain.
 const ComposableCow = '0xfdaFc9d1902f4e0b84f65F49f244b32b31013b74';
 const CowVaultRelayer = '0xC92E8bdf79f0507f65a392b0ab4667716BFE0110';

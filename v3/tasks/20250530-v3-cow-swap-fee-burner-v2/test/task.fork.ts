@@ -7,7 +7,7 @@ import { CowSwapFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 
-describeForkTest('CowSwapFeeBurner', 'mainnet', 22617970, function () {
+describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
   enum OrderStatus {
     Nonexistent,
     Active,
@@ -38,7 +38,7 @@ describeForkTest('CowSwapFeeBurner', 'mainnet', 22617970, function () {
     cowSwapFeeBurner = await task.deployedInstance('CowSwapFeeBurner');
 
     const protocolFeeSweeperTask = new Task(
-      '20250503-v3-protocol-fee-sweeper-v2',
+      '20250228-v3-protocol-fee-sweeper',
       TaskMode.READ_ONLY,
       getForkedNetwork(hre)
     );
