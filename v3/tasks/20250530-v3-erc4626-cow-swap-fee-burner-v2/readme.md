@@ -1,6 +1,6 @@
-# 2025-05-30 - V3 ERC4626 Cow Swap Fee Burner
+# 2025-05-30 - V3 ERC4626 Cow Swap Fee Burner V2
 
-Contains `ERC4626CowSwapFeeBurner` for burning protocol fees collected as ERC4626 tokens, via the CoW Protocol.
+Contains `ERC4626CowSwapFeeBurner` for burning protocol fees collected as ERC4626 tokens, via the CoW Protocol. This version implements a few fixes involving subsequent orders for one token, as well as better access controls following the ownable pattern.
 
 The contract first unwraps the tokens and creates burn orders for the underlying assets, which are asynchronously executed through CoW Protocol.
 If the underlying asset is the target token, the redeemed assets are forwarded directly to the recipient, without creating a new order.
