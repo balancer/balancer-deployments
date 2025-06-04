@@ -1177,6 +1177,16 @@
     "status": "DEPRECATED",
     "version": "v3"
   },
+  "20250530-v3-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x891EC9B34829276a9a8ef2F8A9cEAF2486017e0d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
     "contracts": [
       {
