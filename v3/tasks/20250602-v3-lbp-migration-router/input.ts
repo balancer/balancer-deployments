@@ -1,18 +1,18 @@
-import { Network, NETWORKS, Task, TaskMode } from '@src';
-import hre from 'hardhat';
+import { Task, TaskMode } from '@src';
 
 export type LBPMigrationRouterDeployment = {
-  Vault: string;
-  WeightedPoolFactory: string;
-  Treasury: string;
+  BalancerContractRegistry: string;
+  Version: string;
 };
 
-const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
-const WeightedPoolFactory = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY);
-const Treasury = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
+const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY);
+const Version = JSON.stringify({
+  name: 'LBPMigrationRouter',
+  version: 1,
+  deployment: '20250602-v3-lbp-migration-router',
+});
 
 export default {
-  Vault,
-  WeightedPoolFactory,
-  Treasury,
+  BalancerContractRegistry,
+  Version,
 };
