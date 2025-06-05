@@ -1005,6 +1005,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0x17a00FcDEafeE2E97b52083330B3B339Fb633dC1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250507-v3-erc4626-cow-swap-fee-burner": {
     "contracts": [
       {
