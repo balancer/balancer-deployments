@@ -19,7 +19,6 @@
 - Deployed V3 Aggregator Router to all networks.
 - Deployed V3 MEV Capture Hook to all networks.
 - Deployed V3 Router (V2) to all networks.
-- Deployed V3 Cow Swap Fee Burner to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Liquidity Bootstrapping Pool to all networks.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Protocol Fee Controller V2 to all networks.
@@ -34,6 +33,7 @@
 - Deployed V3 Wrapped BPT Factory to all networks.
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
 - Deployed V3 ERC4626 Cow Swap Fee Burner V2 to all networks.
+- Deployed V3 Cow Swap Fee Burner V2 to all networks.
 
 #### V2
 
@@ -79,7 +79,8 @@
 - Deprecated `20250121-v3-stable-surge`.
 - Deprecated `20241205-v3-vault-explorer`.
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
-- Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`
+- Deprecated `20250221-v3-cow-swap-fee-burner`.
+- Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`.
 
 #### V2
 
