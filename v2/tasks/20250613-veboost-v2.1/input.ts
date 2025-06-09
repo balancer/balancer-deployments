@@ -35,22 +35,6 @@ export default {
         end_time: 1750896000, // 6/26/25
       },
       {
-        // tx: 0x017e056002635a65f7afee99c5b0a3544189c432e3065edcf33f42bcfbd6dfaf
-        from: '0x719a143654a0C4621F49FA77077800ef3F5C3b40',
-        to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('217734180858584444'),
-        start_time: 1747403627,
-        end_time: 1749686400, // 6/12/25
-      },
-      {
-        // tx: 0x517130237936396be083728f29d520be56110a2b2c86a09631b7accde52e4635
-        from: '0x719a143654a0C4621F49FA77077800ef3F5C3b40',
-        to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('8732663871263516470'),
-        start_time: 1747340195,
-        end_time: 1749686400, // 6/12/25
-      },
-      {
         // tx: 0x494930339e854d855b9d96f940a8535d86fc0bbc586847713a4d168ff43270f3
         from: '0x6d7003C9366AdCE15433090a5179157995bff620',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
