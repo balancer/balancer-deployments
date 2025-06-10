@@ -1,10 +1,10 @@
-import { bn } from '@helpers/numbers';
+import { BigNumber, bn } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
 
 type CreateBoostCall = {
   from: string;
   to: string;
-  amount: bigint;
+  amount: BigNumber;
   start_time: number;
   end_time: number;
 };
@@ -61,7 +61,7 @@ export default {
     ],
     PreseededApprovalCalls: [
       {
-        operator: '0x308A756B4f9aa3148CaD7ccf8e72c18C758b2EF2', // Tetu operator
+        operator: '0xB9fA147b96BbC932e549f619A448275855b9A7D9', // Tetu operator (Gnosis Safe)
         delegator: '0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce', // TetuBAL locker
       },
       {
