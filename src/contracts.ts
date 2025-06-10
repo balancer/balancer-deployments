@@ -25,6 +25,27 @@ export async function deploy(
   return deployment.deployed();
 }
 
+export async function deployVyper(
+  contract: Artifact | string,
+  args: Array<Param> = [],
+  from?: SignerWithAddress
+): Promise<Contract> {
+  if (!args) args = [];
+  if (!from) from = await getSigner();
+
+  const artifact: Artifact = typeof contract === 'string' ? getArtifact(contract) : contract;
+  const transformedAbi = transformVyperAbi(artifact.abi);
+
+  const { ethers } = await import('hardhat');
+
+  // Create factory with transformed ABI; Vyper can't handle arrays (tuples in the ABI).
+  const factory = new ethers.ContractFactory(transformedAbi, artifact.bytecode, from);
+
+  const deployment = await factory.deploy(...args);
+
+  return deployment.deployed();
+}
+
 export async function instanceAt(contract: Artifact | string, address: string): Promise<Contract> {
   const artifact: Artifact = typeof contract === 'string' ? getArtifact(contract) : contract;
 
@@ -54,4 +75,38 @@ export function getArtifact(contract: string): Artifact {
 
   const artifacts = new Artifacts(artifactsPath);
   return artifacts.readArtifactSync(contract.split('/').slice(-1)[0]);
+}
+
+// Function to transform Vyper ABI to ethers.js v5 compatible format
+function transformVyperAbi(abi: any[]): any[] {
+  return abi.map((item) => {
+    if (item.type === 'constructor' && item.inputs) {
+      return {
+        ...item,
+        inputs: item.inputs.map((input: any) => transformInput(input)),
+      };
+    }
+    return item;
+  });
+}
+
+function transformInput(input: any): any {
+  if (input.type.includes('(') && input.type.includes(')')) {
+    // Extract the tuple definition and array size
+    const match = input.type.match(/\((.*?)\)(\[.*?\])?/);
+    if (match) {
+      const tupleTypes = match[1].split(',');
+      const arraySize = match[2] || '';
+
+      return {
+        ...input,
+        type: `tuple${arraySize}`,
+        components: tupleTypes.map((type: string, index: number) => ({
+          name: `field${index}`,
+          type: type.trim(),
+        })),
+      };
+    }
+  }
+  return input;
 }

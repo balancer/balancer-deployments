@@ -10,7 +10,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 import logger from './logger';
 import Verifier from './verifier';
-import { deploy, deploymentTxData, instanceAt } from './contracts';
+import { deploy, deploymentTxData, deployVyper, instanceAt } from './contracts';
 
 import {
   NETWORKS,
@@ -283,7 +283,8 @@ export default class Task {
     args: Array<Param> = [],
     from?: SignerWithAddress,
     force?: boolean,
-    libs?: Libraries
+    libs?: Libraries,
+    vyper?: boolean
   ): Promise<Contract> {
     if (this.mode == TaskMode.CHECK) {
       return await this.check(name, args, libs);
@@ -296,7 +297,9 @@ export default class Task {
     let instance: Contract;
     const output = this.output({ ensure: false });
     if (force || !output[name]) {
-      instance = await deploy(this.artifact(name), args, from, libs);
+      instance = vyper
+        ? await deployVyper(this.artifact(name), args, from)
+        : await deploy(this.artifact(name), args, from, libs);
       this.save({ [name]: instance });
       logger.success(`Deployed ${name} at ${instance.address}`);
 
