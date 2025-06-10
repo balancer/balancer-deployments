@@ -27,6 +27,7 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   let lbpFactory: Contract;
   let gyro2CLPFactory: Contract;
   let gyroECLPFactory: Contract;
+  let reClammPoolFactory: Contract;
 
   let task: Task;
 
@@ -90,6 +91,9 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     const gyroECLPTask = new Task('20250124-v3-gyro-eclp', TaskMode.READ_ONLY, getForkedNetwork(hre));
     gyroECLPFactory = await gyroECLPTask.deployedInstance('GyroECLPPoolFactory');
+
+    const reClammTask = new Task('20250409-v3-reclamm-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    reClammPoolFactory = await reClammTask.deployedInstance('ReClammPoolFactory');
   });
 
   before('grant permissions', async () => {
@@ -150,6 +154,9 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     info = await registry.getBalancerContractInfo(gyroECLPFactory.address);
     _validateInfo(info);
+
+    info = await registry.getBalancerContractInfo(reClammPoolFactory.address);
+    _validateInfo(info);
   });
 
   it('has registered the aliases', async () => {
@@ -179,6 +186,10 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'GyroECLP');
     expect(contractAddress).to.eq(gyroECLPFactory.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'ReClammPool');
+    expect(contractAddress).to.eq(reClammPoolFactory.address);
     expect(isActive).to.be.true;
   });
 

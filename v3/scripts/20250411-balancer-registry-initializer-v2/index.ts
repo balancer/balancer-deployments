@@ -16,6 +16,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.LBPoolName,
       input.Gyro2CLPName,
       input.GyroECLPName,
+      input.ReClammPoolName,
     ],
     [
       input.WeightedPoolFactory,
@@ -24,6 +25,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.LBPoolFactory,
       input.Gyro2CLPPoolFactory,
       input.GyroECLPPoolFactory,
+      input.ReClammPoolFactory,
     ],
     [
       input.WeightedPoolAlias,
@@ -33,6 +35,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.BatchRouterAlias,
       input.Gyro2CLPAlias,
       input.GyroECLPAlias,
+      input.ReClammAlias,
     ],
     [
       input.WeightedPoolFactory,
@@ -42,6 +45,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.BatchRouter,
       input.Gyro2CLPPoolFactory,
       input.GyroECLPPoolFactory,
+      input.ReClammPoolFactory,
     ],
   ];
 

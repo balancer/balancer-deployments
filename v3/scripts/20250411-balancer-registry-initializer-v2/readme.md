@@ -2,7 +2,7 @@
 
 Second deployment of the `BalancerContractRegistryInitializer`, responsible for populating the registry with routers and pool factories (and initial aliases).
 
-This updates the StablePool and StableSurgePool factories to V2, and adds the Gyro 2CLP and ECLP pools.
+This updates the StablePool and StableSurgePool factories to V2, and adds the Gyro and ReClamm pools.
 
 ## Useful Files
 
