@@ -5,5 +5,12 @@ Deployment of `ReClammPoolFactory`, a new pool type that implements concentrated
 ## Useful Files
 
 - [Code](https://github.com/balancer/reclamm/commit/61512d4737a69ca5b703842d058252585cfca381)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)
