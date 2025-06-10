@@ -704,6 +704,26 @@
         "address": "0x0b11209B8c5E821b18dED147583b8978c3E63911"
       }
     ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x9179C06629ef7f17Cb5759F501D89997FE0E7b45"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
+      }
+    ],
     "status": "ACTIVE",
     "version": "v3"
   }
