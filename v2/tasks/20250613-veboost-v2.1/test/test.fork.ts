@@ -114,6 +114,23 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
     await newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator);
   });
 
+  it('should not allow crossing the streams', async () => {
+    const { operator } = input.PreseededApprovalCalls[0];
+    const { delegator } = input.PreseededApprovalCalls[1];
+
+    opAccnt = await impersonate(operator);
+
+    const endTime = await computeValidEndTime(delegator);
+    const amount = await computeValidAmount(delegator);
+
+    await validateBoostAssumptions(operator, delegator, amount, endTime);
+
+    // Should revert.
+    await expect(
+      newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator)
+    ).to.be.reverted;
+  });
+
   async function computeValidEndTime(delegator: string): Promise<BigNumber> {
     const endOfLockPeriod = await votingEscrow.locked__end(delegator);
     expect(endOfLockPeriod).to.be.gt(currentTime);
