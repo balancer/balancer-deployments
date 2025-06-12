@@ -90,7 +90,7 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
     await newBoost.connect(operatorAccount)['boost(address,uint256,uint256,address)'](operator, bn(1e18), sixMonthsLater, delegator);
   });
 
-  it.only('should allow creating boosts from StakeDAO operator', async () => {
+  it('should allow creating boosts from StakeDAO operator', async () => {
     const { operator, delegator } = input.PreseededApprovalCalls[1];
 
     operatorAccount = await impersonate(operator);
