@@ -67,7 +67,7 @@ export default {
       },
       {
         operator: '0xB0552b6860CE5C0202976Db056b5e3Cc4f9CC765', // Stake DAO operator multi-sig
-        delegator: '0xc4EAc760C2C631eE0b064E39888b89158ff808B2', // sdBAL locker
+        delegator: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5', // sdBAL locker
       },
     ],
   },
