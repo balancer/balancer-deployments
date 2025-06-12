@@ -9,17 +9,19 @@ import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from 
 import { VeBoostV21Deployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { bn } from '@helpers/numbers';
-import { currentTimestamp, MONTH } from '@helpers/time';
+import { currentTimestamp, WEEK } from '@helpers/time';
+import { ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
   let oldBoost: Contract;
   let newBoost: Contract;
   let delegationProxy: Contract;
-  let operatorAccount: SignerWithAddress;
+  let votingEscrow: Contract;
+  let opAccnt: SignerWithAddress;
+  let currentTime: BigNumber;
 
   let task: Task;
   let input: VeBoostV21Deployment;
-  let sixMonthsLater: BigNumber;
 
   const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
 
@@ -31,11 +33,13 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
     input = task.input() as VeBoostV21Deployment;
     oldBoost = await task.instanceAt('VeBoostV2', input.VeBoostV2);
 
+    const votingEscrowTask = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    votingEscrow = await votingEscrowTask.deployedInstance('VotingEscrow');
+
     const veDelegationProxyTask = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, getForkedNetwork(hre));
     delegationProxy = await veDelegationProxyTask.deployedInstance('VotingEscrowDelegationProxy');
 
-    const currentTime = await currentTimestamp();
-    sixMonthsLater = currentTime.add(6 * MONTH);
+    currentTime = await currentTimestamp();
   });
 
   it('no unexpected boosts exist on old veBoost contract', async () => {
@@ -84,18 +88,60 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
 
   it('should allow creating boosts from Tetu operator', async () => {
     const { operator, delegator } = input.PreseededApprovalCalls[0];
-    operatorAccount = await impersonate(operator);
 
-    // Should not revert.
-    await newBoost.connect(operatorAccount)['boost(address,uint256,uint256,address)'](operator, bn(1e18), sixMonthsLater, delegator);
+    opAccnt = await impersonate(operator);
+
+    const endTime = await computeValidEndTime(delegator);
+    const amount = await computeValidAmount(delegator);
+
+    await validateBoostAssumptions(operator, delegator, amount, endTime);
+
+    // Calls _boost(from: delegator, to: operator, amount: 1, end_time: endTime)
+    await newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator);
   });
 
   it('should allow creating boosts from StakeDAO operator', async () => {
     const { operator, delegator } = input.PreseededApprovalCalls[1];
 
-    operatorAccount = await impersonate(operator);
+    opAccnt = await impersonate(operator);
+
+    const endTime = await computeValidEndTime(delegator);
+    const amount = await computeValidAmount(delegator);
+
+    await validateBoostAssumptions(operator, delegator, amount, endTime);
 
     // Should not revert.
-    await newBoost.connect(operatorAccount)['boost(address,uint256,uint256,address)'](operator, bn(1e18), sixMonthsLater, delegator);
+    await newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator);
   });
+
+  async function computeValidEndTime(delegator: string): Promise<BigNumber> {
+    const endOfLockPeriod = await votingEscrow.locked__end(delegator);
+    expect(endOfLockPeriod).to.be.gt(currentTime);
+
+    // Has to be on a week boundary in the future, but earlier than the end of the lock.
+    return endOfLockPeriod.sub(bn(WEEK));
+  }
+
+  async function validateBoostAssumptions(
+    operator: string,
+    delegator: string,
+    amount: BigNumber,
+    endTime: BigNumber
+  ): Promise<void> {
+    // Validate boost assumptions
+    expect(operator).to.not.eq(ZERO_ADDRESS);
+    expect(operator).to.not.eq(delegator);
+    expect(amount).to.be.gt(0);
+    expect(endTime).to.be.gt(currentTime);
+    expect(endTime.toNumber() % WEEK).to.eq(0);
+
+    const veLockedEnd = await votingEscrow.locked__end(delegator);
+    expect(endTime).to.be.lte(veLockedEnd);
+  }
+
+  async function computeValidAmount(delegator: string): Promise<BigNumber> {
+    const balance = await votingEscrow['balanceOf(address)'](delegator);
+
+    return balance.div(2);
+  }
 });
