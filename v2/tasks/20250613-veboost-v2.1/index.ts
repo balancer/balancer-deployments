@@ -56,6 +56,5 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const useVyper = true;
   const noLibs = {};*/
 
-  console.log(args);
   await task.deploy('VeBoostV2', args, from, force);
 };
