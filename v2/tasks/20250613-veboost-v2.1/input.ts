@@ -1,11 +1,8 @@
-import { BigNumber, bn } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
 
-type CreateBoostCall = {
+type MigrateBoostCall = {
   from: string;
   to: string;
-  amount: BigNumber;
-  start_time: number;
   end_time: number;
 };
 
@@ -15,47 +12,51 @@ type SetApprovalForAllCall = {
 };
 
 const VotingEscrow = new Task('20220325-gauge-controller', TaskMode.READ_ONLY);
+const VeBoostV2 = new Task('20221205-veboost-v2', TaskMode.READ_ONLY);
 
 export type VeBoostV21Deployment = {
   VotingEscrow: string;
-  PreseededBoostCalls: CreateBoostCall[];
+  VeBoostV2: string;
+  PreseededBoostCalls: MigrateBoostCall[];
   PreseededApprovalCalls: SetApprovalForAllCall[];
 };
 
 export default {
   VotingEscrow,
+  VeBoostV2,
   mainnet: {
+    // Amounts and start times included for reference.
     PreseededBoostCalls: [
       {
         // tx: 0xb1795fffafd3741569d1d4d348483938c018034c65e4415056d4a18a4da1601b
         from: '0x250Dc31d9eCD8AF562f506b40d0dE4349C987E92',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('9575170789062471648420'),
-        start_time: 1748360315,
+        // amount: bn('9575170789062471648420'),
+        // start_time: 1748360315,
         end_time: 1750896000, // 6/26/25
       },
       {
         // tx: 0x494930339e854d855b9d96f940a8535d86fc0bbc586847713a4d168ff43270f3
         from: '0x6d7003C9366AdCE15433090a5179157995bff620',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('26292826216057311443'),
-        start_time: 1736399183,
+        // amount: bn('26292826216057311443'),
+        // start_time: 1736399183,
         end_time: 1759968000, // 10/9/25
       },
       {
         // tx: 0xa44aac2544ddd237363ac2d2b300a75c057424a30f4c68693636cb48154667f1
         from: '0xA58f6c3Ff171523BE8Ca7094422fc5D1864AE683',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('1637164145089059973'),
-        start_time: 1724977943,
+        // amount: bn('1637164145089059973'),
+        // start_time: 1724977943,
         end_time: 1753920000, // 7/31/25
       },
       {
         // tx: 0x148b4ad2b40f6f10dec822c523fdc109d605d398049cbeddad375a2b99ae0aca
         from: '0x278a8453ECf2f477a5Ab3Cd9b0Ea410b7B2C4182',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        amount: bn('19747907203562458212'),
-        start_time: 1719216503,
+        // amount: bn('19747907203562458212'),
+        // start_time: 1719216503,
         end_time: 1750291200, // 6/19/25
       },
     ],
