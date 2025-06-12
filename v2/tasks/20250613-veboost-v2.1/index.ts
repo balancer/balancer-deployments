@@ -15,46 +15,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         to: ZERO_ADDRESS,
         end_time: 0,
       })
-    ),
+    ).map((call) => [call.from, call.to, call.end_time]), // Transform to tuple array
     input.PreseededApprovalCalls.concat(
       new Array<(typeof input.PreseededApprovalCalls)[number]>(MAX_PRESEED - input.PreseededApprovalCalls.length).fill({
         operator: ZERO_ADDRESS,
         delegator: ZERO_ADDRESS,
       })
-    ),
+    ).map((call) => [call.operator, call.delegator]), // Transform to tuple array
   ];
-
-  /*const preseededBoostCalls = [
-    // Convert input objects to arrays
-    ...input.PreseededBoostCalls.map((call) => [call.from, call.to, call.amount, call.start_time, call.end_time]),
-    // Pad remaining slots with null arrays
-    ...Array(MAX_PRESEED - input.PreseededBoostCalls.length)
-      .fill(null)
-      .map(() => [
-        ZERO_ADDRESS, // from
-        ZERO_ADDRESS, // to
-        0, // amount
-        0, // start_time
-        0, // end_time
-      ]),
-  ];
-
-  const preseededApprovalCalls = [
-    // Convert input objects to arrays
-    ...input.PreseededApprovalCalls.map((call) => [call.operator, call.delegator]),
-    // Pad remaining slots with null arrays
-    ...Array(MAX_PRESEED - input.PreseededApprovalCalls.length)
-      .fill(null)
-      .map(() => [
-        ZERO_ADDRESS, // operator
-        ZERO_ADDRESS, // delegator
-      ]),
-  ];
-
-  const args = [input.VotingEscrow, preseededBoostCalls, preseededApprovalCalls];
-
-  const useVyper = true;
-  const noLibs = {};*/
 
   await task.deploy('VeBoostV2', args, from, force);
 };

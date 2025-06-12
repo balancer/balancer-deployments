@@ -8,7 +8,7 @@ import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from 
 
 import { VeBoostV21Deployment } from '../input';
 
-describeForkTest('veBoostV2', 'mainnet', 22668480, function () {
+describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
   let oldBoost: Contract;
   let boost: Contract;
   let delegationProxy: Contract;
@@ -29,10 +29,6 @@ describeForkTest('veBoostV2', 'mainnet', 22668480, function () {
     const veDelegationProxyTask = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, getForkedNetwork(hre));
     delegationProxy = await veDelegationProxyTask.deployedInstance('VotingEscrowDelegationProxy');
   });
-
-  it.only('works', () => {
-    expect(true).to.be.true;
-  })
 
   it('no unexpected boosts exist on old veBoost contract', async () => {
     const totalSupply = await oldBoost.totalSupply();
