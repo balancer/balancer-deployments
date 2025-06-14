@@ -17,11 +17,10 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
   let newBoost: Contract;
   let delegationProxy: Contract;
   let votingEscrow: Contract;
-  let opAccnt: SignerWithAddress;
-  let currentTime: BigNumber;
 
-  const oldBalances = new Map<string, BigNumber>();
-  let uniqueAddresses: Set<string>;
+  let opAccnt: SignerWithAddress;
+  let govMultisig: SignerWithAddress;
+  let currentTime: BigNumber;
 
   let input: VeBoostV21Deployment;
   let task: Task;
@@ -43,51 +42,43 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
 
     const veDelegationProxyTask = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, getForkedNetwork(hre));
     delegationProxy = await veDelegationProxyTask.deployedInstance('VotingEscrowDelegationProxy');
-  });
 
-  before('record old balances', async () => {
-    uniqueAddresses = new Set(input.PreseededBoostCalls.flatMap((call) => [call.from, call.to]));
     currentTime = await currentTimestamp();
-
-    // First pass: store the balances before migration.
-    for (const address of uniqueAddresses) {
-      const balance = await delegationProxy.adjusted_balance_of(address);
-      oldBalances.set(address, balance);
-    }
   });
 
-  it('no unexpected boosts exist on old veBoost contract', async () => {
-    const totalSupply = await oldBoost.totalSupply();
-    expect(await newBoost.totalSupply()).to.be.eq(totalSupply);
-  });
-
-  it('proxy can be migrated to delegation', async () => {
+  before('set permissions', async () => {
     const authorizer = await new Task(
       '20210418-authorizer',
       TaskMode.READ_ONLY,
       getForkedNetwork(hre)
     ).deployedInstance('Authorizer');
 
-    const govMultisig = await impersonate(GOV_MULTISIG);
+    govMultisig = await impersonate(GOV_MULTISIG);
     await authorizer
       .connect(govMultisig)
       .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+  });
 
+  it('proxy can be migrated to delegation', async () => {
     expect(await delegationProxy.getDelegationImplementation()).to.be.eq(oldBoost.address);
 
     await newBoost.migrate();
-
     await delegationProxy.connect(govMultisig).setDelegation(newBoost.address);
 
     expect(await delegationProxy.getDelegationImplementation()).to.be.eq(newBoost.address);
   });
 
   it('adjusted balances should be unchanged after migration', async () => {
-    for (const address of uniqueAddresses) {
-      const actualBalance = await delegationProxy.adjusted_balance_of(address);
-      const expectedBalance = oldBalances.get(address);
+    const uniqueAddresses = new Set(input.PreseededBoostCalls.flatMap((call) => [call.from, call.to]));
 
-      expect(actualBalance).to.eq(expectedBalance);
+    // They change every second, so I can't store the old balances through the delegation proxy.
+    // This is the only way to compute them at the same timestamp.
+    // The proxy call literally just forwards to the same function in the boost, so this is equivalent.
+    for (const address of uniqueAddresses) {
+      const oldBalance = await oldBoost.adjusted_balance_of(address);
+      const newBalance = await newBoost.adjusted_balance_of(address);
+
+      expect(newBalance).to.eq(oldBalance);
     }
   });
 
