@@ -1111,5 +1111,50 @@
         "setSurgeThresholdPercentage(address,uint256)": "0x3e5b3786c2433c83d82d4d118259a3cf5b7dd26b4f21c6c56115c2ce1cfa825b"
       }
     }
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0xcbcf54de2b1929c05c781b09523cf13c51fbb997666e28b394e559556c7e7cb1",
+        "recoverProtocolFees(address[])": "0x213b909bc04d673c3e6d3ec1affc143bc8dabb75afeee026e46864fd442baa39",
+        "removeProtocolFeeBurner(address)": "0x7af4e50630a7b7974bf8bc40e28612954db2b594884708da860d9a164d86b0f5",
+        "setFeeRecipient(address)": "0xb2478c1d6b5789fb2eb22ddbd0cdcb372ffe664979ff49487c09fd5f857cc767",
+        "setTargetToken(address)": "0x1fe53d6e2f394ef4070a14a67771e10c121ad25478afc0a36986c5767c425bbb",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x14063ceb23c91467860eb9a242020a95c50c929fb1f9b7a3f8df15f0a0c4df70",
+        "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0xe804beeda244417d4f174b615090e88cd0ade3ba64e3307cd01cedf9306ee16c"
+      }
+    }
+  },
+  "20250409-v3-reclamm-pool": {
+    "ReClammPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(address,address,address),uint256,(uint256,uint256,uint256,bool,bool),uint256,uint256,bytes32)": "0x4efa5556322782acf20974bccf741581d19fb2cc6581ac550cd982a40b9d0e60",
+        "disable()": "0x668986fc2832f58b18f6dbb6bd3930239eb176f8c74768d3386c75061f84eabd"
+      }
+    },
+    "ReClammPool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xe482ef529B8f7fFC6ECCDea7eaF29C717E9ed079",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0xcbbabb89098f451fe6c60a154c6795dafef990f12c0d38444ae0dd7b7056cb34",
+        "emitTransfer(address,address,uint256)": "0x89694f123239ed64397b948170e3fd33a12690139d4545136ed960ba0a0aab67",
+        "incrementNonce()": "0xa38af8ba8fc07b92f47bc1dd181a0d2ce609baac34d36331574b3d8a45fe0ac2",
+        "onAfterAddLiquidity(address,address,uint8,uint256[],uint256[],uint256,uint256[],bytes)": "0x228d993fa99634b90640a2acaae447e89d3cf36986b36506526ddc1cd3b78a80",
+        "onAfterInitialize(uint256[],uint256,bytes)": "0xc4f4d8edaa6b397551df96fe3c896045fdd002157e7104db9444c6d310d04c36",
+        "onAfterRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],uint256[],bytes)": "0x9624778816c37b4da60cb5dc3c9fe527d59860175407e8618ed2297bf55e92a5",
+        "onAfterSwap((uint8,address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,address,bytes))": "0xb448aa3d4e29bd8e73c606b83205a2e9c608255a3e342711dc621d03492e63fe",
+        "onBeforeAddLiquidity(address,address,uint8,uint256[],uint256,uint256[],bytes)": "0xd2ecae2f48c3d8c5afea29092191fff488cda5fe4bcae8507703783e1e3676f1",
+        "onBeforeInitialize(uint256[],bytes)": "0xe2917b9c1589e8b57dbb55da6e5dc66f2c8ef1c398a4e6b35ebc1814ef70a60b",
+        "onBeforeRemoveLiquidity(address,address,uint8,uint256,uint256[],uint256[],bytes)": "0xc7e4e84fba20422c0f179a90264f5744b10b6bd4bc2b1a6bbb1a99ddc17501bd",
+        "onBeforeSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes),address)": "0x9d806b6ed9c39ae98d7fdfa3ef217391f7c827e24993c3d5ba6f22fd7f70287d",
+        "onSwap((uint8,uint256,uint256[],uint256,uint256,address,bytes))": "0x8875924c357f4da7062e9398fc80fb068954e9c1213deea6526c47726fe61bc9",
+        "setCenterednessMargin(uint256)": "0x5a0f2587cf3923c4c723345de0c97eb51231505849b8be143b7f5d2d7ba0d210",
+        "setDailyPriceShiftExponent(uint256)": "0xf0965833ab10492aee52b7abc365544892b981527e54e0780c886c3aa0ad47b4",
+        "startPriceRatioUpdate(uint256,uint256,uint256)": "0x5fb8b6cd494cbe90988ca6d485eae55c2de57e694219ce25be7f4d38addac178",
+        "stopPriceRatioUpdate()": "0x88231e1b202c07a43d9358792a93fe8f997690cddc3de65936ad6dca17ccebac"
+      }
+    }
   }
 }

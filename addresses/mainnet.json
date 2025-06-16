@@ -1596,7 +1596,7 @@
         "address": "0x0E800D8d2E8b4694610AEdc385Aa6D763492B106"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250228-v3-protocol-fee-sweeper": {
@@ -1606,7 +1606,7 @@
         "address": "0xd22eecBB495380Ef52b1CCeF1cA594979885D484"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-liquidity-bootstrapping-pool": {
@@ -1686,6 +1686,74 @@
       {
         "name": "VaultExplorer",
         "address": "0xFc2986feAB34713E659da84F3B1FA32c1da95832"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250409-v3-reclamm-pool": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x5939ab16fDf1991B0EF603c639B6b501A7841fAB"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x6A5127AE6df32f722e34B5b4aBc67b0d4e582B39"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250418-v3-wrapped-bpt": {
+    "contracts": [
+      {
+        "name": "WrappedBalancerPoolTokenFactory",
+        "address": "0xA3d11a39dEA14d245659816d35456B89FfBfB744"
+      },
+      {
+        "name": "MockWrappedBalancerPoolToken",
+        "address": "0x27ad56B2bfcb923091d80CA2D657AEbA5Ac3121c"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x90BD26fbb9dB17D75b56E4cA3A4c438FA7C93694"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-erc4626-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x45fB5aF0a1aD80Ea16C803146eb81844D9972373"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x9958317b80ee5f10457017d54c2484D722059157"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x816e90DC85bF016455017a76Bc09CC0451Eeb308"
       }
     ],
     "status": "ACTIVE",
