@@ -712,7 +712,7 @@
         "address": "0x67F8DF125B796B05895a6dc8Ecf944b9556ecb0B"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20221207-aave-rebalanced-linear-pool-v3": {
