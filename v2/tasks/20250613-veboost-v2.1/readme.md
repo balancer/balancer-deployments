@@ -4,4 +4,5 @@ Deployment of veBoost V2.1, replacing [`veBoostV2`](../20221205-veboost-v2). Thi
 
 ## Useful Files
 
+- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/208901355aa9d30f8924e657ce0ad7646443b7d7).
 - [`VeBoostV2` artifact](./artifact/VeBoostV2.json)
