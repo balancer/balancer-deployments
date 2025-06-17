@@ -18,7 +18,6 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
   let delegationProxy: Contract;
   let votingEscrow: Contract;
 
-  let opAccnt: SignerWithAddress;
   let govMultisig: SignerWithAddress;
   let currentTime: BigNumber;
 
@@ -82,49 +81,70 @@ describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
     }
   });
 
+  it('total supply should be unchanged after migration', async () => {
+    const oldSupply = await oldBoost.totalSupply();
+    const newSupply = await newBoost.totalSupply();
+
+    expect(newSupply).to.eq(oldSupply);
+  });
+
   it('should allow creating boosts from Tetu operator', async () => {
     const { operator, delegator } = input.PreseededApprovalCalls[0];
 
-    opAccnt = await impersonate(operator);
+    const currentOperator = await impersonate(operator);
 
     const endTime = await computeValidEndTime(delegator);
     const amount = await computeValidAmount(delegator);
 
-    await validateBoostAssumptions(operator, delegator, amount, endTime);
+    await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
+
+    const operatorBalanceBefore = await newBoost.adjusted_balance_of(currentOperator.address);
+    expect(operatorBalanceBefore).to.eq(0);
 
     // Calls _boost(from: delegator, to: operator, amount: 1, end_time: endTime)
-    await newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator);
+    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
+    await boostMethod(currentOperator.address, amount, endTime, delegator);
+
+    const operatorBalanceAfter = await newBoost.adjusted_balance_of(currentOperator.address);
+    expect(operatorBalanceAfter).to.be.almostEqual(amount);
   });
 
   it('should allow creating boosts from StakeDAO operator', async () => {
     const { operator, delegator } = input.PreseededApprovalCalls[1];
 
-    opAccnt = await impersonate(operator);
+    const currentOperator = await impersonate(operator);
 
     const endTime = await computeValidEndTime(delegator);
     const amount = await computeValidAmount(delegator);
 
-    await validateBoostAssumptions(operator, delegator, amount, endTime);
+    await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
+
+    const operatorBalanceBefore = await newBoost.adjusted_balance_of(currentOperator.address);
+    expect(operatorBalanceBefore).to.eq(0);
 
     // Should not revert.
-    await newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator);
+    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
+    await boostMethod(currentOperator.address, amount, endTime, delegator);
+
+    const operatorBalanceAfter = await newBoost.adjusted_balance_of(currentOperator.address);
+    expect(operatorBalanceAfter).to.be.almostEqual(amount);
   });
 
   it('should not allow crossing the streams', async () => {
     const { operator } = input.PreseededApprovalCalls[0];
     const { delegator } = input.PreseededApprovalCalls[1];
 
-    opAccnt = await impersonate(operator);
+    const currentOperator = await impersonate(operator);
 
     const endTime = await computeValidEndTime(delegator);
     const amount = await computeValidAmount(delegator);
 
-    await validateBoostAssumptions(operator, delegator, amount, endTime);
+    await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
+
+    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
 
     // Should revert.
-    await expect(
-      newBoost.connect(opAccnt)['boost(address,uint256,uint256,address)'](operator, amount, endTime, delegator)
-    ).to.be.reverted;
+    await expect(boostMethod(currentOperator.address, amount, endTime, delegator)).to.be.reverted;
   });
 
   async function computeValidEndTime(delegator: string): Promise<BigNumber> {
