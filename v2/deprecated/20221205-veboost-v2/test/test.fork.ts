@@ -8,7 +8,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('veBoostV2', 'mainnet', 16110000, function () {
+describeForkTest.skip('veBoostV2', 'mainnet', 16110000, function () {
   let oldDelegation: Contract;
   let delegation: Contract;
 

@@ -214,7 +214,7 @@
         "address": "0x927906bbAc747c13c75F6447FE8abb490EAB456C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230109-gauge-adder-v3": {
