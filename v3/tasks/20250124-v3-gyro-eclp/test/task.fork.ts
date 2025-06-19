@@ -35,7 +35,7 @@ describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: input.TestBalancerToken,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

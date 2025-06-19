@@ -39,7 +39,7 @@ describeForkTest('V3-StablePool-V2', 'mainnet', 22069200, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: input.TestBalancerToken,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

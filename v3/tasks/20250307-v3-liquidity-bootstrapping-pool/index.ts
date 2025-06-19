@@ -24,7 +24,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     const newLBPParams = {
       owner: from ?? DELEGATE_OWNER,
-      projectToken: input.BAL,
+      projectToken: input.TestBalancerToken,
       reserveToken: input.WETH,
       projectTokenStartWeight: HIGH_WEIGHT,
       reserveTokenStartWeight: LOW_WEIGHT,

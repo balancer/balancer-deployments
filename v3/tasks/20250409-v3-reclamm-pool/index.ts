@@ -28,7 +28,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: input.TestBalancerToken,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

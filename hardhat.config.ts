@@ -469,6 +469,12 @@ export default {
       default: 'error',
     },
   },
+  networks: {
+    hyperevm: {
+      chainId: 999,
+      url: 'https://rpc.hyperliquid.xyz/evm',
+    },
+  },
   etherscan: {
     customChains: [
       {
@@ -509,6 +515,14 @@ export default {
         urls: {
           apiURL: 'https://api.snowscan.xyz/api',
           browserURL: 'https://snowscan.xyz/',
+        },
+      },
+      {
+        network: 'hyperevm',
+        chainId: 999,
+        urls: {
+          apiURL: 'https://www.hyperscan.com/api',
+          browserURL: 'https://www.hyperscan.com',
         },
       },
     ],

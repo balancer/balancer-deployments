@@ -11,6 +11,7 @@ Contains `AggregatorRouter` for basic swap operations (exact in / exact out) whe
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`AggregatorRouter` artifact](./artifact/AggregatorRouter.json)
 

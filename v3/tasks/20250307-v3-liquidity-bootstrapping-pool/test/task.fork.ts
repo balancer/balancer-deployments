@@ -7,6 +7,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
+import { LBPoolFactoryDeployment } from '../input';
 
 describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
@@ -43,6 +44,7 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
+    const input = task.input() as LBPoolFactoryDeployment;
 
     const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     trustedRouter = await routerTask.deployedInstance('Router');
@@ -59,7 +61,7 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     const fork = getForkedNetwork(hre);
 
     WETH = tokensTask.output({ network: fork }).WETH;
-    BAL = tokensTask.output({ network: fork }).BAL;
+    BAL = input.TestBalancerToken;
 
     balToken = await task.instanceAt('IERC20', BAL);
     wethToken = await task.instanceAt('IERC20', WETH);

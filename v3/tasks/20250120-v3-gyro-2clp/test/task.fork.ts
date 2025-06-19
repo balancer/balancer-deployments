@@ -35,7 +35,7 @@ describeForkTest('Gyro2CLPPool', 'mainnet', 22117000, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: input.TestBalancerToken,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

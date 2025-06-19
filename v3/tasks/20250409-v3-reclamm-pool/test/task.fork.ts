@@ -43,7 +43,7 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22590000, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: input.TestBalancerToken,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
