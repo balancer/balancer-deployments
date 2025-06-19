@@ -214,7 +214,7 @@
         "address": "0x927906bbAc747c13c75F6447FE8abb490EAB456C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230109-gauge-adder-v3": {
@@ -976,6 +976,20 @@
       {
         "name": "VaultExplorer",
         "address": "0xC82E329C832CAcc8DA65dbB57ac72B068e0CEb9B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250409-v3-reclamm-pool": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x2A4054779DaDf4Cf3F4849f1AC307845F182cfE5"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x919094AdC27c2B779F70eD65D5d96F0b5331f660"
       }
     ],
     "status": "ACTIVE",

@@ -712,7 +712,7 @@
         "address": "0x67F8DF125B796B05895a6dc8Ecf944b9556ecb0B"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20221207-aave-rebalanced-linear-pool-v3": {
@@ -1686,6 +1686,20 @@
       {
         "name": "VaultExplorer",
         "address": "0xFc2986feAB34713E659da84F3B1FA32c1da95832"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250409-v3-reclamm-pool": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x5939ab16fDf1991B0EF603c639B6b501A7841fAB"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x6A5127AE6df32f722e34B5b4aBc67b0d4e582B39"
       }
     ],
     "status": "ACTIVE",
