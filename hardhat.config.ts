@@ -469,12 +469,6 @@ export default {
       default: 'error',
     },
   },
-  networks: {
-    hyperevm: {
-      chainId: 999,
-      url: 'https://rpc.hyperliquid.xyz/evm',
-    },
-  },
   etherscan: {
     customChains: [
       {
