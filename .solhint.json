@@ -10,6 +10,7 @@
     "reason-string": ["error", {"maxLength": 64}],
     "func-visibility": ["error", {"ignoreConstructors": true}],
     "compiler-version": ["off"],
-    "no-global-import": ["off"]
+    "no-global-import": ["off"],
+    "one-contract-per-file": "off"
   }
 }

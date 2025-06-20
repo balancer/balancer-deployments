@@ -22,6 +22,8 @@ import "@balancer-labs/v2-interfaces/contracts/pool-utils/IRateProviderPool.sol"
 import "@balancer-labs/v2-interfaces/contracts/pool-utils/IRecoveryMode.sol";
 import "@balancer-labs/v2-interfaces/contracts/pool-stable/IComposableStablePoolRates.sol";
 
+// solhint-disable custom-errors
+
 /**
  * @notice Performs a read-only reentrancy attack on a target composable stable pool, making use of the `receive`
  * callback hook in the middle of a join operation.
@@ -34,13 +36,13 @@ contract ReadOnlyReentrancyAttackerCSP {
         SET_TOKEN_RATE_CACHE_DURATION
     }
 
-    IVault private immutable _vault;
+    IVault private immutable _VAULT;
     AttackType private _attackType;
     bytes32 private _poolId;
     address private _tokenWithProvider;
 
     constructor(IVault vault) {
-        _vault = vault;
+        _VAULT = vault;
     }
 
     /**
@@ -67,14 +69,14 @@ contract ReadOnlyReentrancyAttackerCSP {
         _tokenWithProvider = address(0);
 
         uint256 assetsLength = joinPoolRequest.assets.length;
-        IVault vault = _vault;
+        IVault vault = _VAULT;
         for (uint256 i = 0; i < assetsLength; ++i) {
             IERC20 asset = IERC20(address(joinPoolRequest.assets[i]));
             asset.approve(address(vault), joinPoolRequest.maxAmountsIn[i]);
         }
 
         if (_needsRateProvider(attackType)) {
-            (address pool, ) = _vault.getPool(_poolId);
+            (address pool, ) = _VAULT.getPool(_poolId);
 
             IRateProvider[] memory rateProviders = IRateProviderPool(pool).getRateProviders();
             for (uint256 i = 0; i < rateProviders.length; ++i) {
@@ -96,7 +98,7 @@ contract ReadOnlyReentrancyAttackerCSP {
 
     function _reenterAttack() internal {
         AttackType attackType = _attackType;
-        (address pool, ) = _vault.getPool(_poolId);
+        (address pool, ) = _VAULT.getPool(_poolId);
 
         if (attackType == AttackType.DISABLE_RECOVERY_MODE) {
             IRecoveryMode(pool).disableRecoveryMode();

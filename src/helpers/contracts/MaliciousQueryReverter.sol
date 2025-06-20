@@ -25,6 +25,7 @@ contract MaliciousQueryReverter {
 
     function maybeRevertMaliciously() public view {
         if (revertType == RevertType.NonMalicious) {
+            // solhint-disable-next-line custom-errors
             revert("NON_MALICIOUS_REVERT");
         } else if (revertType == RevertType.MaliciousSwapQuery) {
             spoofSwapQueryRevert();

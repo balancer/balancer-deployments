@@ -20,7 +20,7 @@ import "./TestToken.sol";
 //we're unable to implement IYearnTokenVault because it defines the decimals function, which collides with
 //the TestToken ERC20 implementation
 contract MockYearnTokenVault is TestToken, MaliciousQueryReverter {
-    address private immutable _token;
+    address private immutable _TOKEN;
 
     uint256 private _lastReport;
     uint256 private _lockedProfit;
@@ -33,12 +33,12 @@ contract MockYearnTokenVault is TestToken, MaliciousQueryReverter {
         uint8 decimals,
         address underlyingAsset
     ) TestToken(name, symbol, decimals) {
-        _token = underlyingAsset;
+        _TOKEN = underlyingAsset;
         _lockedProfitDegradation = 1e18;
     }
 
     function token() external view returns (address) {
-        return _token;
+        return _TOKEN;
     }
 
     function pricePerShare() public view returns (uint256) {
@@ -53,7 +53,7 @@ contract MockYearnTokenVault is TestToken, MaliciousQueryReverter {
     }
 
     function deposit(uint256 _amount, address recipient) public returns (uint256) {
-        ERC20(_token).transferFrom(msg.sender, address(this), _amount);
+        ERC20(_TOKEN).transferFrom(msg.sender, address(this), _amount);
 
         uint256 amountToMint = (_amount * 10**decimals()) / pricePerShare();
         _mint(recipient, amountToMint);
@@ -65,7 +65,7 @@ contract MockYearnTokenVault is TestToken, MaliciousQueryReverter {
         _burn(msg.sender, maxShares);
 
         uint256 amountToReturn = (maxShares * pricePerShare()) / 10**decimals();
-        ERC20(_token).transfer(recipient, amountToReturn);
+        ERC20(_TOKEN).transfer(recipient, amountToReturn);
 
         return amountToReturn;
     }
