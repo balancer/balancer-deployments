@@ -134,7 +134,7 @@ jobs:
       - name: Check Hyperevm Deployment Addresses
         uses: ./.github/actions/check-network-deployments
         env:
-          hyperevm_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
         with:
           network-name: hyperevm
   check-sepolia-deployments:
