@@ -12,6 +12,7 @@ Pools from this factory use weighted math, which is best suited for uncorrelated
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
 - [`WeightedPool` artifact](./artifact/WeightedPool.json)

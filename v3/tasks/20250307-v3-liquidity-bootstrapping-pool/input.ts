@@ -4,7 +4,7 @@ import { YEAR } from '@helpers/time';
 export type LBPoolFactoryDeployment = {
   Vault: string;
   WETH: string;
-  BAL: string;
+  TestBalancerToken: string;
   Router: string;
   PauseWindowDuration: number;
   FactoryVersion: string;
@@ -13,7 +13,7 @@ export type LBPoolFactoryDeployment = {
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
-const BAL = new Task('00000000-tokens', TaskMode.READ_ONLY);
+const TestBalancerToken = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY);
 
 // Router used to add/remove liquidity.
 const TrustedRouter = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY);
@@ -23,7 +23,7 @@ const BaseVersion = { version: 1, deployment: '20250307-v3-liquidity-bootstrappi
 export default {
   Vault,
   WETH,
-  BAL,
+  TestBalancerToken,
   Router: TrustedRouter,
   PauseWindowDuration: 4 * YEAR,
   FactoryVersion: JSON.stringify({ name: 'LBPoolFactory', ...BaseVersion }),

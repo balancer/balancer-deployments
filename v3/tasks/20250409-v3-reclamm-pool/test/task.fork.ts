@@ -19,6 +19,7 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22590000, function () {
   const INITIAL_TARGET_PRICE = fp(2500);
 
   const SWAP_FEE_PERCENTAGE = bn(1e16); // 1%
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   let task: Task;
   let factory: Contract, pool: Contract;
@@ -43,7 +44,7 @@ describeForkTest('V3-ReClammPool', 'mainnet', 22590000, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

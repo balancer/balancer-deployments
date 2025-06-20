@@ -12,5 +12,6 @@ This contract is targeted for Base and L2 networks in general, where the priorit
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`MevCaptureHook` artifact](./artifact/MevCaptureHook.json)

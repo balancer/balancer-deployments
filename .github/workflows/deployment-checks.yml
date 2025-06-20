@@ -127,6 +127,16 @@ jobs:
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
         with:
           network-name: mode
+  check-hyperevm-deployments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Hyperevm Deployment Addresses
+        uses: ./.github/actions/check-network-deployments
+        env:
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+        with:
+          network-name: hyperevm
   check-sepolia-deployments:
     runs-on: ubuntu-latest
     steps:
@@ -248,6 +258,16 @@ jobs:
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
         with:
           network-name: mode
+  check-hyperevm-action-ids:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Hyperevm Action IDs
+        uses: ./.github/actions/check-network-action-ids
+        env:
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+        with:
+          network-name: hyperevm
   check-sepolia-action-ids:
     runs-on: ubuntu-latest
     steps:

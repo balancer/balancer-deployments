@@ -11,6 +11,7 @@ Deployment for the LBPool, a Weighted Pool with mutable weights, designed to sup
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)

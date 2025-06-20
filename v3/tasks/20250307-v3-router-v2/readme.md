@@ -16,6 +16,7 @@ There were also other changes to the Router contract and inheritance hierarchy s
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Router` artifact](./artifact/Router.json)
 
