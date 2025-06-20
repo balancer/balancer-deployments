@@ -32,12 +32,12 @@ contract ReadOnlyReentrancyAttackerMP {
         UPDATE_PROTOCOL_FEE_CACHE
     }
 
-    IVault private immutable _vault;
+    IVault private immutable _VAULT;
     AttackType private _attackType;
     bytes32 private _poolId;
 
     constructor(IVault vault) {
-        _vault = vault;
+        _VAULT = vault;
     }
 
     /**
@@ -57,12 +57,13 @@ contract ReadOnlyReentrancyAttackerMP {
         IVault.JoinPoolRequest memory joinPoolRequest,
         AttackType attackType
     ) external payable {
+        // solhint-disable-next-line custom-errors
         require(msg.value > 0, "Insufficient ETH");
         _attackType = attackType;
         _poolId = poolId;
 
         uint256 assetsLength = joinPoolRequest.assets.length;
-        IVault vault = _vault;
+        IVault vault = _VAULT;
         for (uint256 i = 0; i < assetsLength; ++i) {
             IERC20 asset = IERC20(address(joinPoolRequest.assets[i]));
             asset.approve(address(vault), joinPoolRequest.maxAmountsIn[i]);
@@ -77,7 +78,7 @@ contract ReadOnlyReentrancyAttackerMP {
 
     function _reenterAttack() internal {
         AttackType attackType = _attackType;
-        (address pool, ) = _vault.getPool(_poolId);
+        (address pool, ) = _VAULT.getPool(_poolId);
 
         if (attackType == AttackType.SET_MANAGEMENT_AUM_FEE) {
             uint256 aumFeePercentage = 50e16; // 50%
@@ -92,7 +93,7 @@ contract ReadOnlyReentrancyAttackerMP {
 
             IManagedPool(pool).addToken(weth, address(0), tokenWeight, 0, recipient);
         } else if (attackType == AttackType.REMOVE_TOKEN) {
-            (IERC20[] memory tokens, , ) = _vault.getPoolTokens(_poolId);
+            (IERC20[] memory tokens, , ) = _VAULT.getPoolTokens(_poolId);
             address sender = address(this);
 
             IManagedPool(pool).removeToken(tokens[1], 0, sender);

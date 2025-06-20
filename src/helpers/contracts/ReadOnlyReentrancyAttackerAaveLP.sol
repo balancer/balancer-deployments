@@ -36,12 +36,12 @@ contract ReadOnlyReentrancyAttackerAaveLP {
     uint256 private constant _UPPER_TARGET = 500e18;
     uint256 private constant _SWAP_FEE_PERCENTAGE = 1e16;
 
-    IVault private immutable _vault;
+    IVault private immutable _VAULT;
     AttackType private _attackType;
     ILinearPool private _pool;
 
     constructor(IVault vault) {
-        _vault = vault;
+        _VAULT = vault;
     }
 
     /**
@@ -77,7 +77,7 @@ contract ReadOnlyReentrancyAttackerAaveLP {
         ops[0].sender = address(this);
         ops[0].recipient = payable(address(this));
 
-        _vault.manageUserBalance{ value: msg.value }(ops);
+        _VAULT.manageUserBalance{ value: msg.value }(ops);
     }
 
     receive() external payable {

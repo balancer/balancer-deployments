@@ -29,7 +29,7 @@ contract MockERC4626Token is TestToken, IERC4626, MaliciousQueryReverter {
     uint256 private _scaleAssetsToFP;
     uint256 private _scaleSharesToFP;
     uint256 private _totalAssets;
-    address private immutable _asset;
+    address private immutable _ASSET;
 
     constructor(
         string memory name,
@@ -37,7 +37,7 @@ contract MockERC4626Token is TestToken, IERC4626, MaliciousQueryReverter {
         uint8 decimals,
         address asset
     ) TestToken(name, symbol, decimals) {
-        _asset = asset;
+        _ASSET = asset;
 
         uint256 assetDecimals = TestToken(asset).decimals();
         uint256 assetDecimalsDifference = Math.sub(18, assetDecimals);
@@ -56,7 +56,7 @@ contract MockERC4626Token is TestToken, IERC4626, MaliciousQueryReverter {
     }
 
     function asset() external view override returns (address) {
-        return _asset;
+        return _ASSET;
     }
 
     function convertToAssets(uint256 shares) external view override returns (uint256) {

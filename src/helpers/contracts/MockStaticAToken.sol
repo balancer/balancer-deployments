@@ -19,7 +19,7 @@ import "./TestToken.sol";
 contract MockStaticAToken is TestToken {
     // solhint-disable-next-line var-name-mixedcase
     address private immutable _ASSET;
-    address private immutable _lendingPool;
+    address private immutable _LENDING_POOL;
 
     constructor(
         string memory name,
@@ -29,7 +29,7 @@ contract MockStaticAToken is TestToken {
         address lendingPool
     ) TestToken(name, symbol, decimals) {
         _ASSET = underlyingAsset;
-        _lendingPool = lendingPool;
+        _LENDING_POOL = lendingPool;
     }
 
     // solhint-disable-next-line func-name-mixedcase
@@ -39,10 +39,11 @@ contract MockStaticAToken is TestToken {
 
     // solhint-disable-next-line func-name-mixedcase
     function LENDING_POOL() external view returns (address) {
-        return _lendingPool;
+        return _LENDING_POOL;
     }
 
     function rate() external pure returns (uint256) {
+        // solhint-disable-next-line custom-errors
         revert("Should not call this");
     }
 
