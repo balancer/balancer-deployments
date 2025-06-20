@@ -7,7 +7,6 @@ import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
-import { LBPoolFactoryDeployment } from '../input';
 
 describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
