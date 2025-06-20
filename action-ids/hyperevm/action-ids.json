@@ -262,17 +262,5 @@
         "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0x314de434a59fc45d929c3c4090c49a73b425dd208a0e2e9e009fe3eb583e4957"
       }
     }
-  },
-  "20250530-v3-cow-swap-fee-burner-v2": {
-    "CowSwapFeeBurner": {
-      "useAdaptor": true,
-      "actionIds": {}
-    }
-  },
-  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
-    "ERC4626CowSwapFeeBurner": {
-      "useAdaptor": true,
-      "actionIds": {}
-    }
   }
 }
