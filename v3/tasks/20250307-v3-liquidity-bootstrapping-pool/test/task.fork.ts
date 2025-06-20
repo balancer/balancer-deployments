@@ -44,7 +44,6 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
-    const input = task.input() as LBPoolFactoryDeployment;
 
     const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     trustedRouter = await routerTask.deployedInstance('Router');
