@@ -22,6 +22,7 @@ describeForkTest('V3-StablePool-V2', 'mainnet', 22069200, function () {
   const POOL_CONTRACT_NAME = 'StablePool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
   const LARGE_AMP = 6000;
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
@@ -39,7 +40,7 @@ describeForkTest('V3-StablePool-V2', 'mainnet', 22069200, function () {
         paysYieldFees: false,
       },
       {
-        token: input.TestBalancerToken,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

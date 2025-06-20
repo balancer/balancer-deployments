@@ -18,6 +18,7 @@ describeForkTest('Gyro2CLPPool', 'mainnet', 22117000, function () {
   const TASK_NAME = '20250120-v3-gyro-2clp';
   const POOL_CONTRACT_NAME = 'Gyro2CLPPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
@@ -35,7 +36,7 @@ describeForkTest('Gyro2CLPPool', 'mainnet', 22117000, function () {
         paysYieldFees: false,
       },
       {
-        token: input.TestBalancerToken,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
