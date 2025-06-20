@@ -20,15 +20,15 @@ import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
 contract MockGearboxVault is MaliciousQueryReverter {
     using FixedPoint for uint256;
 
-    address private immutable _asset;
+    address private immutable _ASSET;
     uint256 private _rate = 1e27;
 
     constructor(address underlyingAsset) {
-        _asset = underlyingAsset;
+        _ASSET = underlyingAsset;
     }
 
     function underlyingToken() external view returns (address) {
-        return _asset;
+        return _ASSET;
     }
 
     // solhint-disable-next-line func-name-mixedcase
