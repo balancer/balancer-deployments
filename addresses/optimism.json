@@ -85,6 +85,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x9179C06629ef7f17Cb5759F501D89997FE0E7b45"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220404-erc4626-linear-pool-v2": {
     "contracts": [
       {

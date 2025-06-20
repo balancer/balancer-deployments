@@ -269,6 +269,16 @@
     "status": "DEPRECATED",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x397BC40Ba584E651f4f5Cf4Ae089F0130569a1c7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220325-ve-delegation": {
     "contracts": [
       {
