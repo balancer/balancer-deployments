@@ -51,14 +51,6 @@ export default {
         // start_time: 1724977943,
         end_time: 1753920000, // 7/31/25
       },
-      {
-        // tx: 0x148b4ad2b40f6f10dec822c523fdc109d605d398049cbeddad375a2b99ae0aca
-        from: '0x278a8453ECf2f477a5Ab3Cd9b0Ea410b7B2C4182',
-        to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        // amount: bn('19747907203562458212'),
-        // start_time: 1719216503,
-        end_time: 1750291200, // 6/19/25
-      },
     ],
     PreseededApprovalCalls: [
       {
