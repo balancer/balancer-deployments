@@ -28,14 +28,6 @@ export default {
     // Amounts and start times included for reference.
     PreseededBoostCalls: [
       {
-        // tx: 0xb1795fffafd3741569d1d4d348483938c018034c65e4415056d4a18a4da1601b
-        from: '0x250Dc31d9eCD8AF562f506b40d0dE4349C987E92',
-        to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
-        // amount: bn('9575170789062471648420'),
-        // start_time: 1748360315,
-        end_time: 1750896000, // 6/26/25
-      },
-      {
         // tx: 0x494930339e854d855b9d96f940a8535d86fc0bbc586847713a4d168ff43270f3
         from: '0x6d7003C9366AdCE15433090a5179157995bff620',
         to: '0xea79d1A83Da6DB43a85942767C389fE0ACf336A5',
