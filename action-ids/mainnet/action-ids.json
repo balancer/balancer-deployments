@@ -1863,5 +1863,15 @@
         "disable()": "0xd6ef2cdea6236fe8b350fe1371523aade37cb3ec44de40e46a13ac44ab467e9e"
       }
     }
+  },
+  "20250430-v3-pool-pause-helper": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addPools(address[])": "0x5bad71f0e45688df730a8899e8d8f5eab564788d918c163737a5300a00da8135",
+        "pausePools(address[])": "0x59cfe1d62b352f4e6621924f908836f85a31a1c038d101f4dfbfe3b0d9eba017",
+        "removePools(address[])": "0x651a547730c1a290c39c03b000c62443094849a73feaa7d8efc068a7cb3c6cde"
+      }
+    }
   }
 }

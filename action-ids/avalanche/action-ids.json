@@ -706,5 +706,15 @@
         "stopPriceRatioUpdate()": "0x2cd44f7180492cb72db2386c418a5a431835ac212ef513756e2defbe7df6dfbe"
       }
     }
+  },
+  "20250430-v3-pool-pause-helper": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addPools(address[])": "0x6862e90a7925dbb091dc986e0d8639feab7d112636a4e4d78061617944e10327",
+        "pausePools(address[])": "0xf09e05e4f668882e79cc9490bdf3a9f038c4e1ae73bae5b6a33175c8b43340c8",
+        "removePools(address[])": "0xa8231aae6490a0fed137a564aa847d86702550fc1bb53bdee362ce27a5c208e9"
+      }
+    }
   }
 }
