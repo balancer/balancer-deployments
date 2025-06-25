@@ -1030,5 +1030,15 @@
         "removePools(address[])": "0x906aa059b5209cb5dbfae22026ebf6dfab210591de8c80fda9aa7260b8615f87"
       }
     }
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "PoolSwapFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addPools(address[])": "0xf2778cd61d9f473e8c2f35546b687db31ae0279a0c4b9b204d36180c9f97cc34",
+        "removePools(address[])": "0x211045b351d51684f67e8562a29c5e465e87aaa32b7991ebe3f0bd57512dab8a",
+        "setStaticSwapFeePercentage(address,uint256)": "0xb6fd530dbccb8bcbbeb884a36c8a96731b602036ebd1a35836e0a1d803f7859c"
+      }
+    }
   }
 }
