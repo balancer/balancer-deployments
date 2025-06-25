@@ -262,5 +262,15 @@
         "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0x314de434a59fc45d929c3c4090c49a73b425dd208a0e2e9e009fe3eb583e4957"
       }
     }
+  },
+  "20250430-v3-pool-pause-helper": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addPools(address[])": "0x2c998553ba3cea681ec80fa328d04c67e6eef4b84f0d5cd1a9417a5fdabfda85",
+        "pausePools(address[])": "0xe69a3d5ad56ad6c8b1d30048e3cd2bce2eb5fa9f0a11ce4099cfca924f7c418a",
+        "removePools(address[])": "0x9f266ec028aead82a28dbc6afde1055474f59908527e5b340f715d0468b94409"
+      }
+    }
   }
 }
