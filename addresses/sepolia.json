@@ -1029,6 +1029,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-protocol-fee-helper": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0xAa6CEAa0142fFCdF6Bb8f3953e7E2a7535243beC"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {

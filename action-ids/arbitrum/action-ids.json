@@ -1176,5 +1176,16 @@
         "setStaticSwapFeePercentage(address,uint256)": "0x7a470a182124564ab7961e2c83c63597b7d4c1a90681c8b6e49d1770ac144ec6"
       }
     }
+  },
+  "20250430-v3-protocol-fee-helper": {
+    "ProtocolFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addPools(address[])": "0x14f11289fb30711228841135f93a8efafc276423ead4ab987e37bc180ef4c7e5",
+        "removePools(address[])": "0x89da8f7fe46dae75b4df100af6c9d18a030bfb52df53e34dc5977257681dd8a4",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x1be173ee482dbf0df30f8f21a8feb1022f02ad7769333b4e714c9981c3da05ba",
+        "setProtocolYieldFeePercentage(address,uint256)": "0x470add0341f9a366977e01aec6b1e1a1f0b5d45d710b0d84968f77aaddd239a9"
+      }
+    }
   }
 }
