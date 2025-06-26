@@ -37,6 +37,7 @@
 - Deployed V3 Aggregator Batch Router to all networks.
 - Deployed V3 ReClamm Pool Factory to all networks.
 - Deployed V3 Pool Pause Helper to all networks.
+- Deployed V3 Pool Swap Fee Helper to all networks.
 
 #### V2
 
