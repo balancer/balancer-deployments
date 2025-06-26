@@ -175,20 +175,34 @@ export async function getActionIds(
     .sort(([sigA], [sigB]) => (sigA < sigB ? -1 : 1)); // Sort functions alphabetically.
 
   const { useAdaptor, actionIdSource } = await getActionIdSource(task, contractName, factoryOutput, factoryName);
-  const actionIds = await getActionIdsFromSource(contractFunctions, actionIdSource);
+  const actionIds: ActionIdData =
+    actionIdSource === undefined ? {} : await getActionIdsFromSource(contractFunctions, actionIdSource);
 
   return { useAdaptor, actionIds };
 }
 
+/**
+ * Returns action ID source and a boolean indicating whether the source is the authorizer adaptor.
+ * For V3 contracts, it is tolerable to return undefined as the action ID source for permissionless contracts, as
+ * V3 does not interact with the authorizer adaptor at all.
+ */
 async function getActionIdSource(
   task: Task,
   contractName: string,
   factoryOutput?: string,
   factoryName?: string
-): Promise<{ useAdaptor: boolean; actionIdSource: Contract }> {
+): Promise<{ useAdaptor: boolean; actionIdSource: Contract | undefined }> {
   const artifact = task.artifact(contractName);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const contractInterface = new Interface(artifact.abi as any);
+
+  // An exception is the V3 vault: Vault and extension actually have `getActionId` implemented in the vault admin.
+  if (task.id === '20241204-v3-vault' && (contractName === 'Vault' || contractName === 'VaultExtension')) {
+    const contract = await task.deployedInstance(contractName);
+    const vaultAdmin = await task.deployedInstance('VaultAdmin');
+    const contractAsAdmin = vaultAdmin.attach(contract.address);
+    return { useAdaptor: false, actionIdSource: contractAsAdmin };
+  }
 
   // Not all contracts use the Authorizer directly for authentication.
   // Only if it has the `getActionId` function does it use the Authorizer directly.
@@ -206,7 +220,8 @@ async function getActionIdSource(
     }
   } else {
     const adaptorTask = new Task('20220325-authorizer-adaptor', TaskMode.READ_ONLY, task.network);
-    return { useAdaptor: true, actionIdSource: await adaptorTask.deployedInstance('AuthorizerAdaptor') };
+    const actionIdSource = await adaptorTask.optionalDeployedInstance('AuthorizerAdaptor');
+    return { useAdaptor: true, actionIdSource };
   }
 }
 

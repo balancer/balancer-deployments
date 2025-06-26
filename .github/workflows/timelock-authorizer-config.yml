@@ -131,6 +131,17 @@ jobs:
         with:
           network-name: mode
 
+  verify-hyperevm-timelock-authorizer-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Hyperevm Timelock Authorizer Configuration
+        uses: ./.github/actions/verify-network-timelock-authorizer-config
+        env:
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+        with:
+          network-name: hyperevm
+
   verify-sepolia-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:

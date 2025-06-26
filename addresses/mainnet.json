@@ -269,6 +269,16 @@
     "status": "DEPRECATED",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x397BC40Ba584E651f4f5Cf4Ae089F0130569a1c7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220325-ve-delegation": {
     "contracts": [
       {
@@ -712,7 +722,7 @@
         "address": "0x67F8DF125B796B05895a6dc8Ecf944b9556ecb0B"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20221207-aave-rebalanced-linear-pool-v3": {
@@ -1719,11 +1729,41 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x5915DEA04ce390F0f44CA0806F7c6Dd99Ce2f941"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x254F3A2974b97dc2E675f6115c845567C55f83b0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
         "address": "0x90BD26fbb9dB17D75b56E4cA3A4c438FA7C93694"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0xDADa7bE438bdD89416F4802B679E320b15c92D49"
       }
     ],
     "status": "ACTIVE",

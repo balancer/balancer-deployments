@@ -47,6 +47,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0xD53F5d8d926fb2a0f7Be614B16e649B8aC102D83"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
       {
@@ -701,11 +711,41 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x891EC9B34829276a9a8ef2F8A9cEAF2486017e0d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
         "address": "0xB9d01CA61b9C181dA1051bFDd28e1097e920AB14"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
       }
     ],
     "status": "ACTIVE",

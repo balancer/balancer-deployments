@@ -214,7 +214,7 @@
         "address": "0x927906bbAc747c13c75F6447FE8abb490EAB456C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230109-gauge-adder-v3": {
@@ -1009,11 +1009,41 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x28620a494d75d4a8959dD7a1835bF85A5Ce7b1C4"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x3b0b1F85792082500CD3acE3C58f2297edc19146"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
         "address": "0x0f3615e60b1D23a5DD98CE74865FAA79A6d9aF70"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0x17a00FcDEafeE2E97b52083330B3B339Fb633dC1"
       }
     ],
     "status": "ACTIVE",

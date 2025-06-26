@@ -511,6 +511,14 @@ export default {
           browserURL: 'https://snowscan.xyz/',
         },
       },
+      {
+        network: 'hyperevm',
+        chainId: 999,
+        urls: {
+          apiURL: 'https://www.hyperscan.com/api',
+          browserURL: 'https://www.hyperscan.com',
+        },
+      },
     ],
   },
 };

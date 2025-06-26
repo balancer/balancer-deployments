@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { GyroECLPPoolDeployment } from '../input';
 
-describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
+describeForkTest('GyroECLPPool-V3', 'mainnet', 21818600, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: GyroECLPPoolDeployment;
@@ -18,6 +18,7 @@ describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
   const TASK_NAME = '20250124-v3-gyro-eclp';
   const POOL_CONTRACT_NAME = 'GyroECLPPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
@@ -35,7 +36,7 @@ describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -71,7 +72,7 @@ describeForkTest('GyroECLPPool', 'mainnet', 21818600, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,

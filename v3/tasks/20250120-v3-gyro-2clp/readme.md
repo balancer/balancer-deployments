@@ -12,6 +12,7 @@ Pools from this factory use Gyroscope's 2-CLP math, suitable for fungible concen
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Gyro2CLPPoolFactory` artifact](./artifact/Gyro2CLPPoolFactory.json)
 - [`Gyro2CLPPool` artifact](./artifact/Gyro2CLPPool.json)

@@ -36,8 +36,8 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
   let WETH: string;
-  let BAL: string;
   let startTime: BigNumber;
+  const BAL = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
@@ -59,7 +59,6 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     const fork = getForkedNetwork(hre);
 
     WETH = tokensTask.output({ network: fork }).WETH;
-    BAL = tokensTask.output({ network: fork }).BAL;
 
     balToken = await task.instanceAt('IERC20', BAL);
     wethToken = await task.instanceAt('IERC20', WETH);

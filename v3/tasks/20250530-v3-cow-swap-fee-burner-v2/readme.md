@@ -11,5 +11,6 @@ Contains `CowSwapFeeBurner` for burning the protocol fee via CoW Protocol. The c
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`CowSwapFeeBurner` artifact](./artifact/CowSwapFeeBurner.json)

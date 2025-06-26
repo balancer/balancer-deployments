@@ -36,12 +36,12 @@ contract ReadOnlyReentrancyAttackerLP {
     uint256 private constant _UPPER_TARGET = 500e18;
     uint256 private constant _SWAP_FEE_PERCENTAGE = 1e16;
 
-    IVault private immutable _vault;
+    IVault private immutable _VAULT;
     AttackType private _attackType;
     ILinearPool private _pool;
 
     constructor(IVault vault) {
-        _vault = vault;
+        _VAULT = vault;
     }
 
     /**
@@ -65,7 +65,7 @@ contract ReadOnlyReentrancyAttackerLP {
     ) external payable {
         _attackType = attackType;
         _pool = pool;
-        IVault vault = _vault;
+        IVault vault = _VAULT;
         IERC20 weth = vault.WETH();
         bytes32 poolId = pool.getPoolId();
 
@@ -79,6 +79,7 @@ contract ReadOnlyReentrancyAttackerLP {
                 break;
             }
         }
+        // solhint-disable-next-line custom-errors
         require(i < tokens.length, "Pool does not contain WETH");
 
         IVault.ExitPoolRequest memory exitPoolRequest = IVault.ExitPoolRequest(

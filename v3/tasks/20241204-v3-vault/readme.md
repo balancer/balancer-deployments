@@ -11,6 +11,7 @@ V3 Vault deployment, with Extension, Admin and Factory. Cornerstone of Balancer 
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Vault` artifact](./artifact/Vault.json)
 - [`VaultAdmin` artifact](./artifact/VaultAdmin.json)

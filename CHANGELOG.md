@@ -34,7 +34,10 @@
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
 - Deployed V3 ERC4626 Cow Swap Fee Burner V2 to all networks.
 - Deployed V3 Cow Swap Fee Burner V2 to all networks.
+- Deployed V3 Aggregator Batch Router to all networks.
 - Deployed V3 ReClamm Pool Factory to all networks.
+- Deployed V3 Pool Pause Helper to all networks.
+- Deployed V3 Pool Swap Fee Helper to all networks.
 
 #### V2
 

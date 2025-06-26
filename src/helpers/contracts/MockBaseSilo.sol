@@ -100,9 +100,9 @@ interface ISilo is IBaseSilo {
 
 contract MockBaseSilo is MaliciousQueryReverter {
     // asset address for which Silo was created
-    address private immutable _siloAsset;
+    address private immutable _SILO_ASSET;
 
-    address private immutable _siloRepository;
+    address private immutable _SILO_REPOSITORY;
 
     /// @dev asset => AssetStorage
     mapping(address => IBaseSilo.AssetStorage) private _assetStorage;
@@ -111,8 +111,8 @@ contract MockBaseSilo is MaliciousQueryReverter {
     mapping(address => IBaseSilo.AssetInterestData) private _interestData;
 
     constructor(address siloRepository, address siloAsset) {
-        _siloRepository = siloRepository;
-        _siloAsset = siloAsset;
+        _SILO_REPOSITORY = siloRepository;
+        _SILO_ASSET = siloAsset;
     }
 
     function assetStorage(address _asset) external view returns (IBaseSilo.AssetStorage memory) {
@@ -128,12 +128,12 @@ contract MockBaseSilo is MaliciousQueryReverter {
 
     function siloAsset() external view returns (address) {
         maybeRevertMaliciously();
-        return _siloAsset;
+        return _SILO_ASSET;
     }
 
     function siloRepository() external view returns (address) {
         maybeRevertMaliciously();
-        return _siloRepository;
+        return _SILO_REPOSITORY;
     }
 
     function setAssetStorage(
