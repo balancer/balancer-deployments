@@ -17,8 +17,8 @@ import "./MaliciousQueryReverter.sol";
 import "./TestToken.sol";
 
 contract MockShareToken is TestToken, MaliciousQueryReverter {
-    address private immutable _silo;
-    address private immutable _asset;
+    address private immutable _SILO;
+    address private immutable _ASSET;
     uint256 private _supply;
 
     /// @dev Token is always deployed for specific Silo and asset
@@ -33,18 +33,18 @@ contract MockShareToken is TestToken, MaliciousQueryReverter {
         address asset,
         uint8 decimals
     ) TestToken(name, symbol, decimals) {
-        _silo = address(silo);
-        _asset = asset;
+        _SILO = address(silo);
+        _ASSET = asset;
     }
 
     function asset() external view returns (address) {
         maybeRevertMaliciously();
-        return _asset;
+        return _ASSET;
     }
 
     function silo() external view returns (address) {
         maybeRevertMaliciously();
-        return _silo;
+        return _SILO;
     }
 
     function totalSupply() public view override returns (uint256) {

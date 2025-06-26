@@ -45,6 +45,9 @@ if (process.env.CI) {
       },
       "mode": {
         "url": "${process.env.MODE_RPC_ENDPOINT}"
+      },
+      "hyperevm": {
+        "url": "${process.env.HYPEREVM_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

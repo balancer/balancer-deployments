@@ -26,12 +26,12 @@ import "@balancer-labs/v2-interfaces/contracts/pool-utils/IProtocolFeeCache.sol"
 contract ReadOnlyReentrancyAttackerWP {
     enum AttackType { DISABLE_RECOVERY_MODE, UPDATE_PROTOCOL_FEE_CACHE }
 
-    IVault private immutable _vault;
+    IVault private immutable _VAULT;
     AttackType private _attackType;
     bytes32 private _poolId;
 
     constructor(IVault vault) {
-        _vault = vault;
+        _VAULT = vault;
     }
 
     /**
@@ -51,12 +51,13 @@ contract ReadOnlyReentrancyAttackerWP {
         IVault.JoinPoolRequest memory joinPoolRequest,
         AttackType attackType
     ) external payable {
+        // solhint-disable-next-line custom-errors
         require(msg.value > 0, "Insufficient ETH");
         _attackType = attackType;
         _poolId = poolId;
 
         uint256 assetsLength = joinPoolRequest.assets.length;
-        IVault vault = _vault;
+        IVault vault = _VAULT;
         for (uint256 i = 0; i < assetsLength; ++i) {
             IERC20 asset = IERC20(address(joinPoolRequest.assets[i]));
             asset.approve(address(vault), joinPoolRequest.maxAmountsIn[i]);
@@ -71,7 +72,7 @@ contract ReadOnlyReentrancyAttackerWP {
 
     function _reenterAttack() internal {
         AttackType attackType = _attackType;
-        (address pool, ) = _vault.getPool(_poolId);
+        (address pool, ) = _VAULT.getPool(_poolId);
 
         if (attackType == AttackType.DISABLE_RECOVERY_MODE) {
             IRecoveryMode(pool).disableRecoveryMode();

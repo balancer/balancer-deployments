@@ -2,7 +2,7 @@ import { VaultDeployment } from './input';
 import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ethers } from 'hardhat';
 
-const skipCheckNetworkList = ['optimism'];
+const skipCheckNetworkList = ['optimism', 'hyperevm'];
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

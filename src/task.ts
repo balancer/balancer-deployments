@@ -94,6 +94,16 @@ export default class Task {
     return this.instanceAt(name, address);
   }
 
+  async optionalDeployedInstance(name: string): Promise<Contract | undefined> {
+    let instance: Contract;
+    try {
+      instance = await this.deployedInstance(name);
+      return instance;
+    } catch {
+      return undefined;
+    }
+  }
+
   async inputInstance(artifactName: string, inputName: string): Promise<Contract> {
     const rawInput = this.rawInput();
     const input = rawInput[inputName];

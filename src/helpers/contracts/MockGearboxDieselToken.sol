@@ -17,7 +17,7 @@ pragma solidity ^0.7.0;
 import "./TestToken.sol";
 
 contract MockGearboxDieselToken is TestToken {
-    address private immutable _gearboxVault;
+    address private immutable _GEARBOX_VAULT;
 
     constructor(
         string memory name,
@@ -25,10 +25,10 @@ contract MockGearboxDieselToken is TestToken {
         uint8 decimals,
         address gearboxVaultAddress
     ) TestToken(name, symbol, decimals) {
-        _gearboxVault = gearboxVaultAddress;
+        _GEARBOX_VAULT = gearboxVaultAddress;
     }
 
     function owner() external view returns (address) {
-        return address(_gearboxVault);
+        return address(_GEARBOX_VAULT);
     }
 }

@@ -1,6 +1,6 @@
 # <img src="logo.svg" alt="Balancer" height="128px">
 
-# Balancer V2 Deployments
+# Balancer V2 & V3 Deployments
 
 [![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.org/package/@balancer-labs/v2-deployments)
 [![GitHub Repository](https://img.shields.io/badge/github-deployments-lightgrey?logo=github)](https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments)
@@ -91,7 +91,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Polygon Root Gauges V2, for veBAL voting               | [`20220823-polygon-root-gauge-factory-v2`](./v2/tasks/20220823-polygon-root-gauge-factory-v2)           |
 | Pool Recovery Helper                                   | [`20221123-pool-recovery-helper`](./v2/tasks/20221123-pool-recovery-helper)                             |
 | Authorizer Adaptor Entrypoint                          | [`20221124-authorizer-adaptor-entrypoint`](./v2/tasks/20221124-authorizer-adaptor-entrypoint)           |
-| VeBoost V2                                             | [`20221205-veboost-v2`](./v2/tasks/20221205-veboost-v2)                                                 |
 | Single Recipient Stakeless Gauges V2                   | [`20230215-single-recipient-gauge-factory`](./v2/tasks/20230215-single-recipient-gauge-factory-v2)      |
 | Gnosis Root Gauge, for veBAL voting                    | [`20230217-gnosis-root-gauge-factory`](./v2/tasks/20230217-gnosis-root-gauge-factory)                   |
 | Merkle Orchard Distributor V2                          | [`20230222-merkle-orchard-v2`](./v2/tasks/20230222-merkle-orchard-v2)                                   |
@@ -141,14 +140,17 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
 | V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
+| V3 ReClamm Pool                                        | [`20250409-v3-reclamm-pool`](./v3/tasks/20250409-v3-reclamm-pool)                                       |
 | V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
 | V3 Pool Pause Helper                                   | [`20250430-v3-pool-pause-helper`](./v3/tasks/20250430-v3-pool-pause-helper)                             |
 | V3 Pool Swap Fee Helper                                | [`20250430-v3-pool-swap-fee-helper`](./v3/tasks/20250430-v3-pool-swap-fee-helper)                       |
 | V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
 | V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
+| V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
 | V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
 | V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
+| V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
 
 ## Scripts
 
@@ -213,6 +215,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Batch Relayer V4                                    | [`20220916-batch-relayer-v4`](./v2/deprecated/20220916-batch-relayer-v4)                                 |
 | Managed Pool                                        | [`20221021-managed-pool`](./v2/deprecated/20221021-managed-pool)                                         |
 | Composable Stable Pools V2                          | [`20221122-composable-stable-pool-v2`](./v2/deprecated/20221122-composable-stable-pool-v2)               |
+| VeBoost V2                                          | [`20221205-veboost-v2`](./v2/deprecated/20221205-veboost-v2)                                             |
 | Linear Pools for Aave aTokens (with rebalancing) V3 | [`20221207-aave-rebalanced-linear-pool-v3`](./v2/deprecated/20221207-aave-rebalanced-linear-pool-v3)     |
 | Gauge Registrant V3                                 | [`20230109-gauge-adder-v3`](./v2/deprecated/20230109-gauge-adder-v3)                                     |
 | Weighted Pool V3                                    | [`20230206-weighted-pool-v3`](./v2/deprecated/20230206-weighted-pool-v3)                                 |
