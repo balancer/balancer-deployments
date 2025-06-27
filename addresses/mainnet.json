@@ -1779,6 +1779,16 @@
     "status": "DEPRECATED",
     "version": "v3"
   },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x1780e8185199DAc45284039Bb3E3B64060D943AB"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250530-v3-cow-swap-fee-burner-v2": {
     "contracts": [
       {
