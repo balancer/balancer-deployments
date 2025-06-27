@@ -73,6 +73,7 @@
 - Deployed `BaseRootGaugeFactory` to Mainnet.
 - Deployed `BatchRelayerLibrary` V6 to all networks.
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
+- Deployed `VeBoost` 2.1 to Mainnet.
 
 ### Deprecations
 
@@ -114,7 +115,8 @@
 - Deprecated `20230527-l2-gauge-checkpointer`.
 - Deprecated `20230529-avalanche-root-gauge-factory`.
 - Deprecated `20230731-stakeless-gauge-checkpointer`.
-- Deprecated `20230711-composable-stable-pool-v5`
+- Deprecated `20230711-composable-stable-pool-v5`.
+- Deprecated `20221205-veboost-v2`.
 
 ### New Networks
 
