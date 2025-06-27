@@ -323,6 +323,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0xEAedc32a51c510d35ebC11088fD5fF2b47aACF2E"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250530-v3-cow-swap-fee-burner-v2": {
     "contracts": [
       {
