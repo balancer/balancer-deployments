@@ -1389,6 +1389,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20250613-veboost-v2.1": {
+    "contracts": [
+      {
+        "name": "VeBoostV2",
+        "address": "0x2cf8e145Bdfe7c52b49AD9bB3c294a31B2736c59"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -1777,6 +1787,16 @@
       }
     ],
     "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x1780e8185199DAc45284039Bb3E3B64060D943AB"
+      }
+    ],
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
