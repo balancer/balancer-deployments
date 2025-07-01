@@ -1164,7 +1164,7 @@
         "address": "0xe482ef529B8f7fFC6ECCDea7eaF29C717E9ed079"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {

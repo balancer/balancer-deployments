@@ -1010,7 +1010,7 @@
         "address": "0xaC1675219FbB81F2C53950a92dF3F95AAffeab8E"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {

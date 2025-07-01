@@ -276,7 +276,7 @@
         "address": "0x493E0E14fCCB89925b507322f605b84629A8918a"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {
