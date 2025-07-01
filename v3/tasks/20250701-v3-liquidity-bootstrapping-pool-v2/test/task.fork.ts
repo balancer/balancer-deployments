@@ -6,7 +6,8 @@ import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskM
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
-import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
+import { advanceTime, currentTimestamp, DAY, HOUR, MONTH } from '@helpers/time';
+import { swapFeePercentage } from '../../../../v2/tasks/20231031-batch-relayer-v6/test/helpers/sharedStableParams';
 
 describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
@@ -30,6 +31,8 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
   let wethToken: Contract;
   let permit2: Contract;
   let task: Task;
+  let migrationRouter: Contract;
+  let bptTimeLocker: Contract;
   let admin: SignerWithAddress;
   let whale: SignerWithAddress;
 
@@ -43,6 +46,8 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
     factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
+    migrationRouter = await task.deployedInstance('LBPMigrationRouter');
+    bptTimeLocker = await task.deployedInstance('BPTTimeLocker');
 
     const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     trustedRouter = await routerTask.deployedInstance('Router');
@@ -104,7 +109,17 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     };
 
     const poolCreationReceipt = await (
-      await factory.create('Mock LBP', 'LBP-TEST', newLBPParams, SWAP_FEE, ONES_BYTES32)
+      await factory.createWithMigration(
+        'Mock LBP',
+        'LBP-TEST',
+        newLBPParams,
+        SWAP_FEE,
+        ONES_BYTES32,
+        12 * MONTH,
+        fp(1),
+        HIGH_WEIGHT,
+        LOW_WEIGHT
+      )
     ).wait();
 
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
@@ -168,5 +183,22 @@ describeForkTest('LBPool-V3', 'mainnet', 21970456, function () {
     await advanceTime(DAY);
 
     expect(await pool.isSwapEnabled()).to.be.false;
+  });
+
+  it('migrates the liquidity', async () => {
+    await migrationRouter.connect(admin).migrate(pool.address, admin.address, {
+      name: 'Migrated LBP',
+      symbol: 'MLBP',
+      roleAccounts: {
+        pauseManager: ZERO_ADDRESS,
+        swapFeeManager: ZERO_ADDRESS,
+        poolCreator: ZERO_ADDRESS,
+      },
+      swapFeePercentage: fp(0.01),
+      poolHooksContract: ZERO_ADDRESS,
+      enableDonation: false,
+      disableUnbalancedLiquidity: false,
+      salt: ONES_BYTES32,
+    });
   });
 });
