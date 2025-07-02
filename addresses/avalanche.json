@@ -694,7 +694,7 @@
         "address": "0x33608014e176139e0b9058B32EEae1A5ce795FD3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {
