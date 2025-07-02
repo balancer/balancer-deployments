@@ -92,7 +92,7 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     const gyroECLPTask = new Task('20250124-v3-gyro-eclp', TaskMode.READ_ONLY, getForkedNetwork(hre));
     gyroECLPFactory = await gyroECLPTask.deployedInstance('GyroECLPPoolFactory');
 
-    const reClammTask = new Task('20250409-v3-reclamm-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const reClammTask = new Task('20250702-v3-reclamm-pool-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     reClammPoolFactory = await reClammTask.deployedInstance('ReClammPoolFactory');
   });
 

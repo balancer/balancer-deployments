@@ -45,7 +45,7 @@ const StableSurgePoolName = '20250404-v3-stable-surge-pool-factory-v2'; // Upgra
 const LBPoolName = '20250307-v3-liquidity-bootstrapping-pool';
 const Gyro2CLPName = '20250120-v3-gyro-2clp'; // Added
 const GyroECLPName = '20250124-v3-gyro-eclp'; // Added
-const ReClammPoolName = '20250409-v3-reclamm-pool'; // Added
+const ReClammPoolName = '20250702-v3-reclamm-pool-v2'; // Added
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY);
