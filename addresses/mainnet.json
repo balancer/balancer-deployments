@@ -1722,7 +1722,7 @@
         "address": "0x6A5127AE6df32f722e34B5b4aBc67b0d4e582B39"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {

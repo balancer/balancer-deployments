@@ -992,7 +992,7 @@
         "address": "0x919094AdC27c2B779F70eD65D5d96F0b5331f660"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {
