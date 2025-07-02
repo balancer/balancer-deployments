@@ -28,6 +28,8 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   let gyro2CLPFactory: Contract;
   let gyroECLPFactory: Contract;
   let reClammPoolFactory: Contract;
+  let aggregatorRouter: Contract;
+  let aggregatorBatchRouter: Contract;
 
   let task: Task;
 
@@ -65,6 +67,12 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     const clrTask = new Task('20250123-v3-composite-liquidity-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
     compositeLiquidityRouter = await clrTask.deployedInstance('CompositeLiquidityRouter');
+
+    const aggTask = new Task('20250218-v3-aggregator-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    aggregatorRouter = await aggTask.deployedInstance('AggregatorRouter');
+
+    const aggBatchTask = new Task('20250507-v3-aggregator-batch-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    aggregatorBatchRouter = await aggBatchTask.deployedInstance('AggregatorBatchRouter');
 
     const weightedPoolTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
     weightedPoolFactory = await weightedPoolTask.deployedInstance('WeightedPoolFactory');
@@ -134,6 +142,8 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     expect(await registry.isTrustedRouter(batchRouter.address)).to.be.true;
     expect(await registry.isTrustedRouter(bufferRouter.address)).to.be.true;
     expect(await registry.isTrustedRouter(compositeLiquidityRouter.address)).to.be.true;
+    expect(await registry.isTrustedRouter(aggregatorRouter.address)).to.be.true;
+    expect(await registry.isTrustedRouter(aggregatorBatchRouter.address)).to.be.true;
   });
 
   it('has registered the pool factories', async () => {
@@ -178,6 +188,18 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'BatchRouter');
     expect(contractAddress).to.eq(batchRouter.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'CompositeLiquidityRouter');
+    expect(contractAddress).to.eq(compositeLiquidityRouter.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'AggregatorRouter');
+    expect(contractAddress).to.eq(aggregatorRouter.address);
+    expect(isActive).to.be.true;
+
+    [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'AggregatorBatchRouter');
+    expect(contractAddress).to.eq(aggregatorBatchRouter.address);
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'Gyro2CLP');

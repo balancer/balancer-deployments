@@ -11,6 +11,8 @@ export type BalancerContractRegistryInitializerDeployment = {
   BufferRouter: string;
   CompositeLiquidityRouterName: string;
   CompositeLiquidityRouter: string;
+  AggregatorRouterName;
+  AggregatorBatchRouterName;
   WeightedPoolName: string;
   WeightedPoolFactory: string;
   StablePoolName: string;
@@ -25,6 +27,8 @@ export type BalancerContractRegistryInitializerDeployment = {
   GyroECLPPoolFactory: string;
   ReClammPoolName: string;
   ReClammPoolFactory: string;
+  AggregatorRouter: string;
+  AggregatorBatchRouter: string;
   WeightedPoolAlias: string;
   StablePoolAlias: string;
   RouterAlias: string;
@@ -33,6 +37,9 @@ export type BalancerContractRegistryInitializerDeployment = {
   Gyro2CLPAlias: string;
   GyroECLPAlias: string;
   ReClammAlias: string;
+  AggregatorRouterAlias: string;
+  AggregatorBatchRouterAlias: string;
+  CompositeLiquidityRouterAlias: string;
 };
 
 const RouterName = '20250307-v3-router-v2';
@@ -46,6 +53,8 @@ const LBPoolName = '20250307-v3-liquidity-bootstrapping-pool';
 const Gyro2CLPName = '20250120-v3-gyro-2clp'; // Added
 const GyroECLPName = '20250124-v3-gyro-eclp'; // Added
 const ReClammPoolName = '20250702-v3-reclamm-pool-v2'; // Added
+const AggregatorRouterName = '20250218-v3-aggregator-router';
+const AggregatorBatchRouterName = '20250507-v3-aggregator-batch-router';
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY);
@@ -61,6 +70,8 @@ const LBPoolFactory = new Task(LBPoolName, TaskMode.READ_ONLY);
 const Gyro2CLPPoolFactory = new Task(Gyro2CLPName, TaskMode.READ_ONLY);
 const GyroECLPPoolFactory = new Task(GyroECLPName, TaskMode.READ_ONLY);
 const ReClammPoolFactory = new Task(ReClammPoolName, TaskMode.READ_ONLY);
+const AggregatorRouter = new Task(AggregatorRouterName, TaskMode.READ_ONLY);
+const AggregatorBatchRouter = new Task(AggregatorBatchRouterName, TaskMode.READ_ONLY);
 
 const WeightedPoolAlias = 'WeightedPool';
 const StablePoolAlias = 'StablePool';
@@ -70,6 +81,9 @@ const GyroECLPAlias = 'GyroECLP';
 const ReClammAlias = 'ReClammPool';
 const RouterAlias = 'Router';
 const BatchRouterAlias = 'BatchRouter';
+const CompositeLiquidityRouterAlias = 'CompositeLiquidityRouter';
+const AggregatorRouterAlias = 'AggregatorRouter';
+const AggregatorBatchRouterAlias = 'AggregatorBatchRouter';
 
 export default {
   Vault,
@@ -82,6 +96,10 @@ export default {
   BufferRouter,
   CompositeLiquidityRouterName,
   CompositeLiquidityRouter,
+  AggregatorRouterName,
+  AggregatorRouter,
+  AggregatorBatchRouterName,
+  AggregatorBatchRouter,
   WeightedPoolName,
   WeightedPoolFactory,
   StablePoolName,
@@ -104,4 +122,7 @@ export default {
   Gyro2CLPAlias,
   GyroECLPAlias,
   ReClammAlias,
+  AggregatorRouterAlias,
+  AggregatorBatchRouterAlias,
+  CompositeLiquidityRouterAlias,
 };
