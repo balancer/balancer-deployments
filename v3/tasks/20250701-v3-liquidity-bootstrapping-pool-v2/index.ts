@@ -10,9 +10,11 @@ import { ethers } from 'hardhat';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as LBPoolFactoryDeployment;
 
-  const args = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, input.Router];
+  const migrationRouterArgs = [input.BalancerContractRegistry, input.LBPMigrationRouterVersion];
+  const migrationRouter = await task.deployAndVerify('LBPMigrationRouter', migrationRouterArgs, from, force);
 
-  const factory = await task.deployAndVerify('LBPoolFactory', args, from, force);
+  const factoryArgs = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, input.Router];
+  const factory = await task.deployAndVerify('LBPoolFactory', factoryArgs, from, force);
 
   if (task.mode === TaskMode.LIVE) {
     const HIGH_WEIGHT = fp(0.8);
