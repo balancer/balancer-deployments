@@ -11,5 +11,13 @@ Internal mechanics and pool math remain the same as the previous version, which 
 ## Useful Files
 
 - [Code](https://github.com/balancer/reclamm/commit/7f33fe215df39cd39144c841266df4cea9b094ab)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)
