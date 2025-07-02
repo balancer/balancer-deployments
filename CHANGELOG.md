@@ -35,7 +35,7 @@
 - Deployed V3 ERC4626 Cow Swap Fee Burner V2 to all networks.
 - Deployed V3 Cow Swap Fee Burner V2 to all networks.
 - Deployed V3 Aggregator Batch Router to all networks.
-- Deployed V3 ReClamm Pool Factory to all networks.
+- Deployed V3 ReClamm Pool Factory V2 to all networks.
 - Deployed V3 Pool Pause Helper to all networks.
 - Deployed V3 Pool Swap Fee Helper to all networks.
 - Deployed V3 Balancer Fee Burner to all networks.
@@ -87,6 +87,7 @@
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
 - Deprecated `20250221-v3-cow-swap-fee-burner`.
 - Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`.
+- Deprecated `20250409-v3-reclamm-pool`.
 
 #### V2
 
