@@ -980,5 +980,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250702-v3-reclamm-pool-v2": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0xc86eF81E57492BE65BFCa9b0Ed53dCBAfDBe6100"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x3004934b023631DaA3fF7Ad020aA3f5C4Ed0eC1B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
