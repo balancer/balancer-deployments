@@ -12,8 +12,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const migrationRouterArgs = [input.BalancerContractRegistry, input.LBPMigrationRouterVersion];
   const migrationRouter = await task.deployAndVerify('LBPMigrationRouter', migrationRouterArgs, from, force);
-
-  const factoryArgs = [input.Vault, input.PauseWindowDuration, input.FactoryVersion, input.PoolVersion, input.Router];
+  const factoryArgs = [
+    input.Vault,
+    input.PauseWindowDuration,
+    input.FactoryVersion,
+    input.PoolVersion,
+    input.Router,
+    migrationRouter.address,
+  ];
   const factory = await task.deployAndVerify('LBPoolFactory', factoryArgs, from, force);
 
   if (task.mode === TaskMode.LIVE) {
