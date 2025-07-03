@@ -1,6 +1,6 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
@@ -19,25 +19,21 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
 
   const SWAP_FEE = fp(0.01);
 
-  const TOKEN_HOLDER = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
+  const TEST_BAL_ADMIN = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
   const INITIAL_BAL = fp(26667);
   const INITIAL_WETH = fp(8);
 
   let vault: Contract, vaultExtension: Contract;
   let factory: Contract, pool: Contract;
-  let trustedRouter: Contract;
-  let balToken: Contract;
-  let wethToken: Contract;
+  let trustedRouter: Contract, migrationRouter: Contract;
+  let bal: Contract, weth: Contract;
   let permit2: Contract;
   let task: Task;
-  let migrationRouter: Contract;
-  let admin: SignerWithAddress, whale: SignerWithAddress, projectTreasury: SignerWithAddress;
+  let admin: SignerWithAddress, projectTreasury: SignerWithAddress;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
-  let WETH: string;
-  const BAL = '0xba100000625a3754423978a60c9317c58a424e3D';
   const projectTokenLbpEndWeight = LOW_WEIGHT;
   const reserveTokenLbpEndWeight = HIGH_WEIGHT;
 
@@ -58,30 +54,30 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const permit2Address = permit2Task.output({ network: 'mainnet' }).Permit2;
     permit2 = await task.instanceAt('IPermit2', permit2Address);
 
-    admin = await getSigner(0);
-    projectTreasury = await getSigner(1);
-    whale = await impersonate(TOKEN_HOLDER, fp(10e8));
+    admin = await impersonate(TEST_BAL_ADMIN, fp(10e8));
+    projectTreasury = await getSigner(0);
 
     const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+    const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
 
     const fork = getForkedNetwork(hre);
 
-    WETH = tokensTask.output({ network: fork }).WETH;
+    const WETH = tokensTask.output({ network: fork }).WETH;
 
-    balToken = await task.instanceAt('IERC20', BAL);
-    wethToken = await task.instanceAt('IERC20', WETH);
+    bal = await testBALTokenTask.deployedInstance('TestBalancerToken');
+    weth = await task.instanceAt('IERC20', WETH);
   });
 
   before('setup contracts and parameters', async () => {
     tokenConfig = [
       {
-        token: WETH,
+        token: weth.address,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: BAL,
+        token: bal.address,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -100,8 +96,8 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
 
     const lbpParams = {
       owner: admin.address,
-      projectToken: BAL,
-      reserveToken: WETH,
+      projectToken: bal.address,
+      reserveToken: weth.address,
       projectTokenStartWeight: HIGH_WEIGHT,
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: projectTokenLbpEndWeight,
@@ -134,8 +130,8 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(BAL);
-    expect(await pool.getReserveToken()).to.eq(WETH);
+    expect(await pool.getProjectToken()).to.eq(bal.address);
+    expect(await pool.getReserveToken()).to.eq(weth.address);
   });
 
   it('checks pool version', async () => {
@@ -157,23 +153,20 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('initializes the pool', async () => {
-    // Give the admin tokens
-    balToken.connect(whale).transfer(admin.address, INITIAL_BAL);
-    wethToken.connect(whale).transfer(admin.address, INITIAL_WETH);
+    // Give the admin tokens: mint test tokens, get WETH
+    await bal.connect(admin).mint(admin.address, INITIAL_BAL);
 
-    await balToken.connect(admin).approve(permit2.address, INITIAL_BAL);
-    await permit2.connect(admin).approve(BAL, trustedRouter.address, INITIAL_BAL, maxUint(48));
-
-    await wethToken.connect(admin).approve(permit2.address, INITIAL_WETH);
-    await permit2.connect(admin).approve(WETH, trustedRouter.address, INITIAL_WETH, maxUint(48));
+    await bal.connect(admin).approve(permit2.address, INITIAL_BAL);
+    await permit2.connect(admin).approve(bal.address, trustedRouter.address, INITIAL_BAL, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
       pool.address,
-      [BAL, WETH],
+      [bal.address, weth.address],
       [INITIAL_BAL, INITIAL_WETH],
       0,
-      false, // wethIsETH
-      ZERO_BYTES32
+      true, // wethIsETH
+      ZERO_BYTES32,
+      { value: INITIAL_WETH }
     );
   });
 
@@ -215,7 +208,7 @@ describeForkTest('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const migrationEvent = expectEvent.inReceipt(migrateReceipt, 'PoolMigrated');
     const weightedPool = await task.instanceAt('WeightedPool', migrationEvent.args.weightedPool);
 
-    expect(await weightedPool.getTokens()).to.deep.equal([BAL, WETH]);
+    expect(await weightedPool.getTokens()).to.deep.equal([bal.address, weth.address]);
     expect(await weightedPool.getNormalizedWeights()).to.deep.equal([HIGH_WEIGHT, LOW_WEIGHT]);
 
     const vaultAsExtension = vaultExtension.attach(vault.address);
