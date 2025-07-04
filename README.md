@@ -134,7 +134,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
 | V3 Cow Swap Fee Burner                                 | [`20250221-v3-cow-swap-fee-burner`](./v3/tasks/20250221-v3-cow-swap-fee-burner)                         |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
-| V3 Liquidity Bootstrapping Pool                        | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/tasks/20250307-v3-liquidity-bootstrapping-pool)       |
 | V3 Vault Factory V2, and Vault contracts               | [`20250321-v3-vault-factory-v2`](./v3/tasks/20250321-v3-vault-factory-v2)                               |
 | V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
@@ -150,6 +149,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
 | V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
 | V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
+| V3 Liquidity Bootstrapping Pool (V2)                   | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/tasks/20250701-v3-liquidity-bootstrapping-pool-v2) |
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 
 ## Scripts
@@ -245,4 +245,5 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
+| V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |

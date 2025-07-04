@@ -910,7 +910,7 @@
         "address": "0x410E6933B5d9F7ffBAB35AF4aAbCaA82a4C1F287"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {

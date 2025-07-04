@@ -1082,7 +1082,7 @@
         "address": "0x9d3E72c11aD7bF7132a141FF6F716491c6d01518"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {
