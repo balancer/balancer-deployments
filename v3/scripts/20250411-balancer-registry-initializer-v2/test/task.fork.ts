@@ -88,7 +88,7 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
 
     const lbpFactoryTask = new Task(
-      '20250307-v3-liquidity-bootstrapping-pool',
+      '20250701-v3-liquidity-bootstrapping-pool-v2',
       TaskMode.READ_ONLY,
       getForkedNetwork(hre)
     );
