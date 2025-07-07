@@ -11,3 +11,4 @@ Migration is optional, and is defined when the LBP is created.
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/1889fb73671e08d647ad1744cfa9a9147fc902a2)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
+- [`LBPMigrationRouter` artifact](./artifact/LBPMigrationRouter.json)
