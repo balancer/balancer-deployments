@@ -12,3 +12,4 @@ Migration is optional, and is defined when the LBP is created.
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
 - [`LBPMigrationRouter` artifact](./artifact/LBPMigrationRouter.json)
+- [`BPTTimeLocker` artifact](./artifact/BPTTimeLocker.json)
