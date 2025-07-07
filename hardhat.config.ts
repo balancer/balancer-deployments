@@ -515,8 +515,8 @@ export default {
         network: 'hyperevm',
         chainId: 999,
         urls: {
-          apiURL: 'https://www.hyperscan.com/api',
-          browserURL: 'https://www.hyperscan.com',
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=999',
+          browserURL: 'https://hyperevmscan.io/',
         },
       },
     ],
