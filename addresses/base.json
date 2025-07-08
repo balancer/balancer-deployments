@@ -672,7 +672,7 @@
         "address": "0x9Ce89Efb4EbE2BC692003Af804e7A33FBBE93043"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {

@@ -1640,7 +1640,7 @@
         "address": "0xdBB8aD38C990Bd4ca2c88A6E6CfDF5045B0d4FB0"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {

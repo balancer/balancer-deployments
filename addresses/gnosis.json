@@ -802,7 +802,7 @@
         "address": "0xc08dDF053003efa63eC7CA1B0ecd4024445A5c51"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {
