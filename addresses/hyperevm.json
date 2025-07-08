@@ -178,7 +178,7 @@
         "address": "0xa2bf625Fb0793Bc70885C3cB248dc50608d49157"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {

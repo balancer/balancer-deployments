@@ -622,7 +622,7 @@
         "address": "0x4BdEA6CdcD01422f514363245B74BC2212Fd2aa4"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {
