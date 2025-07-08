@@ -9,6 +9,11 @@ Migration is optional, and is defined when the LBP is created.
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/1889fb73671e08d647ad1744cfa9a9147fc902a2)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
 - [`LBPMigrationRouter` artifact](./artifact/LBPMigrationRouter.json)
