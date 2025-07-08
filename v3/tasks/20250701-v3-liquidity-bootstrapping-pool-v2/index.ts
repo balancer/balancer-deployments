@@ -1,4 +1,4 @@
-import { DELEGATE_OWNER, ZERO_BYTES32 } from '@helpers/constants';
+import { DELEGATE_OWNER, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { LBPoolFactoryDeployment } from './input';
 import { saveContractDeploymentTransactionHash, Task, TaskMode, TaskRunOptions } from '@src';
 import { DAY, HOUR } from '@helpers/time';
@@ -59,7 +59,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           poolCreationParams.symbol,
           poolCreationParams.newLBPParams,
           poolCreationParams.swapFeePercentage,
-          poolCreationParams.salt
+          poolCreationParams.salt,
+          ZERO_ADDRESS
         )
       ).wait();
 
@@ -78,13 +79,19 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     newLBPParams.startTime = updateParams.startTime;
     newLBPParams.endTime = updateParams.endTime;
 
+    // Migration parameters set at 0.
     const poolParams = [
       poolCreationParams.name,
       poolCreationParams.symbol,
       poolCreationParams.newLBPParams,
       input.Vault,
       input.Router,
+      ZERO_ADDRESS, // No migration
       await factory.getPoolVersion(),
+      0,
+      0,
+      0,
+      0,
     ];
 
     // We are now ready to verify the Pool
