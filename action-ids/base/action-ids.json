@@ -772,5 +772,28 @@
         "stopPriceRatioUpdate()": "0x9ab650e0d79e50d3072ec3ea6b32de3a2d95d9cf4b0e85ed25e44c6875c4ceef"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,uint256,uint256)": "0xf11846654023300a45e036ee03ffa836b548c9f56b2cf398db69b2eac71b624f",
+        "migrateLiquidity(address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x0f0ddd12656197a69a492e7339e0b826db3209dc767c5a3c1a6de82e135b0dd8",
+        "migrateLiquidityHook((address,address,address[],address,address,uint256,uint256,uint256,uint256))": "0x7c1c55f8d0a0065bfae9408a385066dce48048a27960a4541d248b1f57a158e3",
+        "queryMigrateLiquidity(address,address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0xb9d5f2a54d304172ba4931f1d7cd8e56644f3fb4560c9d4edd624a3c65e86977",
+        "setOperator(address,bool)": "0xc78e5fdba14dff83aeda75e9cc6703da7994428046fba4738569192ba72293ba",
+        "transfer(address,uint256,uint256)": "0x5b18ba13feb077eade4115960aadf05f77b6db8c4a4b9814a44ebbe9099555b5",
+        "transferFrom(address,address,uint256,uint256)": "0x33273363faa4cea1b77756655025387f6fa086b8c0158c5f5f1accdf6e25ee5b",
+        "withdrawBPT(address)": "0xad701b60695236ba69d7ac47f9e548a890cab2310337d712b185d676b0f9a05f"
+      }
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0xe8094171ff6f2c306b8bb384bcb3a92ceffa85285040d20e635d432d64c34bab",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xba82952fa2a771ec3b6ce0a5d71750707b355a4675d4d1b6ecdce988df54fee6",
+        "disable()": "0x3f6401a12ca8f8048783a6e5b059877235fcf452f62691cbcbe45ebe6bf3c217"
+      }
+    }
   }
 }

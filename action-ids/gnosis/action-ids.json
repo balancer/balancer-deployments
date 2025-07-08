@@ -921,5 +921,28 @@
         "stopPriceRatioUpdate()": "0x270e56b87d366a006dfd6146f9bae90acf2a9ddd5aa53e2310c1f39ce7e238e7"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,uint256,uint256)": "0x7353c02525cf12f9747a4b997096c3a282d2d8f916acd31c5460c8e8db7314ce",
+        "migrateLiquidity(address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0xb69603044d0d46609fa422ab529e09b73c44c8b152417a3100b9088eaff79273",
+        "migrateLiquidityHook((address,address,address[],address,address,uint256,uint256,uint256,uint256))": "0x7be752f3a395d778195edb575fba3705a79c6def66c24d69205bc39b75729475",
+        "queryMigrateLiquidity(address,address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x855cff1034d2b696a1f9e9e2f4c8cb8e66e6c9cd8f02ef93392276e78c31757c",
+        "setOperator(address,bool)": "0xe25ff10af76b6661bf8d1cf78fac6a18940bbfbfc39650099cf2c3b50803f290",
+        "transfer(address,uint256,uint256)": "0x2d7266c958b2e193d608181384a9693a24640537ad944fb98a60f4361c49f2a4",
+        "transferFrom(address,address,uint256,uint256)": "0xb39abe9534223edfe4fd030a6c7b3572d0ac478f69f453b86b06f8fc24bdc106",
+        "withdrawBPT(address)": "0xf95eaedf261aebfb3df9fac6af94778c6a73db142456cfac9d20b25c61eb9046"
+      }
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0x85e4845c47ec41a1da0ea18c68490e2b68f0413ad91fd93c2a8c5d27b8442a32",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xf92d9fd70bbca97e02fb35780195ecd59995762d0e92e7575894f7598ada1da5",
+        "disable()": "0xa58fd4a4bf957636db02af34ea4f6b78cc0dc1a1246aa3314baf7f972d0c9ee9"
+      }
+    }
   }
 }

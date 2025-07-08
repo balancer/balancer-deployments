@@ -1207,5 +1207,28 @@
         "stopPriceRatioUpdate()": "0x6e046fe940d85928049936e9d9bdb308ad4f3976555fd604de80d328add103dd"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,uint256,uint256)": "0x9286977d478ad976bc469452e60b917d9ee1bea7c797aa1d1bf0126c4920b32f",
+        "migrateLiquidity(address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x2fdf2523d4f01cbf34e5d1865fe4ef9c7caffd74e190ee3f92c1a489cd5ebbb2",
+        "migrateLiquidityHook((address,address,address[],address,address,uint256,uint256,uint256,uint256))": "0xbc777efbbe34020948407fbcceb53afe966663b30095fe9cfe0061a16af98c68",
+        "queryMigrateLiquidity(address,address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0xe011a907540aebd99d253ee3f22dd538957cd29f628eeeec810dbf1c8e6ace10",
+        "setOperator(address,bool)": "0x56d2678af882d5b3582d448d604ede8b4d36c19da2a15be64c5efe55a2896e2a",
+        "transfer(address,uint256,uint256)": "0x15eb52cdfbf3c8121eee30167cfec96f92a866dea5f28cc3dce7d26ec6b65cbe",
+        "transferFrom(address,address,uint256,uint256)": "0x0f0f2fba62f31461384366bb9108ca0432c1663b37b18a3c1101ac21ada68718",
+        "withdrawBPT(address)": "0xac505b6ff67afff5debd009dd785d9c4e830923305596d9b643fbafba1c9f6e4"
+      }
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0x4b49c0351101a10647619f4b52888abd4674ec4be8585a7a7ef212ba0792b33e",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xd0c1bd55619815c8c4e6eca55860d70d41d7f64346d555c1272c9280e1483ef3",
+        "disable()": "0x420e98f887204e24065ca464f7424e10e354754d5a9fa42b526de06cdefb61ec"
+      }
+    }
   }
 }

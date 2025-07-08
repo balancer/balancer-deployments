@@ -1914,5 +1914,28 @@
         "stopPriceRatioUpdate()": "0x5b724a9636dde55c9382dbb0106888a5d582b4a3f76ef3c734cb7cfeef775456"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,uint256,uint256)": "0xcc4f30ad5e0f2abab2338a73aa701883ee2749cbd314a9e61528c9232ecae7fd",
+        "migrateLiquidity(address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x92efa306e6df4cfde36d98862892eb44dba70994a881b9e1fdb6099d8065263a",
+        "migrateLiquidityHook((address,address,address[],address,address,uint256,uint256,uint256,uint256))": "0x6b3f33fc28c7cbbffc5f0526229b3412bb511e4dddeb42a8dfb183f18e321c94",
+        "queryMigrateLiquidity(address,address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0xa291d9cc73d7c36623d5960f0504c6ac8fbe09e5c36e4a8106658a4ec5124373",
+        "setOperator(address,bool)": "0x725b652d297fd76486ce1a43f3206d5f133766b6e9b9dc996ed9639f83617692",
+        "transfer(address,uint256,uint256)": "0x57beb6ac1120ef58662a1730edb82de770cf6f9c495f7112e4a769379e23eae5",
+        "transferFrom(address,address,uint256,uint256)": "0x1b73d61f1a31169019924cdb77457f0a31672e0f69b25b91183a4a0ce4dc5c71",
+        "withdrawBPT(address)": "0x92a5b4bca32ff8a63de3c7de9a7e81265e8312bf097658884b969c4935aba4c8"
+      }
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0xe5d60cac468e1fdd6d308310306efe080c37c965c8cf269248b738c78a8c1f65",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0x6275310cd96156193adc7319d94aab943b3518d011535270fcf5ac2e99a0fecb",
+        "disable()": "0xec386230b43d2777141af97e47dae057801371989fd72e32faacec52147502db"
+      }
+    }
   }
 }

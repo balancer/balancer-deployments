@@ -1027,5 +1027,28 @@
         "stopPriceRatioUpdate()": "0x8624236b185780ba072207780bd3c5958c0fd2dcf5979235b857e10b3c4179fb"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {
+        "approve(address,uint256,uint256)": "0x134abbbf99b3bf36f1d41df74eabc79df07a952908918855efb33af5bdabeee5",
+        "migrateLiquidity(address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x719d0749765a50bfafccf21ffc9bf7075f78f69e85d407b24e06f7c27f750942",
+        "migrateLiquidityHook((address,address,address[],address,address,uint256,uint256,uint256,uint256))": "0xcfd256c1a4c0d318e990410d11b27057161f840c16486fe685db187ee8efad65",
+        "queryMigrateLiquidity(address,address,address,(string,string,(address,address,address),uint256,address,bool,bool,bytes32))": "0x4f1bfeec78a208a244cebce40b4c44eb12d26f7904bf326a761572db017cbffe",
+        "setOperator(address,bool)": "0xd79dac38e0486395b3dcd3df1a1eb930f38575f63a00cee833516330dcd77195",
+        "transfer(address,uint256,uint256)": "0x79f805c17848c0c7ea02be6208426fb7f06a6084cf5196446643027ff70b815d",
+        "transferFrom(address,address,uint256,uint256)": "0xffb54473396bd42c04fb28ea0af9cb73b8a98e9ce25efaafe90378b511038b9f",
+        "withdrawBPT(address)": "0xb985104d2cbdc08ec158c72bac8870bb73b2468ae441b5b145ff261ad6f35d33"
+      }
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0x741869b07a54d793b412c3bd5ca72e92485e15e2c86be172fbe624135b9cc56e",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xa8cde46bc170f6790f6e3cb1d6d37c148145ca4112264bdea36b40ae7c6528b8",
+        "disable()": "0x87718798d7b3fba119fbf388701396c35009cf180dcdcc0ce48653017185674a"
+      }
+    }
   }
 }
