@@ -6,5 +6,5 @@ This updates the StablePool and StableSurgePool factories to V2, and adds the Gy
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/b4e6855dfa6d404ca5ba4a62974cda8333614157).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/8afa73431e07794fb287afb8b0402c606fcaedb8).
 - [`BalancerContractRegistryInitializer` artifact](./artifact/BalancerContractRegistryInitializer.json)
