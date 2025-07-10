@@ -921,5 +921,15 @@
         "stopPriceRatioUpdate()": "0x270e56b87d366a006dfd6146f9bae90acf2a9ddd5aa53e2310c1f39ce7e238e7"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0x85e4845c47ec41a1da0ea18c68490e2b68f0413ad91fd93c2a8c5d27b8442a32",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xf92d9fd70bbca97e02fb35780195ecd59995762d0e92e7575894f7598ada1da5",
+        "disable()": "0xa58fd4a4bf957636db02af34ea4f6b78cc0dc1a1246aa3314baf7f972d0c9ee9"
+      }
+    }
   }
 }
