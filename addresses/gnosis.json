@@ -822,7 +822,7 @@
         "address": "0x0c6052254551EAe3ECac77B01DFcf1025418828f"
       }
     ],
-    "status": "SCRIPT",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250324-v3-stable-pool-v2": {

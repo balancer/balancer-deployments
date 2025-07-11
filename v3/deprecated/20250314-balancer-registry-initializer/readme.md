@@ -1,5 +1,9 @@
 # 2025-03-14 - V3 Balancer Contract Registry Initializer
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This original initializer was superseded by this [updated version](../../scripts/20250411-balancer-registry-initializer-v2/).
+
 Deployment of the `BalancerContractRegistryInitializer`, responsible for populating the registry with routers and pool factories (and initial aliases).
 
 ## Useful Files
