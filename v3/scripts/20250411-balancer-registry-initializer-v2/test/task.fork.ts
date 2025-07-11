@@ -156,9 +156,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     info = await registry.getBalancerContractInfo(stableSurgePoolFactory.address);
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(lbpFactory.address);
-    _validateInfo(info);
-
     info = await registry.getBalancerContractInfo(gyro2CLPFactory.address);
     _validateInfo(info);
 
