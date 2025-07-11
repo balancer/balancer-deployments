@@ -86,13 +86,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     );
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
 
-    const lbpFactoryTask = new Task(
-      '20250701-v3-liquidity-bootstrapping-pool-v2',
-      TaskMode.READ_ONLY,
-      getForkedNetwork(hre)
-    );
-    lbpFactory = await lbpFactoryTask.deployedInstance('LBPoolFactory');
-
     const gyro2CLPTask = new Task('20250120-v3-gyro-2clp', TaskMode.READ_ONLY, getForkedNetwork(hre));
     gyro2CLPFactory = await gyro2CLPTask.deployedInstance('Gyro2CLPPoolFactory');
 
