@@ -24,7 +24,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   let weightedPoolFactory: Contract;
   let stablePoolFactory: Contract;
   let stableSurgePoolFactory: Contract;
-  let lbpFactory: Contract;
   let gyro2CLPFactory: Contract;
   let gyroECLPFactory: Contract;
   let reClammPoolFactory: Contract;
@@ -87,13 +86,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     );
     stableSurgePoolFactory = await stableSurgePoolTask.deployedInstance('StableSurgePoolFactory');
 
-    const lbpFactoryTask = new Task(
-      '20250701-v3-liquidity-bootstrapping-pool-v2',
-      TaskMode.READ_ONLY,
-      getForkedNetwork(hre)
-    );
-    lbpFactory = await lbpFactoryTask.deployedInstance('LBPoolFactory');
-
     const gyro2CLPTask = new Task('20250120-v3-gyro-2clp', TaskMode.READ_ONLY, getForkedNetwork(hre));
     gyro2CLPFactory = await gyro2CLPTask.deployedInstance('Gyro2CLPPoolFactory');
 
@@ -154,9 +146,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
     _validateInfo(info);
 
     info = await registry.getBalancerContractInfo(stableSurgePoolFactory.address);
-    _validateInfo(info);
-
-    info = await registry.getBalancerContractInfo(lbpFactory.address);
     _validateInfo(info);
 
     info = await registry.getBalancerContractInfo(gyro2CLPFactory.address);

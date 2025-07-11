@@ -11,6 +11,7 @@ Contains the `AggregatorBatchRouter`, for complex multi-hop swaps (supports buff
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`AggregatorBatchRouter` artifact](./artifact/AggregatorBatchRouter.json)
 

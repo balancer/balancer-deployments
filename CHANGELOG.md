@@ -22,7 +22,7 @@
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Protocol Fee Controller V2 to all networks.
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Balancer Contract Registry Initializer (V1 / V2) to all networks.
 - Deployed V3 Gyro E-CLP Factory to all networks.
 - Deployed V3 Gyro 2-CLP Factory to all networks.
 - Deployed V3 Stable Pool Factory V2 to all networks.

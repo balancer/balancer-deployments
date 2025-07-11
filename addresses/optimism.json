@@ -1013,6 +1013,16 @@
     "status": "DEPRECATED",
     "version": "v3"
   },
+  "20250411-balancer-registry-initializer-v2": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0xa1D0791a41318c775707C56eAe247AF81a05322C"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
   "20250418-v3-wrapped-bpt": {
     "contracts": [
       {

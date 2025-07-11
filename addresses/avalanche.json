@@ -697,6 +697,16 @@
     "status": "DEPRECATED",
     "version": "v3"
   },
+  "20250411-balancer-registry-initializer-v2": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0xFc00536A0fd292c284deeF6af8F644d8373d9cad"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
   "20250418-v3-wrapped-bpt": {
     "contracts": [
       {
