@@ -24,7 +24,6 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
   let weightedPoolFactory: Contract;
   let stablePoolFactory: Contract;
   let stableSurgePoolFactory: Contract;
-  let lbpFactory: Contract;
   let gyro2CLPFactory: Contract;
   let gyroECLPFactory: Contract;
   let reClammPoolFactory: Contract;
