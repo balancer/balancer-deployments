@@ -7,4 +7,7 @@ This updates the StablePool and StableSurgePool factories to V2, and adds the Gy
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/8afa73431e07794fb287afb8b0402c606fcaedb8).
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [`BalancerContractRegistryInitializer` artifact](./artifact/BalancerContractRegistryInitializer.json)

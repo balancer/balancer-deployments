@@ -19,8 +19,6 @@ export type BalancerContractRegistryInitializerDeployment = {
   StablePoolFactory: string;
   StableSurgePoolName: string;
   StableSurgePoolFactory: string;
-  LBPoolName: string;
-  LBPoolFactory: string;
   Gyro2CLPName: string;
   Gyro2CLPPoolFactory: string;
   GyroECLPName: string;
@@ -49,7 +47,6 @@ const CompositeLiquidityRouterName = '20250123-v3-composite-liquidity-router-v2'
 const WeightedPoolName = '20241205-v3-weighted-pool';
 const StablePoolName = '20250324-v3-stable-pool-v2'; // Upgraded to V2
 const StableSurgePoolName = '20250404-v3-stable-surge-pool-factory-v2'; // Upgraded to V2
-const LBPoolName = '20250701-v3-liquidity-bootstrapping-pool-v2'; // Upgraded to V2
 const Gyro2CLPName = '20250120-v3-gyro-2clp'; // Added
 const GyroECLPName = '20250124-v3-gyro-eclp'; // Added
 const ReClammPoolName = '20250702-v3-reclamm-pool-v2'; // Added
@@ -66,7 +63,6 @@ const CompositeLiquidityRouter = new Task(CompositeLiquidityRouterName, TaskMode
 const WeightedPoolFactory = new Task(WeightedPoolName, TaskMode.READ_ONLY);
 const StablePoolFactory = new Task(StablePoolName, TaskMode.READ_ONLY);
 const StableSurgePoolFactory = new Task(StableSurgePoolName, TaskMode.READ_ONLY);
-const LBPoolFactory = new Task(LBPoolName, TaskMode.READ_ONLY);
 const Gyro2CLPPoolFactory = new Task(Gyro2CLPName, TaskMode.READ_ONLY);
 const GyroECLPPoolFactory = new Task(GyroECLPName, TaskMode.READ_ONLY);
 const ReClammPoolFactory = new Task(ReClammPoolName, TaskMode.READ_ONLY);
@@ -106,8 +102,6 @@ export default {
   StablePoolFactory,
   StableSurgePoolName,
   StableSurgePoolFactory,
-  LBPoolName,
-  LBPoolFactory,
   Gyro2CLPName,
   Gyro2CLPPoolFactory,
   GyroECLPName,
