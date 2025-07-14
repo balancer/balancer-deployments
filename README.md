@@ -134,7 +134,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
 | V3 Cow Swap Fee Burner                                 | [`20250221-v3-cow-swap-fee-burner`](./v3/tasks/20250221-v3-cow-swap-fee-burner)                         |
-| V3 Protocol Fee Sweeper                                | [`20250228-v3-protocol-fee-sweeper`](./v3/tasks/20250228-v3-protocol-fee-sweeper)                       |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
 | V3 Liquidity Bootstrapping Pool                        | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/tasks/20250307-v3-liquidity-bootstrapping-pool)       |
 | V3 Vault Factory V2, and Vault contracts               | [`20250321-v3-vault-factory-v2`](./v3/tasks/20250321-v3-vault-factory-v2)                               |
@@ -142,6 +141,15 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
 | V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
+| V3 ReClamm Pool                                        | [`20250409-v3-reclamm-pool`](./v3/tasks/20250409-v3-reclamm-pool)                                       |
+| V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
+| V3 Pool Pause Helper                                   | [`20250430-v3-pool-pause-helper`](./v3/tasks/20250430-v3-pool-pause-helper)                             |
+| V3 Pool Swap Fee Helper                                | [`20250430-v3-pool-swap-fee-helper`](./v3/tasks/20250430-v3-pool-swap-fee-helper)                       |
+| V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
+| V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
+| V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
+| V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
+| V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
 
 ## Scripts
 
@@ -232,8 +240,6 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
-<<<<<<< HEAD
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
-=======
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
->>>>>>> master
+| V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
