@@ -14,11 +14,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   console.log(ruleArgs);
 
   await task.deployAndVerify('MomentumUpdateRule', ruleArgs, from, force);
-  await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);
+  await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
   await task.deployAndVerify('DifferenceMomentumUpdateRule', ruleArgs, from, force);
   await task.deployAndVerify('MinimumVarianceUpdateRule', ruleArgs, from, force);
 
-  const powerChannelRule = await task.deployAndVerify('PowerChannelUpdateRule', ruleArgs, from, force);
+  const channelFollowing = await task.deployAndVerify('ChannelFollowingUpdateRule', ruleArgs, from, force);
 
   const factoryArgs = [
     input.Vault,
@@ -45,12 +45,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.ChainlinkFeedETH,
       input.USDC,
       input.ChainlinkDataFeedUSDC,
-      powerChannelRule.address,
+      channelFollowing.address,
       salt,
       accountAddress
     );
-    console.log('input', input);
-    console.log('params', params);
 
     if (force || !task.output({ ensure: false })['QuantAMMWeightedPool']) {
       const poolCreationReceipt = await (await factory.create(params, { gasLimit: 15e6 })).wait();

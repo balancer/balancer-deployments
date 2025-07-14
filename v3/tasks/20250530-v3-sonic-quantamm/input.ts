@@ -120,42 +120,57 @@ export async function createPoolParams(
   }));
 
   const lambdas = [
-    bn('811035769801363300'),
-    bn('781490597023096500'),
-    bn('289524066401247700'),
-    bn('289524066401247700'),
+    bn('787251601222726700'),
+    bn('572187959313645500'),
+    bn('447941220120420800'),
+    bn('929563018539273000'),
   ];
-  //const lambdas = [bn('0.811035769801363300'), bn('0.781490597023096500'), bn('0.289524066401247700')];
+  //const lambdas = [bn('0.7872516012227267'), bn('0.5721879593136455'), bn('0.4479412201204208'), bn('0.929563018539273')];
 
   const movingAverages = [
-    bn('94942928796381976374946'),
-    bn('3318477539169648631581'),
-    bn('999995937643198773'),
-    bn('999995937643198773'),
+    bn('338583042824133150'),
+    bn('999661784760720100'),
+    bn('2950531637919522800000'),
+    bn('109863599701288810000000'),
   ];
-  //const movingAverages = [bn('94942.928796381976374946'), bn('3318.477539169648631581'), bn('0.999995937643198773')];
+  //ewma/moving_averages: [109863.59970128881 2950.5316379195228 0.33858304282413315 0.99966178476072010]
 
   const intermediateValues = [
-    bn('47164825037595406235540'),
-    bn('269029300295401773334'),
-    bn('14503442449845'),
-    bn('14503442449845'),
+    bn('305518036416401630'),
+    bn('-202962654102146'),
+    bn('101101638177726780000'),
+    bn('712283057672066850000000'),
   ];
-  //const intermediateValues = [bn('47164.825037595406235540'), bn('269.029300295401773334'), bn('0.000014503442449845')];
+
+  //running_a / intermediate values: [712283.05767206685  101.10163817772678  0.30551803641640163 -0.00020296265410214614]
+
+  //parameterDescriptions[0] = "Kappa: Kappa dictates the aggressiveness of response to a signal change.";
+  //parameterDescriptions[1] = "Width: Width parameter for the mean reversion channel.";
+  //parameterDescriptions[2] = "Amplitude: Amplitude of the mean reversion effect.";
+  //parameterDescriptions[3] = "Exponents: Exponents for the trend following portion.";
+  //parameterDescriptions[4] = "Inverse Scaling: Scaling factor for channel portion. "
+  //    "If set to max(exp(-x^2/2)sin(pi*x/3)) [=0.541519...] "
+  //    "then the amplitude parameter directly controls the channel height.";
+  //parameterDescriptions[5] = "Pre-exp Scaling: Scaling factor before exponentiation in the trend following portion.";
+  //parameterDescriptions[6] = "Use raw price: 0 = use moving average, 1 = use raw price for denominator of price gradient.";
 
   const parameters = [
-    [
-      bn('1390968414526753800000'),
-      bn('806695362159777100000'),
-      bn('255928993330991830000'),
-      bn('255928993330991830000'),
-    ], //kappa
-    [bn('1531232793117663900'), bn('1000000000000000100'), bn('1000000000000000100'), bn('1000000000000000100')], //exponents
+    [bn('593900773823135980000'), bn('93130867147542816000'), bn('89055850228512313000'), bn('2601959372357041000000')], //kappa
+    [bn('16622246139525294'), bn('903593235016048'), bn('10606898165675289'), bn('8638844105105422')], //width
+    [bn('11037321655782598'), bn('903593235016047'), bn('2762835127905918'), bn('74853775497883593')], //amplitude
+    [bn('844348984064979400'), bn('1068631815808947200'), bn('2355880196865995000'), bn('783203891197999300')], //exponents
+    [bn('541500000000000000'), bn('541500000000000000'), bn('541500000000000000'), bn('541500000000000000')], //inverse scaling factor
+    [bn('297027682894500'), bn('1573133109866300'), bn('223865496705500'), bn('201549309314500')], //Pre-exp Scaling
+    [bn('0')], //Use Raw Price
   ];
 
   //const parameters = [
-  //  [bn('1390.968414526753800000'), bn('806.695362159777100000'), bn('255.928993330991830000')], //kappa
-  //  [bn('1.531232793117663900'), bn('1.000000000000000100'), bn('1.000000000000000100')], //exponents
+  //[bn('2601.9593723570410'), bn('89.055850228512313'), bn('593.90077382313598'), bn('93.130867147542816')], //kappa
+  //[bn('0.7832038911979993'), bn('2.3558801968659950'), bn('0.8443489840649794'), bn('1.0686318158089472')], //exponents
+  //[bn('0.0086388441051054223'), bn('0.010606898165675289'), bn('0.016622246139525294'), bn('0.00090359323501604781')], //width
+  //[bn('0.074853775497883593'), bn('0.0027628351279059180'), bn('0.011037321655782598'), bn('0.07.2324601375887462')], //amplitude
+  //[bn('0.0002015493093145'), bn('0.0002238654967055'), bn('0.0002970276828945'), bn('0.0015731331098663')], //Pre-exp Scaling
+  //[bn('0')], //Use Raw Price
   //];
 
   //again this is in InputHelper.sortTokens order
@@ -167,17 +182,17 @@ export async function createPoolParams(
   ];
 
   const normalizedWeights = [
-    bn('396269268000000000'),
-    bn('30000000000000000'),
-    bn('30000000000000000'),
-    bn('543730732000000000'),
+    bn('030000000000000000'),
+    bn('030000000000000000'),
+    bn('910000000000000000'),
+    bn('030000000000000000'),
   ];
   //const normalizedWeights = [bn('0.439096623000000000'), bn('0.462022194000000000'), fp('0.098881183000000000')];
   const intNormalizedWeights = [...normalizedWeights];
 
   const poolDetails = [
     ['overview', 'adaptabilityScore', 'number', '5'],
-    ['ruleDetails', 'updateRuleName', 'string', 'Power Channel'],
+    ['ruleDetails', 'updateRuleName', 'string', 'Channel Following'],
   ];
 
   const poolSettings: PoolSettings = {
@@ -194,8 +209,8 @@ export async function createPoolParams(
   };
 
   return {
-    name: 'TEST - SONIC - DO NOT USE',
-    symbol: 'TESTBTFS',
+    name: 'SONIC MACRO BTF',
+    symbol: 'SONIC-MACRO-BTF',
     tokens: tokenConfig,
     normalizedWeights,
     roleAccounts: {
@@ -203,7 +218,7 @@ export async function createPoolParams(
       swapFeeManager: ZERO_ADDRESS,
       poolCreator: ZERO_ADDRESS,
     },
-    swapFeePercentage: fp(0.02),
+    swapFeePercentage: fp(0.005),
     poolHooksContract: ZERO_ADDRESS,
     enableDonation: false,
     disableUnbalancedLiquidity: false,
