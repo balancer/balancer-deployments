@@ -37,6 +37,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x282A1A74E3C97EfDe0E72811261fD1d30ac91023"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220721-balancer-queries": {
     "contracts": [
       {
@@ -235,6 +245,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250117-v3-contract-registry": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistry",
+        "address": "0x54EE99A97DeB6998c70876171085B3408920FaA7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250121-v3-stable-surge": {
     "contracts": [
       {
@@ -340,6 +360,20 @@
       {
         "name": "VaultExplorer",
         "address": "0x9672Af0b41e97855E9fff995a058C6F46a09d5B3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250702-v3-reclamm-pool-v2": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x99c13B259138a8ad8badbBfB87A4074591310De0"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0xf687cbf48D1b1201Ff49c4C841a62a33c64129Da"
       }
     ],
     "status": "ACTIVE",
