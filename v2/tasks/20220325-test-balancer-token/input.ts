@@ -27,4 +27,7 @@ export default {
   sepolia: {
     Admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
+  sonic: {
+    Admin: '0xb5e6b895734409Df411a052195eb4EE7e40d8696',
+  },
 };
