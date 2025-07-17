@@ -6,7 +6,7 @@ export type StableSurgePoolDeployment = {
   StableSurgeHook: string;
   PauseWindowDuration: number;
   WETH: string;
-  BAL: string;
+  TestBalancerToken: string;
   FactoryVersion: string;
   PoolVersion: string;
 };
@@ -14,7 +14,7 @@ export type StableSurgePoolDeployment = {
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 const StableSurgeHook = new Task('20250403-v3-stable-surge-hook-v2', TaskMode.READ_ONLY);
 const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
-const BAL = new Task('00000000-tokens', TaskMode.READ_ONLY);
+const TestBalancerToken = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY);
 
 const BaseVersion = { version: 2, deployment: '20250404-v3-stable-surge-pool-factory-v2' };
 
@@ -23,7 +23,7 @@ export default {
   StableSurgeHook,
   PauseWindowDuration: 4 * 12 * MONTH,
   WETH,
-  BAL,
+  TestBalancerToken,
   FactoryVersion: JSON.stringify({ name: 'StableSurgePoolFactory', ...BaseVersion }),
   PoolVersion: JSON.stringify({ name: 'StableSurgePool', ...BaseVersion }),
 };

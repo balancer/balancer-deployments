@@ -512,6 +512,14 @@ export default {
         },
       },
       {
+        network: 'hyperevm',
+        chainId: 999,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=999',
+          browserURL: 'https://hyperevmscan.io/',
+        },
+      },
+      {
         network: 'sonic',
         chainId: 146,
         urls: {

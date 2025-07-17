@@ -39,6 +39,9 @@ export default {
   mode: {
     admin: '0x4f22C2784Cbd2B24a172566491Ee73fee1A63c2e',
   },
+  hyperevm: {
+    admin: '0x9ff471F9f98F42E5151C7855fD1b5aa906b1AF7e', // Maxi Omni
+  },
   sonic: {
     admin: '0x6Daeb8BB06A7CF3475236C6c567029d333455E38',
   },

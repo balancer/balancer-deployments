@@ -30,6 +30,9 @@ export default {
   mainnet: {
     FeeRecipient: MaxiOmniMultisig,
   },
+  hyperevm: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
   sepolia: {
     FeeRecipient: SepoliaAdmin,
   },

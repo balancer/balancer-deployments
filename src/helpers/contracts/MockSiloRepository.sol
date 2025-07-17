@@ -20,10 +20,10 @@ import "./MaliciousQueryReverter.sol";
 
 contract MockSiloRepository is MaliciousQueryReverter {
     uint256 private _protocolShareFee;
-    MockInterestRateModel private immutable _mockModel;
+    MockInterestRateModel private immutable _MOCK_MODEL;
 
     constructor(uint256 compoundRate, uint256 currentRate) {
-        _mockModel = new MockInterestRateModel(compoundRate, currentRate);
+        _MOCK_MODEL = new MockInterestRateModel(compoundRate, currentRate);
     }
 
     function getInterestRateModel(
@@ -31,7 +31,7 @@ contract MockSiloRepository is MaliciousQueryReverter {
         address /* asset */
     ) external view returns (address) {
         maybeRevertMaliciously();
-        return address(_mockModel);
+        return address(_MOCK_MODEL);
     }
 
     function protocolShareFee() external view returns (uint256) {

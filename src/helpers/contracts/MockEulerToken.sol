@@ -52,6 +52,7 @@ contract MockEulerToken is TestToken, MaliciousQueryReverter {
     }
 
     function setExchangeRateMultiplier(uint256 _exchangeRateMultiplier) external {
+        //solhint-disable-next-line custom-errors
         require(_exchangeRateMultiplier < 3, "Cannot set exchangeRateMultiplier bigger 3");
         exchangeRateMultiplier = _exchangeRateMultiplier;
     }

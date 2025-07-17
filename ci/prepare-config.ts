@@ -48,6 +48,9 @@ if (process.env.CI) {
       },
       "sonic": {
         "url": "${process.env.SONIC_RPC_ENDPOINT}"
+      },
+      "hyperevm": {
+        "url": "${process.env.HYPEREVM_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

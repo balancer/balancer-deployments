@@ -1,6 +1,6 @@
 # <img src="logo.svg" alt="Balancer" height="128px">
 
-# Balancer V2 Deployments
+# Balancer V2 & V3 Deployments
 
 [![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.org/package/@balancer-labs/v2-deployments)
 [![GitHub Repository](https://img.shields.io/badge/github-deployments-lightgrey?logo=github)](https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments)
@@ -91,7 +91,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Polygon Root Gauges V2, for veBAL voting               | [`20220823-polygon-root-gauge-factory-v2`](./v2/tasks/20220823-polygon-root-gauge-factory-v2)           |
 | Pool Recovery Helper                                   | [`20221123-pool-recovery-helper`](./v2/tasks/20221123-pool-recovery-helper)                             |
 | Authorizer Adaptor Entrypoint                          | [`20221124-authorizer-adaptor-entrypoint`](./v2/tasks/20221124-authorizer-adaptor-entrypoint)           |
-| VeBoost V2                                             | [`20221205-veboost-v2`](./v2/tasks/20221205-veboost-v2)                                                 |
 | Single Recipient Stakeless Gauges V2                   | [`20230215-single-recipient-gauge-factory`](./v2/tasks/20230215-single-recipient-gauge-factory-v2)      |
 | Gnosis Root Gauge, for veBAL voting                    | [`20230217-gnosis-root-gauge-factory`](./v2/tasks/20230217-gnosis-root-gauge-factory)                   |
 | Merkle Orchard Distributor V2                          | [`20230222-merkle-orchard-v2`](./v2/tasks/20230222-merkle-orchard-v2)                                   |
@@ -135,13 +134,11 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
 | V3 Cow Swap Fee Burner                                 | [`20250221-v3-cow-swap-fee-burner`](./v3/tasks/20250221-v3-cow-swap-fee-burner)                         |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
-| V3 Liquidity Bootstrapping Pool                        | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/tasks/20250307-v3-liquidity-bootstrapping-pool)       |
 | V3 Vault Factory V2, and Vault contracts               | [`20250321-v3-vault-factory-v2`](./v3/tasks/20250321-v3-vault-factory-v2)                               |
 | V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
 | V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
-| V3 ReClamm Pool                                        | [`20250409-v3-reclamm-pool`](./v3/tasks/20250409-v3-reclamm-pool)                                       |
 | V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
 | V3 Pool Pause Helper                                   | [`20250430-v3-pool-pause-helper`](./v3/tasks/20250430-v3-pool-pause-helper)                             |
 | V3 Pool Swap Fee Helper                                | [`20250430-v3-pool-swap-fee-helper`](./v3/tasks/20250430-v3-pool-swap-fee-helper)                       |
@@ -150,6 +147,10 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
 | V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
+| V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
+| V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
+| V3 Liquidity Bootstrapping Pool (V2)                   | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/tasks/20250701-v3-liquidity-bootstrapping-pool-v2) |
+| V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 
 ## Scripts
 
@@ -168,7 +169,7 @@ These are deployments for script-like contracts (often called 'coordinators') wh
 | Timelock authorizer transition permission migration | [`20230130-ta-transition-migrator`](./v2/scripts/20230130-ta-transition-migrator)                       |
 | Coordination of the Gauge Adder migration V3 --> V4 | [`20230519-gauge-adder-migration-v3-to-v4`](./v2/scripts/20230519-gauge-adder-migration-v3-to-v4)       |
 | Protocol Fee Controller Migration                   | [`20250221-protocol-fee-controller-migration`](./v3/scripts/20250221-protocol-fee-controller-migration) |
-| Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/scripts/20250314-balancer-registry-initializer)         |
+| Balancer Contract Registry Initializer (V2)         | [`20250411-balancer-registry-initializer-v2`](./v3/scripts/20250411-balancer-registry-initializer-v2)   |
 
 ## Deprecated Deployments
 
@@ -214,6 +215,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Batch Relayer V4                                    | [`20220916-batch-relayer-v4`](./v2/deprecated/20220916-batch-relayer-v4)                                 |
 | Managed Pool                                        | [`20221021-managed-pool`](./v2/deprecated/20221021-managed-pool)                                         |
 | Composable Stable Pools V2                          | [`20221122-composable-stable-pool-v2`](./v2/deprecated/20221122-composable-stable-pool-v2)               |
+| VeBoost V2                                          | [`20221205-veboost-v2`](./v2/deprecated/20221205-veboost-v2)                                             |
 | Linear Pools for Aave aTokens (with rebalancing) V3 | [`20221207-aave-rebalanced-linear-pool-v3`](./v2/deprecated/20221207-aave-rebalanced-linear-pool-v3)     |
 | Gauge Registrant V3                                 | [`20230109-gauge-adder-v3`](./v2/deprecated/20230109-gauge-adder-v3)                                     |
 | Weighted Pool V3                                    | [`20230206-weighted-pool-v3`](./v2/deprecated/20230206-weighted-pool-v3)                                 |
@@ -243,3 +245,6 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
+| V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
+| Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |
+| V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |

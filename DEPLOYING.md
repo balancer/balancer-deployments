@@ -130,6 +130,10 @@ This data is accessed via the [`local-networks-config`](https://www.npmjs.com/pa
     "mode": {
       "url": "https://mode.rpc.endpoint/myAPIKey",
       "verificationAPIKey": "mode-etherscan-API-key"
+    },
+    "hyperevm": {
+      "url": "https://hyperevm.rpc.endpoint/myAPIKey",
+      "verificationAPIKey": "hyperevm-etherscan-API-key"
     }
   },
   "defaultConfig": {
@@ -151,6 +155,19 @@ $ yarn hardhat deploy --id <task-id> --network <network>
 Deployment addresses will be automatically saved to the appropriate file in the tasks's `output` directory, and source code submittted to Etherscan for verification[^1].
 
 Further runs of the task will not attempt to redeploy contracts for which an output already exists: use the `--force` flag to do a redeployment.
+
+This mechanism should work for EVM-equivalent networks, i.e. anywhere the artifact compiled for mainnet can run as is.
+
+### HyperEVM deployment
+
+HyperEVM can reuse the same artifacts as every other network, but it has a [dual-block architecture](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm/dual-block-architecture) with small and large blocks with different gas limits.
+
+Most contracts deployments require large blocks. To target them, the deployer account needs to be setup for it beforehand.
+One possible way to achieve this is through this [web application](https://hyperevm-block-toggle.vercel.app/); connect the deployer address and sign the required messages to use large blocks on deployment.
+
+Other than that, it is required to deposit 10 USDC to hypercore via the [hyperliquid app](https://app.hyperliquid.xyz).
+
+After these two steps are performed, the deployer account is ready to execute the deployment tasks as usual.
 
 ## Checking Deployments
 

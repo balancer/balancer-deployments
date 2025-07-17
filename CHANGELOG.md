@@ -19,11 +19,10 @@
 - Deployed V3 Aggregator Router to all networks.
 - Deployed V3 MEV Capture Hook to all networks.
 - Deployed V3 Router (V2) to all networks.
-- Deployed V3 Liquidity Bootstrapping Pool to all networks.
 - Deployed V3 Hook Examples to Sepolia.
 - Deployed V3 Protocol Fee Controller V2 to all networks.
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
-- Deployed V3 Balancer Contract Registry Initializer to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
+- Deployed V3 Balancer Contract Registry Initializer (V1 / V2) to all networks.
 - Deployed V3 Gyro E-CLP Factory to all networks.
 - Deployed V3 Gyro 2-CLP Factory to all networks.
 - Deployed V3 Stable Pool Factory V2 to all networks.
@@ -34,7 +33,12 @@
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
 - Deployed V3 ERC4626 Cow Swap Fee Burner V2 to all networks.
 - Deployed V3 Cow Swap Fee Burner V2 to all networks.
-- Deployed V3 ReClamm Pool Factory to all networks.
+- Deployed V3 Aggregator Batch Router to all networks.
+- Deployed V3 ReClamm Pool Factory V2 to all networks.
+- Deployed V3 Pool Pause Helper to all networks.
+- Deployed V3 Pool Swap Fee Helper to all networks.
+- Deployed V3 Balancer Fee Burner to all networks.
+- Deployed V3 Liquidity Boostrapping Pool V2 to Arbitrum, Base, Gnosis, Mainnet and Sepolia.
 
 #### V2
 
@@ -69,6 +73,7 @@
 - Deployed `BaseRootGaugeFactory` to Mainnet.
 - Deployed `BatchRelayerLibrary` V6 to all networks.
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
+- Deployed `VeBoost` 2.1 to Mainnet.
 
 ### Deprecations
 
@@ -81,6 +86,8 @@
 - Deprecated `20241205-v3-vault-explorer`.
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
 - Deprecated `20250221-v3-cow-swap-fee-burner`.
+- Deprecated `20250307-v3-liquidity-bootstrapping-pool`
+- Deprecated `20250409-v3-reclamm-pool`.
 - Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`.
 
 #### V2
@@ -110,7 +117,8 @@
 - Deprecated `20230527-l2-gauge-checkpointer`.
 - Deprecated `20230529-avalanche-root-gauge-factory`.
 - Deprecated `20230731-stakeless-gauge-checkpointer`.
-- Deprecated `20230711-composable-stable-pool-v5`
+- Deprecated `20230711-composable-stable-pool-v5`.
+- Deprecated `20221205-veboost-v2`.
 
 ### New Networks
 

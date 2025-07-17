@@ -47,6 +47,10 @@
     "chainId": 34443,
     "block-explorer": "https://modescan.io"
   },
+  "hyperevm": {
+    "chainId": 999,
+    "block-explorer": "https://www.hyperscan.com"
+  },
   "sonic": {
     "chainId": 146,
     "block-explorer": "https://sonicscan.org/"

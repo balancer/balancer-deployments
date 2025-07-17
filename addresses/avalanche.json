@@ -47,6 +47,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0xD53F5d8d926fb2a0f7Be614B16e649B8aC102D83"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220517-protocol-fee-withdrawer": {
     "contracts": [
       {
@@ -612,7 +622,7 @@
         "address": "0x4BdEA6CdcD01422f514363245B74BC2212Fd2aa4"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {
@@ -684,7 +694,17 @@
         "address": "0x33608014e176139e0b9058B32EEae1A5ce795FD3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250411-balancer-registry-initializer-v2": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0xFc00536A0fd292c284deeF6af8F644d8373d9cad"
+      }
+    ],
+    "status": "SCRIPT",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {
@@ -701,11 +721,41 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x891EC9B34829276a9a8ef2F8A9cEAF2486017e0d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
         "address": "0xB9d01CA61b9C181dA1051bFDd28e1097e920AB14"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
       }
     ],
     "status": "ACTIVE",
@@ -719,6 +769,16 @@
       }
     ],
     "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x36E8e371e6863E5f96D00667016DDE87fe1Cc5d1"
+      }
+    ],
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -736,6 +796,20 @@
       {
         "name": "ERC4626CowSwapFeeBurner",
         "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250702-v3-reclamm-pool-v2": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x309abcAeFa19CA6d34f0D8ff4a4103317c138657"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x443aC03E071E38577f2c50e3a7bdE30D9CEc06C2"
       }
     ],
     "status": "ACTIVE",

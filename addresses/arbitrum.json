@@ -183,6 +183,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x6eE18fbb1BBcC5CF700cD75ea1aef2bb21e3cB3F"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220404-erc4626-linear-pool-v2": {
     "contracts": [
       {
@@ -1072,7 +1082,7 @@
         "address": "0x9d3E72c11aD7bF7132a141FF6F716491c6d01518"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250307-v3-router-v2": {
@@ -1092,7 +1102,7 @@
         "address": "0x687b8C9b41E01Be8B591725fac5d5f52D0564d79"
       }
     ],
-    "status": "SCRIPT",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250324-v3-stable-pool-v2": {
@@ -1154,7 +1164,7 @@
         "address": "0xe482ef529B8f7fFC6ECCDea7eaF29C717E9ed079"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250418-v3-wrapped-bpt": {
@@ -1171,11 +1181,41 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x9d2917E41B705BF58BD28E5422230883bbE3f521"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xb96524227c4B5Ab908FC3d42005FE3B07abA40E9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250503-v3-protocol-fee-sweeper-v2": {
     "contracts": [
       {
         "name": "ProtocolFeeSweeper",
         "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
       }
     ],
     "status": "ACTIVE",
@@ -1189,6 +1229,16 @@
       }
     ],
     "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      }
+    ],
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -1206,6 +1256,38 @@
       {
         "name": "ERC4626CowSwapFeeBurner",
         "address": "0xD53F5d8d926fb2a0f7Be614B16e649B8aC102D83"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0xFc2986feAB34713E659da84F3B1FA32c1da95832"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0x8D217CB74f675B46cC2767C8cF0aAB53BE1c4818"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x791fEf0FE92A522DC82D0ea800708b035495147d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250702-v3-reclamm-pool-v2": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x355bD33F0033066BB3DE396a6d069be57353AD95"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x89d9D76C1E5aA9a78364380bB17c4c7d385dA83c"
       }
     ],
     "status": "ACTIVE",

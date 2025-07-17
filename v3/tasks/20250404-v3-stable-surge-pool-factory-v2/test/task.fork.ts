@@ -19,6 +19,7 @@ describeForkTest('StableSurgePoolFactoryV2', 'mainnet', 22195600, function () {
   const POOL_CONTRACT_NAME = 'StableSurgePool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
   const CONTRACT_VERSION_NUMBER = 2;
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
     task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
@@ -44,7 +45,7 @@ describeForkTest('StableSurgePoolFactoryV2', 'mainnet', 22195600, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
