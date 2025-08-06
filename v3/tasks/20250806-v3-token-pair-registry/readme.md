@@ -5,5 +5,5 @@ This contract is managed by an admin.
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/e04c46896ffd639ac0e4c3c091bae8743bee1f1d).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/63f93701a7def1459c66fe6e4d10f49dd9f0b16b).
 - [`TokenPairRegistry` artifact](./artifact/TokenPairRegistry.json)
