@@ -7,8 +7,8 @@ export type TokenPairRegistryDeployment = {
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 
-// https://github.com/BalancerMaxis/bal_addresses/blob/4b7ab007d01af33f996ae22bc70184f4eca6deeb/extras/signers.json#L72
-const InitialOwner = '0x74E283B985EA76c55C8B48d6bD1067a418188424';
+// https://github.com/BalancerMaxis/bal_addresses/blob/43e3e8b2fcfcb8be10553f136ce64cc9290496dc/extras/multisigs.json#L132
+const InitialOwner = '0x9ff471F9f98F42E5151C7855fD1b5aa906b1AF7e';
 
 export default {
   Vault,

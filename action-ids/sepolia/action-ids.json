@@ -1037,5 +1037,20 @@
         "disable()": "0x87718798d7b3fba119fbf388701396c35009cf180dcdcc0ce48653017185674a"
       }
     }
+  },
+  "20250806-v3-token-pair-registry": {
+    "TokenPairRegistry": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x8f7a1cd0082d4110055db98512712c81dc5890af3901b65c5769ef60d8e13c1d",
+        "addPath(address,(address,address,bool)[])": "0x0c92aba254b1a47a217df524c44c90d5026ee1b0de5c7c9e2c1e75e8a238068f",
+        "addSimplePath(address)": "0x73d6b6a3e74bf576826677d6f20502de16139e6d71f13faa8867cb882363b7d3",
+        "forceTransferOwnership(address)": "0x91719ecb384e246a31108699467874a3c0382db1a7ac58b73afabe1e9f648ba9",
+        "removePathAtIndex(address,address,uint256)": "0x9accd487c9366f5a53085007f2c1829396e5002e31e938ad3e9d018b0e7d732d",
+        "removeSimplePath(address)": "0x204b9074b30ed4b622b5c1dccfddd8f113bba0f44382bdf4b2b7af740286d99c",
+        "renounceOwnership()": "0x361150e2a5322ea9624e1a70e29e3d3015bd483a2aaf38e814b92d110d622d2d",
+        "transferOwnership(address)": "0x59d2c01d366a825cbcfe026188008c68cc51786ad209e95e1567a1950298097f"
+      }
+    }
   }
 }

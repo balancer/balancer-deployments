@@ -313,5 +313,20 @@
         "stopPriceRatioUpdate()": "0x05e6b8498af95fef525a5bb539007288969ef0e9ffa44acc38f068abd84800bc"
       }
     }
+  },
+  "20250806-v3-token-pair-registry": {
+    "TokenPairRegistry": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x90198593abb78796a50368f258dba83b14009858c1fc73ac65e3b980a1125c83",
+        "addPath(address,(address,address,bool)[])": "0x2c834edbd3c8e678b2ed4b8f477ae3932a22d8aa94b53dadd7c0a04cb5fe858e",
+        "addSimplePath(address)": "0xf4e59df59e5c4e4be48d9008e51d9e8485d8693d900f8a029b564fc8ee867ecb",
+        "forceTransferOwnership(address)": "0xbf3be8dd2a53fb714968036b1297f1fa9df8ae0f9d077792cdf9d6e7e2c1ec9e",
+        "removePathAtIndex(address,address,uint256)": "0xf6c328d54a8b2e62b7285ae8dfa1c2586cc37411c04bf880e5cd18d82a43a9ac",
+        "removeSimplePath(address)": "0x6665039d578090db4e6c4c3e651c54712879ef5cbad17feed2b7cefa4df9d86c",
+        "renounceOwnership()": "0xd689d84609f9a3eb28339815d07f01d54bb89d667957232a5c8c7151d15f614d",
+        "transferOwnership(address)": "0xe5475bb58d406d6469b78319a49e4ef4541b9182065f46a9390743eff116f8c7"
+      }
+    }
   }
 }

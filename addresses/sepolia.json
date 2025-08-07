@@ -1120,5 +1120,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250806-v3-token-pair-registry": {
+    "contracts": [
+      {
+        "name": "TokenPairRegistry",
+        "address": "0xcBDe7AFEF330B0d70F220450758694f556792F35"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
