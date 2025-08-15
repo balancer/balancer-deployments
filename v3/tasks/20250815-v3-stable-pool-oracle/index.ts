@@ -1,0 +1,32 @@
+import { StableLPOracleDeployment } from './input';
+import { saveContractDeploymentTransactionHash, Task, TaskMode, TaskRunOptions } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
+import { ZERO_ADDRESS } from '@helpers/constants';
+
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
+  const input = task.input() as StableLPOracleDeployment;
+
+  const factory = await task.deployAndVerify(
+    'StableLPOracleFactory',
+    [input.Vault, input.FactoryVersion, input.OracleVersion],
+    from,
+    force
+  );
+
+  if (task.mode === TaskMode.LIVE) {
+    if (force || !task.output({ ensure: false })['MockStableLPOracle']) {
+      const receipt = await (await factory.create(input.MockStablePool, [ZERO_ADDRESS, ZERO_ADDRESS])).wait();
+      const event = expectEvent.inReceipt(receipt, 'PoolCreated');
+      const mockLPOracleAddress = event.args.pool;
+
+      saveContractDeploymentTransactionHash(mockLPOracleAddress, receipt.transactionHash, task.network);
+      task.save({ MockStableLPOracle: mockLPOracleAddress });
+    }
+
+    const mockOracle = await task.instanceAt('StableLPOracle', task.output()['MockStableLPOracle']);
+
+    // We are now ready to verify the oracle contract
+    await task.verify('StableLPOracle', mockOracle.address, [input.MockStablePool, [ZERO_ADDRESS, ZERO_ADDRESS]]);
+  }
+};

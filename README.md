@@ -152,6 +152,8 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Liquidity Bootstrapping Pool (V2)                   | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/tasks/20250701-v3-liquidity-bootstrapping-pool-v2) |
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
+| V3 Weighted LP Oracle                                  | [`20250814-v3-weighted-pool-oracle`](./v3/tasks/20250814-v3-weighted-pool-oracle)                       |
+| V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 
 ## Scripts
 
