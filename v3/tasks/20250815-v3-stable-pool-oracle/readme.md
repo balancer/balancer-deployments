@@ -1,8 +1,7 @@
-# 2025-08-15 - V3 Token Pair Registry
+# 2025-08-15 - V3 Stable Pool Oracle
 
 Contains `StableLPOracle` and its corresponding `StableLPOracleFactory`.
-These contracts provide a manipulation-resistant mechanism to compute the market price of LP tokens from weighted pools given market price feeds for each of the tokens registered in the pool
-
+These contracts provide a manipulation-resistant mechanism to compute the market price of LP tokens from stable pools given market price feeds for each of the tokens registered in the pool.
 
 ## Useful Files
 
