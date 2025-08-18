@@ -34,7 +34,7 @@ describeForkTest('StableLPOracle', 'mainnet', 23147505, function () {
     expect(factoryVersion.version).to.be.eq(0);
   });
 
-  it('create oracle', async () => {
+  it('creates oracle', async () => {
     // Feeds are ordered according to the token order registered in the pool.
     const tx = await stableLPOracleFactory.create(STABLE_POOL_ADDRESS, [
       USDT_PRICE_FEED,

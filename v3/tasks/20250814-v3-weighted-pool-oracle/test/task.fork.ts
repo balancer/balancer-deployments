@@ -33,7 +33,7 @@ describeForkTest('WeightedLPOracle', 'base', 34240741, function () {
     expect(factoryVersion.version).to.be.eq(0);
   });
 
-  it('create oracle', async () => {
+  it('creates oracle', async () => {
     // Feeds are ordered according to the token order registered in the pool.
     const tx = await weightedLPOracleFactory.create(WEIGHTED_POOL_ADDRESS, [USDC_FEED_ADDRESS, ETH_FEED_ADDRESS]);
 
