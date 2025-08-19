@@ -1,0 +1,122 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ConstantPriceFeed",
+  "sourceName": "contracts/ConstantPriceFeed.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "description",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint80",
+          "name": "",
+          "type": "uint80"
+        }
+      ],
+      "name": "getRoundData",
+      "outputs": [
+        {
+          "internalType": "uint80",
+          "name": "",
+          "type": "uint80"
+        },
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint80",
+          "name": "",
+          "type": "uint80"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestRoundData",
+      "outputs": [
+        {
+          "internalType": "uint80",
+          "name": "",
+          "type": "uint80"
+        },
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint80",
+          "name": "",
+          "type": "uint80"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "version",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080806040523460155761021c908161001a8239f35b5f80fdfe60806040908082526004361015610014575f80fd5b5f3560e01c908163313ce567146101cd5750806354fd4d50146101b25780637284e416146100e45780639a6fc8f5146100935763feaf968c14610055575f80fd5b3461008f575f60031936011261008f57515f808252670de0b6b3a7640000602083015242604083018190526060830152608082015260a090f35b5f80fd5b503461008f57602060031936011261008f5760043569ffffffffffffffffffff81160361008f57515f808252670de0b6b3a7640000602083015242604083018190526060830152608082015260a090f35b503461008f575f60031936011261008f5780519080820182811067ffffffffffffffff8211176101855781526017825260208201917f436f6e7374616e7420312e30205072696365204665656400000000000000000083527fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f8351948593602085525180918160208701528686015e5f85828601015201168101030190f35b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b503461008f575f60031936011261008f576020905160018152f35b3461008f575f60031936011261008f5780601260209252f3fea2646970667358221220a2b21629b378e2a88e7e70d49fcd72d91d40df528f880624d987ba794e39cf2264736f6c634300081b0033",
+  "deployedBytecode": "0x60806040908082526004361015610014575f80fd5b5f3560e01c908163313ce567146101cd5750806354fd4d50146101b25780637284e416146100e45780639a6fc8f5146100935763feaf968c14610055575f80fd5b3461008f575f60031936011261008f57515f808252670de0b6b3a7640000602083015242604083018190526060830152608082015260a090f35b5f80fd5b503461008f57602060031936011261008f5760043569ffffffffffffffffffff81160361008f57515f808252670de0b6b3a7640000602083015242604083018190526060830152608082015260a090f35b503461008f575f60031936011261008f5780519080820182811067ffffffffffffffff8211176101855781526017825260208201917f436f6e7374616e7420312e30205072696365204665656400000000000000000083527fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f8351948593602085525180918160208701528686015e5f85828601015201168101030190f35b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b503461008f575f60031936011261008f576020905160018152f35b3461008f575f60031936011261008f5780601260209252f3fea2646970667358221220a2b21629b378e2a88e7e70d49fcd72d91d40df528f880624d987ba794e39cf2264736f6c634300081b0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
