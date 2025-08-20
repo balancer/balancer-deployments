@@ -1885,6 +1885,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x83bf399FA3DC49Af8fb5c34031a50c7C93F56129"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x74a1B9Fe5b1151A80E4dE22F79cf73ef358D2086"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {

@@ -827,5 +827,14 @@
         "disable()": "0x416d92d817cb23a3d644810c79c3e5d9cd991b729c260819b570abd632e3a90a"
       }
     }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xa4f5bafaf5a6384b8ac967064c4fb5ebc8a8ece87f61ab294970322fa126d155",
+        "disable()": "0xa821892dcbfcfb5e12afef4adb89e0f3a91ec943502f0e9c127ae54bb6ba9283"
+      }
+    }
   }
 }

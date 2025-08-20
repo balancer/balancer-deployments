@@ -1969,5 +1969,14 @@
         "disable()": "0x670bb9136d895ccf004e9d8685cec0fb3638dd5d57459751297adc9776329fdc"
       }
     }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x8f88b537b02a2ff7d600d7323c8ecc9b795f50f095a6010a6acbc9f32a006d1d",
+        "disable()": "0xf2ba8ee437d51234f84659a503679184d5b06f06f85eae2b2e1319177f6e2cd9"
+      }
+    }
   }
 }
