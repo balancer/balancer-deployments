@@ -1012,5 +1012,15 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20250813-v3-constant-price-feed": {
+    "contracts": [
+      {
+        "name": "ConstantPriceFeed",
+        "address": "0xA0De078cd5cFa7088821B83e0bD7545ccfb7c883"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

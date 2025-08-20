@@ -5,7 +5,7 @@ import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('StableLPOracle', 'mainnet', 23147505, function () {
+describeForkTest('StableLPOracle', 'mainnet', 23182450, function () {
   let task: Task;
   let stableLPOracleFactory: Contract, stableLPOracle: Contract;
   let poolToken: Contract;
@@ -58,7 +58,7 @@ describeForkTest('StableLPOracle', 'mainnet', 23147505, function () {
 
   it('checks prices', async () => {
     const { prices } = await stableLPOracle.getFeedData();
-    expect(fromFp(prices[0])).to.be.equalWithError(1.0);
+    expect(fromFp(prices[0])).to.be.equalWithError(0.999);
     expect(fromFp(prices[1])).to.be.equalWithError(0.999);
     expect(fromFp(prices[2])).to.be.equalWithError(0.999);
   });
@@ -67,6 +67,6 @@ describeForkTest('StableLPOracle', 'mainnet', 23147505, function () {
     const { answer } = await stableLPOracle.latestRoundData();
     const totalSupply = await poolToken.totalSupply();
     // This is the TVL in USD at the current block.
-    expect(fromFp(fpMul(answer, totalSupply))).to.be.equalWithError(28332842);
+    expect(fromFp(fpMul(answer, totalSupply))).to.be.equalWithError(30630456);
   });
 });
