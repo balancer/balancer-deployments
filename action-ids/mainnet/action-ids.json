@@ -1960,5 +1960,14 @@
         "transferPoolSetOwnership(address)": "0xdeacdbee1fac97b02518c7d63a3f047b488199648c10f0c347768da0bb70228c"
       }
     }
+  },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x39aeee7ae3cb71ba75889f250760f6e7a8fdcb0b42e97b5b36ca7e77c01d59ab",
+        "disable()": "0x670bb9136d895ccf004e9d8685cec0fb3638dd5d57459751297adc9776329fdc"
+      }
+    }
   }
 }
