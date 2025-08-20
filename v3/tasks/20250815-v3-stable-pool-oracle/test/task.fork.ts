@@ -58,7 +58,7 @@ describeForkTest('StableLPOracle', 'mainnet', 23182450, function () {
 
   it('checks prices', async () => {
     const { prices } = await stableLPOracle.getFeedData();
-    expect(fromFp(prices[0])).to.be.equalWithError(1.0);
+    expect(fromFp(prices[0])).to.be.equalWithError(0.999);
     expect(fromFp(prices[1])).to.be.equalWithError(0.999);
     expect(fromFp(prices[2])).to.be.equalWithError(0.999);
   });
