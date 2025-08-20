@@ -1033,6 +1033,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x8A8B9f35765899B3a0291700141470D79EA2eA88"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0x7347C39625908c5205606daB026443bBc743aF2F"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
