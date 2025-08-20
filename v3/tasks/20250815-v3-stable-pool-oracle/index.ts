@@ -19,7 +19,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
         await factory.create(input.MockStablePool, [input.ConstantPriceFeed, input.ConstantPriceFeed])
       ).wait();
       const event = expectEvent.inReceipt(receipt, 'StableLPOracleCreated');
-      const mockLPOracleAddress = event.args.pool;
+      const mockLPOracleAddress = event.args.oracle;
 
       saveContractDeploymentTransactionHash(mockLPOracleAddress, receipt.transactionHash, task.network);
       task.save({ MockStableLPOracle: mockLPOracleAddress });
@@ -29,8 +29,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // We are now ready to verify the oracle contract
     await task.verify('StableLPOracle', mockOracle.address, [
+      input.Vault,
       input.MockStablePool,
       [input.ConstantPriceFeed, input.ConstantPriceFeed],
+      input.OracleVersion,
     ]);
   }
 };
