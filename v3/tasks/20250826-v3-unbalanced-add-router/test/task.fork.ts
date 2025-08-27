@@ -3,11 +3,9 @@ import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { fp, maxUint } from '@helpers/numbers';
-import { MAX_UINT112, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
-import * as expectEvent from '@helpers/expectEvent';
+import { fp } from '@helpers/numbers';
+import { ZERO_ADDRESS } from '@helpers/constants';
 import { UnbalancedLiquidityRouterViaSwapDeployment } from '../input';
-import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
 import { currentTimestamp, MINUTE } from '@helpers/time';
 
 describeForkTest('V3-UnbalancedAddRouter', 'mainnet', 23227500, function () {
@@ -19,17 +17,12 @@ describeForkTest('V3-UnbalancedAddRouter', 'mainnet', 23227500, function () {
 
   let task: Task;
   let router: Contract, permit2: Contract;
-  let factory: Contract, pool: Contract;
+  let pool: Contract;
   let wethSigner: SignerWithAddress, alice: SignerWithAddress;
   let input: UnbalancedLiquidityRouterViaSwapDeployment;
-  let BAL: string;
-  let balToken: Contract;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let tokenConfig: any[];
 
   const AAVE = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
-  const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+  let WETH: string;
   const AAVE_WETH_POOL = '0x9d1fcf346ea1b073de4d5834e25572cc6ad71f4d';
 
   before('run task', async () => {
@@ -41,6 +34,8 @@ describeForkTest('V3-UnbalancedAddRouter', 'mainnet', 23227500, function () {
     router = await task.deployedInstance(CONTRACT_NAME);
     permit2 = await task.instanceAt('IPermit2', input.Permit2);
 
+    WETH = input.WETH;
+    wethSigner = await impersonate(input.WETH, fp(10e8));
     alice = await getSigner();
   });
 
@@ -61,13 +56,23 @@ describeForkTest('V3-UnbalancedAddRouter', 'mainnet', 23227500, function () {
     expect(await router.getWeth()).to.eq(input.WETH);
   });
 
+  it('checks router WETH', async () => {
+    const wethTx = wethSigner.sendTransaction({
+      to: router.address,
+      value: ethers.utils.parseEther('1.0'),
+    });
+    await expect(wethTx).to.not.be.reverted;
+
+    const aliceTx = alice.sendTransaction({
+      to: router.address,
+      value: ethers.utils.parseEther('1.0'),
+    });
+    await expect(aliceTx).to.be.reverted;
+  });
+
   it('adds liquidity unbalanced to a reclamm pool', async () => {
     const totalSupply = await pool.totalSupply();
-    const { balancesRaw } = await pool.getTokenInfo();
     const bptAmountOut = totalSupply.div(10);
-
-    console.log('total supply: ', totalSupply);
-    console.log('balances raw: ', balancesRaw);
 
     const amountsIn = await router
       .connect(ZERO_ADDRESS)
@@ -100,7 +105,6 @@ describeForkTest('V3-UnbalancedAddRouter', 'mainnet', 23227500, function () {
       userData: '0x',
     };
 
-    console.log('about to add');
     await router
       .connect(alice)
       .addUnbalancedLiquidityViaSwapExactOut(
