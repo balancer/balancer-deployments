@@ -5,7 +5,5 @@ Contains the `HyperEVMRateProviderFactory` and `HyperEVMRateProvider` contracts,
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/a0ec8382f2942dd5c6671bf76562774e463e5553).
-- [Hyperevm mainnet addresses](./output/hyperevm.json)
-- [Sepolia testnet addresses](./output/sepolia.json)
 - [`HyperEVMRateProvider` artifact](./artifact/HyperEVMRateProvider.json)
 - [`HyperEVMRateProviderFactory` artifact](./artifact/HyperEVMRateProviderFactory.json)
