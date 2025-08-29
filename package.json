@@ -44,6 +44,9 @@
     "test:v3": "yarn build && hardhat test v3/**/test/*.ts",
     "ci:prepare-config": "ts-node ci/prepare-config.ts"
   },
+  "resolutions": {
+    "node-fetch": "^3.3.2"
+  },
   "devDependencies": {
     "@balancer-labs/v2-interfaces": "latest",
     "@balancer-labs/v2-solidity-utils": "^3.0.2",
