@@ -5,11 +5,10 @@ import { expect } from 'chai';
 
 describeForkTest('V3-HyperEVMRateProviderFactory', 'hyperevm', 12336700, function () {
   let task: Task;
-  let factory: Contract;
+  let vault: Contract, factory: Contract;
 
   const FACTORY_NAME = 'HyperEVMRateProviderFactory';
   const VERSION_NUMBER = 1;
-  const VAULT = '0xbA1333333333a1BA1108E8412f11850A5C319bA9';
 
   before('run task', async () => {
     task = new Task('20250828-v3-hyperevm-rate-provider', TaskMode.TEST, getForkedNetwork(hre));
@@ -17,9 +16,14 @@ describeForkTest('V3-HyperEVMRateProviderFactory', 'hyperevm', 12336700, functio
     factory = await task.deployedInstance(FACTORY_NAME);
   });
 
+  before('setup contracts', async () => {
+    const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    vault = await vaultTask.deployedInstance('Vault');
+  });
+
   it('checks vault', async () => {
-    const vault = await factory.getVault();
-    expect(vault).to.be.eq(VAULT);
+    const factoryVault = await factory.getVault();
+    expect(factoryVault).to.be.eq(vault.address);
   });
 
   it('checks version', async () => {
