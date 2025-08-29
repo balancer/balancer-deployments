@@ -33,6 +33,10 @@ const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.RE
 const Vault3 = new Task('20241204-v3-vault', TaskMode.READ_ONLY, network);
 const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2', network);
 const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, network);
+const ProtocolFeeSweeper = new Task('20250214-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
+const ProtocolFeeSweeperV2 = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY, network);
+const PoolPauseHelper = new Task('20241024-v3-pool-pause-helper', TaskMode.READ_ONLY, network);
+const PoolSwapFeeHelper = new Task('20241024-v3-pool-swap-fee-helper', TaskMode.READ_ONLY, network);
 
 export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
@@ -276,6 +280,7 @@ const ExecuteDelaysV2: DelayData[] = [
 ];
 
 const ExecuteDelaysV3: DelayData[] = [
+  // setAuthorizer must be long since no delay can be longer than it.
   { actionId: Vault3.actionId('VaultAdmin', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
   { actionId: Vault3.actionId('VaultAdmin', 'disableQueryPermanently()'), newDelay: LONG_DELAY },
   { actionId: Vault3.actionId('VaultAdmin', 'enableQuery()'), newDelay: MEDIUM_DELAY },
@@ -323,6 +328,40 @@ const ExecuteDelaysV3: DelayData[] = [
       'registerBalancerContract(uint8,string,address)'
     ),
     newDelay: SHORT_DELAY,
+  },
+
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+
+  {
+    actionId: PoolPauseHelper.actionId('PoolPauseHelper', 'addPools(address[])'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: PoolSwapFeeHelper.actionId('PoolSwapFeeHelper', 'addPools(address[])'),
+    newDelay: MEDIUM_DELAY,
   },
 ];
 
