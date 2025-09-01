@@ -41,6 +41,8 @@
 - Deployed V3 Liquidity Boostrapping Pool V2 to Arbitrum, Base, Gnosis, Mainnet and Sepolia.
 - Deployed V3 Token Pair Registry to Sepolia and Hyperevm.
 - Deployed Chainlink Constant Price Feed to all networks.
+- Deployed V3 Weighted LP Oracle Factory to all networks.
+- Deployed V3 Stable LP Oracle Factory to all networks.
 
 #### V2
 
