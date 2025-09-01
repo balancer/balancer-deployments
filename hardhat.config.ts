@@ -509,7 +509,7 @@ export default {
         urls: {
           apiURL: 'https://explorer.monad-testnet.category.xyz/api',
           browserURL: 'https://explorer.monad-testnet.category.xyz/',
-        }
+        },
       },
       {
         network: 'avalanche',
