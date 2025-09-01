@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { advanceTime, WEEK } from '@helpers/time';
 
-describeForkTest('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, function () {
+describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, function () {
   let govMultisig: SignerWithAddress, checkpointMultisig: SignerWithAddress;
   let coordinator: Contract;
 

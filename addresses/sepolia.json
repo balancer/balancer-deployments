@@ -214,7 +214,7 @@
         "address": "0x927906bbAc747c13c75F6447FE8abb490EAB456C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230109-gauge-adder-v3": {
@@ -692,7 +692,7 @@
         "address": "0xc6674C0c7694E9b990eAc939E74F8cc3DD39B4b0"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-router": {
@@ -702,7 +702,7 @@
         "address": "0x0BF61f706105EA44694f2e92986bD01C39930280"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -716,7 +716,7 @@
         "address": "0x7373C5b9610d43466395617c428eCAA5b47ac5AA"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
@@ -726,7 +726,7 @@
         "address": "0xEB15EBBF9C1a4D7D243d57dE447Df0b97C40c324"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-weighted-pool": {
@@ -768,6 +768,374 @@
       {
         "name": "VeBALFeeDiscountHookExample",
         "address": "0xEDB47231A12bdf64b8D951dEd3351128f95B7e80"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250117-v3-contract-registry": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistry",
+        "address": "0x115A6FC12312a01E0B63E51dFa97DAeb8dE9D2F0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250120-v3-gyro-2clp": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x38ce8e04EBC04A39BED4b097e8C9bb8Ca74e33d8"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0x4d1a7352311CA9f63AB8bEA96CA873796C72EBDf"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250121-v3-stable-surge": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0xD516c344413B4282dF1E4082EAE6B1081F3b1932"
+      },
+      {
+        "name": "StableSurgeHook",
+        "address": "0x30CE53fA38a1399F0CA158b5c38362c80E423bA9"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xD8D88e186AA7cfa3929dF79ab5a5f02316e7d77B"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250123-v3-composite-liquidity-router-v2": {
+    "contracts": [
+      {
+        "name": "CompositeLiquidityRouter",
+        "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250124-v3-gyro-eclp": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x589cA6855C348d831b394676c25B125BcdC7F8ce"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0xD2fB2b142c27094833f48c8a4a950ecc2e139F66"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250212-v3-mev-capture-hook": {
+    "contracts": [
+      {
+        "name": "MevCaptureHook",
+        "address": "0xEC9578e79d412537095501584284B092D2F6b9F7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250214-v3-protocol-fee-controller-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeController",
+        "address": "0x931d2a630f6bdfe872F98ea967447c8F99d4823a"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250218-v3-aggregator-router": {
+    "contracts": [
+      {
+        "name": "AggregatorRouter",
+        "address": "0x7E0FaA621138275033979Bad405553b103fe0FbC"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250221-protocol-fee-controller-migration": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeControllerMigration",
+        "address": "0x79232d3431463dC2B8Fd8fb28B352B9Ba92Eb280"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
+  "20250221-v3-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x3400AaFA47C6dC0D8Ffc2380D3665f701cD53eBc"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250228-v3-protocol-fee-sweeper": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x5E69888b605a181A5615aC1b3C8937aFA2913d15"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250307-v3-liquidity-bootstrapping-pool": {
+    "contracts": [
+      {
+        "name": "LBPoolFactory",
+        "address": "0xA714753434481DbaBf7921963f18190636eCde69"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x410E6933B5d9F7ffBAB35AF4aAbCaA82a4C1F287"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250307-v3-router-v2": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0x5e315f96389C1aaF9324D97d3512ae1e0Bf3C21a"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250314-balancer-registry-initializer": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x6B7C56698bEb33E1f0226e73C5D417e575315106"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250324-v3-stable-pool-v2": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0xc274A11E09a3c92Ac64eAff5bEC4ee8f5dfEe207"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x1C72b94E0e291dEe39a239E6e9C47625b14dEA71"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250403-v3-stable-surge-hook-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgeHook",
+        "address": "0x7dfca838fD5fCd70f876431D41CaA3E3E2ea1520"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250404-v3-stable-surge-pool-factory-v2": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x2f1d6F4C40047dC122cA7e46B0D1eC27739BFc66"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x781589d386e62ba7eB5D8382eE4DC86d8C64f882"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250407-v3-vault-explorer-v2": {
+    "contracts": [
+      {
+        "name": "VaultExplorer",
+        "address": "0xC82E329C832CAcc8DA65dbB57ac72B068e0CEb9B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250409-v3-reclamm-pool": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0x2A4054779DaDf4Cf3F4849f1AC307845F182cfE5"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x919094AdC27c2B779F70eD65D5d96F0b5331f660"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250418-v3-wrapped-bpt": {
+    "contracts": [
+      {
+        "name": "WrappedBalancerPoolTokenFactory",
+        "address": "0xE47e1b8640e18F77BEC160D2Bb2481F65e580730"
+      },
+      {
+        "name": "MockWrappedBalancerPoolToken",
+        "address": "0xeC2C01AE8BE49D9335157e2e0680c686e2629Bfb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-pause-helper": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x28620a494d75d4a8959dD7a1835bF85A5Ce7b1C4"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250430-v3-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x3b0b1F85792082500CD3acE3C58f2297edc19146"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x0f3615e60b1D23a5DD98CE74865FAA79A6d9aF70"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-aggregator-batch-router": {
+    "contracts": [
+      {
+        "name": "AggregatorBatchRouter",
+        "address": "0x17a00FcDEafeE2E97b52083330B3B339Fb633dC1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250507-v3-erc4626-cow-swap-fee-burner": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x60afAC111365663C03B8a193926342D2D4715f03"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0xdb837CCe319F885AD34C8bCbf432De8bF8DEC406"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0x3a57cDd9f3f6C9eC69dEe654ba7E07Ad5afc63e1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0xFc90794CcaD600d756310EF727ae736ee926Fa45"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0x0AE19A3f8c35e0156E0d39307ad4cce1acD42929"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0xE92cF5185384f53B2af74A2eBA62ba3A9C0ED65B"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xc432fC493269Cf9412ef419a8E571655657158a3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250702-v3-reclamm-pool-v2": {
+    "contracts": [
+      {
+        "name": "ReClammPoolFactory",
+        "address": "0xf58A574530Ea5cEB727095e6039170c1e8068fcA"
+      },
+      {
+        "name": "MockReClammPool",
+        "address": "0x78bE2bd092045315D30D2b91d98CAbb15333e021"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250806-v3-token-pair-registry": {
+    "contracts": [
+      {
+        "name": "TokenPairRegistry",
+        "address": "0xcBDe7AFEF330B0d70F220450758694f556792F35"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250813-v3-constant-price-feed": {
+    "contracts": [
+      {
+        "name": "ConstantPriceFeed",
+        "address": "0x1074d0962656768E2b97a0ce39d8c6CCcfBb73b3"
       }
     ],
     "status": "ACTIVE",

@@ -1,6 +1,7 @@
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-vyper';
 import '@nomiclabs/hardhat-waffle';
+import '@nomicfoundation/hardhat-verify';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
 import 'tsconfig-paths/register';
@@ -34,6 +35,7 @@ import {
   saveTimelockAuthorizerConfig,
   withRetries,
 } from './src/network';
+import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
 
 const THEGRAPHURLS: { [key: string]: string } = {};
 
@@ -47,7 +49,17 @@ task('deploy', 'Run deployment task')
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
-      const verifier = apiKey ? new Verifier(hre.network, apiKey) : undefined;
+      const verifier = apiKey
+        ? new Verifier(
+            hre.network,
+            apiKey,
+            await Etherscan.getCurrentChainConfig(
+              hre.network.name,
+              hre.network.provider,
+              hre.config.etherscan.customChains
+            )
+          )
+        : undefined;
       await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).run(args);
     }
   );
@@ -67,7 +79,17 @@ task('verify-contract', `Verify a task's deployment on a block explorer`)
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
-      const verifier = apiKey ? new Verifier(hre.network, apiKey) : undefined;
+      const verifier = apiKey
+        ? new Verifier(
+            hre.network,
+            apiKey,
+            await Etherscan.getCurrentChainConfig(
+              hre.network.name,
+              hre.network.provider,
+              hre.config.etherscan.customChains
+            )
+          )
+        : undefined;
 
       // Contracts can only be verified in Live mode
       await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).verify(args.name, args.address, args.args);
@@ -143,10 +165,14 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
   .addOptionalParam('id', 'Specific task ID')
   .addOptionalParam('name', 'Contract name')
   .addOptionalParam('address', 'Address of Pool created from a factory')
+  .addOptionalParam('factory', 'Name of pool factory (only if it is not `<contract>Factory`')
   .setAction(
-    async (args: { id: string; name: string; address?: string; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+    async (
+      args: { id: string; name: string; address?: string; factory?: string; verbose?: boolean },
+      hre: HardhatRuntimeEnvironment
+    ) => {
       async function saveActionIdsTask(
-        args: { id: string; name: string; address?: string; verbose?: boolean },
+        args: { id: string; name: string; address?: string; factory?: string; verbose?: boolean },
         hre: HardhatRuntimeEnvironment
       ) {
         Logger.setDefaults(false, args.verbose || false);
@@ -160,7 +186,7 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
             );
           }
           const task = new Task(args.id, TaskMode.READ_ONLY, hre.network.name);
-          await saveActionIds(task, args.name, args.address);
+          await saveActionIds(task, args.name, args.address, args.factory);
           return;
         }
 
@@ -446,7 +472,7 @@ export default {
   etherscan: {
     customChains: [
       {
-        network: 'zkemv',
+        network: 'zkevm',
         chainId: 1101,
         urls: {
           apiURL: 'https://api-zkevm.polygonscan.com/api',
@@ -483,6 +509,22 @@ export default {
         urls: {
           apiURL: 'https://explorer.monad-testnet.category.xyz/api',
           browserURL: 'https://explorer.monad-testnet.category.xyz/',
+        }
+      },
+      {
+        network: 'avalanche',
+        chainId: 43114,
+        urls: {
+          apiURL: 'https://api.snowscan.xyz/api',
+          browserURL: 'https://snowscan.xyz/',
+        },
+      },
+      {
+        network: 'hyperevm',
+        chainId: 999,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=999',
+          browserURL: 'https://hyperevmscan.io/',
         },
       },
     ],

@@ -15,10 +15,15 @@ describeForkTest('WeightedPool-V3', 'mainnet', 21336200, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
 
+  const TASK_NAME = '20241205-v3-weighted-pool';
+  const POOL_CONTRACT_NAME = 'WeightedPool';
+  const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
+  const BAL_TOKEN = '0xba100000625a3754423978a60c9317c58a424e3D';
+
   before('run task', async () => {
-    task = new Task('20241205-v3-weighted-pool', TaskMode.TEST, getForkedNetwork(hre));
+    task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
-    factory = await task.deployedInstance('WeightedPoolFactory');
+    factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
   });
 
   before('setup contracts and parameters', async () => {
@@ -31,7 +36,7 @@ describeForkTest('WeightedPool-V3', 'mainnet', 21336200, function () {
         paysYieldFees: false,
       },
       {
-        token: input.BAL,
+        token: BAL_TOKEN,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -75,11 +80,25 @@ describeForkTest('WeightedPool-V3', 'mainnet', 21336200, function () {
     ).wait();
 
     const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
-    pool = await task.instanceAt('WeightedPool', event.args.pool);
+    pool = await task.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
   });
 
   it('checks pool tokens', async () => {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
+  });
+
+  it('checks pool version', async () => {
+    const version = JSON.parse(await pool.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(POOL_CONTRACT_NAME);
+  });
+
+  it('checks factory version', async () => {
+    const version = JSON.parse(await factory.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(1);
+    expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
   });
 });

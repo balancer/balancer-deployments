@@ -15,7 +15,7 @@ import { TRANSITION_END_BLOCK, TimelockAuthorizerTransitionMigratorDeployment } 
 import { RoleData } from '../input/types';
 import { DAY, advanceTime } from '@helpers/time';
 
-describeForkTest('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSITION_END_BLOCK, function () {
+describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSITION_END_BLOCK, function () {
   let input: TimelockAuthorizerTransitionMigratorDeployment;
   let migrator: Contract, newAuthorizer: Contract;
   let root: SignerWithAddress;

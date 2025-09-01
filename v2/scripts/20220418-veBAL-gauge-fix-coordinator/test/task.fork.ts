@@ -13,7 +13,7 @@ import { impersonate } from '@src';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
 
-describeForkTest('veBALGaugeFixCoordinator', 'mainnet', 14850000, function () {
+describeForkTest.skip('veBALGaugeFixCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 

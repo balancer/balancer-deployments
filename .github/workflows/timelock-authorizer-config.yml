@@ -10,137 +10,31 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  verify-mainnet-timelock-authorizer-config:
+  verify-timelock-authorizer-config:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
-      - uses: actions/checkout@v3
-      - name: Verify Mainnet Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
-        with:
-          network-name: mainnet
-
-  verify-polygon-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Polygon Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
-        with:
-          network-name: polygon
-
-  verify-arbitrum-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Arbitrum Timelock Authorizer Configuration
+      - uses: actions/checkout@v4
+      - name: Verify ${{ matrix.network }} Timelock Authorizer Configuration
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
-        with:
-          network-name: arbitrum
-
-  verify-optimism-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Optimism Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
-        with:
-          network-name: optimism
-
-  verify-bsc-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Binance Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
-        with:
-          network-name: bsc
-
-  verify-gnosis-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Gnosis Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
-        with:
-          network-name: gnosis
-
-  verify-avalanche-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Avalanche Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-        with:
-          network-name: avalanche
-
-  verify-zkevm-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Polygon-ZkEvm Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
-          network-name: zkevm
-
-  verify-base-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Base Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
-        with:
-          network-name: base
-
-  verify-fraxtal-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Fraxtal Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
-        with:
-          network-name: fraxtal
-
-  verify-mode-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Mode Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
-        with:
-          network-name: mode
-
-  verify-sepolia-timelock-authorizer-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Verify Sepolia Timelock Authorizer Configuration
-        uses: ./.github/actions/verify-network-timelock-authorizer-config
-        env:
-          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
-        with:
-          network-name: sepolia
+          network-name: ${{ matrix.network }}
 
 env:
   CI: true

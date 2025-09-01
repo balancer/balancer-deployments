@@ -11,258 +11,68 @@ jobs:
   check-artifacts:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Check Deployment Artifacts
         run: yarn check-artifacts
 
-  check-mainnet-deployments:
+  check-deployments:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
-      - uses: actions/checkout@v3
-      - name: Check Mainnet Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
-        with:
-          network-name: mainnet
-  check-polygon-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Polygon Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
-        with:
-          network-name: polygon
-  check-arbitrum-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Arbitrum Deployment Addresses
+      - uses: actions/checkout@v4
+      - name: Check ${{ matrix.network }} deployment addresses
         uses: ./.github/actions/check-network-deployments
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
-        with:
-          network-name: arbitrum
-  check-optimism-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Optimism Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
-        with:
-          network-name: optimism
-  check-bsc-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Binance Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
-        with:
-          network-name: bsc
-  check-gnosis-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Gnosis Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
-        with:
-          network-name: gnosis
-  check-avalanche-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Avalanche Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-        with:
-          network-name: avalanche
-  check-zkevm-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Polygon-ZkEvm Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
-          network-name: zkevm
-  check-base-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Base Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
-        with:
-          network-name: base
-  check-fraxtal-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Fraxtal Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
-        with:
-          network-name: fraxtal
-  check-mode-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Mode Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
-        with:
-          network-name: mode
-  check-sepolia-deployments:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Sepolia Deployment Addresses
-        uses: ./.github/actions/check-network-deployments
-        env:
-          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
-        with:
-          network-name: sepolia
+          network-name: ${{ matrix.network }}
 
   check-mainnet-action-ids:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
-      - uses: actions/checkout@v3
-      - name: Check Mainnet Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
-        with:
-          network-name: mainnet
-  check-polygon-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Polygon Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
-        with:
-          network-name: polygon
-  check-arbitrum-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Arbitrum Action IDs
+      - uses: actions/checkout@v4
+      - name: Check ${{ matrix.network }} Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
-        with:
-          network-name: arbitrum
-  check-optimism-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Optimism Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
-        with:
-          network-name: optimism
-  check-bsc-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Binance Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
-        with:
-          network-name: bsc
-  check-gnosis-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Gnosis Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
-        with:
-          network-name: gnosis
-  check-avalanche-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Avalanche Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-        with:
-          network-name: avalanche
-  check-zkevm-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Polygon-ZkEvm Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
+          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
+          BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
+          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
+          GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
+          HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+          MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
+          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+          OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
+          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
-          network-name: zkevm
-  check-base-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Base Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
-        with:
-          network-name: base
-  check-fraxtal-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Fraxtal Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
-        with:
-          network-name: fraxtal
-  check-mode-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Mode Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
-        with:
-          network-name: mode
-  check-sepolia-action-ids:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Sepolia Action IDs
-        uses: ./.github/actions/check-network-action-ids
-        env:
-          SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
-        with:
-          network-name: sepolia
+          network-name: ${{ matrix.network }}
 
   check-address-lookup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Prepare Config
@@ -273,7 +83,7 @@ jobs:
   check-timelock-authorizer-config:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up environment
         uses: ./.github/actions/setup
       - name: Prepare Config
@@ -284,10 +94,9 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - uses: actions/checkout@v4
+      - uses: umbrelladocs/action-linkspector@v1
         with:
-          use-quiet-mode: 'yes'
-          config-file: 'mlc_config.json'
+          fail_level: any
 env:
   CI: true

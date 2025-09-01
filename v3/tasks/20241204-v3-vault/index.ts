@@ -1,9 +1,16 @@
 import { VaultDeployment } from './input';
-import { Task, TaskRunOptions } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
 import { ethers } from 'hardhat';
+
+const skipCheckNetworkList = ['optimism', 'hyperevm'];
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
+  if (task.mode === TaskMode.CHECK && skipCheckNetworkList.includes(task.network)) {
+    // Vault was deployed in another task; skip check.
+    return;
+  }
+
   const input = task.input() as VaultDeployment;
 
   const vaultFactoryArgs = [
@@ -31,7 +38,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
-      { gasLimit: 17e6 }
+      { gasLimit: 16e6 }
     ),
     ['Vault', 'VaultExtension', 'VaultAdmin', 'ProtocolFeeController'],
     (await vaultFactory.isDeployed(vaultAddress)) === false,
