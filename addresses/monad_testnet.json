@@ -72,7 +72,7 @@
         "address": "0x36caC20dd805d128c1a6Dd16eeA845C574b5A17C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-router": {
@@ -82,7 +82,7 @@
         "address": "0x85a80afee867aDf27B50BdB7b76DA70f1E853062"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-stable-pool": {
@@ -96,7 +96,7 @@
         "address": "0x67c2A650f6Eda2b448061c8cE6923571493C2aD2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-vault-explorer": {
@@ -106,7 +106,7 @@
         "address": "0x9805dcfD25e6De36bad8fe9D3Fe2c9b44B764102"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241205-v3-weighted-pool": {
