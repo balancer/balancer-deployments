@@ -6,20 +6,18 @@ export const TRANSITION_END_BLOCK = 4316000;
 
 const network = 'sepolia';
 
-const Vault2 = new Task('20210418-vault', TaskMode.READ_ONLY, network);
+const Vault = new Task('20210418-vault', TaskMode.READ_ONLY, network);
 
 const BalancerTokenAdmin = new Task('20220325-balancer-token-admin', TaskMode.READ_ONLY, network);
 const GaugeController = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, network);
 const VotingEscrowDelegationProxy = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, network);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MainnetGaugeFactory = new Task('20220822-mainnet-gauge-factory-v2', TaskMode.READ_ONLY, network);
 const L2VotingEscrowDelegationProxy = new Task('20230316-l2-ve-delegation-proxy', TaskMode.READ_ONLY, network);
 const L2BalancerPseudoMinter = new Task('20230316-l2-balancer-pseudo-minter', TaskMode.READ_ONLY, network);
 const L2Layer0BridgeForwarder = new Task('20230404-l2-layer0-bridge-forwarder', TaskMode.READ_ONLY, network);
 const VeBALRemapper = new Task('20230504-vebal-remapper', TaskMode.READ_ONLY, network);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SmartWalletChecker = new Task('20220420-smart-wallet-checker', TaskMode.READ_ONLY, network);
 const ProtocolFeeWithdrawer = new Task('20220517-protocol-fee-withdrawer', TaskMode.READ_ONLY, network);
 const ProtocolFeePercentagesProvider = new Task(
@@ -28,15 +26,6 @@ const ProtocolFeePercentagesProvider = new Task(
   network
 );
 const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.READ_ONLY, network);
-
-// V3 contracts
-const Vault3 = new Task('20241204-v3-vault', TaskMode.READ_ONLY, network);
-const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2', network);
-const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, network);
-const ProtocolFeeSweeper = new Task('20250214-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
-const ProtocolFeeSweeperV2 = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY, network);
-const PoolPauseHelper = new Task('20241024-v3-pool-pause-helper', TaskMode.READ_ONLY, network);
-const PoolSwapFeeHelper = new Task('20241024-v3-pool-swap-fee-helper', TaskMode.READ_ONLY, network);
 
 export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
@@ -52,7 +41,7 @@ const LONG_DELAY = DAY;
 
 export const RootTransferDelay = LONG_DELAY;
 
-const GrantDelaysV2: DelayData[] = [
+export const GrantDelays: DelayData[] = [
   // BAL is minted by the BalancerMinter. Changing the minter means changing the veBAL liquidity mining system.
   {
     actionId: BalancerTokenAdmin.actionId('BalancerTokenAdmin', 'mint(address,uint256)'),
@@ -71,63 +60,49 @@ const GrantDelaysV2: DelayData[] = [
 
   // Relayer permissions - all of these are dangerous since relayers are powerful, but they also opt-in by each user.
   {
-    actionId: Vault2.actionId('Vault', 'setRelayerApproval(address,address,bool)'),
+    actionId: Vault.actionId('Vault', 'setRelayerApproval(address,address,bool)'),
     newDelay: MEDIUM_DELAY,
   },
   {
-    actionId: Vault2.actionId(
+    actionId: Vault.actionId(
       'Vault',
       'swap((bytes32,uint8,address,address,uint256,bytes),(address,bool,address,bool),uint256,uint256)'
     ),
     newDelay: MEDIUM_DELAY,
   },
   {
-    actionId: Vault2.actionId(
+    actionId: Vault.actionId(
       'Vault',
       'batchSwap(uint8,(bytes32,uint256,uint256,uint256,bytes)[],address[],(address,bool,address,bool),int256[],uint256)'
     ),
     newDelay: MEDIUM_DELAY,
   },
   {
-    actionId: Vault2.actionId('Vault', 'joinPool(bytes32,address,address,(address[],uint256[],bytes,bool))'),
+    actionId: Vault.actionId('Vault', 'joinPool(bytes32,address,address,(address[],uint256[],bytes,bool))'),
     newDelay: MEDIUM_DELAY,
   },
   {
-    actionId: Vault2.actionId('Vault', 'exitPool(bytes32,address,address,(address[],uint256[],bytes,bool))'),
+    actionId: Vault.actionId('Vault', 'exitPool(bytes32,address,address,(address[],uint256[],bytes,bool))'),
     newDelay: MEDIUM_DELAY,
   },
   {
-    actionId: Vault2.actionId('Vault', 'manageUserBalance((uint8,address,uint256,address,address)[])'),
+    actionId: Vault.actionId('Vault', 'manageUserBalance((uint8,address,uint256,address,address)[])'),
     newDelay: MEDIUM_DELAY,
   },
 
   // The permission to withdraw protocol fees is held solely by the ProtocolFeeWithdrawer.
   {
-    actionId: Vault2.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'withdrawCollectedFees(address[],uint256[],address)'),
     newDelay: LONG_DELAY,
   },
   // The permission to modify protocol fees at the Collector is held by the ProtocolFeePercentagesProvider.
   {
-    actionId: Vault2.actionId('ProtocolFeesCollector', 'setSwapFeePercentage(uint256)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'setSwapFeePercentage(uint256)'),
     newDelay: LONG_DELAY,
   },
   {
-    actionId: Vault2.actionId('ProtocolFeesCollector', 'setFlashLoanFeePercentage(uint256)'),
+    actionId: Vault.actionId('ProtocolFeesCollector', 'setFlashLoanFeePercentage(uint256)'),
     newDelay: LONG_DELAY,
-  },
-];
-
-const GrantDelaysV3: DelayData[] = [
-  {
-    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'withdrawProtocolFees(address,address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeController.actionId(
-      'ProtocolFeeController',
-      'withdrawProtocolFeesForToken(address,address,address)'
-    ),
-    newDelay: MEDIUM_DELAY,
   },
 ];
 
@@ -137,70 +112,53 @@ export const Granters: RoleData[] = [];
 
 export const Revokers: RoleData[] = [];
 
-const ExecuteDelaysV2: DelayData[] = [
+export const ExecuteDelays: DelayData[] = [
   // setAuthorizer must be long since no delay can be longer than it.
-  { actionId: Vault2.actionId('Vault', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
-
-  // Actions behind the authorizer adaptor are not compatible, which is why they are commented out.
-  // Ideally we'd set timelocks for some of these actions, but not doing so doesn't represent a huge risk either.
+  { actionId: Vault.actionId('Vault', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
 
   // Allowlisting addresses to hold veBAL is relatively risk free.
-  // {
-  //   actionId: SmartWalletChecker.actionId('SmartWalletChecker', 'allowlistAddress(address)'),
-  //   newDelay: SHORT_DELAY,
-  // },
+  {
+    actionId: SmartWalletChecker.actionId('SmartWalletChecker', 'allowlistAddress(address)'),
+    newDelay: SHORT_DELAY,
+  },
 
   // This action would replace the SmartWalletChecker.
-  // {
-  //   actionId: GaugeController.actionId('VotingEscrow', 'apply_smart_wallet_checker()'),
-  //   newDelay: LONG_DELAY,
-  // },
-
-  // These actions are 'disabled' - we don't mean to ever use them.
-  // {
-  //   actionId: GaugeController.actionId('GaugeController', 'change_type_weight(int128,uint256)'),
-  //   newDelay: LONG_DELAY,
-  // },
-  // {
-  //   actionId: GaugeController.actionId('GaugeController', 'change_gauge_weight(address,uint256)'),
-  //   newDelay: LONG_DELAY,
-  // },
-
-  // These are typically associated with setting up a new network, though they are not strictly needed. They are not
-  // risky however.
-  // {
-  //   actionId: GaugeController.actionId('GaugeController', 'add_type(string)'),
-  //   newDelay: MEDIUM_DELAY,
-  // },
-  // {
-  //   actionId: GaugeController.actionId('GaugeController', 'add_type(string,uint256)'),
-  //   newDelay: MEDIUM_DELAY,
-  // },
-
-  // Gauge configuration
-  // {
-  //   actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'set_reward_distributor(address,address)'),
-  //   newDelay: MEDIUM_DELAY,
-  // },
-  // {
-  //   actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'add_reward(address,address)'),
-  //   newDelay: SHORT_DELAY,
-  // },
-  // {
-  //   actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'setRelativeWeightCap(uint256)'),
-  //   newDelay: SHORT_DELAY,
-  // },
-
-  // We don't currently use this but there's no huge risk in doing so.
   {
-    actionId: BalancerTokenAdmin.actionId('BalancerTokenAdmin', 'snapshot()'),
-    newDelay: MEDIUM_DELAY,
+    actionId: GaugeController.actionId('VotingEscrow', 'apply_smart_wallet_checker()'),
+    newDelay: LONG_DELAY,
   },
 
   // This would replace the ve boost system.
   {
     actionId: VotingEscrowDelegationProxy.actionId('VotingEscrowDelegationProxy', 'setDelegation(address)'),
     newDelay: LONG_DELAY,
+  },
+
+  // These actions are 'disabled' - we don't mean to ever use them.
+  {
+    actionId: GaugeController.actionId('GaugeController', 'change_type_weight(int128,uint256)'),
+    newDelay: LONG_DELAY,
+  },
+  {
+    actionId: GaugeController.actionId('GaugeController', 'change_gauge_weight(address,uint256)'),
+    newDelay: LONG_DELAY,
+  },
+
+  // These are typically associated with setting up a new network, though they are not strictly needed. They are not
+  // risky however.
+  {
+    actionId: GaugeController.actionId('GaugeController', 'add_type(string)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: GaugeController.actionId('GaugeController', 'add_type(string,uint256)'),
+    newDelay: MEDIUM_DELAY,
+  },
+
+  // We don't currently use this but there's no huge risk in doing so.
+  {
+    actionId: BalancerTokenAdmin.actionId('BalancerTokenAdmin', 'snapshot()'),
+    newDelay: MEDIUM_DELAY,
   },
 
   // This creates a new protocol fee type, but there's no huge risk since nothing will use it.
@@ -241,6 +199,12 @@ const ExecuteDelaysV2: DelayData[] = [
     newDelay: MEDIUM_DELAY,
   },
 
+  // Gauge configuration
+  {
+    actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'set_reward_distributor(address,address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+
   // Boost Configuration
   {
     actionId: L2VotingEscrowDelegationProxy.actionId('VotingEscrowDelegationProxy', 'setDelegation(address)'),
@@ -257,6 +221,14 @@ const ExecuteDelaysV2: DelayData[] = [
 
   // Operational actions taken frequently
 
+  {
+    actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'add_reward(address,address)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: MainnetGaugeFactory.actionId('LiquidityGaugeV5', 'setRelativeWeightCap(uint256)'),
+    newDelay: SHORT_DELAY,
+  },
   {
     actionId: ProtocolFeeWithdrawer.actionId(
       'ProtocolFeesWithdrawer',
@@ -279,100 +251,11 @@ const ExecuteDelaysV2: DelayData[] = [
   },
 ];
 
-const ExecuteDelaysV3: DelayData[] = [
-  // setAuthorizer must be long since no delay can be longer than it.
-  { actionId: Vault3.actionId('VaultAdmin', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'disableQueryPermanently()'), newDelay: LONG_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'enableQuery()'), newDelay: MEDIUM_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'disableRecoveryMode()'), newDelay: SHORT_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'setProtocolFeeController(address)'), newDelay: MEDIUM_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'setStaticSwapFeePercentage(address,uint256)'), newDelay: MEDIUM_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'unpausePool(address)'), newDelay: MEDIUM_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'unpauseVault()'), newDelay: MEDIUM_DELAY },
-  { actionId: Vault3.actionId('VaultAdmin', 'unpauseVaultBuffers()'), newDelay: MEDIUM_DELAY },
-
-  {
-    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setGlobalProtocolSwapFeePercentage(uint256)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setGlobalProtocolYieldFeePercentage(uint256)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setProtocolSwapFeePercentage(address,uint256)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setProtocolYieldFeePercentage(address,uint256)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: BalancerContractRegistry.actionId(
-      'BalancerContractRegistry',
-      'addOrUpdateBalancerContractAlias(string,address)'
-    ),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: BalancerContractRegistry.actionId('BalancerContractRegistry', 'deprecateBalancerContract(address)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: BalancerContractRegistry.actionId('BalancerContractRegistry', 'deregisterBalancerContract(string)'),
-    newDelay: SHORT_DELAY,
-  },
-  {
-    actionId: BalancerContractRegistry.actionId(
-      'BalancerContractRegistry',
-      'registerBalancerContract(uint8,string,address)'
-    ),
-    newDelay: SHORT_DELAY,
-  },
-
-  {
-    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
-    newDelay: MEDIUM_DELAY,
-  },
-
-  {
-    actionId: PoolPauseHelper.actionId('PoolPauseHelper', 'addPools(address[])'),
-    newDelay: MEDIUM_DELAY,
-  },
-  {
-    actionId: PoolSwapFeeHelper.actionId('PoolSwapFeeHelper', 'addPools(address[])'),
-    newDelay: MEDIUM_DELAY,
-  },
-];
-
-export const GrantDelays = [...GrantDelaysV2, ...GrantDelaysV3];
-export const ExecuteDelays = [...ExecuteDelaysV2, ...ExecuteDelaysV3];
-
 // Checks
 
 const actionIds = [
-  ExecuteDelaysV2.map((delayData) => delayData.actionId),
-  GrantDelaysV2.map((delayData) => delayData.actionId),
+  ExecuteDelays.map((delayData) => delayData.actionId),
+  GrantDelays.map((delayData) => delayData.actionId),
 ].flat();
 
 if (new Set(actionIds).size !== actionIds.length) {
@@ -380,8 +263,8 @@ if (new Set(actionIds).size !== actionIds.length) {
 }
 
 const delays = [
-  ExecuteDelaysV2.map((delayData) => delayData.newDelay),
-  GrantDelaysV2.map((delayData) => delayData.newDelay),
+  ExecuteDelays.map((delayData) => delayData.newDelay),
+  GrantDelays.map((delayData) => delayData.newDelay),
 ].flat();
 
 if (delays.some((delay) => delay < SHORT_DELAY || delay > LONG_DELAY)) {
