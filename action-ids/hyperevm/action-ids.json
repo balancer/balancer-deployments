@@ -328,5 +328,14 @@
         "transferOwnership(address)": "0xe5475bb58d406d6469b78319a49e4ef4541b9182065f46a9390743eff116f8c7"
       }
     }
+  },
+  "20250828-v3-hyperevm-rate-provider": {
+    "HyperEVMRateProviderFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(uint32,uint32)": "0x00aa66ec3a9eb6f3e64c391759631bd278b97a642da3e3f7f804e0e49397cc8f",
+        "disable()": "0xcd8f331b7c518f4af90bfbdb07f0fa1ed9696434b18322ae3727f11d50bd41a3"
+      }
+    }
   }
 }
