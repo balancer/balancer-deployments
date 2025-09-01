@@ -30,6 +30,7 @@ const LONG_DELAY = DAY;
 export const RootTransferDelay = LONG_DELAY;
 
 export const GrantDelays: DelayData[] = [
+  // Fee controller permissions do not affect user funds and are rather infrequent, but do affect collected fees.
   {
     actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'withdrawProtocolFees(address,address)'),
     newDelay: MEDIUM_DELAY,
@@ -52,15 +53,24 @@ export const Revokers: RoleData[] = [];
 export const ExecuteDelays: DelayData[] = [
   // setAuthorizer must be long since no delay can be longer than it.
   { actionId: Vault.actionId('VaultAdmin', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
+  // Queries can be disabled without making it permanent; we must be sure about this.
   { actionId: Vault.actionId('VaultAdmin', 'disableQueryPermanently()'), newDelay: LONG_DELAY },
+  // If queries were disabled it was probably for a good reason; it might be dangerous to re-enable.
   { actionId: Vault.actionId('VaultAdmin', 'enableQuery()'), newDelay: MEDIUM_DELAY },
+  // Disabling recovery mode is low impact.
   { actionId: Vault.actionId('VaultAdmin', 'disableRecoveryMode()'), newDelay: SHORT_DELAY },
+  // The fee controller might need replacement, although other than fees it's not dangerous in terms of user funds.
   { actionId: Vault.actionId('VaultAdmin', 'setProtocolFeeController(address)'), newDelay: MEDIUM_DELAY },
+  // This is operational, but whoever can call this can set the swap fee percentage for any pool, so it must be checked.
   { actionId: Vault.actionId('VaultAdmin', 'setStaticSwapFeePercentage(address,uint256)'), newDelay: MEDIUM_DELAY },
+  // Unpausing a pool is probably dangerous, and is rarely done anyway.
   { actionId: Vault.actionId('VaultAdmin', 'unpausePool(address)'), newDelay: MEDIUM_DELAY },
+  // Same for the Vault.
   { actionId: Vault.actionId('VaultAdmin', 'unpauseVault()'), newDelay: MEDIUM_DELAY },
+  // And same for the buffers.
   { actionId: Vault.actionId('VaultAdmin', 'unpauseVaultBuffers()'), newDelay: MEDIUM_DELAY },
 
+  // Changing protocol fee percentages for a pool or in general is low impact, operational but rarely done.
   {
     actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setGlobalProtocolSwapFeePercentage(uint256)'),
     newDelay: SHORT_DELAY,
@@ -77,6 +87,8 @@ export const ExecuteDelays: DelayData[] = [
     actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setProtocolYieldFeePercentage(address,uint256)'),
     newDelay: SHORT_DELAY,
   },
+
+  // The contract registry has mild impact when it comes to trusted routers.
   {
     actionId: BalancerContractRegistry.actionId(
       'BalancerContractRegistry',
@@ -100,6 +112,7 @@ export const ExecuteDelays: DelayData[] = [
     newDelay: SHORT_DELAY,
   },
 
+  // Protocol fee sweeper changes are operational and might drain fees if done incorrectly, so medium delay.
   {
     actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
     newDelay: MEDIUM_DELAY,
@@ -125,6 +138,7 @@ export const ExecuteDelays: DelayData[] = [
     newDelay: MEDIUM_DELAY,
   },
 
+  // Any pool can be paused or have its swap fee changed, so medium delay.
   {
     actionId: PoolPauseHelper.actionId('PoolPauseHelper', 'addPools(address[])'),
     newDelay: MEDIUM_DELAY,

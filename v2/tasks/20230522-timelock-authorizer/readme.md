@@ -5,6 +5,7 @@ This Authorizer implementation allows defining a delay per action identifier. Us
 
 ## Useful Files
 
+- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/db24e8372ac7fa51e5db65bfa961697382f68337).
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`TimelockAuthorizer` artifact](./artifact/TimelockAuthorizer.json)
 - [`TimelockAuthorizerMigrator` artifact](./artifact/TimelockAuthorizerMigrator.json)
