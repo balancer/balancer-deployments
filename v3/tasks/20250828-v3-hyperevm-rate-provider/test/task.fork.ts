@@ -8,7 +8,7 @@ describeForkTest('V3-HyperEVMRateProviderFactory', 'hyperevm', 12336700, functio
   let vault: Contract, factory: Contract;
 
   const FACTORY_NAME = 'HyperEVMRateProviderFactory';
-  const VERSION_NUMBER = 1;
+  const VERSION_NUMBER = 2;
 
   before('run task', async () => {
     task = new Task('20250828-v3-hyperevm-rate-provider', TaskMode.TEST, getForkedNetwork(hre));

@@ -8,8 +8,8 @@ export type HyperEVMRateProviderFactoryDeployment = {
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 
-const BaseVersion = { version: 1, deployment: '20250828-v3-hyperevm-rate-provider' };
-const RateProviderVersion = 1;
+const BaseVersion = { version: 2, deployment: '20250828-v3-hyperevm-rate-provider' };
+const RateProviderVersion = 2;
 
 export default {
   Vault,
