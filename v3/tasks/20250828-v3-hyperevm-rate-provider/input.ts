@@ -4,8 +4,6 @@ export type HyperEVMRateProviderFactoryDeployment = {
   Vault: string;
   FactoryVersion: string;
   RateProviderVersion: number;
-  ExampleTokenIndex: number;
-  ExamplePairIndex: number;
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
@@ -17,6 +15,4 @@ export default {
   Vault,
   FactoryVersion: JSON.stringify({ name: 'HyperEVMRateProviderFactory', ...BaseVersion }),
   RateProviderVersion,
-  ExampleTokenIndex: 1,
-  ExamplePairIndex: 0,
 };

@@ -406,19 +406,5 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
-  },
-  "20250828-v3-hyperevm-rate-provider": {
-    "contracts": [
-      {
-        "name": "HyperEVMRateProviderFactory",
-        "address": "0x9179C06629ef7f17Cb5759F501D89997FE0E7b45"
-      },
-      {
-        "name": "MockHyperEVMRateProvider",
-        "address": "0xCeEDaf7Fab79CC06103439E2aAF7F0B3276EA34f"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
   }
 }
