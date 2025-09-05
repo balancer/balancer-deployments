@@ -20,6 +20,7 @@ jobs:
   check-deployments:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
@@ -43,9 +44,10 @@ jobs:
         with:
           network-name: ${{ matrix.network }}
 
-  check-mainnet-action-ids:
+  check-action-ids:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
