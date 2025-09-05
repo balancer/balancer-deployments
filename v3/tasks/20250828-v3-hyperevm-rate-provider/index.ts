@@ -20,7 +20,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       const mockRateProviderAddress = event.args.rateProvider;
 
       saveContractDeploymentTransactionHash(mockRateProviderAddress, receipt.transactionHash, task.network);
-      task.save({ MockRateProvider: mockRateProviderAddress });
+      task.save({ MockHyperEVMRateProvider: mockRateProviderAddress });
     }
 
     const mockRateProvider = await task.instanceAt('HyperEVMRateProvider', task.output()['MockHyperEVMRateProvider']);
