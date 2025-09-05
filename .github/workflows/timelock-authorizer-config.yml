@@ -13,6 +13,7 @@ jobs:
   verify-timelock-authorizer-config:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
     steps:
