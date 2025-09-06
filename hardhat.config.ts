@@ -504,6 +504,14 @@ export default {
         },
       },
       {
+        network: 'monad_testnet',
+        chainId: 10143,
+        urls: {
+          apiURL: 'https://explorer.monad-testnet.category.xyz/api',
+          browserURL: 'https://explorer.monad-testnet.category.xyz/',
+        },
+      },
+      {
         network: 'avalanche',
         chainId: 43114,
         urls: {
