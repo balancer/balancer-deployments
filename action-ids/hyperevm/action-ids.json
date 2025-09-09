@@ -337,5 +337,19 @@
         "disable()": "0x125f8185b9efebee1266720f09cd756bd130f70cb24b5929efa8ff3df158e86f"
       }
     }
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "LBPMigrationRouter": {
+      "useAdaptor": true,
+      "actionIds": {}
+    },
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address)": "0x79ad72588e196b8bb0116f40facd7bff3825f55cbe12c3616b1aeddd33577e39",
+        "createWithMigration(string,string,(address,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool),uint256,bytes32,address,uint256,uint256,uint256,uint256)": "0xbf2c4e4bed71b535db21d1736935f9b63569b371ca844f694f058ce79bae9ac3",
+        "disable()": "0x668986fc2832f58b18f6dbb6bd3930239eb176f8c74768d3386c75061f84eabd"
+      }
+    }
   }
 }
