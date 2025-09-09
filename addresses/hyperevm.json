@@ -373,6 +373,24 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0xa1D0791a41318c775707C56eAe247AF81a05322C"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x40330BB045E24CdE97B019F13c44D0B552CD3be5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250702-v3-reclamm-pool-v2": {
     "contracts": [
       {

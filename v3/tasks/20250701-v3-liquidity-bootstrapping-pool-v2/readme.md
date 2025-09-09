@@ -13,6 +13,7 @@ Migration is optional, and is defined when the LBP is created.
 - [Gnosis mainnet addresses](./output/gnosis.json)
 - [Arbitrum mainnet addresses](./output/arbitrum.json)
 - [Base mainnet addresses](./output/base.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
