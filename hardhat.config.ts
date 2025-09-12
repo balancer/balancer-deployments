@@ -519,6 +519,19 @@ export default {
           browserURL: 'https://hyperevmscan.io/',
         },
       },
+      {
+        network: 'monad',
+        chainId: 143,
+        urls: {
+          apiURL: 'https://sourcify-api-monad.blockvision.org',
+          browserURL: 'https://mainnet-beta.monvision.io/',
+        },
+      },
     ],
+  },
+  sourcify: {
+    enabled: true,
+    apiUrl: "https://sourcify-api-monad.blockvision.org",
+    browserUrl: "https://mainnet-beta.monvision.io/"
   },
 };

@@ -19,6 +19,7 @@ export const NETWORKS = [
   'fraxtal',
   'mode',
   'hyperevm',
+  'monad',
 ];
 
 export type Network = (typeof NETWORKS)[number];
