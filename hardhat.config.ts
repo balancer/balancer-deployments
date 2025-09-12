@@ -519,6 +519,14 @@ export default {
           browserURL: 'https://hyperevmscan.io/',
         },
       },
+      {
+        network: 'plasma',
+        chainId: 9745,
+        urls: {
+          apiURL: 'https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan',
+          browserURL: 'https://plasmascan.to/',
+        },
+      },
     ],
   },
 };
