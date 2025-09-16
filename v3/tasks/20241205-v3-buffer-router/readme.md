@@ -13,5 +13,6 @@ Contains `BufferRouter` to initialize and manage liquidity positions for buffers
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BufferRouter` artifact](./artifact/BufferRouter.json)

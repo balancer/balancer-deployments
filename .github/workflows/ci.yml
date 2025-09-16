@@ -69,6 +69,7 @@ jobs:
           FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
           HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
+          PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
         run: yarn test --bail

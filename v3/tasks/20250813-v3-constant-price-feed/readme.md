@@ -12,6 +12,7 @@ This contract is useful as the price feed for oracles when the market price feed
 - [Base mainnet addresses](./output/base.json)
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ConstantPriceFeed` artifact](./artifact/ConstantPriceFeed.json)

@@ -50,5 +50,9 @@
   "hyperevm": {
     "chainId": 999,
     "block-explorer": "https://www.hyperscan.com"
+  },
+  "plasma": {
+    "chainId": 9745,
+    "block-explorer": "https://plasmascan.to/"
   }
 }

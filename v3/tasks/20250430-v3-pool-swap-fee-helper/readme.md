@@ -12,5 +12,6 @@ The Pool Swap Fee Helper contract enables granular control over the power to set
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`PoolSwapFeeHelper` artifact](./artifact/PoolSwapFeeHelper.json)
