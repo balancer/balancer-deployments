@@ -18,6 +18,7 @@ Internal mechanics and pool math remain the same as the previous version, which 
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)
