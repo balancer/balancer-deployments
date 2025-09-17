@@ -18,5 +18,6 @@ Note that unpausing is not addressed here, and still must be explicitly granted 
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`PoolPauseHelper` artifact](./artifact/PoolPauseHelper.json)
