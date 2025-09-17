@@ -65,7 +65,9 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('can create a pool set', async () => {
-    poolSetId = await pauseHelper.connect(admin)["createPoolSet(address,address[])"](manager.address, [pool.address]);
+    await pauseHelper.connect(admin)["createPoolSet(address,address[])"](manager.address, [pool.address]);
+
+    poolSetId = await pauseHelper.getPoolSetIdForManager(manager.address);
 
     expect(await pauseHelper.getManagerForPoolSet(poolSetId)).to.eq(manager.address);
     expect(await pauseHelper.getPoolCountForSet(poolSetId)).to.eq(1);
@@ -82,9 +84,9 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('can transfer pause permission', async () => {
-    await pauseHelper.connect(manager).transferPoolSetOwnership(newManager);
+    await pauseHelper.connect(manager).transferPoolSetOwnership(newManager.address);
 
-    expect(await pauseHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager);
+    expect(await pauseHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager.address);
   });
 
   it('new manager can pause pools', async () => {
