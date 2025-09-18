@@ -1026,7 +1026,7 @@
         "address": "0x3b0b1F85792082500CD3acE3C58f2297edc19146"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
