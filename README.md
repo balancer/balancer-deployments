@@ -156,6 +156,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Weighted LP Oracle                                  | [`20250814-v3-weighted-pool-oracle`](./v3/tasks/20250814-v3-weighted-pool-oracle)                       |
 | V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
+| Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
 
 ## Scripts
 
