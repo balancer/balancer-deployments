@@ -5,7 +5,7 @@ import { BigNumber, fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { PoolPauseHelperDeployment } from "../input";
+import { PoolPauseHelperDeployment } from '../input';
 
 describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
   const TASK_NAME = '20250919-v3-pool-pause-helper-v2';
@@ -65,7 +65,7 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('can create a pool set', async () => {
-    await pauseHelper.connect(admin)["createPoolSet(address,address[])"](manager.address, [pool.address]);
+    await pauseHelper.connect(admin)['createPoolSet(address,address[])'](manager.address, [pool.address]);
 
     poolSetId = await pauseHelper.getPoolSetIdForManager(manager.address);
 
