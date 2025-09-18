@@ -788,7 +788,7 @@
         "address": "0x65A22Ec32c37835Ad5E77Eb6f7452Ac59E113a9F"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
