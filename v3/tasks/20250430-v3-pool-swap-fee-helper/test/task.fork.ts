@@ -50,7 +50,7 @@ describeForkTest('V3-PoolSwapFeeHelper', 'mainnet', 22348940, function () {
   before('grant permissions', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    // Grant the helper permission to set protocol fees.
+    // Grant the helper permission to set pool swap fees.
     await authorizer
       .connect(govMultisig)
       .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.address);
