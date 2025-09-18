@@ -6,7 +6,7 @@ import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSig
 import { actionId } from '@helpers/models/misc/actions';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-describeForkTest('V3-ProtocolFeeHelper', 'mainnet', 22348940, function () {
+describeForkTest.skip('V3-ProtocolFeeHelper', 'mainnet', 22348940, function () {
   const TASK_NAME = '20250430-v3-protocol-fee-helper';
   const CONTRACT_NAME = 'ProtocolFeeHelper';
 
