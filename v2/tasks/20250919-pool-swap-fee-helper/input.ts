@@ -16,13 +16,16 @@ export default {
   arbitrum: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  base: {
-    HelperAdmin: MaxiOmniMultisig,
-  },
   avalanche: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  optimism: {
+  base: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  bsc: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  fraxtal: {
     HelperAdmin: MaxiOmniMultisig,
   },
   gnosis: {
@@ -31,10 +34,19 @@ export default {
   mainnet: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  hyperevm: {
+  mode: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  optimism: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  polygon: {
     HelperAdmin: MaxiOmniMultisig,
   },
   sepolia: {
     HelperAdmin: SepoliaAdmin,
+  },
+  zkevm: {
+    HelperAdmin: MaxiOmniMultisig,
   },
 };
