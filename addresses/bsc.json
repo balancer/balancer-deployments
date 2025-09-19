@@ -424,5 +424,15 @@
     ],
     "status": "ACTIVE",
     "version": "v2"
+  },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x7A2535f5fB47b8e44c02Ef5D9990588313fe8F05"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
   }
 }
