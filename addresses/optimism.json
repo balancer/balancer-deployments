@@ -743,6 +743,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -1136,6 +1146,16 @@
       {
         "name": "ConstantPriceFeed",
         "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x355bD33F0033066BB3DE396a6d069be57353AD95"
       }
     ],
     "status": "ACTIVE",

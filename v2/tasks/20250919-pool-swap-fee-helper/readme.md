@@ -7,4 +7,16 @@ The swap fee helper is deployed with an admin account (e.g., the Maxi's multisig
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v2-monorepo/commit/46a0969457abe6d0348f6be7df6b315695269754)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Polygon mainnet addresses](./output/polygon.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [BSC mainnet addresses](./output/bsc.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Polygon zkeVM mainnet addresses](./output/zkevm.json)
+- [Base mainnet addresses](./output/base.json)
+- [Fraxtal mainnet addresses](./output/fraxtal.json)
+- [Mode mainnet addresses](./output/mode.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`PoolSwapFeeHelper` artifact](./artifact/PoolSwapFeeHelper.json)

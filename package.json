@@ -56,7 +56,7 @@
     "@ethereumjs/evm": "^3.1.1",
     "@ethersproject/contracts": "^5.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
-    "@nomicfoundation/hardhat-verify": "^2.0.12",
+    "@nomicfoundation/hardhat-verify": "^2.1.1",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-vyper": "^3.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.6",
