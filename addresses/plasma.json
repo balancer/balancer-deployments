@@ -275,16 +275,6 @@
     "status": "DEPRECATED",
     "version": "v3"
   },
-  "20250430-v3-protocol-fee-helper": {
-    "contracts": [
-      {
-        "name": "ProtocolFeeHelper",
-        "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
-  },
   "20250502-v3-fee-percentages-provider": {
     "contracts": [
       {
