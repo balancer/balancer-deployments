@@ -5,5 +5,4 @@ The Protocol Fee Helper contract enables granular control over the power to set 
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/ab48d59c4a922327a127a2959470a8161409559d)
-- [Plasma mainnet addresses](./output/plasma.json)
 - [`ProtocolFeeHelper` artifact](./artifact/ProtocolFeeHelper.json)
