@@ -215,17 +215,6 @@
       }
     }
   },
-  "20250430-v3-protocol-fee-helper": {
-    "ProtocolFeeHelper": {
-      "useAdaptor": false,
-      "actionIds": {
-        "addPools(address[])": "0x7da01995a41e58160884c3dce13a52c4f836ac2027063699529106ae58752d32",
-        "removePools(address[])": "0xe66729dbf88847d3745eb0908a7adb08a738e224c5962b99af9ba1e039be2248",
-        "setProtocolSwapFeePercentage(address,uint256)": "0xd714e1dfa5f708f1c38629de73e2231f884e7cc444e34ef8c4881b76fa2372b1",
-        "setProtocolYieldFeePercentage(address,uint256)": "0x15ba6194e053620a16440107475f1c4e937c24b04bde27362e7fd0d75e9390bd"
-      }
-    }
-  },
   "20250502-v3-fee-percentages-provider": {
     "ProtocolFeePercentagesProvider": {
       "useAdaptor": false,
