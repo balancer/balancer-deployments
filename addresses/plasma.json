@@ -231,6 +231,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250411-balancer-registry-initializer-v2": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
   "20250418-v3-wrapped-bpt": {
     "contracts": [
       {
