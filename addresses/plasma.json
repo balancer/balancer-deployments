@@ -231,6 +231,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250411-balancer-registry-initializer-v2": {
+    "contracts": [
+      {
+        "name": "BalancerContractRegistryInitializer",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v3"
+  },
   "20250418-v3-wrapped-bpt": {
     "contracts": [
       {
@@ -263,16 +273,6 @@
       }
     ],
     "status": "DEPRECATED",
-    "version": "v3"
-  },
-  "20250430-v3-protocol-fee-helper": {
-    "contracts": [
-      {
-        "name": "ProtocolFeeHelper",
-        "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
-      }
-    ],
-    "status": "ACTIVE",
     "version": "v3"
   },
   "20250502-v3-fee-percentages-provider": {
