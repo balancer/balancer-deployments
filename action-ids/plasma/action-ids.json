@@ -268,29 +268,7 @@
       }
     }
   },
-  "20250530-v3-balancer-fee-burner": {
-    "BalancerFeeBurner": {
-      "useAdaptor": true,
-      "actionIds": {}
-    }
-  },
-  "20250530-v3-cow-swap-fee-burner-v2": {
-    "CowSwapFeeBurner": {
-      "useAdaptor": true,
-      "actionIds": {}
-    }
-  },
-  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
-    "ERC4626CowSwapFeeBurner": {
-      "useAdaptor": true,
-      "actionIds": {}
-    }
-  },
   "20250701-v3-liquidity-bootstrapping-pool-v2": {
-    "LBPMigrationRouter": {
-      "useAdaptor": true,
-      "actionIds": {}
-    },
     "LBPoolFactory": {
       "useAdaptor": false,
       "actionIds": {
