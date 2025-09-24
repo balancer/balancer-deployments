@@ -147,6 +147,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250228-v3-protocol-fee-sweeper": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0x47B489bf5836f83ABD928C316F8e39bC0587B020"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
   "20250307-v3-router-v2": {
     "contracts": [
       {
@@ -285,11 +295,69 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeSweeper",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250507-v3-aggregator-batch-router": {
     "contracts": [
       {
         "name": "AggregatorBatchRouter",
         "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-balancer-fee-burner": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x8e3fEaAB11b7B351e3EA1E01247Ab6ccc847dD52"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "CowSwapFeeBurner",
+        "address": "0xaD89051bEd8d96f045E8912aE1672c6C0bF8a85E"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250530-v3-erc4626-cow-swap-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "ERC4626CowSwapFeeBurner",
+        "address": "0x311334883921Fb1b813826E585dF1C2be4358615"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250701-v3-liquidity-bootstrapping-pool-v2": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0x0f08eEf2C785AA5e7539684aF04755dEC1347b7c"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xc49a3d36aD36c69216b4B534b3cCf34039143f87"
       }
     ],
     "status": "ACTIVE",
@@ -314,6 +382,16 @@
       {
         "name": "ConstantPriceFeed",
         "address": "0x25EA7b202CD8447e8E6F4A7C59b19C66DfEf1925"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xc9b36096f5201ea332Db35d6D195774ea0D5988f"
       }
     ],
     "status": "ACTIVE",
