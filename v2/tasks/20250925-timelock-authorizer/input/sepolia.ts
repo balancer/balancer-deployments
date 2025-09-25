@@ -2,7 +2,7 @@ import { DAY, HOUR } from '@helpers/time';
 import { Task, TaskMode } from '@src';
 import { DelayData, RoleData } from './types';
 
-export const TRANSITION_END_BLOCK = 4316000;
+export const TRANSITION_END_BLOCK = 9279300;
 
 const network = 'sepolia';
 
