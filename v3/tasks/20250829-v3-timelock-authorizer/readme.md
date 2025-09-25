@@ -5,7 +5,7 @@ This Authorizer implementation allows defining a delay per action identifier. Us
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/23c7fbc761e3bd442c03eeb48407a560f51a7ae5).
+- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/88e3db46eb668353cfb4e66a1dc33ba9db284cb3).
 - [`TimelockAuthorizer` artifact](./artifact/TimelockAuthorizer.json)
 - [`TimelockAuthorizerMigrator` artifact](./artifact/TimelockAuthorizerMigrator.json)
 - [`TimelockExecutionHelper` artifact](./artifact/TimelockExecutionHelper.json)
