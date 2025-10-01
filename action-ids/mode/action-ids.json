@@ -267,5 +267,23 @@
         "updateTokenRateCache(address)": "0x0de31dd9b4271162a24ad9c87f73dcf5433e4b45a183ff0efe7a8983b0ed1a1c"
       }
     }
+  },
+  "20250919-pool-swap-fee-helper": {
+    "PoolSwapFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x288b1ed252f0bce2b2572c361e604ff54f48faa8931d0ea26542a92fff5ece23",
+        "addPoolsToSet(uint256,bytes32[])": "0xce7f55a75e1d61474238fdd94962d2c19eab4ee300eeafc679d8ca339a0d0d7a",
+        "createPoolSet(address)": "0xba8b309d4154bd164eb95147535e9ad0f41ca708381c7e381480c43b47d357f4",
+        "createPoolSet(address,bytes32[])": "0xcae39a61b1ff8f8412804f902b220f2c7e96a5eb67d8a62e7a327a8775246806",
+        "destroyPoolSet(uint256)": "0xb45425ee007dd9ca7b6f246bfd025d430f68dd2a84e8ac45f68e74eb1a4ed19c",
+        "forceTransferOwnership(address)": "0xbb9c4694f0f80db6d64bb3f0893c6ce3f1bd040406836637143c324ebcbda294",
+        "removePoolsFromSet(uint256,bytes32[])": "0xe94927e308b7d78d10f19dd8d7bb3eb7653e3d51f0a4eabdf83de60147469695",
+        "renounceOwnership()": "0xb6482dc234b5a4f92bddfdffff30ccb0d9c184b26ac81554ddf73c1d3a657b01",
+        "setSwapFeePercentage(bytes32,uint256)": "0x3c61af6dcbb86f64dee683a9e9c6909b4563d59924cd2cb9a5e9dde62f752e60",
+        "transferOwnership(address)": "0x469dadf4e501417596901382340695556622c4f5aeb1c019a83245268592f72a",
+        "transferPoolSetOwnership(address)": "0x01ec4bbf82bf856ff4e6e4facb7d489aaeb6cd84f0f285f46a4f6296d7ea8462"
+      }
+    }
   }
 }

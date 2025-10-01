@@ -142,6 +142,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
 | V3 Pool Pause Helper                                   | [`20250430-v3-pool-pause-helper`](./v3/tasks/20250430-v3-pool-pause-helper)                             |
 | V3 Pool Swap Fee Helper                                | [`20250430-v3-pool-swap-fee-helper`](./v3/tasks/20250430-v3-pool-swap-fee-helper)                       |
+| V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
 | V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
@@ -156,6 +157,8 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
 | V3 Protocol Fee Helper (V2)                            | [`20250919-v3-protocol-fee-helper-v2`](./v3/tasks/20250919-v3-protocol-fee-helper-v2)                   |
+| V3 Pool Swap Fee Helper (V2)                           | [`20250919-v3-pool-swap-fee-helper-v2`](./v3/tasks/20250919-v3-pool-swap-fee-helper-v2)                 |
+| Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
 
 ## Scripts
 
@@ -254,3 +257,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |
 | V3 Protocol Fee Helper                              | [`20250430-v3-protocol-fee-helper`](./v3/deprecated/20250430-v3-protocol-fee-helper)                     |
+| V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |

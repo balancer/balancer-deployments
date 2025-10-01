@@ -132,7 +132,7 @@ export default class Verifier {
     return {
       ...input,
       sources: Object.keys(input.sources)
-        .filter((source) => importedSourceNames.has(source) || source.includes('IERC'))
+        .filter((source) => importedSourceNames.has(source) || source.includes('@openzeppelin'))
         .map((source) => ({ [source]: input.sources[source] }))
         .reduce((previous, current) => Object.assign(previous, current), {}),
     };
