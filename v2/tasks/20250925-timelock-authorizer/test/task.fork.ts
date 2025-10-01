@@ -18,7 +18,11 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 function doForkTestsOnNetwork(network: string, block: number) {
   describeForkTest(`TimelockAuthorizer ${network}`, network, block, function () {
     let input: TimelockAuthorizerDeployment;
-    let migrator: Contract, vault: Contract, newAuthorizer: Contract, oldAuthorizer: Contract;
+    let migrator: Contract,
+      vault: Contract,
+      newAuthorizer: Contract,
+      oldAuthorizer: Contract,
+      authorizerWrapper: Contract;
     let root: SignerWithAddress;
     let task: Task;
 
@@ -44,6 +48,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const multisig = await impersonate(input.Root, fp(100));
       const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
       await oldAuthorizer.connect(multisig).grantRolesToMany([setAuthorizerActionId], [migrator.address]);
+
+      const authorizerWrapperTask = new Task('20230414-authorizer-wrapper', TaskMode.READ_ONLY, getForkedNetwork(hre));
+      authorizerWrapper = await authorizerWrapperTask.deployedInstance('AuthorizerWithAdaptorValidation');
     });
 
     it('migrates all roles properly', async () => {
@@ -79,7 +86,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
     it('does not set the new authorizer immediately', async () => {
       expect(await newAuthorizer.isRoot(migrator.address)).to.be.true;
-      expect(await vault.getAuthorizer()).to.be.equal(oldAuthorizer.address);
+      // At this block height, permissions are granted in the "actual" authorizer, but the vault points
+      // to the authorizer wrapper (i.e. with adaptor validation).
+      expect(await vault.getAuthorizer()).to.be.equal(authorizerWrapper.address);
     });
 
     it('finalizes the migration once new root address claims root status', async () => {
