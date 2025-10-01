@@ -6,5 +6,5 @@ Note that as in V1, unpausing is not addressed here, and still must be explicitl
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/2a73ff06cfe55482bdebc37ee74ca3b93d9ea062)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/3ee90727e175957fda6daa231c984a2fffba2a02)
 - [`PoolPauseHelper` artifact](./artifact/PoolPauseHelper.json)
