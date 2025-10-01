@@ -1,9 +1,0 @@
-import { PoolSwapFeeHelperDeployment } from './input';
-import { Task, TaskRunOptions } from '@src';
-
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
-  const input = task.input() as PoolSwapFeeHelperDeployment;
-
-  await task.deployAndVerify('PoolSwapFeeHelper', [input.Vault], from, force);
-};

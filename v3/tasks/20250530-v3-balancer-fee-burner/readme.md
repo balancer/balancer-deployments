@@ -12,5 +12,6 @@ Contains the `BalancerFeeBurner` contract, which is used to burn protocol fees t
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BalancerFeeBurner` artifact](./artifact/BalancerFeeBurner.json)

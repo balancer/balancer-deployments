@@ -320,7 +320,7 @@
         "address": "0x0f08eEf2C785AA5e7539684aF04755dEC1347b7c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
@@ -434,6 +434,16 @@
       {
         "name": "MockHyperEVMRateProvider",
         "address": "0xb18fA0cb5DE8cecB8899AAE6e38b1B7ed77885dA"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x309abcAeFa19CA6d34f0D8ff4a4103317c138657"
       }
     ],
     "status": "ACTIVE",
