@@ -4,5 +4,5 @@ This second deployment of the Protocol Fee Helper contract enables granular cont
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/2a73ff06cfe55482bdebc37ee74ca3b93d9ea062)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/3ee90727e175957fda6daa231c984a2fffba2a02)
 - [`ProtocolFeeHelper` artifact](./artifact/ProtocolFeeHelper.json)
