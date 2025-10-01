@@ -26,6 +26,7 @@ const ProtocolFeePercentagesProvider = new Task(
   network
 );
 const ProtocolIdRegistry = new Task('20230223-protocol-id-registry', TaskMode.READ_ONLY, network);
+const PoolSwapFeeHelper = new Task('20250919-pool-swap-fee-helper', TaskMode.READ_ONLY, network);
 
 export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
@@ -247,6 +248,16 @@ export const ExecuteDelays: DelayData[] = [
 
   {
     actionId: VeBALRemapper.actionId('VotingEscrowRemapper', 'setNetworkRemappingManager(address,address)'),
+    newDelay: SHORT_DELAY,
+  },
+
+  // Any pool can have its swap fee changed, but this is a relatively operational action.
+  {
+    actionId: PoolSwapFeeHelper.actionId('PoolSwapFeeHelper', 'createPoolSet(address,bytes32[])'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: PoolSwapFeeHelper.actionId('PoolSwapFeeHelper', 'addPoolsToSet(uint256,bytes32[])'),
     newDelay: SHORT_DELAY,
   },
 ];

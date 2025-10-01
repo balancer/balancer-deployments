@@ -8,12 +8,11 @@ const network = 'sepolia';
 
 // V3 contracts
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY, network);
-const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2', network);
+const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY, network);
 const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, network);
-const ProtocolFeeSweeper = new Task('20250214-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
+const ProtocolFeeSweeper = new Task('20250228-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
 const ProtocolFeeSweeperV2 = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY, network);
-const PoolPauseHelper = new Task('20241024-v3-pool-pause-helper', TaskMode.READ_ONLY, network);
-const PoolSwapFeeHelper = new Task('20241024-v3-pool-swap-fee-helper', TaskMode.READ_ONLY, network);
+const PoolSwapFeeHelperV2 = new Task('20250919-v3-pool-swap-fee-helper-v2', TaskMode.READ_ONLY, network);
 
 export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
@@ -28,6 +27,8 @@ const MEDIUM_DELAY = 3 * HOUR;
 const LONG_DELAY = DAY;
 
 export const RootTransferDelay = LONG_DELAY;
+
+console.log('about to get grant delays; network: ', ProtocolFeeController.network);
 
 export const GrantDelays: DelayData[] = [
   // Fee controller permissions do not affect user funds and are rather infrequent, but do affect collected fees.
@@ -58,7 +59,7 @@ export const ExecuteDelays: DelayData[] = [
   // If queries were disabled it was probably for a good reason; it might be dangerous to re-enable.
   { actionId: Vault.actionId('VaultAdmin', 'enableQuery()'), newDelay: MEDIUM_DELAY },
   // Disabling recovery mode is low impact.
-  { actionId: Vault.actionId('VaultAdmin', 'disableRecoveryMode()'), newDelay: SHORT_DELAY },
+  { actionId: Vault.actionId('VaultAdmin', 'disableRecoveryMode(address)'), newDelay: SHORT_DELAY },
   // The fee controller might need replacement, although other than fees it's not dangerous in terms of user funds.
   { actionId: Vault.actionId('VaultAdmin', 'setProtocolFeeController(address)'), newDelay: MEDIUM_DELAY },
   // This is operational, but whoever can call this can set the swap fee percentage for any pool, so it must be checked.
@@ -138,14 +139,14 @@ export const ExecuteDelays: DelayData[] = [
     newDelay: MEDIUM_DELAY,
   },
 
-  // Any pool can be paused or have its swap fee changed, so medium delay.
+  // Any pool can have its swap fee changed, but this is a relatively operational action.
   {
-    actionId: PoolPauseHelper.actionId('PoolPauseHelper', 'addPools(address[])'),
-    newDelay: MEDIUM_DELAY,
+    actionId: PoolSwapFeeHelperV2.actionId('PoolSwapFeeHelper', 'createPoolSet(address,address[])'),
+    newDelay: SHORT_DELAY,
   },
   {
-    actionId: PoolSwapFeeHelper.actionId('PoolSwapFeeHelper', 'addPools(address[])'),
-    newDelay: MEDIUM_DELAY,
+    actionId: PoolSwapFeeHelperV2.actionId('PoolSwapFeeHelper', 'addPoolsToSet(uint256,address[])'),
+    newDelay: SHORT_DELAY,
   },
 ];
 

@@ -16,14 +16,15 @@ import { TimelockAuthorizerDeployment, default as input } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 function doForkTestsOnNetwork(network: string, block: number) {
-  describeForkTest(`TimelockAuthorizer ${network}`, network, block, function () {
+  describeForkTest(`TimelockAuthorizerV3 ${network}`, network, block, function () {
     let input: TimelockAuthorizerDeployment;
-    let migrator: Contract, vault: Contract, newAuthorizer: Contract, oldAuthorizer: Contract;
+    let migrator: Contract, vault: Contract, vaultAdmin: Contract, vaultExtension: Contract;
+    let newAuthorizer: Contract, oldAuthorizer: Contract;
     let root: SignerWithAddress;
     let task: Task;
 
     before('run task', async () => {
-      task = new Task('20250829-v3-timelock-authorizer', TaskMode.TEST, getForkedNetwork(hre));
+      task = new Task('20250925-v3-timelock-authorizer', TaskMode.TEST, getForkedNetwork(hre));
       await task.run({ force: true });
       input = task.input() as TimelockAuthorizerDeployment;
       migrator = await task.deployedInstance('TimelockAuthorizerMigrator');
@@ -35,6 +36,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
     before('load vault', async () => {
       const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
       vault = await vaultTask.instanceAt('Vault', await migrator.vault());
+      vaultExtension = await vaultTask.deployedInstance('VaultExtension');
+      vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
+      vaultExtension = vaultExtension.attach(vault.address);
     });
 
     before('load old authorizer and impersonate multisig', async () => {
@@ -42,7 +46,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
       oldAuthorizer = await authorizerTask.instanceAt('Authorizer', await migrator.oldAuthorizer());
 
       const multisig = await impersonate(input.Root, fp(100));
-      const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
+      const setAuthorizerActionId = await actionId(vaultAdmin, 'setAuthorizer');
       await oldAuthorizer.connect(multisig).grantRolesToMany([setAuthorizerActionId], [migrator.address]);
     });
 
@@ -79,7 +83,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
     it('does not set the new authorizer immediately', async () => {
       expect(await newAuthorizer.isRoot(migrator.address)).to.be.true;
-      expect(await vault.getAuthorizer()).to.be.equal(oldAuthorizer.address);
+      expect(await vaultExtension.getAuthorizer()).to.be.equal(oldAuthorizer.address);
     });
 
     it('finalizes the migration once new root address claims root status', async () => {
@@ -88,7 +92,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
       await newAuthorizer.connect(root).claimRoot();
 
       await migrator.finalizeMigration();
-      expect(await vault.getAuthorizer()).to.be.equal(newAuthorizer.address);
+      expect(await vaultExtension.getAuthorizer()).to.be.equal(newAuthorizer.address);
       expect(await newAuthorizer.isRoot(root.address)).to.be.true;
       expect(await newAuthorizer.isRoot(migrator.address)).to.be.false;
     });
@@ -123,9 +127,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
     }
 
     it('allows migrating the authorizer address again', async () => {
-      const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
+      const setAuthorizerActionId = await actionId(vaultAdmin, 'setAuthorizer');
 
-      expect(await vault.getAuthorizer()).to.be.eq(newAuthorizer.address);
+      expect(await vaultExtension.getAuthorizer()).to.be.eq(newAuthorizer.address);
 
       await newAuthorizer.connect(root).grantPermission(setAuthorizerActionId, root.address, vault.address);
 
@@ -133,7 +137,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
       const tx = await newAuthorizer
         .connect(root)
-        .schedule(vault.address, vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [root.address]);
+        .schedule(vault.address, vaultAdmin.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [
+          root.address,
+        ]);
       const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 
       await advanceTime(30 * DAY);
@@ -141,7 +147,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
       // Execute authorizer change
       await newAuthorizer.connect(root).execute(event.args.scheduledExecutionId);
 
-      expect(await vault.getAuthorizer()).to.be.eq(nextAuthorizer);
+      expect(await vaultExtension.getAuthorizer()).to.be.eq(nextAuthorizer);
     });
   });
 }

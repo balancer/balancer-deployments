@@ -23,7 +23,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
     let task: Task;
 
     before('run task', async () => {
-      task = new Task('20230522-timelock-authorizer', TaskMode.TEST, getForkedNetwork(hre));
+      task = new Task('20250925-timelock-authorizer', TaskMode.TEST, getForkedNetwork(hre));
       await task.run({ force: true });
       input = task.input() as TimelockAuthorizerDeployment;
       migrator = await task.deployedInstance('TimelockAuthorizerMigrator');
