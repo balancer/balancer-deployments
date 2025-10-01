@@ -13,6 +13,7 @@ These contracts provide a manipulation-resistant mechanism to compute the market
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`WeightedLPOracle` artifact](./artifact/WeightedLPOracle.json)
 - [`WeightedLPOracleFactory` artifact](./artifact/WeightedLPOracleFactory.json)
