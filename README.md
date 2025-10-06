@@ -110,7 +110,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | L2 VeBoost V2                                          | [`20230525-l2-veboost-v2`](./v2/tasks/20230525-l2-veboost-v2)                                           |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./v2/tasks/20230526-zkevm-root-gauge-factory)                     |
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./v2/tasks/20230526-gauge-working-balance-helper)             |
-| Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./v2/tasks/20230522-timelock-authorizer)                               |
 | Pool Data Queries for bulk operations                  | [`20230613-balancer-pool-data-queries`](./v2/tasks/20230613-balancer-pool-data-queries)                 |
 | L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./v2/tasks/20230712-child-chain-gauge-checkpointer)         |
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./v2/tasks/20230717-chainlink-rate-provider-factory)       |
@@ -157,6 +156,8 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
 | Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
 | V3 Pool Swap Fee Helper (V2)                           | [`20250919-v3-pool-swap-fee-helper-v2`](./v3/tasks/20250919-v3-pool-swap-fee-helper-v2)                 |
+| Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
+| Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
 
 ## Scripts
 
