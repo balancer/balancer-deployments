@@ -12,6 +12,7 @@ const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2',
 const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, network);
 const ProtocolFeeSweeper = new Task('20250228-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
 const ProtocolFeeSweeperV2 = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY, network);
+// Fee sweeper V1 is active in most networks, but it was superseded technically by V2.
 const PoolSwapFeeHelperV2 = new Task('20250919-v3-pool-swap-fee-helper-v2', TaskMode.READ_ONLY, network);
 
 export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
