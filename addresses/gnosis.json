@@ -948,7 +948,7 @@
         "address": "0x870F988484A4b3034b6Cca09829f6a1B4123fBC1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250507-v3-erc4626-cow-swap-fee-burner": {
