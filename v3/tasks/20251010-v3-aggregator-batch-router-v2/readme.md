@@ -6,5 +6,5 @@ It represents a refactor of the Router architecture to eliminate specific contra
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/5d029e0ae9317f450e50c5a32148cfb6).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/46e053b17c0761a07b5fff899e8c7a7fb1a74874).
 - [`BatchRouter` artifact](./artifact/BatchRouter.json)
