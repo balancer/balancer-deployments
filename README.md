@@ -143,7 +143,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
 | V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
-| V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
 | V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
 | V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
 | V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
@@ -158,6 +157,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Pool Swap Fee Helper (V2)                           | [`20250919-v3-pool-swap-fee-helper-v2`](./v3/tasks/20250919-v3-pool-swap-fee-helper-v2)                 |
 | Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
 | Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
+| V3 Aggregator Batch Router (V2)                        | [`20251010-v3-aggregator-batch-router-v2`](./v3/tasks/20251010-v3-aggregator-batch-router-v2)           |
 
 ## Scripts
 
@@ -256,3 +256,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |
 | V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |
+| V3 Aggregator Batch Router                          | [`20250507-v3-aggregator-batch-router`](./v3/deprecated/20250507-v3-aggregator-batch-router)             |
