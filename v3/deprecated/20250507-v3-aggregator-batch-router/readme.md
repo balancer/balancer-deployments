@@ -1,5 +1,9 @@
 # 2025-05-07 - V3 Aggregator Batch Router
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version, while still safe to use, was superseded by [`AggregatorBatchRouter` V2](../../tasks/20251010-v3-aggregator-batch-router-v2/), which represents a refactor of the Router architecture.
+
 Contains the `AggregatorBatchRouter`, for complex multi-hop swaps (supports buffer wrap / unwrap). This version of the BatchRouter does not use permit2. The sender pays the required amounts to the Vault up front, avoiding any kind of token approval requirements.
 
 ## Useful Files

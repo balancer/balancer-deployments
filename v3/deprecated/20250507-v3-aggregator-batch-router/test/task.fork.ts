@@ -7,7 +7,7 @@ import { bn, fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';
 
-describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
+describeForkTest.skip('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
   let task: Task;
   let aggregatorBatchRouter: Contract;
   let pool: Contract;
