@@ -425,6 +425,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0xf4743D026f3D07aF3747bb7d05BeD06D177241d7"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xA0790da61ffF3D2E6dC8dbc7739A18d513447401"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x0b11209B8c5E821b18dED147583b8978c3E63911"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x65d092A81f95139Fd274Fed91A7b0481fee05c66"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250828-v3-hyperevm-rate-provider": {
     "contracts": [
       {

@@ -295,5 +295,23 @@
         "transferPoolSetOwnership(address)": "0x7afe5b8abd1dcc0be199cf048b516046012e6a09bbda98953c58e77d26991845"
       }
     }
+  },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xf2ee28e02388f5ecd0f46abd68472a7c87d5c4951b4787c92622430d5631867a",
+        "disable()": "0x1be4d8436c8723792a5d64b8ed2f84912f721ac143f81403ed63103056322793"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x32b9076acee3ca69e7f0d845abc017deb6bd81ad775a3adc0b2bf2557bfbd362",
+        "disable()": "0xfdae18cb216aeaa8c8bfbb7a875699bd6b0e7d31cc28292a26a182860745d00c"
+      }
+    }
   }
 }
