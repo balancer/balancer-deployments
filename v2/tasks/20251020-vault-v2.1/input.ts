@@ -1,5 +1,5 @@
 import { Task, TaskMode } from '@src';
-import { MONTH } from '@helpers/time';
+import { MONTH, YEAR } from '@helpers/time';
 
 export type VaultDeployment = {
   Authorizer: string;
@@ -13,7 +13,7 @@ const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
 export default {
   Authorizer,
-  pauseWindowDuration: 4 * MONTH * 12,
+  pauseWindowDuration: 4 * YEAR,
   bufferPeriodDuration: 3 * MONTH,
   WETH,
 };
