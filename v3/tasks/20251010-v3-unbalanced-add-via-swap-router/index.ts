@@ -5,6 +5,6 @@ import { Task, TaskRunOptions } from '@src';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as AddViaSwapRouterDeployment;
 
-  const routerArgs = [input.Vault, input.Permit2, input.WETH, input.RouterVersion];
+  const routerArgs = [input.Vault, input.WETH, input.Permit2, input.RouterVersion];
   await task.deployAndVerify('UnbalancedAddViaSwapRouter', routerArgs, from, force);
 };
