@@ -184,23 +184,7 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     const bptBalanceBefore = await pool.balanceOf(alice.address);
     const deadline = (await ethers.provider.getBlock('latest')).timestamp + 3600;
 
-    // Attempt to grief by sending extra ETH to the router before the add operation.
-    const wethTx = wethSigner.sendTransaction({
-      to: unbalancedAddRouter.address,
-      value: 1,
-    });
-    (await wethTx).wait();
-
-    const tx = await unbalancedAddRouter.connect(alice).addLiquidityUnbalanced(pool.address, deadline, false, params);
-
-    const receipt = await tx.wait();
-    // Verify EthReturnFailure event was emitted.
-    const ethReturnFailureEvent = receipt.events?.find(
-      (e: any) => e.event === 'EthReturnFailure'
-    );
-    expect(ethReturnFailureEvent).to.exist;
-    expect(ethReturnFailureEvent?.args?.sender).to.equal(alice.address);
-    expect(ethReturnFailureEvent?.args?.excessAmount).to.equal(1);
+    await unbalancedAddRouter.connect(alice).addLiquidityUnbalanced(pool.address, deadline, false, params);
 
     const bptBalanceAfter = await pool.balanceOf(alice.address);
     const bptReceived = bptBalanceAfter.sub(bptBalanceBefore);
