@@ -157,7 +157,6 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     const poolTokenInfo = await vaultAsExtension.getPoolTokenInfo(pool.address);
 
     const proportionalBpt = totalSupply.mul(exactAmount).div(poolTokenInfo.balancesRaw[1]);
-    const minBptAmountOut = proportionalBpt.mul(105).div(100);
 
     const largeHolderSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
     await balToken.connect(largeHolderSigner).transfer(alice.address, maxAdjustableAmount.mul(2));
@@ -173,7 +172,7 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     await permit2.connect(alice).approve(input.WETH, unbalancedAddRouter.address, exactAmount.mul(2), maxUint(48));
 
     const params = {
-      minBptAmountOut: minBptAmountOut,
+      exactBptAmountOut: proportionalBpt,
       exactToken: input.WETH,
       exactAmount: exactAmount,
       maxAdjustableAmount: maxAdjustableAmount,
@@ -189,8 +188,8 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     const bptBalanceAfter = await pool.balanceOf(alice.address);
     const bptReceived = bptBalanceAfter.sub(bptBalanceBefore);
 
-    expect(bptReceived).to.be.gte(minBptAmountOut.mul(99).div(100)); // Allow 1% slippage
     expect(bptReceived).to.be.gt(0);
+    expect(bptReceived).to.be.eq(proportionalBpt);
   });
 
   // NB: This test must go at the end, or the Router having extra ETH messes up the add liquidity test.
