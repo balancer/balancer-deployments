@@ -11,6 +11,6 @@ It also extends the pause window to match V3.
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/bddbc1016a30038e60041ddd2f66e9862107c729).
+- [Code](https://github.com/balancer/balancer-v2-monorepo/commit/febdff69169d2927e662cc92a713b5c528b0fa9b).
 - [`Vault` artifact](./artifact/Vault.json)
 - [`BalancerQueries` artifact](./artifact/BalancerQueries.json)
