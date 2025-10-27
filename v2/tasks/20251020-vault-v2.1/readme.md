@@ -5,7 +5,7 @@ Deployment of a patched version of the Vault, Balancer V2's core contract, for n
 The patch addresses the two known vulnerabilities discovered since the original deployment in 2021.
 
 1) Token front-running: due to a gas optimization that removed a required check to ensure internal balances could only be created for deployed tokens as disclosed [here](https://forum.balancer.fi/t/balancer-v2-token-frontrun-vulnerability-disclosure/6309).
-2) Read-only reentrancy: due to a violation of the checks/effects/interactions pattern in returning native ETH. See https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345
+2) Read-only reentrancy: due to a violation of the checks/effects/interactions pattern in returning native ETH. See [here](https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345).
 
 It also extends the pause window to match V3.
 
