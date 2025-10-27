@@ -14,6 +14,6 @@ const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
 export default {
   Authorizer,
   pauseWindowDuration: 4 * YEAR,
-  bufferPeriodDuration: 3 * MONTH,
+  bufferPeriodDuration: 6 * MONTH,
   WETH,
 };
