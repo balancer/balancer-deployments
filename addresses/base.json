@@ -431,6 +431,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xd22eecBB495380Ef52b1CCeF1cA594979885D484"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -788,7 +798,7 @@
         "address": "0x65A22Ec32c37835Ad5E77Eb6f7452Ac59E113a9F"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
@@ -878,6 +888,26 @@
       {
         "name": "MockReClammPool",
         "address": "0x6147DCcc9aF9641CA5e86e3b0075E8c7c853AEF6"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250813-v3-constant-price-feed": {
+    "contracts": [
+      {
+        "name": "ConstantPriceFeed",
+        "address": "0x1CD776897ef4f647bf8241Ec69549e4A9cb1D608"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xFc00536A0fd292c284deeF6af8F644d8373d9cad"
       }
     ],
     "status": "ACTIVE",

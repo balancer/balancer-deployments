@@ -51,6 +51,10 @@
     "chainId": 999,
     "block-explorer": "https://www.hyperscan.com"
   },
+  "plasma": {
+    "chainId": 9745,
+    "block-explorer": "https://plasmascan.to/"
+  },
   "sonic": {
     "chainId": 146,
     "block-explorer": "https://sonicscan.org/"

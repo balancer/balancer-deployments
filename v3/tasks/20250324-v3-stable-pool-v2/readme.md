@@ -15,5 +15,6 @@ This version increases the maximum amplification parameter from 5,000 to 50,000.
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePoolFactory` artifact](./artifact/StablePoolFactory.json)

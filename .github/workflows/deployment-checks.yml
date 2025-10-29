@@ -20,8 +20,9 @@ jobs:
   check-deployments:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, zkevm]
     steps:
       - uses: actions/checkout@v4
       - name: Check ${{ matrix.network }} deployment addresses
@@ -37,6 +38,7 @@ jobs:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
@@ -44,11 +46,12 @@ jobs:
         with:
           network-name: ${{ matrix.network }}
 
-  check-mainnet-action-ids:
+  check-action-ids:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, polygon, sepolia, zkevm]
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, zkevm]
     steps:
       - uses: actions/checkout@v4
       - name: Check ${{ matrix.network }} Action IDs
@@ -64,6 +67,7 @@ jobs:
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
+          PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}

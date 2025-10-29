@@ -19,6 +19,7 @@ export const NETWORKS = [
   'fraxtal',
   'mode',
   'hyperevm',
+  'plasma',
   'sonic',
 ];
 

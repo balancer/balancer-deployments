@@ -515,20 +515,6 @@
     "status": "ACTIVE",
     "version": "v2"
   },
-  "20230522-timelock-authorizer": {
-    "contracts": [
-      {
-        "name": "TimelockAuthorizerMigrator",
-        "address": "0x6eaD84Af26E997D27998Fc9f8614e8a19BB93938"
-      },
-      {
-        "name": "TimelockAuthorizer",
-        "address": "0xDe615cc5712B4954BeB613BCF32E61C137Cc64f9"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v2"
-  },
   "20230526-gauge-working-balance-helper": {
     "contracts": [
       {
@@ -634,6 +620,16 @@
       {
         "name": "MockComposableStablePool",
         "address": "0x7b0d669142FEDe0eB9065E3B9140a7c90a934a27"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x11824a16f3230b99acBd9174E91c6E5E021DA884"
       }
     ],
     "status": "ACTIVE",
@@ -1026,7 +1022,7 @@
         "address": "0x3b0b1F85792082500CD3acE3C58f2297edc19146"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
@@ -1116,6 +1112,36 @@
       {
         "name": "MockReClammPool",
         "address": "0x78bE2bd092045315D30D2b91d98CAbb15333e021"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250806-v3-token-pair-registry": {
+    "contracts": [
+      {
+        "name": "TokenPairRegistry",
+        "address": "0xcBDe7AFEF330B0d70F220450758694f556792F35"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250813-v3-constant-price-feed": {
+    "contracts": [
+      {
+        "name": "ConstantPriceFeed",
+        "address": "0x1074d0962656768E2b97a0ce39d8c6CCcfBb73b3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xA65b0BC17EA5B5dD4C5252df95b20390766405A4"
       }
     ],
     "status": "ACTIVE",
