@@ -551,6 +551,14 @@ export default {
           browserURL: 'https://plasmascan.to/',
         },
       },
+      {
+        network: 'xlayer',
+        chainId: 196,
+        urls: {
+          apiURL: 'https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/xlayer',
+          browserURL: 'https://oklink.com/xlayer',
+        },
+      },
     ],
   },
 };
