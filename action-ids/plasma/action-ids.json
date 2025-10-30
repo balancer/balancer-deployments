@@ -295,5 +295,19 @@
         "transferPoolSetOwnership(address)": "0x7afe5b8abd1dcc0be199cf048b516046012e6a09bbda98953c58e77d26991845"
       }
     }
+  },
+  "20250503-v3-protocol-fee-sweeper-v2": {
+    "ProtocolFeeSweeper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "addProtocolFeeBurner(address)": "0xd011ead327902b85c7a74e6453835a487eeb801174f8ad65883b77c96106120b",
+        "recoverProtocolFees(address[])": "0xb385a6751f865eaf8e235b83dd607211041868fa8a1a43060e656add782693a7",
+        "removeProtocolFeeBurner(address)": "0x549bbe1105d780576b4eb067a5ee113c2e43d0d1c98daf06dcde3bfb1b697769",
+        "setFeeRecipient(address)": "0x06baf912d5be3793e87f0ede00c439c6722cf75803ee86565c2569ce21b47c89",
+        "setTargetToken(address)": "0x7bd417f6e7512ea620dafbe5fd156ffed94d66242de023a3d7f8ac6b45717547",
+        "sweepProtocolFeesForToken(address,address,uint256,uint256,address)": "0x4ef316fbb5f04b9943a3d4b316b52f0e683f22f8d71cbe11b0ce44e9e1e767c7",
+        "sweepProtocolFeesForWrappedToken(address,address,uint256,uint256,address)": "0xe3c9b8d04d7f290f4bab02d1623198fe8061c2a92d4452580dc1d9875bbbd8d0"
+      }
+    }
   }
 }
