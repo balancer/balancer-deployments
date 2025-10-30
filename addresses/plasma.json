@@ -9,11 +9,47 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20210418-vault": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerQueries",
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220325-test-balancer-token": {
     "contracts": [
       {
         "name": "TestBalancerToken",
         "address": "0x36caC20dd805d128c1a6Dd16eeA845C574b5A17C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
+  "20251020-vault-v2.1": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerQueries",
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
       }
     ],
     "status": "ACTIVE",

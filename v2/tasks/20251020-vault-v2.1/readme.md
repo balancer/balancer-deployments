@@ -12,5 +12,6 @@ It also extends the pause window to match V3.
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v2-monorepo/commit/febdff69169d2927e662cc92a713b5c528b0fa9b).
+- [Plasma mainnet addresses](./output/plasma.json)
 - [`Vault` artifact](./artifact/Vault.json)
 - [`BalancerQueries` artifact](./artifact/BalancerQueries.json)
