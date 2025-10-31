@@ -1146,15 +1146,5 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
-  },
-  "20251010-v3-unbalanced-add-via-swap-router": {
-    "contracts": [
-      {
-        "name": "UnbalancedAddViaSwapRouter",
-        "address": "0x898938871f9DaF0F2B90421C370573527B787492"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
   }
 }
