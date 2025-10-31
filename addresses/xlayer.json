@@ -110,7 +110,7 @@
         "address": "0x9805dcfD25e6De36bad8fe9D3Fe2c9b44B764102"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
