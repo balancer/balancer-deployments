@@ -1,4 +1,4 @@
-# 2025-10-10 - V3 Aggregator Batch Router V2
+# 2025-10-10 - V3 Prepaid Batch Router V2
 
 Contains the second deployment of the prepaid `BatchRouter` (formerly `AggregatorBatchRouter`), for complex multi-hop swaps (supports buffer wrap / unwrap). This version of the BatchRouter does not use permit2. The sender pays the required amounts to the Vault up front, avoiding any kind of token approval requirements.
 
