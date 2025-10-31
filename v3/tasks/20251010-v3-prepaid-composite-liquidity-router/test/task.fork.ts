@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('AggregatorCompositeLiquidityRouter-V3', 'mainnet', 23534632, function () {
+describeForkTest('PrepaidCompositeLiquidityRouter-V3', 'mainnet', 23534632, function () {
   let task: Task;
   let compositeLiquidityRouter: Contract;
   let wethSigner: SignerWithAddress, alice: SignerWithAddress;
@@ -14,7 +14,7 @@ describeForkTest('AggregatorCompositeLiquidityRouter-V3', 'mainnet', 23534632, f
   const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
   const versionNumber = 1;
-  const deploymentId = '20251010-v3-aggregator-composite-liquidity-router';
+  const deploymentId = '20251010-v3-prepaid-composite-liquidity-router';
 
   before('run task', async () => {
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));
