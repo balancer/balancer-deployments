@@ -6,7 +6,7 @@ import { Task, TaskRunOptions } from '@src';
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
   const input = task.input() as CompositeLiquidityRouter;
 
-  // Pass the zero address to Permit2 to make this an "aggregator" (prepaid) Router.
+  // Pass the zero address to Permit2 to make this an "prepaid" Router.
   const routerArgs = [input.Vault, input.WETH, ZERO_ADDRESS, input.CompositeLiquidityRouterVersion];
   await task.deployAndVerify('CompositeLiquidityRouter', routerArgs, from, force);
 };

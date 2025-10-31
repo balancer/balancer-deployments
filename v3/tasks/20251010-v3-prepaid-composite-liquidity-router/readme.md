@@ -1,6 +1,6 @@
 # 2025-10-10 - V3 Aggregator Composite Liquidity Router
 
-Aggregator (prepaid) Composite Liquidity Router deployment for Balancer V3.
+Prepaid Composite Liquidity Router deployment for Balancer V3.
 Contains a prepaid version of the `CompositeLiquidityRouter` for complex liquidity operations involving pools with ERC4626 wrappers, as well as nested pools.
 
 The contract is identical to the regular Composite Liquidity Router (V3), with the prepaid flag turned on by passing the zero address to Permit2 on deployment.
