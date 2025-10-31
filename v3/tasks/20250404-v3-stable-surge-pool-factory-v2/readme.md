@@ -19,6 +19,7 @@ It also splits the deployment of the hook out of the factory deployment, allowin
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePool` artifact](./artifact/StablePool.json)
 - [`StableSurgePoolFactory` artifact](./artifact/StableSurgePoolFactory.json)
