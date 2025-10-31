@@ -13,8 +13,8 @@ describeForkTest('PrepaidCompositeLiquidityRouter-V3', 'mainnet', 23534632, func
 
   const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
-  const versionNumber = 1;
-  const deploymentId = '20251010-v3-prepaid-composite-liquidity-router';
+  const versionNumber = 3;
+  const deploymentId = '20251010-v3-prepaid-composite-liquidity-router-v3';
 
   before('run task', async () => {
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));

@@ -1,4 +1,4 @@
-# 2025-10-10 - V3 Prepaid Composite Liquidity Router
+# 2025-10-10 - V3 Prepaid Composite Liquidity Router (V3)
 
 Prepaid Composite Liquidity Router deployment for Balancer V3.
 Contains a prepaid version of the `CompositeLiquidityRouter` for complex liquidity operations involving pools with ERC4626 wrappers, as well as nested pools.
