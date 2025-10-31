@@ -594,7 +594,7 @@
         "address": "0x9dA18982a33FD0c7051B19F0d7C76F2d5E7e017c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -788,7 +788,7 @@
         "address": "0x18CC3C68A5e64b40c846Aa6E45312cbcBb94f71b"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {

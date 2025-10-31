@@ -54,5 +54,9 @@
   "plasma": {
     "chainId": 9745,
     "block-explorer": "https://plasmascan.to/"
+  },
+  "xlayer": {
+    "chainId": 196,
+    "block-explorer": "https://oklink.com/xlayer"
   }
 }
