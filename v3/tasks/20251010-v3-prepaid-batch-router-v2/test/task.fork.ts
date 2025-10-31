@@ -7,9 +7,9 @@ import { bn, fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';
 
-describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function () {
+describeForkTest('V3-PrepaidBatchRouter-V2', 'mainnet', 23534632, function () {
   let task: Task;
-  let aggregatorBatchRouter: Contract;
+  let prepaidBatchRouter: Contract;
   let pool: Contract;
   let vault: Contract;
   let rsEthWhale: SignerWithAddress, zero: SignerWithAddress;
@@ -25,13 +25,13 @@ describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function ()
   const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
   const versionNumber = 2;
-  const deploymentId = '20251010-v3-aggregator-batch-router-v2';
+  const deploymentId = '20251010-v3-prepaid-batch-router-v2';
 
   before('run task', async () => {
     task = new Task(deploymentId, TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
 
-    aggregatorBatchRouter = await task.deployedInstance('BatchRouter');
+    prepaidBatchRouter = await task.deployedInstance('BatchRouter');
 
     const testTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const WETH = await testTokenTask.instanceAt('TestBalancerToken', WETH_ADDRESS);
@@ -55,15 +55,15 @@ describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function ()
   });
 
   it('checks router version', async () => {
-    const routerVersion = JSON.parse(await aggregatorBatchRouter.version());
-    expect(routerVersion.name).to.be.eq('AggregatorBatchRouter');
+    const routerVersion = JSON.parse(await prepaidBatchRouter.version());
+    expect(routerVersion.name).to.be.eq('PrepaidBatchRouter');
     expect(routerVersion.version).to.be.eq(versionNumber);
     expect(routerVersion.deployment).to.be.eq(deploymentId);
   });
 
   it('checks router configuration', async () => {
-    expect(await aggregatorBatchRouter.getWeth()).to.eq(WETH_ADDRESS);
-    expect(await aggregatorBatchRouter.getPermit2()).to.eq(ZERO_ADDRESS);
+    expect(await prepaidBatchRouter.getWeth()).to.eq(WETH_ADDRESS);
+    expect(await prepaidBatchRouter.getPermit2()).to.eq(ZERO_ADDRESS);
   });
 
   it('performs swap', async () => {
@@ -78,7 +78,7 @@ describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function ()
       },
     ];
 
-    const queryResult = await aggregatorBatchRouter
+    const queryResult = await prepaidBatchRouter
       .connect(zero)
       .callStatic.querySwapExactIn(pathsExactIn, rsEthWhale.address, '0x');
 
@@ -95,7 +95,7 @@ describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function ()
     // Set actual expected amount out.
     pathsExactIn[0].minAmountOut = expectedAmountOut;
 
-    await aggregatorBatchRouter.connect(rsEthWhale).swapExactIn(pathsExactIn, deadline, false, '0x');
+    await prepaidBatchRouter.connect(rsEthWhale).swapExactIn(pathsExactIn, deadline, false, '0x');
 
     const hgEthBalanceAfter: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
 
@@ -104,27 +104,27 @@ describeForkTest('V3-AggregatorBatchRouter-V2', 'mainnet', 23534632, function ()
 
   it('checks batch router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: aggregatorBatchRouter.address,
+      to: prepaidBatchRouter.address,
       value: ethers.utils.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: aggregatorBatchRouter.address,
+      to: prepaidBatchRouter.address,
       value: ethers.utils.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
   });
 
   it('reverts on multicall in prepaid mode', async () => {
-    const dummyCalldata = aggregatorBatchRouter.interface.encodeFunctionData('querySwapExactIn', [
+    const dummyCalldata = prepaidBatchRouter.interface.encodeFunctionData('querySwapExactIn', [
       [],
       rsEthWhale.address,
       '0x',
     ]);
 
     try {
-      await aggregatorBatchRouter.connect(rsEthWhale).multicall([dummyCalldata]);
+      await prepaidBatchRouter.connect(rsEthWhale).multicall([dummyCalldata]);
       expect.fail('Expected transaction to revert');
     } catch (error: unknown) {
       // OperationNotSupported() selector is 0x29a270f5.
