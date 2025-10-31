@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, zkevm]
+        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, xlayer, zkevm]
     steps:
       - uses: actions/checkout@v4
       - name: Verify ${{ matrix.network }} Timelock Authorizer Configuration
@@ -34,6 +34,7 @@ jobs:
           PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
+          XLAYER_RPC_ENDPOINT: ${{ secrets.XLAYER_RPC_ENDPOINT }}
           ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
         with:
           network-name: ${{ matrix.network }}

@@ -11,4 +11,5 @@ This updates the StablePool and StableSurgePool factories to V2, and adds the Gy
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
 - [`BalancerContractRegistryInitializer` artifact](./artifact/BalancerContractRegistryInitializer.json)
