@@ -1756,7 +1756,7 @@
         "address": "0x5915DEA04ce390F0f44CA0806F7c6Dd99Ce2f941"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
