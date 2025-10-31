@@ -7,7 +7,7 @@ export type PoolPauseHelperDeployment = {
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 
-// See https://github.com/BalancerMaxis/bal_addresses/blob/main/outputs/addressbook.json#L268
+// See https://github.com/BalancerMaxis/bal_addresses/blob/b155d7ef5ea0521e3517213912ce103e48222360/outputs/addressbook.json#L339
 const MaxiOmniMultisig = '0x9ff471F9f98F42E5151C7855fD1b5aa906b1AF7e';
 const SepoliaAdmin = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
