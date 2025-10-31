@@ -272,7 +272,7 @@
         "address": "0x7A2535f5fB47b8e44c02Ef5D9990588313fe8F05"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
