@@ -158,7 +158,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
 | Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
 | Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
-| V3 Prepaid Composite Liquidity Router               | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router) |
+| V3 Prepaid Composite Liquidity Router                  | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router) |
 | V3 Composite Liquidity Router (V3)                     | [`20251010-v3-composite-liquidity-router-v3`](./v3/tasks/20251010-v3-composite-liquidity-router-v3)     |
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
 
