@@ -110,7 +110,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | L2 VeBoost V2                                          | [`20230525-l2-veboost-v2`](./v2/tasks/20230525-l2-veboost-v2)                                           |
 | Polygon ZkEVM Root Gauge, for veBAL voting             | [`20230526-zkevm-root-gauge-factory`](./v2/tasks/20230526-zkevm-root-gauge-factory)                     |
 | Gauge Working Balance Helper                           | [`20230526-gauge-working-balance-helper`](./v2/tasks/20230526-gauge-working-balance-helper)             |
-| Timelock Authorizer, governance contract               | [`20230522-timelock-authorizer`](./v2/tasks/20230522-timelock-authorizer)                               |
 | Pool Data Queries for bulk operations                  | [`20230613-balancer-pool-data-queries`](./v2/tasks/20230613-balancer-pool-data-queries)                 |
 | L2 Child Chain Gauge Checkpointer (Relayer)            | [`20230712-child-chain-gauge-checkpointer`](./v2/tasks/20230712-child-chain-gauge-checkpointer)         |
 | Chainlink Rate Provider Factory                        | [`20230717-chainlink-rate-provider-factory`](./v2/tasks/20230717-chainlink-rate-provider-factory)       |
@@ -127,7 +126,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
-| V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 | V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
@@ -158,6 +156,10 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Helper (V2)                            | [`20250919-v3-protocol-fee-helper-v2`](./v3/tasks/20250919-v3-protocol-fee-helper-v2)                   |
 | V3 Pool Swap Fee Helper (V2)                           | [`20250919-v3-pool-swap-fee-helper-v2`](./v3/tasks/20250919-v3-pool-swap-fee-helper-v2)                 |
 | Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
+| Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
+| Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
+| V3 Composite Liquidity Router (V3)                     | [`20251010-v3-composite-liquidity-router-v3`](./v3/tasks/20251010-v3-composite-liquidity-router-v3)     |
+| Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
 
 ## Scripts
 
@@ -251,6 +253,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
+| V3 Composite Liquidity Router (V2)                  | [`20250123-v3-composite-liquidity-router-v2`](./v3/deprecated/20250123-v3-composite-liquidity-router-v2) |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
 | V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
 | Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |

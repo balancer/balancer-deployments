@@ -564,7 +564,7 @@
         "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
