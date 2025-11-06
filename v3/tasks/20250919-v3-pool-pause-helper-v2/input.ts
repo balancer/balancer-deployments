@@ -34,6 +34,9 @@ export default {
   hyperevm: {
     HelperAdmin: MaxiOmniMultisig,
   },
+  plasma: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
   sepolia: {
     HelperAdmin: SepoliaAdmin,
   },
