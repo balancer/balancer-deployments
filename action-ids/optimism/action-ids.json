@@ -1107,5 +1107,23 @@
         "transferPoolSetOwnership(address)": "0x7bb56a5af69a41562b690194f0c2fa892c877c9f1acf0dc3523196f8bd78ae91"
       }
     }
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x14e9bc35f25b4663311ff41c46125d726433af1ec1746bf2a7efa95c5e351a7b",
+        "addPoolsToSet(uint256,address[])": "0x5e4416f64b17995aa8819b1adbf1ef218731c3c013c6eea60fde8caa5be3b952",
+        "createPoolSet(address)": "0xac4dd0ffdf7d575ecf0af49050890e6485568bf7bd44cb55e882a8324534776c",
+        "createPoolSet(address,address[])": "0xe2c99b3687c00a126b8f17c7cf04ddc7ff6674a6b83d1025ac322017835cfe40",
+        "destroyPoolSet(uint256)": "0x90ced13a60685f81f2a70732ec12a29def69b0c9995a43dec1be649e0314571f",
+        "forceTransferOwnership(address)": "0x9955b3671dd54d3c215bf9be3c6cb8ef6e320583d9ff32767c053f0d0d4413d6",
+        "pausePools(address[])": "0xb7e4b5aa73d0927fec74476773b5e05e7a6b66eb09015052c7e37cc4c1327d06",
+        "removePoolsFromSet(uint256,address[])": "0x7978c55001f580b036ab72ba56c7d39e11bf8acbd5e0c93bcc89c7371b348125",
+        "renounceOwnership()": "0x8fc3bd5ae2e049c0a1258b084207d8626a37432f9716975431ed9837182831ae",
+        "transferOwnership(address)": "0x07ea75b94fee131edbcb6ba4ebbcba92f3652394b85fbee620d653c2ad3d30bd",
+        "transferPoolSetOwnership(address)": "0xd5b8d34a52f076d1132f0b5af94d9b47f0cc016961f47fd5396c200cc0493a23"
+      }
+    }
   }
 }

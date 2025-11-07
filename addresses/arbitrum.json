@@ -1313,6 +1313,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x1780e8185199DAc45284039Bb3E3B64060D943AB"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
