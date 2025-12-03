@@ -52,12 +52,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     const mockPool = await task.instanceAt('FixedPriceLBPool', task.output()['MockFixedPriceLBPool']);
 
-    // Get actual params (verify might be executed after the initial deployment, so timestamps gotten by the script
-    // itself might be outdated).
-    const updateParams = await mockPool.getGradualWeightUpdateParams();
-    newFixedLBPParams.startTime = updateParams.startTime;
-    newFixedLBPParams.endTime = updateParams.endTime;
-
     const factoryParams = {
       vault: input.Vault,
       trustedRouter: input.Router,
