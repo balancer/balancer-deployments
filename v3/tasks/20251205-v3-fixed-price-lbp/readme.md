@@ -4,6 +4,6 @@ Deployment of the fixed price Liquidity Bootstrapping Pool; a simple kind of LBP
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/e7aa4c6a0d2482a1ef93f7572c26f094bf416b2e)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/52a94c039e9fb319a51d9b047692337574a820fd)
 - [`FixedPriceLBPoolFactory` artifact](./artifact/FixedPriceLBPoolFactory.json)
 - [`FixedPriceLBPool` artifact](./artifact/FixedPriceLBPool.json)
