@@ -160,7 +160,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Prepaid Composite Liquidity Router (V3)             | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router-v3) |
 | V3 Composite Liquidity Router (V3)                     | [`20251010-v3-composite-liquidity-router-v3`](./v3/tasks/20251010-v3-composite-liquidity-router-v3)     |
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
-| V3 Balancer Burner (V2)                                | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
+| V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
 
 ## Scripts
 
@@ -261,4 +261,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |
 | V3 Pool Pause Helper                                | [`20250430-v3-pool-pause-helper`](./v3/deprecated/20250430-v3-pool-pause-helper)                         |
 | V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |
-| V3 Balancer Burner                                  | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
+| V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
