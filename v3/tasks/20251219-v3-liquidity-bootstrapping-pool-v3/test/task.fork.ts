@@ -111,7 +111,7 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
       bptPercentageToMigrate: fp(0.8),
       migrationWeightProjectToken: HIGH_WEIGHT,
       migrationWeightReserveToken: LOW_WEIGHT,
-    }
+    };
 
     const lbpParams = {
       projectTokenStartWeight: HIGH_WEIGHT,
@@ -128,7 +128,7 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
         lbpParams,
         SWAP_FEE,
         ONES_BYTES32,
-        ZERO_ADDRESS,
+        ZERO_ADDRESS
       )
     ).wait();
 
@@ -175,7 +175,7 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
       [INITIAL_BAL, 0], // 0 reserve tokens
       0,
       false, // wethIsETH
-      ZERO_BYTES32,
+      ZERO_BYTES32
     );
   });
 
@@ -210,19 +210,15 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     await pool.connect(admin).approve(migrationRouter.address, maxUint(256));
     const weightedPoolProjectWeight = HIGH_WEIGHT;
     const weightedPoolReserveWeight = LOW_WEIGHT;
-    
+
     const vaultAsExtension = vaultExtension.attach(vault.address);
     const balancesBeforeMigration = await vaultAsExtension.getCurrentLiveBalances(pool.address);
     const actualBalInPool = balancesBeforeMigration[0];
     const actualWethInPool = balancesBeforeMigration[1];
-    
+
     // For seedless LBP, effective reserve = real + virtual
     const [, virtualBalanceScaled18] = await pool.getReserveTokenVirtualBalance();
     const effectiveWethInPool = actualWethInPool.add(virtualBalanceScaled18);
-    
-    console.log(`Actual BAL in pool: ${actualBalInPool}`);
-    console.log(`Actual WETH in pool: ${actualWethInPool}`);
-    console.log(`Effective WETH (with virtual): ${effectiveWethInPool}`);
 
     const migrateReceipt = await (
       await migrationRouter.connect(admin).migrateLiquidity(pool.address, projectTreasury.address, {
@@ -249,10 +245,10 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     expect(await weightedPool.getNormalizedWeights()).to.deep.equal([HIGH_WEIGHT, LOW_WEIGHT]);
 
     const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.address);
-    
+
     // Get LBP end weights for spot price calculation
     const lbpWeights = await pool.getNormalizedWeights();
-    
+
     // Spot price = (BAL / BAL_weight) / (effectiveWETH / WETH_weight)
     // In terms of BAL per WETH
     const spotPrice = actualBalInPool
@@ -260,10 +256,10 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
       .div(effectiveWethInPool)
       .mul(fp(1))
       .div(lbpWeights[0]); // project weight
-    
+
     // Expected BAL migrated = 80% of actual BAL
     const expectedBalMigrated = actualBalInPool.mul(80).div(100);
-    
+
     // Expected WETH = BAL_migrated / spotPrice * (reserveWeight / projectWeight)
     const expectedWethMigrated = expectedBalMigrated
       .mul(fp(1))
