@@ -7,7 +7,7 @@ import { BalancerFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 
-describeForkTest('BalancerFeeBurner', 'mainnet', 22598419, function () {
+describeForkTest.skip('BalancerFeeBurner', 'mainnet', 22598419, function () {
   let task: Task;
   let balancerFeeBurner: Contract;
   let input: BalancerFeeBurnerDeployment;

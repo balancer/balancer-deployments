@@ -1,5 +1,9 @@
 # 2025-05-30 - V3 Balancer Fee Burner
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version was superseded by [`BalancerFeeBurner` V2](../../tasks/20251219-v3-balancer-fee-burner-v2/), which adds wrap/unwrap operations.
+
 Contains the `BalancerFeeBurner` contract, which is used to burn protocol fees through Balancer V3. The owner can define a swap path for each token.
 
 ## Useful Files
