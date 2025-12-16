@@ -8,7 +8,7 @@ If this virtual reserve balance parameter is 0, it will create a standard "Seede
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/316ded078ddc2f1b28da5804d25752af67453435)
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/cdb5d86cf458362538ada1ba24ff33506c74ed94)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
 - [`LBPMigrationRouter` artifact](./artifact/LBPMigrationRouter.json)
