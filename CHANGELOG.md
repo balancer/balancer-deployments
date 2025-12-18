@@ -42,6 +42,7 @@
 - Deployed Chainlink Constant Price Feed to all networks.
 - Deployed V3 HyperEVM Rate Provider to HyperEVM.
 - Deployed V3 Pool Swap Fee Helper (V2) to all networks.
+- Deployed V3 Pool Pause Helper (V2) to all networks.
 
 #### V2
 
