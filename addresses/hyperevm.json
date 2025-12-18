@@ -439,6 +439,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x1bcA39b01F451b0a05D7030e6e6981a73B716b1C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
