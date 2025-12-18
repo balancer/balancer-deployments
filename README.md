@@ -160,6 +160,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Prepaid Composite Liquidity Router (V3)             | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router-v3) |
 | V3 Composite Liquidity Router (V3)                     | [`20251010-v3-composite-liquidity-router-v3`](./v3/tasks/20251010-v3-composite-liquidity-router-v3)     |
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
+| V3 Fixed Price Liquidity Bootstrapping Pool            | [`20251205-v3-fixed-price-lbp`](./v3/tasks/20251205-v3-fixed-price-lbp)                                 |
 | V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
 
 ## Scripts
