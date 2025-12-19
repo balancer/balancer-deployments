@@ -46,6 +46,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: LOW_WEIGHT,
       reserveTokenEndWeight: HIGH_WEIGHT,
+      reserveTokenVirtualBalance: fp(1000),
     };
 
     const swapFeePercentage = fp(0.01);
@@ -53,10 +54,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['MockLBPool']) {
-      console.log('about to create pool');
-      console.log('LBP Common Params:', newLBPCommonParams);
-      console.log('LBP Params:', newLBPParams);
-
       const poolCreationReceipt = await (
         await factory.create(
           newLBPCommonParams,
@@ -66,7 +63,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           poolCreator
         )
       ).wait();
-      console.log('created pool');
 
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const mockPoolAddress = event.args.pool;
