@@ -1,0 +1,36 @@
+digraph balancer_deployments {
+  rankdir=TB;
+  graph [splines=true, overlap=false];
+  node [shape=box, fontname="Helvetica", fontsize=9];
+  subgraph cluster_v3_router {
+    label="v3-router";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_router_deprecated [label="V3 Router\n2024-12-05 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250307_v3_router_v2_active [label="V3 Router V2\n2025-03-07 (v2, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20241205_v3_router_deprecated -> n_20250307_v3_router_v2_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_batch_router {
+    label="v3-batch-router";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_batch_router_active [label="V3 Batch Router\n2024-12-05 (v1, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+  }
+  subgraph cluster_v3_composite_liquidity_router {
+    label="v3-composite-liquidity-router";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_composite_liquidity_router_deprecated [label="V3 Composite Liquidity Router\n2024-12-05 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250123_v3_composite_liquidity_router_v2_deprecated [label="V3 Composite Liquidity Router (V2)\n2025-01-23 (v2, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20241205_v3_composite_liquidity_router_deprecated -> n_20250123_v3_composite_liquidity_router_v2_deprecated [style=dashed, color="#888888"];
+    n_20251010_v3_composite_liquidity_router_v3_active [label="V3 Composite Liquidity Router (V3)\n2025-10-10 (v3, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20250123_v3_composite_liquidity_router_v2_deprecated -> n_20251010_v3_composite_liquidity_router_v3_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_prepaid_composite_liquidity_router {
+    label="v3-prepaid-composite-liquidity-router";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20251010_v3_prepaid_composite_liquidity_router_active [label="V3 Prepaid Composite Liquidity Router (V3)\n2025-10-10 (v1, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+  }
+  subgraph cluster_v3_buffer_router {
+    label="v3-buffer-router";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_buffer_router_active [label="V3 Buffer Router\n2024-12-05 (v1, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+  }
+}

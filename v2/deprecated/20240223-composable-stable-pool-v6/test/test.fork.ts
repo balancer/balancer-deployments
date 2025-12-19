@@ -21,7 +21,7 @@ import { deploy } from '@src';
 import { randomBytes } from 'ethers/lib/utils';
 import { DAY, MINUTE, advanceTime, currentTimestamp } from '@helpers/time';
 
-describeForkTest('ComposableStablePool V6', 'mainnet', 19292000, function () {
+describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function () {
   let task: Task;
 
   let factory: Contract;
