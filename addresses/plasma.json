@@ -360,7 +360,7 @@
         "address": "0xc49a3d36aD36c69216b4B534b3cCf34039143f87"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
