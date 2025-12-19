@@ -30,39 +30,43 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const blockBefore = await ethers.provider.getBlock(blockNumBefore);
     const timestampBefore = bn(blockBefore.timestamp);
 
-    const newLBPParams = {
+    const newLBPCommonParams = {
+      name: 'DO NOT USE - Mock LBP',
+      symbol: 'TEST',
       owner: from ?? DELEGATE_OWNER,
       projectToken: input.TestBalancerToken,
       reserveToken: input.WETH,
-      projectTokenStartWeight: HIGH_WEIGHT,
-      reserveTokenStartWeight: LOW_WEIGHT,
-      projectTokenEndWeight: LOW_WEIGHT,
-      reserveTokenEndWeight: HIGH_WEIGHT,
       startTime: timestampBefore.add(HOUR),
       endTime: timestampBefore.add(DAY),
       blockProjectTokenSwapsIn: false,
     };
 
-    const poolCreationParams = {
-      name: 'DO NOT USE - Mock LBP',
-      symbol: 'TEST',
-      newLBPParams,
-      swapFeePercentage: fp(0.01),
-      salt: ZERO_BYTES32,
+    const newLBPParams = {
+      projectTokenStartWeight: HIGH_WEIGHT,
+      reserveTokenStartWeight: LOW_WEIGHT,
+      projectTokenEndWeight: LOW_WEIGHT,
+      reserveTokenEndWeight: HIGH_WEIGHT,
     };
+
+    const swapFeePercentage = fp(0.01);
+    const poolCreator = ZERO_ADDRESS;
 
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['MockLBPool']) {
+      console.log('about to create pool');
+      console.log('LBP Common Params:', newLBPCommonParams);
+      console.log('LBP Params:', newLBPParams);
+
       const poolCreationReceipt = await (
         await factory.create(
-          poolCreationParams.name,
-          poolCreationParams.symbol,
-          poolCreationParams.newLBPParams,
-          poolCreationParams.swapFeePercentage,
-          poolCreationParams.salt,
-          ZERO_ADDRESS
+          newLBPCommonParams,
+          newLBPParams,
+          swapFeePercentage,
+          ZERO_BYTES32, // Salt
+          poolCreator
         )
       ).wait();
+      console.log('created pool');
 
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const mockPoolAddress = event.args.pool;
@@ -76,23 +80,24 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // Get actual params (verify might be executed after the initial deployment, so timestamps gotten by the script
     // itself might be outdated).
     const updateParams = await mockPool.getGradualWeightUpdateParams();
-    newLBPParams.startTime = updateParams.startTime;
-    newLBPParams.endTime = updateParams.endTime;
+    newLBPCommonParams.startTime = updateParams.startTime;
+    newLBPCommonParams.endTime = updateParams.endTime;
 
-    // Migration parameters set at 0.
-    const poolParams = [
-      poolCreationParams.name,
-      poolCreationParams.symbol,
-      poolCreationParams.newLBPParams,
-      input.Vault,
-      input.Router,
-      ZERO_ADDRESS, // No migration
-      await factory.getPoolVersion(),
-      0,
-      0,
-      0,
-      0,
-    ];
+    const migrationParams = {
+      migrationRouter: ZERO_ADDRESS,
+      lockDurationAfterMigration: 0,
+      bptPercentageToMigrate: 0,
+      migrationWeightProjectToken: 0,
+      migrationWeightReserveToken: 0,
+    };
+
+    const factoryParams = {
+      vault: input.Vault,
+      trustedRouter: input.Router,
+      poolVersion: await factory.getPoolVersion(),
+    };
+
+    const poolParams = [newLBPCommonParams, migrationParams, newLBPParams, factoryParams];
 
     // We are now ready to verify the Pool
     await task.verify('LBPool', mockPool.address, poolParams);
