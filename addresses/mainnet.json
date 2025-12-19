@@ -1844,7 +1844,7 @@
         "address": "0xa1E9e74BbDBDE4B8F9F624E71641F54e3b7F11bf"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
