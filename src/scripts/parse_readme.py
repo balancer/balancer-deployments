@@ -125,7 +125,14 @@ def main():
 
     json.dump(all_records, fp=open("docs/deployments.json", "w", encoding="utf-8"),
               indent=2, ensure_ascii=False)
+    
+    # Write alphabetized list of available families (used to create graphs)
+    # Note that this is *after* the overrides have been applied
+    families = sorted({r["family"] for r in all_records})
 
+    families_path = Path("docs/families.txt")
+    families_path.parent.mkdir(parents=True, exist_ok=True)
+    families_path.write_text("\n".join(families) + "\n", encoding="utf-8")
 
 if __name__ == "__main__":
     main()
