@@ -144,7 +144,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
 | V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
-| V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
 | V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
@@ -162,6 +161,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
 | V3 Fixed Price Liquidity Bootstrapping Pool            | [`20251205-v3-fixed-price-lbp`](./v3/tasks/20251205-v3-fixed-price-lbp)                                 |
 | V3 Liquidity Bootstrapping Pool (V3)                   | [`20251219-v3-liquidity-bootstrapping-pool-v3`](./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3) |
+| V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
 
 ## Scripts
 
@@ -263,3 +263,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Pool Pause Helper                                | [`20250430-v3-pool-pause-helper`](./v3/deprecated/20250430-v3-pool-pause-helper)                         |
 | V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |
 | V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |
+| V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
