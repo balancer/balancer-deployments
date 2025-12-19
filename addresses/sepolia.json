@@ -1062,7 +1062,7 @@
         "address": "0xdb837CCe319F885AD34C8bCbf432De8bF8DEC406"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
