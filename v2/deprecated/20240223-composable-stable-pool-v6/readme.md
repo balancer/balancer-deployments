@@ -1,6 +1,10 @@
-# 2021-12-02 - Liquidity Bootstrapping Pool with no Protocol Fees
+# 2024-02-23 - Composable Stable Pool V6
 
-Deployment of the `NoProtocolFeeLiquidityBootstrappingPool`, for Liquidity Bootstrapping Pools of up to 4 tokens that ignore protocol fees. This is a temporary Pool factory that will be used until a version that properly reimplements protocol fees is released.
+> ⚠️ **DEPRECATED: do not use** ⚠️
+> This has been deprecated due to a [vulnerability](https://medium.com/balancer-protocol/nov-3-exploit-post-mortem-51dcbeb6b020). The factory has been disabled to prevent creation of new vulnerable pools.
+
+Deployment of `ComposableStablePoolFactory` V6, which supersedes `20230711-composable-stable-pool-v5`.
+This version is the same in terms of functionality, but has a longer pause window (4 years) and buffer period (6 months).
 
 ## Useful Files
 
@@ -16,5 +20,4 @@ Deployment of the `NoProtocolFeeLiquidityBootstrappingPool`, for Liquidity Boots
 - [Fraxtal mainnet addresses](./output/fraxtal.json)
 - [Mode mainnet addresses](./output/mode.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
-- [`LiquidityBootstrappingPool` artifact](./artifact/LiquidityBootstrappingPool.json)
-- [`NoProtocolFeeLiquidityBootstrappingPoolFactory` artifact](./artifact/NoProtocolFeeLiquidityBootstrappingPoolFactory.json)
+- [`ComposableStablePoolFactory` artifact](./artifact/ComposableStablePoolFactory.json)
