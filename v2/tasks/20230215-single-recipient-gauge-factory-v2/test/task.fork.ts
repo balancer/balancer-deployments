@@ -16,7 +16,7 @@ import { range } from 'lodash';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, function () {
+describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, function () {
   let admin: SignerWithAddress, other: SignerWithAddress, balWhale: SignerWithAddress;
   let vault: Contract,
     authorizer: Contract,

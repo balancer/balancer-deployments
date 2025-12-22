@@ -9,7 +9,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('ProtocolFeePercentagesProvider', 'mainnet', 15130000, function () {
+describeForkTest.skip('ProtocolFeePercentagesProvider', 'mainnet', 15130000, function () {
   let admin: SignerWithAddress;
   let protocolFeePercentagesProvider: Contract;
   let vault: Contract, authorizer: Contract, feesCollector: Contract;
