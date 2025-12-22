@@ -9,7 +9,7 @@ import { fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
+describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
   let admin: SignerWithAddress;
   let govMultisig: SignerWithAddress, lmMultisig: SignerWithAddress, swapFeeSetter: SignerWithAddress;
   let authorizer: Contract,

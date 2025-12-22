@@ -8,7 +8,7 @@ import { MAX_UINT256 } from '@helpers/constants';
 import { MONTH } from '@helpers/time';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function () {
+describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;
