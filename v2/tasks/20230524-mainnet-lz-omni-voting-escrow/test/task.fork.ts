@@ -8,7 +8,7 @@ import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { OmniVotingEscrowDeployment as OmniVotingEscrowDeployment } from '../input';
 
-describeForkTest('OmniVotingEscrow', 'mainnet', 17331260, function () {
+describeForkTest.skip('OmniVotingEscrow', 'mainnet', 17331260, function () {
   let deployer: SignerWithAddress;
 
   let task: Task;

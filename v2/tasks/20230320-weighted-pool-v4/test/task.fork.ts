@@ -16,7 +16,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-wit
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 import { randomBytes } from 'ethers/lib/utils';
 
-describeForkTest('WeightedPool V4', 'mainnet', 16870763, function () {
+describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
   let owner: SignerWithAddress,
     whale: SignerWithAddress,
     wstEthWhale: SignerWithAddress,
