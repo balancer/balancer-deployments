@@ -23,3 +23,5 @@ dist/
 pkg/balancer-js/src/typechain/*
 
 test.json
+
+.vscode/*

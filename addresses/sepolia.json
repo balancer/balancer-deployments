@@ -38,7 +38,7 @@
         "address": "0xe90472ffc41D7Ddf8E3B456bBA748e3F22c59C6f"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -478,7 +478,7 @@
         "address": "0xE458224CA8d6605c87b73E92aa5CB7A4e77770f3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -622,7 +622,7 @@
         "address": "0x7b0d669142FEDe0eB9065E3B9140a7c90a934a27"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {

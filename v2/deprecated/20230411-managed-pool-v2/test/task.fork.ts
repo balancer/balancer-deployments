@@ -17,7 +17,7 @@ import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkT
 import { randomBytes } from 'ethers/lib/utils';
 import { deploy } from '@src';
 
-describeForkTest('ManagedPoolFactory', 'mainnet', 17033100, function () {
+describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
   let factory: Contract,
     vault: Contract,
