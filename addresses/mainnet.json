@@ -132,7 +132,7 @@
         "address": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20211203-batch-relayer": {
@@ -1156,7 +1156,7 @@
         "address": "0xD0cbF6765997b7CA7Be6440F5E305B2ec7B96065"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -1372,7 +1372,7 @@
         "address": "0xF1C849190Ecfae64d0Bd0a0708708E1De906aaB5"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20240522-fraxtal-root-gauge-factory": {

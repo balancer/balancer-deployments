@@ -1,5 +1,8 @@
 # 2023-04-11 - Managed Pool Factory V2
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+> This has been deprecated as part of the general migration to V3. See [this X post](https://x.com/Balancer/status/2001695563268387210). The factory has been disabled to prevent creation of new pools.
+
 Second deployment of the `ManagedPoolFactory`, which allows creating Managed Pools using create2, reentrancy protection, and other improvements.
 
 A Managed Pool is a Weighted Pool with mutable tokens and weights, designed to be used in conjunction with an owner contract containing specific business logic. This in turn may support many asset management use cases, such as large token counts, rebalancing through token changes, gradual weight or fee updates, fine-grained control of protocol and management fees, allowlisting of LPs, and more.
