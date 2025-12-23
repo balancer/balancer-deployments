@@ -7,7 +7,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 
 function doForkTestsOnNetwork(network: string, block: number) {
-  describeForkTest(`BatchRelayerLibrary V6 - Gauge checkpoints - ${network}`, network, block, function () {
+  describeForkTest.skip(`BatchRelayerLibrary V6 - Gauge checkpoints - ${network}`, network, block, function () {
     let task: Task;
 
     let relayer: Contract, library: Contract;

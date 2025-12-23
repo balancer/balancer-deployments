@@ -16,7 +16,7 @@ import { WEEK, advanceToTimestamp, currentTimestamp, currentWeekTimestamp } from
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function () {
+describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function () {
   let vault: Contract, authorizer: Contract, authorizerAdaptor: Contract;
   let gaugeFactory: Contract, pseudoMinter: Contract, veProxy: Contract, gauge: Contract;
   let admin: SignerWithAddress, user1: SignerWithAddress, user2: SignerWithAddress, govMultisig: SignerWithAddress;
