@@ -9,6 +9,13 @@ If this virtual reserve balance parameter is 0, it will create a standard "Seede
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/cdb5d86cf458362538ada1ba24ff33506c74ed94)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)
 - [`LBPMigrationRouter` artifact](./artifact/LBPMigrationRouter.json)
