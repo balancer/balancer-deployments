@@ -42,7 +42,7 @@
 - Deployed V3 HyperEVM Rate Provider to HyperEVM.
 - Deployed V3 Pool Swap Fee Helper (V2) to all networks.
 - Deployed V3 Pool Pause Helper (V2) to all networks.
-- Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet and Sepolia.
+- Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
 
 #### V2
 
