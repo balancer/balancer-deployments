@@ -836,5 +836,15 @@
         "transferPoolSetOwnership(address)": "0xc3370b16221120d4cdf25c625ca3a63292d1f03ca0aae1319c52449d5c863b55"
       }
     }
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0x63c58ec902f304404d6e4b34ddb6b64746e627a9f171713a7f13d2d8fbf51a4f",
+        "createWithMigration((string,string,address,address,address,uint256,uint256,bool),(address,uint256,uint256,uint256,uint256),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0xdc9ba15ad6051243d3a329d7d6e6ddb0008f181d4812f6d7d60af648db431b97",
+        "disable()": "0x6febf9f238dc2ec20e86da0ec49412a1a4d6f6a3a5de38e57a31d7f05dd323f8"
+      }
+    }
   }
 }

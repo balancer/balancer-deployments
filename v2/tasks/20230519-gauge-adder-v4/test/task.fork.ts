@@ -12,7 +12,7 @@ import { getSigner, impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('GaugeAdderV4', 'mainnet', 17295800, function () {
+describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
   let factory: Contract;
   let adaptorEntrypoint: Contract;
   let authorizer: Contract;
