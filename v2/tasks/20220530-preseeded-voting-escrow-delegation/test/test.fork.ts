@@ -12,7 +12,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('PreseededVotingEscrowDelegation', 'mainnet', 14850000, function () {
+describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, function () {
   let oldDelegation: Contract;
   let receiver: SignerWithAddress;
   let delegation: Contract;

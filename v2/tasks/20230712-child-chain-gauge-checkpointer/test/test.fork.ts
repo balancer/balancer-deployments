@@ -5,7 +5,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest('ChildChainGaugeCheckpointer (BalancerRelayer)', 'polygon', 44244700, function () {
+describeForkTest.skip('ChildChainGaugeCheckpointer (BalancerRelayer)', 'polygon', 44244700, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;

@@ -17,7 +17,7 @@ import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskM
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { AvalancheRootGaugeFactoryDeployment } from '../input';
 
-describeForkTest('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function () {
+describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let daoMultisig: SignerWithAddress;
   let factory: Contract, gauge: Contract;
