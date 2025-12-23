@@ -1988,5 +1988,14 @@
         "disable()": "0x72fd4963dcf180d1df4e653ff72a27ca0c9e8943829fa0a6de70f3dde5a0c7ed"
       }
     }
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "FixedPriceLBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),uint256,uint256,bytes32,address)": "0xfbc14f6f27cddc1db4818f7b96cc01805cbd449b3f43a9085a2f1c249cf77fc1",
+        "disable()": "0x9117651d3db1f75e5aba050b30b85baf13b7a0821a9ce8b3118f8ca4b7033046"
+      }
+    }
   }
 }
