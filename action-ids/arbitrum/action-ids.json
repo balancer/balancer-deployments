@@ -1271,5 +1271,24 @@
         "transferPoolSetOwnership(address)": "0xfaa675561f5d6c0e36c617009399a64eb4f22ad4c36c50a100449634f146a860"
       }
     }
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0x8a4982b75f116370e0628a68d87270be56c3aaf3b878ba4716bda82c1f7ae5b5",
+        "createWithMigration((string,string,address,address,address,uint256,uint256,bool),(address,uint256,uint256,uint256,uint256),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0xac6f0785c9cecf727000ba6a4a73230dfc4a4a0570e19a33c88ede9b535bf06f",
+        "disable()": "0x9cfdab4beadfcae7d0f179599ccd11866e01cf1ee5c21374f6261d4c8338d914"
+      }
+    }
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "FixedPriceLBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),uint256,uint256,bytes32,address)": "0xdb367796766b2d2ecdd31fb412b0cf40eca5dbe3454c75becdda1d24340ae28f",
+        "disable()": "0x563e4481a97a41cdd413da1f83ac6635161c37618c79f5212599f5d564353f36"
+      }
+    }
   }
 }

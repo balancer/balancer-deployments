@@ -34,7 +34,7 @@
         "address": "0x85a80afee867aDf27B50BdB7b76DA70f1E853062"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -438,7 +438,7 @@
         "address": "0xc061361fDa32fF5b65F7D98aCC9a87349d3F0768"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -558,7 +558,7 @@
         "address": "0x5d98909Aa2b3d964907B3735597F47E06b04D8b4"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
@@ -968,7 +968,7 @@
         "address": "0x02916d8F0891309806FCb347Bf4191692cbDDcAF"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -1006,7 +1006,7 @@
         "address": "0xf4404306c2fb1c9C93dB173B7595eE086B45859D"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
@@ -1048,6 +1048,38 @@
       {
         "name": "PoolSwapFeeHelper",
         "address": "0x2b432B08679d17f8A4DB785544C406BC0f47F290"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "contracts": [
+      {
+        "name": "FixedPriceLBPoolFactory",
+        "address": "0xD9E91f7aD501929b089992842a3f193795E6479e"
+      },
+      {
+        "name": "MockFixedPriceLBPool",
+        "address": "0x977D798353a377a21CdF3CEbD82d05C382823647"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0xcb3FE6cC529101AF5880a05429729f967501c9E7"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0x2FAa140F90f76eeEEBC191f4eF4b2634be1E4e91"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xb9A47E725828d432C06Eeba654B4F865051c90e7"
       }
     ],
     "status": "ACTIVE",

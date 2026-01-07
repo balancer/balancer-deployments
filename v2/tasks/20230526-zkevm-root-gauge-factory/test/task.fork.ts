@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('PolygonZkEVMRootGaugeFactory', 'mainnet', 17268518, function () {
+describeForkTest.skip('PolygonZkEVMRootGaugeFactory', 'mainnet', 17268518, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,

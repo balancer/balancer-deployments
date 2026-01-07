@@ -72,7 +72,7 @@
         "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -620,7 +620,7 @@
         "address": "0xb4AF4fdd49da2A2BA9522EAdCF86D407a69f19c8"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -740,7 +740,7 @@
         "address": "0x287E4A89d03deCdF7ac372c7B5332AbCDb3D912A"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
@@ -1104,7 +1104,7 @@
         "address": "0xD53F5d8d926fb2a0f7Be614B16e649B8aC102D83"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {

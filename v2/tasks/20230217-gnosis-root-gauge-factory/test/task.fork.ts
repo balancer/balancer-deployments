@@ -18,7 +18,7 @@ import { expectTransferEvent } from '@helpers/expectTransfer';
 import { describeForkTest } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
+describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,

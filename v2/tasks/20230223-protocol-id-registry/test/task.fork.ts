@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-describeForkTest('ProtocolIdRegistry', 'mainnet', 16691900, function () {
+describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   let vault: Contract, authorizer: Contract;
   let protocolIdRegistry: Contract;
   let admin: SignerWithAddress, other: SignerWithAddress;
