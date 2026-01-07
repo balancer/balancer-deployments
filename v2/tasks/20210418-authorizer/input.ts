@@ -50,4 +50,7 @@ export default {
   xlayer: {
     admin: '0xDA07B188daE2ee63B2eC61Ee4cdB9673C03d2293',
   },
+  ink: {
+    admin: '0xDA07B188daE2ee63B2eC61Ee4cdB9673C03d2293',
+  },
 };

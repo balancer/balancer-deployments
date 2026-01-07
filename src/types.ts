@@ -21,6 +21,7 @@ export const NETWORKS = [
   'hyperevm',
   'plasma',
   'xlayer',
+  'ink',
 ];
 
 export type Network = (typeof NETWORKS)[number];
