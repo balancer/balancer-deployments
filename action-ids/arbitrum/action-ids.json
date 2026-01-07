@@ -1253,5 +1253,42 @@
         "transferPoolSetOwnership(address)": "0x5d91624a8ad7d51dac1b4189db4a4b09d72d7a1350631431f8179e1bb9055a54"
       }
     }
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x8bea6d2c2a756a42ff3e8180a934f7428bcb733513acad81a635983cfe923ba0",
+        "addPoolsToSet(uint256,address[])": "0x233710920f050d32d972a0cc5da6cac8719a590a1abfcfb7670bcb9ccc9dd12d",
+        "createPoolSet(address)": "0xa6680b0f38be5c4119d12bf34181715fb1e94af1e2081ac47a42b7ac1f815c7e",
+        "createPoolSet(address,address[])": "0x76c56a3b7d3974549aa64ac4ca99c1d2cc173a5d1b34b990dcb72ed7769e8cff",
+        "destroyPoolSet(uint256)": "0xb38f3e6a67e8cedec5e1d3b8bd9a29bcbe548ebe1b72fd78e8107c255721d4e1",
+        "forceTransferOwnership(address)": "0x22c8f467e9f0e1e647de6d4ab97575851a63311e5506806e3c1f5a61ef296b66",
+        "pausePools(address[])": "0x92eb09bf334e23e0fefee191556d8a300a21b504e39d4a2b994a4a36ef032a95",
+        "removePoolsFromSet(uint256,address[])": "0x5f4360e9868e545ba6202a0e4331f56c81e63cf2e4c619266492a0cf8146a923",
+        "renounceOwnership()": "0xaefca8ac4b3022dd1ba8b234d02b64117593ebe6206a96ffe2b63b3a4b0104a4",
+        "transferOwnership(address)": "0x425fe0cc0d3d0f09cf542c350a40f39cab7f9b230cac9d7d39f5784c18356253",
+        "transferPoolSetOwnership(address)": "0xfaa675561f5d6c0e36c617009399a64eb4f22ad4c36c50a100449634f146a860"
+      }
+    }
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0x8a4982b75f116370e0628a68d87270be56c3aaf3b878ba4716bda82c1f7ae5b5",
+        "createWithMigration((string,string,address,address,address,uint256,uint256,bool),(address,uint256,uint256,uint256,uint256),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0xac6f0785c9cecf727000ba6a4a73230dfc4a4a0570e19a33c88ede9b535bf06f",
+        "disable()": "0x9cfdab4beadfcae7d0f179599ccd11866e01cf1ee5c21374f6261d4c8338d914"
+      }
+    }
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "FixedPriceLBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),uint256,uint256,bytes32,address)": "0xdb367796766b2d2ecdd31fb412b0cf40eca5dbe3454c75becdda1d24340ae28f",
+        "disable()": "0x563e4481a97a41cdd413da1f83ac6635161c37618c79f5212599f5d564353f36"
+      }
+    }
   }
 }

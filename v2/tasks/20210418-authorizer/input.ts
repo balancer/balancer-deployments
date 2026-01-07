@@ -46,4 +46,8 @@ export default {
   plasma: {
     admin: '0xB5485e0F543eE6e01e221A57e58ED95268215Ac9',
   },
+  // https://github.com/BalancerMaxis/bal_addresses/blob/f658fa1529785b28d235ffcba6fbca2562a939b8/extras/signers.json#L39
+  xlayer: {
+    admin: '0xDA07B188daE2ee63B2eC61Ee4cdB9673C03d2293',
+  },
 };

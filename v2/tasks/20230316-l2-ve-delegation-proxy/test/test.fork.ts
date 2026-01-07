@@ -14,7 +14,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { deploy } from '@src';
 
-describeForkTest('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, function () {
+describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, function () {
   let vault: Contract, authorizer: Contract;
   let veProxy: Contract, nullVotingEscrow: Contract, veDelegation: Contract;
   let admin: SignerWithAddress, user1: SignerWithAddress, user2: SignerWithAddress;

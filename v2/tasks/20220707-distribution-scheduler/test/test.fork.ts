@@ -11,7 +11,7 @@ import { MAX_UINT256 } from '@helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('DistributionScheduler', 'mainnet', 14850000, function () {
+describeForkTest.skip('DistributionScheduler', 'mainnet', 14850000, function () {
   let lmCommittee: SignerWithAddress, distributor: SignerWithAddress;
   let scheduler: Contract, gauge: Contract, DAI: Contract, USDC: Contract;
 

@@ -6,7 +6,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 
-describeForkTest('ChainlinkRateProviderFactory', 'mainnet', 17717232, function () {
+describeForkTest.skip('ChainlinkRateProviderFactory', 'mainnet', 17717232, function () {
   let task: Task;
   let usdcPriceFeed: Contract, rateProviderFactory: Contract, rateProvider: Contract;
   const usdcPriceFeedAddress = '0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6';

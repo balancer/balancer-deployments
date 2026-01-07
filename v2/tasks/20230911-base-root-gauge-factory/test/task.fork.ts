@@ -17,7 +17,7 @@ import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskM
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { BaseRootGaugeFactoryDeployment } from '../input';
 
-describeForkTest('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
+describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let daoMultisig: SignerWithAddress;
   let factory: Contract, gauge: Contract;

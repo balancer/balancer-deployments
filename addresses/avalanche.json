@@ -34,7 +34,7 @@
         "address": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -340,7 +340,7 @@
         "address": "0x3Fb81f6FB0dd94c6fC7e138887f1CA4CDB5E2999"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -460,7 +460,7 @@
         "address": "0xc6057Da8673bE26378470A302628a07f70775F3A"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
@@ -564,7 +564,7 @@
         "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -738,7 +738,7 @@
         "address": "0x891EC9B34829276a9a8ef2F8A9cEAF2486017e0d"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -788,7 +788,7 @@
         "address": "0x36E8e371e6863E5f96D00667016DDE87fe1Cc5d1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -830,6 +830,16 @@
       {
         "name": "ConstantPriceFeed",
         "address": "0xd22eecBB495380Ef52b1CCeF1cA594979885D484"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x30fF095E22Dda9751b5E1a67928611dcB6308D7E"
       }
     ],
     "status": "ACTIVE",
