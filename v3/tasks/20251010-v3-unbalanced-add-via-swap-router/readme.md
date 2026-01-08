@@ -4,5 +4,5 @@ This router is designed to allow adding liquidity unbalanced to pools that do no
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/2f0eb1845eb7d40c83904b669cddf37c733479d3).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/aed46f9b2c03bb08cd1ad3d37716ae86f2a4c44d).
 - [`UnbalancedAddViaSwapRouter` artifact](./artifact/UnbalancedAddViaSwapRouter.json)
