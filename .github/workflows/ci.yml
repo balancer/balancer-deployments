@@ -47,13 +47,13 @@ jobs:
         #  - use a different key on every single run, causing for the cache to always be saved.
         #  - use a wildcard as a restore key, which will cause all stored keys to match and the most recent one to be
         #    selected.
-        uses: pat-s/always-upload-cache@v3
+        uses: actions/cache@v3
         id: cache-forked-network
         with:
           path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
           key: hardhat-network-fork-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
-            hardhat-network-fork-*
+            hardhat-network-fork-
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
