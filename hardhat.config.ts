@@ -1,5 +1,4 @@
 import '@nomiclabs/hardhat-ethers';
-import '@nomiclabs/hardhat-vyper';
 import '@nomiclabs/hardhat-waffle';
 import '@nomicfoundation/hardhat-verify';
 import 'hardhat-local-networks-config-plugin';
@@ -478,9 +477,6 @@ export default {
         },
       },
     ],
-  },
-  vyper: {
-    compilers: [{ version: '0.3.1' }, { version: '0.3.3' }],
   },
   paths: {
     artifacts: './src/helpers/.hardhat/artifacts',
