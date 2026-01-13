@@ -53,7 +53,7 @@ jobs:
           path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
           key: hardhat-network-fork-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
-            hardhat-network-fork-*
+            hardhat-network-fork-
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
