@@ -74,6 +74,7 @@ jobs:
       - name: Test
         run: yarn test --bail
       - name: Save Forked Network Cache
+        # Always save; the key changes on every run, and the current one should be the most complete one.
         id: cache-forked-network-save
         if: always()
         uses: actions/cache/save@v4
