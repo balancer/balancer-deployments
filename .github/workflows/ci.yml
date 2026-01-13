@@ -37,7 +37,7 @@ jobs:
       - name: Install
         run: yarn --immutable
         if: steps.cache.outputs.cache-hit != 'true'
-      - name: Forked Network Cache
+      - name: Restore Forked Network Cache
         # Hardhat caches node requests when working with forked networks (e.g. when querying contract code, storage,
         # etc.) to save time in future runs. We cache this directory across runs.
         # This cache action is special for a couple reasons, which originate from a) it not occupying much disk size,
@@ -47,14 +47,21 @@ jobs:
         #  - use a different key on every single run, causing for the cache to always be saved.
         #  - use a wildcard as a restore key, which will cause all stored keys to match and the most recent one to be
         #    selected.
-        uses: actions/cache@v4
-        id: cache-forked-network
+        id: cache-forked-network-restore
+        uses: actions/cache/restore@v4
         with:
           path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
-          key: hardhat-network-fork-${{ github.run_number }}-${{ github.run_attempt }}
+          key: hardhat-network-fork
           restore-keys: |
-            hardhat-network-fork-*
-          save-always: true
+            hardhat-network-fork
+
+      - name: Save Forked Network Cache
+        id: cache-forked-network-save
+        if: always() && steps.cache-forked-network-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.cache-forked-network-restore.outputs.cache-primary-key }}
+          path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
