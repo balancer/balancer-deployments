@@ -27,7 +27,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24.12
       - name: Cache
         uses: actions/cache@v4
         id: cache
@@ -47,7 +47,7 @@ jobs:
         #  - use a different key on every single run, causing for the cache to always be saved.
         #  - use a wildcard as a restore key, which will cause all stored keys to match and the most recent one to be
         #    selected.
-        uses: pat-s/always-upload-cache@v3
+        uses: actions/cache@v4
         id: cache-forked-network
         with:
           path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
