@@ -17,6 +17,7 @@ node_modules/
 # Hardhat artifacts
 artifacts/
 cache/
+edr-cache/
 
 # Build artifacts
 dist/
