@@ -54,14 +54,6 @@ jobs:
           key: hardhat-network-fork
           restore-keys: |
             hardhat-network-fork
-
-      - name: Save Forked Network Cache
-        id: cache-forked-network-save
-        if: always() && steps.cache-forked-network-restore.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          key: ${{ steps.cache-forked-network-restore.outputs.cache-primary-key }}
-          path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
       - name: Prepare Config
         run: yarn ci:prepare-config
         env:
@@ -81,3 +73,10 @@ jobs:
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
         run: yarn test --bail
+      - name: Save Forked Network Cache
+        id: cache-forked-network-save
+        if: always() && steps.cache-forked-network-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.cache-forked-network-restore.outputs.cache-primary-key }}
+          path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
