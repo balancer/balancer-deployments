@@ -564,14 +564,14 @@ export default {
         chainId: 143,
         urls: {
           apiURL: 'https://sourcify-api-monad.blockvision.org',
-          browserURL: 'https://mainnet-beta.monvision.io/',
+          browserURL: 'https://monadvision.com/',
         },
       },
     ],
   },
   sourcify: {
     enabled: true,
-    apiUrl: "https://sourcify-api-monad.blockvision.org",
-    browserUrl: "https://mainnet-beta.monvision.io/"
+    apiUrl: "https://sourcify-api-monad.blockvision.org/",
+    browserUrl: "https://monadvision.com/"
   },
 };

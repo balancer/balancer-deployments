@@ -14,6 +14,7 @@ V3 Vault deployment, with Extension, Admin and Factory. Cornerstone of Balancer 
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Vault` artifact](./artifact/Vault.json)
 - [`VaultAdmin` artifact](./artifact/VaultAdmin.json)

@@ -30,6 +30,9 @@ export default {
   xlayer: {
     Admin: '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673',
   },
+  monad: {
+    Admin: '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673',
+  },
   sepolia: {
     Admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
