@@ -58,5 +58,9 @@
   "xlayer": {
     "chainId": 196,
     "block-explorer": "https://oklink.com/xlayer"
+  },
+  "monad": {
+    "chainId": 143,
+    "block-explorer": "https://monadvision.com"
   }
 }
