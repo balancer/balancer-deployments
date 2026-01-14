@@ -33,6 +33,9 @@ export default {
   hyperevm: {
     FeeRecipient: MaxiOmniMultisig,
   },
+  plasma: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
   sepolia: {
     FeeRecipient: SepoliaAdmin,
   },

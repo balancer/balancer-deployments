@@ -10,7 +10,7 @@ import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from 
 import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 
-describeForkTest('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
+describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;

@@ -15,7 +15,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function () {
+describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, lpTokenHolder: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,

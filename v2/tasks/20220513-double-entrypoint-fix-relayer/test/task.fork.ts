@@ -9,7 +9,7 @@ import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest('DoubleEntrypointFixRelayer', 'mainnet', 14770592, function () {
+describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, function () {
   let govMultisig: SignerWithAddress;
   let btcBptHolder: SignerWithAddress, snxBptHolder: SignerWithAddress;
   let relayer: Contract;

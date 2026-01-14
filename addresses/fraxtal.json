@@ -38,7 +38,7 @@
         "address": "0xaeace3B34BcA1BFe585e4B0Bb303e60e0771F139"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -204,7 +204,7 @@
         "address": "0x1fB5653B800fa675F7b791652cF60D264198e5f2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -294,6 +294,16 @@
       {
         "name": "MockComposableStablePool",
         "address": "0xA65bc2c42697494a53DC53bf1a45c9e72201467F"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v2"
+  },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
       }
     ],
     "status": "ACTIVE",

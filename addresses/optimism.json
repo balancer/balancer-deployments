@@ -72,7 +72,7 @@
         "address": "0xf302f9F50958c5593770FDf4d4812309fF77414f"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -620,7 +620,7 @@
         "address": "0xb4AF4fdd49da2A2BA9522EAdCF86D407a69f19c8"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -740,6 +740,16 @@
         "address": "0x287E4A89d03deCdF7ac372c7B5332AbCDb3D912A"
       }
     ],
+    "status": "DEPRECATED",
+    "version": "v2"
+  },
+  "20250919-pool-swap-fee-helper": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      }
+    ],
     "status": "ACTIVE",
     "version": "v2"
   },
@@ -844,7 +854,7 @@
         "address": "0xc9b36096f5201ea332Db35d6D195774ea0D5988f"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -1044,7 +1054,7 @@
         "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -1054,7 +1064,7 @@
         "address": "0x1CD776897ef4f647bf8241Ec69549e4A9cb1D608"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250503-v3-protocol-fee-sweeper-v2": {
@@ -1094,7 +1104,7 @@
         "address": "0xD53F5d8d926fb2a0f7Be614B16e649B8aC102D83"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -1136,6 +1146,26 @@
       {
         "name": "ConstantPriceFeed",
         "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x16B50F6bF8C8Ca73C07e17762188c5DEEe7aE5Db"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-swap-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolSwapFeeHelper",
+        "address": "0x355bD33F0033066BB3DE396a6d069be57353AD95"
       }
     ],
     "status": "ACTIVE",

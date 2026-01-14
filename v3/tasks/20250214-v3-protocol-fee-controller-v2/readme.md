@@ -14,5 +14,7 @@ There is nothing to deprecate, as the original Protocol Fee Controller was deplo
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeController` artifact](./artifact/ProtocolFeeController.json)

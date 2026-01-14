@@ -48,6 +48,12 @@ if (process.env.CI) {
       },
       "hyperevm": {
         "url": "${process.env.HYPEREVM_RPC_ENDPOINT}"
+      },
+      "plasma": {
+        "url": "${process.env.PLASMA_RPC_ENDPOINT}"
+      },
+      "xlayer": {
+        "url": "${process.env.XLAYER_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

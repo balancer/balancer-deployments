@@ -1,7 +1,14 @@
 import { VaultDeployment } from './input';
-import { Task, TaskRunOptions } from '@src';
+import { Task, TaskMode, TaskRunOptions } from '@src';
+
+const skipCheckNetworkList = ['plasma'];
 
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
+  if (task.mode === TaskMode.CHECK && skipCheckNetworkList.includes(task.network)) {
+    // Vault was deployed in another task; skip check.
+    return;
+  }
+
   const input = task.input() as VaultDeployment;
   const vaultArgs = [input.Authorizer, input.WETH, input.pauseWindowDuration, input.bufferPeriodDuration];
   const vault = await task.deployAndVerify('Vault', vaultArgs, from, force);

@@ -36,6 +36,7 @@ import {
   withRetries,
 } from './src/network';
 import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
+import { ApiKey } from '@nomicfoundation/hardhat-verify/types';
 
 const THEGRAPHURLS: { [key: string]: string } = {};
 
@@ -43,12 +44,25 @@ task('deploy', 'Run deployment task')
   .addParam('id', 'Deployment task ID')
   .addFlag('force', 'Ignore previous deployments')
   .addOptionalParam('key', 'Etherscan API key to verify contracts')
+  .addFlag('v1', 'Use Etherscan V1 API to verify the contract')
   .setAction(
-    async (args: { id: string; force?: boolean; key?: string; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
+    async (
+      args: { id: string; force?: boolean; key?: string; verbose?: boolean; v1?: boolean },
+      hre: HardhatRuntimeEnvironment
+    ) => {
       Logger.setDefaults(false, args.verbose || false);
 
+      const network = hre.network.name;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
+      const networkApiKey = args.key ?? (hre.config.networks[network] as any).verificationAPIKey;
+      // If the v1 API flag is set, we need to wrap the API key in an object with the network name as the key
+      // as this is how the Etherscan verification library expects it (otherwise it defaults to v2).
+      const apiKey: ApiKey = args.v1
+        ? {
+            [network]: networkApiKey,
+          }
+        : networkApiKey;
+
       const verifier = apiKey
         ? new Verifier(
             hre.network,
@@ -70,15 +84,25 @@ task('verify-contract', `Verify a task's deployment on a block explorer`)
   .addParam('address', 'Contract address')
   .addParam('args', 'ABI-encoded constructor arguments')
   .addOptionalParam('key', 'Etherscan API key to verify contracts')
+  .addFlag('v1', 'Use Etherscan V1 API to verify the contract')
   .setAction(
     async (
-      args: { id: string; name: string; address: string; key: string; args: string; verbose?: boolean },
+      args: { id: string; name: string; address: string; key: string; args: string; verbose?: boolean; v1?: boolean },
       hre: HardhatRuntimeEnvironment
     ) => {
       Logger.setDefaults(false, args.verbose || false);
 
+      const network = hre.network.name;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const apiKey = args.key ?? (hre.config.networks[hre.network.name] as any).verificationAPIKey;
+      const networkApiKey = args.key ?? (hre.config.networks[network] as any).verificationAPIKey;
+      // If the v1 API flag is set, we need to wrap the API key in an object with the network name as the key
+      // as this is how the Etherscan verification library expects it (otherwise it defaults to v2).
+      const apiKey: ApiKey = args.v1
+        ? {
+            [network]: networkApiKey,
+          }
+        : networkApiKey;
+
       const verifier = apiKey
         ? new Verifier(
             hre.network,
@@ -517,6 +541,22 @@ export default {
         urls: {
           apiURL: 'https://api.etherscan.io/v2/api?chainid=999',
           browserURL: 'https://hyperevmscan.io/',
+        },
+      },
+      {
+        network: 'plasma',
+        chainId: 9745,
+        urls: {
+          apiURL: 'https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan',
+          browserURL: 'https://plasmascan.to/',
+        },
+      },
+      {
+        network: 'xlayer',
+        chainId: 196,
+        urls: {
+          apiURL: 'https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/xlayer',
+          browserURL: 'https://oklink.com/xlayer',
         },
       },
       {

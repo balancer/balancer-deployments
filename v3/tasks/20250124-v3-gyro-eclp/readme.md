@@ -15,6 +15,8 @@ This version uses the BaseSplitCodeFactory to help with deployment on networks w
 - [Optimism mainnet addresses](./output/optimism.json)
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`GyroECLPPoolFactory` artifact](./artifact/GyroECLPPoolFactory.json)
 - [`GyroECLPPool` artifact](./artifact/GyroECLPPool.json)
