@@ -1510,7 +1510,7 @@
         "address": "0x527d0E14acc53FB040DeBeae1cAb973D23FB3568"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

@@ -672,7 +672,7 @@
         "address": "0xd43c36038250c66D46854e536Bf959fdDE5294c3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

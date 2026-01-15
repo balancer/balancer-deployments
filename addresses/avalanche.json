@@ -530,7 +530,7 @@
         "address": "0xD2643c05FA9590Ec80b6a6866f4B9C73CA60cc0C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
