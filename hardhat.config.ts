@@ -563,15 +563,10 @@ export default {
         network: 'monad',
         chainId: 143,
         urls: {
-          apiURL: 'https://sourcify-api-monad.blockvision.org/',
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=143',
           browserURL: 'https://monadscan.com/',
         },
       },
     ],
-  },
-  sourcify: {
-    enabled: true,
-    apiUrl: 'https://sourcify-api-monad.blockvision.org/',
-    browserUrl: 'https://monadvision.com/',
   },
 };
