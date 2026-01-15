@@ -1126,7 +1126,7 @@
         "address": "0xcb2840553945dBc776d98DABC141f9b2CceC3c30"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -1150,7 +1150,7 @@
         "address": "0xe8788E22e04d82e0A2b0daE6DFa80B9627060597"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {

@@ -1,0 +1,13 @@
+# 2026-01-16 - V3 Stable pool (V3)
+
+Third deployment of the `StablePoolFactory` for Balancer V3.
+Pools from this factory use stable math, inspired by Curve stable pools, which is best suited for correlated assets.
+
+This version contains stability improvements and a larger pause window.
+Allows setting pool creator on pool deployment.
+
+## Useful Files
+
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/6c37baf5d9efdc21c167e30fd6928446d717ab6e).
+- [`StablePool` artifact](./artifact/StablePool.json)
+- [`StablePoolFactory` artifact](./artifact/StablePoolFactory.json)
