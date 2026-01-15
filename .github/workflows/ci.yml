@@ -27,7 +27,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 22.13
+          node-version: 24.12
       - name: Cache
         uses: actions/cache@v4
         id: cache
@@ -37,7 +37,7 @@ jobs:
       - name: Install
         run: yarn --immutable
         if: steps.cache.outputs.cache-hit != 'true'
-      - name: Forked Network Cache
+      - name: Restore Forked Network Cache
         # Hardhat caches node requests when working with forked networks (e.g. when querying contract code, storage,
         # etc.) to save time in future runs. We cache this directory across runs.
         # This cache action is special for a couple reasons, which originate from a) it not occupying much disk size,
@@ -47,8 +47,8 @@ jobs:
         #  - use a different key on every single run, causing for the cache to always be saved.
         #  - use a wildcard as a restore key, which will cause all stored keys to match and the most recent one to be
         #    selected.
-        uses: pat-s/always-upload-cache@v3
-        id: cache-forked-network
+        id: cache-forked-network-restore
+        uses: actions/cache/restore@v4
         with:
           path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'
           key: hardhat-network-fork-${{ github.run_number }}-${{ github.run_attempt }}
@@ -64,12 +64,20 @@ jobs:
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
           GNOSIS_RPC_ENDPOINT: ${{ secrets.GNOSIS_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
-          ZKEVM_RPC_ENDPOINT: ${{ secrets.ZKEVM_RPC_ENDPOINT }}
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
           FRAXTAL_RPC_ENDPOINT: ${{ secrets.FRAXTAL_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
           HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
           PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
+          XLAYER_RPC_ENDPOINT: ${{ secrets.XLAYER_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
       - name: Test
         run: yarn test --bail
+      - name: Save Forked Network Cache
+        # Always save; the key changes on every run, and the current one should be the most complete one.
+        id: cache-forked-network-save
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.cache-forked-network-restore.outputs.cache-primary-key }}
+          path: 'src/helpers/.hardhat/cache/hardhat-network-fork/**'

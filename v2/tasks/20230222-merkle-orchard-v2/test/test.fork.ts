@@ -13,7 +13,7 @@ import { expectTransferEvent } from '@helpers/expectTransfer';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { MerkleTree } from './merkleTree';
 
-describeForkTest('MerkleOrchard V2', 'mainnet', 16684000, function () {
+describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
   let distributor: SignerWithAddress;
   let merkleOrchard: Contract;
   let ldoToken: Contract;

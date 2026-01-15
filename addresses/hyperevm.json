@@ -110,7 +110,7 @@
         "address": "0xa523f47A933D5020b23629dDf689695AA94612Dc"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -310,7 +310,7 @@
         "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -350,7 +350,7 @@
         "address": "0xEAedc32a51c510d35ebC11088fD5fF2b47aACF2E"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -388,7 +388,7 @@
         "address": "0x40330BB045E24CdE97B019F13c44D0B552CD3be5"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
@@ -467,11 +467,53 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x1bcA39b01F451b0a05D7030e6e6981a73B716b1C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
         "name": "PoolSwapFeeHelper",
         "address": "0x309abcAeFa19CA6d34f0D8ff4a4103317c138657"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "contracts": [
+      {
+        "name": "FixedPriceLBPoolFactory",
+        "address": "0xAE563E3f8219521950555F5962419C8919758Ea2"
+      },
+      {
+        "name": "MockFixedPriceLBPool",
+        "address": "0x1E1F8B9Ff0A12E4fa3d7d7BcC9C30948bCCCBf38"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0xFc00536A0fd292c284deeF6af8F644d8373d9cad"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0xd22eecBB495380Ef52b1CCeF1cA594979885D484"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x834653c8D2C1d2464368Fcf33b58490Ad4ec1c59"
       }
     ],
     "status": "ACTIVE",

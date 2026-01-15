@@ -1,0 +1,172 @@
+import { DAY, HOUR } from '@helpers/time';
+import { Task, TaskMode } from '@src';
+import { DelayData, RoleData } from './types';
+
+export const TRANSITION_END_BLOCK = 9279300;
+
+const network = 'sepolia';
+
+// V3 contracts
+const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY, network);
+const ProtocolFeeController = new Task('20250214-v3-protocol-fee-controller-v2', TaskMode.READ_ONLY, network);
+const BalancerContractRegistry = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, network);
+const ProtocolFeeSweeper = new Task('20250228-v3-protocol-fee-sweeper', TaskMode.READ_ONLY, network);
+const ProtocolFeeSweeperV2 = new Task('20250503-v3-protocol-fee-sweeper-v2', TaskMode.READ_ONLY, network);
+// Fee sweeper V1 is active in most networks, but it was superseded technically by V2.
+const PoolSwapFeeHelperV2 = new Task('20250919-v3-pool-swap-fee-helper-v2', TaskMode.READ_ONLY, network);
+
+export const Root = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
+
+// Happens frequently
+const SHORT_DELAY = 0.5 * HOUR;
+
+// May happen frequently but can be dangerous
+const MEDIUM_DELAY = 3 * HOUR;
+
+// Happens basically never. A long grant delay typically involves replacing infrastructure (e.g. replacing the veBAL
+// system or protocol fees).
+const LONG_DELAY = DAY;
+
+export const RootTransferDelay = LONG_DELAY;
+
+console.log('about to get grant delays; network: ', ProtocolFeeController.network);
+
+export const GrantDelays: DelayData[] = [
+  // Fee controller permissions do not affect user funds and are rather infrequent, but do affect collected fees.
+  {
+    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'withdrawProtocolFees(address,address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeController.actionId(
+      'ProtocolFeeController',
+      'withdrawProtocolFeesForToken(address,address,address)'
+    ),
+    newDelay: MEDIUM_DELAY,
+  },
+];
+
+export const getRoles: () => Promise<RoleData[]> = async () => [];
+
+export const Granters: RoleData[] = [];
+
+export const Revokers: RoleData[] = [];
+
+export const ExecuteDelays: DelayData[] = [
+  // setAuthorizer must be long since no delay can be longer than it.
+  { actionId: Vault.actionId('VaultAdmin', 'setAuthorizer(address)'), newDelay: LONG_DELAY },
+  // Queries can be disabled without making it permanent; we must be sure about this.
+  { actionId: Vault.actionId('VaultAdmin', 'disableQueryPermanently()'), newDelay: LONG_DELAY },
+  // If queries were disabled it was probably for a good reason; it might be dangerous to re-enable.
+  { actionId: Vault.actionId('VaultAdmin', 'enableQuery()'), newDelay: MEDIUM_DELAY },
+  // Disabling recovery mode is low impact.
+  { actionId: Vault.actionId('VaultAdmin', 'disableRecoveryMode(address)'), newDelay: SHORT_DELAY },
+  // The fee controller might need replacement, although other than fees it's not dangerous in terms of user funds.
+  { actionId: Vault.actionId('VaultAdmin', 'setProtocolFeeController(address)'), newDelay: MEDIUM_DELAY },
+  // This is operational, but whoever can call this can set the swap fee percentage for any pool, so it must be checked.
+  { actionId: Vault.actionId('VaultAdmin', 'setStaticSwapFeePercentage(address,uint256)'), newDelay: MEDIUM_DELAY },
+  // Unpausing a pool is probably dangerous, and is rarely done anyway.
+  { actionId: Vault.actionId('VaultAdmin', 'unpausePool(address)'), newDelay: MEDIUM_DELAY },
+  // Same for the Vault.
+  { actionId: Vault.actionId('VaultAdmin', 'unpauseVault()'), newDelay: MEDIUM_DELAY },
+  // And same for the buffers.
+  { actionId: Vault.actionId('VaultAdmin', 'unpauseVaultBuffers()'), newDelay: MEDIUM_DELAY },
+
+  // Changing protocol fee percentages for a pool or in general is low impact, operational but rarely done.
+  {
+    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setGlobalProtocolSwapFeePercentage(uint256)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setGlobalProtocolYieldFeePercentage(uint256)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setProtocolSwapFeePercentage(address,uint256)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: ProtocolFeeController.actionId('ProtocolFeeController', 'setProtocolYieldFeePercentage(address,uint256)'),
+    newDelay: SHORT_DELAY,
+  },
+
+  // The contract registry has mild impact when it comes to trusted routers.
+  {
+    actionId: BalancerContractRegistry.actionId(
+      'BalancerContractRegistry',
+      'addOrUpdateBalancerContractAlias(string,address)'
+    ),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: BalancerContractRegistry.actionId('BalancerContractRegistry', 'deprecateBalancerContract(address)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: BalancerContractRegistry.actionId('BalancerContractRegistry', 'deregisterBalancerContract(string)'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: BalancerContractRegistry.actionId(
+      'BalancerContractRegistry',
+      'registerBalancerContract(uint8,string,address)'
+    ),
+    newDelay: SHORT_DELAY,
+  },
+
+  // Protocol fee sweeper changes are operational and might drain fees if done incorrectly, so medium delay.
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeper.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'addProtocolFeeBurner(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setFeeRecipient(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+  {
+    actionId: ProtocolFeeSweeperV2.actionId('ProtocolFeeSweeper', 'setTargetToken(address)'),
+    newDelay: MEDIUM_DELAY,
+  },
+
+  // Any pool can have its swap fee changed, but this is a relatively operational action.
+  {
+    actionId: PoolSwapFeeHelperV2.actionId('PoolSwapFeeHelper', 'createPoolSet(address,address[])'),
+    newDelay: SHORT_DELAY,
+  },
+  {
+    actionId: PoolSwapFeeHelperV2.actionId('PoolSwapFeeHelper', 'addPoolsToSet(uint256,address[])'),
+    newDelay: SHORT_DELAY,
+  },
+];
+
+// Checks
+
+const actionIds = [
+  ExecuteDelays.map((delayData) => delayData.actionId),
+  GrantDelays.map((delayData) => delayData.actionId),
+].flat();
+
+if (new Set(actionIds).size !== actionIds.length) {
+  throw new Error('Duplicate action ID found in configuration');
+}
+
+const delays = [
+  ExecuteDelays.map((delayData) => delayData.newDelay),
+  GrantDelays.map((delayData) => delayData.newDelay),
+].flat();
+
+if (delays.some((delay) => delay < SHORT_DELAY || delay > LONG_DELAY)) {
+  throw new Error('Delays outside expected bounds');
+}

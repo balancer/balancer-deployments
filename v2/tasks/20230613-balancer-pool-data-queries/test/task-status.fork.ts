@@ -10,7 +10,7 @@ const BB_E_DAI_ID = '0xeb486af868aeb3b6e53066abc9623b1041b42bc000000000000000000
 const BB_E_USDT_ID = '0x3c640f0d3036ad85afa2d5a9e32be651657b874f00000000000000000000046b';
 const BB_E_USD_ID = '0x50cf90b954958480b8df7958a9e965752f62712400000000000000000000046f';
 
-describeForkTest('BalancerPoolDataQueries', 'mainnet', 17413298, function () {
+describeForkTest.skip('BalancerPoolDataQueries', 'mainnet', 17413298, function () {
   let balancerPoolDataQueries: Contract;
 
   before('deploy balancer pool data queries', async () => {

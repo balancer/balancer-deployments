@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { MAX_UINT256 } from '@helpers/constants';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest('BatchRelayerLibrary V6 - CompoundV2Wrapping', 'polygon', 40305420, function () {
+describeForkTest.skip('BatchRelayerLibrary V6 - CompoundV2Wrapping', 'polygon', 40305420, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;

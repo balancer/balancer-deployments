@@ -38,7 +38,7 @@
         "address": "0xe90472ffc41D7Ddf8E3B456bBA748e3F22c59C6f"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -478,7 +478,7 @@
         "address": "0xE458224CA8d6605c87b73E92aa5CB7A4e77770f3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -510,20 +510,6 @@
       {
         "name": "GaugeAdder",
         "address": "0xE42FFA682A26EF8F25891db4882932711D42e467"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v2"
-  },
-  "20230522-timelock-authorizer": {
-    "contracts": [
-      {
-        "name": "TimelockAuthorizerMigrator",
-        "address": "0x6eaD84Af26E997D27998Fc9f8614e8a19BB93938"
-      },
-      {
-        "name": "TimelockAuthorizer",
-        "address": "0xDe615cc5712B4954BeB613BCF32E61C137Cc64f9"
       }
     ],
     "status": "ACTIVE",
@@ -636,7 +622,7 @@
         "address": "0x7b0d669142FEDe0eB9065E3B9140a7c90a934a27"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
@@ -832,7 +818,7 @@
         "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -1026,7 +1012,7 @@
         "address": "0x28620a494d75d4a8959dD7a1835bF85A5Ce7b1C4"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -1076,7 +1062,7 @@
         "address": "0xdb837CCe319F885AD34C8bCbf432De8bF8DEC406"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -1114,7 +1100,7 @@
         "address": "0xc432fC493269Cf9412ef419a8E571655657158a3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
@@ -1179,11 +1165,53 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x52e7e9CEeF4bfE3c91a006a2AC1F9F409ff449A8"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
         "name": "PoolSwapFeeHelper",
         "address": "0xA65b0BC17EA5B5dD4C5252df95b20390766405A4"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "contracts": [
+      {
+        "name": "FixedPriceLBPoolFactory",
+        "address": "0x57Ef4cB125d1c690dF98118281090b7CdC7b9F85"
+      },
+      {
+        "name": "MockFixedPriceLBPool",
+        "address": "0xc5b83A1c411ba7553f526e09dC5a833cf7194f3c"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0x8B8c22B8578A86ead5BcE7294ADFcba767329eb3"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0x7fed0fd2843232973eE2F61120e9D9C5eB78Cb16"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x1f7821096bF1630119f58bfE1676384D159Ac166"
       }
     ],
     "status": "ACTIVE",

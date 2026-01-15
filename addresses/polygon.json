@@ -102,7 +102,7 @@
         "address": "0x41B953164995c11C81DA73D212ED8Af25741b7Ac"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20211203-batch-relayer": {
@@ -698,7 +698,7 @@
         "address": "0x074eFD7806e6c28e8b6611075b1Aa62c6c408090"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -818,7 +818,7 @@
         "address": "0xd78b8a04498a15c54cf96d3e201cdd85D4ba524d"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
