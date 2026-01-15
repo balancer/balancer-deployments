@@ -117,7 +117,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./v2/tasks/20231031-batch-relayer-v6)                                     |
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
-| V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
@@ -159,6 +158,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Fixed Price Liquidity Bootstrapping Pool            | [`20251205-v3-fixed-price-lbp`](./v3/tasks/20251205-v3-fixed-price-lbp)                                 |
 | V3 Liquidity Bootstrapping Pool (V3)                   | [`20251219-v3-liquidity-bootstrapping-pool-v3`](./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3) |
 | V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
+| V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
 
 ## Scripts
 
@@ -254,6 +254,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
+| V3 Weighted Pool                                    | [`20241205-v3-weighted-pool`](./v3/deprecated/20241205-v3-weighted-pool)                                 |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
 | V3 Composite Liquidity Router (V2)                  | [`20250123-v3-composite-liquidity-router-v2`](./v3/deprecated/20250123-v3-composite-liquidity-router-v2) |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
