@@ -564,7 +564,7 @@ export default {
         chainId: 143,
         urls: {
           apiURL: 'https://sourcify-api-monad.blockvision.org/',
-          browserURL: 'https://monadvision.com/',
+          browserURL: 'https://monadscan.com/',
         },
       },
     ],
