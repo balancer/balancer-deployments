@@ -1,5 +1,9 @@
 # 2024-12-05 - V3 Weighted pool
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This pool factory has been superseded by [weighted pool V2](../../tasks/20260115-v3-weighted-pool-v2/), which has stability improvements and a longer pause window.
+
 Deployment of the `WeightedPoolFactory` for Balancer V3.
 Pools from this factory use weighted math, which is best suited for uncorrelated assets (full price range).
 
