@@ -31,7 +31,18 @@ digraph balancer_deployments {
     label="v3-stable-pool";
     style=dashed; color="#dddddd"; fontsize=10;
     n_20241205_v3_stable_pool_deprecated [label="V3 Stable Pool\n2024-12-05 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
-    n_20250324_v3_stable_pool_v2_active [label="V3 Stable Pool V2\n2025-03-24 (v2, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
-    n_20241205_v3_stable_pool_deprecated -> n_20250324_v3_stable_pool_v2_active [style=dashed, color="#888888"];
+    n_20250324_v3_stable_pool_v2_deprecated [label="V3 Stable Pool V2\n2025-03-24 (v2, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20241205_v3_stable_pool_deprecated -> n_20250324_v3_stable_pool_v2_deprecated [style=dashed, color="#888888"];
+    n_20260116_v3_stable_pool_v3_active [label="V3 Stable Pool (V3)\n2026-01-16 (v3, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20250324_v3_stable_pool_v2_deprecated -> n_20260116_v3_stable_pool_v3_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_stable_surge_pool {
+    label="v3-stable-surge-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20250121_v3_stable_surge_deprecated [label="V3 Stable Surge Pool\n2025-01-21 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250404_v3_stable_surge_pool_factory_v2_deprecated [label="V3 Stable Surge Pool (V2)\n2025-04-04 (v2, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250121_v3_stable_surge_deprecated -> n_20250404_v3_stable_surge_pool_factory_v2_deprecated [style=dashed, color="#888888"];
+    n_20260117_v3_stable_surge_pool_factory_v3_active [label="V3 Stable Surge Pool (V3)\n2026-01-17 (v3, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20250404_v3_stable_surge_pool_factory_v2_deprecated -> n_20260117_v3_stable_surge_pool_factory_v3_active [style=dashed, color="#888888"];
   }
 }

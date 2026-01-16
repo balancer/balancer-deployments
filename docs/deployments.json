@@ -819,19 +819,6 @@
     "path": "./v3/tasks/20250321-v3-vault-factory-v2"
   },
   {
-    "description": "V3 Stable Pool V2",
-    "task_id": "20250324-v3-stable-pool-v2",
-    "date": "2025-03-24",
-    "date_raw": "20250324",
-    "slug": "v3-stable-pool-v2",
-    "family": "v3-stable-pool",
-    "family_source": "derived",
-    "version": "v2",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250324-v3-stable-pool-v2"
-  },
-  {
     "description": "V3 Stable Surge Hook (V2)",
     "task_id": "20250403-v3-stable-surge-hook-v2",
     "date": "2025-04-03",
@@ -843,19 +830,6 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20250403-v3-stable-surge-hook-v2"
-  },
-  {
-    "description": "V3 Stable Surge Pool (V2)",
-    "task_id": "20250404-v3-stable-surge-pool-factory-v2",
-    "date": "2025-04-04",
-    "date_raw": "20250404",
-    "slug": "v3-stable-surge-pool-factory-v2",
-    "family": "v3-stable-surge-pool",
-    "family_source": "override",
-    "version": "v2",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250404-v3-stable-surge-pool-factory-v2"
   },
   {
     "description": "V3 Vault Explorer V2",
@@ -1194,6 +1168,32 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20260115-v3-weighted-pool-v2"
+  },
+  {
+    "description": "V3 Stable Pool (V3)",
+    "task_id": "20260116-v3-stable-pool-v3",
+    "date": "2026-01-16",
+    "date_raw": "20260116",
+    "slug": "v3-stable-pool-v3",
+    "family": "v3-stable-pool",
+    "family_source": "derived",
+    "version": "v3",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260116-v3-stable-pool-v3"
+  },
+  {
+    "description": "V3 Stable Surge Pool (V3)",
+    "task_id": "20260117-v3-stable-surge-pool-factory-v3",
+    "date": "2026-01-17",
+    "date_raw": "20260117",
+    "slug": "v3-stable-surge-pool-factory-v3",
+    "family": "v3-stable-surge-pool",
+    "family_source": "override",
+    "version": "v3",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260117-v3-stable-surge-pool-factory-v3"
   },
   {
     "description": "Weighted Pools of up to 8 tokens",
@@ -2130,6 +2130,32 @@
     "ecosystem": "v3",
     "status": "deprecated",
     "path": "./v3/deprecated/20250314-balancer-registry-initializer"
+  },
+  {
+    "description": "V3 Stable Pool V2",
+    "task_id": "20250324-v3-stable-pool-v2",
+    "date": "2025-03-24",
+    "date_raw": "20250324",
+    "slug": "v3-stable-pool-v2",
+    "family": "v3-stable-pool",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250324-v3-stable-pool-v2"
+  },
+  {
+    "description": "V3 Stable Surge Pool (V2)",
+    "task_id": "20250404-v3-stable-surge-pool-factory-v2",
+    "date": "2025-04-04",
+    "date_raw": "20250404",
+    "slug": "v3-stable-surge-pool-factory-v2",
+    "family": "v3-stable-surge-pool",
+    "family_source": "override",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250404-v3-stable-surge-pool-factory-v2"
   },
   {
     "description": "V3 ReClamm Pool",
