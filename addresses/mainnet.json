@@ -1684,7 +1684,7 @@
         "address": "0x95BC5CA62Ed018b5206342479ded82e18e46dcbf"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -1708,7 +1708,7 @@
         "address": "0x0A8aFe82Eb901Cd5b19834ec9Ed764Ce4D85DD5D"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {
@@ -1918,6 +1918,20 @@
       {
         "name": "MockLBPool",
         "address": "0x0954601F4b1fFECe41A411A66F4546620F121b8c"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x332694Ef46D880DF6Ea9593e04CB8ABEE5F81D99"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0xBa3Af3FC98498174868507560838EE03d961e033"
       }
     ],
     "status": "ACTIVE",

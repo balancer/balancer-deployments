@@ -1125,5 +1125,14 @@
         "transferPoolSetOwnership(address)": "0xd5b8d34a52f076d1132f0b5af94d9b47f0cc016961f47fd5396c200cc0493a23"
       }
     }
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0x14ccce874cb2f9a19d44aa5ac42689add46846369f225c38fc51211427f5db32",
+        "disable()": "0xfa398ba71167ef8b770b9cac65f7c2c677629959d5fa2e6a9332190274521589"
+      }
+    }
   }
 }
