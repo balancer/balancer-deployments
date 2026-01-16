@@ -15,6 +15,7 @@ Pools from this factory use weighted math, which is best suited for uncorrelated
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
 - [`WeightedPool` artifact](./artifact/WeightedPool.json)

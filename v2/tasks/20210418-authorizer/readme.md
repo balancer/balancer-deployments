@@ -19,5 +19,7 @@ This contract is expected to be eventually replaced by one with a) native suppor
 - [Mode mainnet addresses](./output/mode.json)
 - [HyperEVM mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Authorizer` artifact](./artifact/Authorizer.json)

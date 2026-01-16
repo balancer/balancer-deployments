@@ -79,7 +79,7 @@
 - Deployed `BatchRelayerLibrary` V6 to all networks.
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
 - Deployed `VeBoost` 2.1 to Mainnet.
-- Deployed V3 Pool Swap Fee Helper to all networks.
+- Deployed `Vault` 2.1 to Plasma.
 
 ### Deprecations
 
