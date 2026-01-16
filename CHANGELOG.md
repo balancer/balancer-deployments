@@ -43,6 +43,7 @@
 - Deployed V3 Pool Swap Fee Helper (V2) to all networks.
 - Deployed V3 Pool Pause Helper (V2) to all networks.
 - Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
+- Deployed V3 Fixed Price Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
 
 #### V2
 
@@ -78,7 +79,7 @@
 - Deployed `BatchRelayerLibrary` V6 to all networks.
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
 - Deployed `VeBoost` 2.1 to Mainnet.
-- Deployed V3 Pool Swap Fee Helper to all networks.
+- Deployed `Vault` 2.1 to Plasma.
 
 ### Deprecations
 
