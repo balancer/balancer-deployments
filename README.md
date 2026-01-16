@@ -157,6 +157,8 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Liquidity Bootstrapping Pool (V3)                   | [`20251219-v3-liquidity-bootstrapping-pool-v3`](./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3) |
 | V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
 | V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
+| V3 Stable Pool (V3)                                    | [`20260116-v3-stable-pool-v3`](./v3/tasks/20260116-v3-stable-pool-v3)                                   |
+| V3 Stable Surge Pool (V3)                              | [`20260117-v3-stable-surge-pool-factory-v3`](./v3/tasks/20260117-v3-stable-surge-pool-factory-v3)       |
 
 ## Scripts
 
