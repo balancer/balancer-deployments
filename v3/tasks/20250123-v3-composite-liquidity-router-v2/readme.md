@@ -1,10 +1,5 @@
 # 2025-01-23 - V3 Composite Liquidity Router (V2)
 
-> ⚠️ **DEPRECATED: do not use** ⚠️
->
-> The Composite Liquidity Router V2, while still safe to use, was superseded by this [updated version](../../tasks/20251010-v3-composite-liquidity-router-v3/).
-> The new version supports nested pools, among other changes.
-
 Composite Liquidity Router deployment for Balancer V3, version 2.
 Contains `CompositeLiquidityRouter` for complex liquidity operations involving pools with ERC4626 wrappers.
 
@@ -26,5 +21,6 @@ Composite Liquidity Router V1 is still safe to use, although its automatic wrap 
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`CompositeLiquidityRouter` artifact](./artifact/CompositeLiquidityRouter.json)

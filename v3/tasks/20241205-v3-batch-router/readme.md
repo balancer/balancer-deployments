@@ -15,5 +15,6 @@ Contains `BatchRouter` for complex multi-hop swaps (supports single token add / 
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`BatchRouter` artifact](./artifact/BatchRouter.json)

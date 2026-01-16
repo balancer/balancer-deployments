@@ -54,6 +54,9 @@ if (process.env.CI) {
       },
       "xlayer": {
         "url": "${process.env.XLAYER_RPC_ENDPOINT}"
+      },
+      "monad": {
+        "url": "${process.env.MONAD_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

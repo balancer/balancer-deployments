@@ -24,6 +24,7 @@ It also splits the deployment of the hook out of the factory deployment, allowin
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePool` artifact](./artifact/StablePool.json)
 - [`StableSurgePoolFactory` artifact](./artifact/StableSurgePoolFactory.json)
