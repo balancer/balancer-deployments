@@ -17,5 +17,6 @@ This version increases the maximum amplification parameter from 5,000 to 50,000.
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StablePoolFactory` artifact](./artifact/StablePoolFactory.json)

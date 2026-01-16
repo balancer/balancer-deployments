@@ -16,5 +16,6 @@ This version adds missing getters for buffer assets, and also `enableRecoveryMod
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`VaultExplorer` artifact](./artifact/VaultExplorer.json)
