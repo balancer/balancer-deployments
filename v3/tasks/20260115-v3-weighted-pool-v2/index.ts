@@ -78,6 +78,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       numTokens: newWeightedPoolParams.tokens.length,
       normalizedWeights: newWeightedPoolParams.normalizedWeights,
       version: await factory.getPoolVersion(),
+      minTokenBalances: [1e6, 1e6],
     };
 
     // We are now ready to verify the Pool
