@@ -488,5 +488,33 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x65A22Ec32c37835Ad5E77Eb6f7452Ac59E113a9F"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x5DD26423430fF98286a2C22c0bd0369b649359d0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x7c1b7A97BfAcD39975dE53e989A16c7BC4C78275"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x6E9f431E367d800bc2eFD6BCe9e51F7086A9463d"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

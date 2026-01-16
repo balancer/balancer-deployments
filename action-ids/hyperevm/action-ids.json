@@ -415,5 +415,46 @@
         "disable()": "0x6febf9f238dc2ec20e86da0ec49412a1a4d6f6a3a5de38e57a31d7f05dd323f8"
       }
     }
+  },
+  "20260116-v3-stable-pool-v3": {
+    "StablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x6fc0af5d0244086ca13072c16e951a7e20fc29b56e1aa53a09a17374c6c6e2a6",
+        "disable()": "0x54ed747f10bf74fca2a1110cb69c6328e2fb5025039aede2933d04dfc21abd11"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x04bf7Cda60bA846C76208d962563525Fb930E397",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x49182966e9c66a5d35013c72e2e51ad235946899252221734d94085d9c3358b0",
+        "emitTransfer(address,address,uint256)": "0xf85c51d7ced71bf03bc8a8429c80d1832b65893298a36d9a130a89beab54910d",
+        "incrementNonce()": "0x972a0b55ad4e1ede56317f1a6965a011c44503ef41b639728602d8a62a3b6123",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0xbf45f967ea578a73e12fdb05d1cb0c6fbeb0cfd9a9b63b60ed1ea87f05ea0c96",
+        "stopAmplificationParameterUpdate()": "0xdbc0f40ef74b8ba526f95a3c5c582e1ce7de28fa0bca55ef6f71d2116c0562f6"
+      }
+    }
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xeb7730A6eEc7159EFe9258AD72e7072a4e5B974f",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x8a121ea93676b7548e03e32474f0929ab21d8ce4538f1b0ca16733eecf2094ff",
+        "emitTransfer(address,address,uint256)": "0x90e998c82dc6fb4131706c45c3ece6e5ec41c519f0e8f804881db9a48b1bd2d2",
+        "incrementNonce()": "0xcb5868d9e7826467a5b76a9caca3518145c22d19345e08aa2cdf2641e10a04af",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x266177977a2ab041e433e149b347aaec3d0321344496807b8fb057436bf51e28",
+        "stopAmplificationParameterUpdate()": "0x84c777ccf633a5961c82eeed8cab0b5fe38cdc0a4990bde9bab9c0fff5d43b66"
+      },
+      "factoryName": "StableSurgePoolFactory"
+    },
+    "StableSurgePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,bool,bytes32)": "0xa6f6902bc6a5f4817b2af06fbe69d63823f9ca291c406ee0081f7c4384fba70a",
+        "disable()": "0xfd955b750857662dfda32cfff623b9edf9541cc37e08005c4b74aa28086643be"
+      }
+    }
   }
 }
