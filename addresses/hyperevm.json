@@ -76,7 +76,7 @@
         "address": "0xCEFea117D605909994E96cC686Af50adE55Ec99E"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -110,7 +110,7 @@
         "address": "0xa523f47A933D5020b23629dDf689695AA94612Dc"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -228,7 +228,7 @@
         "address": "0x254f3aC68528113508587DF2B30f71301b85D7E1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -252,7 +252,7 @@
         "address": "0xe4b9ae240748eb2C39016B30010FDc6dcD28B338"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {
@@ -486,6 +486,48 @@
       {
         "name": "MockLBPool",
         "address": "0x834653c8D2C1d2464368Fcf33b58490Ad4ec1c59"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x6eE18fbb1BBcC5CF700cD75ea1aef2bb21e3cB3F"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0x07917080fF2A1e58CBFF4D9a3FeB150Fc2162Acb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0xb96524227c4B5Ab908FC3d42005FE3B07abA40E9"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x04bf7Cda60bA846C76208d962563525Fb930E397"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xeb7730A6eEc7159EFe9258AD72e7072a4e5B974f"
       }
     ],
     "status": "ACTIVE",
