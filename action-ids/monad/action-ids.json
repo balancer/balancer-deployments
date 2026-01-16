@@ -225,5 +225,14 @@
         "stopPriceRatioUpdate()": "0xd09c6f4ab6a8ca9ddf8ea2b6fcdc634bf37983d49a63bdcb8ab95de825a2112c"
       }
     }
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0xe7ed5159b29d55a6a4b079e388fb3e197e4331b8b2a593d19b5a1d238f20170c",
+        "disable()": "0x3dd110fd101a1be6115ceb811a85535de6c9c019360c7d67c022c48a3dd685d9"
+      }
+    }
   }
 }

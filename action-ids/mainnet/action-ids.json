@@ -1997,5 +1997,14 @@
         "disable()": "0x9117651d3db1f75e5aba050b30b85baf13b7a0821a9ce8b3118f8ca4b7033046"
       }
     }
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0x88c29dcf5249b5facccab867b1a01c657364563fc75045162a561c7966bdd67c",
+        "disable()": "0x5a2389555953f58e8746cb8c3171904d268fce2d55fa1aac3f20343ccd04cb0b"
+      }
+    }
   }
 }
