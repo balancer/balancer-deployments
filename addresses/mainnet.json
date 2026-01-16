@@ -1891,6 +1891,20 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20251205-v3-fixed-price-lbp": {
+    "contracts": [
+      {
+        "name": "FixedPriceLBPoolFactory",
+        "address": "0xeb1AA94421aEcFB1dc17dDB1068E4609c4bE8758"
+      },
+      {
+        "name": "MockFixedPriceLBPool",
+        "address": "0x179C68302A24E4E59667b3DF7fb70C1c5DcEc5d3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251219-v3-liquidity-bootstrapping-pool-v3": {
     "contracts": [
       {
