@@ -736,7 +736,7 @@
         "address": "0xFc253B433B7225AC7736EAbDF4115F7252aECb91"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241213-v3-hook-examples": {

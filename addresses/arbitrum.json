@@ -952,7 +952,7 @@
         "address": "0x681fae0CA3aE40CD3e3b5f17860bE960511a67e2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

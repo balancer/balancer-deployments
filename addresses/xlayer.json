@@ -76,7 +76,7 @@
         "address": "0x3103f111426288815C5A8DD52509D752E1B02cF8"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

@@ -112,7 +112,7 @@
         "address": "0xB105ED4d410DDf940C848Ab95dCc4434Aa816aA6"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

@@ -542,7 +542,7 @@
         "address": "0xEcFfba4414bB9d52DA1598A313d9d3FEa11bFE99"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {

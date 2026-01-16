@@ -820,7 +820,7 @@
         "address": "0x79bd0f6623fb8B430AC43673dbb3996C6826e565"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
