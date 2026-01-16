@@ -1170,5 +1170,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x254F3A2974b97dc2E675f6115c845567C55f83b0"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0x449cBf906EE19e54895D6aefFff7C0f82179EEC2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }

@@ -11,7 +11,6 @@
 #### V3
 
 - Deployed V3 Vault to all networks.
-- Deployed V3 Weighted Pool to all networks.
 - Deployed V3 Batch Router to all networks.
 - Deployed V3 Buffer Router to all networks.
 - Deployed V3 Composite Liquidity Router (V2) to all networks.
@@ -44,6 +43,7 @@
 - Deployed V3 Pool Pause Helper (V2) to all networks.
 - Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
 - Deployed V3 Fixed Price Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
+- Deployed V3 Weighted Pool (V2) to all networks.
 
 #### V2
 
@@ -88,6 +88,7 @@
 - Deprecated `20241205-v3-composite-liquidity-router`.
 - Deprecated `20241205-v3-router`.
 - Deprecated `20241205-v3-stable-pool`.
+- Deprecated `20241205-v3-weighted-pool`
 - Deprecated `20250121-v3-stable-surge`.
 - Deprecated `20241205-v3-vault-explorer`.
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
