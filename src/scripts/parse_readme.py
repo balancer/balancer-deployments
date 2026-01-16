@@ -123,6 +123,11 @@ def main():
             r["family"] = task_id_overrides[r["task_id"]]
             r["family_source"] = "override"
 
+    # Ensure docs/ exists before writing files
+    docs_dir = Path("docs")
+    docs_dir.mkdir(parents=True, exist_ok=True)
+
+    # Write deployments.json
     json.dump(all_records, fp=open("docs/deployments.json", "w", encoding="utf-8"),
               indent=2, ensure_ascii=False)
     
