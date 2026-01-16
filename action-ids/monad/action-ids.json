@@ -225,5 +225,55 @@
         "stopPriceRatioUpdate()": "0xd09c6f4ab6a8ca9ddf8ea2b6fcdc634bf37983d49a63bdcb8ab95de825a2112c"
       }
     }
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0xe7ed5159b29d55a6a4b079e388fb3e197e4331b8b2a593d19b5a1d238f20170c",
+        "disable()": "0x3dd110fd101a1be6115ceb811a85535de6c9c019360c7d67c022c48a3dd685d9"
+      }
+    }
+  },
+  "20260116-v3-stable-pool-v3": {
+    "StablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x9c28b58d099d8d0eb0abf144089b6400c2b10cd0e7ffd1262434db687bc6a275",
+        "disable()": "0xac0d1be9ff7d3e69a1596ff43dec0fa65eb1ffb47dafc81433455b3f5014370f"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xa9d3537B7E9672e90a6B38a0c473c909f17C2B64",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x4512e07d15f8d59449f76053e81af489cd7b15e5b4870852206af6946df87bd2",
+        "emitTransfer(address,address,uint256)": "0x344d7bd1e44b0236d20fde9fb6fdbdd501e23f0b9a9fedc7b1a647eb527d5bef",
+        "incrementNonce()": "0xbed2fb4a85e6e34050729048f2603eb3587ad4c480714bfe88386936756ca219",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x56597673db48fa5e4a7afee340df3f4329d4937a8d2046c924c40d1faafdc172",
+        "stopAmplificationParameterUpdate()": "0xb3ee92848b1e4c9b227aec979c0469ef7e2e12f50f67620ff6659e1a43afca0a"
+      }
+    }
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "StableSurgePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,bool,bytes32)": "0x21796171cdb8594a7ddd3dee8647f92e5fd8b96154ea56f24665e9bee4d8af0c",
+        "disable()": "0xceeb84f98e049989237e570ba87203572b1ba663061d817739b66a9fb08a7901"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x23b7B5F9416de66dc6c299a771544306F9BB6a2f",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x6bf24daed295d8bd803276d4d53de487f17de0ba2607b581eb0655e720974d24",
+        "emitTransfer(address,address,uint256)": "0xc5ee230cd6bf3e2d7685c46fc02ecb21d56fd0186740844a49871abde72227ff",
+        "incrementNonce()": "0x78d50c39da675ede18d01f04f8a8ecd2579d3ad5d512329e3f01de13cca05129",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x6bf9f64e8755a240cd5604ab5cabd4a1eed020059be9a1a64be071859f023276",
+        "stopAmplificationParameterUpdate()": "0xd5e70e51651eb5be66f83b01794f74b5dbb417b607bf0425c5c5d3aa7386b38b"
+      },
+      "factoryName": "StableSurgePoolFactory"
+    }
   }
 }
