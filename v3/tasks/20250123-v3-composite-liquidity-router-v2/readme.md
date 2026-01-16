@@ -21,5 +21,6 @@ Composite Liquidity Router V1 is still safe to use, although its automatic wrap 
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`CompositeLiquidityRouter` artifact](./artifact/CompositeLiquidityRouter.json)

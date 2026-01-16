@@ -559,6 +559,14 @@ export default {
           browserURL: 'https://oklink.com/xlayer',
         },
       },
+      {
+        network: 'monad',
+        chainId: 143,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=143',
+          browserURL: 'https://monadscan.com/',
+        },
+      },
     ],
   },
 };
