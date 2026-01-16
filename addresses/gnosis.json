@@ -672,7 +672,7 @@
         "address": "0xd43c36038250c66D46854e536Bf959fdDE5294c3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -724,7 +724,7 @@
         "address": "0x6eaD84Af26E997D27998Fc9f8614e8a19BB93938"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {

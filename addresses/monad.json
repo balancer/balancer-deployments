@@ -76,7 +76,7 @@
         "address": "0x87F438EAf18cb8d0e4F1B08080acF225AB7AA0F3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -110,7 +110,7 @@
         "address": "0x3f170631ed9821Ca51A59D996aB095162438DC10"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {

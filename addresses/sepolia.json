@@ -736,7 +736,7 @@
         "address": "0xFc253B433B7225AC7736EAbDF4115F7252aECb91"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20241213-v3-hook-examples": {
@@ -818,7 +818,7 @@
         "address": "0x6A20a4b6DcFF78e6D21BF0dbFfD58C96644DB9cb"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {

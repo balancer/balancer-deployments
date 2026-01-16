@@ -117,12 +117,12 @@ Returns an object with all contracts from a deployment and their addresses.
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./v2/tasks/20231031-batch-relayer-v6)                                     |
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
-| V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
+| V3 Composite Liquidity Router (V2)                     | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 | V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
@@ -154,11 +154,11 @@ Returns an object with all contracts from a deployment and their addresses.
 | Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
 | Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
 | V3 Prepaid Composite Liquidity Router (V3)             | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router-v3) |
-| V3 Composite Liquidity Router (V3)                     | [`20251010-v3-composite-liquidity-router-v3`](./v3/tasks/20251010-v3-composite-liquidity-router-v3)     |
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
 | V3 Fixed Price Liquidity Bootstrapping Pool            | [`20251205-v3-fixed-price-lbp`](./v3/tasks/20251205-v3-fixed-price-lbp)                                 |
 | V3 Liquidity Bootstrapping Pool (V3)                   | [`20251219-v3-liquidity-bootstrapping-pool-v3`](./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3) |
 | V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
+| V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
 
 ## Scripts
 
@@ -254,8 +254,8 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
+| V3 Weighted Pool                                    | [`20241205-v3-weighted-pool`](./v3/deprecated/20241205-v3-weighted-pool)                                 |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
-| V3 Composite Liquidity Router (V2)                  | [`20250123-v3-composite-liquidity-router-v2`](./v3/deprecated/20250123-v3-composite-liquidity-router-v2) |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
 | V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
 | Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |

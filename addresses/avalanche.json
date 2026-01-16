@@ -530,7 +530,7 @@
         "address": "0xD2643c05FA9590Ec80b6a6866f4B9C73CA60cc0C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -564,7 +564,7 @@
         "address": "0x0C8f71D19f87c0bD1b9baD2484EcC3388D5DbB98"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
