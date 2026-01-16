@@ -5,7 +5,7 @@ import { Contract } from 'ethers';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 
-describeForkTest.skip('CompositeLiquidityRouter-V3-2', 'mainnet', 21688700, function () {
+describeForkTest('CompositeLiquidityRouter-V3-2', 'mainnet', 21688700, function () {
   let task: Task;
   let compositeLiquidityRouter: Contract;
   let wethSigner: SignerWithAddress, alice: SignerWithAddress;
