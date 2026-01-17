@@ -21,4 +21,5 @@ httpHeaders:
       Accept-Language: 'en-US,en;q=0.5'
 
 ignorePatterns:
-  - pattern: '^https://medium\.com/.*$'
+  - pattern: '^https://medium\.com/balancer-protocol/.*$'
+  - pattern: '^https://medium\.com/immunefi/.*$'
