@@ -262,6 +262,6 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |
 | V3 Pool Pause Helper                                | [`20250430-v3-pool-pause-helper`](./v3/deprecated/20250430-v3-pool-pause-helper)                         |
 | V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |
-| V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)          |
+| V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/deprecated/20250507-v3-erc4626-cow-swap-fee-burner)     |
 | V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
 | V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |

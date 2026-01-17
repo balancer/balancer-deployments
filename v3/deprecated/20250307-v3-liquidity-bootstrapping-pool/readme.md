@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`LiquidityBoostrappingPool` V2](./20250701-v3-liquidity-bootstrapping-pool-v2/), which (optionally) allows enforcing liquidity migration when the LBP is created. This deployment can still be used if the migration functionality is not desired.
+> This version was superseded by [`LiquidityBoostrappingPool` V2](../20250701-v3-liquidity-bootstrapping-pool-v2/), which (optionally) allows enforcing liquidity migration when the LBP is created. This deployment can still be used if the migration functionality is not desired.
 
 Deployment for the LBPool, a Weighted Pool with mutable weights, designed to support v3 Liquidity Bootstrapping. This V3 version is more restrictive than LBPs were in V2, in order to make them more deterministic, simpler for aggregators, and safer for end users. They are limited to two tokens and a single weight change operation, specified on deployment.
 
