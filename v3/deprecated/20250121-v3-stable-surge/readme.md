@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> The stable pool was superseded by this [updated version](../../tasks/20250404-v3-stable-surge-pool-factory-v2/).
+> The stable pool was superseded by this [updated version](./20250404-v3-stable-surge-pool-factory-v2/).
 
 Deployment of the `StableSurgePoolFactory` for Balancer V3.
 Pools from this factory use stable math, inspired by Curve stable pools, which is best suited for correlated assets.
