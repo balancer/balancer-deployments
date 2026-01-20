@@ -855,6 +855,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0x6623d1CEEaB236ae93aCAfB285dDFB77336B6981"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20260115-v3-weighted-pool-v2": {
     "contracts": [
       {

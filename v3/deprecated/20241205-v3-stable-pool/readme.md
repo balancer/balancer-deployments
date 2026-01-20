@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> The stable pool was superseded by this [updated version](../../tasks/20250324-v3-stable-pool-v2/).
+> The stable pool was superseded by this [updated version](../20250324-v3-stable-pool-v2/).
 
 The original pool is still safe to use; V2 just includes new functionality.
 
