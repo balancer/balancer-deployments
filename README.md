@@ -132,7 +132,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
 | V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
-| V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
 | V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
