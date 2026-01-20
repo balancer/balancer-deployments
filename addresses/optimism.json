@@ -820,7 +820,7 @@
         "address": "0x79bd0f6623fb8B430AC43673dbb3996C6826e565"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -854,7 +854,7 @@
         "address": "0xc9b36096f5201ea332Db35d6D195774ea0D5988f"
       }
     ],
-    "status": "DEPRECATED",
+    "status": "ACTIVE",
     "version": "v3"
   },
   "20250124-v3-gyro-eclp": {
@@ -972,7 +972,7 @@
         "address": "0x1f1f8f2d3cea43a1F65ADb480DE42F57a71e57A5"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -996,7 +996,7 @@
         "address": "0x05BD88D143a2EdDF08B82632a358e9ED0e6eef9d"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {
@@ -1194,6 +1194,58 @@
       {
         "name": "PoolSwapFeeHelper",
         "address": "0x355bD33F0033066BB3DE396a6d069be57353AD95"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0x03CBccbe8d2073A1dC186aE6Bcd95390Fcdff36f"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x254F3A2974b97dc2E675f6115c845567C55f83b0"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0x449cBf906EE19e54895D6aefFff7C0f82179EEC2"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x1780e8185199DAc45284039Bb3E3B64060D943AB"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x2b393D5f479578A2e59C4F04A84a5D225e5BA61B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0xFD214210587Fb84798cbE7F37235e12898f3128f"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x48C9f56545A412de9554786898dDaa3F2736Bfb5"
       }
     ],
     "status": "ACTIVE",

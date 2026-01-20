@@ -37,6 +37,7 @@ jobs:
           HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+          MONAD_RPC_ENDPOINT: ${{ secrets.MONAD_RPC_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
           PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
@@ -65,6 +66,7 @@ jobs:
           HYPEREVM_RPC_ENDPOINT: ${{ secrets.HYPEREVM_RPC_ENDPOINT }}
           MAINNET_RPC_ENDPOINT: ${{ secrets.MAINNET_RPC_ENDPOINT }}
           MODE_RPC_ENDPOINT: ${{ secrets.MODE_RPC_ENDPOINT }}
+          MONAD_RPC_ENDPOINT: ${{ secrets.MONAD_RPC_ENDPOINT }}
           OPTIMISM_RPC_ENDPOINT: ${{ secrets.OPTIMISM_RPC_ENDPOINT }}
           PLASMA_RPC_ENDPOINT: ${{ secrets.PLASMA_RPC_ENDPOINT }}
           POLYGON_RPC_ENDPOINT: ${{ secrets.POLYGON_RPC_ENDPOINT }}
@@ -102,5 +104,6 @@ jobs:
       - uses: umbrelladocs/action-linkspector@v1
         with:
           fail_level: any
+          filter_mode: nofilter
 env:
   CI: true

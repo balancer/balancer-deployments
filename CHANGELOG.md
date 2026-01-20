@@ -11,7 +11,6 @@
 #### V3
 
 - Deployed V3 Vault to all networks.
-- Deployed V3 Weighted Pool to all networks.
 - Deployed V3 Batch Router to all networks.
 - Deployed V3 Buffer Router to all networks.
 - Deployed V3 Composite Liquidity Router (V2) to all networks.
@@ -25,9 +24,7 @@
 - Deployed V3 Balancer Contract Registry Initializer (V1 / V2) to all networks.
 - Deployed V3 Gyro E-CLP Factory to all networks.
 - Deployed V3 Gyro 2-CLP Factory to all networks.
-- Deployed V3 Stable Pool Factory V2 to all networks.
 - Deployed V3 Stable Surge Hook V2 to all networks.
-- Deployed V3 Stable Surge Pool Factory V2 to all networks.
 - Deployed V3 Vault Explorer V2 to all networks.
 - Deployed V3 Wrapped BPT Factory to all networks.
 - Deployed V3 Protocol Fee Sweeper V2 to all networks.
@@ -46,6 +43,10 @@
 - Deployed V3 Pool Pause Helper (V2) to all networks.
 - Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
 - Deployed V3 Fixed Price Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
+- Deployed V3 Weighted Pool (V2) to all networks.
+- Deployed V3 Stable Pool Factory (V3) to all networks.
+- Deployed V3 Stable Surge Pool Factory (V3) to all networks.
+- Deployed V3 Unbalanced Add Via Swap Router to all networks.
 
 #### V2
 
@@ -90,15 +91,18 @@
 - Deprecated `20241205-v3-composite-liquidity-router`.
 - Deprecated `20241205-v3-router`.
 - Deprecated `20241205-v3-stable-pool`.
+- Deprecated `20241205-v3-weighted-pool`.
 - Deprecated `20250121-v3-stable-surge`.
 - Deprecated `20241205-v3-vault-explorer`.
 - Deprecated `20250228-v3-protocol-fee-sweeper`.
 - Deprecated `20250221-v3-cow-swap-fee-burner`.
-- Deprecated `20250307-v3-liquidity-bootstrapping-pool`
+- Deprecated `20250307-v3-liquidity-bootstrapping-pool`.
+- Deprecated `20250324-v3-stable-pool-v2`.
+- Deprecated `20250404-v3-stable-surge-pool-factory-v2`.
 - Deprecated `20250409-v3-reclamm-pool`.
 - Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`.
 - Deprecated `20250430-v3-pool-swap-fee-helper`.
-- Deprecated `20250701-v3-liquidity-bootstrapping-pool-v2`
+- Deprecated `20250701-v3-liquidity-bootstrapping-pool-v2`.
 
 #### V2
 
