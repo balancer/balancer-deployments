@@ -1,5 +1,9 @@
 # 2025-01-20 - Gyro 2-CLP
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This pool factory has been superseded by [Gyro 2CLP V2](../../tasks/20260123-v3-gyro-2clp-v2/), which has stability improvements and a longer pause window.
+
 Deployment of the `Gyro2CLPFactory` for Balancer V3.
 Pools from this factory use Gyroscope's 2-CLP math, suitable for fungible concentrated liquidity applications.
 
