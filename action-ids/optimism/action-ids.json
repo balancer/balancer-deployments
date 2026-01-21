@@ -1108,6 +1108,24 @@
       }
     }
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x02ceae8786e4e8be2dad68729a95a85cdf39f706866705770928d0c144b119bf",
+        "disable()": "0x6febf9f238dc2ec20e86da0ec49412a1a4d6f6a3a5de38e57a31d7f05dd323f8"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xc7463a0488793cd1cfb33f6dabc7141560e063ce0106a9091f999c645a5e9fca",
+        "disable()": "0x54ed747f10bf74fca2a1110cb69c6328e2fb5025039aede2933d04dfc21abd11"
+      }
+    }
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "PoolPauseHelper": {
       "useAdaptor": false,

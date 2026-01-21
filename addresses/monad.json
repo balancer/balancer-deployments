@@ -289,6 +289,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xAFBBa7ad037e3e3Fb41272eAeE68756E8D076512"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0xaD89051bEd8d96f045E8912aE1672c6C0bF8a85E"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x68056E4234A6Aa4dB6fE66E93703fd90669a8697"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251010-v3-unbalanced-add-via-swap-router": {
     "contracts": [
       {

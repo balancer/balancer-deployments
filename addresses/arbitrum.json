@@ -1313,6 +1313,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x7f4C133e44381D05129F9B81bAD8Fa9F3345D29B"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xbef1A20A201562A28b48fC39Af70AcF05F946C76"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x816e90DC85bF016455017a76Bc09CC0451Eeb308"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x43597258c55f225303476C2Deb0e1c064524512a"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "contracts": [
       {

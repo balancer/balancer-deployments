@@ -968,6 +968,24 @@
       }
     }
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x56e175bc3b872e0edf5c7a0e22ea8a720e99a7a8d272a5bc719628de7d7ff9a3",
+        "disable()": "0x795164235c0dde5d12fe96e40481bca453010c9a1d847db918106ca8a73c6f5b"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x66649e6ca5efe4530ebfb06e33ade6826a292f83fc636379e6d60ed5cd9934a7",
+        "disable()": "0xc998e066674c66a49c6ee7de05ce851b9aa1b5afc39b278ffa4119145f5b26e5"
+      }
+    }
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "PoolPauseHelper": {
       "useAdaptor": false,
