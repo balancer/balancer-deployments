@@ -123,7 +123,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
 | V3 Composite Liquidity Router (V2)                     | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
-| V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
@@ -157,6 +156,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
 | V3 Stable Pool (V3)                                    | [`20260116-v3-stable-pool-v3`](./v3/tasks/20260116-v3-stable-pool-v3)                                   |
 | V3 Stable Surge Pool (V3)                              | [`20260117-v3-stable-surge-pool-factory-v3`](./v3/tasks/20260117-v3-stable-surge-pool-factory-v3)       |
+| V3 Gyro E-CLP (V2)                                     | [`20260126-v3-gyro-eclp-v2`](./v3/tasks/20260126-v3-gyro-eclp-v2)                                       |
 
 ## Scripts
 
@@ -254,6 +254,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
 | V3 Weighted Pool                                    | [`20241205-v3-weighted-pool`](./v3/deprecated/20241205-v3-weighted-pool)                                 |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
+| V3 Gyro E-CLP                                       | [`20250124-v3-gyro-eclp`](./v3/deprecated/20250124-v3-gyro-eclp)                                         |
 | V3 Cow Swap Fee Burner                              | [`20250221-v3-cow-swap-fee-burner`](./v3/deprecated/20250221-v3-cow-swap-fee-burner)                     |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
 | V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
