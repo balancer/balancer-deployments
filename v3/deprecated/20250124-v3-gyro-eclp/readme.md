@@ -1,5 +1,9 @@
 # 2025-01-24 - Gyro E-CLP
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> The E-CLP pool was superseded by this [updated version](../../tasks/20260126-v3-gyro-eclp-v2/).
+
 Deployment of the `GyroECLPFactory` for Balancer V3.
 Pools from this factory use Gyroscope's E-CLP math, suitable for fungible concentrated liquidity applications.
 
