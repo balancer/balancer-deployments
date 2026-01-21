@@ -10,7 +10,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { Gyro2CLPPoolDeployment } from '../input';
 import { currentTimestamp, MONTH } from '@helpers/time';
 
-describeForkTest('Gyro2CLPPool', 'mainnet', 24285750, function () {
+describeForkTest('V3-Gyro2CLPPool-V2', 'mainnet', 24285750, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let vault: Contract, vaultAsExtension: Contract;
