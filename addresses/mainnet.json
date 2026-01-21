@@ -1534,7 +1534,7 @@
         "address": "0x4ffECD2dab8703a74BD13Ba10BcE3419B9f5fA80"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {

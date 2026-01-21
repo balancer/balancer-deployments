@@ -790,7 +790,7 @@
         "address": "0x4d1a7352311CA9f63AB8bEA96CA873796C72EBDf"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {
