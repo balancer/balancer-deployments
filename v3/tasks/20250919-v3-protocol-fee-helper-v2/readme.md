@@ -5,4 +5,13 @@ This second deployment of the Protocol Fee Helper contract enables granular cont
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/3ee90727e175957fda6daa231c984a2fffba2a02)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeHelper` artifact](./artifact/ProtocolFeeHelper.json)

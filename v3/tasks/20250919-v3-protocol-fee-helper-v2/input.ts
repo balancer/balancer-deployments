@@ -16,22 +16,25 @@ export default {
   arbitrum: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  base: {
-    HelperAdmin: MaxiOmniMultisig,
-  },
   avalanche: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  optimism: {
+  base: {
     HelperAdmin: MaxiOmniMultisig,
   },
   gnosis: {
     HelperAdmin: MaxiOmniMultisig,
   },
+  hyperevm: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
   mainnet: {
     HelperAdmin: MaxiOmniMultisig,
   },
-  hyperevm: {
+  optimism: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  plasma: {
     HelperAdmin: MaxiOmniMultisig,
   },
   sepolia: {

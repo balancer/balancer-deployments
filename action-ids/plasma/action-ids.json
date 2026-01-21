@@ -425,5 +425,24 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "ProtocolFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0xcfeb6b8e110e05f1ee17ecda3652cdf4bb2a71d35d7d4454963c0ea32286f352",
+        "addPoolsToSet(uint256,address[])": "0xc7fa914e4b4f6cf4757aefd9a18d26175307c6fe6c1fee591368966447343380",
+        "createPoolSet(address)": "0xdfbf2ef01b255777b13b5b03076c023fdcd4049017c1587c5ae41887d2339924",
+        "createPoolSet(address,address[])": "0x52089fb35b70555b34d01d30f0d66a5112d16aa6b77d1476914154df58c4a7fe",
+        "destroyPoolSet(uint256)": "0x61533abc5601fe441235f824ddce0459d58bb70790aaab6633be2d673cc50a17",
+        "forceTransferOwnership(address)": "0x7277a423522ab46c1829db36516d2bdbc4806b88b8bc2c609aeee6a7f470424c",
+        "removePoolsFromSet(uint256,address[])": "0xe461ce6ee8f8cf48fedfed76b395a61115745c3445850e896c36b37743c61e41",
+        "renounceOwnership()": "0x8b8060f6c82db89cc7a02365a5976490652a9bfd66088b3a1ce1413e2395e8cb",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x3a2a5d2f7aaf4786bffbe52701a3a48e4de20ab9c54a44c77549b6424be58b3f",
+        "setProtocolYieldFeePercentage(address,uint256)": "0xc187f23b6d2031998024c37123064ab22a30e22a961271245467c0d8a2ba658e",
+        "transferOwnership(address)": "0x0df09dee8a18fb070a25d5eea18299563b2210f724dbe0f9a67e9dc4087a46d9",
+        "transferPoolSetOwnership(address)": "0x3efeaf22f2a4a62cffb41833a07d337c200a2adefc48202ef351130fc648fc17"
+      }
+    }
   }
 }
