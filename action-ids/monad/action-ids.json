@@ -275,5 +275,23 @@
       },
       "factoryName": "StableSurgePoolFactory"
     }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xf7a526a0d57ac26f15f26085791f5ce9217fad5629a0121ceaadcd5f0ea4db25",
+        "disable()": "0xcb59c73ad3efdb6ca638156b8748efc61c152771a4fdc93e86025258b85ef34e"
+      }
+    }
+  },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x9e4d4bfe17cfc9a062968d0b4466d6fb91fb5ed2652c15ab5b08e88002059d3d",
+        "disable()": "0x04ff17dcfba52debdaff70a2ab61be1f14f5b288649aaa803c7cf9a340112990"
+      }
+    }
   }
 }

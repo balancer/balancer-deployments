@@ -14,6 +14,8 @@ These contracts provide a manipulation-resistant mechanism to compute the market
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`StableLPOracle` artifact](./artifact/StableLPOracle.json)
 - [`StableLPOracleFactory` artifact](./artifact/StableLPOracleFactory.json)

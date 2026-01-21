@@ -279,6 +279,44 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250813-v3-constant-price-feed": {
+    "contracts": [
+      {
+        "name": "ConstantPriceFeed",
+        "address": "0x311334883921Fb1b813826E585dF1C2be4358615"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x1311Fbc9F60359639174c1e7cC2032DbDb5Cc4d1"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xAFBBa7ad037e3e3Fb41272eAeE68756E8D076512"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0xEB1eeaBF0126d813589C3D2CfeFFE410D9aE3863"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0xb376E00b5F12c755A68E75F04F279F7137731978"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251010-v3-unbalanced-add-via-swap-router": {
     "contracts": [
       {
