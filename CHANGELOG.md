@@ -47,6 +47,7 @@
 - Deployed V3 Stable Pool Factory (V3) to all networks.
 - Deployed V3 Stable Surge Pool Factory (V3) to all networks.
 - Deployed V3 Unbalanced Add Via Swap Router to all networks.
+- Deployed V3 Protocol Fee Helper (V2) to all networks.
 
 #### V2
 

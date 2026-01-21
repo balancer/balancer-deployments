@@ -1185,6 +1185,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0xF41bE1c215E4eDc6aaADd0f4009B3fB5a1b7291A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251010-v3-unbalanced-add-via-swap-router": {
     "contracts": [
       {
