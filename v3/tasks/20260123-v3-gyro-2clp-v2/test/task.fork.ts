@@ -18,7 +18,7 @@ describeForkTest('Gyro2CLPPool', 'mainnet', 24285750, function () {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
-  
+
   let admin: SignerWithAddress;
 
   const TASK_NAME = '20260123-v3-gyro-2clp-v2';
@@ -133,8 +133,10 @@ describeForkTest('Gyro2CLPPool', 'mainnet', 24285750, function () {
     const now = await currentTimestamp();
 
     expect(poolPaused).to.be.false;
-    
-    const yearsUntilExpiration = bn(poolPauseWindowEndTime).sub(now).div(12 * MONTH);
+
+    const yearsUntilExpiration = bn(poolPauseWindowEndTime)
+      .sub(now)
+      .div(12 * MONTH);
     expect(yearsUntilExpiration).to.gt(50);
-  })
+  });
 });
