@@ -36,6 +36,12 @@ export default {
   plasma: {
     FeeRecipient: MaxiOmniMultisig,
   },
+  xlayer: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
+  monad: {
+    FeeRecipient: MaxiOmniMultisig,
+  },
   sepolia: {
     FeeRecipient: SepoliaAdmin,
   },
