@@ -13,5 +13,7 @@ This second deployment of the Protocol Fee Helper contract enables granular cont
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeHelper` artifact](./artifact/ProtocolFeeHelper.json)

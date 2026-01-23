@@ -19,5 +19,7 @@ It does this for each pool by withdrawing tokens from the Protocol Fee Controlle
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ProtocolFeeSweeper` artifact](./artifact/ProtocolFeeSweeper.json)
