@@ -19,6 +19,9 @@ describeForkTest('ClaimSignatureRegistry', 'mainnet', 24291200, function () {
     'I acknowledge and agree to the SEAL Safe Harbor Agreement which was approved by governance resolution and can offer legal protection to whitehats who aid in the recovery of assets during an active exploit.\n\n' +
     'I understand that my claim will not be processed unless I accept these terms in full and without modification.';
 
+  // Remove last character to make it different
+  const notAcceptedMessage: string = message.substring(0, message.length - 1);
+
   before('run task', async () => {
     task = new Task('20260122-claim-signature-registry', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
@@ -35,5 +38,10 @@ describeForkTest('ClaimSignatureRegistry', 'mainnet', 24291200, function () {
 
     const storedSignature = await claimSignatureRegistry.signatures(signer.address);
     expect(storedSignature).to.equal(signature);
+  });
+
+  it('does not accept signatures for other messages', async () => {
+    const signature = await signer.signMessage(notAcceptedMessage);
+    await expect(claimSignatureRegistry.connect(signer).recordSignature(signature)).to.be.reverted;
   });
 });
