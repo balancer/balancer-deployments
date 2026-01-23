@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## [Unreleased]
+
+Changes that have been merged but not yet released.
 
 ### Breaking changes
 
