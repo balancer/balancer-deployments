@@ -6,5 +6,6 @@ Technically not a script, but it's not part of the core contract deployments eit
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/e8b99d8a14e0e1636c2f0954ce87920df0e963d6).
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ClaimSignatureRegistry` artifact](./artifact/ClaimSignatureRegistry.json)
