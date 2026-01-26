@@ -4,7 +4,7 @@ import { describeForkTest, getForkedNetwork, getSigner, Task, TaskMode } from '@
 import { expect } from 'chai';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-describeForkTest('ClaimSignatureRegistry', 'mainnet', 24291200, function () {
+describeForkTest('ClaimSignatureRegistry', 'mainnet', 24321400, function () {
   let task: Task;
   let signer: SignerWithAddress;
   let claimSignatureRegistry: Contract;
