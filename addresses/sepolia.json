@@ -1219,6 +1219,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x00526Cfbc8569Ef966d94025c9c586dF0c82B1C1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251219-v3-liquidity-bootstrapping-pool-v3": {
     "contracts": [
       {
