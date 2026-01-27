@@ -54,6 +54,12 @@ if (process.env.CI) {
       },
       "plasma": {
         "url": "${process.env.PLASMA_RPC_ENDPOINT}"
+      },
+      "xlayer": {
+        "url": "${process.env.XLAYER_RPC_ENDPOINT}"
+      },
+      "monad": {
+        "url": "${process.env.MONAD_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

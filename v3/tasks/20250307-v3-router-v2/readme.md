@@ -18,6 +18,8 @@ There were also other changes to the Router contract and inheritance hierarchy s
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Router` artifact](./artifact/Router.json)
 

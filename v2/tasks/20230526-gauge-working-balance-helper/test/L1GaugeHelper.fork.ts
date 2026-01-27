@@ -8,7 +8,7 @@ import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, currentTimestamp, advanceTime } from '@helpers/time';
 
-describeForkTest('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, function () {
+describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;

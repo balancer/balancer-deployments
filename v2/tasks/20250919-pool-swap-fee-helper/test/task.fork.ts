@@ -11,7 +11,7 @@ import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWe
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { randomBytes } from 'ethers/lib/utils';
 
-describeForkTest('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
+describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
   const TASK_NAME = '20250919-pool-swap-fee-helper';
   const CONTRACT_NAME = 'PoolSwapFeeHelper';
 

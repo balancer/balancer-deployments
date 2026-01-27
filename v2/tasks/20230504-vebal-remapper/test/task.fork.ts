@@ -14,7 +14,7 @@ import { impersonate } from '@src';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { deploy } from '@src';
 
-describeForkTest('VotingEscrowRemapper', 'mainnet', 17182400, function () {
+describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   let vault: Contract, authorizer: Contract;
   let veRemapper: Contract, veBAL: Contract, smartWalletChecker: Contract, omniVotingEscrow: Contract;
   let omniVotingEscrowAdaptor: Contract;

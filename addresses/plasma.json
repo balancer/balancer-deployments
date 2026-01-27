@@ -9,11 +9,47 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20210418-vault": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerQueries",
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
   "20220325-test-balancer-token": {
     "contracts": [
       {
         "name": "TestBalancerToken",
         "address": "0x36caC20dd805d128c1a6Dd16eeA845C574b5A17C"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
+  "20251020-vault-v2.1": {
+    "contracts": [
+      {
+        "name": "Vault",
+        "address": "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      },
+      {
+        "name": "ProtocolFeesCollector",
+        "address": "0xce88686553686DA562CE7Cea497CE749DA109f9F"
+      },
+      {
+        "name": "BalancerQueries",
+        "address": "0xa3b370092aeb56770B23315252aB5E16DAcBF62B"
       }
     ],
     "status": "ACTIVE",
@@ -76,7 +112,7 @@
         "address": "0xB105ED4d410DDf940C848Ab95dCc4434Aa816aA6"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -204,7 +240,7 @@
         "address": "0x73EAA52887Bd838E956FFbEfBc83b76a79291E90"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -228,7 +264,7 @@
         "address": "0x1a6F5c37bCA7aaE5d0DB132947590e8E0cbC9e19"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {
@@ -272,7 +308,7 @@
         "address": "0x7A2535f5fB47b8e44c02Ef5D9990588313fe8F05"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -322,7 +358,7 @@
         "address": "0x8e3fEaAB11b7B351e3EA1E01247Ab6ccc847dD52"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -360,7 +396,7 @@
         "address": "0xc49a3d36aD36c69216b4B534b3cCf34039143f87"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
@@ -387,11 +423,143 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0xD961E30156C2E0D0d925A0De45f931CB7815e970"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xF375128b5413ff1EEd5AD716b26A40bcdBe083CB"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x86e67E115f96DF37239E0479441303De0de7bc2b"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x0Fa0f9990D7969a7aE6f9961d663E4A201Ed6417"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x5B42eC6D40f7B7965BE5308c70e2603c0281C1E9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
         "name": "PoolSwapFeeHelper",
         "address": "0xc9b36096f5201ea332Db35d6D195774ea0D5988f"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0xB9d01CA61b9C181dA1051bFDd28e1097e920AB14"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0xf4743D026f3D07aF3747bb7d05BeD06D177241d7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "contracts": [
+      {
+        "name": "FixedPriceLBPoolFactory",
+        "address": "0xEAedc32a51c510d35ebC11088fD5fF2b47aACF2E"
+      },
+      {
+        "name": "MockFixedPriceLBPool",
+        "address": "0xB0C8aaC0fb6e508fcB1E4E51f1323053bad0BE5B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "contracts": [
+      {
+        "name": "LBPMigrationRouter",
+        "address": "0xF39CA6ede9BF7820a952b52f3c94af526bAB9015"
+      },
+      {
+        "name": "LBPoolFactory",
+        "address": "0x3BEb058DE1A25dd24223fd9e1796df8589429AcE"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0x5841260f6C89e32f1070532B9C176b6257ba9997"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0x86705Ee19c0509Ff68F1118C55ee2ebdE383D122"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0x8f95FbC386E05719417196f95bDADb00D305c637"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x65A22Ec32c37835Ad5E77Eb6f7452Ac59E113a9F"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x5DD26423430fF98286a2C22c0bd0369b649359d0"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x7c1b7A97BfAcD39975dE53e989A16c7BC4C78275"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x6E9f431E367d800bc2eFD6BCe9e51F7086A9463d"
       }
     ],
     "status": "ACTIVE",

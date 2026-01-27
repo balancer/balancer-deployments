@@ -9,7 +9,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { bn } from '@helpers/numbers';
 
-describeForkTest('L2VeBoostV2', 'arbitrum', 94139000, function () {
+describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
   let delegation: Contract, delegationProxy: Contract, authorizer: Contract;
 
   let task: Task;

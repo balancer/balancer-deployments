@@ -34,7 +34,7 @@
         "address": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20220325-authorizer-adaptor": {
@@ -340,7 +340,7 @@
         "address": "0x3Fb81f6FB0dd94c6fC7e138887f1CA4CDB5E2999"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20230414-authorizer-wrapper": {
@@ -460,7 +460,7 @@
         "address": "0xc6057Da8673bE26378470A302628a07f70775F3A"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v2"
   },
   "20250919-pool-swap-fee-helper": {
@@ -530,7 +530,7 @@
         "address": "0xD2643c05FA9590Ec80b6a6866f4B9C73CA60cc0C"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250117-v3-contract-registry": {
@@ -656,7 +656,7 @@
         "address": "0xF0F873D737085663645d57c6dE2D952887Ff4700"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250403-v3-stable-surge-hook-v2": {
@@ -680,7 +680,7 @@
         "address": "0x2FCDF727B44956E32a543C43134f781A7de0aAC7"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250407-v3-vault-explorer-v2": {
@@ -738,7 +738,7 @@
         "address": "0x891EC9B34829276a9a8ef2F8A9cEAF2486017e0d"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250430-v3-pool-swap-fee-helper": {
@@ -788,7 +788,7 @@
         "address": "0x36E8e371e6863E5f96D00667016DDE87fe1Cc5d1"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250530-v3-cow-swap-fee-burner-v2": {
@@ -835,11 +835,111 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x0E800D8d2E8b4694610AEdc385Aa6D763492B106"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0x67e5Cd2dE1725a1bbaEF38926ed339719Ff63E8a"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x4eff2d77D9fFbAeFB4b141A3e494c085b3FF4Cb5"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x9a7921977ca7232395229Ef2a9EDD53DEc59F365"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "contracts": [
+      {
+        "name": "PoolPauseHelper",
+        "address": "0x30fF095E22Dda9751b5E1a67928611dcB6308D7E"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-swap-fee-helper-v2": {
     "contracts": [
       {
         "name": "PoolSwapFeeHelper",
         "address": "0x9d2917E41B705BF58BD28E5422230883bbE3f521"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0xCF7608f0136DB42FDEC021f755BD66406F29158c"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0x6623d1CEEaB236ae93aCAfB285dDFB77336B6981"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0xBDbADc891BB95DEE80eBC491699228EF0f7D6fF1"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0xB9FBBdf09A2c7a5568F68c3F9db6E2bee5D550bd"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0x16B50F6bF8C8Ca73C07e17762188c5DEEe7aE5Db"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xa4Fd7FA31647A381F079F1216D0DA678c5533fF1"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "contracts": [
+      {
+        "name": "StableSurgePoolFactory",
+        "address": "0x8D217CB74f675B46cC2767C8cF0aAB53BE1c4818"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0x9893534936CF9188feeE16047898e3b14FC23726"
       }
     ],
     "status": "ACTIVE",

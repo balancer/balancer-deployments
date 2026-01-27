@@ -20,6 +20,8 @@ export const NETWORKS = [
   'mode',
   'hyperevm',
   'plasma',
+  'xlayer',
+  'monad',
   'sonic',
 ];
 

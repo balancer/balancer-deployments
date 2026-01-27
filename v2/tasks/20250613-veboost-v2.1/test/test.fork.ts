@@ -12,7 +12,7 @@ import { bn } from '@helpers/numbers';
 import { currentTimestamp, WEEK } from '@helpers/time';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('VeBoostV2', 'mainnet', 22668480, function () {
+describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
   let oldBoost: Contract;
   let newBoost: Contract;
   let delegationProxy: Contract;

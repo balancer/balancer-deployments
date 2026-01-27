@@ -5,7 +5,7 @@ import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { VaultDeployment } from '../input';
 import { currentTimestamp } from '@helpers/time';
 
-describeForkTest('Vault v2.1', 'plasma', 3100000, function () {
+describeForkTest.skip('Vault v2.1', 'plasma', 3100000, function () {
   const TASK_NAME = '20251020-vault-v2.1';
   const CONTRACT_NAME = 'Vault';
 

@@ -2,7 +2,7 @@
 
 # Balancer V2 & V3 Deployments
 
-[![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.org/package/@balancer-labs/v2-deployments)
+[![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.com/package/@balancer-labs/v2-deployments)
 [![GitHub Repository](https://img.shields.io/badge/github-deployments-lightgrey?logo=github)](https://github.com/balancer-labs/balancer-v2-monorepo/tree/master/pkg/deployments)
 
 This package contains the addresses and ABIs of all Balancer V2 deployed contracts for Ethereum mainnet, Polygon, Arbitrum, Optimism, Gnosis, BSC and Avalanche, as well as various test networks. Each deployment consists of a deployment script (called 'task'), inputs (script configuration, such as dependencies), outputs (typically contract addresses), ABIs and bytecode files of related contracts.
@@ -39,13 +39,13 @@ Past deployments that are currently not in use or have been superseded can be ac
 
 Returns an [Ethers](https://docs.ethers.io/v5/) contract object for a canonical deployment (e.g. the Vault, or a Pool factory).
 
-_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/plugins/nomicfoundation-hardhat-ethers.html) plugin._
+_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-ethers) plugin._
 
 - **async function getBalancerContractAt(taskID, contract, address)**
 
 Returns an [Ethers](https://docs.ethers.io/v5/) contract object for a contract dynamically created at a known address (e.g. a Pool created from a factory).
 
-_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/plugins/nomicfoundation-hardhat-ethers.html) plugin._
+_Note: requires using [Hardhat](https://hardhat.org/) with the [`hardhat-ethers`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-ethers) plugin._
 
 - **function getBalancerContractAbi(taskID, contract)**
 
@@ -70,7 +70,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | Authorizer, governance contract                        | [`20210418-authorizer`](./v2/tasks/20210418-authorizer)                                                 |
 | Vault, main protocol contract                          | [`20210418-vault`](./v2/tasks/20210418-vault)                                                           |
 | Rate Provider for wstETH                               | [`20210812-wsteth-rate-provider`](./v2/tasks/20210812-wsteth-rate-provider)                             |
-| Liquidity Bootstrapping Pools                          | [`20211202-no-protocol-fee-lbp`](./v2/tasks/20211202-no-protocol-fee-lbp)                               |
 | Authorizer Adaptor for extending governance            | [`20220325-authorizer-adaptor`](./v2/tasks/20220325-authorizer-adaptor)                                 |
 | Wallet for the BAL token                               | [`20220325-bal-token-holder-factory`](./v2/tasks/20220325-bal-token-holder-factory)                     |
 | Admin of the BAL token                                 | [`20220325-balancer-token-admin`](./v2/tasks/20220325-balancer-token-admin)                             |
@@ -100,7 +99,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | L2 Voting Escrow Delegation Proxy                      | [`20230316-l2-ve-delegation-proxy`](./v2/tasks/20230316-l2-ve-delegation-proxy)                         |
 | Weighted Pool V4                                       | [`20230320-weighted-pool-v4`](./v2/tasks/20230320-weighted-pool-v4)                                     |
 | L2 Layer0 Bridge Forwarder                             | [`20230404-l2-layer0-bridge-forwarder`](./v2/tasks/20230404-l2-layer0-bridge-forwarder)                 |
-| Managed Pool V2                                        | [`20230411-managed-pool-v2`](./v2/tasks/20230411-managed-pool-v2)                                       |
 | Authorizer with Adaptor Validation                     | [`20230414-authorizer-wrapper`](./v2/tasks/20230414-authorizer-wrapper)                                 |
 | Voting Escrow Remapper                                 | [`20230504-vebal-remapper`](./v2/tasks/20230504-vebal-remapper)                                         |
 | Gauge Registrant V4                                    | [`20230519-gauge-adder-v4`](./v2/tasks/20230519-gauge-adder-v4)                                         |
@@ -117,48 +115,48 @@ Returns an object with all contracts from a deployment and their addresses.
 | Base Root Gauge, for veBAL voting                      | [`20230911-base-root-gauge-factory`](./v2/tasks/20230911-base-root-gauge-factory)                       |
 | Stakeless Gauge Checkpointer V2                        | [`20230915-stakeless-gauge-checkpointer-v2`](./v2/tasks/20230915-stakeless-gauge-checkpointer-v2)       |
 | Batch Relayer V6                                       | [`20231031-batch-relayer-v6`](./v2/tasks/20231031-batch-relayer-v6)                                     |
-| Composable Stable Pools V6                             | [`20240223-composable-stable-pool-v6`](./v2/tasks/20240223-composable-stable-pool-v6)                   |
 | Fraxtal Root Gauge, for veBAL voting                   | [`20240522-fraxtal-root-gauge-factory`](./v2/tasks/20240522-fraxtal-root-gauge-factory)                 |
 | V3 Vault                                               | [`20241204-v3-vault`](./v3/tasks/20241204-v3-vault)                                                     |
-| V3 Weighted Pool                                       | [`20241205-v3-weighted-pool`](./v3/tasks/20241205-v3-weighted-pool)                                     |
 | V3 Batch Router                                        | [`20241205-v3-batch-router`](./v3/tasks/20241205-v3-batch-router)                                       |
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
 | V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
-| V3 Composite Liquidity Router (2)                      | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
+| V3 Composite Liquidity Router (V2)                     | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
 | V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
-| V3 Cow Swap Fee Burner                                 | [`20250221-v3-cow-swap-fee-burner`](./v3/tasks/20250221-v3-cow-swap-fee-burner)                         |
 | V3 Router V2                                           | [`20250307-v3-router-v2`](./v3/tasks/20250307-v3-router-v2)                                             |
 | V3 Vault Factory V2, and Vault contracts               | [`20250321-v3-vault-factory-v2`](./v3/tasks/20250321-v3-vault-factory-v2)                               |
-| V3 Stable Pool V2                                      | [`20250324-v3-stable-pool-v2`](./v3/tasks/20250324-v3-stable-pool-v2)                                   |
 | V3 Stable Surge Hook (V2)                              | [`20250403-v3-stable-surge-hook-v2`](./v3/tasks/20250403-v3-stable-surge-hook-v2)                       |
-| V3 Stable Surge Pool (V2)                              | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/tasks/20250404-v3-stable-surge-pool-factory-v2)       |
 | V3 Vault Explorer V2                                   | [`20250407-v3-vault-explorer-v2`](./v3/tasks/20250407-v3-vault-explorer-v2)                             |
 | V3 Wrapped BPT Factory                                 | [`20250418-v3-wrapped-bpt`](./v3/tasks/20250418-v3-wrapped-bpt)                                         |
-| V3 Pool Pause Helper                                   | [`20250430-v3-pool-pause-helper`](./v3/tasks/20250430-v3-pool-pause-helper)                             |
-| V3 Protocol Fee Helper                                 | [`20250430-v3-protocol-fee-helper`](./v3/tasks/20250430-v3-protocol-fee-helper)                         |
 | V3 Protocol Fee Percentages Provider                   | [`20250502-v3-fee-percentages-provider`](./v3/tasks/20250502-v3-fee-percentages-provider)               |
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
-| V3 ERC4626 Cow Swap Fee Burner                         | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/tasks/20250507-v3-erc4626-cow-swap-fee-burner)         |
-| V3 Balancer Burner                                     | [`20250530-v3-balancer-fee-burner`](./v3/tasks/20250530-v3-balancer-fee-burner)                         |
 | V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
-| V3 Liquidity Bootstrapping Pool (V2)                   | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/tasks/20250701-v3-liquidity-bootstrapping-pool-v2) |
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
 | V3 Chainlink Constant Price Feed                       | [`20250813-v3-constant-price-feed`](./v3/tasks/20250813-v3-constant-price-feed)                         |
 | V3 Weighted LP Oracle                                  | [`20250814-v3-weighted-pool-oracle`](./v3/tasks/20250814-v3-weighted-pool-oracle)                       |
 | V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
-| Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
+| V3 Protocol Fee Helper (V2)                            | [`20250919-v3-protocol-fee-helper-v2`](./v3/tasks/20250919-v3-protocol-fee-helper-v2)                   |
+| V3 Pool Pause Helper (V2)                              | [`20250919-v3-pool-pause-helper-v2`](./v3/tasks/20250919-v3-pool-pause-helper-v2)                       |
 | V3 Pool Swap Fee Helper (V2)                           | [`20250919-v3-pool-swap-fee-helper-v2`](./v3/tasks/20250919-v3-pool-swap-fee-helper-v2)                 |
+| Pool Swap Fee Helper                                   | [`20250919-pool-swap-fee-helper`](./v2/tasks/20250919-pool-swap-fee-helper)                             |
 | Timelock Authorizer, governance contract (V2)          | [`20250925-timelock-authorizer`](./v2/tasks/20250925-timelock-authorizer)                               |
 | Timelock Authorizer, governance contract (V3)          | [`20250925-v3-timelock-authorizer`](./v3/tasks/20250925-v3-timelock-authorizer)                         |
+| V3 Unbalanced Add via Swap Router                      | [`20251010-v3-unbalanced-add-via-swap-router`](./v3/tasks/20251010-v3-unbalanced-add-via-swap-router)   |
+| V3 Prepaid Composite Liquidity Router (V3)             | [`20251010-v3-prepaid-composite-liquidity-router`](./v3/tasks/20251010-v3-prepaid-composite-liquidity-router-v3) |
 | Vault v2.1 (patched for new L2s)                       | [`20251020-vault-v2.1`](./v2/tasks/20251020-vault-v2.1)                                                 |
+| V3 Fixed Price Liquidity Bootstrapping Pool            | [`20251205-v3-fixed-price-lbp`](./v3/tasks/20251205-v3-fixed-price-lbp)                                 |
+| V3 Liquidity Bootstrapping Pool (V3)                   | [`20251219-v3-liquidity-bootstrapping-pool-v3`](./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3) |
+| V3 Balancer Fee Burner (V2)                            | [`20251219-v3-balancer-fee-burner-v2`](./v3/tasks/20251219-v3-balancer-fee-burner-v2)                   |
+| V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
+| V3 Stable Pool (V3)                                    | [`20260116-v3-stable-pool-v3`](./v3/tasks/20260116-v3-stable-pool-v3)                                   |
+| V3 Stable Surge Pool (V3)                              | [`20260117-v3-stable-surge-pool-factory-v3`](./v3/tasks/20260117-v3-stable-surge-pool-factory-v3)       |
 
 ## Scripts
 
@@ -197,6 +195,7 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Distributor contract for arbitrum BAL rewards       | [`20210913-bal-arbitrum-merkle`](./v2/deprecated/20210913-bal-arbitrum-merkle)                           |
 | Distributor contract for arbitrum MCB rewards       | [`20210928-mcb-arbitrum-merkle`](./v2/deprecated/20210928-mcb-arbitrum-merkle)                           |
 | Merkle Orchard Distributor                          | [`20211012-merkle-orchard`](./v2/deprecated/20211012-merkle-orchard)                                     |
+| Liquidity Bootstrapping Pools                       | [`20211202-no-protocol-fee-lbp`](./v2/deprecated/20211202-no-protocol-fee-lbp)                           |
 | Batch Relayer                                       | [`20211203-batch-relayer`](./v2/deprecated/20211203-batch-relayer)                                       |
 | Linear Pools for Aave aTokens                       | [`20211208-aave-linear-pool`](./v2/deprecated/20211208-aave-linear-pool)                                 |
 | Preminted BPT Meta Stable Pools                     | [`20211208-stable-phantom-pool`](./v2/deprecated/20211208-stable-phantom-pool)                           |
@@ -242,18 +241,29 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | Linear Pools for Gearbox Tokens V2                  | [`20230409-gearbox-linear-pool-v2`](./v2/deprecated/20230409-gearbox-linear-pool-v2)                     |
 | Linear Pools for Aave aTokens V5                    | [`20230410-aave-linear-pool-v5`](./v2/deprecated/20230410-aave-linear-pool-v5)                           |
 | Linear Pools for Silo Tokens V2                     | [`20230410-silo-linear-pool-v2`](./v2/deprecated/20230410-silo-linear-pool-v2)                           |
+| Managed Pool V2                                     | [`20230411-managed-pool-v2`](./v2/deprecated/20230411-managed-pool-v2)                                   |
 | L2 Gauge Checkpointer                               | [`20230527-l2-gauge-checkpointer`](./v2/deprecated/20230527-l2-gauge-checkpointer)                       |
 | Avalanche Root Gauge, for veBAL voting              | [`20230529-avalanche-root-gauge-factory`](./v2/deprecated/20230529-avalanche-root-gauge-factory)         |
 | Composable Stable Pools V5                          | [`20230711-composable-stable-pool-v5`](./v2/deprecated/20230711-composable-stable-pool-v5)               |
 | Composable Stable Pools V5 (ZKEVM)                  | [`20230711-zkevm-composable-stable-pool-v5`](./v2/deprecated/20230711-zkevm-composable-stable-pool-v5)   |
 | Stakeless Gauge Checkpointer                        | [`20230731-stakeless-gauge-checkpointer`](./v2/deprecated/20230731-stakeless-gauge-checkpointer)         |
+| Composable Stable Pools V6                          | [`20240223-composable-stable-pool-v6`](./v2/deprecated/20240223-composable-stable-pool-v6)               |
 | V3 Composite Liquidity Router                       | [`20241205-v3-composite-liquidity-router`](./v3/deprecated/20241205-v3-composite-liquidity-router)       |
 | V3 Router                                           | [`20241205-v3-router`](./v3/deprecated/20241205-v3-router)                                               |
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
+| V3 Weighted Pool                                    | [`20241205-v3-weighted-pool`](./v3/deprecated/20241205-v3-weighted-pool)                                 |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
+| V3 Cow Swap Fee Burner                              | [`20250221-v3-cow-swap-fee-burner`](./v3/deprecated/20250221-v3-cow-swap-fee-burner)                     |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
 | V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
 | Balancer Contract Registry Initializer              | [`20250314-balancer-registry-initializer`](./v3/deprecated/20250314-balancer-registry-initializer)       |
+| V3 Stable Pool V2                                   | [`20250324-v3-stable-pool-v2`](./v3/deprecated/20250324-v3-stable-pool-v2)                               |
+| V3 Stable Surge Pool (V2)                           | [`20250404-v3-stable-surge-pool-factory-v2`](./v3/deprecated/20250404-v3-stable-surge-pool-factory-v2)   |
 | V3 ReClamm Pool                                     | [`20250409-v3-reclamm-pool`](./v3/deprecated/20250409-v3-reclamm-pool)                                   |
+| V3 Protocol Fee Helper                              | [`20250430-v3-protocol-fee-helper`](./v3/deprecated/20250430-v3-protocol-fee-helper)                     |
+| V3 Pool Pause Helper                                | [`20250430-v3-pool-pause-helper`](./v3/deprecated/20250430-v3-pool-pause-helper)                         |
 | V3 Pool Swap Fee Helper                             | [`20250430-v3-pool-swap-fee-helper`](./v3/deprecated/20250430-v3-pool-swap-fee-helper)                   |
+| V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/deprecated/20250507-v3-erc4626-cow-swap-fee-burner)     |
+| V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
+| V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |

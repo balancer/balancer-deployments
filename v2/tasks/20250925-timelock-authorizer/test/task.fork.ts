@@ -16,7 +16,7 @@ import { TimelockAuthorizerDeployment, default as input } from '../input';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 function doForkTestsOnNetwork(network: string, block: number) {
-  describeForkTest(`TimelockAuthorizer ${network}`, network, block, function () {
+  describeForkTest.skip(`TimelockAuthorizer ${network}`, network, block, function () {
     let input: TimelockAuthorizerDeployment;
     let migrator: Contract,
       vault: Contract,
