@@ -14,6 +14,8 @@ Pools from this factory use Gyroscope's 2-CLP math, suitable for fungible concen
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`Gyro2CLPPoolFactory` artifact](./artifact/Gyro2CLPPoolFactory.json)
 - [`Gyro2CLPPool` artifact](./artifact/Gyro2CLPPool.json)

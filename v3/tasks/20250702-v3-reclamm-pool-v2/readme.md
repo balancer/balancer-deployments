@@ -19,6 +19,8 @@ Internal mechanics and pool math remain the same as the previous version, which 
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)

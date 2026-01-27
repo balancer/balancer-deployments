@@ -6,5 +6,10 @@ The current VaultFactory deploys the ProtocolFeeController and passes it into th
 ## Useful Files
 
 - [Code](https://github.com/balancer/balancer-v3-monorepo/commit/e1ae7f091244ae20e5c1add3e7f89b6d33f48d23).
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [`VaultFactory` artifact](./artifact/VaultFactory.json)
 

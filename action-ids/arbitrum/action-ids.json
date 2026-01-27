@@ -1253,5 +1253,129 @@
         "transferPoolSetOwnership(address)": "0x5d91624a8ad7d51dac1b4189db4a4b09d72d7a1350631431f8179e1bb9055a54"
       }
     }
+  },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x78501a730bdbd995c1bca1ae21e7662f00a6d03855357ef69a9b99cf93811a4c",
+        "disable()": "0x292caf0d3dd98f8308c03b314a257a5039d174e5524f3c5ebf64d04544a19c95"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x1fd0343c04d819b372121a3a72d520c7f8a39c37574efa4b18a13f8b2e38b94f",
+        "disable()": "0x685b9db1685629cf39cd997bf85383fb254f27482b9a18a56e61259965303124"
+      }
+    }
+  },
+  "20250919-v3-pool-pause-helper-v2": {
+    "PoolPauseHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x8bea6d2c2a756a42ff3e8180a934f7428bcb733513acad81a635983cfe923ba0",
+        "addPoolsToSet(uint256,address[])": "0x233710920f050d32d972a0cc5da6cac8719a590a1abfcfb7670bcb9ccc9dd12d",
+        "createPoolSet(address)": "0xa6680b0f38be5c4119d12bf34181715fb1e94af1e2081ac47a42b7ac1f815c7e",
+        "createPoolSet(address,address[])": "0x76c56a3b7d3974549aa64ac4ca99c1d2cc173a5d1b34b990dcb72ed7769e8cff",
+        "destroyPoolSet(uint256)": "0xb38f3e6a67e8cedec5e1d3b8bd9a29bcbe548ebe1b72fd78e8107c255721d4e1",
+        "forceTransferOwnership(address)": "0x22c8f467e9f0e1e647de6d4ab97575851a63311e5506806e3c1f5a61ef296b66",
+        "pausePools(address[])": "0x92eb09bf334e23e0fefee191556d8a300a21b504e39d4a2b994a4a36ef032a95",
+        "removePoolsFromSet(uint256,address[])": "0x5f4360e9868e545ba6202a0e4331f56c81e63cf2e4c619266492a0cf8146a923",
+        "renounceOwnership()": "0xaefca8ac4b3022dd1ba8b234d02b64117593ebe6206a96ffe2b63b3a4b0104a4",
+        "transferOwnership(address)": "0x425fe0cc0d3d0f09cf542c350a40f39cab7f9b230cac9d7d39f5784c18356253",
+        "transferPoolSetOwnership(address)": "0xfaa675561f5d6c0e36c617009399a64eb4f22ad4c36c50a100449634f146a860"
+      }
+    }
+  },
+  "20251219-v3-liquidity-bootstrapping-pool-v3": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0x8a4982b75f116370e0628a68d87270be56c3aaf3b878ba4716bda82c1f7ae5b5",
+        "createWithMigration((string,string,address,address,address,uint256,uint256,bool),(address,uint256,uint256,uint256,uint256),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0xac6f0785c9cecf727000ba6a4a73230dfc4a4a0570e19a33c88ede9b535bf06f",
+        "disable()": "0x9cfdab4beadfcae7d0f179599ccd11866e01cf1ee5c21374f6261d4c8338d914"
+      }
+    }
+  },
+  "20251205-v3-fixed-price-lbp": {
+    "FixedPriceLBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),uint256,uint256,bytes32,address)": "0xdb367796766b2d2ecdd31fb412b0cf40eca5dbe3454c75becdda1d24340ae28f",
+        "disable()": "0x563e4481a97a41cdd413da1f83ac6635161c37618c79f5212599f5d564353f36"
+      }
+    }
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0x657d538acae944f957ba318e687039c54a9a4c3e60f903b2a14b760b05c49d08",
+        "disable()": "0xf2ba8ee437d51234f84659a503679184d5b06f06f85eae2b2e1319177f6e2cd9"
+      }
+    }
+  },
+  "20260116-v3-stable-pool-v3": {
+    "StablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xbf1bb397ab2a539c910e905a766186226c7c02ab64533fcf8bbb5ca6b75c10ad",
+        "disable()": "0xd8cd6f4a6e906357c1a19c0360fea43290a59efa4f7e1e27eff867e7369ffd75"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x56753142400b2C49C451553B19299b011b78572b",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0xbf38a9b1d221a1432ff912e502ab68691be11cc668e0e74befa5af5c0e7ef596",
+        "emitTransfer(address,address,uint256)": "0xf1a25aba3fab24d686b4f319243fd42a8a02f8b6bbb7f1ea0bd4a691abde64c1",
+        "incrementNonce()": "0xe48a579eaff47e69645e829db0b36f824b445357ef34ac51f41738331d6ed384",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x8b7e70ed185246d61a104f2a216732444c163d1682cac59b59f595c0067aad2b",
+        "stopAmplificationParameterUpdate()": "0x04dbdd8e16d89c99bf4623c2c8ce4145cd27b6eec119ecbecb683ec691cc3465"
+      }
+    }
+  },
+  "20260117-v3-stable-surge-pool-factory-v3": {
+    "StableSurgePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,bool,bytes32)": "0x8c1a3a38b135d65baa29e772994f93efb67160c088590d60684bff9c5fdac6ed",
+        "disable()": "0x795164235c0dde5d12fe96e40481bca453010c9a1d847db918106ca8a73c6f5b"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0x52BA6e6b21434F0a6e4A8027d20f85592edfc1b1",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0x8a1866183ee3e8aa30479308d10e57a10b5dbe3b621c89a2e3d968b8419e1d05",
+        "emitTransfer(address,address,uint256)": "0xe457e949e4c1dda16b3cb6ffd4efed66399631018e38b2165f8024a7d3e8235b",
+        "incrementNonce()": "0xff5fc4fa3e8bb403eba6a304491ee5380f57830935a6c31fe9e428f761abe7b3",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0xb814492aea13199fa9dc93ea16f57ca95ce7436682c28c109eb92510965f47dd",
+        "stopAmplificationParameterUpdate()": "0xecd679390277115a1110f3ad3eef6ef34e3981ff91128330ed4d8ab76d48c494"
+      },
+      "factoryName": "StableSurgePoolFactory"
+    }
+  },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "ProtocolFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0xfffb9661fe4030b09476009f91d798d667956a06dec8de9850c46778ac58c58f",
+        "addPoolsToSet(uint256,address[])": "0xb7f4e400ed24ed549fdcfa9e5b69e4cededb5434cd893ae31c94bf487b2de10b",
+        "createPoolSet(address)": "0x6bc7d567ee4faac64c7ed94d8bfd9a8d3b13a0597637c8598d84fef6a7b4b3cb",
+        "createPoolSet(address,address[])": "0x97b240cff53ccd7d7354e87798fa069cb49178044651e1af778067ced5cda664",
+        "destroyPoolSet(uint256)": "0x064f7bb6be38f86f5be514b2edb879283e95704b0bda2c7d6ed07fe8b6c072b1",
+        "forceTransferOwnership(address)": "0xa672ed2fa5a2833fdf7844ac71b397c91bf10b7ba653cc768554a55e8c276365",
+        "removePoolsFromSet(uint256,address[])": "0x533bec9ac0235d525d12c00586dfb57c62ffd0881eb059fe92ef2a503d4c1272",
+        "renounceOwnership()": "0x79d2e25dcdc1c176aa415bb535929c5f46e35d756ab0c1a6e91723c4761044f0",
+        "setProtocolSwapFeePercentage(address,uint256)": "0xed81f6bbe3369860edd719f55e7ba8b748de01b121051bd06b9302bf731b924f",
+        "setProtocolYieldFeePercentage(address,uint256)": "0xf8b3b92e8ba330c4fc68aa89b51a0128eb0330bd03375d894d344752863af088",
+        "transferOwnership(address)": "0x61ac62cd61880450222e508c45a8a9fae1a098782d7ae86d5b7fd8db3c425718",
+        "transferPoolSetOwnership(address)": "0x5a8f5476ffbb059634902d970e22ca0aaeb54f9c74854c3dfc6620d675d3ca47"
+      }
+    }
   }
 }
