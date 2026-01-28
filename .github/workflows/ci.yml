@@ -20,6 +20,19 @@ jobs:
       - name: Lint
         run: yarn lint
 
+  deployments-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate deployments.json
+        run: python3 src/scripts/parse_readme.py
+
+      - name: Verify generated files are committed
+        run: |
+          git status --porcelain
+          git diff --exit-code -- docs/deployments.json docs/families.txt
+
   test-fork:
     runs-on: ubuntu-latest
     steps:
