@@ -124,7 +124,7 @@
         "address": "0xb0e35E520A50F443eE2b42BCDd4b89aa544d3198"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250214-v3-protocol-fee-controller-v2": {

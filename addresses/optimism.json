@@ -878,7 +878,7 @@
         "address": "0x47234a234875e203826E737993eee6B673237848"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250212-v3-mev-capture-hook": {
