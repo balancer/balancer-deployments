@@ -1,5 +1,7 @@
 # <img src="logo.svg" alt="Balancer" height="128px">
 
+**Balancer Protocol** - Programmable Liquidity
+
 # Balancer V2 & V3 Deployments
 
 [![NPM Package](https://img.shields.io/npm/v/@balancer-labs/v2-deployments.svg)](https://www.npmjs.com/package/@balancer-labs/v2-deployments)
