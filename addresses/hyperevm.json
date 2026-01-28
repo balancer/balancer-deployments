@@ -100,7 +100,7 @@
         "address": "0xB793C034CFC1635C104d28d483af0b1ace553E2d"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {

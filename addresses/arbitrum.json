@@ -986,7 +986,7 @@
         "address": "0xCa3372c28438D0905C96A01d834F5c14a34EE295"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {
