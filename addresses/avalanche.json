@@ -913,6 +913,16 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0xf94bb6911dAF3734759105c26e0E79790281bfFC"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20260115-v3-weighted-pool-v2": {
     "contracts": [
       {
