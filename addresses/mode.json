@@ -268,5 +268,15 @@
     ],
     "status": "ACTIVE",
     "version": "v2"
+  },
+  "20260122-claim-signature-registry": {
+    "contracts": [
+      {
+        "name": "ClaimSignatureRegistry",
+        "address": "0x1702067424096F07A60e62cceE3dE9420068492D"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v2"
   }
 }

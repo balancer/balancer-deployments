@@ -819,6 +819,24 @@
       }
     }
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x865fbbe85e80de6d611f454e07996187c1fa7b03e37ebb1a68ca0f6fbd483b24",
+        "disable()": "0x416d92d817cb23a3d644810c79c3e5d9cd991b729c260819b570abd632e3a90a"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xa4f5bafaf5a6384b8ac967064c4fb5ebc8a8ece87f61ab294970322fa126d155",
+        "disable()": "0xa821892dcbfcfb5e12afef4adb89e0f3a91ec943502f0e9c127ae54bb6ba9283"
+      }
+    }
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "PoolPauseHelper": {
       "useAdaptor": false,
@@ -904,6 +922,25 @@
         "stopAmplificationParameterUpdate()": "0x75ef8e7757eeca9444a2b63ace4c479c32455f03a04339817d9def668c9497ca"
       },
       "factoryName": "StableSurgePoolFactory"
+    }
+  },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "ProtocolFeeHelper": {
+      "useAdaptor": false,
+      "actionIds": {
+        "acceptOwnership()": "0x9d59a7e26ea23ec9139e8581e1468d5e0135fd158fd0d579d40c0077abce9352",
+        "addPoolsToSet(uint256,address[])": "0x3e013e900b54071a6c685afe7f81953a7b7f08ea606be9d23050219b7d750394",
+        "createPoolSet(address)": "0x2771c9c6cfd30e2667fe649251ff32e9a65a3e8ecb7a380215ca2bbd405a7203",
+        "createPoolSet(address,address[])": "0x7c536abad08786c69c6962b8d17f108078ce1067cc6349ef618f18c8dca6f16a",
+        "destroyPoolSet(uint256)": "0xd6a03f0b274b7e1be09be27d2259b0c5b478ad962fb9959403bb464314d301bd",
+        "forceTransferOwnership(address)": "0xb57c9ef8554f880fa166870770ddf12bb2eb245e2dd5e37535c1a3e86688dbd1",
+        "removePoolsFromSet(uint256,address[])": "0x19094680d6b8907b29ee057f29b5df3fbba154b3839c7a074bf056ea2f800779",
+        "renounceOwnership()": "0x5228282db6da9a46bf7e3e4037c84350d1e487082adc0124a6f3b2d038b0b50a",
+        "setProtocolSwapFeePercentage(address,uint256)": "0x1f985557a821f71988172e883f7a6d44d71d13001400b8b4b7ba3e28a6dcd069",
+        "setProtocolYieldFeePercentage(address,uint256)": "0xe0ee6cb9f82b4ddcd6f380cfdcecc2fbba651027496c6d4a697c13b13bbbb9d6",
+        "transferOwnership(address)": "0x62f35600c7aa8698165c510012c23f02721dcb5c9f1e51886371d5982d5d7a5c",
+        "transferPoolSetOwnership(address)": "0x71249f6ea179bcc712b0157ee56bc325a86eef49c289ad8ddbb372c1bc787572"
+      }
     }
   }
 }

@@ -15,6 +15,8 @@ If this virtual reserve balance parameter is 0, it will create a standard "Seede
 - [Base mainnet addresses](./output/base.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`LBPoolFactory` artifact](./artifact/LBPoolFactory.json)
 - [`LBPool` artifact](./artifact/LBPool.json)

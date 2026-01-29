@@ -136,7 +136,7 @@
         "address": "0x2DDB14954014Bfa99f190a50e5A207B42613b727"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
@@ -423,6 +423,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0xD961E30156C2E0D0d925A0De45f931CB7815e970"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xF375128b5413ff1EEd5AD716b26A40bcdBe083CB"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x86e67E115f96DF37239E0479441303De0de7bc2b"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x0Fa0f9990D7969a7aE6f9961d663E4A201Ed6417"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "contracts": [
       {
@@ -443,6 +471,26 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0xB9d01CA61b9C181dA1051bFDd28e1097e920AB14"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0xf4743D026f3D07aF3747bb7d05BeD06D177241d7"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251205-v3-fixed-price-lbp": {
     "contracts": [
       {
@@ -452,6 +500,16 @@
       {
         "name": "MockFixedPriceLBPool",
         "address": "0xB0C8aaC0fb6e508fcB1E4E51f1323053bad0BE5B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x0b11209B8c5E821b18dED147583b8978c3E63911"
       }
     ],
     "status": "ACTIVE",

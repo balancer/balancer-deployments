@@ -1409,6 +1409,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20260122-claim-signature-registry": {
+    "contracts": [
+      {
+        "name": "ClaimSignatureRegistry",
+        "address": "0x07b1a0bAb2BaB6FD4DeE2dDCc512B2725abABC55"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -1534,7 +1544,7 @@
         "address": "0x4ffECD2dab8703a74BD13Ba10BcE3419B9f5fA80"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {
@@ -1871,6 +1881,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x05503B3aDE04aCA81c8D6F88eCB73Ba156982D2B"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xcC8d5475e7a3C65E29Af30e5f89F14F5722E7cDa"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x83bf399FA3DC49Af8fb5c34031a50c7C93F56129"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x74a1B9Fe5b1151A80E4dE22F79cf73ef358D2086"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "contracts": [
       {
@@ -1891,6 +1929,26 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250919-v3-protocol-fee-helper-v2": {
+    "contracts": [
+      {
+        "name": "ProtocolFeeHelper",
+        "address": "0x5A962CDc2786875cA5c40aDc09D874e4D6711a74"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251010-v3-unbalanced-add-via-swap-router": {
+    "contracts": [
+      {
+        "name": "UnbalancedAddViaSwapRouter",
+        "address": "0xfA80c17EE7E382c9C541bFa4bea0514E46DCCba5"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
   "20251205-v3-fixed-price-lbp": {
     "contracts": [
       {
@@ -1900,6 +1958,16 @@
       {
         "name": "MockFixedPriceLBPool",
         "address": "0x179C68302A24E4E59667b3DF7fb70C1c5DcEc5d3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x90e065b28c9B7464B44f185f5a6b8e4B4c827f2a"
       }
     ],
     "status": "ACTIVE",
