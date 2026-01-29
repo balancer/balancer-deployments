@@ -33,7 +33,6 @@
 - Deployed V3 Aggregator Batch Router to all networks.
 - Deployed V3 ReClamm Pool Factory V2 to all networks.
 - Deployed V3 Pool Pause Helper to all networks.
-- Deployed V3 Balancer Fee Burner to all networks.
 - Deployed V3 Token Pair Registry to Sepolia and Hyperevm.
 - Deployed Chainlink Constant Price Feed to all networks.
 - Deployed V3 HyperEVM Rate Provider to HyperEVM.
@@ -48,6 +47,7 @@
 - Deployed V3 Stable Surge Pool Factory (V3) to all networks.
 - Deployed V3 Unbalanced Add Via Swap Router to all networks.
 - Deployed V3 Protocol Fee Helper (V2) to all networks.
+- Deployed V3 Balancer Fee Burner (V2) to all networks.
 
 #### V2
 
@@ -84,6 +84,7 @@
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
 - Deployed `VeBoost` 2.1 to Mainnet.
 - Deployed `Vault` 2.1 to Plasma.
+- Deployed `ClaimSignatureRegistry` to all networks.
 
 ### Deprecations
 
@@ -104,6 +105,7 @@
 - Deprecated `20250507-v3-erc4626-cow-swap-fee-burner`.
 - Deprecated `20250430-v3-pool-swap-fee-helper`.
 - Deprecated `20250701-v3-liquidity-bootstrapping-pool-v2`.
+- Deprecated `20250530-v3-balancer-fee-burner`.
 
 #### V2
 

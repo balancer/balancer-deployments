@@ -851,6 +851,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20260122-claim-signature-registry": {
+    "contracts": [
+      {
+        "name": "ClaimSignatureRegistry",
+        "address": "0x2b432B08679d17f8A4DB785544C406BC0f47F290"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -976,7 +986,7 @@
         "address": "0xCa3372c28438D0905C96A01d834F5c14a34EE295"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {
@@ -1390,6 +1400,16 @@
       {
         "name": "MockFixedPriceLBPool",
         "address": "0x6e9758D6d5110bB97e0e15bA9fc2A8590C7C23bb"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x56c8D8f7F926e0Fb04a2cF05F18b44b2C5864AEB"
       }
     ],
     "status": "ACTIVE",

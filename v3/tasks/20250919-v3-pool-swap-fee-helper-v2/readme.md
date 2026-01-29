@@ -15,5 +15,7 @@ The swap fee helper is deployed with an admin account (e.g., the Maxi's multisig
 - [Avalanche mainnet addresses](./output/avalanche.json)
 - [Hyperevm mainnet addresses](./output/hyperevm.json)
 - [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
 - [`PoolSwapFeeHelper` artifact](./artifact/PoolSwapFeeHelper.json)

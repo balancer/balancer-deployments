@@ -473,6 +473,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20260122-claim-signature-registry": {
+    "contracts": [
+      {
+        "name": "ClaimSignatureRegistry",
+        "address": "0x45fB5aF0a1aD80Ea16C803146eb81844D9972373"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -554,7 +564,7 @@
         "address": "0x9E20Af4c055e368CA3618d50bcB132027BED3372"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
@@ -898,6 +908,16 @@
       {
         "name": "UnbalancedAddViaSwapRouter",
         "address": "0x6623d1CEEaB236ae93aCAfB285dDFB77336B6981"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0xf94bb6911dAF3734759105c26e0E79790281bfFC"
       }
     ],
     "status": "ACTIVE",

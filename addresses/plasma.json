@@ -136,7 +136,7 @@
         "address": "0x2DDB14954014Bfa99f190a50e5A207B42613b727"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250123-v3-composite-liquidity-router-v2": {
@@ -500,6 +500,16 @@
       {
         "name": "MockFixedPriceLBPool",
         "address": "0xB0C8aaC0fb6e508fcB1E4E51f1323053bad0BE5B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x0b11209B8c5E821b18dED147583b8978c3E63911"
       }
     ],
     "status": "ACTIVE",

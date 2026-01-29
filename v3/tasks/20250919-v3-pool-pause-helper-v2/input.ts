@@ -37,6 +37,12 @@ export default {
   plasma: {
     HelperAdmin: MaxiOmniMultisig,
   },
+  xlayer: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
+  monad: {
+    HelperAdmin: MaxiOmniMultisig,
+  },
   sepolia: {
     HelperAdmin: SepoliaAdmin,
   },
