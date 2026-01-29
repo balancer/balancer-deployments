@@ -22,13 +22,13 @@ As a side effect, it also produces the `docs/families.txt` file, a simple list o
 
 ## 2 - Generate Graph Data
 
-From the top level, run: `python3 src/scripts/make_graph.py docs/deployments.json <mygraph>.dot [family1,family2,family3,...]`
+From the top level, run: `python3 src/scripts/make_graph.py docs/deployments.json docs/output/<mygraph>.dot [family1,family2,family3,...]`
 
 This script reads deployments.json and generates a Graphviz .dot file, which can then be rendered graphically. If you provide comma-separated "family" arguments, it will generate data for a subset of all the deployments. For instance, to generate a graph of the V3 routers, the command would be:
 
-`python3 src/scripts/make_graph.py docs/deployments.json routers.dot v3-router,v3-batch-router,v3-composite-liquidity-router,v3-prepaid-composite-liquidity-router,v3-buffer-router`
+`python3 src/scripts/make_graph.py docs/deployments.json docs/output/routers.dot v3-router,v3-batch-router,v3-composite-liquidity-router,v3-prepaid-composite-liquidity-router,v3-buffer-router`
 
-This generates a routers.dot file at the top level.
+This generates a routers.dot file in docs/output.
 
 ## 3 - Generate the Image
 
