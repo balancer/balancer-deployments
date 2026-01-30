@@ -157,6 +157,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Stable Surge Pool (V3)                              | [`20260117-v3-stable-surge-pool-factory-v3`](./v3/tasks/20260117-v3-stable-surge-pool-factory-v3)       |
 | V3 Gyro 2-CLP (V2)                                     | [`20260123-v3-gyro-2clp-v2`](./v3/tasks/20260123-v3-gyro-2clp-v2)                                       |
 | V3 Gyro E-CLP (V2)                                     | [`20260126-v3-gyro-eclp-v2`](./v3/tasks/20260126-v3-gyro-eclp-v2)                                       |
+| V3 Weighted LP Oracle (V2)                             | [`20260202-v3-weighted-pool-oracle-v2`](./v3/tasks/20260202-v3-weighted-pool-oracle-v2)                 |
 
 ## Scripts
 
@@ -270,3 +271,4 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/deprecated/20250507-v3-erc4626-cow-swap-fee-burner)     |
 | V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
 | V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |
+| V3 Weighted LP Oracle                               | [`20250814-v3-weighted-pool-oracle`](./v3/deprecated/20250814-v3-weighted-pool-oracle)                   |
