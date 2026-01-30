@@ -137,7 +137,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
 | V3 Chainlink Constant Price Feed                       | [`20250813-v3-constant-price-feed`](./v3/tasks/20250813-v3-constant-price-feed)                         |
-| V3 Weighted LP Oracle                                  | [`20250814-v3-weighted-pool-oracle`](./v3/tasks/20250814-v3-weighted-pool-oracle)                       |
 | V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
 | V3 Protocol Fee Helper (V2)                            | [`20250919-v3-protocol-fee-helper-v2`](./v3/tasks/20250919-v3-protocol-fee-helper-v2)                   |
