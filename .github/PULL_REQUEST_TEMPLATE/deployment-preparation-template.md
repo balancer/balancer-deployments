@@ -9,7 +9,7 @@
 - [ ] `build-info` is updated with artifacts compiled at the specified commit
 - [ ] Artifacts are generated from `build-info`
 - [ ] New task has a working fork test <!-- This implies index and input scripts are correct -->
-- [ ] If this is a pool factory, a pool was deployed to testnet and successfully verified
+- [ ] If this is a factory, the product (e.g., pool) was deployed to testnet and successfully verified
 - [ ] Maxis have been informed of any required governance actions
 
 ## Deprecating old tasks checklist: <!-- Only if applicable -->
