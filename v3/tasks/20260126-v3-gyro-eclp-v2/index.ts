@@ -96,7 +96,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           newGyroECLPPoolParams.hooksAddress,
           newGyroECLPPoolParams.enableDonations,
           newGyroECLPPoolParams.disableUnbalancedLiquidity,
-          newGyroECLPPoolParams.salt,
+          newGyroECLPPoolParams.salt
         )
       ).wait();
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
