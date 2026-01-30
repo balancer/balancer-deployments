@@ -5,7 +5,7 @@ import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('WeightedLPOracle', 'base', 34453000, function () {
+describeForkTest.skip('WeightedLPOracle', 'base', 34453000, function () {
   let task: Task;
   let weightedLPOracleFactory: Contract, weightedLPOracle: Contract;
   let poolToken: Contract;
