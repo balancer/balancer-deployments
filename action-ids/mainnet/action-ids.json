@@ -2084,5 +2084,23 @@
         "transferPoolSetOwnership(address)": "0x792d8f12b102cfa3ab3d7018934c613bcdafde3e191569b27afe2e34a782bc99"
       }
     }
+  },
+  "20260123-v3-gyro-2clp-v2": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xb361660e5b297788bdaa7d51d50e3cb5d4eb7a332ed70a02109cdb38035ea15d",
+        "disable()": "0x137755d1520c2aaf0ed37342b4a55bb9b196966544cc01e55bf95c5c10250ded"
+      }
+    }
+  },
+  "20260126-v3-gyro-eclp-v2": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x1031fcd0a1a27213c0bb03ff1b441343699710a943d90cab49e523f0ce9dbdf7",
+        "disable()": "0x2d0c285e5bb0971186e8f654e0e8de6a78aaa9baf88d4cb8925527fafef4a43f"
+      }
+    }
   }
 }

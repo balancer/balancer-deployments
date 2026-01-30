@@ -574,5 +574,33 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20260123-v3-gyro-2clp-v2": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x136f1EFcC3f8f88516B9E94110D56FDBfB1778d1"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0xc6f6EeAE42Ec52F2e175067ef3DF1Ac96d005AD6"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260126-v3-gyro-eclp-v2": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x5C6fb490BDFD3246EB0bB062c168DeCAF4bD9FDd"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0x3965CeB788589015613c6a7065dcACa00E7242eE"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
