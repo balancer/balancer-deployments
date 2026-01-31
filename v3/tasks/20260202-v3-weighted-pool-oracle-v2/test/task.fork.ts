@@ -18,8 +18,6 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
   const ETH_FEED_ADDRESS = '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70';
   const USDC_FEED_ADDRESS = '0x7e860098F58bBFC8648a4311b374B1D669a2bc6B';
 
-  const VERSION = 1;
-
   before('run task', async () => {
     task = new Task('20260202-v3-weighted-pool-oracle-v2', TaskMode.TEST, getForkedNetwork(hre));
     await task.run({ force: true });
@@ -40,7 +38,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     const factoryVersion = JSON.parse(await weightedLPOracleFactory.version());
     expect(factoryVersion.deployment).to.be.eq(task.id);
     expect(factoryVersion.name).to.be.eq('WeightedLPOracleFactory');
-    expect(factoryVersion.version).to.be.eq(VERSION);
+    expect(factoryVersion.version).to.be.eq(input.OracleVersion);
   });
 
   it('creates oracle', async () => {
