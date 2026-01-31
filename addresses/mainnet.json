@@ -1892,7 +1892,7 @@
         "address": "0xcC8d5475e7a3C65E29Af30e5f89F14F5722E7cDa"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250815-v3-stable-pool-oracle": {

@@ -924,7 +924,7 @@
         "address": "0x98CCA70241bB0199A89122b9363Cf67d34836Ca2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250815-v3-stable-pool-oracle": {
