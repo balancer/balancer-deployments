@@ -29,6 +29,7 @@ __metadata:
   dependencies:
     "@balancer-labs/v2-interfaces": "npm:latest"
     "@balancer-labs/v2-solidity-utils": "npm:^3.0.2"
+    "@balancer-labs/v3-interfaces": "npm:latest"
     "@ethereumjs/common": "npm:^4.4.0"
     "@ethereumjs/evm": "npm:^3.1.1"
     "@ethersproject/contracts": "npm:^5.0.0"
@@ -37,6 +38,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": "npm:^2.2.1"
     "@nomiclabs/hardhat-vyper": "npm:^3.0.5"
     "@nomiclabs/hardhat-waffle": "npm:^2.0.6"
+    "@openzeppelin/contracts": "npm:@openzeppelin/contracts@^5.0.0"
     "@solidity-parser/parser": "npm:^0.18.0"
     "@types/async-retry": "npm:^1"
     "@types/chai": "npm:^4"
@@ -67,8 +69,8 @@ __metadata:
     node-fetch: "npm:^3.3.2"
     prettier: "npm:^2.7.1"
     prettier-plugin-solidity: "npm:v1.0.0-alpha.59"
-    solhint: "npm:^3.2.0"
-    solhint-plugin-prettier: "npm:^0.0.4"
+    solhint: "npm:^3.4.1"
+    solhint-plugin-prettier: "npm:^0.0.5"
     ts-node: "npm:^10.9.1"
     tsconfig-paths: "npm:^4.1.2"
     typescript: "npm:^4.9.3"
@@ -95,6 +97,13 @@ __metadata:
   dependencies:
     "@balancer-labs/v2-interfaces": "npm:0.3.0"
   checksum: 10c0/713a9132726b09ad72eb1f14891d300afc8b8169d7deb3c4c4d001ba07290828102137908ab27ebe3f055a1d9c057277adc4f21661c8d7a40eb9ad53493a8b31
+  languageName: node
+  linkType: hard
+
+"@balancer-labs/v3-interfaces@npm:latest":
+  version: 1.0.0
+  resolution: "@balancer-labs/v3-interfaces@npm:1.0.0"
+  checksum: 10c0/e8a6f48f649bfae21b8d35110da6b0845e1458f350f704e331d3b8453f583f517ff2aa5a5240fc767784bfc775eff4e20bebe2a5ae8e4f846faed8ac7ad19c0e
   languageName: node
   linkType: hard
 
@@ -1298,6 +1307,13 @@ __metadata:
   dependencies:
     semver: "npm:^7.3.5"
   checksum: 10c0/26e376d780f60ff16e874a0ac9bc3399186846baae0b6e1352286385ac134d900cc5dafaded77f38d77f86898fc923ae1cee9d7399f0275b1aa24878915d722b
+  languageName: node
+  linkType: hard
+
+"@openzeppelin/contracts@npm:@openzeppelin/contracts@^5.0.0":
+  version: 5.5.0
+  resolution: "@openzeppelin/contracts@npm:5.5.0"
+  checksum: 10c0/884ab2850ff380c11d042ce50ebecf8fad2f784105554d8826a4160126d17e96b8a636400e5640ac227d7e8f8754477835ead8acb2668355b83e2509ca7fca63
   languageName: node
   linkType: hard
 
@@ -6425,19 +6441,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solhint-plugin-prettier@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "solhint-plugin-prettier@npm:0.0.4"
+"solhint-plugin-prettier@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "solhint-plugin-prettier@npm:0.0.5"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.0"
   peerDependencies:
-    prettier: ^1.15.0
+    prettier: ^1.15.0 || ^2.0.0
     prettier-plugin-solidity: ^1.0.0-alpha.14
-  checksum: 10c0/61924fb506dd94c31e4cd8975d78ed3053cfd7bc0be57bd258d2f2f619b09693cd38876db2364a1c20d8306446a9f506d6534dfb81230e165231ebdc825e5f15
+  checksum: 10c0/3dd40c9e7d7c0cf9a36816cb185f75ea12b51b976e13568ab3d4e914c3160d75b6b8fe5b18bf33c06e4a17f7dcc9d25a22dfe1f3fb9a27c4911e6d41234ef5e2
   languageName: node
   linkType: hard
 
-"solhint@npm:^3.2.0":
+"solhint@npm:^3.4.1":
   version: 3.6.2
   resolution: "solhint@npm:3.6.2"
   dependencies:
