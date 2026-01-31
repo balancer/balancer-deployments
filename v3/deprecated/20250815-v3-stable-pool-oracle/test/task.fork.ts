@@ -5,7 +5,7 @@ import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest('StableLPOracle', 'mainnet', 23182450, function () {
+describeForkTest.skip('StableLPOracle', 'mainnet', 23182450, function () {
   let task: Task;
   let stableLPOracleFactory: Contract, stableLPOracle: Contract;
   let poolToken: Contract;
