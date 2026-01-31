@@ -334,7 +334,7 @@
         "address": "0xb376E00b5F12c755A68E75F04F279F7137731978"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250919-v3-pool-pause-helper-v2": {
