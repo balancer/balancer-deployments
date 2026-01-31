@@ -450,7 +450,7 @@
         "address": "0x65d092A81f95139Fd274Fed91A7b0481fee05c66"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250828-v3-hyperevm-rate-provider": {

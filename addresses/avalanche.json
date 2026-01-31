@@ -870,7 +870,7 @@
         "address": "0x9a7921977ca7232395229Ef2a9EDD53DEc59F365"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250919-v3-pool-pause-helper-v2": {
