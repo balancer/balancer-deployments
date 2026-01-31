@@ -97,8 +97,8 @@
     "node-fetch": "^3.3.2",
     "prettier": "^2.7.1",
     "prettier-plugin-solidity": "v1.0.0-alpha.59",
-    "solhint": "^3.2.0",
-    "solhint-plugin-prettier": "^0.0.4",
+    "solhint": "^3.4.1",
+    "solhint-plugin-prettier": "^0.0.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.3"
