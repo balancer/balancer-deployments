@@ -1,5 +1,4 @@
 import hre from 'hardhat';
-import { ethers } from 'hardhat';
 import { Contract } from 'ethers';
 import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { fpMul, fromFp } from '@helpers/numbers';
