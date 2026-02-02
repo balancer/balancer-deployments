@@ -22,8 +22,6 @@
 - Deployed V3 Protocol Fee Controller V2 to all networks.
 - Deployed V3 Protocol Fee Controller Migration to Mainnet, Gnosis, Arbitrum, Base and Sepolia.
 - Deployed V3 Balancer Contract Registry Initializer (V1 / V2) to all networks.
-- Deployed V3 Gyro E-CLP Factory to all networks.
-- Deployed V3 Gyro 2-CLP Factory to all networks.
 - Deployed V3 Stable Surge Hook V2 to all networks.
 - Deployed V3 Vault Explorer V2 to all networks.
 - Deployed V3 Wrapped BPT Factory to all networks.
@@ -48,6 +46,8 @@
 - Deployed V3 Unbalanced Add Via Swap Router to all networks.
 - Deployed V3 Protocol Fee Helper (V2) to all networks.
 - Deployed V3 Balancer Fee Burner (V2) to all networks.
+- Deployed V3 Gyro E-CLP Factory (V2) to all networks.
+- Deployed V3 Gyro 2-CLP Factory (V2) to all networks.
 
 #### V2
 
@@ -106,6 +106,8 @@
 - Deprecated `20250430-v3-pool-swap-fee-helper`.
 - Deprecated `20250701-v3-liquidity-bootstrapping-pool-v2`.
 - Deprecated `20250530-v3-balancer-fee-burner`.
+- Deprecated `20250120-v3-gyro-2clp`.
+- Deprecated `20250124-v3-gyro-eclp`.
 
 #### V2
 
