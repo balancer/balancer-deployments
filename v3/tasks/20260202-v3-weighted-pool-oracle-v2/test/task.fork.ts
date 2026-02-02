@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { ethers } from 'hardhat';
 import { Contract } from 'ethers';
-import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -31,8 +31,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
 
     poolToken = await vaultTask.instanceAt('IERC20', WEIGHTED_POOL_ADDRESS);
 
-    const VaultUnlockTestHelper = await ethers.getContractFactory('VaultUnlockTestHelper');
-    unlockHelper = await VaultUnlockTestHelper.deploy(vault.address);
+    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.address]);
   });
 
   it('checks version', async () => {
