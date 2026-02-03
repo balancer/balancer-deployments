@@ -6,6 +6,7 @@ import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import input from '../input';
+import { expectRevertWithCustomError } from '@helpers/expectCustomError';
 
 describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
   let task: Task;
@@ -88,17 +89,10 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     expect(await stableLPOracle.getShouldRevertIfVaultUnlocked()).to.be.true;
 
     const callData = stableLPOracle.interface.encodeFunctionData('latestRoundData');
-    const expectedSelector = ethers.utils.id('VaultIsUnlocked()').slice(0, 10);
 
-    let reverted = false;
-    try {
-      await unlockHelper.callWhileUnlocked(stableLPOracle.address, callData);
-    } catch (e: unknown) {
-      reverted = true;
-      const errorMessage = e instanceof Error ? e.message : String(e);
-
-      expect(errorMessage).to.include(expectedSelector);
-    }
-    expect(reverted).to.be.true;
+    await expectRevertWithCustomError(
+      unlockHelper.callWhileUnlocked(stableLPOracle.address, callData),
+      'VaultIsUnlocked()'
+    );
   });
 });

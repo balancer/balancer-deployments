@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`StableLPOracle` V2](../../tasks/20260203-v3-stable-pool-oracle-v2/), which allows creation of oracles that only work when the Balancer Vault is locked.
+> This version was superseded by [`StableLPOracle` V2](../../tasks/20260203-v3-stable-pool-oracle-v2/), which allows creation of oracles that only work when the Balancer Vault is locked. This oracle can still be used as long as a deposit cap is implemented somewhere in the system (i.e. in the lending protocol accepting BPT as collateral); otherwise the V2 oracle is a superset of this version that allows the creator to configure an extra layer of protection against flash-minted BPT.
 
 Contains `StableLPOracle` and its corresponding `StableLPOracleFactory`.
 These contracts provide a manipulation-resistant mechanism to compute the market price of LP tokens from stable pools given market price feeds for each of the tokens registered in the pool.
