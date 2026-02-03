@@ -4173,13 +4173,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:~2.28.4":
-  version: 2.28.4
-  resolution: "hardhat@npm:2.28.4"
+"hardhat@npm:~2.26.5":
+  version: 2.26.5
+  resolution: "hardhat@npm:2.26.5"
   dependencies:
     "@ethereumjs/util": "npm:^9.1.0"
     "@ethersproject/abi": "npm:^5.1.2"
-    "@nomicfoundation/edr": "npm:0.12.0-next.22"
+    "@nomicfoundation/edr": "npm:^0.11.3"
     "@nomicfoundation/solidity-analyzer": "npm:^0.1.0"
     "@sentry/node": "npm:^5.18.1"
     adm-zip: "npm:^0.4.16"
@@ -4226,7 +4226,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/bootstrap.js
-  checksum: 10c0/5780de6b1a1bd7a386ca72db1941be1599aa128c8c9327734895e59241422b142b99412d687ab1b4ae6574e91a675d3be02086dbecc98726fb7014f66ef82180
+  checksum: 10c0/4f757c27881514ad79aaf73e6226f2fde773b97d4a63b3e40c991ca093868ef8ad3b98970347c6f3a46dd1214c53822bbecc02e008fe99ed83150f607fbeb5f9
   languageName: node
   linkType: hard
 
