@@ -52,7 +52,9 @@
     "pbkdf2": "^3.1.3",
     "sha.js": "^2.4.12",
     "elliptic": "^6.6.1",
-    "tar": "^7.5.3"
+    "tar": "^7.5.3",
+    "hardhat": "~2.26.5",
+    "@nomicfoundation/hardhat-network-helpers": "~1.0.6"
   },
   "devDependencies": {
     "@balancer-labs/v2-interfaces": "latest",
