@@ -33,7 +33,7 @@ __metadata:
     "@ethereumjs/common": "npm:^4.4.0"
     "@ethereumjs/evm": "npm:^3.1.1"
     "@ethersproject/contracts": "npm:^5.0.0"
-    "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.6"
+    "@nomicfoundation/hardhat-network-helpers": "npm:~1.0.6"
     "@nomicfoundation/hardhat-verify": "npm:^2.1.1"
     "@nomiclabs/hardhat-ethers": "npm:^2.2.1"
     "@nomiclabs/hardhat-vyper": "npm:^3.0.5"
@@ -1141,14 +1141,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomicfoundation/hardhat-network-helpers@npm:^1.0.6":
-  version: 1.1.2
-  resolution: "@nomicfoundation/hardhat-network-helpers@npm:1.1.2"
+"@nomicfoundation/hardhat-network-helpers@npm:~1.0.6":
+  version: 1.0.13
+  resolution: "@nomicfoundation/hardhat-network-helpers@npm:1.0.13"
   dependencies:
     ethereumjs-util: "npm:^7.1.4"
   peerDependencies:
-    hardhat: ^2.26.0
-  checksum: 10c0/00fb7392bc0a0c3df635a52fe350ae5e5a71610f3718e11e6b17753f6723231c81def37a19933cd96174cbc5362c0168c8fa98ea73910d46dd9d4bbba0c7990f
+    hardhat: ^2.9.5
+  checksum: 10c0/1588ec4e0418ba8f15a6ac9d59178238fb6e7ebcfc4c4174e51d419aefe5f79bb349f8bd870ece7c6e0e35d3c0d2f585af130c3772791bf76265c9659703ba61
   languageName: node
   linkType: hard
 
