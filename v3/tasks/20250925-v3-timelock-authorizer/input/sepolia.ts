@@ -29,8 +29,6 @@ const LONG_DELAY = DAY;
 
 export const RootTransferDelay = LONG_DELAY;
 
-console.log('about to get grant delays; network: ', ProtocolFeeController.network);
-
 export const GrantDelays: DelayData[] = [
   // Fee controller permissions do not affect user funds and are rather infrequent, but do affect collected fees.
   {
