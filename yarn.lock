@@ -62,7 +62,7 @@ __metadata:
     graphql: "npm:^16.6.0"
     graphql-request: "npm:^5.2.0"
     hardhat: "npm:^2.28.4"
-    hardhat-ignore-warnings: "npm:^0.2.8"
+    hardhat-ignore-warnings: "npm:^0.2.12"
     hardhat-local-networks-config-plugin: "npm:^0.0.6"
     lodash.range: "npm:^3.2.0"
     mocha: "npm:^10.2.0"
@@ -4118,7 +4118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-ignore-warnings@npm:^0.2.8":
+"hardhat-ignore-warnings@npm:^0.2.12":
   version: 0.2.12
   resolution: "hardhat-ignore-warnings@npm:0.2.12"
   dependencies:
