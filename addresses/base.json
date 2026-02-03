@@ -618,7 +618,7 @@
         "address": "0x2196Ddb2b51F706857A2934eE79D9FBB463C5372"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250212-v3-mev-capture-hook": {
@@ -924,7 +924,7 @@
         "address": "0x98CCA70241bB0199A89122b9363Cf67d34836Ca2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250815-v3-stable-pool-oracle": {
@@ -938,7 +938,7 @@
         "address": "0x8Cdf4abc48b62B0a380beC87e432d01372F82D72"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250919-v3-pool-pause-helper-v2": {
@@ -1060,6 +1060,34 @@
       {
         "name": "MockStablePool",
         "address": "0xBe49c07a938BaD3e84e0dD6c8B6702CF6F4585e3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260123-v3-gyro-2clp-v2": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x312600bc7645E47a4926dc658827398AF070D431"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0xFFde1F9d936b1b0974eF5fD54e60627773349E97"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260126-v3-gyro-eclp-v2": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x86a0E97eC0D5dB8DAE106D3067358d41968fD12c"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0xe5b7AC176B7516806BD8bB4240C479f5FF215D47"
       }
     ],
     "status": "ACTIVE",
