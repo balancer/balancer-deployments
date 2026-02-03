@@ -819,6 +819,24 @@
       }
     }
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0x865fbbe85e80de6d611f454e07996187c1fa7b03e37ebb1a68ca0f6fbd483b24",
+        "disable()": "0x416d92d817cb23a3d644810c79c3e5d9cd991b729c260819b570abd632e3a90a"
+      }
+    }
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,address[])": "0xa4f5bafaf5a6384b8ac967064c4fb5ebc8a8ece87f61ab294970322fa126d155",
+        "disable()": "0xa821892dcbfcfb5e12afef4adb89e0f3a91ec943502f0e9c127ae54bb6ba9283"
+      }
+    }
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "PoolPauseHelper": {
       "useAdaptor": false,
@@ -922,6 +940,24 @@
         "setProtocolYieldFeePercentage(address,uint256)": "0xe0ee6cb9f82b4ddcd6f380cfdcecc2fbba651027496c6d4a697c13b13bbbb9d6",
         "transferOwnership(address)": "0x62f35600c7aa8698165c510012c23f02721dcb5c9f1e51886371d5982d5d7a5c",
         "transferPoolSetOwnership(address)": "0x71249f6ea179bcc712b0157ee56bc325a86eef49c289ad8ddbb372c1bc787572"
+      }
+    }
+  },
+  "20260126-v3-gyro-eclp-v2": {
+    "GyroECLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],(int256,int256,int256,int256,int256),((int256,int256),(int256,int256),int256,int256,int256,int256,int256),(address,address,address),uint256,address,bool,bool,bytes32)": "0x5af369525d26f108d64e9fe3d669795d1fabfb233cf477b78d2a32fd287e4a59",
+        "disable()": "0x8b071aa8408d8c48b4df6664507b7b5b17cec9c92b7e4120cdcf64fb92a3927b"
+      }
+    }
+  },
+  "20260123-v3-gyro-2clp-v2": {
+    "Gyro2CLPPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0xb58cdac8966be1e5e258f0d4ae18f8a5e4c6d642daa1ff648fee8347ffaf5a04",
+        "disable()": "0x5a5d65fdc0591e5eebc3e1ce9f585c33808b2cf422a2cf7777851b4088b4005a"
       }
     }
   }

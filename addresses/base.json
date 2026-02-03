@@ -441,6 +441,16 @@
     "status": "ACTIVE",
     "version": "v2"
   },
+  "20260122-claim-signature-registry": {
+    "contracts": [
+      {
+        "name": "ClaimSignatureRegistry",
+        "address": "0x45fB5aF0a1aD80Ea16C803146eb81844D9972373"
+      }
+    ],
+    "status": "SCRIPT",
+    "version": "v2"
+  },
   "20241204-v3-vault": {
     "contracts": [
       {
@@ -566,7 +576,7 @@
         "address": "0x1E919A507c9381119a4E9CF43795b100fc8c988b"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250121-v3-stable-surge": {
@@ -608,7 +618,7 @@
         "address": "0x2196Ddb2b51F706857A2934eE79D9FBB463C5372"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250212-v3-mev-capture-hook": {
@@ -903,6 +913,34 @@
     "status": "ACTIVE",
     "version": "v3"
   },
+  "20250814-v3-weighted-pool-oracle": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x774cB66e2B2dB59A9daF175e9b2B7A142E17EB94"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0x98CCA70241bB0199A89122b9363Cf67d34836Ca2"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
+  "20250815-v3-stable-pool-oracle": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0xb21A277466e7dB6934556a1Ce12eb3F032815c8A"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0x8Cdf4abc48b62B0a380beC87e432d01372F82D72"
+      }
+    ],
+    "status": "DEPRECATED",
+    "version": "v3"
+  },
   "20250919-v3-pool-pause-helper-v2": {
     "contracts": [
       {
@@ -952,6 +990,16 @@
       {
         "name": "MockFixedPriceLBPool",
         "address": "0xe53F02f690BA30c1652f9bE7B92370aC7bb2F533"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20251219-v3-balancer-fee-burner-v2": {
+    "contracts": [
+      {
+        "name": "BalancerFeeBurner",
+        "address": "0x90BD26fbb9dB17D75b56E4cA3A4c438FA7C93694"
       }
     ],
     "status": "ACTIVE",
@@ -1012,6 +1060,34 @@
       {
         "name": "MockStablePool",
         "address": "0xBe49c07a938BaD3e84e0dD6c8B6702CF6F4585e3"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260123-v3-gyro-2clp-v2": {
+    "contracts": [
+      {
+        "name": "Gyro2CLPPoolFactory",
+        "address": "0x312600bc7645E47a4926dc658827398AF070D431"
+      },
+      {
+        "name": "MockGyro2CLPPool",
+        "address": "0xFFde1F9d936b1b0974eF5fD54e60627773349E97"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260126-v3-gyro-eclp-v2": {
+    "contracts": [
+      {
+        "name": "GyroECLPPoolFactory",
+        "address": "0x86a0E97eC0D5dB8DAE106D3067358d41968fD12c"
+      },
+      {
+        "name": "MockGyroECLPPool",
+        "address": "0xe5b7AC176B7516806BD8bB4240C479f5FF215D47"
       }
     ],
     "status": "ACTIVE",

@@ -121,9 +121,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Buffer Router                                       | [`20241205-v3-buffer-router`](./v3/tasks/20241205-v3-buffer-router)                                     |
 | V3 Hook Examples                                       | [`20241213-v3-hook-examples`](./v3/tasks/20241213-v3-hook-examples)                                     |
 | V3 Balancer Contract Registry                          | [`20250117-v3-contract-registry`](./v3/tasks/20250117-v3-contract-registry)                             |
-| V3 Gyro 2-CLP                                          | [`20250120-v3-gyro-2clp`](./v3/tasks/20250120-v3-gyro-2clp)                                             |
 | V3 Composite Liquidity Router (V2)                     | [`20250123-v3-composite-liquidity-router-v2`](./v3/tasks/20250123-v3-composite-liquidity-router-v2)     |
-| V3 Gyro E-CLP                                          | [`20250124-v3-gyro-eclp`](./v3/tasks/20250124-v3-gyro-eclp)                                             |
 | V3 MEV Capture Hook                                    | [`20250212-v3-mev-capture-hook`](./v3/tasks/20250212-v3-mev-capture-hook)                               |
 | V3 Protocol Fee Controller V2                          | [`20250214-v3-protocol-fee-controller-v2`](./v3/tasks/20250214-v3-protocol-fee-controller-v2)           |
 | V3 Aggregator Router                                   | [`20250218-v3-aggregator-router`](./v3/tasks/20250218-v3-aggregator-router)                             |
@@ -138,8 +136,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
 | V3 Chainlink Constant Price Feed                       | [`20250813-v3-constant-price-feed`](./v3/tasks/20250813-v3-constant-price-feed)                         |
-| V3 Weighted LP Oracle                                  | [`20250814-v3-weighted-pool-oracle`](./v3/tasks/20250814-v3-weighted-pool-oracle)                       |
-| V3 Stable LP Oracle                                    | [`20250815-v3-stable-pool-oracle`](./v3/tasks/20250815-v3-stable-pool-oracle)                           |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
 | V3 Protocol Fee Helper (V2)                            | [`20250919-v3-protocol-fee-helper-v2`](./v3/tasks/20250919-v3-protocol-fee-helper-v2)                   |
 | V3 Pool Pause Helper (V2)                              | [`20250919-v3-pool-pause-helper-v2`](./v3/tasks/20250919-v3-pool-pause-helper-v2)                       |
@@ -155,6 +151,10 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Weighted Pool (V2)                                  | [`20260115-v3-weighted-pool-v2`](./v3/tasks/20260115-v3-weighted-pool-v2)                               |
 | V3 Stable Pool (V3)                                    | [`20260116-v3-stable-pool-v3`](./v3/tasks/20260116-v3-stable-pool-v3)                                   |
 | V3 Stable Surge Pool (V3)                              | [`20260117-v3-stable-surge-pool-factory-v3`](./v3/tasks/20260117-v3-stable-surge-pool-factory-v3)       |
+| V3 Gyro 2-CLP (V2)                                     | [`20260123-v3-gyro-2clp-v2`](./v3/tasks/20260123-v3-gyro-2clp-v2)                                       |
+| V3 Gyro E-CLP (V2)                                     | [`20260126-v3-gyro-eclp-v2`](./v3/tasks/20260126-v3-gyro-eclp-v2)                                       |
+| V3 Weighted LP Oracle (V2)                             | [`20260202-v3-weighted-pool-oracle-v2`](./v3/tasks/20260202-v3-weighted-pool-oracle-v2)                 |
+| V3 Stable LP Oracle (V2)                               | [`20260203-v3-stable-pool-oracle-v2`](./v3/tasks/20260203-v3-stable-pool-oracle-v2)                     |
 
 ## Scripts
 
@@ -174,6 +174,7 @@ These are deployments for script-like contracts (often called 'coordinators') wh
 | Coordination of the Gauge Adder migration V3 --> V4 | [`20230519-gauge-adder-migration-v3-to-v4`](./v2/scripts/20230519-gauge-adder-migration-v3-to-v4)       |
 | Protocol Fee Controller Migration                   | [`20250221-protocol-fee-controller-migration`](./v3/scripts/20250221-protocol-fee-controller-migration) |
 | Balancer Contract Registry Initializer (V2)         | [`20250411-balancer-registry-initializer-v2`](./v3/scripts/20250411-balancer-registry-initializer-v2)   |
+| Claim Signature Registry                            | [`20260122-claim-signature-registry`](./v2/scripts/20260122-claim-signature-registry)                   |
 
 ## Deprecated Deployments
 
@@ -251,7 +252,9 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 Stable Pool                                      | [`20241205-v3-stable-pool`](./v3/deprecated/20241205-v3-stable-pool)                                     |
 | V3 Vault Explorer                                   | [`20241205-v3-vault-explorer`](./v3/deprecated/20241205-v3-vault-explorer)                               |
 | V3 Weighted Pool                                    | [`20241205-v3-weighted-pool`](./v3/deprecated/20241205-v3-weighted-pool)                                 |
+| V3 Gyro 2-CLP                                       | [`20250120-v3-gyro-2clp`](./v3/deprecated/20250120-v3-gyro-2clp)                                         |
 | V3 Stable Surge Pool                                | [`20250121-v3-stable-surge`](./v3/deprecated/20250121-v3-stable-surge)                                   |
+| V3 Gyro E-CLP                                       | [`20250124-v3-gyro-eclp`](./v3/deprecated/20250124-v3-gyro-eclp)                                         |
 | V3 Cow Swap Fee Burner                              | [`20250221-v3-cow-swap-fee-burner`](./v3/deprecated/20250221-v3-cow-swap-fee-burner)                     |
 | V3 Protocol Fee Sweeper                             | [`20250228-v3-protocol-fee-sweeper`](./v3/deprecated/20250228-v3-protocol-fee-sweeper)                   |
 | V3 Liquidity Bootstrapping Pool                     | [`20250307-v3-liquidity-bootstrapping-pool`](./v3/deprecated/20250307-v3-liquidity-bootstrapping-pool)   |
@@ -267,3 +270,5 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/deprecated/20250507-v3-erc4626-cow-swap-fee-burner)     |
 | V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
 | V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |
+| V3 Weighted LP Oracle                               | [`20250814-v3-weighted-pool-oracle`](./v3/deprecated/20250814-v3-weighted-pool-oracle)                   |
+| V3 Stable LP Oracle                                 | [`20250815-v3-stable-pool-oracle`](./v3/deprecated/20250815-v3-stable-pool-oracle)                       |
