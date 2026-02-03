@@ -496,7 +496,7 @@ export default {
   networks: {
     arbitrum: {
       url: 'https://arb-one.api.pocket.network',
-    }
+    },
   },
   etherscan: {
     customChains: [
