@@ -35,8 +35,6 @@
 - Deployed Chainlink Constant Price Feed to all networks.
 - Deployed V3 HyperEVM Rate Provider to HyperEVM.
 - Deployed V3 Pool Swap Fee Helper (V2) to all networks.
-- Deployed V3 Weighted LP Oracle Factory to all networks.
-- Deployed V3 Stable LP Oracle Factory to all networks.
 - Deployed V3 Pool Pause Helper (V2) to all networks.
 - Deployed V3 Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
 - Deployed V3 Fixed Price Liquidity Boostrapping Pool V3 to Arbitrum, Base, Gnosis, HyperEVM, Mainnet, Plasma and Sepolia.
@@ -48,6 +46,8 @@
 - Deployed V3 Balancer Fee Burner (V2) to all networks.
 - Deployed V3 Gyro E-CLP Factory (V2) to all networks.
 - Deployed V3 Gyro 2-CLP Factory (V2) to all networks.
+- Deployed V3 Weighted LP Oracle Factory (V2) to all networks.
+- Deployed V3 Stable LP Oracle Factory (V2) to all networks.
 
 #### V2
 
@@ -108,6 +108,8 @@
 - Deprecated `20250530-v3-balancer-fee-burner`.
 - Deprecated `20250120-v3-gyro-2clp`.
 - Deprecated `20250124-v3-gyro-eclp`.
+- Deprecated `20250814-v3-weighted-pool-oracle`.
+- Deprecated `20250815-v3-stable-pool-oracle`.
 
 #### V2
 
