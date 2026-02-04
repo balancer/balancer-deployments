@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
-import { bn, fp, fpMul, fromFp } from '@helpers/numbers';
+import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import input from '../input';
