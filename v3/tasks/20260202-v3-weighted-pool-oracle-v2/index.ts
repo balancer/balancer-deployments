@@ -37,9 +37,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     await task.verify('WeightedLPOracle', mockOracle.address, [
       input.Vault,
       input.MockWeightedPool,
+      [input.ConstantPriceFeed, input.ConstantPriceFeed],
+      input.SequencerUptimeFeed,
+      input.UptimeResyncWindow,
       input.ShouldUseBlockTimeForOldestFeedUpdate,
       input.ShouldRevertIfVaultUnlocked,
-      [input.ConstantPriceFeed, input.ConstantPriceFeed],
       input.OracleVersion,
     ]);
   }
