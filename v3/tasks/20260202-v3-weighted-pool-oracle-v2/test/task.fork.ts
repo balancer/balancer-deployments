@@ -74,7 +74,6 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
   });
 
   it('gets TVL measured in USD', async () => {
-    //const { answer } = await weightedLPOracle.latestRoundData();
     const [, answer] = await weightedLPOracle.latestRoundData();
 
     const totalSupply = await poolToken.totalSupply();
