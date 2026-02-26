@@ -2,6 +2,9 @@
 
 Deployment of `EclpLPOracle` and its corresponding `EclpLPOracleFactory`.
 These contracts provide a manipulation-resistant mechanism to compute the market price of LP tokens from Gyro E-CLP pools given market price feeds for each of the tokens registered in the pool.
+It also increases price stability by ensuring the very latest rates are applied during TVL calculation.
+
+Additionally, it provides sequencer uptime grace periods (1 hour) for L2 networks that rely on them (e.g. Arbitrum, Optimism, Base).
 
 ## Useful Files
 
