@@ -1,0 +1,7 @@
+{
+  "task_id_overrides": {
+    "20250121-v3-stable-surge": "v3-stable-surge-pool",
+    "20250404-v3-stable-surge-pool-factory-v2": "v3-stable-surge-pool",
+    "20260117-v3-stable-surge-pool-factory-v3": "v3-stable-surge-pool"
+  }
+}
