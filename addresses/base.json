@@ -1092,5 +1092,47 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20260202-v3-weighted-pool-oracle-v2": {
+    "contracts": [
+      {
+        "name": "WeightedLPOracleFactory",
+        "address": "0x397BC40Ba584E651f4f5Cf4Ae089F0130569a1c7"
+      },
+      {
+        "name": "MockWeightedLPOracle",
+        "address": "0xFf4C6f3d1682Bf16376568aeAf5F7624176c68eC"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260203-v3-stable-pool-oracle-v2": {
+    "contracts": [
+      {
+        "name": "StableLPOracleFactory",
+        "address": "0x254F3A2974b97dc2E675f6115c845567C55f83b0"
+      },
+      {
+        "name": "MockStableLPOracle",
+        "address": "0xc10DA7439B7DF61A105dD9C9a93178b93458006A"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260209-v3-gyro-eclp-oracle": {
+    "contracts": [
+      {
+        "name": "EclpLPOracleFactory",
+        "address": "0x2cf8e145Bdfe7c52b49AD9bB3c294a31B2736c59"
+      },
+      {
+        "name": "MockEclpLPOracle",
+        "address": "0xb5fdad81ff3ACdbdbf232784A31074Ff4153C5C8"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
