@@ -5,6 +5,6 @@ These contracts provide a manipulation-resistant mechanism to compute the market
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/4be1ca366c5a3abd9f24934a24539c3dc45fd66a).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/c1cd3696c3627bfe93f66f6aa175b9ad894c3e4a).
 - [`EclpLPOracle` artifact](./artifact/EclpLPOracle.json)
 - [`EclpLPOracleFactory` artifact](./artifact/EclpLPOracleFactory.json)
