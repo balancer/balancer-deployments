@@ -1,0 +1,48 @@
+digraph balancer_deployments {
+  rankdir=TB;
+  graph [splines=true, overlap=false];
+  node [shape=box, fontname="Helvetica", fontsize=9];
+  subgraph cluster_weighted_pool {
+    label="weighted-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20210418_weighted_pool_deprecated [label="Weighted Pools of up to 8 tokens\n2021-04-18 (v1, deprecated)", fillcolor="#cce5ff", color="#004085", style="filled,dashed"];
+    n_20220908_weighted_pool_v2_deprecated [label="Weighted Pool V2\n2022-09-08 (v2, deprecated)", fillcolor="#cce5ff", color="#004085", style="filled,dashed"];
+    n_20210418_weighted_pool_deprecated -> n_20220908_weighted_pool_v2_deprecated [style=dashed, color="#888888"];
+    n_20230206_weighted_pool_v3_deprecated [label="Weighted Pool V3\n2023-02-06 (v3, deprecated)", fillcolor="#cce5ff", color="#004085", style="filled,dashed"];
+    n_20220908_weighted_pool_v2_deprecated -> n_20230206_weighted_pool_v3_deprecated [style=dashed, color="#888888"];
+    n_20230320_weighted_pool_v4_active [label="Weighted Pool V4\n2023-03-20 (v4, active)", fillcolor="#cce5ff", color="#004085", style="filled,solid"];
+    n_20230206_weighted_pool_v3_deprecated -> n_20230320_weighted_pool_v4_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_stable_pool {
+    label="stable-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20210624_stable_pool_deprecated [label="Stable Pools of up to 5 tokens\n2021-06-24 (v1, deprecated)", fillcolor="#cce5ff", color="#004085", style="filled,dashed"];
+    n_20220609_stable_pool_v2_deprecated [label="Stable Pools V2 of up to 5 tokens\n2022-06-09 (v2, deprecated)", fillcolor="#cce5ff", color="#004085", style="filled,dashed"];
+    n_20210624_stable_pool_deprecated -> n_20220609_stable_pool_v2_deprecated [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_weighted_pool {
+    label="v3-weighted-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_weighted_pool_deprecated [label="V3 Weighted Pool\n2024-12-05 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20260115_v3_weighted_pool_v2_active [label="V3 Weighted Pool (V2)\n2026-01-15 (v2, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20241205_v3_weighted_pool_deprecated -> n_20260115_v3_weighted_pool_v2_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_stable_pool {
+    label="v3-stable-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20241205_v3_stable_pool_deprecated [label="V3 Stable Pool\n2024-12-05 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250324_v3_stable_pool_v2_deprecated [label="V3 Stable Pool V2\n2025-03-24 (v2, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20241205_v3_stable_pool_deprecated -> n_20250324_v3_stable_pool_v2_deprecated [style=dashed, color="#888888"];
+    n_20260116_v3_stable_pool_v3_active [label="V3 Stable Pool (V3)\n2026-01-16 (v3, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20250324_v3_stable_pool_v2_deprecated -> n_20260116_v3_stable_pool_v3_active [style=dashed, color="#888888"];
+  }
+  subgraph cluster_v3_stable_surge_pool {
+    label="v3-stable-surge-pool";
+    style=dashed; color="#dddddd"; fontsize=10;
+    n_20250121_v3_stable_surge_deprecated [label="V3 Stable Surge Pool\n2025-01-21 (v1, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250404_v3_stable_surge_pool_factory_v2_deprecated [label="V3 Stable Surge Pool (V2)\n2025-04-04 (v2, deprecated)", fillcolor="#d4edda", color="#155724", style="filled,dashed"];
+    n_20250121_v3_stable_surge_deprecated -> n_20250404_v3_stable_surge_pool_factory_v2_deprecated [style=dashed, color="#888888"];
+    n_20260117_v3_stable_surge_pool_factory_v3_active [label="V3 Stable Surge Pool (V3)\n2026-01-17 (v3, active)", fillcolor="#d4edda", color="#155724", style="filled,solid"];
+    n_20250404_v3_stable_surge_pool_factory_v2_deprecated -> n_20260117_v3_stable_surge_pool_factory_v3_active [style=dashed, color="#888888"];
+  }
+}

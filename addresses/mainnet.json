@@ -2060,33 +2060,5 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
-  },
-  "20260202-v3-weighted-pool-oracle-v2": {
-    "contracts": [
-      {
-        "name": "WeightedLPOracleFactory",
-        "address": "0xDd10aDF05379D7C0Ee4bC9c72ecc5C01c40E25b8"
-      },
-      {
-        "name": "MockWeightedLPOracle",
-        "address": "0x82c36Ffed5eAbB7D4D3f1798a322BC76621cFd41"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
-  },
-  "20260203-v3-stable-pool-oracle-v2": {
-    "contracts": [
-      {
-        "name": "StableLPOracleFactory",
-        "address": "0x99f2D91EBA577e4Bf7175E72B3Ef2B6dDb1FaBe3"
-      },
-      {
-        "name": "MockStableLPOracle",
-        "address": "0xfB018615183C6c9c7f50a6b9FA9bF241b3F50698"
-      }
-    ],
-    "status": "ACTIVE",
-    "version": "v3"
   }
 }
