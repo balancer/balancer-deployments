@@ -48,6 +48,7 @@
 - Deployed V3 Gyro 2-CLP Factory (V2) to all networks.
 - Deployed V3 Weighted LP Oracle Factory (V2) to all networks.
 - Deployed V3 Stable LP Oracle Factory (V2) to all networks.
+- Deployed V3 ELP Oracle Factory to all networks.
 
 #### V2
 
