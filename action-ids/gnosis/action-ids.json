@@ -1109,5 +1109,32 @@
         "disable()": "0xf864f98db8fd619790200186aa36bc6284f55337a24c4524fb15914279e72435"
       }
     }
+  },
+  "20260202-v3-weighted-pool-oracle-v2": {
+    "WeightedLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,bool,bool,address[])": "0x570e806575a9c15fad931399c3b054b5bc154c720593c1cef52821fd74e857a7",
+        "disable()": "0x52fc19b080539ed656ec47f7345ef5487fb5a621fb18fddb5b7554a16a279073"
+      }
+    }
+  },
+  "20260203-v3-stable-pool-oracle-v2": {
+    "StableLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,bool,bool,address[])": "0x56a1e61d79a3a20d40efb565b908c368fd95f94d11b4ca3ff8f95081af741381",
+        "disable()": "0x39d0998cb59b0652b3cd9f27b7469da9ad4c1175e647a59ddcedd3e459debac4"
+      }
+    }
+  },
+  "20260209-v3-gyro-eclp-oracle": {
+    "EclpLPOracleFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(address,bool,bool,address[])": "0xf4f536f0ef90aab0e9ec676678cb925865c564c28e842fe4d104c95e329b0196",
+        "disable()": "0x19c3b821cff80ee8893c7bb90cf12b61851110d5b83cfa86ae65873f0dbb7825"
+      }
+    }
   }
 }
