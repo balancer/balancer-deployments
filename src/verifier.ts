@@ -84,13 +84,14 @@ export default class Verifier {
             args as any[]
           );
 
-    const { message: guid } = await this.etherscanInstance.verify(
+    const verificationResponse = (await this.etherscanInstance.verify(
       address,
       JSON.stringify(buildInfo.input),
       fullSourceName,
       `v${contractInformation.solcLongVersion}`,
       deployArgumentsEncoded
-    );
+    )) as { message: string };
+    const { message: guid } = verificationResponse;
 
     await sleep(1000);
 

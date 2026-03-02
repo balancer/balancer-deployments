@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumber, BigNumberish, bn } from '@helpers/numbers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
@@ -18,7 +18,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - YearnWrapping', 'mainnet', 16622
   let usdcToken: Contract, yearnToken: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
   let chainedReference: BigNumber;
-  const amountToWrap = 100e6;
+  const amountToWrap = bn(100e6);
 
   before('run task', async () => {
     task = new Task('20231031-batch-relayer-v6', TaskMode.TEST, getForkedNetwork(hre));
@@ -62,7 +62,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - YearnWrapping', 'mainnet', 16622
   it('should wrap successfully', async () => {
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
     const balanceOfYearnBefore = await yearnToken.balanceOf(recipient.address);
-    const expectedBalanceOfYearnAfter = Math.floor((1e6 / (await yearnToken.pricePerShare())) * amountToWrap);
+    const pricePerShare = bn(await yearnToken.pricePerShare());
+    const expectedBalanceOfYearnAfter = amountToWrap.mul(1_000_000).div(pricePerShare);
 
     expect(balanceOfYearnBefore).to.be.equal(0);
 
@@ -88,12 +89,13 @@ describeForkTest.skip('BatchRelayerLibrary V6 - YearnWrapping', 'mainnet', 16622
   });
 
   it('should unwrap successfully', async () => {
-    const YearnAmountToWithdraw = Math.floor((1e6 / (await yearnToken.pricePerShare())) * amountToWrap);
+    const pricePerShare = bn(await yearnToken.pricePerShare());
+    const yearnAmountToWithdraw = amountToWrap.mul(1_000_000).div(pricePerShare);
 
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
     const balanceOfYearnBefore = await yearnToken.balanceOf(recipient.address);
 
-    expect(balanceOfYearnBefore).to.be.almostEqual(YearnAmountToWithdraw);
+    expect(balanceOfYearnBefore).to.be.almostEqual(yearnAmountToWithdraw);
 
     const withdrawFromYearn = library.interface.encodeFunctionData('unwrapYearn', [
       yvUSDC,

@@ -1,4 +1,4 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, Task, TaskMode } from '@src';
@@ -6,7 +6,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { StablePoolDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { currentTimestamp, DAY } from '@helpers/time';
 
 describeForkTest('V3-StablePool-V3', 'mainnet', 24242530, function () {

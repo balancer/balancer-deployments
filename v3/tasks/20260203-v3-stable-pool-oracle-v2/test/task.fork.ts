@@ -1,5 +1,5 @@
-import hre from 'hardhat';
-import { ethers } from 'hardhat';
+import hre from '@src/hardhatCompat';
+import { ethers } from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { fpMul, fromFp } from '@helpers/numbers';
@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import input from '../input';
 import { expectRevertWithCustomError } from '@helpers/expectCustomError';
+import * as expectEvent from '@helpers/expectEvent';
 
 describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
   let task: Task;
@@ -53,7 +54,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     );
 
     const receipt = await tx.wait();
-    const event = receipt.events?.find((e: { event: string }) => e.event === 'StableLPOracleCreated');
+    const event = expectEvent.inReceipt(receipt as unknown as { logs: Array<{ address: string }> }, 'StableLPOracleCreated');
     stableLPOracle = await task.instanceAt('StableLPOracle', event?.args?.oracle);
     expect(stableLPOracle).to.not.be.undefined;
     expect(stableLPOracle).to.not.be.eq(ZERO_ADDRESS);

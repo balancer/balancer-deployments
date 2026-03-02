@@ -1,5 +1,6 @@
 import { AsyncFunc } from 'mocha';
-import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
+import type { SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers/types';
+import { takeSnapshot } from './networkHelpers';
 
 const SNAPSHOTS: Array<SnapshotRestorer> = [];
 

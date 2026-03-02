@@ -1,15 +1,17 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
-import { BigNumberish, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import type { BigNumberish } from '@helpers/numbers';
 
 import { BigNumber, bn, fp, FP_ONE } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { expectEqualWithError } from '@helpers/relativeError';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { range } from 'lodash';
+import range from 'lodash.range';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { actionId } from '@helpers/models/misc/actions';
 
@@ -175,7 +177,9 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, 10000); // Max voting power is 10k points
+    const remainingVotingPower = 10000 - Number(await gaugeController['vote_user_power(address)'](veBALHolder.address));
+    expect(remainingVotingPower).to.be.gt(0);
+    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, remainingVotingPower);
 
     // We now need to go through an epoch for the votes to be locked in.
     // Advancing 7 days ensures we don't move forward 2 entire epochs, which would complicate the math ahead.
@@ -185,7 +189,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
       await gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, await currentWeekTimestamp())
-    ).to.be.gt(weightCap);
+    ).to.be.gt(weightCap as any);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
 
@@ -253,7 +257,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     expectEvent.inIndirectReceipt(mintReceipt, lzBalProxy.interface, 'SendToChain', {
       _dstChainId: LZ_AVAX_CHAIN_ID,
       _from: gauge.address,
-      _toAddress: ethers.utils.hexZeroPad(await gauge.getRecipient(), 32).toLowerCase(),
+      _toAddress: ethers.zeroPadValue(await gauge.getRecipient(), 32).toLowerCase(),
       _amount: actualEmissionsSharedDecimals,
     });
   });
@@ -275,7 +279,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     // We require that they're all above the cap for simplicity - this lets us use the cap as each week's weight (and
     // also tests cap behavior).
     for (const relativeWeight of relativeWeights) {
-      expect(relativeWeight).to.be.gt(weightCap);
+      expect(relativeWeight).to.be.gt(weightCap as any);
     }
 
     // The amount of tokens allocated to the gauge should equal the sum of the weekly emissions rate times the weight
@@ -325,7 +329,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     expectEvent.inIndirectReceipt(receipt, lzBalProxy.interface, 'SendToChain', {
       _dstChainId: LZ_AVAX_CHAIN_ID,
       _from: gauge.address,
-      _toAddress: ethers.utils.hexZeroPad(await gauge.getRecipient(), 32).toLowerCase(),
+      _toAddress: ethers.zeroPadValue(await gauge.getRecipient(), 32).toLowerCase(),
       _amount: expectedEmissionsSharedDecimals,
     });
   });
@@ -373,7 +377,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
             expectEvent.inIndirectReceipt(receipt, lzBalProxy.interface, 'SendToChain', {
               _dstChainId: LZ_AVAX_CHAIN_ID,
               _from: mockGauge.address,
-              _toAddress: ethers.utils.hexZeroPad(await mockGauge.getRecipient(), 32).toLowerCase(),
+              _toAddress: ethers.zeroPadValue(await mockGauge.getRecipient(), 32).toLowerCase(),
               _amount: actualEmissionsSharedDecimals,
             });
           }
@@ -388,7 +392,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
       context('non-round amounts', () => {
         for (let amount = bn(1); amount.lte(fp(10000)); amount = amount.mul(10)) {
-          const randomInt = (max: BigNumber) => BigNumber.from(ethers.utils.randomBytes(32)).mod(max);
+          const randomInt = (max: BigNumber) => BigNumber.from(ethers.randomBytes(32)).mod(max);
           itBridgesTokens(amount.add(randomInt(amount.mul(8))));
         }
       });

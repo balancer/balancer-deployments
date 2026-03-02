@@ -1,7 +1,8 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, deploy } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
@@ -84,7 +85,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
           library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [gaugeAddressA, gaugeAddressB]]),
         ]);
 
-      const gaugeInterface = new ethers.utils.Interface([
+      const gaugeInterface = new ethers.Interface([
         'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
       ]);
 

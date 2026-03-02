@@ -1,14 +1,15 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 import { expect } from 'chai';
 
 import * as expectEvent from '@helpers/expectEvent';
 
 import { ZERO_ADDRESS } from '@helpers/constants';
-import { range } from 'lodash';
+import range from 'lodash.range';
 import { actionId } from '@helpers/models/misc/actions';
 import { fromNow, MONTH } from '@helpers/time';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
@@ -31,7 +32,9 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     receiver = await getSigner(1);
   });
 
-  it('proxy can be migrated to delegation', async () => {
+  it('proxy can be migrated to delegation', async function () {
+    this.timeout(10 * 60 * 1000);
+
     const delegationProxyTask = new Task('20220325-ve-delegation', TaskMode.READ_ONLY, getForkedNetwork(hre));
 
     const delegationProxy = await delegationProxyTask.deployedInstance('VotingEscrowDelegationProxy');
@@ -54,7 +57,9 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     await delegationProxy.connect(govMultisig).setDelegation(delegation.address);
   });
 
-  it('preseeds boosts and approvals', async () => {
+  it('preseeds boosts and approvals', async function () {
+    this.timeout(10 * 60 * 1000);
+
     const receipt = await (await delegation.preseed()).wait();
 
     for (const i in range(10)) {
@@ -79,16 +84,18 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     }
   });
 
-  it('mints boosts for all accounts that had a boost', async () => {
+  it('mints boosts for all accounts that had a boost', async function () {
+    this.timeout(10 * 60 * 1000);
+
     const oldTotalSupply = await oldDelegation.totalSupply();
     let cancelledTokens = 0;
 
-    for (const i in range(oldTotalSupply)) {
+    for (const i of range(Number(oldTotalSupply))) {
       const id = await oldDelegation.tokenByIndex(i);
 
       // Any cancelled boosts will still show up in the token enumeration (as the token is not burned), but will have a
       // zero expiration time. We simply skip those, since cancelled boosts are not recreated in the preseeded contract.
-      if (((await oldDelegation.token_expiry(id)) as BigNumber).isZero()) {
+      if (((await oldDelegation.token_expiry(id)) as BigNumber) === 0n) {
         cancelledTokens += 1;
         continue;
       }
@@ -105,7 +112,9 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     expect(await delegation.totalSupply()).to.equal(oldTotalSupply.sub(cancelledTokens));
   });
 
-  it('the Tribe operator can create boosts for the DAO', async () => {
+  it('the Tribe operator can create boosts for the DAO', async function () {
+    this.timeout(10 * 60 * 1000);
+
     // From https://forum.balancer.fi/t/tribe-dao-boost-delegation/3218
     const TRIBE_DAO = '0xc4EAc760C2C631eE0b064E39888b89158ff808B2';
     const TRIBE_OPERATOR = '0x66977ce30049cd0e443216bf26377966c3a109e2';

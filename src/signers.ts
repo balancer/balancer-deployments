@@ -1,27 +1,25 @@
-import { BigNumber } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
 
-import { impersonateAccount, setBalance as setAccountBalance } from '@nomicfoundation/hardhat-network-helpers';
 import { fp } from './helpers/numbers';
+import { impersonateAccount, setBalance as setAccountBalance } from './helpers/networkHelpers';
 
-export async function getSigners(): Promise<SignerWithAddress[]> {
-  const { ethers } = await import('hardhat');
+export async function getSigners(): Promise<HardhatEthersSigner[]> {
+  const { ethers } = await import('@src/hardhatCompat');
   return ethers.getSigners();
 }
 
-export async function getSigner(index = 0): Promise<SignerWithAddress> {
+export async function getSigner(index = 0): Promise<HardhatEthersSigner> {
   return (await getSigners())[index];
 }
 
-export async function impersonate(address: string, balance = fp(100)): Promise<SignerWithAddress> {
+export async function impersonate(address: string, balance = fp(100)): Promise<HardhatEthersSigner> {
   await impersonateAccount(address);
   await setBalance(address, balance);
 
-  const { ethers } = await import('hardhat');
-  const signer = ethers.provider.getSigner(address);
-  return SignerWithAddress.create(signer);
+  const { ethers } = await import('@src/hardhatCompat');
+  return ethers.getSigner(address);
 }
 
-export async function setBalance(address: string, balance: BigNumber): Promise<void> {
+export async function setBalance(address: string, balance: bigint): Promise<void> {
   await setAccountBalance(address, balance);
 }

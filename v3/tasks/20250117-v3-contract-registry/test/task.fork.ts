@@ -1,9 +1,9 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { fp } from '@helpers/numbers';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function () {

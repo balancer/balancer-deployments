@@ -1,9 +1,9 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { ProtocolFeeSweeperDeployment } from '../input';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 

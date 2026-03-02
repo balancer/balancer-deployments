@@ -1,4 +1,6 @@
-import { ethers } from 'hardhat';
+import hre from 'hardhat';
+
+import { ethers } from '@src/hardhatCompat';
 import { ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';

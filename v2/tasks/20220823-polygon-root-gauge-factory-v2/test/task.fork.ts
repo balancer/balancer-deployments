@@ -1,17 +1,19 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { range } from 'lodash';
+import range from 'lodash.range';
 
 import { BigNumber, fp, FP_ONE } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK } from '@helpers/time';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
+import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { expectEqualWithError } from '@helpers/relativeError';
-import { ZERO_ADDRESS } from '@helpers/constants';
+import { ZERO_ADDRESS, MAX_UINT256 } from '@helpers/constants';
 import { actionId } from '@helpers/models/misc/actions';
+import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
@@ -23,13 +25,16 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     authorizerAdaptor: Contract,
     BALTokenAdmin: Contract,
     gaugeController: Contract,
-    gaugeAdder: Contract;
+    gaugeAdder: Contract,
+    veBAL: Contract,
+    bal80weth20Pool: Contract;
   let BAL: string;
 
   let task: Task;
 
-  const VEBAL_HOLDER = '0xd519D5704B41511951C8CF9f65Fee9AB9beF2611';
   const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
+  const VEBAL_POOL = '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56';
+  const VAULT_BOUNTY = fp(1000);
 
   const weightCap = fp(0.001);
 
@@ -48,7 +53,7 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     admin = await getSigner(0);
     recipient = await getSigner(1);
 
-    veBALHolder = await impersonate(VEBAL_HOLDER);
+    veBALHolder = await impersonate((await getSigner(2)).address, VAULT_BOUNTY.add(fp(5))); // plus gas
   });
 
   before('setup contracts', async () => {
@@ -81,6 +86,33 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
       'GaugeController',
       gaugeControllerTask.output({ network: 'mainnet' }).GaugeController
     );
+    veBAL = await gaugeControllerTask.instanceAt('VotingEscrow', gaugeControllerTask.output({ network: 'mainnet' }).VotingEscrow);
+
+    const weightedPoolTask = new Task('20210418-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    bal80weth20Pool = await weightedPoolTask.instanceAt('WeightedPool2Tokens', VEBAL_POOL);
+  });
+
+  before('create veBAL whale', async () => {
+    const poolId = await bal80weth20Pool.getPoolId();
+
+    await vault.connect(veBALHolder).joinPool(
+      poolId,
+      veBALHolder.address,
+      veBALHolder.address,
+      {
+        assets: [BAL, ZERO_ADDRESS],
+        maxAmountsIn: [0, VAULT_BOUNTY],
+        fromInternalBalance: false,
+        userData: WeightedPoolEncoder.joinExactTokensInForBPTOut([0, VAULT_BOUNTY], 0),
+      },
+      { value: VAULT_BOUNTY }
+    );
+
+    await bal80weth20Pool.connect(veBALHolder).approve(veBAL.address, MAX_UINT256);
+    const currentTime = await currentTimestamp();
+    await veBAL
+      .connect(veBALHolder)
+      .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime.add(MONTH * 12));
   });
 
   it('create gauge', async () => {
@@ -121,7 +153,9 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, 10000); // Max voting power is 10k points
+    const remainingVotingPower = 10000 - Number(await gaugeController['vote_user_power(address)'](veBALHolder.address));
+    expect(remainingVotingPower).to.be.gt(0);
+    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, remainingVotingPower);
 
     // We now need to go through an epoch for the votes to be locked in
     await advanceTime(DAY * 8);
@@ -130,7 +164,7 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
       await gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, await currentWeekTimestamp())
-    ).to.be.gt(weightCap);
+    ).to.be.gt(weightCap as any);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
 
@@ -177,7 +211,7 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     );
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
     ]);
 
@@ -206,7 +240,7 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     // We require that they're all above the cap for simplicity - this lets us use the cap as each week's weight (and
     // also tests cap behavior).
     for (const relativeWeight of relativeWeights) {
-      expect(relativeWeight).to.be.gt(weightCap);
+      expect(relativeWeight).to.be.gt(weightCap as any);
     }
 
     // The amount of tokens minted should equal the sum of the weekly emissions rate times the relative weight of the
@@ -239,7 +273,7 @@ describeForkTest.skip('PolygonRootGaugeFactoryV2', 'mainnet', 15397200, function
     expect(transferEvent.args.value).to.be.almostEqual(expectedEmissions);
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
     ]);
 

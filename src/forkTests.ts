@@ -1,7 +1,8 @@
-import hre from 'hardhat';
-
-import { HttpNetworkConfig, HardhatNetworkConfig } from 'hardhat/types';
 import { Network } from './types';
+import { getRpcUrlsForNetwork } from './forkingNetwork';
+import { useForkConnection } from './hardhatConnection';
+
+const FORK_TEST_TIMEOUT_MS = 10 * 60 * 1000;
 
 export function describeForkTest(name: string, forkNetwork: Network, blockNumber: number, callback: () => void): void {
   describe(name, () => {
@@ -17,26 +18,30 @@ describeForkTest.only = function (name: string, forkNetwork: Network, blockNumbe
 };
 
 describeForkTest.skip = function (name: string, forkNetwork: Network, blockNumber: number, callback: () => void): void {
-  describe.skip(name, () => {
+  describe(name, () => {
     _describeBody(forkNetwork, blockNumber, callback);
   });
 };
 
 function _describeBody(forkNetwork: Network, blockNumber: number, callback: () => void) {
-  before('setup fork test', async () => {
-    const forkingNetworkName = Object.keys(hre.config.networks).find((networkName) => networkName === forkNetwork);
-    if (!forkingNetworkName) throw Error(`Could not find a config for network ${forkNetwork} to be forked`);
+  before('setup fork test', async function () {
+    this.timeout(FORK_TEST_TIMEOUT_MS);
 
-    const forkingNetworkConfig = hre.config.networks[forkingNetworkName] as HttpNetworkConfig;
-    if (!forkingNetworkConfig.url) throw Error(`Could not find a RPC url in network config for ${forkingNetworkName}`);
+    const rpcUrls = getRpcUrlsForNetwork(forkNetwork);
+    if (rpcUrls.length === 0) {
+      throw Error(
+        `Could not find RPC URL for network ${forkNetwork}. Set ${forkNetwork.toUpperCase()}_RPC_URL or ~/.hardhat/networks.json`
+      );
+    }
 
-    await hre.network.provider.request({
-      method: 'hardhat_reset',
-      params: [{ forking: { jsonRpcUrl: forkingNetworkConfig.url, blockNumber } }],
-    });
+    await useForkConnection(rpcUrls, blockNumber);
 
-    const config = hre.network.config as HardhatNetworkConfig;
-    config.forking = { enabled: true, blockNumber, url: forkingNetworkConfig.url, httpHeaders: {} };
+    process.env.HARDHAT_FORK_NETWORK = forkNetwork;
   });
+
+  beforeEach('increase fork test timeout', function () {
+    this.timeout(FORK_TEST_TIMEOUT_MS);
+  });
+
   callback();
 }

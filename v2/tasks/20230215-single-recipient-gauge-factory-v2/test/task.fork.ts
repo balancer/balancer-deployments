@@ -1,17 +1,18 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
+import { takeSnapshot } from '@helpers/networkHelpers';
+import type { SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers/types';
 
 import { BigNumber, FP_ONE, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, MONTH, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { expectEqualWithError } from '@helpers/relativeError';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { range } from 'lodash';
+import range from 'lodash.range';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
@@ -222,8 +223,9 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
       expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-      // Max voting power is 10k points
-      await gaugeController.connect(balWhale).vote_for_gauge_weights(gauge.address, 10000);
+      const remainingVotingPower = 10000 - Number(await gaugeController['vote_user_power(address)'](balWhale.address));
+      expect(remainingVotingPower).to.be.gt(0);
+      await gaugeController.connect(balWhale).vote_for_gauge_weights(gauge.address, remainingVotingPower);
 
       // We now need to go through an epoch for the votes to be locked in
       await advanceTime(DAY * 8);
@@ -232,7 +234,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
       expect(
         await gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, await currentWeekTimestamp())
-      ).to.be.gt(weightCap);
+      ).to.be.gt(weightCap as any);
       expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
     });
 
@@ -306,7 +308,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       // We require that they're all above the cap for simplicity - this lets us use the cap as each week's weight (and
       // also tests cap behavior).
       for (const relativeWeight of relativeWeights) {
-        expect(relativeWeight).to.be.gt(weightCap);
+        expect(relativeWeight).to.be.gt(weightCap as any);
       }
 
       // The amount of tokens minted should equal the sum of the weekly emissions rate times the relative weight of the

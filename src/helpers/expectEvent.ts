@@ -1,6 +1,11 @@
 import { expect } from 'chai';
-import { BigNumber, ContractReceipt } from 'ethers';
-import { Interface, LogDescription } from 'ethers/lib/utils';
+import { Interface, LogDescription } from 'ethers';
+import { BigNumber } from './numbers';
+
+type ContractReceipt = {
+  events?: Array<{ event?: string; args?: unknown }>;
+  logs?: Array<Record<string, unknown>>;
+};
 
 // Ported from @openzeppelin/test-helpers to use with Ethers. The Test Helpers don't
 // yet have Typescript typings, so we're being lax about them here.
@@ -9,22 +14,18 @@ import { Interface, LogDescription } from 'ethers/lib/utils';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function inReceipt(receipt: ContractReceipt, eventName: string, eventArgs = {}): any {
-  if (receipt.events == undefined) {
-    throw new Error('No events found in receipt');
-  }
-
-  const events = receipt.events.filter((e) => e.event === eventName);
+  const events = getEvents(receipt).filter((e) => e.event === eventName);
   expect(events.length > 0).to.equal(true, `No '${eventName}' events found`);
 
   const exceptions: Array<string> = [];
   const event = events.find(function (e) {
-    for (const [k, v] of Object.entries(eventArgs)) {
+    for (const [i, [k, v]] of Object.entries(eventArgs).entries()) {
       try {
         if (e.args == undefined) {
           throw new Error('Event has no arguments');
         }
 
-        contains(e.args, k, v);
+        contains(e.args, k, v, i);
       } catch (error) {
         exceptions.push(String(error));
         return false;
@@ -75,13 +76,18 @@ export function inIndirectReceipt(
 
   const exceptions: Array<string> = [];
   const filteredEvents = expectedEvents.filter(function (e) {
-    for (const [k, v] of Object.entries(eventArgs)) {
+    const normalizedArgs = normalizeArgs(
+      e.args as unknown,
+      (e as unknown as { fragment?: { inputs?: Array<{ name?: string }> } }).fragment?.inputs
+    );
+
+    for (const [i, [k, v]] of Object.entries(eventArgs).entries()) {
       try {
-        if (e.args == undefined) {
+        if (normalizedArgs == undefined) {
           throw new Error('Event has no arguments');
         }
 
-        contains(e.args, k, v);
+        contains(normalizedArgs, k, v, i);
       } catch (error) {
         exceptions.push(String(error));
         return false;
@@ -107,10 +113,39 @@ export function inIndirectReceipt(
 }
 
 export function notEmitted(receipt: ContractReceipt, eventName: string): void {
-  if (receipt.events != undefined) {
-    const events = receipt.events.filter((e) => e.event === eventName);
-    expect(events.length > 0).to.equal(false, `'${eventName}' event found`);
+  const events = getEvents(receipt).filter((e) => e.event === eventName);
+  expect(events.length > 0).to.equal(false, `'${eventName}' event found`);
+}
+
+function getEvents(receipt: ContractReceipt): Array<{ event?: string; args?: { [key: string]: any | undefined } }> {
+  const eventsFromLogs = (receipt.logs ?? [])
+    .map((log) => {
+      const event =
+        (log.event as string | undefined) ??
+        (log.eventName as string | undefined) ??
+        ((log as { fragment?: { name?: string } }).fragment?.name as string | undefined);
+      const args = normalizeArgs(
+        log.args as unknown,
+        (log as { fragment?: { inputs?: Array<{ name?: string }> } }).fragment?.inputs
+      );
+
+      if (event === undefined) {
+        return undefined;
+      }
+
+      return { event, args };
+    })
+    .filter((event) => event !== undefined) as Array<{ event?: string; args?: { [key: string]: any | undefined } }>;
+
+  if (eventsFromLogs.length > 0) {
+    return eventsFromLogs;
   }
+
+  if (receipt.events !== undefined) {
+    return receipt.events.map((event) => ({ event: event.event, args: normalizeArgs(event.args as unknown) }));
+  }
+
+  return [];
 }
 
 function arrayFromIndirectReceipt(
@@ -119,34 +154,105 @@ function arrayFromIndirectReceipt(
   eventName: string,
   address?: string
 ): any[] {
-  const decodedEvents = receipt.logs
-    .filter((log) => (address ? log.address.toLowerCase() === address.toLowerCase() : true))
+  const decodedEvents = (receipt.logs ?? [])
+    .filter((log) => {
+      if (!address) {
+        return true;
+      }
+
+      const logAddress = (log.address as string | undefined)?.toLowerCase();
+      return logAddress === address.toLowerCase();
+    })
     .map((log) => {
       try {
-        return emitter.parseLog(log);
+        return emitter.parseLog(log as unknown as { topics: readonly string[]; data: string });
       } catch {
         return undefined;
       }
     })
-    .filter((e): e is LogDescription => e !== undefined);
+    .filter((e): e is LogDescription => e !== undefined && e !== null);
 
   return decodedEvents.filter((event) => event.name === eventName);
 }
 
-function contains(args: { [key: string]: any | undefined }, key: string, value: any) {
-  expect(key in args).to.equal(true, `Event argument '${key}' not found`);
+function contains(args: { [key: string]: any | undefined }, key: string, value: any, position: number) {
+  const argsWithIndexes = args as { [key: string]: any | undefined } & Array<any>;
+  const actualKey =
+    key in args
+      ? key
+      : key.startsWith('_') && key.slice(1) in args
+        ? key.slice(1)
+        : `_${key}` in args
+          ? `_${key}`
+          : undefined;
+  const hasIndex = position in argsWithIndexes;
+  const actualValue = actualKey !== undefined ? args[actualKey] : hasIndex ? argsWithIndexes[position] : undefined;
+
+  expect(actualKey !== undefined || hasIndex).to.equal(true, `Event argument '${key}' not found`);
+
+  if (actualKey === undefined && !hasIndex) {
+    return;
+  }
 
   if (value === null) {
-    expect(args[key]).to.equal(null, `expected event argument '${key}' to be null but got ${args[key]}`);
-  } else if (BigNumber.isBigNumber(args[key]) || BigNumber.isBigNumber(value)) {
-    const actual = BigNumber.isBigNumber(args[key]) ? args[key].toString() : args[key];
+    expect(actualValue).to.equal(null, `expected event argument '${key}' to be null but got ${actualValue}`);
+  } else if (BigNumber.isBigNumber(actualValue) || BigNumber.isBigNumber(value)) {
+    const actual = BigNumber.isBigNumber(actualValue) ? actualValue.toString() : actualValue;
     const expected = BigNumber.isBigNumber(value) ? value.toString() : value;
 
-    expect(args[key]).to.equal(value, `expected event argument '${key}' to have value ${expected} but got ${actual}`);
-  } else {
-    expect(args[key]).to.be.deep.equal(
+    expect(actualValue).to.equal(
       value,
-      `expected event argument '${key}' to have value ${value} but got ${args[key]}`
+      `expected event argument '${key}' to have value ${expected} but got ${actual}`
+    );
+  } else {
+    expect(actualValue).to.be.deep.equal(
+      value,
+      `expected event argument '${key}' to have value ${value} but got ${actualValue}`
     );
   }
+}
+
+function normalizeArgs(
+  rawArgs: unknown,
+  inputs?: Array<{ name?: string }>
+): { [key: string]: any | undefined } | undefined {
+  if (rawArgs === undefined || rawArgs === null) {
+    return undefined;
+  }
+
+  const args = rawArgs as Array<any> & { [key: string]: any | undefined };
+  const normalized: { [key: string]: any | undefined } = {};
+
+  if (Array.isArray(args)) {
+    for (let i = 0; i < args.length; i++) {
+      normalized[i.toString()] = args[i];
+    }
+  }
+
+  for (const key of Object.getOwnPropertyNames(args)) {
+    if (key === 'length') {
+      continue;
+    }
+
+    normalized[key] = (args as Record<string, any | undefined>)[key];
+  }
+
+  if (inputs !== undefined && Array.isArray(args)) {
+    inputs.forEach((input, index) => {
+      const name = input.name?.trim();
+      if (!name) {
+        return;
+      }
+
+      normalized[name] = args[index];
+
+      if (name.startsWith('_')) {
+        normalized[name.slice(1)] = args[index];
+      } else {
+        normalized[`_${name}`] = args[index];
+      }
+    });
+  }
+
+  return normalized;
 }

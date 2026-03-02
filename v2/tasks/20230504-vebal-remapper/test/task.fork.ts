@@ -1,4 +1,5 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
@@ -11,7 +12,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { deploy } from '@src';
 
 describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {

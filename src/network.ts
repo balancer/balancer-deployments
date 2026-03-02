@@ -5,13 +5,12 @@ import Task, { TaskStatus } from './task';
 import { Network } from './types';
 import { getActionIdInfo } from 'actionId';
 import { timestampToString } from '@helpers/time';
-import { BigNumber } from 'ethers';
 import { bn, decimal } from '@helpers/numbers';
 import retry from 'async-retry';
 
-const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
-const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(__dirname, '../addresses');
-const TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY = path.resolve(__dirname, '../timelock-authorizer-config');
+const DEPLOYMENT_TXS_DIRECTORY = path.resolve(process.cwd(), 'deployment-txs');
+const CONTRACT_ADDRESSES_DIRECTORY = path.resolve(process.cwd(), 'addresses');
+const TIMELOCK_AUTHORIZER_CONFIG_DIRECTORY = path.resolve(process.cwd(), 'timelock-authorizer-config');
 
 export function saveContractDeploymentTransactionHash(
   deployedAddress: string,
@@ -174,7 +173,7 @@ export async function getTimelockAuthorizerConfigDiff(task: Task, network: strin
 
   for (const delayInfo of allDelays.grantDelays) {
     const actionId = delayInfo.actionIdInfo.actionId;
-    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdGrantDelay(actionId);
+    const onchainDelay: bigint = await timelockAuthorizer.getActionIdGrantDelay(actionId);
 
     if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
       diff.push({
@@ -188,7 +187,7 @@ export async function getTimelockAuthorizerConfigDiff(task: Task, network: strin
 
   for (const delayInfo of allDelays.executeDelays) {
     const actionId = delayInfo.actionIdInfo.actionId;
-    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdDelay(actionId);
+    const onchainDelay: bigint = await timelockAuthorizer.getActionIdDelay(actionId);
 
     if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
       diff.push({

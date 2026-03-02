@@ -1,15 +1,18 @@
 import fs from 'fs';
 import path, { extname } from 'path';
-import { BuildInfo, CompilerOutputContract } from 'hardhat/types';
+import { pathToFileURL } from 'url';
+import { createRequire } from 'module';
+import type { BuildInfo } from 'hardhat/types/artifacts';
+import type { CompilerOutputContract } from 'hardhat/types/solidity/compiler-io';
 import { Contract, ethers } from 'ethers';
 import { hexToBytes, Address } from '@ethereumjs/util';
 import { Chain, Common, Hardfork } from '@ethereumjs/common';
 import { EVM } from '@ethereumjs/evm';
 import { getContractAddress } from '@ethersproject/address';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { SignerWithAddress } from './types';
 
 import logger from './logger';
-import Verifier from './verifier';
+import type Verifier from './verifier';
 import { deploy, deploymentTxData, instanceAt } from './contracts';
 
 import {
@@ -30,7 +33,8 @@ import { getArtifactFromContractOutput } from './artifact';
 import { getSigner } from './signers';
 
 // Maps to ../v2 and ../v3.
-const VERSION_ROOTS = ['v2', 'v3'].map((version) => path.resolve(__dirname, `../${version}`));
+const VERSION_ROOTS = ['v2', 'v3'].map((version) => path.resolve(process.cwd(), version));
+const nodeRequire = createRequire(path.resolve(process.cwd(), 'package.json'));
 
 // Maps to v2/tasks, v3/tasks, etc.
 const getTasksDir = (versionRoot: string) => path.resolve(versionRoot, 'tasks');
@@ -132,12 +136,12 @@ export default class Task {
   }
 
   async deployFactoryContracts(
-    populatedDeployTransaction: ethers.PopulatedTransaction,
+    populatedDeployTransaction: Record<string, unknown>,
     expectedContracts: Array<string>,
     needsDeploy: boolean,
     from?: SignerWithAddress,
     force?: boolean
-  ): Promise<ethers.providers.TransactionReceipt | undefined> {
+  ): Promise<Record<string, any> | undefined> {
     if (!needsDeploy || this.mode == TaskMode.CHECK) {
       return undefined;
     }
@@ -172,11 +176,11 @@ export default class Task {
   // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
-    deployTransaction?: ethers.providers.TransactionReceipt,
+    deployTransaction?: Record<string, any>,
     externalTask?: Task,
     factoryAddress?: string
   ): Promise<void> {
-    const { ethers } = await import('hardhat');
+    const { ethers } = await import('@src/hardhatCompat');
 
     if (deployTransaction == null) {
       // All contracts are deployed by the one factory transaction, so we can find the transaction hash by the first element
@@ -191,7 +195,7 @@ export default class Task {
 
     for (const contractInfo of contractsInfo) {
       const isDeployedBytecodeValid = await this.checkBytecodeAndSaveEVMState(
-        deployTransaction,
+        deployTransaction as Record<string, any>,
         artifactSource.artifact(contractInfo.name),
         contractInfo.expectedAddress,
         contractInfo.args,
@@ -219,7 +223,7 @@ export default class Task {
       if (this.mode === TaskMode.LIVE) {
         saveContractDeploymentTransactionHash(
           contractInfo.expectedAddress,
-          deployTransaction.transactionHash,
+          (deployTransaction as Record<string, any>).transactionHash,
           this.network
         );
       }
@@ -238,13 +242,13 @@ export default class Task {
 
   // NOTE: If a contract is deployed by a factory, we must set the factoryAddress in the function arguments.
   async checkBytecodeAndSaveEVMState(
-    deployTransaction: ethers.providers.TransactionReceipt,
+    deployTransaction: Record<string, any>,
     artifact: Artifact,
     contractAddress: string,
     args: Array<Param> = [],
     factoryAddress?: string
   ): Promise<boolean> {
-    const { ethers } = await import('hardhat');
+    const { ethers } = await import('@src/hardhatCompat');
 
     const runBytecode = hexToBytes(
       ethers.utils.hexlify(
@@ -270,7 +274,7 @@ export default class Task {
           cliqueSigner: () => Address.fromString(ethers.constants.AddressZero),
           coinbase: Address.fromString(ethers.constants.AddressZero),
           difficulty: BigInt(0),
-          gasLimit: block.gasLimit.toBigInt(),
+          gasLimit: typeof block.gasLimit === 'bigint' ? block.gasLimit : BigInt(block.gasLimit.toString()),
           prevRandao: hexToBytes(ethers.constants.HashZero),
           baseFeePerGas: undefined,
           getBlobGasPrice: () => undefined,
@@ -308,23 +312,27 @@ export default class Task {
     if (force || !output[name]) {
       instance = await deploy(this.artifact(name), args, from, libs);
       this.save({ [name]: instance });
-      logger.success(`Deployed ${name} at ${instance.address}`);
+      logger.success(`Deployed ${name} at ${(instance as any).address}`);
 
       if (this.mode === TaskMode.LIVE) {
-        saveContractDeploymentTransactionHash(instance.address, instance.deployTransaction.hash, this.network);
+        saveContractDeploymentTransactionHash(
+          (instance as any).address,
+          (instance as any).deployTransaction?.hash,
+          this.network
+        );
       }
     } else {
       logger.info(`${name} already deployed at ${output[name]}`);
       instance = await this.instanceAt(name, output[name]);
     }
 
-    await this.saveInInternalEVMState(instance.address);
+    await this.saveInInternalEVMState((instance as any).address);
 
     return instance;
   }
 
   async saveInInternalEVMState(address: string): Promise<void> {
-    const { ethers } = await import('hardhat');
+    const { ethers } = await import('@src/hardhatCompat');
     const evm = await this.evm;
 
     await evm.stateManager.putContractCode(
@@ -370,7 +378,7 @@ export default class Task {
     // The only thing we're not checking is what account deployed the contract, but our code does not have dependencies
     // on the deployer.
 
-    const { ethers } = await import('hardhat');
+    const { ethers } = await import('@src/hardhatCompat');
 
     const deployedAddress = this.output()[name];
     const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
@@ -401,7 +409,7 @@ export default class Task {
 
   async run(options: TaskRunOptions = {}): Promise<void> {
     const taskPath = this._fileAt(this.dir(), 'index.ts');
-    const task = require(taskPath).default;
+    const task = (await import(pathToFileURL(taskPath).href)).default;
     await task(this, options);
   }
 
@@ -413,11 +421,16 @@ export default class Task {
       // that the directory exists.
 
       const nonDeprecatedDir = this._dirAt(getTasksDir(versionRoot), this.id, false);
+      const deprecatedDir = this._dirAt(getDeprecatedDir(versionRoot), this.id, false);
       if (this._existsDir(nonDeprecatedDir)) {
-        return nonDeprecatedDir;
+        const nonDeprecatedIndex = this._fileAt(nonDeprecatedDir, 'index.ts', false);
+        const deprecatedIndex = this._fileAt(deprecatedDir, 'index.ts', false);
+
+        if (this._existsFile(nonDeprecatedIndex) || !this._existsFile(deprecatedIndex)) {
+          return nonDeprecatedDir;
+        }
       }
 
-      const deprecatedDir = this._dirAt(getDeprecatedDir(versionRoot), this.id, false);
       if (this._existsDir(deprecatedDir)) {
         return deprecatedDir;
       }
@@ -571,7 +584,7 @@ export default class Task {
 
   private _getDefaultExportForNetwork(script: string): RawInputKeyValue {
     const taskInputPath = this._fileAt(this.dir(), script);
-    const rawInput = require(taskInputPath).default;
+    const rawInput = nodeRequire(taskInputPath).default;
     const globalInput = { ...rawInput };
     NETWORKS.forEach((network) => delete globalInput[network]);
     const networkInput = rawInput[this.network] || {};
@@ -631,8 +644,8 @@ export default class Task {
 
   private _parseRawOutput(rawOutput: RawOutput): Output {
     return Object.keys(rawOutput).reduce((output: Output, key: string) => {
-      const value = rawOutput[key];
-      output[key] = typeof value === 'string' ? value : value.address;
+      const value = rawOutput[key] as any;
+      output[key] = typeof value === 'string' ? value : (value.address ?? value.target);
       return output;
     }, {});
   }
@@ -672,7 +685,7 @@ export default class Task {
   }
 
   private _findTaskId(idAlias: string): string {
-    const matches = Task.getAllTaskIds().filter((taskDirName) => taskDirName.includes(idAlias));
+    const matches = [...new Set(Task.getAllTaskIds().filter((taskDirName) => taskDirName.includes(idAlias)))];
 
     if (matches.length == 1) {
       return matches[0];

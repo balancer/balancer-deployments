@@ -11,7 +11,7 @@ import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { ZERO_ADDRESS } from '@helpers/constants';
-import { range } from 'lodash';
+import range from 'lodash.range';
 
 describeForkTest.skip('veBALGaugeFixCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;

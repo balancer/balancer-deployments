@@ -1,14 +1,15 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
 import * as expectEvent from '@helpers/expectEvent';
 import { BigNumberish, fp } from '@helpers/numbers';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet', 18412883, function () {
   const DAI = '0x6b175474e89094c44da98b954eedeac495271d0f';

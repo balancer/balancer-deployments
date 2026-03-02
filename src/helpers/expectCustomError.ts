@@ -1,9 +1,9 @@
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function expectRevertWithCustomError(promise: Promise<any>, errorDefinition: string): Promise<void> {
-  const expectedSelector = ethers.utils.id(errorDefinition).slice(0, 10);
+  const expectedSelector = ethers.id(errorDefinition).slice(0, 10);
 
   let reverted = false;
   try {

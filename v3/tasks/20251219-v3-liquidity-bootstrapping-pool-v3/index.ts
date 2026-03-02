@@ -4,7 +4,7 @@ import { saveContractDeploymentTransactionHash, Task, TaskMode, TaskRunOptions }
 import { DAY, HOUR } from '@helpers/time';
 import { bn, fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

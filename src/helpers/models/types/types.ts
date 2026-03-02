@@ -1,6 +1,8 @@
-import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { BigNumberish } from '@ethersproject/bignumber';
+import type { Contract } from 'ethers';
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
+import type { BigNumberish } from '../../numbers';
+
+type SignerWithAddress = HardhatEthersSigner;
 
 export type NAry<T> = T | Array<T>;
 

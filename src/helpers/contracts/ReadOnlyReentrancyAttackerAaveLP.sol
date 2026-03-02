@@ -18,7 +18,6 @@ pragma experimental ABIEncoderV2;
 import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/pool-linear/ILinearPool.sol";
 
-import "@balancer-labs/v2-solidity-utils/contracts/helpers/ERC20Helpers.sol";
 import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
 
 /**
@@ -28,7 +27,10 @@ import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
 contract ReadOnlyReentrancyAttackerAaveLP {
     using FixedPoint for uint256;
 
-    enum AttackType { SET_TARGETS, SET_SWAP_FEE }
+    enum AttackType {
+        SET_TARGETS,
+        SET_SWAP_FEE
+    }
 
     uint8 public constant RECOVERY_MODE_EXIT_KIND = 255;
 
@@ -62,11 +64,7 @@ contract ReadOnlyReentrancyAttackerAaveLP {
      * @param attackType Type of attack; determines which vulnerable pool function to call.
      * @param ethAmount Amount of ETH to deposit
      */
-    function startAttack(
-        ILinearPool pool,
-        AttackType attackType,
-        uint256 ethAmount
-    ) external payable {
+    function startAttack(ILinearPool pool, AttackType attackType, uint256 ethAmount) external payable {
         _attackType = attackType;
         _pool = pool;
 

@@ -12,9 +12,9 @@ import { expectEqualWithError } from '@helpers/relativeError';
 import { actionId } from '@helpers/models/misc/actions';
 import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { deploy } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
   let owner: SignerWithAddress,
@@ -247,7 +247,7 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
     }
 
     async function performAttack(attackType: AttackType, expectRevert: boolean) {
-      const attackTokens = (await vault.getPoolTokens(poolId)).tokens;
+      const attackTokens = [...(await vault.getPoolTokens(poolId)).tokens];
 
       const joinRequest = {
         assets: attackTokens,
@@ -260,7 +260,7 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       if (expectRevert) {
         await expect(attack).to.be.revertedWith('BAL#420');
       } else {
-        await expect(attack).to.not.be.reverted;
+        await attack;
       }
     }
   });
@@ -303,7 +303,7 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokens,
         minAmountsOut: Array(tokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 
@@ -332,12 +332,12 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
     const txA = {
       to: contractA,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     const txB = {
       to: contractB,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     await expect(owner.sendTransaction(txA)).to.be.reverted;

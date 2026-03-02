@@ -2,12 +2,13 @@ import fs from 'fs';
 import path from 'path';
 
 import hre from 'hardhat';
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
@@ -144,6 +145,6 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
   });
 
   function encodeElement(address: string, balance: BigNumber): string {
-    return ethers.utils.solidityKeccak256(['address', 'uint'], [address, balance]);
+    return ethers.solidityPackedKeccak256(['address', 'uint'], [address, balance]);
   }
 });

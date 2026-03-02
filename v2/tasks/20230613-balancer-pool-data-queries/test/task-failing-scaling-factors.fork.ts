@@ -14,6 +14,7 @@ const defaultPoolDataQueryConfig = {
   loadTotalSupply: false,
   loadSwapFees: false,
   loadLinearWrappedTokenRates: false,
+  loadLinearTargets: false,
   loadNormalizedWeights: false,
   loadScalingFactors: false,
   loadAmps: false,

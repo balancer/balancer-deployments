@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -112,7 +112,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       expect(event.event).to.be.eq('GaugeTypeAdded');
 
       // Contains expected `gaugeType` and `gaugeFactory`.
-      const decodedArgs = event.decode(event.data);
+      const decodedArgs = gaugeAdder.interface.decodeEventLog('GaugeTypeAdded', event.data, event.topics);
       expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
     });
 
@@ -134,7 +134,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       expect(event.event).to.be.eq('GaugeFactorySet');
 
       // Contains expected `gaugeType` and `gaugeFactory`.
-      const decodedArgs = event.decode(event.data);
+      const decodedArgs = gaugeAdder.interface.decodeEventLog('GaugeFactorySet', event.data, event.topics);
       expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
       expect(decodedArgs.gaugeFactory).to.be.eq(factory.address);
     });

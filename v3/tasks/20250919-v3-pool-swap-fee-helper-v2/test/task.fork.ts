@@ -1,11 +1,13 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { BigNumber, fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { PoolSwapFeeHelperDeployment } from '../input';
+import * as expectEvent from '@helpers/expectEvent';
+import { ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
   const TASK_NAME = '20250919-v3-pool-swap-fee-helper-v2';
@@ -49,8 +51,50 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
-    const poolTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
-    pool = await poolTask.instanceAt('WeightedPool', poolTask.output().MockWeightedPool);
+    const weightedPoolTask = new Task('20241205-v3-weighted-pool', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    const weightedPoolFactory = await weightedPoolTask.deployedInstance('WeightedPoolFactory');
+
+    const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+    const fork = getForkedNetwork(hre);
+    const WETH = tokensTask.output({ network: fork }).WETH;
+    const BAL = tokensTask.output({ network: fork }).BAL;
+
+    const tokenConfig = [
+      {
+        token: WETH,
+        tokenType: 0,
+        rateProvider: ZERO_ADDRESS,
+        paysYieldFees: false,
+      },
+      {
+        token: BAL,
+        tokenType: 0,
+        rateProvider: ZERO_ADDRESS,
+        paysYieldFees: false,
+      },
+    ].sort((a, b) => a.token.toLowerCase().localeCompare(b.token.toLowerCase()));
+
+    const receipt = await (
+      await weightedPoolFactory.create(
+        'PoolSwapFeeHelper Test Pool',
+        'PSFH-TEST',
+        tokenConfig,
+        [fp(0.8), fp(0.2)],
+        {
+          pauseManager: ZERO_ADDRESS,
+          swapFeeManager: ZERO_ADDRESS,
+          poolCreator: ZERO_ADDRESS,
+        },
+        fp(0.01),
+        ZERO_ADDRESS,
+        false,
+        false,
+        '0x4242424242424242424242424242424242424242424242424242424242424242'
+      )
+    ).wait();
+
+    const event = expectEvent.inReceipt(receipt, 'PoolCreated');
+    pool = await weightedPoolTask.instanceAt('WeightedPool', event.args.pool);
 
     const input = task.input() as PoolSwapFeeHelperDeployment;
     admin = await impersonate(input.HelperAdmin, fp(100));
