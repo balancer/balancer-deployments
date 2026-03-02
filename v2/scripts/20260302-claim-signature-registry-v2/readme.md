@@ -6,5 +6,5 @@ Technically not a script, but it's not part of the core contract deployments eit
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/).
+- [Code](https://github.com/balancer/balancer-v3-monorepo/commit/626bb89274da33349acd5d1dadaac27739a88b62).
 - [`ClaimSignatureRegistry` artifact](./artifact/ClaimSignatureRegistry.json)
