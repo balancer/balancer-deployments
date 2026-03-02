@@ -1,6 +1,6 @@
 # 2026-01-22 - Claim Signature registry
 
-Simple contract to register acceptance of terms onchain.
+Simple contract to register acceptance of terms onchain. Shorter T&C text, required for Trezor users.
 
 Technically not a script, but it's not part of the core contract deployments either.
 
