@@ -715,19 +715,6 @@
     "path": "./v3/tasks/20250123-v3-composite-liquidity-router-v2"
   },
   {
-    "description": "V3 Gyro E-CLP",
-    "task_id": "20250124-v3-gyro-eclp",
-    "date": "2025-01-24",
-    "date_raw": "20250124",
-    "slug": "v3-gyro-eclp",
-    "family": "v3-gyro-eclp",
-    "family_source": "derived",
-    "version": "v1",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250124-v3-gyro-eclp"
-  },
-  {
     "description": "V3 MEV Capture Hook",
     "task_id": "20250212-v3-mev-capture-hook",
     "date": "2025-02-12",
@@ -921,32 +908,6 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20250813-v3-constant-price-feed"
-  },
-  {
-    "description": "V3 Weighted LP Oracle",
-    "task_id": "20250814-v3-weighted-pool-oracle",
-    "date": "2025-08-14",
-    "date_raw": "20250814",
-    "slug": "v3-weighted-pool-oracle",
-    "family": "v3-weighted-pool-oracle",
-    "family_source": "derived",
-    "version": "v1",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250814-v3-weighted-pool-oracle"
-  },
-  {
-    "description": "V3 Stable LP Oracle",
-    "task_id": "20250815-v3-stable-pool-oracle",
-    "date": "2025-08-15",
-    "date_raw": "20250815",
-    "slug": "v3-stable-pool-oracle",
-    "family": "v3-stable-pool-oracle",
-    "family_source": "derived",
-    "version": "v1",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250815-v3-stable-pool-oracle"
   },
   {
     "description": "V3 HyperEVM Rate Provider",
@@ -1168,6 +1129,58 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20260123-v3-gyro-2clp-v2"
+  },
+  {
+    "description": "V3 Gyro E-CLP (V2)",
+    "task_id": "20260126-v3-gyro-eclp-v2",
+    "date": "2026-01-26",
+    "date_raw": "20260126",
+    "slug": "v3-gyro-eclp-v2",
+    "family": "v3-gyro-eclp",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260126-v3-gyro-eclp-v2"
+  },
+  {
+    "description": "V3 Weighted LP Oracle (V2)",
+    "task_id": "20260202-v3-weighted-pool-oracle-v2",
+    "date": "2026-02-02",
+    "date_raw": "20260202",
+    "slug": "v3-weighted-pool-oracle-v2",
+    "family": "v3-weighted-pool-oracle",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260202-v3-weighted-pool-oracle-v2"
+  },
+  {
+    "description": "V3 Stable LP Oracle (V2)",
+    "task_id": "20260203-v3-stable-pool-oracle-v2",
+    "date": "2026-02-03",
+    "date_raw": "20260203",
+    "slug": "v3-stable-pool-oracle-v2",
+    "family": "v3-stable-pool-oracle",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260203-v3-stable-pool-oracle-v2"
+  },
+  {
+    "description": "V3 Gyro E-CLP Oracle",
+    "task_id": "20260209-v3-gyro-eclp-oracle",
+    "date": "2026-02-09",
+    "date_raw": "20260209",
+    "slug": "v3-gyro-eclp-oracle",
+    "family": "v3-gyro-eclp-oracle",
+    "family_source": "derived",
+    "version": "v1",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260209-v3-gyro-eclp-oracle"
   },
   {
     "description": "Weighted Pools of up to 8 tokens",
@@ -2080,6 +2093,19 @@
     "path": "./v3/deprecated/20250121-v3-stable-surge"
   },
   {
+    "description": "V3 Gyro E-CLP",
+    "task_id": "20250124-v3-gyro-eclp",
+    "date": "2025-01-24",
+    "date_raw": "20250124",
+    "slug": "v3-gyro-eclp",
+    "family": "v3-gyro-eclp",
+    "family_source": "derived",
+    "version": "v1",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250124-v3-gyro-eclp"
+  },
+  {
     "description": "V3 Cow Swap Fee Burner",
     "task_id": "20250221-v3-cow-swap-fee-burner",
     "date": "2025-02-21",
@@ -2247,5 +2273,31 @@
     "ecosystem": "v3",
     "status": "deprecated",
     "path": "./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2"
+  },
+  {
+    "description": "V3 Weighted LP Oracle",
+    "task_id": "20250814-v3-weighted-pool-oracle",
+    "date": "2025-08-14",
+    "date_raw": "20250814",
+    "slug": "v3-weighted-pool-oracle",
+    "family": "v3-weighted-pool-oracle",
+    "family_source": "derived",
+    "version": "v1",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250814-v3-weighted-pool-oracle"
+  },
+  {
+    "description": "V3 Stable LP Oracle",
+    "task_id": "20250815-v3-stable-pool-oracle",
+    "date": "2025-08-15",
+    "date_raw": "20250815",
+    "slug": "v3-stable-pool-oracle",
+    "family": "v3-stable-pool-oracle",
+    "family_source": "derived",
+    "version": "v1",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250815-v3-stable-pool-oracle"
   }
 ]
