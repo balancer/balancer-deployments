@@ -10,7 +10,7 @@ describeForkTest('ClaimSignatureRegistryV2', 'mainnet', 24572000, function () {
   let claimSignatureRegistry: Contract;
 
   const message: string =
-    'I ACCEPT BALANCER\'S T&C APPLICABLE TO THIS CLAIM, INCL. ALL PROVISIONS OF THE ToU AND RELEVANT GOV RESOLUTIONS, INCL. LIMITATION OF LIABILITY, MANDATORY ARBITRATION AND RISK DISCLOSURES. I HEREBY CONFIRM & AGREE TO THE FOLLOWING:\n\n' +
+    "I ACCEPT BALANCER'S T&C APPLICABLE TO THIS CLAIM, INCL. ALL PROVISIONS OF THE ToU AND RELEVANT GOV RESOLUTIONS, INCL. LIMITATION OF LIABILITY, MANDATORY ARBITRATION AND RISK DISCLOSURES. I HEREBY CONFIRM & AGREE TO THE FOLLOWING:\n\n" +
     'My acceptance constitutes full final settlement & release of any past, present, & future claims, liabilities, demands, actions, causes of action, damages, or losses of any kind, known or unknown, arising out of or related to the Balancer exploit.\n' +
     'This waiver incl. claims and any right to participate in any class or collective action against the Balancer Foundation & all affiliated entities, as well as their respective officers, directors, contributors, service providers, employees, contractors, advisors, agents, successors, & assigns.\n' +
     'I acknowledge & agree to the Safe Harbor Agreement in all its terms (as approved by Balancer governance resolution).\n' +
