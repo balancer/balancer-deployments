@@ -85,7 +85,7 @@
 - Deployed `ComposableStablePoolFactory` V6 to all networks.
 - Deployed `VeBoost` 2.1 to Mainnet.
 - Deployed `Vault` 2.1 to Plasma.
-- Deployed `ClaimSignatureRegistry` (V1 / V2) to all networks.
+- Deployed `ClaimSignatureRegistry` to all networks.
 
 ### Deprecations
 
