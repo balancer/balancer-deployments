@@ -278,15 +278,5 @@
     ],
     "status": "SCRIPT",
     "version": "v2"
-  },
-  "20260302-claim-signature-registry-v2": {
-    "contracts": [
-      {
-        "name": "ClaimSignatureRegistry",
-        "address": "0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A"
-      }
-    ],
-    "status": "SCRIPT",
-    "version": "v2"
   }
 }
