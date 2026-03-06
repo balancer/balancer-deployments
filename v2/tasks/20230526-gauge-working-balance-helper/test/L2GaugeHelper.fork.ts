@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, deploy, instanceAt } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { FP_ONE, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
 import { MONTH } from '@helpers/time';
@@ -109,7 +109,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
       expect(projected).to.eq(current);
 
       // As a sanity check, we test that they don't own the entire gauge.
-      expect(projected).to.be.lt(FP_ONE);
+      expect(projected).to.be.lt(FP_ONE as any);
     });
   });
 

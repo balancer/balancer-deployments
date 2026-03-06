@@ -36,7 +36,7 @@ export async function getBalancerContract(task: string, contract: string, networ
  */
 export async function getBalancerContractAt(task: string, contract: string, address: string): Promise<Contract> {
   const artifact = getBalancerContractArtifact(task, contract);
-  return new Contract(address, artifact.abi);
+  return new Contract(address, artifact.abi as any);
 }
 
 /**

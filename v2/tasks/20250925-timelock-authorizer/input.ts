@@ -1,5 +1,6 @@
 import { Task, TaskMode } from '@src';
-import { DelayData, RoleData } from './input/types';
+import type { DelayData, RoleData } from './input/types';
+import * as sepoliaInput from './input/sepolia';
 
 const Authorizer = new Task('20210418-authorizer', TaskMode.READ_ONLY);
 const AuthorizerAdaptorEntrypoint = new Task('20221124-authorizer-adaptor-entrypoint', TaskMode.READ_ONLY);
@@ -29,11 +30,7 @@ const input: TimelockAuthorizerDeploymentInputType = {
   Authorizer,
   AuthorizerAdaptorEntrypoint,
   networks: ['sepolia'],
+  sepolia: sepoliaInput,
 };
-
-// Include input files for each network inside global inputs.
-input.networks.forEach((network) => {
-  input[network] = require(`./input/${network}.ts`);
-});
 
 export default input;

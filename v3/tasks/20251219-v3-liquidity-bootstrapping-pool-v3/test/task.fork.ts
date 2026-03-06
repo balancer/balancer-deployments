@@ -1,7 +1,7 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
@@ -232,7 +232,7 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
         },
         swapFeePercentage: SWAP_FEE,
         poolHooksContract: ZERO_ADDRESS,
-        enableDonations: false,
+        enableDonation: false,
         disableUnbalancedLiquidity: false,
         salt: ONES_BYTES32,
       })

@@ -1,8 +1,9 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { bn, fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';

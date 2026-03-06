@@ -1,5 +1,6 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 import { expect } from 'chai';
 
 import { actionId } from '@helpers/models/misc/actions';
@@ -7,7 +8,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 import { VeBoostV21Deployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { bn } from '@helpers/numbers';
 import { currentTimestamp, WEEK } from '@helpers/time';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -149,7 +150,7 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
 
   async function computeValidEndTime(delegator: string): Promise<BigNumber> {
     const endOfLockPeriod = await votingEscrow.locked__end(delegator);
-    expect(endOfLockPeriod).to.be.gt(currentTime);
+    expect(endOfLockPeriod).to.be.gt(currentTime as any);
 
     // Has to be on a week boundary in the future, but earlier than the end of the lock.
     return endOfLockPeriod.sub(bn(WEEK));
@@ -165,7 +166,7 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     expect(operator).to.not.eq(ZERO_ADDRESS);
     expect(operator).to.not.eq(delegator);
     expect(amount).to.be.gt(0);
-    expect(endTime).to.be.gt(currentTime);
+    expect(endTime).to.be.gt(currentTime as any);
     expect(endTime.toNumber() % WEEK).to.eq(0);
 
     const veLockedEnd = await votingEscrow.locked__end(delegator);

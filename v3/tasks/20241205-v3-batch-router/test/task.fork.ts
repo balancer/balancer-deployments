@@ -1,8 +1,8 @@
-import hre, { ethers } from 'hardhat';
+import hre, { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { fp } from '@helpers/numbers';
 
 describeForkTest('BatchRouter-V3', 'mainnet', 21336200, function () {
@@ -39,7 +39,7 @@ describeForkTest('BatchRouter-V3', 'mainnet', 21336200, function () {
       to: batchRouter.address,
       value: ethers.utils.parseEther('1.0'),
     });
-    await expect(wethTx).to.not.be.reverted;
+    await wethTx;
 
     const aliceTx = alice.sendTransaction({
       to: batchRouter.address,

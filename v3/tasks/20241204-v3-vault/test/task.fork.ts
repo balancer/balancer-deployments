@@ -1,9 +1,9 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { MONTH, fromNow } from '@helpers/time';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { fp } from '@helpers/numbers';
 
 describeForkTest('VaultFactory-V3', 'mainnet', 21332116, function () {

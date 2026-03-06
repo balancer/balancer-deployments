@@ -1,10 +1,9 @@
 import { AsyncFunc } from 'mocha';
-import { BigNumber } from 'ethers';
 import chai, { expect } from 'chai';
 
 import { NAry } from './models/types/types';
 import { ZERO_ADDRESS } from './constants';
-import { BigNumberish, bn, fp } from './numbers';
+import { BigNumber, BigNumberish, bn, fp } from './numbers';
 import { expectEqualWithError, expectLessThanOrEqualWithError } from './relativeError';
 
 import { sharedBeforeEach } from './sharedBeforeEach';
@@ -24,6 +23,8 @@ declare global {
       equalWithError(value: NAry<BigNumberish>, error?: BigNumberish): void;
       almostEqual(value: NAry<BigNumberish>, error?: BigNumberish): void;
       almostEqualFp(value: NAry<BigNumberish>, error?: BigNumberish): void;
+      reverted: Promise<void>;
+      revertedWith(message: string): Promise<void>;
     }
   }
 
@@ -92,10 +93,68 @@ chai.use(function (chai, utils) {
     }
   });
 
+  Assertion.addProperty('reverted', function () {
+    const promise = this._obj as Promise<unknown>;
+
+    return promise.then(
+      () => {
+        this.assert(
+          false,
+          'Expected transaction to be reverted',
+          'Expected transaction not to be reverted',
+          undefined,
+          undefined
+        );
+      },
+      (error: unknown) => {
+        this.assert(
+          true,
+          `Expected transaction not to be reverted but it reverted with ${(error as Error)?.message ?? String(error)}`,
+          'Expected transaction to be reverted',
+          undefined,
+          undefined
+        );
+      }
+    );
+  });
+
+  Assertion.addMethod('revertedWith', function (expectedMessage: string) {
+    const promise = this._obj as Promise<unknown>;
+
+    return promise.then(
+      () => {
+        this.assert(false, `Expected transaction to be reverted with '${expectedMessage}'`, '', undefined, undefined);
+      },
+      (error: unknown) => {
+        const actualMessage = (error as Error)?.message ?? String(error);
+        const contains = actualMessage.includes(expectedMessage);
+        this.assert(
+          contains,
+          `Expected revert message to include '${expectedMessage}', got '${actualMessage}'`,
+          `Expected revert message not to include '${expectedMessage}'`,
+          expectedMessage,
+          actualMessage
+        );
+      }
+    );
+  });
+
   ['eq', 'equal', 'equals'].forEach((fn: string) => {
     Assertion.overwriteMethod(fn, function (_super) {
       return function (this: any, expected: any) {
         const actual = utils.flag(this, 'object');
+        if (!utils.flag(this, 'deep') && (BigNumber.isBigNumber(actual) || BigNumber.isBigNumber(expected))) {
+          const equal = BigNumber.from(actual).eq(expected);
+          this.assert(
+            equal,
+            `Expected "${expected}" to equal ${actual}`,
+            `Expected "${expected}" NOT to equal ${actual}`,
+            expected,
+            actual
+          );
+          return;
+        }
+
         if (
           utils.flag(this, 'deep') &&
           Array.isArray(actual) &&
@@ -118,4 +177,52 @@ chai.use(function (chai, utils) {
       };
     });
   });
+
+  type Comparator = (actual: BigNumberish, expected: BigNumberish) => boolean;
+  const comparisonMethods: Array<{ names: string[]; comparator: Comparator; description: string }> = [
+    {
+      names: ['gt', 'above', 'greaterThan'],
+      comparator: (actual, expected) => bn(actual) > bn(expected),
+      description: 'greater than',
+    },
+    {
+      names: ['gte', 'least'],
+      comparator: (actual, expected) => bn(actual) >= bn(expected),
+      description: 'greater than or equal to',
+    },
+    {
+      names: ['lt', 'below', 'lessThan'],
+      comparator: (actual, expected) => bn(actual) < bn(expected),
+      description: 'less than',
+    },
+    {
+      names: ['lte', 'most'],
+      comparator: (actual, expected) => bn(actual) <= bn(expected),
+      description: 'less than or equal to',
+    },
+  ];
+
+  for (const { names, comparator, description } of comparisonMethods) {
+    names.forEach((fn: string) => {
+      Assertion.overwriteMethod(fn, function (_super) {
+        return function (this: any, expected: any) {
+          const actual = utils.flag(this, 'object');
+          if (!utils.flag(this, 'deep') && (BigNumber.isBigNumber(actual) || BigNumber.isBigNumber(expected))) {
+            const ok = comparator(actual, expected);
+            this.assert(
+              ok,
+              `Expected "${actual}" to be ${description} ${expected}`,
+              `Expected "${actual}" not to be ${description} ${expected}`,
+              expected,
+              actual
+            );
+            return;
+          }
+
+          // eslint-disable-next-line prefer-rest-params
+          _super.apply(this, arguments);
+        };
+      });
+    });
+  }
 });

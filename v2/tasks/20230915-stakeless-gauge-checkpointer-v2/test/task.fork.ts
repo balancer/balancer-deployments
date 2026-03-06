@@ -1,7 +1,8 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import { BigNumber, fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
@@ -46,7 +47,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
   const arbitrumRootGauge = '0xB5044FD339A7b858095324cC3F239C212956C179';
   const expectedCheckpoints = 8;
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
@@ -119,11 +120,11 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
       previousWeek
     );
     // 1) The weight of the gauge in the previous week is non-zero, and greater than a given threshold.
-    expect(relativeWeightPreviousWeek).to.be.gte(WEIGHT_THRESHOLD);
+    expect(relativeWeightPreviousWeek).to.be.gte(WEIGHT_THRESHOLD as any);
 
     // 2) The gauge is not up to date in the controller.
     const latestCheckpointedTime = await gaugeController.time_weight(arbitrumRootGauge);
-    expect(latestCheckpointedTime).to.be.lt(currentWeek);
+    expect(latestCheckpointedTime).to.be.lt(currentWeek as any);
 
     // 3) The weight at the current week is 0.
     const relativeWeightNow = await gaugeController['gauge_relative_weight(address)'](arbitrumRootGauge);

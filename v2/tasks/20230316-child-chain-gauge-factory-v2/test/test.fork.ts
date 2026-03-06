@@ -1,8 +1,12 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
-import { BigNumber, BigNumberish, Contract, ContractReceipt } from 'ethers';
+import { Contract } from 'ethers';
+import type { ContractTransactionReceipt as ContractReceipt } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
+import type { BigNumberish } from '@helpers/numbers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { bn, fp } from '@helpers/numbers';
 import { actionId } from '@helpers/models/misc/actions';
 import * as expectEvent from '@helpers/expectEvent';

@@ -17,10 +17,12 @@ node_modules/
 # Hardhat artifacts
 artifacts/
 cache/
+**/.hardhat
 
 # Build artifacts
 dist/
 pkg/balancer-js/src/typechain/*
+typechain-types/
 
 test.json
 

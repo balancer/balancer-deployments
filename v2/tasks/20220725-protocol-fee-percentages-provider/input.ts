@@ -1,6 +1,6 @@
 import { fp } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 
 export type ProtocolFeePercentagesProviderDeployment = {
   Vault: string;

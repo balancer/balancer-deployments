@@ -1,8 +1,10 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MAX_UINT256 } from '@helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
@@ -162,7 +164,7 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
         library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [RETH_STABLE_GAUGE, ETH_STETH_GAUGE]]),
       ]);
 
-    const gaugeInterface = new ethers.utils.Interface([
+    const gaugeInterface = new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
     ]);
 

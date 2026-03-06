@@ -1,5 +1,6 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 import { expect } from 'chai';
 
 import { ZERO_ADDRESS } from '@helpers/constants';

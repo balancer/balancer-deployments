@@ -1,7 +1,8 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract, ContractReceipt } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import { BigNumber, fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
@@ -89,10 +90,11 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     ['0xE867AD0a48e8f815DC0cda2CDb275e0F163A480b', 1],
   ];
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
+  const CHECKPOINT_GAS_LIMIT = 16_700_000;
 
   type GaugeData = {
     address: string;
@@ -307,6 +309,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointAllGaugesAboveRelativeWeight(minRelativeWeight, {
               value: await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight),
+              gasLimit: CHECKPOINT_GAS_LIMIT,
             });
             return await tx.wait();
           };
@@ -329,7 +332,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointGaugesOfTypesAboveRelativeWeight(
               [GaugeType[GaugeType.Ethereum]],
-              minRelativeWeight
+              minRelativeWeight,
+              { gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -344,7 +348,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointGaugesOfTypesAboveRelativeWeight(
               [GaugeType[GaugeType.Polygon]],
-              minRelativeWeight
+              minRelativeWeight,
+              { gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -362,6 +367,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
               minRelativeWeight,
               {
                 value: await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight),
+                gasLimit: CHECKPOINT_GAS_LIMIT,
               }
             );
             return await tx.wait();
@@ -377,7 +383,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointGaugesOfTypesAboveRelativeWeight(
               [GaugeType[GaugeType.Optimism]],
-              minRelativeWeight
+              minRelativeWeight,
+              { gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -392,7 +399,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointGaugesOfTypesAboveRelativeWeight(
               [GaugeType[GaugeType.Gnosis]],
-              minRelativeWeight
+              minRelativeWeight,
+              { gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -409,7 +417,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           performCheckpoint = async () => {
             const tx = await stakelessGaugeCheckpointer.checkpointMultipleGaugesOfMatchingType(
               GaugeType[GaugeType.Gnosis],
-              gaugeDataAboveMinWeight.map((gaugeData) => gaugeData.address)
+              gaugeDataAboveMinWeight.map((gaugeData) => gaugeData.address),
+              { gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -437,7 +446,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
             const tx = await stakelessGaugeCheckpointer.checkpointMultipleGauges(
               matchingTypesArray,
               gaugeDataAboveMinWeight.map((gaugeData) => gaugeData.address),
-              { value }
+              { value, gasLimit: CHECKPOINT_GAS_LIMIT }
             );
             return await tx.wait();
           };
@@ -472,6 +481,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
 
           const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.address, {
             value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.address),
+            gasLimit: CHECKPOINT_GAS_LIMIT,
           });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
@@ -489,7 +499,9 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
           const gnosisGaugeData = gauges.get(GaugeType.Gnosis)![0];
           const gnosisType = GaugeType[GaugeType.Gnosis];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.address);
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.address, {
+            gasLimit: CHECKPOINT_GAS_LIMIT,
+          });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,

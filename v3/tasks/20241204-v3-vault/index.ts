@@ -1,6 +1,6 @@
 import { VaultDeployment } from './input';
 import { Task, TaskMode, TaskRunOptions } from '@src';
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 
 const skipCheckNetworkList = ['optimism', 'hyperevm', 'plasma', 'xlayer', 'monad'];
 

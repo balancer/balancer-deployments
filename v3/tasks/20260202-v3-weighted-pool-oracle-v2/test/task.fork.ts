@@ -1,10 +1,11 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { expectRevertWithCustomError } from '@helpers/expectCustomError';
+import * as expectEvent from '@helpers/expectEvent';
 import input from '../input';
 
 describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
@@ -50,7 +51,10 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     );
 
     const receipt = await tx.wait();
-    const event = receipt.events?.find((e: { event: string }) => e.event === 'WeightedLPOracleCreated');
+    const event = expectEvent.inReceipt(
+      receipt as unknown as { logs: Array<{ address: string }> },
+      'WeightedLPOracleCreated'
+    );
     weightedLPOracle = await task.instanceAt('WeightedLPOracle', event?.args?.oracle);
     expect(weightedLPOracle).to.not.be.undefined;
     expect(weightedLPOracle).to.not.be.eq(ZERO_ADDRESS);

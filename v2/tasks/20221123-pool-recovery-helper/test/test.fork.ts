@@ -2,12 +2,12 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
-import { setCode } from '@nomicfoundation/hardhat-network-helpers';
+import { setCode } from '@helpers/networkHelpers';
 import { Interface } from '@ethersproject/abi';
 
 describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {

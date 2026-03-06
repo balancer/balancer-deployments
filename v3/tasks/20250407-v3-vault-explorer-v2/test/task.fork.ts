@@ -1,10 +1,11 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
+import type { SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers/types';
+import { takeSnapshot } from '@helpers/networkHelpers';
 
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { fp } from '@helpers/numbers';
 import { MAX_UINT48 } from '@helpers/constants';
 import { actionId } from '@helpers/models/misc/actions';

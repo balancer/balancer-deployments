@@ -1,5 +1,4 @@
 import { Decimal } from 'decimal.js';
-import { BigNumber } from 'ethers';
 
 import { BigNumberish, decimal, bn, fp, fromFp, toFp } from '../../../numbers';
 
@@ -372,13 +371,13 @@ function _getTokenBalanceGivenInvariantAndAllOtherBalances(
   }
 
   // const a = 1;
-  amplificationParameter = decimal(amplificationParameter);
-  const b = invariant.div(amplificationParameter.mul(numTokens)).add(sum).sub(invariant);
+  const amp = decimal(amplificationParameter);
+  const b = invariant.div(amp.mul(numTokens)).add(sum).sub(invariant);
   const c = invariant
     .pow(numTokens + 1)
     .mul(-1)
     .div(
-      amplificationParameter.mul(
+      amp.mul(
         decimal(numTokens)
           .pow(numTokens + 1)
           .mul(mul)
@@ -390,3 +389,5 @@ function _getTokenBalanceGivenInvariantAndAllOtherBalances(
     .add(b.pow(2).sub(c.mul(4)).squareRoot())
     .div(2);
 }
+
+type BigNumber = bigint;

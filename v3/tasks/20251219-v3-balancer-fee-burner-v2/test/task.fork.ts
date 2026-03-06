@@ -1,10 +1,10 @@
-import hre, { ethers } from 'hardhat';
+import hre, { ethers } from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { BalancerFeeBurnerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { expect } from 'chai';
 
 describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
@@ -61,6 +61,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
       {
         pool: POOL_USDT_USDC,
         tokenOut: WA_ETH_USDT_ADDRESS,
+        isBuffer: false,
       },
     ];
 
@@ -77,6 +78,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
       {
         pool: POOL_USDT_USDC,
         tokenOut: WA_ETH_USDT_ADDRESS,
+        isBuffer: false,
       },
     ];
 
@@ -107,7 +109,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
 
     const balanceUSDTAfter = await waETHUSDT.balanceOf(RECIPIENT);
 
-    expect(balanceUSDTAfter - balanceUSDTBefore).to.be.gte(minAmountOut);
+    expect(balanceUSDTAfter - balanceUSDTBefore >= minAmountOut).to.be.true;
   });
 
   it('burns tokens with new unwrap/wrap', async () => {
@@ -159,6 +161,6 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
 
     const balanceWaETHUSDTAfter = await waETHUSDT.balanceOf(RECIPIENT);
 
-    expect(balanceWaETHUSDTAfter - balanceWaETHUSDTBefore).to.be.gte(minAmountOut);
+    expect(balanceWaETHUSDTAfter - balanceWaETHUSDTBefore >= minAmountOut).to.be.true;
   });
 });

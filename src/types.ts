@@ -1,7 +1,10 @@
-import { Contract, BigNumber } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { Contract } from 'ethers';
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types';
+import type { Artifact } from 'hardhat/types/artifacts';
 
-export { Artifact, Libraries } from 'hardhat/types';
+export type { Artifact };
+export type Libraries = Record<string, string>;
+export type SignerWithAddress = HardhatEthersSigner;
 
 import Task from './task';
 
@@ -34,7 +37,7 @@ export type TaskRunOptions = {
 export type NAry<T> = T | Array<T>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Param = boolean | string | number | BigNumber | any;
+export type Param = boolean | string | number | bigint | any;
 
 export type Input = {
   [key: string]: NAry<Param>;

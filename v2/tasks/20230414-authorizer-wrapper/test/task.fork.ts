@@ -1,8 +1,8 @@
 import hre from 'hardhat';
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import { fp } from '@helpers/numbers';
@@ -127,7 +127,7 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
       it('GaugeAdder can now add gauges', async () => {
         const tx = await gaugeAdder.connect(lmMultisig).addEthereumGauge(gauge);
 
-        const gaugeControllerInterface = new ethers.utils.Interface([
+        const gaugeControllerInterface = new ethers.Interface([
           'event NewGauge(address gauge, int128 gaugeType, uint256 weight)',
         ]);
 

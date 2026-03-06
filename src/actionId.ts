@@ -1,14 +1,15 @@
 import { FunctionFragment, Interface } from '@ethersproject/abi';
-import { Contract } from '@ethersproject/contracts';
 import fs from 'fs';
-import { padEnd } from 'lodash';
+import lodash from 'lodash';
 import path from 'path';
 import logger from './logger';
 import { request, gql } from 'graphql-request';
 
 import Task, { TaskMode } from './task';
 
-export const ACTION_ID_DIRECTORY = path.join(__dirname, '../action-ids');
+const { padEnd } = lodash;
+
+export const ACTION_ID_DIRECTORY = path.resolve(process.cwd(), 'action-ids');
 
 export type RoleData = {
   role: string;
@@ -191,7 +192,7 @@ async function getActionIdSource(
   contractName: string,
   factoryOutput?: string,
   factoryName?: string
-): Promise<{ useAdaptor: boolean; actionIdSource: Contract | undefined }> {
+): Promise<{ useAdaptor: boolean; actionIdSource: unknown | undefined }> {
   const artifact = task.artifact(contractName);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const contractInterface = new Interface(artifact.abi as any);
@@ -200,7 +201,7 @@ async function getActionIdSource(
   if (task.id === '20241204-v3-vault' && (contractName === 'Vault' || contractName === 'VaultExtension')) {
     const contract = await task.deployedInstance(contractName);
     const vaultAdmin = await task.deployedInstance('VaultAdmin');
-    const contractAsAdmin = vaultAdmin.attach(contract.address);
+    const contractAsAdmin = vaultAdmin.attach(contract.address as string) as any;
     return { useAdaptor: false, actionIdSource: contractAsAdmin };
   }
 
@@ -227,7 +228,7 @@ async function getActionIdSource(
 
 async function getActionIdsFromSource(
   contractFunctions: [string, FunctionFragment][],
-  actionIdSource: Contract
+  actionIdSource: any
 ): Promise<ActionIdData> {
   const functionActionIds = await Promise.all(
     contractFunctions.map(async ([signature, contractFunction]) => {

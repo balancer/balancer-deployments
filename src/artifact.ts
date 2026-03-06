@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
-import { Artifact, CompilerOutputContract } from 'hardhat/types';
+import type { Artifact } from 'hardhat/types/artifacts';
+import type { CompilerOutputContract } from 'hardhat/types/solidity/compiler-io';
 import path from 'path';
 import logger from './logger';
 import Task from './task';

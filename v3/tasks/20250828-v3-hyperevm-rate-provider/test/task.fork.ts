@@ -1,4 +1,4 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 import { expect } from 'chai';

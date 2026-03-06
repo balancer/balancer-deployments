@@ -1,9 +1,9 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { fp } from '@helpers/numbers';
 import { TokenPairRegistryDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { expect } from 'chai';
 
 describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
@@ -62,7 +62,7 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
       isBuffer: true,
     });
 
-    tokenPairRegistry.connect(admin).addPath(USDC.address, boostedPoolPath);
+    await tokenPairRegistry.connect(admin).addPath(USDC.address, boostedPoolPath);
     expect(await tokenPairRegistry.getPaths(USDC.address, USDT.address)).to.deep.equal([
       boostedPoolPath.map((o) => Object.values(o)),
     ]);

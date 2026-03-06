@@ -1,4 +1,4 @@
-import { BuildInfo } from 'hardhat/types';
+import type { BuildInfo } from 'hardhat/types/artifacts';
 
 export function findContractSourceName(buildInfo: BuildInfo, contractName: string): string {
   const names = getAllFullyQualifiedNames(buildInfo);

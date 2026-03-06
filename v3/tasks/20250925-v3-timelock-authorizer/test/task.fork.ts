@@ -1,4 +1,4 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
@@ -13,7 +13,7 @@ import { Task, TaskMode } from '@src';
 import { impersonate } from '@src';
 import { getForkedNetwork } from '@src';
 import { TimelockAuthorizerDeployment, default as input } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 function doForkTestsOnNetwork(network: string, block: number) {
   describeForkTest(`TimelockAuthorizerV3 ${network}`, network, block, function () {

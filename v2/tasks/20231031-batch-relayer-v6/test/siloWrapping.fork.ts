@@ -1,8 +1,9 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 import { BigNumberish, bn } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
 describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 16622559, function () {
@@ -18,7 +19,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
   let usdcToken: Contract, shareToken: Contract, silo: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
   let chainedReference: BigNumber;
-  const amountToWrap = 100e6;
+  const amountToWrap = bn(100e6);
 
   before('run task', async () => {
     task = new Task('20231031-batch-relayer-v6', TaskMode.TEST, getForkedNetwork(hre));
@@ -83,20 +84,18 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfWrappedAfter = await shareToken.balanceOf(recipient.address);
 
-    const estimatedRate = await siloExchangeRate(silo, USDC, shareToken);
-
-    const expectedBalanceOfWrappedAfter = bn(estimatedRate).mul(amountToWrap);
+    const assetSotrage = await silo.assetStorage(USDC);
+    const totalAmount = bn(assetSotrage[3]);
+    const totalShares = bn(await shareToken.totalSupply());
+    const expectedBalanceOfWrappedAfter = totalShares.mul(amountToWrap).div(totalAmount);
 
     expect(balanceOfUSDCBefore.sub(balanceOfUSDCAfter)).to.be.equal(amountToWrap);
     expect(balanceOfWrappedAfter).to.be.almostEqual(expectedBalanceOfWrappedAfter, 0.01);
   });
 
   it('should unwrap successfully', async () => {
-    const estimatedRate = await siloExchangeRate(silo, USDC, shareToken);
-    const wrappedRate = Math.floor(1e6 / estimatedRate);
     const balanceOfWrappedBefore = await shareToken.balanceOf(recipient.address);
-
-    const amountToWithdraw = Math.floor((wrappedRate * balanceOfWrappedBefore) / 1e6);
+    const amountToWithdraw = balanceOfWrappedBefore;
 
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
 
@@ -131,7 +130,7 @@ function toChainedReference(key: BigNumberish): BigNumber {
 
 async function siloExchangeRate(silo: Contract, mainTokenAddress: string, wrappedTokenContract: Contract) {
   const assetSotrage = await silo.assetStorage(mainTokenAddress);
-  const totalAmount = assetSotrage[3];
-  const totalShares = await wrappedTokenContract.totalSupply();
+  const totalAmount = bn(assetSotrage[3]);
+  const totalShares = bn(await wrappedTokenContract.totalSupply());
   return totalAmount / totalShares;
 }

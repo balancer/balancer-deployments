@@ -1,16 +1,12 @@
-import '@nomiclabs/hardhat-ethers';
-import '@nomiclabs/hardhat-vyper';
-import '@nomiclabs/hardhat-waffle';
-import '@nomicfoundation/hardhat-verify';
-import 'hardhat-local-networks-config-plugin';
-import 'hardhat-ignore-warnings';
+import hardhatEthersPlugin from '@nomicfoundation/hardhat-ethers';
+import hardhatVerifyPlugin from '@nomicfoundation/hardhat-verify';
+import hardhatNetworkHelpersPlugin from '@nomicfoundation/hardhat-network-helpers';
+import hardhatMochaPlugin from '@nomicfoundation/hardhat-mocha';
 import 'tsconfig-paths/register';
 
 import './src/helpers/setupTests';
 
 import { task } from 'hardhat/config';
-import { TASK_TEST } from 'hardhat/builtin-tasks/task-names';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
 
 import path from 'path';
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
@@ -18,7 +14,6 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { checkArtifact, extractArtifact } from './src/artifact';
 import test from './src/test';
 import Task, { TaskMode, TaskStatus } from './src/task';
-import Verifier from './src/verifier';
 import logger, { Logger } from './src/logger';
 import {
   checkActionIds,
@@ -35,12 +30,13 @@ import {
   saveTimelockAuthorizerConfig,
   withRetries,
 } from './src/network';
-import { Etherscan } from '@nomicfoundation/hardhat-verify/etherscan';
-import { ApiKey } from '@nomicfoundation/hardhat-verify/types';
+
+type HardhatRuntimeEnvironment = any;
 
 const THEGRAPHURLS: { [key: string]: string } = {};
 
-task('deploy', 'Run deployment task')
+if (process.env.ENABLE_LEGACY_TASKS === 'true') {
+  task('deploy', 'Run deployment task')
   .addParam('id', 'Deployment task ID')
   .addFlag('force', 'Ignore previous deployments')
   .addOptionalParam('key', 'Etherscan API key to verify contracts')
@@ -52,33 +48,11 @@ task('deploy', 'Run deployment task')
     ) => {
       Logger.setDefaults(false, args.verbose || false);
 
-      const network = hre.network.name;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const networkApiKey = args.key ?? (hre.config.networks[network] as any).verificationAPIKey;
-      // If the v1 API flag is set, we need to wrap the API key in an object with the network name as the key
-      // as this is how the Etherscan verification library expects it (otherwise it defaults to v2).
-      const apiKey: ApiKey = args.v1
-        ? {
-            [network]: networkApiKey,
-          }
-        : networkApiKey;
-
-      const verifier = apiKey
-        ? new Verifier(
-            hre.network,
-            apiKey,
-            await Etherscan.getCurrentChainConfig(
-              hre.network.name,
-              hre.network.provider,
-              hre.config.etherscan.customChains
-            )
-          )
-        : undefined;
-      await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).run(args);
+      await new Task(args.id, TaskMode.LIVE, hre.network.name).run(args);
     }
   );
 
-task('verify-contract', `Verify a task's deployment on a block explorer`)
+  task('verify-contract', `Verify a task's deployment on a block explorer`)
   .addParam('id', 'Deployment task ID')
   .addParam('name', 'Contract name')
   .addParam('address', 'Contract address')
@@ -92,35 +66,12 @@ task('verify-contract', `Verify a task's deployment on a block explorer`)
     ) => {
       Logger.setDefaults(false, args.verbose || false);
 
-      const network = hre.network.name;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const networkApiKey = args.key ?? (hre.config.networks[network] as any).verificationAPIKey;
-      // If the v1 API flag is set, we need to wrap the API key in an object with the network name as the key
-      // as this is how the Etherscan verification library expects it (otherwise it defaults to v2).
-      const apiKey: ApiKey = args.v1
-        ? {
-            [network]: networkApiKey,
-          }
-        : networkApiKey;
-
-      const verifier = apiKey
-        ? new Verifier(
-            hre.network,
-            apiKey,
-            await Etherscan.getCurrentChainConfig(
-              hre.network.name,
-              hre.network.provider,
-              hre.config.etherscan.customChains
-            )
-          )
-        : undefined;
-
       // Contracts can only be verified in Live mode
-      await new Task(args.id, TaskMode.LIVE, hre.network.name, verifier).verify(args.name, args.address, args.args);
+      await new Task(args.id, TaskMode.LIVE, hre.network.name).verify(args.name, args.address, args.args);
     }
   );
 
-task('extract-artifacts', `Extract contract artifacts from their build-info`)
+  task('extract-artifacts', `Extract contract artifacts from their build-info`)
   .addOptionalParam('id', 'Specific task ID')
   .addOptionalParam('file', 'Target build-info file name')
   .addOptionalParam('name', 'Contract name')
@@ -138,7 +89,7 @@ task('extract-artifacts', `Extract contract artifacts from their build-info`)
     }
   });
 
-task('check-deployments', `Check that all tasks' deployments correspond to their build-info and inputs`)
+  task('check-deployments', `Check that all tasks' deployments correspond to their build-info and inputs`)
   .addOptionalParam('id', 'Specific task ID')
   .setAction(async (args: { id?: string; force?: boolean; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     // The force argument above is actually not passed (and not required or used in CHECK mode), but it is the easiest
@@ -169,7 +120,7 @@ task('check-deployments', `Check that all tasks' deployments correspond to their
     }
   });
 
-task('check-artifacts', `check that contract artifacts correspond to their build-info`)
+  task('check-artifacts', `check that contract artifacts correspond to their build-info`)
   .addOptionalParam('id', 'Specific task ID')
   .setAction(async (args: { id?: string; verbose?: boolean }) => {
     Logger.setDefaults(false, args.verbose || false);
@@ -185,7 +136,7 @@ task('check-artifacts', `check that contract artifacts correspond to their build
     }
   });
 
-task('save-action-ids', `Print the action IDs for a particular contract and checks their uniqueness`)
+  task('save-action-ids', `Print the action IDs for a particular contract and checks their uniqueness`)
   .addOptionalParam('id', 'Specific task ID')
   .addOptionalParam('name', 'Contract name')
   .addOptionalParam('address', 'Address of Pool created from a factory')
@@ -257,7 +208,7 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
     }
   );
 
-task('check-action-ids', `Check that contract action-ids correspond the expected values`)
+  task('check-action-ids', `Check that contract action-ids correspond the expected values`)
   .addOptionalParam('id', 'Specific task ID')
   .setAction(async (args: { id?: string; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     Logger.setDefaults(false, args.verbose || false);
@@ -275,7 +226,7 @@ task('check-action-ids', `Check that contract action-ids correspond the expected
     checkActionIdUniqueness(hre.network.name);
   });
 
-task('get-action-id-info', `Returns all the matches for the given actionId`)
+  task('get-action-id-info', `Returns all the matches for the given actionId`)
   .addPositionalParam('id', 'ActionId to use for the lookup')
   .setAction(async (args: { id: string; verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     Logger.setDefaults(false, args.verbose || false);
@@ -290,7 +241,7 @@ task('get-action-id-info', `Returns all the matches for the given actionId`)
     }
   });
 
-task('get-action-ids-info', `Reconstructs all the permissions from TheGraph AP and action-ids files`).setAction(
+  task('get-action-ids-info', `Reconstructs all the permissions from TheGraph AP and action-ids files`).setAction(
   async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     Logger.setDefaults(false, args.verbose || false);
     logger.log(`Fetching permissions using TheGraph API on ${hre.network.name}...`, '');
@@ -310,7 +261,7 @@ task('get-action-ids-info', `Reconstructs all the permissions from TheGraph AP a
   }
 );
 
-task('build-address-lookup', `Build a lookup table from contract addresses to the relevant deployment`).setAction(
+  task('build-address-lookup', `Build a lookup table from contract addresses to the relevant deployment`).setAction(
   async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     Logger.setDefaults(false, args.verbose || false);
     if (hre.network.name === 'hardhat') {
@@ -328,7 +279,7 @@ task('build-address-lookup', `Build a lookup table from contract addresses to th
   }
 );
 
-task(
+  task(
   'check-address-lookup',
   `Check whether the existing lookup table from contract addresses to the relevant deployments is correct`
 ).setAction(async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
@@ -353,7 +304,7 @@ task(
   }
 });
 
-task('build-timelock-authorizer-config', `Builds JSON file with Timelock Authorizer configuration`).setAction(
+  task('build-timelock-authorizer-config', `Builds JSON file with Timelock Authorizer configuration`).setAction(
   async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
     Logger.setDefaults(false, args.verbose || false);
 
@@ -380,7 +331,7 @@ task('build-timelock-authorizer-config', `Builds JSON file with Timelock Authori
   }
 );
 
-task(
+  task(
   'check-timelock-authorizer-config',
   `Check whether the existing timelock authorizer configuration file is correct`
 ).setAction(async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
@@ -414,7 +365,7 @@ task(
   }
 });
 
-task(
+  task(
   'verify-timelock-authorizer-config',
   `Check whether the existing timelock authorizer configuration file matches the delays configured onchain`
 ).setAction(async (args: { verbose?: boolean }, hre: HardhatRuntimeEnvironment) => {
@@ -450,9 +401,11 @@ task(
   }
 });
 
-task(TASK_TEST).addOptionalParam('id', 'Specific task ID of the fork test to run.').setAction(test);
+  task('test').addOptionalParam('id', 'Specific task ID of the fork test to run.').setAction(test);
+}
 
 export default {
+  plugins: [hardhatEthersPlugin, hardhatVerifyPlugin, hardhatNetworkHelpersPlugin, hardhatMochaPlugin],
   mocha: {
     timeout: 600000,
   },
@@ -478,9 +431,6 @@ export default {
         },
       },
     ],
-  },
-  vyper: {
-    compilers: [{ version: '0.3.1' }, { version: '0.3.3' }],
   },
   paths: {
     artifacts: './src/helpers/.hardhat/artifacts',

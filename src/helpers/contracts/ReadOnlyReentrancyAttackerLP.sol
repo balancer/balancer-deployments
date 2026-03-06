@@ -15,10 +15,11 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
-import "@balancer-labs/v2-interfaces/contracts/pool-linear/ILinearPool.sol";
+import { IVault } from "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
+import { ILinearPool } from "@balancer-labs/v2-interfaces/contracts/pool-linear/ILinearPool.sol";
 
-import "@balancer-labs/v2-solidity-utils/contracts/helpers/ERC20Helpers.sol";
+import { IERC20 } from "@balancer-labs/v2-interfaces/contracts/solidity-utils/openzeppelin/IERC20.sol";
+import { IAsset } from "@balancer-labs/v2-interfaces/contracts/vault/IAsset.sol";
 import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
 
 /**
@@ -28,7 +29,10 @@ import "@balancer-labs/v2-solidity-utils/contracts/math/FixedPoint.sol";
 contract ReadOnlyReentrancyAttackerLP {
     using FixedPoint for uint256;
 
-    enum AttackType { SET_TARGETS, SET_SWAP_FEE }
+    enum AttackType {
+        SET_TARGETS,
+        SET_SWAP_FEE
+    }
 
     uint8 public constant RECOVERY_MODE_EXIT_KIND = 255;
 
@@ -58,11 +62,7 @@ contract ReadOnlyReentrancyAttackerLP {
      * @param attackType Type of attack; determines which vulnerable pool function to call.
      * @param bptAmountIn Amount of BPT to exit with (exchanged for WETH, unwrapped to ETH)
      */
-    function startAttack(
-        ILinearPool pool,
-        AttackType attackType,
-        uint256 bptAmountIn
-    ) external payable {
+    function startAttack(ILinearPool pool, AttackType attackType, uint256 bptAmountIn) external payable {
         _attackType = attackType;
         _pool = pool;
         IVault vault = _VAULT;
@@ -104,6 +104,12 @@ contract ReadOnlyReentrancyAttackerLP {
             pool.setTargets(_LOWER_TARGET, _UPPER_TARGET);
         } else if (attackType == AttackType.SET_SWAP_FEE) {
             pool.setSwapFeePercentage(_SWAP_FEE_PERCENTAGE);
+        }
+    }
+
+    function _asIAsset(IERC20[] memory tokens) private pure returns (IAsset[] memory assets) {
+        assembly {
+            assets := tokens
         }
     }
 }

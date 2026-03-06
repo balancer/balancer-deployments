@@ -1,14 +1,16 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
+import { BigNumber } from '@helpers/numbers';
 
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { expectTransferEvent } from '@helpers/expectTransfer';
-import { _TypedDataEncoder } from 'ethers/lib/utils';
+import { TypedDataEncoder as _TypedDataEncoder } from 'ethers';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
@@ -184,7 +186,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
 
   describe('only caller check', () => {
     before('setup voter proxy', async () => {
-      const voterProxyABI = new ethers.utils.Interface([
+      const voterProxyABI = new ethers.Interface([
         'function isValidSignature(bytes32 _hash, bytes) view returns (bytes4)',
         'function setVote(bytes32 _hash, bool _valid)',
         'function claimFees(address _distroContract, address _token) returns (uint256)',

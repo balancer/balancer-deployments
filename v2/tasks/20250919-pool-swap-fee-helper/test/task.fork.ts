@@ -5,11 +5,11 @@ import { BigNumber, fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { PoolSwapFeeHelperDeployment } from '../input';
 import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
 import { ZERO_ADDRESS } from '@helpers/constants';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
   const TASK_NAME = '20250919-pool-swap-fee-helper';

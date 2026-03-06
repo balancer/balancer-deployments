@@ -1,6 +1,6 @@
 import { VaultFactoryDeployment } from './input';
 import { Task, TaskMode, TaskRunOptions } from '@src';
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {

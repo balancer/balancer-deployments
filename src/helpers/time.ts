@@ -1,41 +1,43 @@
-import { BigNumber, ContractReceipt } from 'ethers';
-
 import { BigNumberish, bn } from './numbers';
 
-import { time } from '@nomicfoundation/hardhat-network-helpers';
+import { time } from './networkHelpers';
 
-export const currentTimestamp = async (): Promise<BigNumber> => {
+export const currentTimestamp = async (): Promise<bigint> => {
   return bn(await time.latest());
 };
 
-export const currentWeekTimestamp = async (): Promise<BigNumber> => {
+export const currentWeekTimestamp = async (): Promise<bigint> => {
   return (await currentTimestamp()).div(WEEK).mul(WEEK);
 };
 
-export const fromNow = async (seconds: number): Promise<BigNumber> => {
+export const fromNow = async (seconds: number): Promise<bigint> => {
   const now = await currentTimestamp();
   return now.add(seconds);
 };
 
 export const advanceTime = async (seconds: BigNumberish): Promise<void> => {
-  await time.increase(seconds);
+  await time.increase(bn(seconds));
 };
 
 export const advanceToTimestamp = async (timestamp: BigNumberish): Promise<void> => {
-  await time.increaseTo(timestamp);
+  await time.increaseTo(bn(timestamp));
 };
 
 export const setNextBlockTimestamp = async (timestamp: BigNumberish): Promise<void> => {
-  await time.setNextBlockTimestamp(timestamp);
+  await time.setNextBlockTimestamp(bn(timestamp));
 };
 
 export const lastBlockNumber = async (): Promise<number> => await time.latestBlock();
 
-export const receiptTimestamp = async (receipt: ContractReceipt | Promise<ContractReceipt>): Promise<number> => {
-  const { ethers } = await import('hardhat');
+export const receiptTimestamp = async (
+  receipt: { blockHash: string | null } | Promise<{ blockHash: string | null }>
+): Promise<number> => {
+  const { ethers } = await import('@src/hardhatCompat');
 
   const blockHash = (await receipt).blockHash;
+  if (!blockHash) throw new Error('Receipt does not contain blockHash');
   const block = await ethers.provider.getBlock(blockHash);
+  if (!block) throw new Error(`Could not find block by hash: ${blockHash}`);
   return block.timestamp;
 };
 

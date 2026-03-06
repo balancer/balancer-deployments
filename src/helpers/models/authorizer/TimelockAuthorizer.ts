@@ -1,6 +1,5 @@
-import { Interface } from 'ethers/lib/utils';
-import { BigNumber, Contract, ContractTransaction } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { Interface, Contract } from 'ethers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import * as expectEvent from '@helpers/expectEvent';
 import { BigNumberish } from '@helpers/numbers';
@@ -307,6 +306,9 @@ export default class TimelockAuthorizer {
   }
 
   with(params: TxParams = {}): Contract {
-    return params.from ? this.instance.connect(params.from) : this.instance;
+    return (params.from ? this.instance.connect(params.from) : this.instance) as Contract;
   }
 }
+
+type BigNumber = bigint;
+type ContractTransaction = unknown;

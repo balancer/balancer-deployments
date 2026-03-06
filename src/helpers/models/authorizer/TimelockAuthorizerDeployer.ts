@@ -1,4 +1,4 @@
-import { ethers } from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 
 import { MONTH } from '@helpers/time';
 import { deploy } from '@src';

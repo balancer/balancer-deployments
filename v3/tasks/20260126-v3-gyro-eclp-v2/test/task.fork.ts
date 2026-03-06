@@ -1,11 +1,11 @@
-import hre from 'hardhat';
+import hre from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import { GyroECLPPoolDeployment } from '../input';
 import { currentTimestamp, MONTH } from '@helpers/time';
@@ -188,6 +188,6 @@ describeForkTest('V3-GyroECLPPool-V2', 'mainnet', 24285750, function () {
     const yearsUntilExpiration = bn(poolPauseWindowEndTime)
       .sub(now)
       .div(12 * MONTH);
-    expect(yearsUntilExpiration).to.gt(50);
+    expect(yearsUntilExpiration.gt(50)).to.be.true;
   });
 });

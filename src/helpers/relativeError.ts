@@ -3,16 +3,16 @@ import { Decimal } from 'decimal.js';
 import { BigNumberish, bn, pct } from './numbers';
 
 export function expectEqualWithError(actual: BigNumberish, expected: BigNumberish, error: BigNumberish = 0.001): void {
-  actual = bn(actual);
-  expected = bn(expected);
-  const acceptedError = pct(expected, error);
+  const actualBn = bn(actual);
+  const expectedBn = bn(expected);
+  const acceptedError = pct(expectedBn, error);
 
-  if (actual.gte(0)) {
-    expect(actual).to.be.at.least(expected.sub(acceptedError));
-    expect(actual).to.be.at.most(expected.add(acceptedError));
+  if (actualBn >= 0n) {
+    expect(actualBn >= expectedBn - acceptedError).to.be.true;
+    expect(actualBn <= expectedBn + acceptedError).to.be.true;
   } else {
-    expect(actual).to.be.at.most(expected.sub(acceptedError));
-    expect(actual).to.be.at.least(expected.add(acceptedError));
+    expect(actualBn <= expectedBn - acceptedError).to.be.true;
+    expect(actualBn >= expectedBn + acceptedError).to.be.true;
   }
 }
 
@@ -32,12 +32,12 @@ export function expectLessThanOrEqualWithError(
   expected: BigNumberish,
   error: BigNumberish = 0.001
 ): void {
-  actual = bn(actual);
-  expected = bn(expected);
-  const minimumValue = expected.sub(pct(expected, error));
+  const actualBn = bn(actual);
+  const expectedBn = bn(expected);
+  const minimumValue = expectedBn - pct(expectedBn, error);
 
-  expect(actual).to.be.at.most(expected);
-  expect(actual).to.be.at.least(minimumValue);
+  expect(actualBn <= expectedBn).to.be.true;
+  expect(actualBn >= minimumValue).to.be.true;
 }
 
 export function expectRelativeError(actual: Decimal, expected: Decimal, maxRelativeError: Decimal): void {

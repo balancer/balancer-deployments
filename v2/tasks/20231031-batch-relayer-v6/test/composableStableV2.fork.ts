@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
 import { fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
@@ -114,7 +114,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
     const composableInitialBalances = Array.from({ length: tokens.length + 1 }).map((_, i) =>
       i == bptIndex ? 0 : i < bptIndex ? initialBalances[i] : initialBalances[i - 1]
     );
-    const { tokens: allTokens } = await vault.getPoolTokens(poolId);
+    const { tokens: allTokensResult } = await vault.getPoolTokens(poolId);
+    const allTokens = [...allTokensResult];
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
     await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -142,7 +143,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
       const whaleDAIBalanceBeforeJoinExit = await dai.balanceOf(whale.address);
       const ownerDAIBalanceBeforeJoinExit = await dai.balanceOf(owner.address);
 
-      const { tokens: allTokens } = await vault.getPoolTokens(poolId);
+      const { tokens: allTokensResult } = await vault.getPoolTokens(poolId);
+      const allTokens = [...allTokensResult];
 
       const joinUserData = StablePoolEncoder.joinAllTokensInForExactBptOut(bptAmount);
 

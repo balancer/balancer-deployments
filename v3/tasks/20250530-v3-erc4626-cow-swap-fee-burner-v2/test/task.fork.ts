@@ -1,10 +1,10 @@
-import hre, { ethers } from 'hardhat';
+import hre, { ethers } from '@src/hardhatCompat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { ERC4626CowSwapFeeBurnerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { expect } from 'chai';
 import { currentTimestamp } from '@helpers/time';
 
@@ -110,14 +110,23 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
       receiver: admin.address,
       sellAmount: usdcBalanceOfBurner,
       buyAmount: minAmountOut.toNumber(),
-      validTo: blockTimestamp.add(FIVE_MINUTES).toNumber(),
+      validTo: blockTimestamp.add(FIVE_MINUTES).toString(),
       appData: input.AppDataHash,
       feeAmount: 0,
       kind: ethers.utils.keccak256(ethers.utils.toUtf8Bytes('sell')),
       partiallyFillable: true,
     };
 
-    expect(existingOrder).to.deep.equal(expectedOrder);
+    expect(existingOrder.sellToken).to.equal(expectedOrder.sellToken);
+    expect(existingOrder.buyToken).to.equal(expectedOrder.buyToken);
+    expect(existingOrder.receiver).to.equal(expectedOrder.receiver);
+    expect(existingOrder.sellAmount.toString()).to.equal(expectedOrder.sellAmount.toString());
+    expect(existingOrder.buyAmount.toString()).to.equal(expectedOrder.buyAmount.toString());
+    expect(existingOrder.validTo.toString()).to.equal(expectedOrder.validTo.toString());
+    expect(existingOrder.appData).to.equal(expectedOrder.appData);
+    expect(existingOrder.feeAmount.toString()).to.equal(expectedOrder.feeAmount.toString());
+    expect(existingOrder.kind).to.equal(expectedOrder.kind);
+    expect(existingOrder.partiallyFillable).to.equal(expectedOrder.partiallyFillable);
     expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Active);
 
     // The order uses the current burner balance, which is slightly greater than `previewRedeem` because of rounding.

@@ -1,7 +1,8 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -57,11 +58,11 @@ describeForkTest.skip('OmniVotingEscrowChild', 'arbitrum', 94050211, function ()
       await expect(omniVotingEscrowChild.getTrustedRemoteAddress(MAINNET_LZ_CHAIN_ID)).to.be.revertedWith(
         'LzApp: no trusted path record'
       );
-      const encodedEndpoint = ethers.utils.defaultAbiCoder.encode(['bytes'], [MAINNET_TRUSTED_ENDPOINT]);
+      const encodedEndpoint = ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], [MAINNET_TRUSTED_ENDPOINT]);
       await omniVotingEscrowChild.connect(deployer).setTrustedRemoteAddress(MAINNET_LZ_CHAIN_ID, encodedEndpoint);
 
       const remoteAddressBytes = await omniVotingEscrowChild.getTrustedRemoteAddress(MAINNET_LZ_CHAIN_ID);
-      const decodedAddress = ethers.utils.defaultAbiCoder.decode(['bytes'], remoteAddressBytes)[0];
+      const decodedAddress = ethers.AbiCoder.defaultAbiCoder().decode(['bytes'], remoteAddressBytes)[0];
 
       expect(decodedAddress).to.be.eq(MAINNET_TRUSTED_ENDPOINT.toLowerCase());
     });

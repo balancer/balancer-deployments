@@ -1,10 +1,11 @@
-import hre, { ethers } from 'hardhat';
+import hre from 'hardhat';
+import { ethers } from '@src/hardhatCompat';
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { GaugeType } from '@helpers/models/types/types';
 import { BigNumber, fp, FP_ONE } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK, MONTH } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
@@ -13,7 +14,7 @@ import { getForkedNetwork } from '@src';
 import { getSigner, impersonate } from '@src';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { ZERO_ADDRESS, MAX_UINT256 } from '@helpers/constants';
-import { range } from 'lodash';
+import range from 'lodash.range';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { describeForkTest } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
@@ -167,7 +168,9 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, 10000); // Max voting power is 10k points
+    const remainingVotingPower = 10000 - Number(await gaugeController['vote_user_power(address)'](veBALHolder.address));
+    expect(remainingVotingPower).to.be.gt(0);
+    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, remainingVotingPower);
 
     // We now need to go through an epoch for the votes to be locked in
     await advanceTime(DAY * 8);
@@ -177,7 +180,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
       await gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, await currentWeekTimestamp())
-    ).to.be.gt(weightCap);
+    ).to.be.gt(weightCap as any);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
 
@@ -223,7 +226,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     );
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)',
     ]);
 
@@ -251,7 +254,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // We require that they're all above the cap for simplicity - this lets us use the cap as each week's weight (and
     // also tests cap behavior).
     for (const relativeWeight of relativeWeights) {
-      expect(relativeWeight).to.be.gt(weightCap);
+      expect(relativeWeight).to.be.gt(weightCap as any);
     }
 
     // The amount of tokens minted should equal the sum of the weekly emissions rate times the relative weight of the
@@ -283,7 +286,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     expect(transferEvent.args.value).to.be.almostEqual(expectedEmissions);
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event TokensBridgingInitiated(address indexed token, address indexed sender, uint256 value, bytes32 indexed messageId)',
     ]);
 
@@ -298,7 +301,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // looking at some of the data encoded in the UserRequestForAffirmation event. Said data is relatively complicated,
     // but the last bytes seem to be the ABI encoding of (token, recipient, amount). This is based on the event at index
     // 261 of mainnet transaction 0x6a0dcbf72db757f83bf1c9b42e5f940c31e3240479614635fcbe5a5f72091692.
-    const ambInterface = new ethers.utils.Interface([
+    const ambInterface = new ethers.Interface([
       'event UserRequestForAffirmation(bytes32 indexed messageId, bytes encodedData)',
     ]);
 

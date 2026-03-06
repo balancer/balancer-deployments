@@ -1,13 +1,13 @@
-import hre, { ethers } from 'hardhat';
+import hre, { ethers } from '@src/hardhatCompat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import type { HardhatEthersSigner as SignerWithAddress } from '@nomicfoundation/hardhat-ethers/types';
 import { fp, maxUint } from '@helpers/numbers';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
 import { RouterDeployment } from '../input';
-import { setBalance } from '@nomicfoundation/hardhat-network-helpers';
+import { setBalance } from '@helpers/networkHelpers';
 
 describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
   const LARGE_TOKEN_HOLDER = '0xBA12222222228d8Ba445958a75a0704d566BF2C8';
@@ -129,7 +129,7 @@ describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
       to: router.address,
       value: ethers.utils.parseEther('1.0'),
     });
-    await expect(wethTx).to.not.be.reverted;
+    await wethTx;
 
     const aliceTx = alice.sendTransaction({
       to: router.address,

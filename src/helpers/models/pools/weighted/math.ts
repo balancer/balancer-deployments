@@ -1,5 +1,4 @@
 import { Decimal } from 'decimal.js';
-import { BigNumber } from 'ethers';
 
 import { BigNumberish, bn, decimal, fp, fromFp, toFp, fpMul, fpDiv, FP_ONE, FP_100_PCT } from '../../../numbers';
 
@@ -235,3 +234,5 @@ export function calculateBPTPrice(
 ): BigNumber {
   return bn(toFp(fromFp(fpBalance).div(fromFp(fpWeight)).div(fromFp(totalSupply))).toFixed(0));
 }
+
+type BigNumber = bigint;
