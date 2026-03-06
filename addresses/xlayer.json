@@ -282,7 +282,7 @@
         "address": "0x83E443EF4f9963C77bd860f94500075556668cb8"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250702-v3-reclamm-pool-v2": {
