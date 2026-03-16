@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber';
 import { Contract, ContractTransactionResponse, Interface } from 'ethers';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
@@ -58,15 +57,15 @@ export default class TimelockAuthorizer {
     return this.instance.isCanceler(scheduledExecutionId, this.toAddress(account));
   }
 
-  async delay(action: string): Promise<BigNumber> {
+  async delay(action: string): Promise<bigint> {
     return this.instance.getActionIdDelay(action);
   }
 
-  async getActionIdRevokeDelay(actionId: string): Promise<BigNumber> {
+  async getActionIdRevokeDelay(actionId: string): Promise<bigint> {
     return this.instance.getActionIdRevokeDelay(actionId);
   }
 
-  async getActionIdGrantDelay(actionId: string): Promise<BigNumber> {
+  async getActionIdGrantDelay(actionId: string): Promise<bigint> {
     return this.instance.getActionIdGrantDelay(actionId);
   }
 
@@ -74,7 +73,7 @@ export default class TimelockAuthorizer {
     executed: boolean;
     cancelled: boolean;
     protected: boolean;
-    executableAt: BigNumber;
+    executableAt: bigint;
     data: string;
     where: string;
   }> {

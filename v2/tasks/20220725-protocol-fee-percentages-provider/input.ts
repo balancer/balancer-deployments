@@ -1,11 +1,10 @@
 import { fp } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
-import { BigNumber } from '@ethersproject/bignumber';
 
 export type ProtocolFeePercentagesProviderDeployment = {
   Vault: string;
-  maxYieldValue: BigNumber;
-  maxAUMValue: BigNumber;
+  maxYieldValue: bigint;
+  maxAUMValue: bigint;
 };
 
 const Vault = new Task('20210418-vault', TaskMode.READ_ONLY);

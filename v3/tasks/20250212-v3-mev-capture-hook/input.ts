@@ -1,12 +1,11 @@
 import { bn, fp } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
-import { BigNumber } from '@ethersproject/bignumber';
 
 export type MevCaptureHookDeployment = {
   Vault: string;
   BalancerContractRegistry: string;
-  DefaultMevTaxMultiplier: BigNumber;
-  DefaultMevTaxThreshold: BigNumber;
+  DefaultMevTaxMultiplier: bigint;
+  DefaultMevTaxThreshold: bigint;
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);

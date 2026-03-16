@@ -1,5 +1,5 @@
-import { defaultAbiCoder } from '@ethersproject/abi';
-import { BigNumberish } from '@ethersproject/bignumber';
+import { AbiCoder } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 // RECOVERY_MODE must match BasePoolUserData.RECOVERY_MODE_EXIT_KIND, the value that
 // (Legacy)BasePool uses to detect the special exit enabled in recovery mode.
@@ -21,5 +21,5 @@ export class BasePoolEncoder {
    * @param bptAmountIn - the amount of BPT to be burned
    */
   static recoveryModeExit = (bptAmountIn: BigNumberish): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256'], [BasePoolExitKind.RECOVERY_MODE, bptAmountIn]);
+    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256'], [BasePoolExitKind.RECOVERY_MODE, bptAmountIn]);
 }

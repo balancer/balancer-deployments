@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { BigNumber } from '@ethersproject/bignumber';
 import { ContractTransactionReceipt, EventLog, Interface, LogDescription, TransactionReceipt } from 'ethers';
 
 // Ported from @openzeppelin/test-helpers to use with Ethers. The Test Helpers don't
@@ -137,11 +136,6 @@ function contains(args: { [key: string]: any | undefined }, key: string, value: 
       value.toString(),
       `expected event argument '${key}' to have value ${value.toString()} but got ${args[key].toString()}`
     );
-  } else if (BigNumber.isBigNumber(args[key]) || BigNumber.isBigNumber(value)) {
-    const actual = BigNumber.isBigNumber(args[key]) ? args[key].toString() : args[key];
-    const expected = BigNumber.isBigNumber(value) ? value.toString() : value;
-
-    expect(args[key]).to.equal(value, `expected event argument '${key}' to have value ${expected} but got ${actual}`);
   } else {
     expect(args[key]).to.be.deep.equal(
       value,

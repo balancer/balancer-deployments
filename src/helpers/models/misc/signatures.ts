@@ -1,7 +1,7 @@
 import { MaxUint256 as MAX_DEADLINE } from '@ethersproject/constants';
 import { Contract } from '@ethersproject/contracts';
 import { hexValue, hexZeroPad, splitSignature } from '@ethersproject/bytes';
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
+import { BigNumberish } from '@ethersproject/bignumber';
 import { Signer, TypedDataSigner } from '@ethersproject/abstract-signer';
 
 export type Account = string | Signer | Contract;
@@ -185,7 +185,7 @@ export class BalancerMinterAuthorization {
     user: Signer & TypedDataSigner,
     deadline: BigNumberish = MAX_DEADLINE,
     nonce?: BigNumberish
-  ): Promise<{ v: number; r: string; s: string; deadline: BigNumber }> => {
+  ): Promise<{ v: number; r: string; s: string; deadline: bigint }> => {
     const { chainId } = await minterContract.provider.getNetwork();
     if (!nonce) {
       const userAddress = await user.getAddress();
@@ -217,6 +217,6 @@ export class BalancerMinterAuthorization {
 
     const signature = await user._signTypedData(domain, types, value);
 
-    return { ...splitSignature(signature), deadline: BigNumber.from(deadline) };
+    return { ...splitSignature(signature), deadline: BigInt(deadline.toString()) };
   };
 }

@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers';
 import { Task, TaskMode } from '@src';
 import { fp } from '@helpers/numbers';
 
@@ -6,8 +5,8 @@ export type AvalancheRootGaugeFactoryDeployment = {
   Vault: string;
   BalancerMinter: string;
   MultichainRouter: string;
-  MinBridgeLimit: BigNumber;
-  MaxBridgeLimit: BigNumber;
+  MinBridgeLimit: bigint;
+  MaxBridgeLimit: bigint;
 };
 
 const Vault = new Task('20210418-vault', TaskMode.READ_ONLY);

@@ -1,21 +1,21 @@
-import { BigNumber } from '@ethersproject/bignumber';
 import { TransactionReceipt } from 'ethers';
 
 import { BigNumberish, bn } from './numbers';
 
 import { time } from '@nomicfoundation/hardhat-network-helpers';
 
-export const currentTimestamp = async (): Promise<BigNumber> => {
+export const currentTimestamp = async (): Promise<bigint> => {
   return bn(await time.latest());
 };
 
-export const currentWeekTimestamp = async (): Promise<BigNumber> => {
-  return (await currentTimestamp()).div(WEEK).mul(WEEK);
+export const currentWeekTimestamp = async (): Promise<bigint> => {
+  const ts = await currentTimestamp();
+  return (ts / BigInt(WEEK)) * BigInt(WEEK);
 };
 
-export const fromNow = async (seconds: number): Promise<BigNumber> => {
+export const fromNow = async (seconds: number): Promise<bigint> => {
   const now = await currentTimestamp();
-  return now.add(seconds);
+  return now + BigInt(seconds);
 };
 
 export const advanceTime = async (seconds: BigNumberish): Promise<void> => {
