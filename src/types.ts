@@ -1,5 +1,6 @@
-import { Contract, BigNumber } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { Contract } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export { Artifact, Libraries } from 'hardhat/types';
 

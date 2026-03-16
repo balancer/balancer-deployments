@@ -19,9 +19,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.bufferPeriodDuration,
     input.minTradeAmount,
     input.minWrapAmount,
-    ethers.utils.keccak256(input.vaultCreationCode),
-    ethers.utils.keccak256(input.vaultExtensionCreationCode),
-    ethers.utils.keccak256(input.vaultAdminCreationCode),
+    ethers.keccak256(input.vaultCreationCode),
+    ethers.keccak256(input.vaultExtensionCreationCode),
+    ethers.keccak256(input.vaultAdminCreationCode),
   ];
 
   const vaultFactory = await task.deployAndVerify('VaultFactory', vaultFactoryArgs, from, force);
@@ -32,7 +32,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   }
 
   const deployTransaction = await task.deployFactoryContracts(
-    await vaultFactory.populateTransaction.create(
+    await vaultFactory.create.populateTransaction(
       input.salt,
       vaultAddress,
       input.vaultCreationCode,

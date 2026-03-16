@@ -25,7 +25,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     const mockRateProvider = await task.instanceAt('HyperEVMRateProvider', task.output()['MockHyperEVMRateProvider']);
 
-    await task.verify('HyperEVMRateProvider', mockRateProvider.address, [
+    await task.verify('HyperEVMRateProvider', mockRateProvider.target as string, [
       input.ExampleTokenIndex,
       input.ExamplePairIndex,
     ]);

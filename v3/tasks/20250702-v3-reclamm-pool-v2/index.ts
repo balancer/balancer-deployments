@@ -99,6 +99,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     };
 
     // We are now ready to verify the Pool
-    await task.verify('ReClammPool', mockPool.address, [poolParams, input.Vault]);
+    await task.verify('ReClammPool', mockPool.target as string, [poolParams, input.Vault]);
   }
 };

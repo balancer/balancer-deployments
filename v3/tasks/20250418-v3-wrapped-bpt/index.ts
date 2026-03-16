@@ -22,7 +22,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     );
 
     // We are now ready to verify the wrapper
-    await task.verify('WrappedBalancerPoolToken', mockWrappedBalancerPoolToken.address, [
+    await task.verify('WrappedBalancerPoolToken', mockWrappedBalancerPoolToken.target as string, [
       input.Vault,
       await mockWrappedBalancerPoolToken.balancerPoolToken(),
       await mockWrappedBalancerPoolToken.name(),

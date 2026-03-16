@@ -1,5 +1,5 @@
 import { AsyncFunc } from 'mocha';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 import chai, { expect } from 'chai';
 
 import { NAry } from './models/types/types';

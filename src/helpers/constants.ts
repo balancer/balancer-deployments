@@ -1,4 +1,5 @@
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 import { maxUint, maxInt, minInt } from './numbers';
 
 export const MAX_UINT256: BigNumber = maxUint(256);

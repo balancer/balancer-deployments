@@ -1,10 +1,9 @@
-import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { BigNumberish } from '@ethersproject/bignumber';
+import { BaseContract, BigNumberish } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export type NAry<T> = T | Array<T>;
 
-export type Account = string | SignerWithAddress | Contract | { address: string };
+export type Account = string | SignerWithAddress | BaseContract | { address: string };
 
 export type TxParams = {
   from?: SignerWithAddress;

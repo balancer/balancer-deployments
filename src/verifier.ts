@@ -70,7 +70,13 @@ export default class Verifier {
     const contractInformation = await extractMatchingContractInformation(fullSourceName, buildInfo, deployedBytecode);
     if (!contractInformation) throw Error('Could not find a bytecode matching the requested contract');
 
-    const libraryInformation = await getLibraryInformation(contractInformation, libraries);
+    // Adapt input to the correct type.
+    const normalizedLibraries = await Promise.all(
+      Object.entries(libraries).map(async ([key, value]) => ({
+        [key]: typeof value === 'string' ? value : await value.getAddress(),
+      }))
+    ).then((entries) => Object.assign({}, ...entries));
+    const libraryInformation = await getLibraryInformation(contractInformation, normalizedLibraries);
     buildInfo.input.settings.libraries = libraryInformation.libraries;
 
     const deployArgumentsEncoded =

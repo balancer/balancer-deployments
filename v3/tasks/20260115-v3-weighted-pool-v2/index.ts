@@ -82,6 +82,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     };
 
     // We are now ready to verify the Pool
-    await task.verify('WeightedPool', mockPool.address, [poolParams, input.Vault]);
+    await task.verify('WeightedPool', mockPool.target as string, [poolParams, input.Vault]);
   }
 };

@@ -1,12 +1,12 @@
-import { BigNumber } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import { impersonateAccount, setBalance as setAccountBalance } from '@nomicfoundation/hardhat-network-helpers';
 import { fp } from './helpers/numbers';
 
 export async function getSigners(): Promise<SignerWithAddress[]> {
   const { ethers } = await import('hardhat');
-  return ethers.getSigners();
+  return ethers.getSigners() as unknown as SignerWithAddress[];
 }
 
 export async function getSigner(index = 0): Promise<SignerWithAddress> {
@@ -18,8 +18,7 @@ export async function impersonate(address: string, balance = fp(100)): Promise<S
   await setBalance(address, balance);
 
   const { ethers } = await import('hardhat');
-  const signer = ethers.provider.getSigner(address);
-  return SignerWithAddress.create(signer);
+  return await ethers.provider.getSigner(address);
 }
 
 export async function setBalance(address: string, balance: BigNumber): Promise<void> {

@@ -5,8 +5,7 @@ import { Contract, ethers } from 'ethers';
 import { hexToBytes, Address } from '@ethereumjs/util';
 import { Chain, Common, Hardfork } from '@ethereumjs/common';
 import { EVM } from '@ethereumjs/evm';
-import { getContractAddress } from '@ethersproject/address';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import logger from './logger';
 import Verifier from './verifier';
@@ -127,17 +126,17 @@ export default class Task {
 
     const instance = await this.deploy(name, args, from, force, libs);
 
-    await this.verify(name, instance.address, args, libs);
+    await this.verify(name, instance.target as string, args, libs);
     return instance;
   }
 
   async deployFactoryContracts(
-    populatedDeployTransaction: ethers.PopulatedTransaction,
+    populatedDeployTransaction: ethers.TransactionRequest,
     expectedContracts: Array<string>,
     needsDeploy: boolean,
     from?: SignerWithAddress,
     force?: boolean
-  ): Promise<ethers.providers.TransactionReceipt | undefined> {
+  ): Promise<ethers.TransactionReceipt | undefined> {
     if (!needsDeploy || this.mode == TaskMode.CHECK) {
       return undefined;
     }
@@ -166,13 +165,13 @@ export default class Task {
     from = from || (await getSigner());
     const receipt = await from?.sendTransaction(populatedDeployTransaction);
 
-    return await receipt.wait();
+    return (await receipt.wait()) ?? undefined;
   }
 
   // NOTE: contractsInfo must be sorted by deployment order
   async saveAndVerifyFactoryContracts(
     contractsInfo: Array<ContractInfo>,
-    deployTransaction?: ethers.providers.TransactionReceipt,
+    deployTransaction?: ethers.TransactionReceipt,
     externalTask?: Task,
     factoryAddress?: string
   ): Promise<void> {
@@ -182,7 +181,7 @@ export default class Task {
       // All contracts are deployed by the one factory transaction, so we can find the transaction hash by the first element
       const deployedAddress = this.output()[contractsInfo[0].name];
       const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
-      deployTransaction = await ethers.provider.getTransactionReceipt(deploymentTxHash);
+      deployTransaction = (await ethers.provider.getTransactionReceipt(deploymentTxHash))!;
     }
 
     // Pass in an external task if the artifacts are not in the present task.
@@ -217,11 +216,7 @@ export default class Task {
       logger.success(`Contract ${contractInfo.name} attached at ${contractInfo.expectedAddress}`);
 
       if (this.mode === TaskMode.LIVE) {
-        saveContractDeploymentTransactionHash(
-          contractInfo.expectedAddress,
-          deployTransaction.transactionHash,
-          this.network
-        );
+        saveContractDeploymentTransactionHash(contractInfo.expectedAddress, deployTransaction.hash, this.network);
       }
 
       await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
@@ -238,7 +233,7 @@ export default class Task {
 
   // NOTE: If a contract is deployed by a factory, we must set the factoryAddress in the function arguments.
   async checkBytecodeAndSaveEVMState(
-    deployTransaction: ethers.providers.TransactionReceipt,
+    deployTransaction: ethers.TransactionReceipt,
     artifact: Artifact,
     contractAddress: string,
     args: Array<Param> = [],
@@ -247,9 +242,7 @@ export default class Task {
     const { ethers } = await import('hardhat');
 
     const runBytecode = hexToBytes(
-      ethers.utils.hexlify(
-        ethers.utils.concat([artifact.bytecode, new ethers.utils.Interface(artifact.abi).encodeDeploy(args)])
-      )
+      ethers.hexlify(ethers.concat([artifact.bytecode, new ethers.Interface(artifact.abi).encodeDeploy(args)]))
     );
 
     const block = await ethers.provider.getBlock(deployTransaction.blockNumber);
@@ -267,11 +260,11 @@ export default class Task {
         header: {
           number: BigInt(block.number),
           timestamp: BigInt(block.timestamp),
-          cliqueSigner: () => Address.fromString(ethers.constants.AddressZero),
-          coinbase: Address.fromString(ethers.constants.AddressZero),
+          cliqueSigner: () => Address.fromString(ethers.ZeroAddress),
+          coinbase: Address.fromString(ethers.ZeroAddress),
           difficulty: BigInt(0),
-          gasLimit: block.gasLimit.toBigInt(),
-          prevRandao: hexToBytes(ethers.constants.HashZero),
+          gasLimit: block.gasLimit,
+          prevRandao: hexToBytes(ethers.ZeroHash),
           baseFeePerGas: undefined,
           getBlobGasPrice: () => undefined,
         },
@@ -285,7 +278,7 @@ export default class Task {
     await evm.stateManager.putContractCode(Address.fromString(contractAddress), res.returnValue);
 
     const deployedCode = await ethers.provider.getCode(contractAddress);
-    return ethers.utils.hexValue(res.returnValue) == deployedCode;
+    return ethers.hexlify(res.returnValue) == deployedCode;
   }
 
   async deploy(
@@ -308,17 +301,18 @@ export default class Task {
     if (force || !output[name]) {
       instance = await deploy(this.artifact(name), args, from, libs);
       this.save({ [name]: instance });
-      logger.success(`Deployed ${name} at ${instance.address}`);
+      logger.success(`Deployed ${name} at ${instance.target as string}`);
 
       if (this.mode === TaskMode.LIVE) {
-        saveContractDeploymentTransactionHash(instance.address, instance.deployTransaction.hash, this.network);
+        const deployTx = instance.deploymentTransaction();
+        saveContractDeploymentTransactionHash(instance.target as string, deployTx!.hash, this.network);
       }
     } else {
       logger.info(`${name} already deployed at ${output[name]}`);
       instance = await this.instanceAt(name, output[name]);
     }
 
-    await this.saveInInternalEVMState(instance.address);
+    await this.saveInInternalEVMState(instance.target as string);
 
     return instance;
   }
@@ -374,9 +368,9 @@ export default class Task {
 
     const deployedAddress = this.output()[name];
     const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
-    const deploymentTx = await ethers.provider.getTransaction(deploymentTxHash);
+    const deploymentTx: ethers.TransactionResponse = (await ethers.provider.getTransaction(deploymentTxHash))!;
 
-    const expectedDeploymentAddress = getContractAddress(deploymentTx);
+    const expectedDeploymentAddress = ethers.getCreateAddress(deploymentTx);
     if (deployedAddress !== expectedDeploymentAddress) {
       throw Error(
         `The stated deployment address of '${name}' on network '${this.network}' of task '${this.id}' (${deployedAddress}) does not match the address which would be deployed by the transaction ${deploymentTxHash} (which instead deploys to ${expectedDeploymentAddress})`
@@ -632,7 +626,7 @@ export default class Task {
   private _parseRawOutput(rawOutput: RawOutput): Output {
     return Object.keys(rawOutput).reduce((output: Output, key: string) => {
       const value = rawOutput[key];
-      output[key] = typeof value === 'string' ? value : value.address;
+      output[key] = typeof value === 'string' ? value : (value as { target: string }).target;
       return output;
     }, {});
   }

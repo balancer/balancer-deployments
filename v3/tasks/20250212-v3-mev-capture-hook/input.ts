@@ -1,6 +1,6 @@
 import { bn, fp } from '@helpers/numbers';
 import { Task, TaskMode } from '@src';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 export type MevCaptureHookDeployment = {
   Vault: string;

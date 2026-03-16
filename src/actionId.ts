@@ -1,5 +1,4 @@
-import { FunctionFragment, Interface } from '@ethersproject/abi';
-import { Contract } from '@ethersproject/contracts';
+import { Contract, FunctionFragment, Interface } from 'ethers';
 import fs from 'fs';
 import { padEnd } from 'lodash';
 import path from 'path';
@@ -169,10 +168,13 @@ export async function getActionIds(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const contractInterface = new Interface(artifact.abi as any);
-  const contractFunctions = Object.entries(contractInterface.functions)
-    .filter(([, func]) => ['nonpayable', 'payable'].includes(func.stateMutability))
-    .filter(([, func]) => !ignoredFunctions.includes(func.format()))
-    .sort(([sigA], [sigB]) => (sigA < sigB ? -1 : 1)); // Sort functions alphabetically.
+  const allFunctions: FunctionFragment[] = [];
+  contractInterface.forEachFunction((func) => allFunctions.push(func));
+  const contractFunctions = allFunctions
+    .filter((func) => ['nonpayable', 'payable'].includes(func.stateMutability))
+    .filter((func) => !ignoredFunctions.includes(func.format()))
+    .sort((a, b) => (a.format() < b.format() ? -1 : 1))
+    .map((func) => [func.format(), func] as [string, FunctionFragment]); // Sort functions alphabetically.
 
   const { useAdaptor, actionIdSource } = await getActionIdSource(task, contractName, factoryOutput, factoryName);
   const actionIds: ActionIdData =
@@ -200,16 +202,14 @@ async function getActionIdSource(
   if (task.id === '20241204-v3-vault' && (contractName === 'Vault' || contractName === 'VaultExtension')) {
     const contract = await task.deployedInstance(contractName);
     const vaultAdmin = await task.deployedInstance('VaultAdmin');
-    const contractAsAdmin = vaultAdmin.attach(contract.address);
+    const contractAsAdmin = vaultAdmin.attach(contract.target as string) as Contract;
     return { useAdaptor: false, actionIdSource: contractAsAdmin };
   }
 
   // Not all contracts use the Authorizer directly for authentication.
   // Only if it has the `getActionId` function does it use the Authorizer directly.
   // Contracts without this function either are permissionless or use another method such as the AuthorizerAdaptor.
-  const contractIsAuthorizerAware = Object.values(contractInterface.functions).some(
-    (func) => func.name === 'getActionId'
-  );
+  const contractIsAuthorizerAware = contractInterface.getFunction('getActionId') !== null;
 
   if (contractIsAuthorizerAware) {
     if (factoryOutput) {
@@ -231,7 +231,7 @@ async function getActionIdsFromSource(
 ): Promise<ActionIdData> {
   const functionActionIds = await Promise.all(
     contractFunctions.map(async ([signature, contractFunction]) => {
-      const functionSelector = Interface.getSighash(contractFunction);
+      const functionSelector = contractFunction.selector;
       return [signature, await actionIdSource.getActionId(functionSelector)] as [string, string];
     })
   );

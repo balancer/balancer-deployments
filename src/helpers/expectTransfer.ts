@@ -1,16 +1,15 @@
-import { BigNumberish, ContractReceipt } from 'ethers';
+import { BigNumberish, ContractTransactionReceipt, Interface } from 'ethers';
 import * as expectEvent from './expectEvent';
-import { Interface } from 'ethers/lib/utils';
 import { Account } from './models/types/types';
 import { ZERO_ADDRESS } from './constants';
 
 export function expectTransferEvent(
-  receipt: ContractReceipt,
+  receipt: ContractTransactionReceipt,
   args: { from?: string; to?: string; value?: BigNumberish },
   token: Account
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
-  if (receipt.to.toLowerCase() === toAddress(token).toLowerCase()) {
+  if ((receipt.to ?? '').toLowerCase() === toAddress(token).toLowerCase()) {
     return expectEvent.inReceipt(receipt, 'Transfer', args);
   }
   return expectEvent.inIndirectReceipt(
@@ -24,5 +23,7 @@ export function expectTransferEvent(
 
 function toAddress(to?: Account): string {
   if (!to) return ZERO_ADDRESS;
-  return typeof to === 'string' ? to : to.address;
+  if (typeof to === 'string') return to;
+  if ('target' in to) return to.target as string;
+  return (to as { address: string }).address;
 }

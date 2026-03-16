@@ -1,5 +1,5 @@
 import { Decimal } from 'decimal.js';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 import { BigNumberish, decimal, bn, fp, fromFp, toFp } from '../../../numbers';
 
