@@ -1,7 +1,7 @@
-import '@nomiclabs/hardhat-ethers';
-import '@nomiclabs/hardhat-vyper';
-import '@nomiclabs/hardhat-waffle';
+import '@nomicfoundation/hardhat-toolbox';
+import '@nomicfoundation/hardhat-ethers';
 import '@nomicfoundation/hardhat-verify';
+import '@nomiclabs/hardhat-vyper';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
 import 'tsconfig-paths/register';
