@@ -14,7 +14,7 @@ export default {
     const nextRoot = deployment.nextRoot || ZERO_ADDRESS;
     const rootTransferDelay = deployment.rootTransferDelay || MONTH;
     const entrypoint = await deploy('MockAuthorizerAdaptorEntrypoint');
-    const args = [toAddress(root), toAddress(nextRoot), entrypoint.target as string, rootTransferDelay];
+    const args = [toAddress(root), toAddress(nextRoot), entrypoint.target.toString(), rootTransferDelay];
     const instance = await deploy('TimelockAuthorizer', args);
     return new TimelockAuthorizer(instance, root);
   },
@@ -23,6 +23,6 @@ export default {
 function toAddress(to?: Account): string {
   if (!to) return ZERO_ADDRESS;
   if (typeof to === 'string') return to;
-  if ('target' in to) return to.target as string;
+  if ('target' in to) return to.target.toString();
   return (to as { address: string }).address;
 }

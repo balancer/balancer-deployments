@@ -24,6 +24,6 @@ export function expectTransferEvent(
 function toAddress(to?: Account): string {
   if (!to) return ZERO_ADDRESS;
   if (typeof to === 'string') return to;
-  if ('target' in to) return to.target as string;
+  if ('target' in to) return to.target.toString();
   return (to as { address: string }).address;
 }

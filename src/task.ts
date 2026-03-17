@@ -126,7 +126,7 @@ export default class Task {
 
     const instance = await this.deploy(name, args, from, force, libs);
 
-    await this.verify(name, instance.target as string, args, libs);
+    await this.verify(name, instance.target.toString(), args, libs);
     return instance;
   }
 
@@ -183,7 +183,6 @@ export default class Task {
       const deploymentTxHash = getContractDeploymentTransactionHash(deployedAddress, this.network);
       deployTransaction = (await ethers.provider.getTransactionReceipt(deploymentTxHash))!;
     }
-
     // Pass in an external task if the artifacts are not in the present task.
     // For instance, vault-factory-v2, where for safety we don't want to duplicate the artifacts.
     const artifactSource = externalTask === undefined ? this : externalTask;
@@ -217,9 +216,8 @@ export default class Task {
 
       if (this.mode === TaskMode.LIVE) {
         saveContractDeploymentTransactionHash(contractInfo.expectedAddress, deployTransaction.hash, this.network);
+        await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
       }
-
-      await this.verify(contractInfo.name, contractInfo.expectedAddress, contractInfo.args, undefined, externalTask);
     }
   }
 
@@ -301,18 +299,18 @@ export default class Task {
     if (force || !output[name]) {
       instance = await deploy(this.artifact(name), args, from, libs);
       this.save({ [name]: instance });
-      logger.success(`Deployed ${name} at ${instance.target as string}`);
+      logger.success(`Deployed ${name} at ${instance.target.toString()}`);
 
       if (this.mode === TaskMode.LIVE) {
         const deployTx = instance.deploymentTransaction();
-        saveContractDeploymentTransactionHash(instance.target as string, deployTx!.hash, this.network);
+        saveContractDeploymentTransactionHash(instance.target.toString(), deployTx!.hash, this.network);
       }
     } else {
       logger.info(`${name} already deployed at ${output[name]}`);
       instance = await this.instanceAt(name, output[name]);
     }
 
-    await this.saveInInternalEVMState(instance.target as string);
+    await this.saveInInternalEVMState(instance.target.toString());
 
     return instance;
   }

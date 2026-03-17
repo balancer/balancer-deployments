@@ -26,7 +26,7 @@ export default class TimelockAuthorizer {
   }
 
   get address(): string {
-    return this.instance.target as string;
+    return this.instance.target.toString();
   }
 
   get interface(): Interface {
@@ -295,7 +295,7 @@ export default class TimelockAuthorizer {
 
   toAddress(account: Account): string {
     if (typeof account === 'string') return account;
-    if ('target' in account) return account.target as string;
+    if ('target' in account) return account.target.toString();
     return (account as { address: string }).address;
   }
 

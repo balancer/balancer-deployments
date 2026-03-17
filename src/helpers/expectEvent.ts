@@ -112,25 +112,18 @@ function arrayFromIndirectReceipt(
   eventName: string,
   address?: string
 ): any[] {
-  console.log('raw logs:', receipt.logs);
-  console.log('emitter:', emitter);
-  console.log('address:', address);
-
   const decodedEvents = receipt.logs
     .filter((log) => (address ? log.address.toLowerCase() === address.toLowerCase() : true))
     .map((log) => {
       try {
-        console.log('parsing log');
         return emitter.parseLog(log);
       } catch {
-        console.log('##########3 error parsing');
         return undefined;
       }
     })
     .filter((e): e is LogDescription => e !== undefined);
 
-  console.log('decoded events:', decodedEvents);
-  return decodedEvents.filter((event) => event.name === eventName);
+  return decodedEvents.filter((event) => event?.name === eventName);
 }
 
 function contains(args: { [key: string]: any | undefined }, key: string, value: any) {

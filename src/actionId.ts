@@ -202,7 +202,7 @@ async function getActionIdSource(
   if (task.id === '20241204-v3-vault' && (contractName === 'Vault' || contractName === 'VaultExtension')) {
     const contract = await task.deployedInstance(contractName);
     const vaultAdmin = await task.deployedInstance('VaultAdmin');
-    const contractAsAdmin = vaultAdmin.attach(contract.target as string) as Contract;
+    const contractAsAdmin = vaultAdmin.attach(contract.target.toString()) as Contract;
     return { useAdaptor: false, actionIdSource: contractAsAdmin };
   }
 
