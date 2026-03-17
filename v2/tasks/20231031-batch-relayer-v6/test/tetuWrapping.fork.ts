@@ -80,7 +80,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     expect(balanceOfTetuBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdtToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdtToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoTetu = library.interface.encodeFunctionData('wrapTetu', [
@@ -114,7 +114,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
       0,
     ]);
 
-    await (tetuVault.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (tetuVault.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromTetu]);
 

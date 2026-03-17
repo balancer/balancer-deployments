@@ -119,7 +119,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
       { value: VAULT_BOUNTY }
     );
 
-    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target as string, MAX_UINT256);
+    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
     await (veBAL
       .connect(veBALHolder) as Contract)
@@ -136,7 +136,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
     gauge = await task.instanceAt('OptimisticRootGauge', event.args.gauge);
 
-    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
 
     // We need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor Entrypoint
     await (authorizer
@@ -156,12 +156,12 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
   it('add gauge to gauge controller', async () => {
     await (gaugeAdder.connect(admin) as Contract).addGaugeType('Fraxtal');
-    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target as string, 'Fraxtal');
-    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target as string, 'Fraxtal');
+    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target.toString(), 'Fraxtal');
+    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target.toString(), 'Fraxtal');
 
-    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target as string, 'Fraxtal')).to.be.true;
+    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target.toString(), 'Fraxtal')).to.be.true;
 
-    expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('factory stores the gas limit', async () => {
@@ -185,10 +185,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
   });
 
   it('vote for gauge', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target as string, 10000); // Max voting power is 10k points
+    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in.
     // Advancing 7 days ensures we don't move forward 2 entire epochs, which would complicate the math ahead.
@@ -197,7 +197,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -210,7 +210,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
@@ -223,7 +223,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
     // The gauge should now mint and send all minted tokens to the Fraxtal bridge
     const mintReceipt = await (
-      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata, { value: bridgeCost })
+      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost })
     ).wait();
 
     const event = expectEvent.inIndirectReceipt(mintReceipt, gauge.interface, 'Checkpoint', {
@@ -243,7 +243,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
       mintReceipt,
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
         value: actualEmissions,
       },
       BAL
@@ -253,7 +253,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     expectTransferEvent(
       mintReceipt,
       {
-        from: gauge.target as string,
+        from: gauge.target.toString(),
         to: fraxtalL1Bridge,
         value: actualEmissions,
       },
@@ -263,7 +263,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     expectEvent.inIndirectReceipt(mintReceipt, BRIDGE_INTERFACE, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: fraxtalBAL,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _to: recipient.address,
       _amount: actualEmissions,
     });
@@ -272,14 +272,14 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
-    await gaugeController.checkpoint_gauge(gauge.target as string);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
       )
     );
 
@@ -297,7 +297,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
     const bridgeCost = await gauge.getTotalBridgeCost();
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata, { value: bridgeCost });
+    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost });
     const receipt = await tx.wait();
 
     await Promise.all(
@@ -313,7 +313,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
       receipt,
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
       },
       BAL
     );
@@ -325,7 +325,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     expectTransferEvent(
       receipt,
       {
-        from: gauge.target as string,
+        from: gauge.target.toString(),
         to: fraxtalL1Bridge,
         value: actualEmissions,
       },
@@ -335,7 +335,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     expectEvent.inIndirectReceipt(receipt, BRIDGE_INTERFACE, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: fraxtalBAL,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _to: recipient.address,
       _amount: actualEmissions,
     });

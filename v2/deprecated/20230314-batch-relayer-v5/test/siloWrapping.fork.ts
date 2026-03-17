@@ -67,7 +67,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfWrappedBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.target as string, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoSilo = library.interface.encodeFunctionData('wrapShareToken', [
@@ -108,7 +108,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
       chainedReference,
     ]);
 
-    await shareToken.connect(recipient).approve(vault.target as string, amountToWithdraw);
+    await shareToken.connect(recipient).approve(vault.target.toString(), amountToWithdraw);
 
     await relayer.connect(recipient).multicall([withdrawFromSilo]);
 

@@ -30,19 +30,19 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
   });
 
   it('checks vault address', async () => {
-    expect(vault.target as string).to.be.eq(input.targetVaultAddress);
+    expect(vault.target.toString()).to.be.eq(input.targetVaultAddress);
   });
 
   it('checks admin reference', async () => {
-    expect(await vaultAdmin.vault()).to.be.equal(vault.target as string);
+    expect(await vaultAdmin.vault()).to.be.equal(vault.target.toString());
   });
 
   it('checks extension reference', async () => {
-    expect(await vaultExtension.vault()).to.be.equal(vault.target as string);
+    expect(await vaultExtension.vault()).to.be.equal(vault.target.toString());
   });
 
   it('checks protocol fee controller reference', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     expect(await vaultAsExtension.getProtocolFeeController()).to.be.equal(task.output().ProtocolFeeController);
   });
 
@@ -57,10 +57,10 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
   });
 
   it('checks extension', async () => {
-    expect(await vault.getVaultExtension()).to.be.eq(vaultExtension.target as string);
+    expect(await vault.getVaultExtension()).to.be.eq(vaultExtension.target.toString());
   });
 
   it('checks admin', async () => {
-    expect(await vaultExtension.getVaultAdmin()).to.be.eq(vaultAdmin.target as string);
+    expect(await vaultExtension.getVaultAdmin()).to.be.eq(vaultAdmin.target.toString());
   });
 });

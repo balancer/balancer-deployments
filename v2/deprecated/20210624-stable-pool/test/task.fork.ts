@@ -55,16 +55,16 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await task.instanceAt('StablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     const poolId = pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
   });
 
   it('can initialize a stable pool', async () => {
-    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
     const poolId = await pool.getPoolId();
     const userData = StablePoolEncoder.joinInit(initialBalances);
@@ -82,7 +82,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
   it('can swap in a stable pool', async () => {
     const amount = fp(500);
     await dai.connect(whale).transfer(owner.address, amount);
-    await dai.connect(owner).approve(vault.target as string, amount);
+    await dai.connect(owner).approve(vault.target.toString(), amount);
 
     const poolId = await pool.getPoolId();
     await vault

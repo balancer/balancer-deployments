@@ -56,7 +56,7 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
   });
 
   it('burn tokens', async () => {
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Nonexistent);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Nonexistent);
 
     const initBalance = 1000000e6;
     const minAmountOut = initBalance / 2;
@@ -64,15 +64,15 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
     const block = await ethers.provider.getBlock('latest');
 
     // Transfer USDC to protocol fee sweeper
-    await (usdc.connect(usdcWhale) as Contract).transfer(protocolFeeSweeper.target as string, initBalance);
+    await (usdc.connect(usdcWhale) as Contract).transfer(protocolFeeSweeper.target.toString(), initBalance);
 
     // Approve CowSwapFeeBurner to spend USDC
-    await (usdc.connect(protocolFeeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target as string, initBalance);
+    await (usdc.connect(protocolFeeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target.toString(), initBalance);
 
     await (cowSwapFeeBurner.connect(protocolFeeSweeperSigner) as Contract)
       .burn(
         ZERO_ADDRESS,
-        usdc.target as string,
+        usdc.target.toString(),
         initBalance,
         waUSDC_ADDRESS,
         minAmountOut,
@@ -80,7 +80,7 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
         block!.timestamp + FIVE_MINUTES
       );
 
-    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target as string);
+    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target.toString());
     const existingOrder = {
       sellToken: existingRawOrder.sellToken,
       buyToken: existingRawOrder.buyToken,
@@ -95,7 +95,7 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
     };
 
     const expectedOrder = {
-      sellToken: usdc.target as string,
+      sellToken: usdc.target.toString(),
       buyToken: waUSDC_ADDRESS,
       receiver: RECIPIENT,
       sellAmount: initBalance,
@@ -108,6 +108,6 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
     };
 
     expect(existingOrder).to.deep.equal(expectedOrder);
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Active);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Active);
   });
 });

@@ -87,10 +87,10 @@ describeForkTest.skip('BalancerFeeBurner', 'mainnet', 22598419, function () {
     const block = await ethers.provider.getBlock('latest');
 
     // Transfer USDC to protocol fee sweeper
-    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.target as string, AMOUNT_IN);
+    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.target.toString(), AMOUNT_IN);
 
     // Approve BalancerFeeBurner to spend USDC
-    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.target as string, AMOUNT_IN);
+    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.target.toString(), AMOUNT_IN);
 
     const balanceUSDTBefore = await waETHUSDT.balanceOf(RECIPIENT);
 

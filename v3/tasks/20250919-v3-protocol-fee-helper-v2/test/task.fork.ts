@@ -63,14 +63,14 @@ describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
 
     // Grant the helper permission to set protocol swap and yield fees. This is all that is needed for v2.
     await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.target as string);
+      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.target.toString());
 
     await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.target as string);
+      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.target.toString());
   });
 
   it('can create a pool set', async () => {
-    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target as string]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target.toString()]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 
@@ -79,15 +79,15 @@ describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('can set fees on pools', async () => {
-    [oldSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.target as string);
-    [oldYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.target as string);
+    [oldSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    [oldYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
-    await (feeHelper.connect(manager) as Contract).setProtocolSwapFeePercentage(pool.target as string, SWAP_FEE_PERCENTAGE);
-    await (feeHelper.connect(manager) as Contract).setProtocolYieldFeePercentage(pool.target as string, YIELD_FEE_PERCENTAGE);
+    await (feeHelper.connect(manager) as Contract).setProtocolSwapFeePercentage(pool.target.toString(), SWAP_FEE_PERCENTAGE);
+    await (feeHelper.connect(manager) as Contract).setProtocolYieldFeePercentage(pool.target.toString(), YIELD_FEE_PERCENTAGE);
 
     // Fees should now be set.
-    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target as string);
-    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target as string);
+    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
     expect(bn(protocolSwapFeePercentage)).to.equal(SWAP_FEE_PERCENTAGE);
     expect(bn(protocolYieldFeePercentage)).to.equal(YIELD_FEE_PERCENTAGE);
@@ -100,12 +100,12 @@ describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('new manager can set fees on pools', async () => {
-    await (feeHelper.connect(newManager) as Contract).setProtocolSwapFeePercentage(pool.target as string, oldSwapFee);
-    await (feeHelper.connect(newManager) as Contract).setProtocolYieldFeePercentage(pool.target as string, oldYieldFee);
+    await (feeHelper.connect(newManager) as Contract).setProtocolSwapFeePercentage(pool.target.toString(), oldSwapFee);
+    await (feeHelper.connect(newManager) as Contract).setProtocolYieldFeePercentage(pool.target.toString(), oldYieldFee);
 
     // Fees should now be set.
-    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target as string);
-    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target as string);
+    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
     expect(bn(protocolSwapFeePercentage)).to.equal(oldSwapFee);
     expect(bn(protocolYieldFeePercentage)).to.equal(oldYieldFee);

@@ -59,7 +59,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   });
 
   it('can burn tokens', async () => {
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Nonexistent);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Nonexistent);
 
     const erc4626Interface = [
       'function previewRedeem(uint256 amount) external view returns (uint256)',
@@ -70,7 +70,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     const expectedUnderlyingAmount = bn(await waUsdc4626.previewRedeem(BURN_AMOUNT));
     const minAmountOut = expectedUnderlyingAmount - BigInt(1);
 
-    await (waUsdc.connect(feeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target as string, BURN_AMOUNT);
+    await (waUsdc.connect(feeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target.toString(), BURN_AMOUNT);
 
     const blockTimestamp = bn(await currentTimestamp());
 
@@ -78,7 +78,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     await (cowSwapFeeBurner.connect(feeSweeperSigner) as Contract)
       .burn(
         ZERO_ADDRESS,
-        waUsdc.target as string,
+        waUsdc.target.toString(),
         BURN_AMOUNT,
         DAI_ADDRESS,
         minAmountOut,
@@ -87,7 +87,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
       );
 
     // Order is created for underlying asset
-    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target as string);
+    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target.toString());
     const existingOrder = {
       sellToken: existingRawOrder.sellToken,
       buyToken: existingRawOrder.buyToken,
@@ -101,10 +101,10 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
       partiallyFillable: existingRawOrder.partiallyFillable,
     };
 
-    const usdcBalanceOfBurner = Number(await usdc.balanceOf(cowSwapFeeBurner.target as string));
+    const usdcBalanceOfBurner = Number(await usdc.balanceOf(cowSwapFeeBurner.target.toString()));
 
     const expectedOrder = {
-      sellToken: usdc.target as string,
+      sellToken: usdc.target.toString(),
       buyToken: DAI_ADDRESS,
       receiver: admin.address,
       sellAmount: usdcBalanceOfBurner,
@@ -117,11 +117,11 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     };
 
     expect(existingOrder).to.deep.equal(expectedOrder);
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Active);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Active);
 
     // The order uses the current burner balance, which is slightly greater than `previewRedeem` because of rounding.
     expect(usdcBalanceOfBurner).to.be.equalWithError(Number(expectedUnderlyingAmount), 2);
     expect(usdcBalanceOfBurner).to.be.greaterThanOrEqual(Number(expectedUnderlyingAmount));
-    expect(await usdc.allowance(cowSwapFeeBurner.target as string, input.CowVaultRelayer)).to.be.equal(usdcBalanceOfBurner);
+    expect(await usdc.allowance(cowSwapFeeBurner.target.toString(), input.CowVaultRelayer)).to.be.equal(usdcBalanceOfBurner);
   });
 });

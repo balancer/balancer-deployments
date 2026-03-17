@@ -83,11 +83,11 @@ describeForkTest.skip('BalancerContractRegistryInitializer', 'mainnet', 21862412
   before('grant permissions', async () => {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target as string);
+    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString());
   });
 
   it('is initializing the correct registry', async () => {
-    expect(await registryInitializer.balancerContractRegistry()).to.eq(registry.target as string);
+    expect(await registryInitializer.balancerContractRegistry()).to.eq(registry.target.toString());
   });
 
   it('perform registry initialization', async () => {
@@ -100,50 +100,50 @@ describeForkTest.skip('BalancerContractRegistryInitializer', 'mainnet', 21862412
 
   it('does not hold permission to register contracts', async () => {
     const permission = await actionId(registry, 'registerBalancerContract');
-    expect(await authorizer.hasRole(permission, registryInitializer.target as string)).to.be.false;
+    expect(await authorizer.hasRole(permission, registryInitializer.target.toString())).to.be.false;
   });
 
   it('does not hold permission to add aliases', async () => {
     const permission = await actionId(registry, 'addOrUpdateBalancerContractAlias');
-    expect(await authorizer.hasRole(permission, registryInitializer.target as string)).to.be.false;
+    expect(await authorizer.hasRole(permission, registryInitializer.target.toString())).to.be.false;
   });
 
   it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target as string)).to.be.false;
+    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString())).to.be.false;
   });
 
   it('has registered the routers', async () => {
-    expect(await registry.isTrustedRouter(router.target as string)).to.be.true;
-    expect(await registry.isTrustedRouter(batchRouter.target as string)).to.be.true;
-    expect(await registry.isTrustedRouter(bufferRouter.target as string)).to.be.true;
-    expect(await registry.isTrustedRouter(compositeLiquidityRouter.target as string)).to.be.true;
+    expect(await registry.isTrustedRouter(router.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(batchRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(bufferRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(compositeLiquidityRouter.target.toString())).to.be.true;
   });
 
   it('has registered the pool factories', async () => {
-    let info = await registry.getBalancerContractInfo(weightedPoolFactory.target as string);
+    let info = await registry.getBalancerContractInfo(weightedPoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(stablePoolFactory.target as string);
+    info = await registry.getBalancerContractInfo(stablePoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(stableSurgePoolFactory.target as string);
+    info = await registry.getBalancerContractInfo(stableSurgePoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(lbpFactory.target as string);
+    info = await registry.getBalancerContractInfo(lbpFactory.target.toString());
     _validateInfo(info);
   });
 
   it('has registered the aliases', async () => {
     let [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'WeightedPool');
-    expect(contractAddress).to.eq(weightedPoolFactory.target as string);
+    expect(contractAddress).to.eq(weightedPoolFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'StablePool');
-    expect(contractAddress).to.eq(stablePoolFactory.target as string);
+    expect(contractAddress).to.eq(stablePoolFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'Router');
-    expect(contractAddress).to.eq(router.target as string);
+    expect(contractAddress).to.eq(router.target.toString());
     expect(isActive).to.be.true;
   });
 

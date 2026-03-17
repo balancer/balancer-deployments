@@ -77,7 +77,7 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   });
 
   before('set omni voting escrow', async () => {
-    await (omniVotingEscrowAdaptor.connect(admin) as Contract).setOmniVotingEscrow(omniVotingEscrow.target as string);
+    await (omniVotingEscrowAdaptor.connect(admin) as Contract).setOmniVotingEscrow(omniVotingEscrow.target.toString());
   });
 
   it('gets total supply', async () => {

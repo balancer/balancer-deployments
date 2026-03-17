@@ -71,13 +71,13 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   before('setup contracts and parameters', async () => {
     tokenConfig = [
       {
-        token: weth.target as string,
+        token: weth.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: bal.target as string,
+        token: bal.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -88,7 +88,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target as string);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
   });
 
   it('deploys LBP', async () => {
@@ -96,8 +96,8 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
 
     const lbpParams = {
       owner: admin.address,
-      projectToken: bal.target as string,
-      reserveToken: weth.target as string,
+      projectToken: bal.target.toString(),
+      reserveToken: weth.target.toString(),
       projectTokenStartWeight: HIGH_WEIGHT,
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: projectTokenLbpEndWeight,
@@ -130,8 +130,8 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(bal.target as string);
-    expect(await pool.getReserveToken()).to.eq(weth.target as string);
+    expect(await pool.getProjectToken()).to.eq(bal.target.toString());
+    expect(await pool.getReserveToken()).to.eq(weth.target.toString());
   });
 
   it('checks pool version', async () => {
@@ -156,12 +156,12 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     // Give the admin tokens: mint test tokens, get WETH
     await bal.connect(admin).mint(admin.address, INITIAL_BAL);
 
-    await bal.connect(admin).approve(permit2.target as string, INITIAL_BAL);
-    await permit2.connect(admin).approve(bal.target as string, trustedRouter.target as string, INITIAL_BAL, maxUint(48));
+    await bal.connect(admin).approve(permit2.target.toString(), INITIAL_BAL);
+    await permit2.connect(admin).approve(bal.target.toString(), trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
-      pool.target as string,
-      [bal.target as string, weth.target as string],
+      pool.target.toString(),
+      [bal.target.toString(), weth.target.toString()],
       [INITIAL_BAL, INITIAL_WETH],
       0,
       true, // wethIsETH
@@ -183,12 +183,12 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('migrates the liquidity', async () => {
-    await pool.connect(admin).approve(migrationRouter.target as string, maxUint(256));
+    await pool.connect(admin).approve(migrationRouter.target.toString(), maxUint(256));
     const weightedPoolProjectWeight = HIGH_WEIGHT;
     const weightedPoolReserveWeight = LOW_WEIGHT;
 
     const migrateReceipt = await (
-      await migrationRouter.connect(admin).migrateLiquidity(pool.target as string, projectTreasury.target as string, {
+      await migrationRouter.connect(admin).migrateLiquidity(pool.target.toString(), projectTreasury.target.toString(), {
         name: 'Weighted Pool',
         symbol: 'WP-TEST',
         normalizedWeights: [weightedPoolProjectWeight, weightedPoolReserveWeight],
@@ -208,11 +208,11 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const migrationEvent = expectEvent.inReceipt(migrateReceipt, 'PoolMigrated');
     const weightedPool = await task.instanceAt('WeightedPool', migrationEvent.args.weightedPool);
 
-    expect(await weightedPool.getTokens()).to.deep.equal([bal.target as string, weth.target as string]);
+    expect(await weightedPool.getTokens()).to.deep.equal([bal.target.toString(), weth.target.toString()]);
     expect(await weightedPool.getNormalizedWeights()).to.deep.equal([HIGH_WEIGHT, LOW_WEIGHT]);
 
-    const vaultAsExtension = vaultExtension.attach(vault.target as string);
-    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target as string);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString());
+    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target.toString());
     // New pool project weight is higher than LBP's project weight, so we use all of it (scaled at 80%).
     // Then, we apply the ratio of the weights to the reserve token, and we scale at 80% as well.
     expect(currentBalances[0]).to.equalWithError(INITIAL_BAL * BigInt(80) / 100);

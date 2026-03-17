@@ -45,7 +45,7 @@ describeForkTest('ProtocolFeeSweeper-V2', 'mainnet', 22391400, function () {
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
-    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     const controllerAddress = await vaultAsExtension.getProtocolFeeController();
     feeController = await vaultTask.instanceAt('ProtocolFeeController', controllerAddress);
 
@@ -61,7 +61,7 @@ describeForkTest('ProtocolFeeSweeper-V2', 'mainnet', 22391400, function () {
     await (authorizer.connect(govMultisig) as Contract)
       .grantRole(
         await feeController.getActionId(feeController.interface.getFunction('withdrawProtocolFeesForToken')!.selector),
-        feeSweeper.target as string
+        feeSweeper.target.toString()
       );
   });
 
@@ -99,7 +99,7 @@ describeForkTest('ProtocolFeeSweeper-V2', 'mainnet', 22391400, function () {
     const whale = await impersonate(USDC_HOLDER, fp(100));
     const USDC_AMOUNT = 1000e6;
 
-    await (usdcToken.connect(whale) as Contract).transfer(feeSweeper.target as string, USDC_AMOUNT);
+    await (usdcToken.connect(whale) as Contract).transfer(feeSweeper.target.toString(), USDC_AMOUNT);
 
     const balanceBefore = await usdcToken.balanceOf(feeRecipient.address);
     await (feeSweeper.connect(feeRecipient) as Contract).recoverProtocolFees([USDC]);

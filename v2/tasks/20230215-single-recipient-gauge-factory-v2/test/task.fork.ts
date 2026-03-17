@@ -83,7 +83,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
 
   before('get veBAL from BAL', async () => {
     const ethToJoin = fp(100);
-    await (balToken.connect(balWhale) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (balToken.connect(balWhale) as Contract).approve(vault.target.toString(), MAX_UINT256);
     const poolId = await bal80weth20Pool.getPoolId();
 
     await (vault.connect(balWhale) as Contract).joinPool(
@@ -102,7 +102,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       { value: ethToJoin }
     );
 
-    await (bal80weth20Pool.connect(balWhale) as Contract).approve(veBAL.target as string, MAX_UINT256);
+    await (bal80weth20Pool.connect(balWhale) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
     await (veBAL
       .connect(balWhale) as Contract)
@@ -192,7 +192,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       expect(await gauge.getRecipient()).to.equal(recipient);
       expect(await gauge.isRecipientFeeDistributor()).to.equal(mode == RecipientMode.FeeDistributorRecipient);
 
-      expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+      expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
     });
 
     it('grant permissions', async () => {
@@ -212,18 +212,18 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
     it('add gauge to gauge controller directly via AuthorizerAdaptor', async () => {
       // Using 2 as Ethereum gauge type, but it could be any of the existing types since they all have the same
       // relative weight in the controller.
-      const calldata = gaugeController.interface.encodeFunctionData('add_gauge(address,int128)', [gauge.target as string, 2]);
-      await (authorizerAdaptor.connect(admin) as Contract).performAction(gaugeController.target as string, calldata);
+      const calldata = gaugeController.interface.encodeFunctionData('add_gauge(address,int128)', [gauge.target.toString(), 2]);
+      await (authorizerAdaptor.connect(admin) as Contract).performAction(gaugeController.target.toString(), calldata);
 
-      expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+      expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
     });
 
     it('vote for gauge so that weight is above cap', async () => {
-      expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
+      expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
       expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
       // Max voting power is 10k points
-      await (gaugeController.connect(balWhale) as Contract).vote_for_gauge_weights(gauge.target as string, 10000);
+      await (gaugeController.connect(balWhale) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000);
 
       // We now need to go through an epoch for the votes to be locked in
       await advanceTime(DAY * 8);
@@ -231,7 +231,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       await gaugeController.checkpoint();
       // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
       expect(
-        await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, await currentWeekTimestamp())
+        await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
       ).to.be.gt(weightCap);
       expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
     });
@@ -243,7 +243,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
 
       const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
-      const zeroMintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+      const zeroMintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
       expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
         periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
         periodEmissions: 0,
@@ -253,7 +253,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       await advanceTime(WEEK);
 
       // The gauge should now mint and send all minted tokens to the Arbitrum bridge
-      const mintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+      const mintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
       const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
         periodTime: firstMintWeekTimestamp,
       });
@@ -271,7 +271,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
         await mintTx.wait(),
         {
           from: ZERO_ADDRESS,
-          to: gauge.target as string,
+          to: gauge.target.toString(),
           value: actualEmissions,
         },
         BAL
@@ -281,7 +281,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       expectTransferEvent(
         await mintTx.wait(),
         {
-          from: gauge.target as string,
+          from: gauge.target.toString(),
           to: recipient,
           value: actualEmissions,
         },
@@ -292,14 +292,14 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
     it('mint multiple weeks', async () => {
       const numberOfWeeks = 5;
       await advanceTime(WEEK * numberOfWeeks);
-      await gaugeController.checkpoint_gauge(gauge.target as string);
+      await gaugeController.checkpoint_gauge(gauge.target.toString());
 
       const weekTimestamp = await currentWeekTimestamp();
 
       // We can query the relative weight of the gauge for each of the weeks that have passed
       const relativeWeights: bigint[] = await Promise.all(
         range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-          gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - bn(WEEK * weekIndex))
+          gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
         )
       );
 
@@ -316,7 +316,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       const expectedEmissions = weightCap * bn(numberOfWeeks) * weeklyRate / FP_ONE;
 
       const calldata = gauge.interface.encodeFunctionData('checkpoint');
-      const tx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+      const tx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
 
       await Promise.all(
         range(1, numberOfWeeks + 1).map(async (weekIndex) =>
@@ -331,7 +331,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
         await tx.wait(),
         {
           from: ZERO_ADDRESS,
-          to: gauge.target as string,
+          to: gauge.target.toString(),
         },
         BAL
       );
@@ -341,7 +341,7 @@ describeForkTest.skip('SingleRecipientGaugeFactory V2', 'mainnet', 16686000, fun
       expectTransferEvent(
         await tx.wait(),
         {
-          from: gauge.target as string,
+          from: gauge.target.toString(),
           to: recipient,
           value: gaugeTransferEvent.args.value,
         },

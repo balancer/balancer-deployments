@@ -93,12 +93,12 @@ describeForkTest.skip('StableSurge', 'mainnet', 21788400, function () {
 
   it('checks hook address for factory', async () => {
     const hook = await task.deployedInstance('StableSurgeHook');
-    expect(hook.target as string).to.be.equal(await factory.getStableSurgeHook());
+    expect(hook.target.toString()).to.be.equal(await factory.getStableSurgeHook());
   });
 
   it('checks hook address for pool', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.target as string);
-    const { hooksContract } = await vaultAsExtension.getHooksConfig(pool.target as string);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString());
+    const { hooksContract } = await vaultAsExtension.getHooksConfig(pool.target.toString());
     expect(hooksContract).to.be.equal(await factory.getStableSurgeHook());
   });
 

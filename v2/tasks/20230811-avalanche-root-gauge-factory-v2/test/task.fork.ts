@@ -115,7 +115,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
       { value: VAULT_BOUNTY }
     );
 
-    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target as string, MAX_UINT256);
+    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
     await (veBAL
       .connect(veBALHolder) as Contract)
@@ -132,7 +132,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
     gauge = await task.instanceAt('AvalancheRootGauge', event.args.gauge);
 
-    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
 
     // We need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor Entrypoint
     await (authorizer
@@ -155,12 +155,12 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
   });
 
   it('add gauge to gauge controller', async () => {
-    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target as string, 'Avalanche');
-    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target as string, 'Avalanche');
+    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target.toString(), 'Avalanche');
+    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target.toString(), 'Avalanche');
 
-    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target as string, 'Avalanche')).to.be.true;
+    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target.toString(), 'Avalanche')).to.be.true;
 
-    expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('stores the BAL proxy from Layer Zero', async () => {
@@ -172,10 +172,10 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
   });
 
   it('vote for gauge', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target as string, 10000); // Max voting power is 10k points
+    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in.
     // Advancing 7 days ensures we don't move forward 2 entire epochs, which would complicate the math ahead.
@@ -184,7 +184,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -197,7 +197,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - BigInt(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
@@ -210,7 +210,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
     // The gauge should now mint and send all minted tokens to the Avalanche bridge
     const mintReceipt = await (
-      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata, { value: bridgeCost })
+      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost })
     ).wait();
 
     const event = expectEvent.inIndirectReceipt(mintReceipt, gauge.interface, 'Checkpoint', {
@@ -230,7 +230,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
       mintReceipt,
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
         value: actualEmissions,
       },
       BAL
@@ -240,7 +240,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     const transferEvent = expectTransferEvent(
       mintReceipt,
       {
-        from: gauge.target as string,
+        from: gauge.target.toString(),
         to: balProxyAddress,
       },
       BAL
@@ -252,7 +252,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
     expectEvent.inIndirectReceipt(mintReceipt, lzBalProxy.interface, 'SendToChain', {
       _dstChainId: LZ_AVAX_CHAIN_ID,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _toAddress: ethers.zeroPadValue(await gauge.getRecipient(), 32).toLowerCase(),
       _amount: actualEmissionsSharedDecimals,
     });
@@ -261,14 +261,14 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
-    await gaugeController.checkpoint_gauge(gauge.target as string);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - BigInt(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - BigInt(WEEK * weekIndex))
       )
     );
 
@@ -286,7 +286,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
     const bridgeCost = await gauge.getTotalBridgeCost();
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata, { value: bridgeCost });
+    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost });
     const receipt = await tx.wait();
 
     await Promise.all(
@@ -302,7 +302,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
       receipt,
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
       },
       BAL
     );
@@ -313,7 +313,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
     const proxyTransferEvent = expectTransferEvent(
       receipt,
       {
-        from: gauge.target as string,
+        from: gauge.target.toString(),
         to: balProxyAddress,
       },
       BAL
@@ -324,7 +324,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
     expectEvent.inIndirectReceipt(receipt, lzBalProxy.interface, 'SendToChain', {
       _dstChainId: LZ_AVAX_CHAIN_ID,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _toAddress: ethers.zeroPadValue(await gauge.getRecipient(), 32).toLowerCase(),
       _amount: expectedEmissionsSharedDecimals,
     });
@@ -343,7 +343,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
       // Fund mock gauge with BAL
       const mintAction = await actionId(BALTokenAdmin, 'mint');
       await (authorizer.connect(daoMultisig) as Contract).grantRole(mintAction, admin.address);
-      await BALTokenAdmin.mint(mockGauge.target as string, fp(100000));
+      await BALTokenAdmin.mint(mockGauge.target.toString(), fp(100000));
       proxyOwner = await impersonate(await lzBalProxy.owner());
     });
 
@@ -360,7 +360,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
             const transferEvent = expectTransferEvent(
               receipt,
               {
-                from: mockGauge.target as string,
+                from: mockGauge.target.toString(),
                 to: balProxyAddress,
               },
               BAL
@@ -372,7 +372,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory V2', 'mainnet', 17879200, funct
 
             expectEvent.inIndirectReceipt(receipt, lzBalProxy.interface, 'SendToChain', {
               _dstChainId: LZ_AVAX_CHAIN_ID,
-              _from: mockGauge.target as string,
+              _from: mockGauge.target.toString(),
               _toAddress: ethers.zeroPadValue(await mockGauge.getRecipient(), 32).toLowerCase(),
               _amount: actualEmissionsSharedDecimals,
             });

@@ -60,7 +60,7 @@ describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
     const pathsExactIn = [
       {
         tokenIn: RSETH_ADDRESS,
-        steps: [{ pool: pool.target as string, tokenOut: HGETH_ADDRESS, isBuffer: false }],
+        steps: [{ pool: pool.target.toString(), tokenOut: HGETH_ADDRESS, isBuffer: false }],
         exactAmountIn: rplAmountIn,
         minAmountOut: rplAmountIn,
       },
@@ -76,7 +76,7 @@ describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
     const hgEthBalanceBefore: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
     // Pay token in upfront and swap
-    await (rsETH.connect(rsEthWhale) as Contract).transfer(vault.target as string, rplAmountIn);
+    await (rsETH.connect(rsEthWhale) as Contract).transfer(vault.target.toString(), rplAmountIn);
     const deadline = (await currentTimestamp()) + bn(DAY);
 
     await (aggregatorBatchRouter.connect(rsEthWhale) as Contract).swapExactIn(pathsExactIn, deadline, '0x');

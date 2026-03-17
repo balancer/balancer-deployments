@@ -34,7 +34,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const mockOracle = await task.instanceAt('WeightedLPOracle', task.output()['MockWeightedLPOracle']);
 
     // We are now ready to verify the oracle contract
-    await task.verify('WeightedLPOracle', mockOracle.target as string, [
+    await task.verify('WeightedLPOracle', mockOracle.target.toString(), [
       input.Vault,
       input.MockWeightedPool,
       [input.ConstantPriceFeed, input.ConstantPriceFeed],

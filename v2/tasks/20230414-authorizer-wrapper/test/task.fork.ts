@@ -73,15 +73,15 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
 
   describe('getters', () => {
     it('stores the actual (existing basic) authorizer', async () => {
-      expect(await authorizer.getActualAuthorizer()).to.eq(actualAuthorizer.target as string);
+      expect(await authorizer.getActualAuthorizer()).to.eq(actualAuthorizer.target.toString());
     });
 
     it('stores the authorizer adaptor', async () => {
-      expect(await authorizer.getAuthorizerAdaptor()).to.eq(authorizerAdaptor.target as string);
+      expect(await authorizer.getAuthorizerAdaptor()).to.eq(authorizerAdaptor.target.toString());
     });
 
     it('stores the authorizer adaptor entrypoint', async () => {
-      expect(await authorizer.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.target as string);
+      expect(await authorizer.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.target.toString());
     });
 
     it('configures the gauge adder', async () => {
@@ -89,8 +89,8 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
       const gaugeAdderAuthorizer = await adaptorEntrypoint.getAuthorizer();
 
       // Ensure the authorizer we just set the permissions on is the same one the gauge adder is using
-      expect(entrypoint).to.equal(adaptorEntrypoint.target as string);
-      expect(gaugeAdderAuthorizer).to.equal(actualAuthorizer.target as string);
+      expect(entrypoint).to.equal(adaptorEntrypoint.target.toString());
+      expect(gaugeAdderAuthorizer).to.equal(actualAuthorizer.target.toString());
     });
   });
 
@@ -122,8 +122,8 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
         const setAuthorizerAction = await actionId(vault, 'setAuthorizer');
         await (actualAuthorizer.connect(govMultisig) as Contract).grantRole(setAuthorizerAction, admin.address);
 
-        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target as string);
-        expect(await vault.getAuthorizer()).to.equal(authorizer.target as string);
+        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target.toString());
+        expect(await vault.getAuthorizer()).to.equal(authorizer.target.toString());
       });
 
       it('GaugeAdder can now add gauges', async () => {
@@ -160,8 +160,8 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
         const setAuthorizerAction = await actionId(vault, 'setAuthorizer');
         await (actualAuthorizer.connect(govMultisig) as Contract).grantRole(setAuthorizerAction, admin.address);
 
-        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target as string);
-        expect(await vault.getAuthorizer()).to.equal(authorizer.target as string);
+        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target.toString());
+        expect(await vault.getAuthorizer()).to.equal(authorizer.target.toString());
       });
 
       it('the swap fee percentage can be still set', async () => {

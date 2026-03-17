@@ -81,13 +81,13 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
   });
 
   it('sweeps sBTC', async () => {
-    const vaultBalanceBefore = await sBTCContract.balanceOf(vault.target as string);
-    const protocolFeesCollectorBalanceBefore = await sBTCContract.balanceOf(protocolFeesCollector.target as string);
+    const vaultBalanceBefore = await sBTCContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceBefore = await sBTCContract.balanceOf(protocolFeesCollector.target.toString());
 
     await relayer.sweepDoubleEntrypointToken([sBTC_IMPLEMENTATION, sBTC]);
 
-    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target as string);
-    const protocolFeesCollectorBalanceAfter = await sBTCContract.balanceOf(protocolFeesCollector.target as string);
+    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceAfter = await sBTCContract.balanceOf(protocolFeesCollector.target.toString());
 
     expect(vaultBalanceAfter).to.be.eq(0);
     expect(protocolFeesCollectorBalanceAfter - protocolFeesCollectorBalanceBefore).to.be.eq(vaultBalanceBefore);
@@ -123,18 +123,18 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
     expect(await poolContract.balanceOf(btcBptHolder.address)).to.be.eq(0);
     expect(expectedAmountsOut).to.deep.equal(actualAmountsOut);
 
-    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target as string);
+    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target.toString());
     expect(vaultBalanceAfter).to.be.eq(0);
   });
 
   it('sweeps SNX', async () => {
-    const vaultBalanceBefore = await snxContract.balanceOf(vault.target as string);
-    const protocolFeesCollectorBalanceBefore = await snxContract.balanceOf(protocolFeesCollector.target as string);
+    const vaultBalanceBefore = await snxContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceBefore = await snxContract.balanceOf(protocolFeesCollector.target.toString());
 
     await relayer.sweepDoubleEntrypointToken([SNX_IMPLEMENTATION, SNX]);
 
-    const vaultBalanceAfter = await snxContract.balanceOf(vault.target as string);
-    const protocolFeesCollectorBalanceAfter = await snxContract.balanceOf(protocolFeesCollector.target as string);
+    const vaultBalanceAfter = await snxContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceAfter = await snxContract.balanceOf(protocolFeesCollector.target.toString());
 
     expect(vaultBalanceAfter).to.be.eq(0);
     expect(protocolFeesCollectorBalanceAfter - protocolFeesCollectorBalanceBefore).to.be.eq(vaultBalanceBefore);
@@ -165,7 +165,7 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
     expect(await poolContract.balanceOf(snxBptHolder.address)).to.be.eq(0);
     expect(expectedAmountsOut).to.deep.equal(actualAmountsOut);
 
-    const vaultBalanceAfter = await snxContract.balanceOf(vault.target as string);
+    const vaultBalanceAfter = await snxContract.balanceOf(vault.target.toString());
     expect(vaultBalanceAfter).to.be.eq(0);
   });
 });

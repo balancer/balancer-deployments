@@ -84,7 +84,7 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target as string);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
   });
 
   it('deploys LBP', async () => {
@@ -142,14 +142,14 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
     balToken.connect(whale).transfer(admin.address, INITIAL_BAL);
     wethToken.connect(whale).transfer(admin.address, INITIAL_WETH);
 
-    await balToken.connect(admin).approve(permit2.target as string, INITIAL_BAL);
-    await permit2.connect(admin).approve(BAL, trustedRouter.target as string, INITIAL_BAL, maxUint(48));
+    await balToken.connect(admin).approve(permit2.target.toString(), INITIAL_BAL);
+    await permit2.connect(admin).approve(BAL, trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
 
-    await wethToken.connect(admin).approve(permit2.target as string, INITIAL_WETH);
-    await permit2.connect(admin).approve(WETH, trustedRouter.target as string, INITIAL_WETH, maxUint(48));
+    await wethToken.connect(admin).approve(permit2.target.toString(), INITIAL_WETH);
+    await permit2.connect(admin).approve(WETH, trustedRouter.target.toString(), INITIAL_WETH, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
-      pool.target as string,
+      pool.target.toString(),
       [BAL, WETH],
       [INITIAL_BAL, INITIAL_WETH],
       0,

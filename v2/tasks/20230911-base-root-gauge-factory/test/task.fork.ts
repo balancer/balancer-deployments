@@ -118,7 +118,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
       { value: VAULT_BOUNTY }
     );
 
-    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target as string, MAX_UINT256);
+    await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
     await (veBAL
       .connect(veBALHolder) as Contract)
@@ -135,7 +135,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
 
     gauge = await task.instanceAt('BaseRootGauge', event.args.gauge);
 
-    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
 
     // We need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor Entrypoint
     await (authorizer
@@ -158,12 +158,12 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
 
   it('add gauge to gauge controller', async () => {
     await (gaugeAdder.connect(admin) as Contract).addGaugeType('Base');
-    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target as string, 'Base');
-    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target as string, 'Base');
+    await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target.toString(), 'Base');
+    await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target.toString(), 'Base');
 
-    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target as string, 'Base')).to.be.true;
+    expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target.toString(), 'Base')).to.be.true;
 
-    expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('stores the recipient', async () => {
@@ -179,10 +179,10 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
   });
 
   it('vote for gauge', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target as string, 10000); // Max voting power is 10k points
+    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in.
     // Advancing 7 days ensures we don't move forward 2 entire epochs, which would complicate the math ahead.
@@ -191,7 +191,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -204,7 +204,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
@@ -214,7 +214,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     await advanceTime(WEEK);
 
     // The gauge should now mint and send all minted tokens to the Arbitrum bridge
-    const mintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+    const mintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
     const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp,
     });
@@ -232,7 +232,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
       await mintTx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
         value: actualEmissions,
       },
       BAL
@@ -246,7 +246,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     expectEvent.inIndirectReceipt(await mintTx.wait(), localBridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: L2BALToken,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _to: recipient.address,
       _amount: actualEmissions,
     });
@@ -255,14 +255,14 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
-    await gaugeController.checkpoint_gauge(gauge.target as string);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
       )
     );
 
@@ -279,7 +279,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     const expectedEmissions = weightCap * bn(numberOfWeeks) * weeklyRate / FP_ONE;
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target as string, calldata);
+    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
 
     await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
@@ -294,7 +294,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
       await tx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
       },
       BAL
     );
@@ -304,7 +304,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
     const depositEvent = expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: L2BALToken,
-      _from: gauge.target as string,
+      _from: gauge.target.toString(),
       _to: recipient.address,
     });
 
@@ -333,7 +333,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
       // Fund mock gauge with BAL
       const mintAction = await actionId(BALTokenAdmin, 'mint');
       await (authorizer.connect(daoMultisig) as Contract).grantRole(mintAction, admin.address);
-      await BALTokenAdmin.mint(mockGauge.target as string, fp(100000));
+      await BALTokenAdmin.mint(mockGauge.target.toString(), fp(100000));
     });
 
     function itBridgesTokens(amount: BigNumberish) {
@@ -344,7 +344,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
         const transferEvent = expectTransferEvent(
           receipt,
           {
-            from: mockGauge.target as string,
+            from: mockGauge.target.toString(),
             to: bridgeAddress,
           },
           BAL
@@ -354,7 +354,7 @@ describeForkTest.skip('BaseRootGaugeFactory', 'mainnet', 18067080, function () {
         const depositEvent = expectEvent.inIndirectReceipt(receipt, bridgeInterface, 'ERC20DepositInitiated', {
           _l1Token: BAL,
           _l2Token: L2BALToken,
-          _from: mockGauge.target as string,
+          _from: mockGauge.target.toString(),
           _to: mockRecipient,
         });
 

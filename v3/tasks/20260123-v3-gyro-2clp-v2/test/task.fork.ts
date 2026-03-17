@@ -40,7 +40,7 @@ describeForkTest('V3-Gyro2CLPPool-V2', 'mainnet', 24285750, function () {
     vault = await vaultTask.deployedInstance('Vault');
     const vaultExtension = await vaultTask.deployedInstance('VaultExtension');
 
-    vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
+    vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
   });
 
   before('setup contracts and parameters', async () => {
@@ -124,12 +124,12 @@ describeForkTest('V3-Gyro2CLPPool-V2', 'mainnet', 24285750, function () {
   });
 
   it('has a pool creator', async () => {
-    const roleAccounts = await vaultAsExtension.getPoolRoleAccounts(pool.target as string);
+    const roleAccounts = await vaultAsExtension.getPoolRoleAccounts(pool.target.toString());
     expect(roleAccounts.poolCreator).to.eq(admin.address);
   });
 
   it('has an absurdly long pause window', async () => {
-    const [poolPaused, poolPauseWindowEndTime] = await vaultAsExtension.getPoolPausedState(pool.target as string);
+    const [poolPaused, poolPauseWindowEndTime] = await vaultAsExtension.getPoolPausedState(pool.target.toString());
     const now = await currentTimestamp();
 
     expect(poolPaused).to.be.false;

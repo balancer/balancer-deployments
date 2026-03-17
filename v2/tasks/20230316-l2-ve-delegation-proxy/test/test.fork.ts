@@ -58,7 +58,7 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
 
   describe('getters', () => {
     it('returns null voting escrow', async () => {
-      expect(await veProxy.getVotingEscrow()).to.be.eq(nullVotingEscrow.target as string);
+      expect(await veProxy.getVotingEscrow()).to.be.eq(nullVotingEscrow.target.toString());
     });
 
     it('returns empty default voting escrow delegation implementation', async () => {
@@ -76,9 +76,9 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
   });
 
   it('sets a new delegation implementation', async () => {
-    const tx = await (veProxy.connect(admin) as Contract).setDelegation(veDelegation.target as string);
+    const tx = await (veProxy.connect(admin) as Contract).setDelegation(veDelegation.target.toString());
     expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
-      newImplementation: veDelegation.target as string,
+      newImplementation: veDelegation.target.toString(),
     });
   });
 

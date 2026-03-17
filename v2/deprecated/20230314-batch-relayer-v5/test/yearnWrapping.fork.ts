@@ -67,7 +67,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfYearnBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.target as string, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoYearn = library.interface.encodeFunctionData('wrapYearn', [
@@ -103,7 +103,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
       0,
     ]);
 
-    await yearnToken.connect(recipient).approve(vault.target as string, MAX_UINT256);
+    await yearnToken.connect(recipient).approve(vault.target.toString(), MAX_UINT256);
 
     await relayer.connect(recipient).multicall([withdrawFromYearn]);
 

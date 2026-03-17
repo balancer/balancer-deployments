@@ -70,7 +70,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   before('approve tokens by sender', async () => {
     // Even though the sender only starts with USDC, they will eventually get DAI and need to use it in the Vault
     await Promise.all(
-      [usdc, dai].map(async (token) => await token.connect(sender).approve(vault.target as string, MAX_UINT256))
+      [usdc, dai].map(async (token) => await token.connect(sender).approve(vault.target.toString(), MAX_UINT256))
     );
   });
 

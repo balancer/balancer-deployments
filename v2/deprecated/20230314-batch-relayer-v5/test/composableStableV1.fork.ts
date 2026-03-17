@@ -83,8 +83,8 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
     dai = await task.instanceAt('IERC20', DAI);
     usdc = await task.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
   });
 
   before('run composable stable pool task', async () => {
@@ -107,11 +107,11 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
   });
 
   before('initialize composable stable pool', async () => {
@@ -136,7 +136,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
     const bptBalance = await pool.balanceOf(owner.address);
     expect(bptBalance).to > 0;
 
-    const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.target as string);
+    const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.target.toString());
     const ownerDAIBalanceBeforeExit = await dai.balanceOf(owner.address);
     const { tokens: allTokens } = await vault.getPoolTokens(poolId);
     const amountsOut = [fp(100), bn(100e6)];
@@ -162,7 +162,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
 
     await relayer.connect(owner).multicall([exitCalldata]);
 
-    const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.target as string);
+    const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.target.toString());
     const ownerDAIBalanceAfterExit = await dai.balanceOf(owner.address);
 
     expect(vaultDAIBalanceAfterExit).to < vaultDAIBalanceBeforeExit;

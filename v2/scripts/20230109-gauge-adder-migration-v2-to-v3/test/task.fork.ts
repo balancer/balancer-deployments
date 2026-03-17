@@ -90,9 +90,9 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
       gaugeController.interface.getSighash('add_gauge(address,int128)')
     );
 
-    expect(await authorizer.canPerform(addGaugePermission, oldGaugeAdder.target as string, authorizerAdaptor.target as string)).to.be
+    expect(await authorizer.canPerform(addGaugePermission, oldGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
       .false;
-    expect(await authorizer.canPerform(addGaugePermission, newGaugeAdder.target as string, authorizerAdaptor.target as string)).to.be
+    expect(await authorizer.canPerform(addGaugePermission, newGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
       .true;
   });
 
@@ -107,7 +107,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
     ];
     for (const addGaugeFunction of activeAddGaugeFunctions) {
       const permission = await actionId(newGaugeAdder, addGaugeFunction);
-      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target as string)).to.be.true;
+      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target.toString())).to.be.true;
     }
   });
 
@@ -117,7 +117,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
     const inactiveAddGaugeFunctions = ['addGnosisGauge(address)', 'addZKSyncGauge(address)'];
     for (const addGaugeFunction of inactiveAddGaugeFunctions) {
       const permission = await actionId(newGaugeAdder, addGaugeFunction);
-      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target as string)).to.be.false;
+      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target.toString())).to.be.false;
     }
   });
 

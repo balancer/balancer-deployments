@@ -68,16 +68,16 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('StablePool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
-      await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(initialBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -97,7 +97,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     it('swap in the pool', async () => {
       const amount = fp(500);
       await dai.connect(whale).transfer(owner.address, amount);
-      await dai.connect(owner).approve(vault.target as string, amount);
+      await dai.connect(owner).approve(vault.target.toString(), amount);
 
       await vault
         .connect(owner)
@@ -142,9 +142,9 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const poolId = await pool.getPoolId();
 
       // Initialize the pool
-      await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await usdt.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdt.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(unbalancedBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -174,8 +174,8 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       pool = await task.instanceAt('StablePool', event.args.pool);
       poolId = await pool.getPoolId();
 
-      await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(initialBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -196,7 +196,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const bptBalance = await pool.balanceOf(owner.address);
       expect(bptBalance).to > 0;
 
-      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target as string);
+      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceBeforeExit = await usdc.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
@@ -210,7 +210,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target as string);
+      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceAfterExit = await usdc.balanceOf(owner.address);
 
       expect(vaultUSDCBalanceAfterExit).to < vaultUSDCBalanceBeforeExit;

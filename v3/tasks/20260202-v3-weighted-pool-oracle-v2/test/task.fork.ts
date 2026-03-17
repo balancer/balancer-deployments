@@ -1,6 +1,7 @@
 import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
 import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -30,7 +31,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
 
     poolToken = await vaultTask.instanceAt('IERC20', WEIGHTED_POOL_ADDRESS);
 
-    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.target as string]);
+    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.target.toString()]);
   });
 
   it('checks version', async () => {
@@ -50,7 +51,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     );
 
     const receipt = await tx.wait();
-    const event = receipt.events?.find((e: { event: string }) => e.event === 'WeightedLPOracleCreated');
+    const event = expectEvent.inReceipt(receipt, 'WeightedLPOracleCreated');
     weightedLPOracle = await task.instanceAt('WeightedLPOracle', event?.args?.oracle);
     expect(weightedLPOracle).to.not.be.undefined;
     expect(weightedLPOracle.target).to.not.equal(ZERO_ADDRESS);
@@ -88,7 +89,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     const callData = weightedLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(weightedLPOracle.target as string, callData),
+      unlockHelper.callWhileUnlocked(weightedLPOracle.target.toString(), callData),
       'VaultIsUnlocked()'
     );
   });

@@ -104,7 +104,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
       .connect(daoMultisig)
       .grantRole(
         await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.target as string
+        stakelessGaugeCheckpointer.target.toString()
       );
   });
 
@@ -171,7 +171,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
           checkpointInterface,
           'Checkpoint',
           {},
-          gaugeData.target as string,
+          gaugeData.target.toString(),
           gaugeData.expectedCheckpoints
         );
       });

@@ -23,7 +23,7 @@ describeForkTest('V3-HyperEVMRateProviderFactory', 'hyperevm', 12336700, functio
 
   it('checks vault', async () => {
     const factoryVault = await factory.getVault();
-    expect(factoryVault).to.be.eq(vault.target as string);
+    expect(factoryVault).to.be.eq(vault.target.toString());
   });
 
   it('checks version', async () => {

@@ -50,12 +50,12 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
   before('make the migrator a granter by governance', async () => {
     await newAuthorizer
       .connect(root)
-      .manageGranter(newAuthorizer.GENERAL_PERMISSION_SPECIFIER(), migrator.target as string, newAuthorizer.EVERYWHERE(), true);
+      .manageGranter(newAuthorizer.GENERAL_PERMISSION_SPECIFIER(), migrator.target.toString(), newAuthorizer.EVERYWHERE(), true);
 
     expect(
       await newAuthorizer.canGrant(
         newAuthorizer.GENERAL_PERMISSION_SPECIFIER(),
-        migrator.target as string,
+        migrator.target.toString(),
         newAuthorizer.EVERYWHERE()
       )
     ).to.be.true;
@@ -85,7 +85,7 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
           actionId: grantActionId,
           scheduledExecutionId: await migrator.scheduledExecutionIds(i),
         },
-        newAuthorizer.target as string
+        newAuthorizer.target.toString()
       );
     }
   });
@@ -138,7 +138,7 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
     expect(
       await newAuthorizer.canGrant(
         newAuthorizer.GENERAL_PERMISSION_SPECIFIER(),
-        migrator.target as string,
+        migrator.target.toString(),
         newAuthorizer.EVERYWHERE()
       )
     ).to.be.false;

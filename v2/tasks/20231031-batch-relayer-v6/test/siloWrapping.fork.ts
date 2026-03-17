@@ -67,7 +67,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
     expect(balanceOfWrappedBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoSilo = library.interface.encodeFunctionData('wrapShareToken', [
@@ -108,7 +108,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
       chainedReference,
     ]);
 
-    await (shareToken.connect(recipient) as Contract).approve(vault.target as string, amountToWithdraw);
+    await (shareToken.connect(recipient) as Contract).approve(vault.target.toString(), amountToWithdraw);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromSilo]);
 

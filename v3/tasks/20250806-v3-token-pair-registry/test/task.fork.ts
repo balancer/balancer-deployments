@@ -47,23 +47,23 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
   it('set e2e boosted pool path (underlying <--> underlying)', async () => {
     const boostedPoolPath = [];
     boostedPoolPath.push({
-      pool: waUSDC.target as string,
-      tokenOut: waUSDC.target as string,
+      pool: waUSDC.target.toString(),
+      tokenOut: waUSDC.target.toString(),
       isBuffer: true,
     });
     boostedPoolPath.push({
       pool: STABLE_POOL_ADDRESS,
-      tokenOut: waUSDT.target as string,
+      tokenOut: waUSDT.target.toString(),
       isBuffer: false,
     });
     boostedPoolPath.push({
-      pool: waUSDT.target as string,
-      tokenOut: USDT.target as string,
+      pool: waUSDT.target.toString(),
+      tokenOut: USDT.target.toString(),
       isBuffer: true,
     });
 
-    await (tokenPairRegistry.connect(admin) as Contract).addPath(USDC.target as string, boostedPoolPath);
-    expect(await tokenPairRegistry.getPaths(USDC.target as string, USDT.target as string)).to.deep.equal([
+    await (tokenPairRegistry.connect(admin) as Contract).addPath(USDC.target.toString(), boostedPoolPath);
+    expect(await tokenPairRegistry.getPaths(USDC.target.toString(), USDT.target.toString())).to.deep.equal([
       boostedPoolPath.map((o) => Object.values(o)),
     ]);
   });
@@ -74,7 +74,7 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     const waUsdtPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waUSDT.target as string,
+        tokenOut: waUSDT.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
@@ -82,7 +82,7 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     const waUsdcPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waUSDC.target as string,
+        tokenOut: waUSDC.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
@@ -90,41 +90,41 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     const waGhoPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waGHO.target as string,
+        tokenOut: waGHO.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.target as string, waUSDT.target as string)).to.deep.equal([waUsdtPath]);
-    expect(await tokenPairRegistry.getPaths(waUSDT.target as string, waUSDC.target as string)).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waUSDT.target.toString())).to.deep.equal([waUsdtPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waUSDC.target.toString())).to.deep.equal([waUsdcPath]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.target as string, waGHO.target as string)).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target as string, waUSDC.target as string)).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waGHO.target.toString())).to.deep.equal([waGhoPath]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDC.target.toString())).to.deep.equal([waUsdcPath]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDT.target as string, waGHO.target as string)).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target as string, waUSDT.target as string)).to.deep.equal([waUsdtPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waGHO.target.toString())).to.deep.equal([waGhoPath]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDT.target.toString())).to.deep.equal([waUsdtPath]);
   });
 
   it('set buffer path', async () => {
-    await (tokenPairRegistry.connect(admin) as Contract).addSimplePath(waGHO.target as string);
+    await (tokenPairRegistry.connect(admin) as Contract).addSimplePath(waGHO.target.toString());
 
     const wrapPath = [
       {
-        pool: waGHO.target as string,
-        tokenOut: waGHO.target as string,
+        pool: waGHO.target.toString(),
+        tokenOut: waGHO.target.toString(),
         isBuffer: true,
       },
     ].map((o) => Object.values(o));
 
     const unwrapPath = [
       {
-        pool: waGHO.target as string,
-        tokenOut: GHO.target as string,
+        pool: waGHO.target.toString(),
+        tokenOut: GHO.target.toString(),
         isBuffer: true,
       },
     ].map((o) => Object.values(o));
 
-    expect(await tokenPairRegistry.getPaths(GHO.target as string, waGHO.target as string)).to.deep.equal([wrapPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target as string, GHO.target as string)).to.deep.equal([unwrapPath]);
+    expect(await tokenPairRegistry.getPaths(GHO.target.toString(), waGHO.target.toString())).to.deep.equal([wrapPath]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), GHO.target.toString())).to.deep.equal([unwrapPath]);
   });
 });

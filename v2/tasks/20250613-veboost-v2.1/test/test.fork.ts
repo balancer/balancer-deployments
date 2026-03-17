@@ -59,12 +59,12 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
   });
 
   it('proxy can be migrated to delegation', async () => {
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(oldBoost.target as string);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(oldBoost.target.toString());
 
     await newBoost.migrate();
-    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(newBoost.target as string);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(newBoost.target.toString());
 
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(newBoost.target as string);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(newBoost.target.toString());
   });
 
   it('adjusted balances should be unchanged after migration', async () => {

@@ -55,7 +55,7 @@ describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
     // Query result
     const expectedAmountOut = await (aggregatorRouter.connect(zero) as Contract)
       .querySwapSingleTokenExactIn.staticCall(
-        pool.target as string,
+        pool.target.toString(),
         RSETH_ADDRESS,
         HGETH_ADDRESS,
         rplAmountIn,
@@ -69,7 +69,7 @@ describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
     await (rsETH.connect(rsEthWhale) as Contract).transfer(await aggregatorRouter.getVault(), rplAmountIn);
     await (aggregatorRouter.connect(rsEthWhale) as Contract)
       .swapSingleTokenExactIn(
-        pool.target as string,
+        pool.target.toString(),
         RSETH_ADDRESS,
         HGETH_ADDRESS,
         rplAmountIn,

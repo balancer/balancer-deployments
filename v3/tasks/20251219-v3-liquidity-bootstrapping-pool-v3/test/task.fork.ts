@@ -71,13 +71,13 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
   before('setup contracts and parameters', async () => {
     tokenConfig = [
       {
-        token: weth.target as string,
+        token: weth.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: bal.target as string,
+        token: bal.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -88,7 +88,7 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target as string);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
   });
 
   it('deploys LBP', async () => {
@@ -98,15 +98,15 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
       name: 'Mock Seedless LBP',
       symbol: 'SLBP-TEST',
       owner: admin.address,
-      projectToken: bal.target as string,
-      reserveToken: weth.target as string,
+      projectToken: bal.target.toString(),
+      reserveToken: weth.target.toString(),
       startTime: startTime + bn(HOUR),
       endTime: startTime + bn(DAY),
       blockProjectTokenSwapsIn: false,
     };
 
     const migrationParams = {
-      migrationRouter: migrationRouter.target as string,
+      migrationRouter: migrationRouter.target.toString(),
       lockDurationAfterMigration: 12 * MONTH,
       bptPercentageToMigrate: fp(0.8),
       migrationWeightProjectToken: HIGH_WEIGHT,
@@ -140,8 +140,8 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(bal.target as string);
-    expect(await pool.getReserveToken()).to.eq(weth.target as string);
+    expect(await pool.getProjectToken()).to.eq(bal.target.toString());
+    expect(await pool.getReserveToken()).to.eq(weth.target.toString());
   });
 
   it('checks pool version', async () => {
@@ -166,12 +166,17 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     // Give the admin tokens: mint test tokens, get WETH
     await (bal.connect(admin) as Contract).mint(admin.address, INITIAL_BAL);
 
-    await (bal.connect(admin) as Contract).approve(permit2.target as string, INITIAL_BAL);
-    await (permit2.connect(admin) as Contract).approve(bal.target as string, trustedRouter.target as string, INITIAL_BAL, maxUint(48));
+    await (bal.connect(admin) as Contract).approve(permit2.target.toString(), INITIAL_BAL);
+    await (permit2.connect(admin) as Contract).approve(
+      bal.target.toString(),
+      trustedRouter.target.toString(),
+      INITIAL_BAL,
+      maxUint(48)
+    );
 
     await (trustedRouter.connect(admin) as Contract).initialize(
-      pool.target as string,
-      [bal.target as string, weth.target as string],
+      pool.target.toString(),
+      [bal.target.toString(), weth.target.toString()],
       [INITIAL_BAL, 0], // 0 reserve tokens
       0,
       false, // wethIsETH
@@ -185,18 +190,17 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     expect(await pool.isSwapEnabled()).to.be.true;
 
     // Actually need to buy some to get a non-zero reserve balance for migration.
-    await (trustedRouter.connect(admin) as Contract)
-      .swapSingleTokenExactIn(
-        pool.target as string,
-        weth.target as string,
-        bal.target as string,
-        INITIAL_WETH / BigInt(4),
-        0,
-        (await currentTimestamp()) + bn(DAY),
-        true,
-        '0x',
-        { value: INITIAL_WETH / BigInt(4) }
-      );
+    await (trustedRouter.connect(admin) as Contract).swapSingleTokenExactIn(
+      pool.target.toString(),
+      weth.target.toString(),
+      bal.target.toString(),
+      INITIAL_WETH / BigInt(4),
+      0,
+      (await currentTimestamp()) + bn(DAY),
+      true,
+      '0x',
+      { value: INITIAL_WETH / BigInt(4) }
+    );
   });
 
   it('ends the sale', async () => {
@@ -206,12 +210,12 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
   });
 
   it('migrates the liquidity', async () => {
-    await (pool.connect(admin) as Contract).approve(migrationRouter.target as string, maxUint(256));
+    await (pool.connect(admin) as Contract).approve(migrationRouter.target.toString(), maxUint(256));
     const weightedPoolProjectWeight = HIGH_WEIGHT;
     const weightedPoolReserveWeight = LOW_WEIGHT;
 
-    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
-    const balancesBeforeMigration = await vaultAsExtension.getCurrentLiveBalances(pool.target as string);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
+    const balancesBeforeMigration = await vaultAsExtension.getCurrentLiveBalances(pool.target.toString());
     const actualBalInPool = balancesBeforeMigration[0];
     const actualWethInPool = balancesBeforeMigration[1];
 
@@ -220,43 +224,49 @@ describeForkTest('LBPool-V3 (V3)', 'mainnet', 24019450, function () {
     const effectiveWethInPool = actualWethInPool + virtualBalanceScaled18;
 
     const migrateReceipt = await (
-      await (migrationRouter.connect(admin) as Contract).migrateLiquidity(pool.target as string, projectTreasury.address, {
-        name: 'Weighted Pool',
-        symbol: 'WP-TEST',
-        normalizedWeights: [weightedPoolProjectWeight, weightedPoolReserveWeight],
-        roleAccounts: {
-          pauseManager: ZERO_ADDRESS,
-          swapFeeManager: ZERO_ADDRESS,
-          poolCreator: ZERO_ADDRESS,
-        },
-        swapFeePercentage: SWAP_FEE,
-        poolHooksContract: ZERO_ADDRESS,
-        enableDonations: false,
-        disableUnbalancedLiquidity: false,
-        salt: ONES_BYTES32,
-      })
+      await (migrationRouter.connect(admin) as Contract).migrateLiquidity(
+        pool.target.toString(),
+        projectTreasury.address,
+        {
+          name: 'Weighted Pool',
+          symbol: 'WP-TEST',
+          normalizedWeights: [weightedPoolProjectWeight, weightedPoolReserveWeight],
+          roleAccounts: {
+            pauseManager: ZERO_ADDRESS,
+            swapFeeManager: ZERO_ADDRESS,
+            poolCreator: ZERO_ADDRESS,
+          },
+          swapFeePercentage: SWAP_FEE,
+          poolHooksContract: ZERO_ADDRESS,
+          enableDonation: false,
+          disableUnbalancedLiquidity: false,
+          salt: ONES_BYTES32,
+        }
+      )
     ).wait();
 
     const migrationEvent = expectEvent.inReceipt(migrateReceipt, 'PoolMigrated');
     const weightedPool = await task.instanceAt('WeightedPool', migrationEvent.args.weightedPool);
 
-    expect(await weightedPool.getTokens()).to.deep.equal([bal.target as string, weth.target as string]);
+    expect(await weightedPool.getTokens()).to.deep.equal([bal.target.toString(), weth.target.toString()]);
     expect(await weightedPool.getNormalizedWeights()).to.deep.equal([HIGH_WEIGHT, LOW_WEIGHT]);
 
-    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target as string);
+    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target.toString());
 
     // Get LBP end weights for spot price calculation
     const lbpWeights = await pool.getNormalizedWeights();
 
     // Spot price = (BAL / BAL_weight) / (effectiveWETH / WETH_weight)
     // In terms of BAL per WETH
-    const spotPrice = bn(actualBalInPool) * bn(lbpWeights[1]) / bn(effectiveWethInPool) * fp(1) / bn(lbpWeights[0]); // project weight
+    const spotPrice =
+      (((bn(actualBalInPool) * bn(lbpWeights[1])) / bn(effectiveWethInPool)) * fp(1)) / bn(lbpWeights[0]); // project weight
 
     // Expected BAL migrated = 80% of actual BAL
-    const expectedBalMigrated = bn(actualBalInPool) * BigInt(80) / BigInt(100);
+    const expectedBalMigrated = (bn(actualBalInPool) * BigInt(80)) / BigInt(100);
 
     // Expected WETH = BAL_migrated / spotPrice * (reserveWeight / projectWeight)
-    const expectedWethMigrated = expectedBalMigrated * fp(1) / spotPrice * weightedPoolReserveWeight / weightedPoolProjectWeight;
+    const expectedWethMigrated =
+      (((expectedBalMigrated * fp(1)) / spotPrice) * weightedPoolReserveWeight) / weightedPoolProjectWeight;
 
     expect(currentBalances[0]).to.equalWithError(expectedBalMigrated);
     expect(currentBalances[1]).to.equalWithError(expectedWethMigrated);

@@ -75,7 +75,7 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
   });
 
   it('stores an allocation', async () => {
-    await (ldoToken.connect(distributor) as Contract).approve(merkleOrchard.target as string, distributorLdoBalance);
+    await (ldoToken.connect(distributor) as Contract).approve(merkleOrchard.target.toString(), distributorLdoBalance);
     await (merkleOrchard.connect(distributor) as Contract).createDistribution(LDO_ADDRESS, LDO_ROOT, distributorLdoBalance, bn(1));
 
     const proof = merkleTree.getHexProof(elements[0]);

@@ -59,13 +59,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
 
     context('with BAL distributed', () => {
       before('send BAL to distribute', async () => {
-        await BAL.connect(feeCollector).approve(distributor.target as string, balAmount);
-        await distributor.connect(feeCollector).depositToken(BAL.target as string, balAmount);
+        await BAL.connect(feeCollector).approve(distributor.target.toString(), balAmount);
+        await distributor.connect(feeCollector).depositToken(BAL.target.toString(), balAmount);
       });
 
       it('veBAL holders cannot yet claim tokens', async () => {
         const balancesBefore = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
-        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
         const balancesAfter = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
 
         expectEvent.notEmitted(await tx.wait(), 'TokensClaimed');
@@ -83,13 +83,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
 
     context('with WETH distributed', () => {
       before('send BAL to distribute', async () => {
-        await BAL.connect(feeCollector).approve(distributor.target as string, balAmount * BigInt(3));
-        await distributor.connect(feeCollector).depositToken(BAL.target as string, balAmount * BigInt(3));
+        await BAL.connect(feeCollector).approve(distributor.target.toString(), balAmount * BigInt(3));
+        await distributor.connect(feeCollector).depositToken(BAL.target.toString(), balAmount * BigInt(3));
       });
 
       before('send WETH to distribute', async () => {
-        await WETH.connect(feeCollector).approve(distributor.target as string, wethAmount);
-        await distributor.connect(feeCollector).depositToken(WETH.target as string, wethAmount);
+        await WETH.connect(feeCollector).approve(distributor.target.toString(), wethAmount);
+        await distributor.connect(feeCollector).depositToken(WETH.target.toString(), wethAmount);
       });
 
       it('veBAL holders can claim BAL and not WETH', async () => {
@@ -98,13 +98,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
         const expectedBALAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
 
         const wethBalanceBefore = await WETH.balanceOf(veBALHolder.address);
-        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
         const wethBalanceAfter = await WETH.balanceOf(veBALHolder.address);
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
-          BAL.target as string
+          { from: distributor.target.toString(), to: veBALHolder.address, value: expectedBALAmount },
+          BAL.target.toString()
         );
         expect(wethBalanceAfter).to.equal(wethBalanceBefore);
       });
@@ -125,18 +125,18 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
       const expectedBALAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
       const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-      const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+      const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
 
       expectTransferEvent(
         await tx.wait(),
-        { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
-        BAL.target as string
+        { from: distributor.target.toString(), to: veBALHolder.address, value: expectedBALAmount },
+        BAL.target.toString()
       );
 
       expectTransferEvent(
         await tx.wait(),
-        { from: distributor.target as string, to: veBALHolder.address, value: expectedWETHAmount },
-        WETH.target as string
+        { from: distributor.target.toString(), to: veBALHolder.address, value: expectedWETHAmount },
+        WETH.target.toString()
       );
     });
 
@@ -153,18 +153,18 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
       const expectedBALAmount = balFirstWeekAmount + balSecondWeekAmount;
       const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-      const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target as string, WETH.target as string]);
+      const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target.toString(), WETH.target.toString()]);
 
       expectTransferEvent(
         await tx.wait(),
-        { from: distributor.target as string, to: veBALHolder2.address, value: expectedBALAmount },
-        BAL.target as string
+        { from: distributor.target.toString(), to: veBALHolder2.address, value: expectedBALAmount },
+        BAL.target.toString()
       );
 
       expectTransferEvent(
         await tx.wait(),
-        { from: distributor.target as string, to: veBALHolder2.address, value: expectedWETHAmount },
-        WETH.target as string
+        { from: distributor.target.toString(), to: veBALHolder2.address, value: expectedWETHAmount },
+        WETH.target.toString()
       );
     });
   });

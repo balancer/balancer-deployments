@@ -98,8 +98,8 @@ describeForkTest.skip('StableSurgePoolFactoryV2', 'mainnet', 22195600, function 
   });
 
   it('checks hook address for pool', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.target as string);
-    const { hooksContract } = await vaultAsExtension.getHooksConfig(pool.target as string);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString());
+    const { hooksContract } = await vaultAsExtension.getHooksConfig(pool.target.toString());
     expect(hooksContract).to.be.equal(await factory.getStableSurgeHook());
   });
 

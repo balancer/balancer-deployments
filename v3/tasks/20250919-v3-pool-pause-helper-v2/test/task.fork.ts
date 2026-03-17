@@ -41,8 +41,8 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
-    extensionEntrypoint = vaultExtension.attach(vault.target as string) as Contract;
-    adminEntrypoint = vaultAdmin.attach(vault.target as string) as Contract;
+    extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
+    adminEntrypoint = vaultAdmin.attach(vault.target.toString()) as Contract;
 
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
@@ -61,11 +61,11 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to pause pools. This is all that is needed for v2.
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target as string);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target.toString());
   });
 
   it('can create a pool set', async () => {
-    await (pauseHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target as string]);
+    await (pauseHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target.toString()]);
 
     poolSetId = await pauseHelper.getPoolSetIdForManager(manager.address);
 
@@ -75,12 +75,12 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
 
   it('can pause pools', async () => {
     // Ensure pool isn't already paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.false;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target.toString())).to.be.false;
 
-    await (pauseHelper.connect(manager) as Contract).pausePools([pool.target as string]);
+    await (pauseHelper.connect(manager) as Contract).pausePools([pool.target.toString()]);
 
     // Pool should now be paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.true;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target.toString())).to.be.true;
   });
 
   it('can transfer pause permission', async () => {
@@ -93,12 +93,12 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
     await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'unpausePool'), manager.address);
 
     // It was previously paused.
-    await (adminEntrypoint.connect(manager) as Contract).unpausePool(pool.target as string);
-    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.false;
+    await (adminEntrypoint.connect(manager) as Contract).unpausePool(pool.target.toString());
+    expect(await extensionEntrypoint.isPoolPaused(pool.target.toString())).to.be.false;
 
-    await (pauseHelper.connect(newManager) as Contract).pausePools([pool.target as string]);
+    await (pauseHelper.connect(newManager) as Contract).pausePools([pool.target.toString()]);
 
     // Pool should now be paused again.
-    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.true;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target.toString())).to.be.true;
   });
 });

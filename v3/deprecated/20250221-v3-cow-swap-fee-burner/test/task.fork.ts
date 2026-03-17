@@ -48,7 +48,7 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
   });
 
   it('burn tokens', async () => {
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Nonexistent);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Nonexistent);
 
     const initBalance = 1000000e6;
     const minAmountOut = initBalance / 2;
@@ -58,7 +58,7 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
     await authorizer
       .connect(govMultisig)
       .grantRole(await cowSwapFeeBurner.getActionId(cowSwapFeeBurner.interface.getSighash('burn')), usdcWhale.address);
-    await usdc.connect(usdcWhale).approve(cowSwapFeeBurner.target as string, initBalance);
+    await usdc.connect(usdcWhale).approve(cowSwapFeeBurner.target.toString(), initBalance);
 
     const block = await ethers.provider.getBlock('latest');
 
@@ -66,7 +66,7 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
       .connect(usdcWhale)
       .burn(
         ZERO_ADDRESS,
-        usdc.target as string,
+        usdc.target.toString(),
         initBalance,
         waUSDC_ADDRESS,
         minAmountOut,
@@ -74,7 +74,7 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
         block.timestamp + FIVE_MINUTES
       );
 
-    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target as string);
+    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target.toString());
     const existingOrder = {
       sellToken: existingRawOrder.sellToken,
       buyToken: existingRawOrder.buyToken,
@@ -89,7 +89,7 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
     };
 
     const expectedOrder = {
-      sellToken: usdc.target as string,
+      sellToken: usdc.target.toString(),
       buyToken: waUSDC_ADDRESS,
       receiver: admin.address,
       sellAmount: initBalance,
@@ -102,6 +102,6 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
     };
 
     expect(existingOrder).to.deep.equal(expectedOrder);
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target as string)).to.equal(OrderStatus.Active);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Active);
   });
 });

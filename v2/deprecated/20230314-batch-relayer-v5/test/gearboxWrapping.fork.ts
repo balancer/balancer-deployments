@@ -67,7 +67,7 @@ describeForkTest.skip('GearboxWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfDieselBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.target as string, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoGearbox = library.interface.encodeFunctionData('wrapGearbox', [
@@ -104,7 +104,7 @@ describeForkTest.skip('GearboxWrapping', 'mainnet', 16622559, function () {
       0,
     ]);
 
-    await dieselToken.connect(recipient).approve(vault.target as string, MAX_UINT256);
+    await dieselToken.connect(recipient).approve(vault.target.toString(), MAX_UINT256);
 
     await relayer.connect(recipient).multicall([withdrawFromGearbox]);
 

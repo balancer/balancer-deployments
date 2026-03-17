@@ -38,7 +38,7 @@ describeForkTest('VaultFactory-V3', 'mainnet', 21332116, function () {
   });
 
   it('checks protocol fee controller reference', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     expect(await vaultAsExtension.getProtocolFeeController()).to.be.equal(protocolFeeController.target);
   });
 

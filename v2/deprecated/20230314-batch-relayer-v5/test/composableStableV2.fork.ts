@@ -78,8 +78,8 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V2+', 'mainnet', 
     dai = await task.instanceAt('IERC20', DAI);
     usdc = await task.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
   });
 
   // Use V3 so that it's not disabled: same as V2 for joins/exits
@@ -103,11 +103,11 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V2+', 'mainnet', 
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
 
     bptIndex = await pool.getBptIndex();
 
@@ -133,7 +133,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V2+', 'mainnet', 
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('can join and exit', async () => {

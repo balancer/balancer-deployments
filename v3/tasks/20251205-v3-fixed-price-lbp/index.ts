@@ -61,6 +61,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const poolParams = [newFixedLBPParams, factoryParams, projectTokenRate];
 
     // We are now ready to verify the Pool
-    await task.verify('FixedPriceLBPool', mockPool.target as string, poolParams);
+    await task.verify('FixedPriceLBPool', mockPool.target.toString(), poolParams);
   }
 };

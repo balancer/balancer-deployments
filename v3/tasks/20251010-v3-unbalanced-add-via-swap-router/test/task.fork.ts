@@ -121,11 +121,11 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
 
     await (balToken.connect(largeHolderSigner) as Contract).transfer(bob.address, initialBalanceBAL);
 
-    await (balToken.connect(bob) as Contract).approve(permit2.target as string, initialBalanceBAL);
-    await (permit2.connect(bob) as Contract).approve(BAL, router.target as string, initialBalanceBAL, maxUint(48));
+    await (balToken.connect(bob) as Contract).approve(permit2.target.toString(), initialBalanceBAL);
+    await (permit2.connect(bob) as Contract).approve(BAL, router.target.toString(), initialBalanceBAL, maxUint(48));
 
     await (router.connect(bob) as Contract)
-      .initialize(pool.target as string, [BAL, input.WETH], [initialBalanceBAL, initialBalanceWETH], 0, true, ZERO_BYTES32, {
+      .initialize(pool.target.toString(), [BAL, input.WETH], [initialBalanceBAL, initialBalanceWETH], 0, true, ZERO_BYTES32, {
         value: initialBalanceWETH, // Also change this to use the constant instead of hardcoded value
       });
   });
@@ -139,7 +139,7 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
 
   it('checks router configuration', async () => {
     expect(await unbalancedAddRouter.getWeth()).to.eq(input.WETH);
-    expect(await unbalancedAddRouter.getPermit2()).to.eq(permit2.target as string);
+    expect(await unbalancedAddRouter.getPermit2()).to.eq(permit2.target.toString());
   });
 
   it('adds liquidity unbalanced', async () => {
@@ -152,8 +152,8 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const vaultContract = await vaultTask.deployedInstance('Vault');
     const vaultExtension = await vaultTask.deployedInstance('VaultExtension');
-    const vaultAsExtension = vaultExtension.attach(vaultContract.target as string) as Contract;
-    const poolTokenInfo = await vaultAsExtension.getPoolTokenInfo(pool.target as string);
+    const vaultAsExtension = vaultExtension.attach(vaultContract.target.toString()) as Contract;
+    const poolTokenInfo = await vaultAsExtension.getPoolTokenInfo(pool.target.toString());
 
     const proportionalBpt = totalSupply * exactAmount / poolTokenInfo.balancesRaw[1];
 
@@ -164,11 +164,11 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     await setBalance(alice.address, fp(100));
     await (wethContract.connect(alice) as Contract).deposit({ value: exactAmount * BigInt(2) });
 
-    await (balToken.connect(alice) as Contract).approve(permit2.target as string, maxAdjustableAmount * BigInt(2));
-    await (permit2.connect(alice) as Contract).approve(BAL, unbalancedAddRouter.target as string, maxAdjustableAmount * BigInt(2), maxUint(48));
+    await (balToken.connect(alice) as Contract).approve(permit2.target.toString(), maxAdjustableAmount * BigInt(2));
+    await (permit2.connect(alice) as Contract).approve(BAL, unbalancedAddRouter.target.toString(), maxAdjustableAmount * BigInt(2), maxUint(48));
 
-    await (wethContract.connect(alice) as Contract).approve(permit2.target as string, exactAmount * BigInt(2));
-    await (permit2.connect(alice) as Contract).approve(input.WETH, unbalancedAddRouter.target as string, exactAmount * BigInt(2), maxUint(48));
+    await (wethContract.connect(alice) as Contract).approve(permit2.target.toString(), exactAmount * BigInt(2));
+    await (permit2.connect(alice) as Contract).approve(input.WETH, unbalancedAddRouter.target.toString(), exactAmount * BigInt(2), maxUint(48));
 
     const params = {
       exactBptAmountOut: proportionalBpt,
@@ -182,7 +182,7 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
     const bptBalanceBefore = await pool.balanceOf(alice.address);
     const deadline = (await ethers.provider.getBlock('latest'))!.timestamp + 3600;
 
-    await (unbalancedAddRouter.connect(alice) as Contract).addLiquidityUnbalanced(pool.target as string, deadline, false, params);
+    await (unbalancedAddRouter.connect(alice) as Contract).addLiquidityUnbalanced(pool.target.toString(), deadline, false, params);
 
     const bptBalanceAfter = await pool.balanceOf(alice.address);
     const bptReceived = bptBalanceAfter - bptBalanceBefore;
@@ -194,13 +194,13 @@ describeForkTest('V3-UnbalancedAddViaSwapRouter', 'mainnet', 23534632, function 
   // NB: This test must go at the end, or the Router having extra ETH messes up the add liquidity test.
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: unbalancedAddRouter.target as string,
+      to: unbalancedAddRouter.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: unbalancedAddRouter.target as string,
+      to: unbalancedAddRouter.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;

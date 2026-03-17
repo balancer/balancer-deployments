@@ -62,37 +62,37 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
   });
 
   it('deploys with correct Vault', async () => {
-    expect(await registry.getVault()).to.eq(vault.target as string);
+    expect(await registry.getVault()).to.eq(vault.target.toString());
   });
 
   it('can register a contract', async () => {
     await (registry.connect(admin) as Contract)
-      .registerBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool', factory.target as string);
-    await (registry.connect(admin) as Contract).addOrUpdateBalancerContractAlias('WeightedPool', factory.target as string);
+      .registerBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool', factory.target.toString());
+    await (registry.connect(admin) as Contract).addOrUpdateBalancerContractAlias('WeightedPool', factory.target.toString());
   });
 
   it('detects active contracts', async () => {
-    expect(await registry.isActiveBalancerContract(ContractType.POOL_FACTORY, factory.target as string)).to.be.true;
+    expect(await registry.isActiveBalancerContract(ContractType.POOL_FACTORY, factory.target.toString())).to.be.true;
 
     let result = await registry.getBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool');
-    expect(result.contractAddress).to.eq(factory.target as string);
+    expect(result.contractAddress).to.eq(factory.target.toString());
     expect(result.isActive).to.be.true;
 
     result = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'WeightedPool');
-    expect(result.contractAddress).to.eq(factory.target as string);
+    expect(result.contractAddress).to.eq(factory.target.toString());
     expect(result.isActive).to.be.true;
   });
 
   it('has trusted router', async () => {
-    await (registry.connect(admin) as Contract).registerBalancerContract(ContractType.ROUTER, '20241205-v3-router', router.target as string);
+    await (registry.connect(admin) as Contract).registerBalancerContract(ContractType.ROUTER, '20241205-v3-router', router.target.toString());
 
-    expect(await registry.isActiveBalancerContract(ContractType.ROUTER, router.target as string)).to.be.true;
-    expect(await registry.isTrustedRouter(router.target as string)).to.be.true;
-    expect(await registry.isTrustedRouter(factory.target as string)).to.be.false;
+    expect(await registry.isActiveBalancerContract(ContractType.ROUTER, router.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(router.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(factory.target.toString())).to.be.false;
   });
 
   it('handles unregistered contracts', async () => {
-    expect(await registry.isActiveBalancerContract(ContractType.ROUTER, factory.target as string)).to.be.false;
+    expect(await registry.isActiveBalancerContract(ContractType.ROUTER, factory.target.toString())).to.be.false;
     expect(await registry.isActiveBalancerContract(ContractType.ERC4626, ZERO_ADDRESS)).to.be.false;
 
     const { contractAddress, isActive } = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'NotThere');

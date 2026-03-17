@@ -104,7 +104,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
       .connect(daoMultisig) as Contract)
       .grantRole(
         await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
-        stakelessGaugeCheckpointer.target as string
+        stakelessGaugeCheckpointer.target.toString()
       );
   });
 

@@ -75,7 +75,7 @@ describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to set pool swap fees.
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pool, 'setSwapFeePercentage'), feeHelper.target as string);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pool, 'setSwapFeePercentage'), feeHelper.target.toString());
   });
 
   it('can create a pool set', async () => {

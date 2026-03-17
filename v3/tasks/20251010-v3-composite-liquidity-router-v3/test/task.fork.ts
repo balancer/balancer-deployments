@@ -25,7 +25,7 @@ describeForkTest('V3-CompositeLiquidityRouter-V3', 'mainnet', 23534632, function
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const WETH = await testBALTokenTask.instanceAt('TestBalancerToken', WETH_ADDRESS);
-    wethSigner = await impersonate(WETH.target as string, fp(10e8));
+    wethSigner = await impersonate(WETH.target.toString(), fp(10e8));
     alice = await getSigner();
 
     input = task.input() as CompositeLiquidityRouter;
@@ -45,13 +45,13 @@ describeForkTest('V3-CompositeLiquidityRouter-V3', 'mainnet', 23534632, function
 
   it('checks composite liquidity router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: compositeLiquidityRouter.target as string,
+      to: compositeLiquidityRouter.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: compositeLiquidityRouter.target as string,
+      to: compositeLiquidityRouter.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;

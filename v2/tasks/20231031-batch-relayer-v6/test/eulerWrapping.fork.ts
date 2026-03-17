@@ -69,7 +69,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - EulerWrapping', 'mainnet', 16636
     expect(balanceOfeUSDClBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoEuler = library.interface.encodeFunctionData('wrapEuler', [
@@ -110,7 +110,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - EulerWrapping', 'mainnet', 16636
       0,
     ]);
 
-    await (eToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (eToken.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromEuler]);
 
@@ -124,8 +124,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - EulerWrapping', 'mainnet', 16636
   it('should wrap and unwrap successfully', async () => {
     chainedReference = toChainedReference(30);
     chainedReferenceOut = toChainedReference(80);
-    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap * 2);
-    await (eToken.connect(sender) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap * 2);
+    await (eToken.connect(sender) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     const depositIntoEuler_1 = library.interface.encodeFunctionData('wrapEuler', [
       eUSDC,

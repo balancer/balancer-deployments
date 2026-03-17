@@ -71,13 +71,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
 
       context('with BAL distributed', () => {
         before('send BAL to distribute', async () => {
-          await (BAL.connect(feeCollector) as Contract).approve(distributor.target as string, balAmount);
-          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target as string, balAmount);
+          await (BAL.connect(feeCollector) as Contract).approve(distributor.target.toString(), balAmount);
+          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target.toString(), balAmount);
         });
 
         it('veBAL holders cannot yet claim tokens', async () => {
           const balancesBefore = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
           const balancesAfter = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
 
           expectEvent.notEmitted(await tx.wait(), 'TokensClaimed');
@@ -95,13 +95,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
 
       context('with WETH distributed', () => {
         before('send BAL to distribute', async () => {
-          await (BAL.connect(feeCollector) as Contract).approve(distributor.target as string, balAmount * BigInt(3));
-          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target as string, balAmount * BigInt(3));
+          await (BAL.connect(feeCollector) as Contract).approve(distributor.target.toString(), balAmount * BigInt(3));
+          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target.toString(), balAmount * BigInt(3));
         });
 
         before('send WETH to distribute', async () => {
-          await (WETH.connect(feeCollector) as Contract).approve(distributor.target as string, wethAmount);
-          await (distributor.connect(feeCollector) as Contract).depositToken(WETH.target as string, wethAmount);
+          await (WETH.connect(feeCollector) as Contract).approve(distributor.target.toString(), wethAmount);
+          await (distributor.connect(feeCollector) as Contract).depositToken(WETH.target.toString(), wethAmount);
         });
 
         it('veBAL holders can claim BAL and not WETH', async () => {
@@ -110,13 +110,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
           const expectedBALAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
 
           const wethBalanceBefore = await WETH.balanceOf(veBALHolder.address);
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
           const wethBalanceAfter = await WETH.balanceOf(veBALHolder.address);
 
           expectTransferEvent(
             await tx.wait(),
-            { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
-            BAL.target as string
+            { from: distributor.target.toString(), to: veBALHolder.address, value: expectedBALAmount },
+            BAL.target.toString()
           );
           expect(wethBalanceAfter).to.equal(wethBalanceBefore);
         });
@@ -137,18 +137,18 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         const expectedBALAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
         const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
+        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
-          BAL.target as string
+          { from: distributor.target.toString(), to: veBALHolder.address, value: expectedBALAmount },
+          BAL.target.toString()
         );
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.target as string, to: veBALHolder.address, value: expectedWETHAmount },
-          WETH.target as string
+          { from: distributor.target.toString(), to: veBALHolder.address, value: expectedWETHAmount },
+          WETH.target.toString()
         );
       });
 
@@ -165,18 +165,18 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         const expectedBALAmount = balFirstWeekAmount + balSecondWeekAmount;
         const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-        const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target as string, WETH.target as string]);
+        const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target.toString(), WETH.target.toString()]);
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.target as string, to: veBALHolder2.address, value: expectedBALAmount },
-          BAL.target as string
+          { from: distributor.target.toString(), to: veBALHolder2.address, value: expectedBALAmount },
+          BAL.target.toString()
         );
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.target as string, to: veBALHolder2.address, value: expectedWETHAmount },
-          WETH.target as string
+          { from: distributor.target.toString(), to: veBALHolder2.address, value: expectedWETHAmount },
+          WETH.target.toString()
         );
       });
     });
@@ -199,7 +199,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         name: 'FeeDistributor',
         version: '1',
         chainId: (await distributor.runner!.provider!.getNetwork()).chainId,
-        verifyingContract: distributor.target as string,
+        verifyingContract: distributor.target.toString(),
       };
 
       const types = {
@@ -211,13 +211,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       };
 
       const values = {
-        user: voterProxy.target as string,
+        user: voterProxy.target.toString(),
         enabled: true,
-        nonce: (await distributor.getNextNonce(voterProxy.target as string)).toString(),
+        nonce: (await distributor.getNextNonce(voterProxy.target.toString())).toString(),
       };
 
       await (voterProxy.connect(voterProxyAdmin) as Contract).setVote(TypedDataEncoder.hash(domain, types, values), true);
-      await (distributor.connect(voterProxyAdmin) as Contract).setOnlyCallerCheckWithSignature(voterProxy.target as string, true, '0x');
+      await (distributor.connect(voterProxyAdmin) as Contract).setOnlyCallerCheckWithSignature(voterProxy.target.toString(), true, '0x');
     });
 
     context('in the third week, when every token is claimable', () => {
@@ -227,16 +227,16 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       });
 
       it('other account cannot claim for voter proxy', async () => {
-        await expect(distributor.claimTokens(voterProxy.target as string, [BAL.target as string, WETH.target as string])).to.be.revertedWith(
+        await expect(distributor.claimTokens(voterProxy.target.toString(), [BAL.target.toString(), WETH.target.toString()])).to.be.revertedWith(
           'BAL#401'
         );
       });
 
       it('voter proxy can claim fees', async () => {
-        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target as string, BAL.target as string)).to.not.be
+        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target.toString(), BAL.target.toString())).to.not.be
           .reverted;
 
-        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target as string, WETH.target as string)).to.not.be
+        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target.toString(), WETH.target.toString())).to.not.be
           .reverted;
       });
     });

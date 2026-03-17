@@ -49,7 +49,7 @@ describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {
     );
 
     // Grant helper permission to enable recovery mode
-    await (authorizer.connect(admin) as Contract).grantRoles(actionIds, helper.target as string);
+    await (authorizer.connect(admin) as Contract).grantRoles(actionIds, helper.target.toString());
   });
 
   before('approve operator at the authorizer', async () => {

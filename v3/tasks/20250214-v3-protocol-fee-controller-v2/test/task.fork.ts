@@ -119,15 +119,15 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
   });
 
   it('replaces the old fee controller', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     const oldFeeControllerAddress = await vaultAsExtension.getProtocolFeeController();
 
-    const vaultAsAdmin = vaultAdmin.attach(vault.target as string) as Contract;
-    await (vaultAsAdmin.connect(admin) as Contract).setProtocolFeeController(feeController.target as string);
+    const vaultAsAdmin = vaultAdmin.attach(vault.target.toString()) as Contract;
+    await (vaultAsAdmin.connect(admin) as Contract).setProtocolFeeController(feeController.target.toString());
 
     const newFeeControllerAddress = await vaultAsExtension.getProtocolFeeController();
     expect(newFeeControllerAddress).not.to.equal(oldFeeControllerAddress);
-    expect(newFeeControllerAddress).to.eq(feeController.target as string);
+    expect(newFeeControllerAddress).to.eq(feeController.target.toString());
   });
 
   it('sets non-zero global fees', async () => {
@@ -138,7 +138,7 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(await feeController.getGlobalProtocolYieldFeePercentage()).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
   });
 
-  it.only('deploys a pool and gets the events', async () => {
+  it('deploys a pool and gets the events', async () => {
     const newWeightedPoolParams = {
       name: 'Mock Weighted Pool',
       symbol: 'TEST',
@@ -180,39 +180,36 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
   });
 
-  it.only('pool creation emits initial fee events', async () => {
-    await expect(poolCreationReceipt).to.emit(feeController, 'InitialPoolAggregateSwapFeePercentage');
+  it('pool creation emits initial fee events', async () => {
+    const swapFeeEvent = expectEvent.inIndirectReceipt(
+      poolCreationReceipt,
+      feeController.interface,
+      'InitialPoolAggregateSwapFeePercentage'
+    );
 
-    // const swapFeeEvent = expectEvent.inIndirectReceipt(
-    //   poolCreationReceipt,
-    //   feeController.interface,
-    //   'InitialPoolAggregateSwapFeePercentage',
-    //   feeController.target.toString()
-    // );
+    expect(swapFeeEvent.args.pool).to.eq(pool.target.toString());
+    expect(swapFeeEvent.args.aggregateSwapFeePercentage).to.equal(GLOBAL_SWAP_FEE_PERCENTAGE);
+    expect(swapFeeEvent.args.isProtocolFeeExempt).to.be.false;
 
-    // expect(swapFeeEvent.args.pool).to.eq(pool.target as string);
-    // expect(swapFeeEvent.args.aggregateSwapFeePercentage).to.equal(GLOBAL_SWAP_FEE_PERCENTAGE);
-    // expect(swapFeeEvent.args.isProtocolFeeExempt).to.be.false;
+    const yieldFeeEvent = expectEvent.inIndirectReceipt(
+      poolCreationReceipt,
+      feeController.interface,
+      'InitialPoolAggregateYieldFeePercentage'
+    );
 
-    // const yieldFeeEvent = expectEvent.inIndirectReceipt(
-    //   poolCreationReceipt,
-    //   feeController.interface,
-    //   'InitialPoolAggregateYieldFeePercentage'
-    // );
+    expect(yieldFeeEvent.args.pool).to.eq(pool.target.toString());
+    expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
+    expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
 
-    // expect(yieldFeeEvent.args.pool).to.eq(pool.target as string);
-    // expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
-    // expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
+    const poolCreatorEvent = expectEvent.inIndirectReceipt(
+      poolCreationReceipt,
+      feeController.interface,
+      'PoolRegisteredWithFeeController'
+    );
 
-    // const poolCreatorEvent = expectEvent.inIndirectReceipt(
-    //   poolCreationReceipt,
-    //   feeController.interface,
-    //   'PoolRegisteredWithFeeController'
-    // );
-
-    // expect(poolCreatorEvent.args.pool).to.eq(pool.target as string);
-    // expect(poolCreatorEvent.args.poolCreator).to.equal(ZERO_ADDRESS);
-    // expect(poolCreatorEvent.args.protocolFeeExempt).to.be.false;
+    expect(poolCreatorEvent.args.pool).to.eq(pool.target.toString());
+    expect(poolCreatorEvent.args.poolCreator).to.equal(ZERO_ADDRESS);
+    expect(poolCreatorEvent.args.protocolFeeExempt).to.be.false;
   });
 
   it('checks pool aggregate fees', async () => {
@@ -223,8 +220,8 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
   });
 
   it('has new getters', async () => {
-    expect(await feeController.isPoolRegistered(pool.target as string)).to.be.true;
-    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.target as string)).to.equal(0);
-    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.target as string)).to.equal(0);
+    expect(await feeController.isPoolRegistered(pool.target.toString())).to.be.true;
+    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.target.toString())).to.equal(0);
+    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.target.toString())).to.equal(0);
   });
 });

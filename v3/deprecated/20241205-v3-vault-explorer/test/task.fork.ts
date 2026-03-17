@@ -28,10 +28,10 @@ describeForkTest.skip('Vault Explorer', 'mainnet', 21336938, function () {
   });
 
   it('checks contract addresses', async () => {
-    expect(await explorer.getVault()).eq(vault.target as string);
+    expect(await explorer.getVault()).eq(vault.target.toString());
 
     const extensionAddress = await explorer.getVaultExtension();
-    expect(extensionAddress).to.eq(vaultExtension.target as string);
+    expect(extensionAddress).to.eq(vaultExtension.target.toString());
 
     expect(await vaultExtension.getVaultAdmin()).to.eq(await explorer.getVaultAdmin());
   });
@@ -39,13 +39,13 @@ describeForkTest.skip('Vault Explorer', 'mainnet', 21336938, function () {
   it('checks pool tokens', async () => {
     input = task.input() as VaultExplorerDeployment;
 
-    const extensionEntrypoint = vaultExtension.attach(vault.target as string);
-    const poolTokens = (await extensionEntrypoint.getPoolTokens(mockPool.target as string)).map((token: string) =>
+    const extensionEntrypoint = vaultExtension.attach(vault.target.toString());
+    const poolTokens = (await extensionEntrypoint.getPoolTokens(mockPool.target.toString())).map((token: string) =>
       token.toLowerCase()
     );
     expect(poolTokens).to.be.deep.eq([input.BAL.toLowerCase(), input.WETH.toLowerCase()]);
 
-    const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.target as string)).map((token: string) =>
+    const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.target.toString())).map((token: string) =>
       token.toLowerCase()
     );
     expect(explorerPoolTokens).to.be.deep === poolTokens;

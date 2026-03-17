@@ -66,8 +66,8 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
     busd = await task.instanceAt('ERC20', BUSD);
     usdt = await task.instanceAt('ERC20', USDT);
 
-    await busd.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdt.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await busd.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdt.connect(whale).approve(vault.target.toString(), MAX_UINT256);
   });
 
   async function createPool(tokens: string[], initialize = true): Promise<Contract> {
@@ -89,7 +89,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
     const pool = await task.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     if (initialize) {
       const bptIndex = await pool.getBptIndex();
@@ -158,14 +158,14 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
 
       it('performs a swap', async () => {
         await busd.connect(whale).transfer(owner.address, amount);
-        await busd.connect(owner).approve(vault.target as string, amount);
+        await busd.connect(owner).approve(vault.target.toString(), amount);
 
         await vault
           .connect(owner)
@@ -191,7 +191,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
@@ -234,7 +234,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
@@ -287,7 +287,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
       const bptBalance = await pool.balanceOf(owner.address);
       expect(bptBalance).to > 0;
 
-      const vaultUSDTBalanceBeforeExit = await usdt.balanceOf(vault.target as string);
+      const vaultUSDTBalanceBeforeExit = await usdt.balanceOf(vault.target.toString());
       const ownerUSDTBalanceBeforeExit = await usdt.balanceOf(owner.address);
 
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
@@ -303,7 +303,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUSDTBalanceAfterExit = await usdt.balanceOf(vault.target as string);
+      const vaultUSDTBalanceAfterExit = await usdt.balanceOf(vault.target.toString());
       const ownerUSDTBalanceAfterExit = await usdt.balanceOf(owner.address);
 
       expect(vaultUSDTBalanceAfterExit).to < vaultUSDTBalanceBeforeExit;

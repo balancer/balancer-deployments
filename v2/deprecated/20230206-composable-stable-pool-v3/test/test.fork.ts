@@ -83,8 +83,8 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
     aura = await task.instanceAt('ERC20', AURA);
     graviAura = await task.instanceAt('ERC20', GRAVIAURA);
 
-    await busd.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await busd.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
   });
 
   async function createPool(tokens: string[], rateProvider = ZERO_ADDRESS, initialize = true): Promise<Contract> {
@@ -106,7 +106,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
 
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
     const pool = await task.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     if (initialize) {
       const bptIndex = await pool.getBptIndex();
@@ -175,14 +175,14 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
 
       it('performs a swap', async () => {
         await busd.connect(whale).transfer(owner.address, amount);
-        await busd.connect(owner).approve(vault.target as string, amount);
+        await busd.connect(owner).approve(vault.target.toString(), amount);
 
         await vault
           .connect(owner)
@@ -208,7 +208,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
@@ -251,7 +251,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.target as string);
+        expect(registeredAddress).to.equal(pool.target.toString());
 
         bptIndex = await pool.getBptIndex();
       });
@@ -295,7 +295,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
     const attackerFunds = 1000;
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.target as string]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.target.toString()]);
       await busd.connect(whale).transfer(attacker.address, attackerFunds);
       await usdc.connect(whale).transfer(attacker.address, attackerFunds);
       await aura.connect(auraWhale).transfer(attacker.address, attackerFunds);
@@ -314,7 +314,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
     context('when the target pool is protected', () => {
       sharedBeforeEach('deploy pool with rate providers', async () => {
         const rateProvider = await deploy('MockRateProvider');
-        pool = await createPool(tokens, rateProvider.target as string);
+        pool = await createPool(tokens, rateProvider.target.toString());
         poolId = await pool.getPoolId();
       });
 
@@ -403,7 +403,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
       const bptBalance = await pool.balanceOf(owner.address);
       expect(bptBalance).to > 0;
 
-      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target as string);
+      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceBeforeExit = await usdc.balanceOf(owner.address);
 
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
@@ -419,7 +419,7 @@ describeForkTest.skip('ComposableStablePool V3', 'mainnet', 16577000, function (
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target as string);
+      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceAfterExit = await usdc.balanceOf(owner.address);
 
       expect(vaultUSDCBalanceAfterExit).to < vaultUSDCBalanceBeforeExit;

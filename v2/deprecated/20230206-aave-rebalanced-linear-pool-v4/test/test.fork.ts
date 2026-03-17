@@ -60,7 +60,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
     vault = await new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre)).deployedInstance('Vault');
 
     usdt = await task.instanceAt('IERC20', USDT);
-    await usdt.connect(holder).approve(vault.target as string, MAX_UINT256);
+    await usdt.connect(holder).approve(vault.target.toString(), MAX_UINT256);
   });
 
   enum LinearPoolState {
@@ -136,16 +136,16 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('AaveLinearPool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
 
       const { assetManager } = await vault.getPoolTokenInfo(poolId, USDT); // We could query for either USDT or waUSDT
       rebalancer = await task.instanceAt('AaveLinearPoolRebalancer', assetManager);
 
-      await usdt.connect(holder).approve(rebalancer.target as string, MAX_UINT256); // To send extra main on rebalance
+      await usdt.connect(holder).approve(rebalancer.target.toString(), MAX_UINT256); // To send extra main on rebalance
     });
 
     it('check factory version', async () => {
@@ -179,7 +179,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       await vault
         .connect(holder)
         .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target as string, amount: joinAmount, userData: '0x' },
+          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
           { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
           0,
           MAX_UINT256
@@ -211,7 +211,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       await vault
         .connect(holder)
         .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target as string, amount: joinAmount, userData: '0x' },
+          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
           { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
           0,
           MAX_UINT256
@@ -236,7 +236,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDT,
           amount: exitAmount,
           userData: '0x',
@@ -262,7 +262,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       await vault
         .connect(holder)
         .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target as string, amount: joinAmount, userData: '0x' },
+          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
           { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
           0,
           MAX_UINT256
@@ -285,7 +285,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDT,
           amount: exitAmount,
           userData: '0x',
@@ -316,7 +316,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDT,
           amount: exitAmount,
           userData: '0x',
@@ -340,7 +340,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
 
     before('deploy attacker', async () => {
       // Using ReadOnlyReentrancyAttackerAaveLP from 20230410-aave-linear-pool-v5 task
-      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.target as string]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.target.toString()]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: bigint, expectRevert: boolean) {
@@ -348,7 +348,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       // If we send just enough, there will be no "extra" ETH, and it won't trigger the callback and attack
       const amountToSend = expectRevert ? ethAmount + BigInt(1) : ethAmount;
 
-      const attack = attacker.startAttack(pool.target as string, attackType, ethAmount, { value: amountToSend });
+      const attack = attacker.startAttack(pool.target.toString(), attackType, ethAmount, { value: amountToSend });
       if (expectRevert) {
         await expect(attack).to.be.revertedWith('BAL#420');
       } else {

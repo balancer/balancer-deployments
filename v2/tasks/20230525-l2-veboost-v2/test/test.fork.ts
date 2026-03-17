@@ -57,9 +57,9 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
       .connect(govMultisig) as Contract)
       .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
 
-    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target as string);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target.toString());
 
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.target as string);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.target.toString());
   });
 
   it('reverts migrating boosts (nothing to migrate)', async () => {

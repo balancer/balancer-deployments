@@ -74,7 +74,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 184
     expect(balanceOfwUSDMBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdmToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdmToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoUSDM = library.interface.encodeFunctionData('wrapERC4626', [
@@ -110,7 +110,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 184
       0,
     ]);
 
-    await (wusdmToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (wusdmToken.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromYearn]);
 

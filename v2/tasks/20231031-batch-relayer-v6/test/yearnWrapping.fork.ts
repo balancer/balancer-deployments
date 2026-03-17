@@ -67,7 +67,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - YearnWrapping', 'mainnet', 16622
     expect(balanceOfYearnBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoYearn = library.interface.encodeFunctionData('wrapYearn', [
@@ -103,7 +103,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - YearnWrapping', 'mainnet', 16622
       0,
     ]);
 
-    await (yearnToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (yearnToken.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromYearn]);
 

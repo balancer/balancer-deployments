@@ -36,8 +36,8 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
   const USDT_WHALE = '0xf89d7b9c864f589bbf53a82105107622b35eaa40';
 
   async function stakeBPT(user1Stake: bigint, user2Stake: bigint) {
-    await (BPT.connect(user1) as Contract).approve(gauge.target as string, user1Stake);
-    await (BPT.connect(user2) as Contract).approve(gauge.target as string, user2Stake);
+    await (BPT.connect(user1) as Contract).approve(gauge.target.toString(), user1Stake);
+    await (BPT.connect(user2) as Contract).approve(gauge.target.toString(), user2Stake);
 
     await (gauge.connect(user1) as Contract)['deposit(uint256)'](user1Stake);
     await (gauge.connect(user2) as Contract)['deposit(uint256)'](user2Stake);
@@ -113,26 +113,26 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     });
 
     it('adds gauge factory to pseudo minter', async () => {
-      await (pseudoMinter.connect(admin) as Contract).addGaugeFactory(gaugeFactory.target as string);
-      expect(await pseudoMinter.isValidGaugeFactory(gaugeFactory.target as string)).to.be.true;
+      await (pseudoMinter.connect(admin) as Contract).addGaugeFactory(gaugeFactory.target.toString());
+      expect(await pseudoMinter.isValidGaugeFactory(gaugeFactory.target.toString())).to.be.true;
     });
 
     it('create gauge', async () => {
-      const tx = await gaugeFactory.create(BPT.target as string);
+      const tx = await gaugeFactory.create(BPT.target.toString());
       const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
       gauge = await task.instanceAt('ChildChainGauge', event.args.gauge);
 
-      expect(await gaugeFactory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+      expect(await gaugeFactory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
     });
   });
 
   describe('getters', () => {
     it('returns BPT', async () => {
-      expect(await gauge.lp_token()).to.equal(BPT.target as string);
+      expect(await gauge.lp_token()).to.equal(BPT.target.toString());
     });
 
     it('returns factory', async () => {
-      expect(await gauge.factory()).to.equal(gaugeFactory.target as string);
+      expect(await gauge.factory()).to.equal(gaugeFactory.target.toString());
     });
 
     it('returns gauge version', async () => {
@@ -145,7 +145,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     });
 
     it('returns the pseudo minter', async () => {
-      expect(await gauge.bal_pseudo_minter()).to.be.eq(pseudoMinter.target as string);
+      expect(await gauge.bal_pseudo_minter()).to.be.eq(pseudoMinter.target.toString());
     });
   });
 
@@ -167,20 +167,20 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         });
 
         it('"mints" BAL rewards for users', async () => {
-          const receipt1 = await (await (pseudoMinter.connect(user1) as Contract).mint(gauge.target as string)).wait();
-          const receipt2 = await (await (pseudoMinter.connect(user2) as Contract).mint(gauge.target as string)).wait();
+          const receipt1 = await (await (pseudoMinter.connect(user1) as Contract).mint(gauge.target.toString())).wait();
+          const receipt2 = await (await (pseudoMinter.connect(user2) as Contract).mint(gauge.target.toString())).wait();
 
           const user1Rewards = expectTransferEvent(
             receipt1,
-            { from: pseudoMinter.target as string, to: user1.address },
-            BAL.target as string
+            { from: pseudoMinter.target.toString(), to: user1.address },
+            BAL.target.toString()
           );
           expect(user1Rewards.args.value).to.be.almostEqual(rewardUser1);
 
           const user2Rewards = expectTransferEvent(
             receipt2,
-            { from: pseudoMinter.target as string, to: user2.address },
-            BAL.target as string
+            { from: pseudoMinter.target.toString(), to: user2.address },
+            BAL.target.toString()
           );
 
           expect(user2Rewards.args.value).to.be.almostEqual(rewardUser2);
@@ -196,17 +196,17 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     context('without boosts', () => {
       before('stake BPT to the gauges and bridge BAL rewards', async () => {
         await stakeBPT(bptAmount, bptAmount * BigInt(2));
-        await bridgeBAL(gauge.target as string, balPerWeek);
-        expect(await BAL.balanceOf(gauge.target as string)).to.be.eq(balPerWeek);
-        expect(await BAL.balanceOf(pseudoMinter.target as string)).to.be.eq(0);
+        await bridgeBAL(gauge.target.toString(), balPerWeek);
+        expect(await BAL.balanceOf(gauge.target.toString())).to.be.eq(balPerWeek);
+        expect(await BAL.balanceOf(pseudoMinter.target.toString())).to.be.eq(0);
       });
 
       it('checkpoints the gauge and moves the rewards to the pseudo minter', async () => {
         await gauge.user_checkpoint(user1.address);
         await gauge.user_checkpoint(user2.address);
 
-        expect(await BAL.balanceOf(gauge.target as string)).to.be.eq(0);
-        expect(await BAL.balanceOf(pseudoMinter.target as string)).to.be.eq(balPerWeek);
+        expect(await BAL.balanceOf(gauge.target.toString())).to.be.eq(0);
+        expect(await BAL.balanceOf(pseudoMinter.target.toString())).to.be.eq(balPerWeek);
       });
 
       // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
@@ -216,7 +216,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         const extraReward = balPerWeek * BigInt(20);
 
         before('stake BPT to the gauges and bridge BAL rewards', async () => {
-          await bridgeBAL(gauge.target as string, extraReward);
+          await bridgeBAL(gauge.target.toString(), extraReward);
         });
 
         // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
@@ -240,16 +240,16 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
         // In practice, the contract that provides veBAL balances is a third party contract (e.g. Layer Zero).
         mockVE = await deploy('MockVE');
-        veBoost = await deploy('VeBoostV2', [ZERO_ADDRESS, mockVE.target as string]);
+        veBoost = await deploy('VeBoostV2', [ZERO_ADDRESS, mockVE.target.toString()]);
 
-        await bridgeBAL(gauge.target as string, balPerWeek);
+        await bridgeBAL(gauge.target.toString(), balPerWeek);
         await setupBoosts(boost * BigInt(2), boost);
       });
 
       it('sets delegation', async () => {
-        const tx = await (veProxy.connect(admin) as Contract).setDelegation(veBoost.target as string);
+        const tx = await (veProxy.connect(admin) as Contract).setDelegation(veBoost.target.toString());
         expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
-          newImplementation: veBoost.target as string,
+          newImplementation: veBoost.target.toString(),
         });
       });
 
@@ -279,7 +279,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         const boostFn = 'boost(address,uint256,uint256)';
 
         before('delegate boosts', async () => {
-          await bridgeBAL(gauge.target as string, balPerWeek);
+          await bridgeBAL(gauge.target.toString(), balPerWeek);
 
           await mockVE.setLockedEnd(user1.address, MAX_UINT256);
           await mockVE.setLockedEnd(user2.address, MAX_UINT256);
@@ -310,7 +310,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
         context('after delegation expires', () => {
           before('bridge BAL and check status', async () => {
-            await bridgeBAL(gauge.target as string, balPerWeek);
+            await bridgeBAL(gauge.target.toString(), balPerWeek);
 
             const user1Boost = await veProxy.adjustedBalanceOf(user1.address);
             const user2Boost = await veProxy.adjustedBalanceOf(user2.address);
@@ -343,7 +343,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
           before(async () => {
             await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(veProxy, 'killDelegation'), admin.address);
             await (veProxy.connect(admin) as Contract).killDelegation();
-            await bridgeBAL(gauge.target as string, balPerWeek);
+            await bridgeBAL(gauge.target.toString(), balPerWeek);
           });
 
           // Same case as 'without boosts' again.
@@ -372,8 +372,8 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         const gaugeTotalSupply = await gauge.totalSupply();
         expectedReward = rewardAmount * claimerStake / gaugeTotalSupply;
 
-        claimedBeforeOther = await gauge.claimed_reward(other.address, reward.target as string);
-        claimableBeforeOther = await gauge.claimable_reward(other.address, reward.target as string);
+        claimedBeforeOther = await gauge.claimed_reward(other.address, reward.target.toString());
+        claimableBeforeOther = await gauge.claimable_reward(other.address, reward.target.toString());
 
         receipt = (await (
           await (gauge.connect(claimer) as Contract)['claim_rewards(address,address)'](claimer.address, ZERO_ADDRESS)
@@ -381,27 +381,27 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       });
 
       it('transfers rewards to claimer', async () => {
-        const event = expectTransferEvent(receipt, { from: gauge.target as string, to: claimer.address }, reward.target as string);
+        const event = expectTransferEvent(receipt, { from: gauge.target.toString(), to: claimer.address }, reward.target.toString());
         expect(event.args.value).to.be.almostEqual(expectedReward);
       });
 
       it('updates claimed balance for claimer', async () => {
-        const claimedAfterClaimer = await gauge.claimed_reward(claimer.address, reward.target as string);
+        const claimedAfterClaimer = await gauge.claimed_reward(claimer.address, reward.target.toString());
         expect(claimedAfterClaimer).to.be.almostEqual(expectedReward);
       });
 
       it('keeps the same claimed balances for others', async () => {
-        const claimedAfterOther = await gauge.claimed_reward(other.address, reward.target as string);
+        const claimedAfterOther = await gauge.claimed_reward(other.address, reward.target.toString());
         expect(claimedAfterOther).to.be.eq(claimedBeforeOther);
       });
 
       it('updates claimable balance for claimer', async () => {
-        const claimableAfterClaimer = await gauge.claimable_reward(claimer.address, reward.target as string);
+        const claimableAfterClaimer = await gauge.claimable_reward(claimer.address, reward.target.toString());
         expect(claimableAfterClaimer).to.be.eq(0);
       });
 
       it('keeps the same claimable balances for others', async () => {
-        const claimableAfterOther = await gauge.claimable_reward(other.address, reward.target as string);
+        const claimableAfterOther = await gauge.claimable_reward(other.address, reward.target.toString());
         expect(claimableAfterOther).to.deep.equal(claimableBeforeOther);
       });
     }
@@ -418,12 +418,12 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       await (authorizerAdaptor
         .connect(admin) as Contract)
         .performAction(
-          gauge.target as string,
-          gauge.interface.encodeFunctionData('add_reward', [reward.target as string, distributor.address])
+          gauge.target.toString(),
+          gauge.interface.encodeFunctionData('add_reward', [reward.target.toString(), distributor.address])
         );
 
-      await (reward.connect(distributor) as Contract).approve(gauge.target as string, rewardAmount);
-      await (gauge.connect(distributor) as Contract).deposit_reward_token(reward.target as string, rewardAmount);
+      await (reward.connect(distributor) as Contract).approve(gauge.target.toString(), rewardAmount);
+      await (gauge.connect(distributor) as Contract).deposit_reward_token(reward.target.toString(), rewardAmount);
       await advanceToTimestamp((await currentTimestamp()) + BigInt(WEEK));
     });
 

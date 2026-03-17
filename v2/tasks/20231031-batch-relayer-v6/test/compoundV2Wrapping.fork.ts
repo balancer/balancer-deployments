@@ -66,7 +66,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - CompoundV2Wrapping', 'polygon', 
     expect(balanceOfcbrzBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (brzToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (brzToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     // Wrap `amountToWrap` BRZ tokens: pull from `sender`, deposit, mint cTokens and transfer to `recipient`.
     // Store the amount in an output reference.
@@ -103,7 +103,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - CompoundV2Wrapping', 'polygon', 
       0,
     ]);
 
-    await (cToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (cToken.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromMidas]);
 

@@ -116,18 +116,18 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
-      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await uni.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await aave.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       // This is a composable pool, so assets array has to contain BPT.
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: [pool.target as string, ...tokens],
+        assets: [pool.target.toString(), ...tokens],
         maxAmountsIn: [MAX_UINT256, ...initialBalances],
         fromInternalBalance: false,
         userData,
@@ -144,7 +144,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
     it('swap in the pool', async () => {
       const amount = fp(500);
       await comp.connect(whale).transfer(owner.address, amount);
-      await comp.connect(owner).approve(vault.target as string, amount);
+      await comp.connect(owner).approve(vault.target.toString(), amount);
 
       await vault
         .connect(owner)
@@ -176,14 +176,14 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
       pool = await createPool();
       poolId = await pool.getPoolId();
 
-      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await uni.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await aave.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       // This is a composable pool, so assets array has to contain BPT.
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: [pool.target as string, ...tokens],
+        assets: [pool.target.toString(), ...tokens],
         maxAmountsIn: [MAX_UINT256, ...initialBalances],
         fromInternalBalance: false,
         userData,
@@ -200,11 +200,11 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
       const bptBalance = await pool.balanceOf(owner.address);
       expect(bptBalance).to > 0;
 
-      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target as string);
+      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceBeforeExit = await uni.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
-      const tokensWithBpt = [pool.target as string, ...tokens];
+      const tokensWithBpt = [pool.target.toString(), ...tokens];
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokensWithBpt,
         minAmountsOut: Array(tokensWithBpt.length).fill(0),
@@ -215,7 +215,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target as string);
+      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceAfterExit = await uni.balanceOf(owner.address);
 
       expect(vaultUNIBalanceAfterExit).to < vaultUNIBalanceBeforeExit;

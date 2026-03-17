@@ -62,7 +62,7 @@ describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, func
   });
 
   it('sets the smart wallet checker in veBAL', async () => {
-    expect(await veBAL.smart_wallet_checker()).to.equal(smartWalletChecker.target as string);
+    expect(await veBAL.smart_wallet_checker()).to.equal(smartWalletChecker.target.toString());
   });
 
   it('authorizes the multisig to add contracts to the smart wallet checker', async () => {

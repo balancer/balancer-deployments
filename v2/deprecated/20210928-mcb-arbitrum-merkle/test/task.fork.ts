@@ -36,7 +36,7 @@ describeForkTest.skip('MerkleRedeem', 'arbitrum', 1731663, function () {
     token = await task.instanceAt('IERC20', REWARD_TOKEN_ADDRESS);
 
     await distributor.transferOwnership(whale.address);
-    await token.connect(whale).approve(distributor.target as string, MAX_UINT256);
+    await token.connect(whale).approve(distributor.target.toString(), MAX_UINT256);
   });
 
   describe('with an allocation defined', async () => {
@@ -56,7 +56,7 @@ describeForkTest.skip('MerkleRedeem', 'arbitrum', 1731663, function () {
       await distributor.connect(whale).seedAllocations(bn(0), root, fp(100));
 
       const expectedReward = fp(100);
-      expectEqualWithError(await token.balanceOf(distributor.target as string), expectedReward, fp(1));
+      expectEqualWithError(await token.balanceOf(distributor.target.toString()), expectedReward, fp(1));
     });
 
     it('can claim a reward', async () => {

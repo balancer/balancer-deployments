@@ -59,8 +59,8 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     dai = await stableTask.instanceAt('IERC20', DAI);
     usdc = await stableTask.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
   });
 
   before('create pool', async () => {
@@ -77,11 +77,11 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('StablePhantomPool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
 
     bptIndex = await pool.getBptIndex();
 

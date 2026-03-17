@@ -44,7 +44,7 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
-    extensionEntrypoint = vaultExtension.attach(vault.target as string) as Contract;
+    extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
 
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
@@ -64,11 +64,11 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
 
     // Grant the helper permission to set pool swap fees. This is all that is needed for v2.
     await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target as string);
+      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target.toString());
   });
 
   it('can create a pool set', async () => {
-    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target as string]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target.toString()]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 
@@ -77,14 +77,14 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('can set swap fees on pools', async () => {
-    oldSwapFee = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target as string);
+    oldSwapFee = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString());
 
     expect(oldSwapFee).not.to.equal(NEW_SWAP_FEE);
 
-    await (feeHelper.connect(manager) as Contract).setStaticSwapFeePercentage(pool.target as string, NEW_SWAP_FEE);
+    await (feeHelper.connect(manager) as Contract).setStaticSwapFeePercentage(pool.target.toString(), NEW_SWAP_FEE);
 
     // Pool should now have an updated swap fee.
-    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target as string)).to.equal(NEW_SWAP_FEE);
+    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString())).to.equal(NEW_SWAP_FEE);
   });
 
   it('can transfer fee permission', async () => {
@@ -94,9 +94,9 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
   });
 
   it('new manager can set swap fees on pools', async () => {
-    await (feeHelper.connect(newManager) as Contract).setStaticSwapFeePercentage(pool.target as string, oldSwapFee);
+    await (feeHelper.connect(newManager) as Contract).setStaticSwapFeePercentage(pool.target.toString(), oldSwapFee);
 
     // Pool should now have the original swap fee.
-    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target as string)).to.equal(oldSwapFee);
+    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString())).to.equal(oldSwapFee);
   });
 });

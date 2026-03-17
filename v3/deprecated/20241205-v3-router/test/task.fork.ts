@@ -41,7 +41,7 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
     WETH = await testBALTokenTask.instanceAt('TestBalancerToken', input.WETH);
     BAL = await testBALTokenTask.instanceAt('TestBalancerToken', input.BAL);
 
-    wethSigner = await impersonate(WETH.target as string, fp(10e8));
+    wethSigner = await impersonate(WETH.target.toString(), fp(10e8));
     alice = await getSigner();
   });
 
@@ -114,13 +114,13 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
 
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: router.target as string,
+      to: router.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: router.target as string,
+      to: router.target.toString(),
       value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
@@ -134,13 +134,13 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
 
     BAL.connect(largeHolderSigner).transfer(bob.address, initialBalanceBAL);
 
-    await BAL.connect(bob).approve(permit2.target as string, initialBalanceBAL);
-    await permit2.connect(bob).approve(input.BAL, router.target as string, initialBalanceBAL, maxUint(48));
+    await BAL.connect(bob).approve(permit2.target.toString(), initialBalanceBAL);
+    await permit2.connect(bob).approve(input.BAL, router.target.toString(), initialBalanceBAL, maxUint(48));
 
     await router
       .connect(bob)
       .initialize(
-        pool.target as string,
+        pool.target.toString(),
         [input.BAL, input.WETH],
         [initialBalanceBAL, initialBalanceWETH],
         0,

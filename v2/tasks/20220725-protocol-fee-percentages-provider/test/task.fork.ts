@@ -66,7 +66,7 @@ describeForkTest.skip('ProtocolFeePercentagesProvider', 'mainnet', 15130000, fun
       before('grant setSwapFeePercentage permission to fees provider', async () => {
         await (authorizer
           .connect(admin) as Contract)
-          .grantRole(await actionId(feesCollector, 'setSwapFeePercentage'), protocolFeePercentagesProvider.target as string);
+          .grantRole(await actionId(feesCollector, 'setSwapFeePercentage'), protocolFeePercentagesProvider.target.toString());
       });
 
       itSetsFeeCorrectly(FeeType.Swap, fp(0.0951));

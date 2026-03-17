@@ -43,9 +43,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const tokenA = await deploy('TestToken', ['Token A', 'TSTA', 18]);
       const tokenB = await deploy('TestToken', ['Token B', 'TSTB', 18]);
 
-      const txA = await childChainGaugeFactory.create(tokenA.target as string);
+      const txA = await childChainGaugeFactory.create(tokenA.target.toString());
       gaugeAddressA = expectEvent.inReceipt(await txA.wait(), 'GaugeCreated').args.gauge;
-      const txB = await childChainGaugeFactory.create(tokenB.target as string);
+      const txB = await childChainGaugeFactory.create(tokenB.target.toString());
       gaugeAddressB = expectEvent.inReceipt(await txB.wait(), 'GaugeCreated').args.gauge;
       expect(gaugeAddressA).to.not.equal(gaugeAddressB);
     });

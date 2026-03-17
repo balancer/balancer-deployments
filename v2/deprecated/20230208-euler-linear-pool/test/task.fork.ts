@@ -65,7 +65,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
     vault = await new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre)).deployedInstance('Vault');
 
     mainToken = await task.instanceAt('IERC20', USDC);
-    await mainToken.connect(holder).approve(vault.target as string, MAX_UINT256);
+    await mainToken.connect(holder).approve(vault.target.toString(), MAX_UINT256);
   });
 
   enum LinearPoolState {
@@ -141,16 +141,16 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('EulerLinearPool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
 
       const { assetManager } = await vault.getPoolTokenInfo(poolId, USDC); // We could query for either frxEth or eulerToken
       rebalancer = await task.instanceAt('EulerLinearPoolRebalancer', assetManager);
 
-      await mainToken.connect(holder).approve(rebalancer.target as string, MAX_UINT256); // To send extra main on rebalance
+      await mainToken.connect(holder).approve(rebalancer.target.toString(), MAX_UINT256); // To send extra main on rebalance
     });
 
     it('check factory version', async () => {
@@ -194,7 +194,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -231,7 +231,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -259,7 +259,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -287,7 +287,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -313,7 +313,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -344,7 +344,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -366,7 +366,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
     let attacker: Contract;
 
     before('deploy attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerEP', [vault.target as string]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerEP', [vault.target.toString()]);
     });
 
     async function performAttack(attackType: AttackType, ethAmount: bigint, expectRevert: boolean) {
@@ -374,7 +374,7 @@ describeForkTest.skip('EulerLinearPoolFactory', 'mainnet', 16550500, function ()
       // If we send just enough, there will be no "extra" ETH, and it won't trigger the callback and attack
       const amountToSend = expectRevert ? ethAmount + BigInt(1) : ethAmount;
 
-      const attack = attacker.startAttack(pool.target as string, attackType, ethAmount, { value: amountToSend });
+      const attack = attacker.startAttack(pool.target.toString(), attackType, ethAmount, { value: amountToSend });
       if (expectRevert) {
         await expect(attack).to.be.revertedWith('BAL#420');
       } else {

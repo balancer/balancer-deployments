@@ -120,13 +120,13 @@ describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function ()
 
     expectTransferEvent(
       await tx.wait(),
-      { from: await vault.getProtocolFeesCollector(), to: vault.target as string, value: SNX_AMOUNT },
+      { from: await vault.getProtocolFeesCollector(), to: vault.target.toString(), value: SNX_AMOUNT },
       SNX
     );
 
     expectTransferEvent(
       await tx.wait(),
-      { from: await vault.getProtocolFeesCollector(), to: vault.target as string, value: sBTC_AMOUNT },
+      { from: await vault.getProtocolFeesCollector(), to: vault.target.toString(), value: sBTC_AMOUNT },
       sBTC
     );
   });

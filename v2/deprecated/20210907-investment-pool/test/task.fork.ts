@@ -71,11 +71,11 @@ describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () 
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await task.instanceAt('InvestmentPool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     const poolId = pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
   });
 
   it('initial weights are correct', async () => {
@@ -85,8 +85,8 @@ describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () 
 
   it('initialize the pool', async () => {
     // Approve the Vault to join
-    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
     const poolId = await pool.getPoolId();
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
@@ -117,7 +117,7 @@ describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () 
 
     const whaleUSDCBalanceBefore = await usdc.balanceOf(whale.address);
 
-    await dai.connect(whale).approve(vault.target as string, amountInDAI);
+    await dai.connect(whale).approve(vault.target.toString(), amountInDAI);
     await vault.connect(whale).swap(
       {
         kind: SwapKind.GivenIn,

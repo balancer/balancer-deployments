@@ -78,7 +78,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
     );
 
     mainToken = await task.instanceAt('IERC20', frxEth);
-    await mainToken.connect(holder).approve(vault.target as string, MAX_UINT256);
+    await mainToken.connect(holder).approve(vault.target.toString(), MAX_UINT256);
   });
 
   enum LinearPoolState {
@@ -154,11 +154,11 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('ERC4626LinearPool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
 
       const { assetManager } = await vault.getPoolTokenInfo(poolId, frxEth); // We could query for either frxEth or erc4626Token
       rebalancer = await task.instanceAt('ERC4626LinearPoolRebalancer', assetManager);
@@ -197,7 +197,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: frxEth,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -223,7 +223,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
 
   describe('generate excess of main token and rebalance', () => {
     before('approve the rebalancer', async () => {
-      await mainToken.connect(holder).approve(rebalancer.target as string, MAX_UINT256); // To send extra main on rebalance
+      await mainToken.connect(holder).approve(rebalancer.target.toString(), MAX_UINT256); // To send extra main on rebalance
     });
 
     it('deposit main tokens', async () => {
@@ -238,7 +238,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: frxEth,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -266,7 +266,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: frxEth,
           amount: exitAmount,
           userData: '0x',
@@ -294,7 +294,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: frxEth,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -320,7 +320,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: frxEth,
           amount: exitAmount,
           userData: '0x',
@@ -348,12 +348,12 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
     before('use WETH', async () => {
       wethHolder = await impersonate(WETH_HOLDER, fp(100));
       const weth = await instanceAt('IERC20', WETH);
-      await weth.connect(wethHolder).approve(vault.target as string, MAX_UINT256);
+      await weth.connect(wethHolder).approve(vault.target.toString(), MAX_UINT256);
     });
 
     before('deploy attacker', async () => {
       // Using MockERC4626Token from 20230409-erc4626-linear-pool-v4 task
-      attacker = await deploy('ReadOnlyReentrancyAttackerLP', [vault.target as string]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerLP', [vault.target.toString()]);
     });
 
     before('deploy pool and prepare', async () => {
@@ -380,13 +380,13 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: WETH,
-          assetOut: wethPool.target as string,
+          assetOut: wethPool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
         {
-          sender: wethHolder.target as string,
-          recipient: wethHolder.target as string,
+          sender: wethHolder.target.toString(),
+          recipient: wethHolder.target.toString(),
           fromInternalBalance: false,
           toInternalBalance: false,
         },
@@ -404,13 +404,13 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
 
       await wethPool.connect(other).enableRecoveryMode();
 
-      const bptBalance = await wethPool.balanceOf(wethHolder.target as string);
+      const bptBalance = await wethPool.balanceOf(wethHolder.target.toString());
       await wethPool.connect(wethHolder).transfer(attacker.address, bptBalance);
     });
 
     async function performAttack(attackType: AttackType) {
       // Any BPT amount works as long as the attacker has the funds.
-      const attack = attacker.startAttack(wethPool.target as string, attackType, await wethPool.balanceOf(attacker.address));
+      const attack = attacker.startAttack(wethPool.target.toString(), attackType, await wethPool.balanceOf(attacker.address));
       await expect(attack).to.be.revertedWith('BAL#420');
     }
 
@@ -439,7 +439,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: frxEth,
           amount: exitAmount,
           userData: '0x',

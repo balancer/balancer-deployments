@@ -51,7 +51,7 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
       .connect(govMultisig) as Contract)
       .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
 
-    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target as string);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target.toString());
   });
 
   it('preseeds boosts and approvals', async () => {

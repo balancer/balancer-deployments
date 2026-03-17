@@ -53,27 +53,27 @@ describeForkTest.skip('V3-PoolSwapFeeHelper', 'mainnet', 22348940, function () {
     // Grant the helper permission to set pool swap fees.
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target as string);
+      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target.toString());
 
     // Grant permission to call add and set fees on the helper.
     await authorizer.connect(govMultisig).grantRole(await actionId(feeHelper, 'addPools'), admin.address);
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(feeHelper, 'setStaticSwapFeePercentage'), feeSetter.target as string);
+      .grantRole(await actionId(feeHelper, 'setStaticSwapFeePercentage'), feeSetter.target.toString());
   });
 
   it('can add pools', async () => {
-    await feeHelper.connect(admin).addPools([pool.target as string]);
+    await feeHelper.connect(admin).addPools([pool.target.toString()]);
 
     expect(await feeHelper.getPoolCount()).to.equal(1);
   });
 
   it('can set fees on pools', async () => {
-    await feeHelper.connect(feeSetter).setStaticSwapFeePercentage(pool.target as string, SWAP_FEE_PERCENTAGE);
+    await feeHelper.connect(feeSetter).setStaticSwapFeePercentage(pool.target.toString(), SWAP_FEE_PERCENTAGE);
 
     // Fees should now be set.
-    const extensionEntrypoint = vaultExtension.attach(vault.target as string);
-    const swapFeePercentage = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target as string);
+    const extensionEntrypoint = vaultExtension.attach(vault.target.toString());
+    const swapFeePercentage = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString());
 
     expect(bn(swapFeePercentage)).to.equal(SWAP_FEE_PERCENTAGE);
   });

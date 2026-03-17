@@ -48,7 +48,7 @@ describeForkTest.skip('OmniVotingEscrowChild', 'arbitrum', 94050211, function ()
     });
 
     it('stores the delegation hook', async () => {
-      expect(await omniVotingEscrowChild.delegationHook()).to.equal(l2LayerZeroBridgeForwarder.target as string);
+      expect(await omniVotingEscrowChild.delegationHook()).to.equal(l2LayerZeroBridgeForwarder.target.toString());
     });
   });
 

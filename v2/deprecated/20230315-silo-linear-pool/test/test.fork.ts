@@ -65,7 +65,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
     vault = await new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre)).deployedInstance('Vault');
 
     usdc = await task.instanceAt('IERC20', USDC);
-    await usdc.connect(holder).approve(vault.target as string, MAX_UINT256);
+    await usdc.connect(holder).approve(vault.target.toString(), MAX_UINT256);
   });
 
   enum LinearPoolState {
@@ -143,16 +143,16 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('SiloLinearPool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
 
       const { assetManager } = await vault.getPoolTokenInfo(poolId, USDC); // We could query for either frxEth or SiloToken
       rebalancer = await task.instanceAt('SiloLinearPoolRebalancer', assetManager);
 
-      await usdc.connect(holder).approve(rebalancer.target as string, MAX_UINT256); // To send extra main on rebalance
+      await usdc.connect(holder).approve(rebalancer.target.toString(), MAX_UINT256); // To send extra main on rebalance
     });
 
     it('check factory version', async () => {
@@ -187,7 +187,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -224,7 +224,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -252,7 +252,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -280,7 +280,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.target as string,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -306,7 +306,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -337,7 +337,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.target as string,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',

@@ -76,18 +76,18 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
     const stakeAmount = fp(100);
     await (lpToken.connect(lpTokenHolder) as Contract).transfer(veBALHolder.address, stakeAmount);
 
-    await (lpToken.connect(veBALHolder) as Contract).approve(gauge.target as string, MAX_UINT256);
+    await (lpToken.connect(veBALHolder) as Contract).approve(gauge.target.toString(), MAX_UINT256);
 
     await (gauge.connect(veBALHolder) as Contract)['deposit(uint256)'](stakeAmount);
   });
 
   describe('getters', () => {
     it('stores the veDelegationProxy', async () => {
-      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.target as string);
+      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.target.toString());
     });
 
     it('stores the votingEscrow', async () => {
-      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.target as string);
+      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.target.toString());
     });
 
     it('indicates where to read supply from', async () => {
@@ -98,7 +98,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
   context('with no veBAL', () => {
     it('projected balance should equal current', async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-        gauge.target as string,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
@@ -128,7 +128,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
       );
 
       const holderBalance = await bal80weth20Pool.balanceOf(veBALHolder.address);
-      await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(votingEscrow.target as string, MAX_UINT256);
+      await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(votingEscrow.target.toString(), MAX_UINT256);
 
       const currentTime = await currentTimestamp();
       await (votingEscrow.connect(veBALHolder) as Contract).create_lock(holderBalance, currentTime + bn(LOCK_PERIOD));
@@ -136,7 +136,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
     it(`projected balance should be greater than current`, async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-        gauge.target as string,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
@@ -145,7 +145,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
     it(`projected ratio should be greater than current`, async () => {
       const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-        gauge.target as string,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
@@ -159,7 +159,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
       it('projected balance should be equal to or slightly less than current', async () => {
         const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-          gauge.target as string,
+          gauge.target.toString(),
           veBALHolder.address
         );
 
@@ -169,7 +169,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
       it('projected ratio should be equal to or slightly less than current', async () => {
         const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-          gauge.target as string,
+          gauge.target.toString(),
           veBALHolder.address
         );
 
@@ -190,7 +190,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
       it('projected balance should be less than current', async () => {
         const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-          gauge.target as string,
+          gauge.target.toString(),
           veBALHolder.address
         );
 
@@ -199,7 +199,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1', 'mainnet', 17367389, funct
 
       it('projected ratio should be less than current', async () => {
         const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-          gauge.target as string,
+          gauge.target.toString(),
           veBALHolder.address
         );
 

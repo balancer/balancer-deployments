@@ -64,7 +64,7 @@ describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function
       balToken.interface,
       'Transfer',
       { from: ZERO_ADDRESS, to: TRIBE_BAL_RECIPIENT, value: TRIBE_BAL_MINT_AMOUNT },
-      balToken.target as string
+      balToken.target.toString()
     );
   });
 

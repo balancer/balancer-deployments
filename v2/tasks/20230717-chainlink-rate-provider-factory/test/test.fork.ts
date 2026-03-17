@@ -20,13 +20,13 @@ describeForkTest.skip('ChainlinkRateProviderFactory', 'mainnet', 17717232, funct
   });
 
   before('create a ChainLinkRateProvider', async () => {
-    const receipt = await (await rateProviderFactory.create(usdcPriceFeed.target as string)).wait();
+    const receipt = await (await rateProviderFactory.create(usdcPriceFeed.target.toString())).wait();
     const event = await expectEvent.inReceipt(receipt, 'RateProviderCreated');
 
     rateProvider = await task.instanceAt('ChainlinkRateProvider', event.args.rateProvider);
 
-    expect(rateProvider.target as string).to.not.equal(ZERO_ADDRESS);
-    expect(await rateProviderFactory.isRateProviderFromFactory(rateProvider.target as string)).to.be.true;
+    expect(rateProvider.target.toString()).to.not.equal(ZERO_ADDRESS);
+    expect(await rateProviderFactory.isRateProviderFromFactory(rateProvider.target.toString())).to.be.true;
   });
 
   it('rate is about 1 USD per USDC', async () => {

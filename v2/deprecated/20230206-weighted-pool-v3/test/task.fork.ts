@@ -106,9 +106,9 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
   }
 
   async function initPool(poolId: string) {
-    await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
-    await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await comp.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await uni.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+    await aave.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
     await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -152,7 +152,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
@@ -165,7 +165,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
     it('swap in the pool', async () => {
       const amount = fp(500);
       await comp.connect(whale).transfer(owner.address, amount);
-      await comp.connect(owner).approve(vault.target as string, amount);
+      await comp.connect(owner).approve(vault.target.toString(), amount);
 
       await vault
         .connect(owner)
@@ -196,7 +196,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
     const attackerFunds = fp(1);
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.target as string]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.target.toString()]);
       await comp.connect(whale).transfer(attacker.address, attackerFunds);
       await uni.connect(whale).transfer(attacker.address, attackerFunds);
       await aave.connect(whale).transfer(attacker.address, attackerFunds);
@@ -272,9 +272,9 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       pool = await createPool();
       poolId = await pool.getPoolId();
 
-      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
-      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await uni.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await aave.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -295,7 +295,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       const bptBalance = await pool.balanceOf(owner.address);
       expect(bptBalance).to > 0;
 
-      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target as string);
+      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceBeforeExit = await uni.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
@@ -309,7 +309,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target as string);
+      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceAfterExit = await uni.balanceOf(owner.address);
 
       expect(vaultUNIBalanceAfterExit).to < vaultUNIBalanceBeforeExit;

@@ -66,7 +66,7 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
     finalizePermission = await actionId(migration, 'finalizeMigration');
     const overrideYieldFeePermission = await actionId(oldFeeController, 'setProtocolYieldFeePercentage');
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target as string);
+    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target.toString());
     await authorizer.connect(govMultisig).grantRole(finalizePermission, admin.address);
     await authorizer.connect(govMultisig).grantRole(overrideYieldFeePermission, admin.address);
   });
@@ -167,7 +167,7 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
   });
 
   it('cannot finalize more than once', async () => {
-    await expect((migration.connect(admin) as Contract).finalizeMigration).to.be.reverted;
+    await expect((migration.connect(admin) as Contract).finalizeMigration()).to.be.reverted;
   });
 
   it('copied over the global fee percentages', async () => {
@@ -197,26 +197,26 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
   });
 
   it('vault should be set to the new fee controller', async () => {
-    vaultAsExtension = vaultExtension.attach(vault.target as string);
+    vaultAsExtension = vaultExtension.attach(vault.target.toString());
 
-    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(feeController.target as string);
+    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(feeController.target.toString());
   });
 
   it('does not hold permission to set global fee percentages', async () => {
     const swapPermission = await actionId(feeController, 'getGlobalProtocolSwapFeePercentage');
-    expect(await authorizer.hasRole(swapPermission, migration.target as string)).to.be.false;
+    expect(await authorizer.hasRole(swapPermission, migration.target.toString())).to.be.false;
 
     const yieldPermission = await actionId(feeController, 'getGlobalProtocolYieldFeePercentage');
-    expect(await authorizer.hasRole(yieldPermission, migration.target as string)).to.be.false;
+    expect(await authorizer.hasRole(yieldPermission, migration.target.toString())).to.be.false;
   });
 
   it('does not hold permission to update the fee controller', async () => {
     const permission = await actionId(vaultAdmin, 'setProtocolFeeController');
-    expect(await authorizer.hasRole(permission, migration.target as string)).to.be.false;
+    expect(await authorizer.hasRole(permission, migration.target.toString())).to.be.false;
   });
 
   it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target as string)).to.be.false;
+    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target.toString())).to.be.false;
   });
 
   it('deploys a pool with a creator', async () => {
@@ -287,15 +287,15 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
   it('sets a pool creator fee', async () => {
     await feeController
       .connect(admin)
-      .setPoolCreatorSwapFeePercentage(testPoolWithCreator.target as string, POOL_CREATOR_SWAP_FEE);
+      .setPoolCreatorSwapFeePercentage(testPoolWithCreator.target.toString(), POOL_CREATOR_SWAP_FEE);
     await feeController
       .connect(admin)
-      .setPoolCreatorYieldFeePercentage(testPoolWithCreator.target as string, POOL_CREATOR_YIELD_FEE);
+      .setPoolCreatorYieldFeePercentage(testPoolWithCreator.target.toString(), POOL_CREATOR_YIELD_FEE);
 
-    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.target as string)).to.eq(
+    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.target.toString())).to.eq(
       POOL_CREATOR_SWAP_FEE
     );
-    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.target as string)).to.eq(
+    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.target.toString())).to.eq(
       POOL_CREATOR_YIELD_FEE
     );
   });
@@ -309,31 +309,31 @@ describeForkTest('ProtocolFeeControllerMigration', 'mainnet', 22020651, function
     feeController = await feeControllerTask.deployedInstance('ProtocolFeeController');
     migration = await migrationTask.deploy(
       'ProtocolFeeControllerMigration',
-      [input.Vault, feeController.target as string],
+      [input.Vault, feeController.target.toString()],
       admin,
       true // force
     );
 
     // Need to grant permissions to the new migration
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target as string);
+    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), migration.target.toString());
     finalizePermission = await actionId(migration, 'finalizeMigration');
     await authorizer.connect(govMultisig).grantRole(finalizePermission, admin.address);
   });
 
   it('migrates the pool to a new controller', async () => {
-    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(oldFeeController.target as string);
+    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(oldFeeController.target.toString());
 
-    await migration.migratePools([testPoolWithCreator.target as string]);
+    await migration.migratePools([testPoolWithCreator.target.toString()]);
     await migration.connect(admin).finalizeMigration();
 
-    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(feeController.target as string);
+    expect(await vaultAsExtension.getProtocolFeeController()).to.eq(feeController.target.toString());
   });
 
   it('copies the pool creator percentages', async () => {
-    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.target as string)).to.eq(
+    expect(await feeController.getPoolCreatorSwapFeePercentage(testPoolWithCreator.target.toString())).to.eq(
       POOL_CREATOR_SWAP_FEE
     );
-    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.target as string)).to.eq(
+    expect(await feeController.getPoolCreatorYieldFeePercentage(testPoolWithCreator.target.toString())).to.eq(
       POOL_CREATOR_YIELD_FEE
     );
   });

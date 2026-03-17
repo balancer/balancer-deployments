@@ -2,6 +2,7 @@ import hre from 'hardhat';
 import { ethers } from 'hardhat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
 import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -33,7 +34,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     poolToken = await vaultTask.instanceAt('IERC20', STABLE_POOL_ADDRESS);
 
     const VaultUnlockTestHelper = await ethers.getContractFactory('VaultUnlockTestHelper');
-    unlockHelper = await VaultUnlockTestHelper.deploy(vault.target as string);
+    unlockHelper = await VaultUnlockTestHelper.deploy(vault.target.toString());
   });
 
   it('checks version', async () => {
@@ -53,7 +54,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     );
 
     const receipt = await tx.wait();
-    const event = receipt.events?.find((e: { event: string }) => e.event === 'StableLPOracleCreated');
+    const event = expectEvent.inReceipt(receipt, 'StableLPOracleCreated');
     stableLPOracle = await task.instanceAt('StableLPOracle', event?.args?.oracle);
     expect(stableLPOracle).to.not.be.undefined;
     expect(stableLPOracle.target).to.not.equal(ZERO_ADDRESS);
@@ -91,7 +92,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     const callData = stableLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(stableLPOracle.target as string, callData),
+      unlockHelper.callWhileUnlocked(stableLPOracle.target.toString(), callData),
       'VaultIsUnlocked()'
     );
   });

@@ -44,7 +44,7 @@ describeForkTest.skip('OmniVotingEscrow', 'mainnet', 17331260, function () {
     });
 
     it('stores the remapper', async () => {
-      expect(await omniVotingEscrow.votingEscrowRemapper()).to.equal(veBalRemapper.target as string);
+      expect(await omniVotingEscrow.votingEscrowRemapper()).to.equal(veBalRemapper.target.toString());
     });
   });
 

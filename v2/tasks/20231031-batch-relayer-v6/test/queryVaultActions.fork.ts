@@ -91,8 +91,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
   }
 
   async function initPool(poolId: string) {
-    await (dai.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
-    await (mkr.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (dai.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+    await (mkr.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
     await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
@@ -112,7 +112,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.target as string);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {

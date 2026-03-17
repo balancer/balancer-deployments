@@ -136,7 +136,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     );
     adderCoordinator = await adderCoordinatorTask.deployedInstance('GaugeAdderMigrationCoordinator');
 
-    await authorizer.connect(daoMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.target as string);
+    await authorizer.connect(daoMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.target.toString());
     await adderCoordinator.performNextStage();
   });
 
@@ -190,7 +190,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       Array.from(gauges).map(([gaugeType, gaugesData]) => {
         stakelessGaugeCheckpointer.connect(admin).addGaugesWithVerifiedType(
           GaugeType[gaugeType],
-          gaugesData.map((gaugeData) => gaugeData.target as string)
+          gaugesData.map((gaugeData) => gaugeData.target.toString())
         );
       })
     );
@@ -204,7 +204,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       .connect(daoMultisig)
       .grantRole(
         await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.target as string
+        stakelessGaugeCheckpointer.target.toString()
       );
   });
 
@@ -247,7 +247,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       const arbitrumGauge = await task.instanceAt('ArbitrumRootGauge', gauges.get(GaugeType.Arbitrum)![0].address);
       const bridgeCost = await arbitrumGauge.getTotalBridgeCost();
       const arbitrumType = GaugeType[GaugeType.Arbitrum];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.target as string)).to.be.eq(
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.target.toString())).to.be.eq(
         bridgeCost
       );
     });
@@ -255,13 +255,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     it('gets the cost for an non-arbitrum gauge', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const gnosisType = GaugeType[GaugeType.Gnosis];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.target as string)).to.be.eq(0);
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.target.toString())).to.be.eq(0);
     });
 
     it('reverts when the gauge address is not present in the type', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const polygonType = GaugeType[GaugeType.Polygon];
-      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.target as string)).to.be.revertedWith(
+      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.target.toString())).to.be.revertedWith(
         'Gauge was not added to the checkpointer'
       );
     });
@@ -412,7 +412,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
               checkpointInterface,
               'Checkpoint',
               {},
-              gaugeData.target as string,
+              gaugeData.target.toString(),
               gaugeData.expectedCheckpoints
             );
           });
@@ -426,15 +426,15 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const arbitrumGaugeData = gauges.get(GaugeType.Arbitrum)![0];
           const arbitrumType = GaugeType[GaugeType.Arbitrum];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.target as string, {
-            value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target as string),
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.target.toString(), {
+            value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target.toString()),
           });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            arbitrumGaugeData.target as string,
+            arbitrumGaugeData.target.toString(),
             arbitrumGaugeData.expectedCheckpoints
           );
         });
@@ -445,13 +445,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const gnosisGaugeData = gauges.get(GaugeType.Gnosis)![0];
           const gnosisType = GaugeType[GaugeType.Gnosis];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.target as string);
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.target.toString());
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            gnosisGaugeData.target as string,
+            gnosisGaugeData.target.toString(),
             gnosisGaugeData.expectedCheckpoints
           );
         });

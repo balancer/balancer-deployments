@@ -67,7 +67,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
     expect(balanceOfDieselBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoGearbox = library.interface.encodeFunctionData('wrapGearbox', [
@@ -104,7 +104,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
       0,
     ]);
 
-    await (dieselToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (dieselToken.connect(recipient) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     await (relayer.connect(recipient) as Contract).multicall([withdrawFromGearbox]);
 

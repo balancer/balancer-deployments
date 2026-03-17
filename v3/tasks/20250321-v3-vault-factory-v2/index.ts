@@ -35,7 +35,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     await vaultFactory.create.populateTransaction(
       input.salt,
       vaultAddress,
-      protocolFeeController.target as string,
+      protocolFeeController.target.toString(),
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
@@ -75,7 +75,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       {
         name: 'Vault',
         expectedAddress: vaultAddress,
-        args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.address],
+        args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.target.toString()],
       },
     ],
     deployTransaction,

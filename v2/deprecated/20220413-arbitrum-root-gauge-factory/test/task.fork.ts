@@ -87,9 +87,9 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     gauge = await task.instanceAt('ArbitrumRootGauge', event.args.gauge);
     expect(event.args.recipient).to.equal(recipient.address);
 
-    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
-    expect(await factory.getRecipientGauge(recipient.address)).to.equal(gauge.target as string);
-    expect(await factory.getGaugeRecipient(gauge.target as string)).to.equal(recipient.address);
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
+    expect(await factory.getRecipientGauge(recipient.address)).to.equal(gauge.target.toString());
+    expect(await factory.getGaugeRecipient(gauge.target.toString())).to.equal(recipient.address);
   });
 
   it('grant permissions', async () => {
@@ -112,28 +112,28 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
   });
 
   it('add gauge to gauge controller', async () => {
-    await gaugeAdder.addGaugeFactory(factory.target as string, 4); // Arbitrum is Gauge Type 4
-    await gaugeAdder.addArbitrumGauge(gauge.target as string);
+    await gaugeAdder.addGaugeFactory(factory.target.toString(), 4); // Arbitrum is Gauge Type 4
+    await gaugeAdder.addArbitrumGauge(gauge.target.toString());
 
-    expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('vote for gauge', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
-    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.target as string, 10000); // Max voting power is 10k points
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
+    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in
     await advanceTime(DAY * 8);
 
     await gaugeController.checkpoint();
-    expect(await gaugeController['gauge_relative_weight(address)'](gauge.target as string)).to.be.gt(0);
+    expect(await gaugeController['gauge_relative_weight(address)'](gauge.target.toString())).to.be.gt(0);
   });
 
   it('mint & bridge tokens', async () => {
     // The gauge has votes for this week, and it will mint the first batch of tokens. We store the current gauge
     // relative weight, as it will change as time goes by due to vote decay.
     const firstMintWeekTimestamp = await currentWeekTimestamp();
-    const gaugeRelativeWeight = await gaugeController['gauge_relative_weight(address)'](gauge.target as string);
+    const gaugeRelativeWeight = await gaugeController['gauge_relative_weight(address)'](gauge.target.toString());
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
@@ -141,7 +141,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     const bridgeETH = await gauge.getTotalBridgeCost();
     const zeroMintTx = await authorizerAdaptor
       .connect(admin)
-      .performAction(gauge.target as string, calldata, { value: bridgeETH });
+      .performAction(gauge.target.toString(), calldata, { value: bridgeETH });
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - WEEK, // Process past week, which had zero votes
       periodEmissions: 0,
@@ -151,7 +151,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     await advanceTime(WEEK);
 
     // The gauge should now mint and send all minted tokens to the Arbitrum bridge
-    const mintTx = await authorizerAdaptor.connect(admin).performAction(gauge.target as string, calldata, { value: bridgeETH });
+    const mintTx = await authorizerAdaptor.connect(admin).performAction(gauge.target.toString(), calldata, { value: bridgeETH });
     const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp,
     });
@@ -168,7 +168,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
       await mintTx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
         value: actualEmissions,
       },
       BAL
@@ -180,7 +180,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     ]);
 
     expectEvent.inIndirectReceipt(await mintTx.wait(), bridgeInterface, 'DepositInitiated', {
-      from: gauge.target as string,
+      from: gauge.target.toString(),
       to: recipient.address,
       l1Token: BAL,
       amount: actualEmissions,
@@ -190,14 +190,14 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
-    await gaugeController.checkpoint_gauge(gauge.target as string);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - WEEK * weekIndex)
+        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - WEEK * weekIndex)
       )
     );
 
@@ -211,7 +211,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
     const tx = await authorizerAdaptor
       .connect(admin)
-      .performAction(gauge.target as string, calldata, { value: await gauge.getTotalBridgeCost() });
+      .performAction(gauge.target.toString(), calldata, { value: await gauge.getTotalBridgeCost() });
 
     await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
@@ -226,7 +226,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
       await tx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.target as string,
+        to: gauge.target.toString(),
         value: expectedEmissions,
       },
       BAL
@@ -238,7 +238,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     ]);
 
     expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'DepositInitiated', {
-      from: gauge.target as string,
+      from: gauge.target.toString(),
       to: recipient.address,
       l1Token: BAL,
       amount: expectedEmissions,

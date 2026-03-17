@@ -23,13 +23,13 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
     const vaultTask = new Task('20241204-v3-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
-    extensionEntrypoint = vaultExtension.attach(vault.target as string) as Contract;
+    extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
 
     input = task.input() as WrappedBPTDeployment;
   });
 
   it('has Vault address', async () => {
-    expect(await bptFactory.getVault()).eq(vault.target as string);
+    expect(await bptFactory.getVault()).eq(vault.target.toString());
   });
 
   it('can wrap BPT', async () => {
@@ -46,6 +46,6 @@ describeForkTest('BPT-Wrapper', 'mainnet', 22275225, function () {
 
     // Recover the original BPT from the wrapped token.
     expect(await wrappedToken.balancerPoolToken()).to.equal(BPT);
-    expect(await wrappedToken.vault()).to.eq(vault.target as string);
+    expect(await wrappedToken.vault()).to.eq(vault.target.toString());
   });
 });

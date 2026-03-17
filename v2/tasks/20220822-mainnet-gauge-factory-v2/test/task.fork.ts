@@ -97,7 +97,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     gauge = await task.instanceAt('LiquidityGaugeV5', event.args.gauge);
     expect(await gauge.lp_token()).to.equal(LP_TOKEN);
 
-    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
   });
 
   it('grant permissions', async () => {
@@ -114,23 +114,23 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
   });
 
   it('add gauge to gauge controller', async () => {
-    await (gaugeAdder.connect(admin) as Contract).addGaugeFactory(factory.target as string, 2); // Ethereum is type 2.
-    await (gaugeAdder.connect(admin) as Contract).addEthereumGauge(gauge.target as string);
+    await (gaugeAdder.connect(admin) as Contract).addGaugeFactory(factory.target.toString(), 2); // Ethereum is type 2.
+    await (gaugeAdder.connect(admin) as Contract).addEthereumGauge(gauge.target.toString());
 
-    expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('stake LP tokens in gauge', async () => {
-    await (lpToken.connect(lpTokenHolder) as Contract).approve(gauge.target as string, MAX_UINT256);
+    await (lpToken.connect(lpTokenHolder) as Contract).approve(gauge.target.toString(), MAX_UINT256);
     await (gauge.connect(lpTokenHolder) as Contract)['deposit(uint256)'](await lpToken.balanceOf(lpTokenHolder.address));
   });
 
   it('vote for gauge so that weight is above cap', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.target as string)).to.equal(0);
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
     // Max voting power is 10k points
-    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target as string, 10000);
+    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000);
 
     // We now need to go through an epoch for the votes to be locked in
     await advanceTime(DAY * 8);
@@ -138,7 +138,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -148,7 +148,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     const firstMintWeekTimestamp = await currentWeekTimestamp();
     await advanceToTimestamp(firstMintWeekTimestamp + bn(WEEK));
 
-    const tx = await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target as string);
+    const tx = await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target.toString());
     const event = expectTransferEvent(
       await tx.wait(),
       {
@@ -176,14 +176,14 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
 
-    await gaugeController.checkpoint_gauge(gauge.target as string);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target as string, weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
       )
     );
 
@@ -193,7 +193,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
       expect(relativeWeight).to.be.gt(weightCap);
     }
 
-    const tx = await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target as string);
+    const tx = await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target.toString());
     const event = expectTransferEvent(
       await tx.wait(),
       {

@@ -71,11 +71,11 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await task.instanceAt('NoProtocolFeeLiquidityBootstrappingPool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     const poolId = pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.target as string);
+    expect(registeredAddress).to.equal(pool.target.toString());
   });
 
   it('initialize a liquidity bootstrapping pool from the owner', async () => {
@@ -84,8 +84,8 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
     await usdc.connect(whale).transfer(owner.address, initialBalanceUSDC);
 
     // Approve the Vault to join
-    await dai.connect(owner).approve(vault.target as string, MAX_UINT256);
-    await usdc.connect(owner).approve(vault.target as string, MAX_UINT256);
+    await dai.connect(owner).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(owner).approve(vault.target.toString(), MAX_UINT256);
 
     const poolId = await pool.getPoolId();
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
@@ -105,7 +105,7 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
 
   it('can swap in a liquidity bootstrapping pool', async () => {
     const amount = fp(500); // Small relative to Pool balance - should have zero price impact
-    await dai.connect(whale).approve(vault.target as string, amount);
+    await dai.connect(whale).approve(vault.target.toString(), amount);
 
     const poolId = await pool.getPoolId();
 
