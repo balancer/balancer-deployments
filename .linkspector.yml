@@ -1,6 +1,9 @@
 dirs:
   - .
 useGitIgnore: true
+puppeteerArgs:
+  - '--no-sandbox'
+  - '--disable-setuid-sandbox'
 aliveStatusCodes:
   - 200
   - 429
