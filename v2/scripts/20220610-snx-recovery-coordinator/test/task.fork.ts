@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { defaultAbiCoder } from '@ethersproject/abi';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -120,13 +120,13 @@ describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function ()
 
     expectTransferEvent(
       await tx.wait(),
-      { from: await vault.getProtocolFeesCollector(), to: vault.address, value: SNX_AMOUNT },
+      { from: await vault.getProtocolFeesCollector(), to: vault.target as string, value: SNX_AMOUNT },
       SNX
     );
 
     expectTransferEvent(
       await tx.wait(),
-      { from: await vault.getProtocolFeesCollector(), to: vault.address, value: sBTC_AMOUNT },
+      { from: await vault.getProtocolFeesCollector(), to: vault.target as string, value: sBTC_AMOUNT },
       sBTC
     );
   });

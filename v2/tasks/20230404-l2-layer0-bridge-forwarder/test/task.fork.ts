@@ -10,7 +10,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { randomAddress, ZERO_ADDRESS } from '@helpers/constants';
 
 describeForkTest.skip('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function () {
@@ -43,7 +43,7 @@ describeForkTest.skip('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function 
   before('grant set and kill delegation permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await actionId(forwarder, 'setDelegation'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(forwarder, 'setDelegation'), admin.address);
   });
 
   it('returns empty delegation', async () => {
@@ -52,11 +52,11 @@ describeForkTest.skip('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function 
 
   it('reverts if non-admin sets a new delegation', async () => {
     // SENDER_NOT_ALLOWED
-    await expect(forwarder.connect(other).setDelegation(delegation)).to.be.revertedWith('BAL#401');
+    await expect((forwarder.connect(other) as Contract).setDelegation(delegation)).to.be.revertedWith('BAL#401');
   });
 
   it('sets a new delegation', async () => {
-    const tx = await forwarder.connect(admin).setDelegation(delegation);
+    const tx = await (forwarder.connect(admin) as Contract).setDelegation(delegation);
 
     expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
       newImplementation: delegation,

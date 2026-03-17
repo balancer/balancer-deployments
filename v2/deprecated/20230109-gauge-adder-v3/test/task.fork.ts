@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -50,13 +50,13 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     oldAuthorizer = await authorizerTask.deployedInstance('Authorizer');
-    expect(await migrator.oldAuthorizer()).to.be.eq(oldAuthorizer.address);
+    expect(await migrator.oldAuthorizer()).to.be.eq(oldAuthorizer.target as string);
 
     const vaultTask = new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre));
     vault = await vaultTask.deployedInstance('Vault');
 
     const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
-    await oldAuthorizer.connect(daoMultisig).grantRolesToMany([setAuthorizerActionId], [migrator.address]);
+    await oldAuthorizer.connect(daoMultisig).grantRolesToMany([setAuthorizerActionId], [migrator.target as string]);
 
     await migrator.finalizeMigration();
   });
@@ -69,7 +69,7 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
   context('construction', () => {
     it('stores the entrypoint', async () => {
-      expect(await gaugeAdder.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.address);
+      expect(await gaugeAdder.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.target as string);
     });
 
     it('stores the gauge controller', async () => {
@@ -81,7 +81,7 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
       expect(controllerAdmin).to.not.equal(ZERO_ADDRESS);
       expect(await gaugeController.gauge_exists(ZERO_ADDRESS)).to.be.false;
 
-      expect(await gaugeAdder.getGaugeController()).to.equal(gaugeController.address);
+      expect(await gaugeAdder.getGaugeController()).to.equal(gaugeController.target as string);
     });
   });
 
@@ -116,13 +116,13 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(addFactoryAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(addFactoryAction, lmMultisig.target as string, TimelockAuthorizer.EVERYWHERE, true);
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(addGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(addGaugeAction, lmMultisig.target as string, TimelockAuthorizer.EVERYWHERE, true);
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(gaugeControllerAddGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(gaugeControllerAddGaugeAction, lmMultisig.target as string, TimelockAuthorizer.EVERYWHERE, true);
 
       let tx = await authorizer
         .connect(lmMultisig)
@@ -146,13 +146,13 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
       // to be scheduled and executed after the required time passes.
       tx = await authorizer
         .connect(lmMultisig)
-        .scheduleGrantPermission(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE, []);
+        .scheduleGrantPermission(gaugeControllerAddGaugeAction, gaugeAdder.target as string, TimelockAuthorizer.EVERYWHERE, []);
       const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
       const scheduledExecutionId = event.args.scheduledExecutionId;
 
       // The adder cannot add a gauge in the controller before the delay passes.
       expect(
-        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE)
+        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.target as string, TimelockAuthorizer.EVERYWHERE)
       ).to.be.false;
 
       await advanceTime(14 * DAY);
@@ -161,22 +161,22 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
       expect(await authorizer.canPerform(addFactoryAction, admin.address, TimelockAuthorizer.EVERYWHERE)).to.be.true;
       expect(await authorizer.canPerform(addGaugeAction, admin.address, TimelockAuthorizer.EVERYWHERE)).to.be.true;
       expect(
-        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.address, TimelockAuthorizer.EVERYWHERE)
+        await authorizer.canPerform(gaugeControllerAddGaugeAction, gaugeAdder.target as string, TimelockAuthorizer.EVERYWHERE)
       ).to.be.true;
 
       const entrypoint = await gaugeAdder.getAuthorizerAdaptorEntrypoint();
       const gaugeAdderAuthorizer = await adaptorEntrypoint.getAuthorizer();
 
       // Ensure the authorizer we just set the permissions on is the same one the gauge adder is using
-      expect(entrypoint).to.equal(adaptorEntrypoint.address);
+      expect(entrypoint).to.equal(adaptorEntrypoint.target as string);
       expect(gaugeAdderAuthorizer).to.equal(authorizer.address);
     });
 
     it('can add factories for a gauge type', async () => {
-      const tx = await gaugeAdder.connect(admin).addGaugeFactory(factory.address, 2); // Ethereum is type 2
+      const tx = await gaugeAdder.connect(admin).addGaugeFactory(factory.target as string, 2); // Ethereum is type 2
       expectEvent.inReceipt(await tx.wait(), 'GaugeFactoryAdded', {
         gaugeType: 2,
-        gaugeFactory: factory.address,
+        gaugeFactory: factory.target as string,
       });
     });
 
@@ -186,9 +186,9 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
       gauge = await task.instanceAt('LiquidityGaugeV5', event.args.gauge);
 
-      await gaugeAdder.connect(admin).addEthereumGauge(gauge.address);
+      await gaugeAdder.connect(admin).addEthereumGauge(gauge.target as string);
 
-      expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
+      expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
     });
   });
 });

@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
@@ -17,7 +17,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
 
   let usdcToken: Contract, yearnToken: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
-  let chainedReference: BigNumber;
+  let chainedReference: bigint;
   const amountToWrap = 100e6;
 
   before('run task', async () => {
@@ -67,7 +67,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfYearnBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.address, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target as string, amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoYearn = library.interface.encodeFunctionData('wrapYearn', [
@@ -83,7 +83,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfYearnAfter = await yearnToken.balanceOf(recipient.address);
 
-    expect(balanceOfUSDCBefore.sub(balanceOfUSDCAfter)).to.be.equal(amountToWrap);
+    expect(balanceOfUSDCBefore - balanceOfUSDCAfter).to.be.equal(amountToWrap);
     expect(balanceOfYearnAfter).to.be.almostEqual(expectedBalanceOfYearnAfter);
   });
 
@@ -103,7 +103,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
       0,
     ]);
 
-    await yearnToken.connect(recipient).approve(vault.address, MAX_UINT256);
+    await yearnToken.connect(recipient).approve(vault.target as string, MAX_UINT256);
 
     await relayer.connect(recipient).multicall([withdrawFromYearn]);
 
@@ -111,14 +111,14 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     const balanceOfYearnAfter = await yearnToken.balanceOf(recipient.address);
 
     expect(balanceOfYearnAfter).to.be.equal(0);
-    expect(balanceOfUSDCAfter.sub(balanceOfUSDCBefore)).to.be.almostEqual(amountToWrap);
+    expect(balanceOfUSDCAfter - balanceOfUSDCBefore).to.be.almostEqual(amountToWrap);
   });
 });
 
-function toChainedReference(key: BigNumberish): BigNumber {
+function toChainedReference(key: BigNumberish): bigint {
   const CHAINED_REFERENCE_PREFIX = 'ba10';
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigNumber.from(paddedPrefix).add(key);
+  return BigInt(paddedPrefix) + key;
 }

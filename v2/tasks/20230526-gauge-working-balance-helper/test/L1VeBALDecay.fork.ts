@@ -1,9 +1,9 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, instanceAt } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
-import { fp, fpMul } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import { bn, fp, fpMul } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, currentTimestamp } from '@helpers/time';
@@ -39,7 +39,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
   before('setup accounts', async () => {
     [, veBALHolder, other] = await getSigners();
 
-    veBALHolder = await impersonate(veBALHolder.address, VAULT_BOUNTY.add(fp(5))); // plus gas
+    veBALHolder = await impersonate(veBALHolder.address, VAULT_BOUNTY + fp(5)); // plus gas
     lpTokenHolder = await impersonate(LP_TOKEN_HOLDER, fp(100));
   });
 
@@ -81,31 +81,31 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
     gauge = await gaugeFactoryTask.instanceAt('LiquidityGaugeV5', event.args.gauge);
     expect(await gauge.lp_token()).to.equal(LP_TOKEN);
 
-    expect(await factory.isGaugeFromFactory(gauge.address)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target as string)).to.be.true;
   });
 
   const stakeAmount = fp(100);
 
   before('stake in gauge', async () => {
-    await lpToken.connect(lpTokenHolder).transfer(veBALHolder.address, stakeAmount);
-    await lpToken.connect(lpTokenHolder).transfer(other.address, stakeAmount);
+    await (lpToken.connect(lpTokenHolder) as Contract).transfer(veBALHolder.address, stakeAmount);
+    await (lpToken.connect(lpTokenHolder) as Contract).transfer(other.address, stakeAmount);
 
-    await lpToken.connect(lpTokenHolder).approve(gauge.address, MAX_UINT256);
-    await lpToken.connect(veBALHolder).approve(gauge.address, MAX_UINT256);
-    await lpToken.connect(other).approve(gauge.address, MAX_UINT256);
+    await (lpToken.connect(lpTokenHolder) as Contract).approve(gauge.target as string, MAX_UINT256);
+    await (lpToken.connect(veBALHolder) as Contract).approve(gauge.target as string, MAX_UINT256);
+    await (lpToken.connect(other) as Contract).approve(gauge.target as string, MAX_UINT256);
 
-    await gauge.connect(lpTokenHolder)['deposit(uint256)'](stakeAmount.mul(100));
-    await gauge.connect(veBALHolder)['deposit(uint256)'](stakeAmount);
-    await gauge.connect(other)['deposit(uint256)'](stakeAmount);
+    await (gauge.connect(lpTokenHolder) as Contract)['deposit(uint256)'](stakeAmount * BigInt(100));
+    await (gauge.connect(veBALHolder) as Contract)['deposit(uint256)'](stakeAmount);
+    await (gauge.connect(other) as Contract)['deposit(uint256)'](stakeAmount);
   });
 
   describe('getters', () => {
     it('stores the veDelegationProxy', async () => {
-      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.address);
+      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.target as string);
     });
 
     it('stores the votingEscrow', async () => {
-      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.address);
+      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.target as string);
     });
 
     it('indicates where to read supply from', async () => {
@@ -115,25 +115,25 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
 
   it('projected balance should equal current', async () => {
     const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-      gauge.address,
+      gauge.target as string,
       veBALHolder.address
     );
 
     // Ensure we have equal balances (that are non-zero)
-    expect(projectedWorkingBalance).to.eq(currentWorkingBalance);
-    expect(projectedWorkingBalance).to.gt(0);
+    expect(projectedWorkingBalance).to.equal(currentWorkingBalance);
+    expect(projectedWorkingBalance).to.be.gt(0);
   });
 
   context('with veBAL', () => {
     let bal80weth20Pool: Contract;
-    let whaleBalance: BigNumber;
+    let whaleBalance: bigint;
 
     before('create veBAL whale', async () => {
       const [poolAddress] = await vault.getPool(VEBAL_POOL_ID);
 
       bal80weth20Pool = await instanceAt('IERC20', poolAddress);
 
-      await vault.connect(veBALHolder).joinPool(
+      await (vault.connect(veBALHolder) as Contract).joinPool(
         VEBAL_POOL_ID,
         veBALHolder.address,
         veBALHolder.address,
@@ -148,36 +148,36 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
 
       const totalBalance = await bal80weth20Pool.balanceOf(veBALHolder.address);
       whaleBalance = fpMul(totalBalance, fp(0.99));
-      const otherBalance = totalBalance.sub(whaleBalance);
+      const otherBalance = totalBalance - whaleBalance;
 
-      await bal80weth20Pool.connect(veBALHolder).transfer(other.address, otherBalance);
+      await (bal80weth20Pool.connect(veBALHolder) as Contract).transfer(other.address, otherBalance);
 
-      await bal80weth20Pool.connect(veBALHolder).approve(votingEscrow.address, MAX_UINT256);
-      await bal80weth20Pool.connect(other).approve(votingEscrow.address, MAX_UINT256);
+      await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(votingEscrow.target as string, MAX_UINT256);
+      await (bal80weth20Pool.connect(other) as Contract).approve(votingEscrow.target as string, MAX_UINT256);
 
       const currentTime = await currentTimestamp();
-      await votingEscrow.connect(other).create_lock(otherBalance, currentTime.add(LOCK_PERIOD));
+      await (votingEscrow.connect(other) as Contract).create_lock(otherBalance, currentTime + bn(LOCK_PERIOD));
     });
 
     it('veBAL share size affects projected balances', async () => {
-      const [, projectedBalanceBefore] = await workingBalanceHelper.getWorkingBalances(gauge.address, other.address);
+      const [, projectedBalanceBefore] = await workingBalanceHelper.getWorkingBalances(gauge.target as string, other.address);
       const [, projectedRatioBefore] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-        gauge.address,
+        gauge.target as string,
         other.address
       );
 
-      await gauge.connect(other).user_checkpoint(other.address);
-      await workingBalanceHelper.getWorkingBalances(gauge.address, other.address);
+      await (gauge.connect(other) as Contract).user_checkpoint(other.address);
+      await workingBalanceHelper.getWorkingBalances(gauge.target as string, other.address);
 
       // Dilute other's share
-      await votingEscrow.connect(veBALHolder).create_lock(whaleBalance, (await currentTimestamp()).add(LOCK_PERIOD));
+      await (votingEscrow.connect(veBALHolder) as Contract).create_lock(whaleBalance, (await currentTimestamp()) + bn(LOCK_PERIOD));
 
       const [currentBalanceAfter, projectedBalanceAfter] = await workingBalanceHelper.getWorkingBalances(
-        gauge.address,
+        gauge.target as string,
         other.address
       );
       const [, projectedRatioAfter] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-        gauge.address,
+        gauge.target as string,
         other.address
       );
 

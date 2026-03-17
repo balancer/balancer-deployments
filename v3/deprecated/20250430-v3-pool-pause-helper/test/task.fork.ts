@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 describeForkTest.skip('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
   const TASK_NAME = '20250430-v3-pool-pause-helper';
@@ -49,28 +49,28 @@ describeForkTest.skip('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to pause pools.
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.address);
+    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target as string);
 
     // Grant permission to call add and pause on the helper.
     await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'addPools'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'pausePools'), monitor.address);
+    await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'pausePools'), monitor.target as string);
   });
 
   it('can add pools', async () => {
-    await pauseHelper.connect(admin).addPools([pool.address]);
+    await pauseHelper.connect(admin).addPools([pool.target as string]);
 
-    expect(await pauseHelper.getPoolCount()).to.eq(1);
+    expect(await pauseHelper.getPoolCount()).to.equal(1);
   });
 
   it('can pause pools', async () => {
-    const extensionEntrypoint = vaultExtension.attach(vault.address);
+    const extensionEntrypoint = vaultExtension.attach(vault.target as string);
 
     // Ensure pool isn't already paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.false;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.false;
 
-    await pauseHelper.connect(monitor).pausePools([pool.address]);
+    await pauseHelper.connect(monitor).pausePools([pool.target as string]);
 
     // Pool should now be paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.true;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.true;
   });
 });

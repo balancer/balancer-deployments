@@ -59,9 +59,9 @@ describeForkTest.skip('veBoostV2', 'mainnet', 16110000, function () {
       .connect(govMultisig)
       .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
 
-    await delegationProxy.connect(govMultisig).setDelegation(delegation.address);
+    await delegationProxy.connect(govMultisig).setDelegation(delegation.target as string);
 
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.address);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.target as string);
   });
 
   it('allows existing boosts to be migrated', async () => {

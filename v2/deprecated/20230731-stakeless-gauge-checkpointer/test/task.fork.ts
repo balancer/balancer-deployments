@@ -1,9 +1,9 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -46,14 +46,14 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
   const arbitrumRootGauge = '0xB5044FD339A7b858095324cC3F239C212956C179';
   const expectedCheckpoints = 8;
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
 
   type GaugeData = {
     address: string;
-    weight: BigNumber;
+    weight: bigint;
     expectedCheckpoints: number;
   };
 
@@ -104,7 +104,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
       .connect(daoMultisig)
       .grantRole(
         await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.address
+        stakelessGaugeCheckpointer.target as string
       );
   });
 
@@ -113,7 +113,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
     // The gauge under test was created several weeks before the block specified in the fork test.
     // It meets 3 conditions, explained below.
     const currentWeek = await currentWeekTimestamp();
-    const previousWeek = currentWeek.sub(WEEK);
+    const previousWeek = currentWeek - WEEK;
     const relativeWeightPreviousWeek = await gaugeController['gauge_relative_weight(address,uint256)'](
       arbitrumRootGauge,
       previousWeek
@@ -147,7 +147,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
     });
 
     context('when threshold is above gauge weight', () => {
-      const minRelativeWeight = WEIGHT_THRESHOLD.mul(10);
+      const minRelativeWeight = WEIGHT_THRESHOLD * BigInt(10);
 
       it('skips the gauge', async () => {
         const tx = await stakelessGaugeCheckpointer.checkpointGaugesAboveRelativeWeight(minRelativeWeight, {
@@ -171,7 +171,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
           checkpointInterface,
           'Checkpoint',
           {},
-          gaugeData.address,
+          gaugeData.target as string,
           gaugeData.expectedCheckpoints
         );
       });

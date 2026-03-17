@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { PoolPauseHelperDeployment } from '../input';
 
 describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
@@ -20,7 +20,7 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
   let vaultAdmin: Contract;
   let authorizer: Contract;
   let pool: Contract;
-  let poolSetId: BigNumber;
+  let poolSetId: bigint;
 
   let admin: SignerWithAddress;
   let manager: SignerWithAddress;
@@ -41,8 +41,8 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
-    extensionEntrypoint = vaultExtension.attach(vault.address);
-    adminEntrypoint = vaultAdmin.attach(vault.address);
+    extensionEntrypoint = vaultExtension.attach(vault.target as string) as Contract;
+    adminEntrypoint = vaultAdmin.attach(vault.target as string) as Contract;
 
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
@@ -61,44 +61,44 @@ describeForkTest('V3-PoolPauseHelper-V2', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to pause pools. This is all that is needed for v2.
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target as string);
   });
 
   it('can create a pool set', async () => {
-    await pauseHelper.connect(admin)['createPoolSet(address,address[])'](manager.address, [pool.address]);
+    await (pauseHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target as string]);
 
     poolSetId = await pauseHelper.getPoolSetIdForManager(manager.address);
 
     expect(await pauseHelper.getManagerForPoolSet(poolSetId)).to.eq(manager.address);
-    expect(await pauseHelper.getPoolCountForSet(poolSetId)).to.eq(1);
+    expect(await pauseHelper.getPoolCountForSet(poolSetId)).to.equal(1);
   });
 
   it('can pause pools', async () => {
     // Ensure pool isn't already paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.false;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.false;
 
-    await pauseHelper.connect(manager).pausePools([pool.address]);
+    await (pauseHelper.connect(manager) as Contract).pausePools([pool.target as string]);
 
     // Pool should now be paused.
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.true;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.true;
   });
 
   it('can transfer pause permission', async () => {
-    await pauseHelper.connect(manager).transferPoolSetOwnership(newManager.address);
+    await (pauseHelper.connect(manager) as Contract).transferPoolSetOwnership(newManager.address);
 
     expect(await pauseHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager.address);
   });
 
   it('new manager can pause pools', async () => {
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'unpausePool'), manager.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'unpausePool'), manager.address);
 
     // It was previously paused.
-    await adminEntrypoint.connect(manager).unpausePool(pool.address);
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.false;
+    await (adminEntrypoint.connect(manager) as Contract).unpausePool(pool.target as string);
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.false;
 
-    await pauseHelper.connect(newManager).pausePools([pool.address]);
+    await (pauseHelper.connect(newManager) as Contract).pausePools([pool.target as string]);
 
     // Pool should now be paused again.
-    expect(await extensionEntrypoint.isPoolPaused(pool.address)).to.be.true;
+    expect(await extensionEntrypoint.isPoolPaused(pool.target as string)).to.be.true;
   });
 });

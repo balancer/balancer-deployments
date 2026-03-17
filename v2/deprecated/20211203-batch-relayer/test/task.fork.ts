@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 
 import { BigNumberish } from '@helpers/numbers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { RelayerAuthorization } from '@helpers/models/misc/signatures';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
@@ -29,11 +29,11 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   const ETH_DAI_POOL = '0x0b09dea16768f0799065c475be02919503cb2a3500020000000000000000001a';
 
   const CHAINED_REFERENCE_PREFIX = 'ba10';
-  function toChainedReference(key: BigNumberish): BigNumber {
+  function toChainedReference(key: BigNumberish): bigint {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigNumber.from(paddedPrefix).add(key);
+    return BigInt(paddedPrefix) + key;
   }
 
   before('run task', async () => {
@@ -70,7 +70,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   before('approve tokens by sender', async () => {
     // Even though the sender only starts with USDC, they will eventually get DAI and need to use it in the Vault
     await Promise.all(
-      [usdc, dai].map(async (token) => await token.connect(sender).approve(vault.address, MAX_UINT256))
+      [usdc, dai].map(async (token) => await token.connect(sender).approve(vault.target as string, MAX_UINT256))
     );
   });
 
@@ -89,7 +89,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
     await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, false);
   });
 
-  async function getApprovalCalldata(deadline: BigNumber): Promise<string> {
+  async function getApprovalCalldata(deadline: bigint): Promise<string> {
     return library.interface.encodeFunctionData('setRelayerApproval', [
       relayer.address,
       true,

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { VaultFactoryDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 import { fromNow, MONTH } from '@helpers/time';
 
@@ -30,19 +30,19 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
   });
 
   it('checks vault address', async () => {
-    expect(vault.address).to.be.eq(input.targetVaultAddress);
+    expect(vault.target as string).to.be.eq(input.targetVaultAddress);
   });
 
   it('checks admin reference', async () => {
-    expect(await vaultAdmin.vault()).to.be.equal(vault.address);
+    expect(await vaultAdmin.vault()).to.be.equal(vault.target as string);
   });
 
   it('checks extension reference', async () => {
-    expect(await vaultExtension.vault()).to.be.equal(vault.address);
+    expect(await vaultExtension.vault()).to.be.equal(vault.target as string);
   });
 
   it('checks protocol fee controller reference', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.address);
+    const vaultAsExtension = vaultExtension.attach(vault.target as string) as Contract;
     expect(await vaultAsExtension.getProtocolFeeController()).to.be.equal(task.output().ProtocolFeeController);
   });
 
@@ -57,10 +57,10 @@ describeForkTest('V3-VaultFactory-V2', 'arbitrum', 297799000, function () {
   });
 
   it('checks extension', async () => {
-    expect(await vault.getVaultExtension()).to.be.eq(vaultExtension.address);
+    expect(await vault.getVaultExtension()).to.be.eq(vaultExtension.target as string);
   });
 
   it('checks admin', async () => {
-    expect(await vaultExtension.getVaultAdmin()).to.be.eq(vaultAdmin.address);
+    expect(await vaultExtension.getVaultAdmin()).to.be.eq(vaultAdmin.target as string);
   });
 });

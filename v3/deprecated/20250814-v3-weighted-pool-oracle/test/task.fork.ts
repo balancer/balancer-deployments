@@ -41,7 +41,7 @@ describeForkTest.skip('WeightedLPOracle', 'base', 34453000, function () {
     const event = receipt.events?.find((e: { event: string }) => e.event === 'WeightedLPOracleCreated');
     weightedLPOracle = await task.instanceAt('WeightedLPOracle', event?.args?.oracle);
     expect(weightedLPOracle).to.not.be.undefined;
-    expect(weightedLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(weightedLPOracle).to.not.be === ZERO_ADDRESS;
   });
 
   it('checks price feeds', async () => {

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract, ContractReceipt } from 'ethers';
 
 import { bn } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest } from '@src';
@@ -113,7 +113,7 @@ describeForkTest.skip('veBALGaugeFixCoordinator', 'mainnet', 14850000, function 
       {
         from: ZERO_ADDRESS,
         to: VEBAL_BAL_TOKEN_HOLDER,
-        value: bn('14500e18').mul(2),
+        value: bn('14500e18') * 2,
       },
       BAL_TOKEN
     );
@@ -125,7 +125,7 @@ describeForkTest.skip('veBALGaugeFixCoordinator', 'mainnet', 14850000, function 
       {
         from: ZERO_ADDRESS,
         to: ARBITRUM_BAL_TOKEN_HOLDER,
-        value: bn('10150e18').mul(2),
+        value: bn('10150e18') * 2,
       },
       BAL_TOKEN
     );
@@ -137,7 +137,7 @@ describeForkTest.skip('veBALGaugeFixCoordinator', 'mainnet', 14850000, function 
       {
         from: ZERO_ADDRESS,
         to: POLYGON_BAL_TOKEN_HOLDER,
-        value: bn('24650e18').mul(2),
+        value: bn('24650e18') * 2,
       },
       BAL_TOKEN
     );

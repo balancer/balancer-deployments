@@ -10,7 +10,7 @@ import { calculateInvariant } from '@helpers/models/pools/stable/math';
 import { expectEqualWithError } from '@helpers/relativeError';
 
 import { MAX_UINT256 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
@@ -27,7 +27,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
   const amplificationParameter = bn(100);
   const swapFeePercentage = fp(0.01);
   const initialBalanceDAI = fp(1e6);
-  const initialBalanceUSDC = fp(1e6).div(1e12); // 6 digits
+  const initialBalanceUSDC = fp(1e6) / BigInt(1e12); // 6 digits
   const initialBalances = [initialBalanceDAI, initialBalanceUSDC];
 
   const LARGE_TOKEN_HOLDER = '0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503';
@@ -55,16 +55,16 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await task.instanceAt('StablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
 
     const poolId = pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.address);
+    expect(registeredAddress).to.equal(pool.target as string);
   });
 
   it('can initialize a stable pool', async () => {
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
 
     const poolId = await pool.getPoolId();
     const userData = StablePoolEncoder.joinInit(initialBalances);
@@ -82,7 +82,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
   it('can swap in a stable pool', async () => {
     const amount = fp(500);
     await dai.connect(whale).transfer(owner.address, amount);
-    await dai.connect(owner).approve(vault.address, amount);
+    await dai.connect(owner).approve(vault.target as string, amount);
 
     const poolId = await pool.getPoolId();
     await vault
@@ -95,7 +95,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       );
 
     // Assert pool swap
-    const expectedUSDC = amount.div(1e12);
+    const expectedUSDC = amount / BigInt(1e12);
     expectEqualWithError(await dai.balanceOf(owner.address), 0, 0.0001);
     expectEqualWithError(await usdc.balanceOf(owner.address), expectedUSDC, 0.1);
   });

@@ -1,11 +1,11 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
-import { fp, maxUint } from '@helpers/numbers';
+import { bn, fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
 
 describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
@@ -61,13 +61,13 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
   before('setup contracts and parameters', async () => {
     tokenConfig = [
       {
-        token: weth.address,
+        token: weth.target as string,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: bal.address,
+        token: bal.target as string,
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -78,7 +78,7 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.address);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target as string);
   });
 
   it('deploys FixedPriceLBP', async () => {
@@ -88,10 +88,10 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
       name: 'Mock LBP',
       symbol: 'FixedLBP-TEST',
       owner: admin.address,
-      projectToken: bal.address,
-      reserveToken: weth.address,
-      startTime: startTime.add(HOUR),
-      endTime: startTime.add(DAY),
+      projectToken: bal.target as string,
+      reserveToken: weth.target as string,
+      startTime: startTime + bn(HOUR),
+      endTime: startTime + bn(DAY),
       blockProjectTokenSwapsIn: true,
     };
 
@@ -113,8 +113,8 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(bal.address);
-    expect(await pool.getReserveToken()).to.eq(weth.address);
+    expect(await pool.getProjectToken()).to.eq(bal.target as string);
+    expect(await pool.getReserveToken()).to.eq(weth.target as string);
   });
 
   it('checks pool version', async () => {
@@ -137,14 +137,14 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
 
   it('initializes the pool', async () => {
     // Give the admin tokens: mint test tokens, get WETH
-    await bal.connect(admin).mint(admin.address, INITIAL_BAL);
+    await (bal.connect(admin) as Contract).mint(admin.address, INITIAL_BAL);
 
-    await bal.connect(admin).approve(permit2.address, INITIAL_BAL);
-    await permit2.connect(admin).approve(bal.address, trustedRouter.address, INITIAL_BAL, maxUint(48));
+    await (bal.connect(admin) as Contract).approve(permit2.target as string, INITIAL_BAL);
+    await (permit2.connect(admin) as Contract).approve(bal.target as string, trustedRouter.target as string, INITIAL_BAL, maxUint(48));
 
-    await trustedRouter.connect(admin).initialize(
-      pool.address,
-      [bal.address, weth.address],
+    await (trustedRouter.connect(admin) as Contract).initialize(
+      pool.target as string,
+      [bal.target as string, weth.target as string],
       [INITIAL_BAL, INITIAL_WETH],
       0,
       false, // wethIsETH

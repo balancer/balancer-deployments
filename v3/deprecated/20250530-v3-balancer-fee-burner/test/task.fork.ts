@@ -4,7 +4,7 @@ import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from 
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { BalancerFeeBurnerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 
 describeForkTest.skip('BalancerFeeBurner', 'mainnet', 22598419, function () {
@@ -87,10 +87,10 @@ describeForkTest.skip('BalancerFeeBurner', 'mainnet', 22598419, function () {
     const block = await ethers.provider.getBlock('latest');
 
     // Transfer USDC to protocol fee sweeper
-    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.address, AMOUNT_IN);
+    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.target as string, AMOUNT_IN);
 
     // Approve BalancerFeeBurner to spend USDC
-    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.address, AMOUNT_IN);
+    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.target as string, AMOUNT_IN);
 
     const balanceUSDTBefore = await waETHUSDT.balanceOf(RECIPIENT);
 

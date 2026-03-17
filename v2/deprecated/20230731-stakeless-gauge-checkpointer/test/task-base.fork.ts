@@ -1,9 +1,9 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract, ContractReceipt } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -89,14 +89,14 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     ['0xE867AD0a48e8f815DC0cda2CDb275e0F163A480b', 1],
   ];
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
 
   type GaugeData = {
     address: string;
-    weight: BigNumber;
+    weight: bigint;
     expectedCheckpoints: number;
   };
 
@@ -136,7 +136,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     );
     adderCoordinator = await adderCoordinatorTask.deployedInstance('GaugeAdderMigrationCoordinator');
 
-    await authorizer.connect(daoMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.address);
+    await authorizer.connect(daoMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.target as string);
     await adderCoordinator.performNextStage();
   });
 
@@ -190,7 +190,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       Array.from(gauges).map(([gaugeType, gaugesData]) => {
         stakelessGaugeCheckpointer.connect(admin).addGaugesWithVerifiedType(
           GaugeType[gaugeType],
-          gaugesData.map((gaugeData) => gaugeData.address)
+          gaugesData.map((gaugeData) => gaugeData.target as string)
         );
       })
     );
@@ -204,7 +204,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       .connect(daoMultisig)
       .grantRole(
         await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.address
+        stakelessGaugeCheckpointer.target as string
       );
   });
 
@@ -215,7 +215,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
   });
 
   describe('getTotalBridgeCost', () => {
-    function itChecksTotalBridgeCost(minRelativeWeight: BigNumber) {
+    function itChecksTotalBridgeCost(minRelativeWeight: bigint) {
       it('checks total bridge cost', async () => {
         const arbitrumGauge = await task.instanceAt('ArbitrumRootGauge', gauges.get(GaugeType.Arbitrum)![0].address);
 
@@ -224,7 +224,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
 
         // Bridge cost per gauge is always the same, so total cost is (single gauge cost) * (number of gauges).
         expect(await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight)).to.be.eq(
-          singleGaugeBridgeCost.mul(gaugesAmountAboveMinWeight)
+          singleGaugeBridgeCost * gaugesAmountAboveMinWeight
         );
       });
     }
@@ -247,7 +247,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       const arbitrumGauge = await task.instanceAt('ArbitrumRootGauge', gauges.get(GaugeType.Arbitrum)![0].address);
       const bridgeCost = await arbitrumGauge.getTotalBridgeCost();
       const arbitrumType = GaugeType[GaugeType.Arbitrum];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.address)).to.be.eq(
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.target as string)).to.be.eq(
         bridgeCost
       );
     });
@@ -255,13 +255,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     it('gets the cost for an non-arbitrum gauge', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const gnosisType = GaugeType[GaugeType.Gnosis];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.address)).to.be.eq(0);
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.target as string)).to.be.eq(0);
     });
 
     it('reverts when the gauge address is not present in the type', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const polygonType = GaugeType[GaugeType.Polygon];
-      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.address)).to.be.revertedWith(
+      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.target as string)).to.be.revertedWith(
         'Gauge was not added to the checkpointer'
       );
     });
@@ -285,7 +285,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       itCheckpointsGaugesAboveRelativeWeight(fp(0), 20);
     });
 
-    function itCheckpointsGaugesAboveRelativeWeight(minRelativeWeight: BigNumber, gaugesAboveThreshold: number) {
+    function itCheckpointsGaugesAboveRelativeWeight(minRelativeWeight: bigint, gaugesAboveThreshold: number) {
       let performCheckpoint: () => Promise<ContractReceipt>;
       let gaugeDataAboveMinWeight: GaugeData[] = [];
       let ethereumGaugeDataAboveMinWeight: GaugeData[],
@@ -412,7 +412,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
               checkpointInterface,
               'Checkpoint',
               {},
-              gaugeData.address,
+              gaugeData.target as string,
               gaugeData.expectedCheckpoints
             );
           });
@@ -426,15 +426,15 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const arbitrumGaugeData = gauges.get(GaugeType.Arbitrum)![0];
           const arbitrumType = GaugeType[GaugeType.Arbitrum];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.address, {
-            value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.address),
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.target as string, {
+            value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target as string),
           });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            arbitrumGaugeData.address,
+            arbitrumGaugeData.target as string,
             arbitrumGaugeData.expectedCheckpoints
           );
         });
@@ -445,13 +445,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const gnosisGaugeData = gauges.get(GaugeType.Gnosis)![0];
           const gnosisType = GaugeType[GaugeType.Gnosis];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.address);
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.target as string);
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            gnosisGaugeData.address,
+            gnosisGaugeData.target as string,
             gnosisGaugeData.expectedCheckpoints
           );
         });
@@ -459,7 +459,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     });
   });
 
-  function getGaugeDataAboveMinWeight(gaugeType: GaugeType, fpMinRelativeWeight: BigNumber): GaugeData[] {
-    return gauges.get(gaugeType)!.filter((addressWeight) => addressWeight.weight.gte(fpMinRelativeWeight));
+  function getGaugeDataAboveMinWeight(gaugeType: GaugeType, fpMinRelativeWeight: bigint): GaugeData[] {
+    return gauges.get(gaugeType)!.filter((addressWeight) => addressWeight.weight >= fpMinRelativeWeight);
   }
 });

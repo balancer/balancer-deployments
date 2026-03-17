@@ -2,6 +2,7 @@ import '@nomicfoundation/hardhat-toolbox';
 import '@nomicfoundation/hardhat-ethers';
 import '@nomicfoundation/hardhat-verify';
 import '@nomiclabs/hardhat-vyper';
+import '@typechain/hardhat';
 import 'hardhat-local-networks-config-plugin';
 import 'hardhat-ignore-warnings';
 import 'tsconfig-paths/register';
@@ -453,6 +454,10 @@ task(
 task(TASK_TEST).addOptionalParam('id', 'Specific task ID of the fork test to run.').setAction(test);
 
 export default {
+  typechain: {
+    target: 'ethers-v6',
+    outDir: '.src/typechain-types',
+  },
   mocha: {
     timeout: 600000,
   },

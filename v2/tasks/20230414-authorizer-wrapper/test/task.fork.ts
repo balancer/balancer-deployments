@@ -2,12 +2,14 @@ import hre from 'hardhat';
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import { fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { Interface } from 'ethers';
 
 describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
   let admin: SignerWithAddress;
@@ -71,15 +73,15 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
 
   describe('getters', () => {
     it('stores the actual (existing basic) authorizer', async () => {
-      expect(await authorizer.getActualAuthorizer()).to.eq(actualAuthorizer.address);
+      expect(await authorizer.getActualAuthorizer()).to.eq(actualAuthorizer.target as string);
     });
 
     it('stores the authorizer adaptor', async () => {
-      expect(await authorizer.getAuthorizerAdaptor()).to.eq(authorizerAdaptor.address);
+      expect(await authorizer.getAuthorizerAdaptor()).to.eq(authorizerAdaptor.target as string);
     });
 
     it('stores the authorizer adaptor entrypoint', async () => {
-      expect(await authorizer.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.address);
+      expect(await authorizer.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.target as string);
     });
 
     it('configures the gauge adder', async () => {
@@ -87,8 +89,8 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
       const gaugeAdderAuthorizer = await adaptorEntrypoint.getAuthorizer();
 
       // Ensure the authorizer we just set the permissions on is the same one the gauge adder is using
-      expect(entrypoint).to.equal(adaptorEntrypoint.address);
-      expect(gaugeAdderAuthorizer).to.equal(actualAuthorizer.address);
+      expect(entrypoint).to.equal(adaptorEntrypoint.target as string);
+      expect(gaugeAdderAuthorizer).to.equal(actualAuthorizer.target as string);
     });
   });
 
@@ -111,23 +113,23 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
       });
 
       it('attempting to add gauges reverts as the Adaptor Entrypoint is not yet operational', async () => {
-        await expect(gaugeAdder.connect(lmMultisig).addEthereumGauge(gauge)).to.be.revertedWith('BAL#401');
+        await expect((gaugeAdder.connect(lmMultisig) as Contract).addEthereumGauge(gauge)).to.be.revertedWith('BAL#401');
       });
     });
 
     context('after the upgrade', () => {
       sharedBeforeEach('upgrade Authorizer', async () => {
         const setAuthorizerAction = await actionId(vault, 'setAuthorizer');
-        await actualAuthorizer.connect(govMultisig).grantRole(setAuthorizerAction, admin.address);
+        await (actualAuthorizer.connect(govMultisig) as Contract).grantRole(setAuthorizerAction, admin.address);
 
-        await vault.connect(admin).setAuthorizer(authorizer.address);
-        expect(await vault.getAuthorizer()).to.equal(authorizer.address);
+        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target as string);
+        expect(await vault.getAuthorizer()).to.equal(authorizer.target as string);
       });
 
       it('GaugeAdder can now add gauges', async () => {
-        const tx = await gaugeAdder.connect(lmMultisig).addEthereumGauge(gauge);
+        const tx = await (gaugeAdder.connect(lmMultisig) as Contract).addEthereumGauge(gauge);
 
-        const gaugeControllerInterface = new ethers.utils.Interface([
+        const gaugeControllerInterface = new Interface([
           'event NewGauge(address gauge, int128 gaugeType, uint256 weight)',
         ]);
 
@@ -148,7 +150,7 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
 
     context('before the upgrade', () => {
       it('the swap fee percentage can be set', async () => {
-        const tx = await pool.connect(swapFeeSetter).setSwapFeePercentage(fp(0.1));
+        const tx = await (pool.connect(swapFeeSetter) as Contract).setSwapFeePercentage(fp(0.1));
         expectEvent.inReceipt(await tx.wait(), 'SwapFeePercentageChanged');
       });
     });
@@ -156,14 +158,14 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
     context('after the upgrade', () => {
       sharedBeforeEach('upgrade Authorizer', async () => {
         const setAuthorizerAction = await actionId(vault, 'setAuthorizer');
-        await actualAuthorizer.connect(govMultisig).grantRole(setAuthorizerAction, admin.address);
+        await (actualAuthorizer.connect(govMultisig) as Contract).grantRole(setAuthorizerAction, admin.address);
 
-        await vault.connect(admin).setAuthorizer(authorizer.address);
-        expect(await vault.getAuthorizer()).to.equal(authorizer.address);
+        await (vault.connect(admin) as Contract).setAuthorizer(authorizer.target as string);
+        expect(await vault.getAuthorizer()).to.equal(authorizer.target as string);
       });
 
       it('the swap fee percentage can be still set', async () => {
-        const tx = await pool.connect(swapFeeSetter).setSwapFeePercentage(fp(0.1));
+        const tx = await (pool.connect(swapFeeSetter) as Contract).setSwapFeePercentage(fp(0.1));
         expectEvent.inReceipt(await tx.wait(), 'SwapFeePercentageChanged');
       });
     });

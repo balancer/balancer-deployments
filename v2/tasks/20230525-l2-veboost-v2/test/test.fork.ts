@@ -1,5 +1,5 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { expect } from 'chai';
 
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -53,13 +53,13 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
 
   it('proxy can be migrated to delegation', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG);
-    await authorizer
-      .connect(govMultisig)
+    await (authorizer
+      .connect(govMultisig) as Contract)
       .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
 
-    await delegationProxy.connect(govMultisig).setDelegation(delegation.address);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target as string);
 
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.address);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(delegation.target as string);
   });
 
   it('reverts migrating boosts (nothing to migrate)', async () => {
@@ -69,7 +69,7 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
   it('gets transferred total supply via delegation proxy', async () => {
     // Exact total supply decays with time, and depends on block time.
     // This is an approximate value fetched from Etherscan at around the time the data was transferred.
-    expect(await delegationProxy.totalSupply()).to.be.almostEqual(BigNumber.from('10182868869854932315839099'));
+    expect(await delegationProxy.totalSupply()).to.be.almostEqual(BigInt('10182868869854932315839099'));
   });
 
   it('gets transferred user balance via delegation proxy', async () => {
@@ -77,7 +77,7 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
     // This is an approximate value fetched from Etherscan at around the time the data was transferred.
     // Most importantly, it's not 0.
     expect(await delegationProxy.adjustedBalanceOf(VEBAL_HOLDER)).to.be.almostEqual(
-      BigNumber.from('11458834346686284')
+      BigInt('11458834346686284')
     );
   });
 });

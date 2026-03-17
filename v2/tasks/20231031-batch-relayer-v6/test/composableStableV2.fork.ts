@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
 import { fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
@@ -58,7 +58,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -67,19 +67,19 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
   });
 
   before('approve relayer by the user', async () => {
-    await vault.connect(whale).setRelayerApproval(whale.address, relayer.address, true);
+    await (vault.connect(whale) as Contract).setRelayerApproval(whale.address, relayer.address, true);
   });
 
   before('load tokens and approve', async () => {
     dai = await task.instanceAt('IERC20', DAI);
     usdc = await task.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+    await (dai.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (usdc.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
   });
 
   // Use V3 so that it's not disabled: same as V2 for joins/exits
@@ -103,11 +103,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.address);
+    expect(registeredAddress).to.equal(pool.target as string);
 
     bptIndex = await pool.getBptIndex();
 
@@ -117,7 +117,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
     const { tokens: allTokens } = await vault.getPoolTokens(poolId);
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
-    await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+    await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
       assets: allTokens,
       maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
       fromInternalBalance: false,
@@ -133,7 +133,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target as string);
     });
 
     it('can join and exit', async () => {
@@ -177,13 +177,13 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
         [],
       ]);
 
-      await relayer.connect(whale).multicall([joinCalldata, exitCalldata]);
+      await (relayer.connect(whale) as Contract).multicall([joinCalldata, exitCalldata]);
 
       const whaleDAIBalanceAfterJoinExit = await dai.balanceOf(whale.address);
       const ownerDAIBalanceAfterJoinExit = await dai.balanceOf(owner.address);
 
-      expect(whaleDAIBalanceAfterJoinExit).to.lt(whaleDAIBalanceBeforeJoinExit);
-      expect(ownerDAIBalanceAfterJoinExit).to.gt(ownerDAIBalanceBeforeJoinExit);
+      expect(whaleDAIBalanceAfterJoinExit).to.be.lt(whaleDAIBalanceBeforeJoinExit);
+      expect(ownerDAIBalanceAfterJoinExit).to.be.gt(ownerDAIBalanceBeforeJoinExit);
     });
   });
 });

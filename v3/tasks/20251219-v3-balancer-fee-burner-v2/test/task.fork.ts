@@ -4,7 +4,7 @@ import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from 
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { BalancerFeeBurnerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 
 describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
@@ -64,7 +64,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
       },
     ];
 
-    await balancerFeeBurner.connect(owner).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
+    await (balancerFeeBurner.connect(owner) as Contract).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
 
     const storedPaths = await balancerFeeBurner.getBurnPath(WA_ETH_USDC_ADDRESS);
     expect(storedPaths[0].pool).to.equal(POOL_USDT_USDC);
@@ -80,21 +80,20 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
       },
     ];
 
-    await balancerFeeBurner.connect(owner).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
+    await (balancerFeeBurner.connect(owner) as Contract).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
 
     const minAmountOut = AMOUNT_IN / 2;
     const block = await ethers.provider.getBlock('latest');
 
     // Transfer USDC to protocol fee sweeper
-    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.address, AMOUNT_IN);
+    await (waETHUSDC.connect(whale) as Contract).transfer(protocolFeeSweeper.target as string, AMOUNT_IN);
 
     // Approve BalancerFeeBurner to spend USDC
-    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.address, AMOUNT_IN);
+    await (waETHUSDC.connect(protocolFeeSweeperSigner) as Contract).approve(balancerFeeBurner.target as string, AMOUNT_IN);
 
     const balanceUSDTBefore = await waETHUSDT.balanceOf(RECIPIENT);
 
-    await balancerFeeBurner
-      .connect(protocolFeeSweeperSigner)
+    await (balancerFeeBurner.connect(protocolFeeSweeperSigner) as Contract)
       .burn(
         ZERO_ADDRESS,
         WA_ETH_USDC_ADDRESS,
@@ -102,7 +101,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
         WA_ETH_USDT_ADDRESS,
         minAmountOut,
         RECIPIENT,
-        block.timestamp + FIVE_MINUTES
+        block!.timestamp + FIVE_MINUTES
       );
 
     const balanceUSDTAfter = await waETHUSDT.balanceOf(RECIPIENT);
@@ -135,18 +134,17 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
       },
     ];
 
-    await balancerFeeBurner.connect(owner).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
+    await (balancerFeeBurner.connect(owner) as Contract).setBurnPath(WA_ETH_USDC_ADDRESS, paths);
 
     const minAmountOut = SMALL_AMOUNT_IN / 2;
     const block = await ethers.provider.getBlock('latest');
 
-    await waETHUSDC.connect(whale).transfer(protocolFeeSweeper.address, SMALL_AMOUNT_IN);
-    await waETHUSDC.connect(protocolFeeSweeperSigner).approve(balancerFeeBurner.address, SMALL_AMOUNT_IN);
+    await (waETHUSDC.connect(whale) as Contract).transfer(protocolFeeSweeper.target as string, SMALL_AMOUNT_IN);
+    await (waETHUSDC.connect(protocolFeeSweeperSigner) as Contract).approve(balancerFeeBurner.target as string, SMALL_AMOUNT_IN);
 
     const balanceWaETHUSDTBefore = await waETHUSDT.balanceOf(RECIPIENT);
 
-    await balancerFeeBurner
-      .connect(protocolFeeSweeperSigner)
+    await (balancerFeeBurner.connect(protocolFeeSweeperSigner) as Contract)
       .burn(
         ZERO_ADDRESS,
         WA_ETH_USDC_ADDRESS,
@@ -154,7 +152,7 @@ describeForkTest('BalancerFeeBurner V2', 'mainnet', 24020850, function () {
         WA_ETH_USDT_ADDRESS,
         minAmountOut,
         RECIPIENT,
-        block.timestamp + FIVE_MINUTES
+        block!.timestamp + FIVE_MINUTES
       );
 
     const balanceWaETHUSDTAfter = await waETHUSDT.balanceOf(RECIPIENT);

@@ -2,7 +2,7 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { fp, maxUint } from '@helpers/numbers';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
@@ -120,20 +120,20 @@ describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
   });
 
   it('checks new getters', async () => {
-    expect(await router.getPermit2()).to.eq(permit2.address);
+    expect(await router.getPermit2()).to.eq(permit2.target as string);
     expect(await router.getWeth()).to.eq(input.WETH);
   });
 
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: router.target as string,
+      value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: router.target as string,
+      value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
   });
@@ -144,15 +144,14 @@ describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
 
     const largeHolderSigner = await impersonate(LARGE_TOKEN_HOLDER, fp(10e8));
 
-    balToken.connect(largeHolderSigner).transfer(bob.address, initialBalanceBAL);
+    await (balToken.connect(largeHolderSigner) as Contract).transfer(bob.address, initialBalanceBAL);
 
-    await balToken.connect(bob).approve(permit2.address, initialBalanceBAL);
-    await permit2.connect(bob).approve(BAL, router.address, initialBalanceBAL, maxUint(48));
+    await (balToken.connect(bob) as Contract).approve(permit2.target as string, initialBalanceBAL);
+    await (permit2.connect(bob) as Contract).approve(BAL, router.target as string, initialBalanceBAL, maxUint(48));
 
-    await router
-      .connect(bob)
-      .initialize(pool.address, [BAL, input.WETH], [initialBalanceBAL, initialBalanceWETH], 0, true, ZERO_BYTES32, {
-        value: ethers.utils.parseEther('1000.0'),
+    await (router.connect(bob) as Contract)
+      .initialize(pool.target as string, [BAL, input.WETH], [initialBalanceBAL, initialBalanceWETH], 0, true, ZERO_BYTES32, {
+        value: ethers.parseEther('1000.0'),
       });
   });
 });

@@ -1,7 +1,7 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, deploy } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
@@ -43,11 +43,11 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const tokenA = await deploy('TestToken', ['Token A', 'TSTA', 18]);
       const tokenB = await deploy('TestToken', ['Token B', 'TSTB', 18]);
 
-      const txA = await childChainGaugeFactory.create(tokenA.address);
+      const txA = await childChainGaugeFactory.create(tokenA.target as string);
       gaugeAddressA = expectEvent.inReceipt(await txA.wait(), 'GaugeCreated').args.gauge;
-      const txB = await childChainGaugeFactory.create(tokenB.address);
+      const txB = await childChainGaugeFactory.create(tokenB.target as string);
       gaugeAddressB = expectEvent.inReceipt(await txB.wait(), 'GaugeCreated').args.gauge;
-      expect(gaugeAddressA).to.not.be.eq(gaugeAddressB);
+      expect(gaugeAddressA).to.not.equal(gaugeAddressB);
     });
 
     before('load signers', async () => {
@@ -57,7 +57,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
     before('approve relayer at the authorizer', async () => {
       const relayerActionIds = await Promise.all(
         ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-          vault.getActionId(vault.interface.getSighash(action))
+          vault.getActionId(vault.interface.getFunction(action)!.selector)
         )
       );
 
@@ -66,11 +66,11 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
       // Grant relayer permission to call all relayer functions
-      await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
     });
 
     sharedBeforeEach('approve relayer by the user', async () => {
-      await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
+      await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
     });
 
     it('can call user checkpoint: true', async () => {
@@ -78,13 +78,13 @@ function doForkTestsOnNetwork(network: string, block: number) {
     });
 
     it('sender can update their gauge liquidity limits', async () => {
-      const tx = await relayer
-        .connect(sender)
+      const tx = await (relayer
+        .connect(sender) as Contract)
         .multicall([
           library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [gaugeAddressA, gaugeAddressB]]),
         ]);
 
-      const gaugeInterface = new ethers.utils.Interface([
+      const gaugeInterface = new ethers.Interface([
         'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
       ]);
 

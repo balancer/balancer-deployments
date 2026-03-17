@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -64,7 +64,7 @@ describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function
       balToken.interface,
       'Transfer',
       { from: ZERO_ADDRESS, to: TRIBE_BAL_RECIPIENT, value: TRIBE_BAL_MINT_AMOUNT },
-      balToken.address
+      balToken.target as string
     );
   });
 

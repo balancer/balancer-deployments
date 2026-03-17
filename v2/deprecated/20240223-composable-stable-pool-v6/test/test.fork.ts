@@ -1,13 +1,13 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract, ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 
 import * as expectEvent from '@helpers/expectEvent';
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { getSigner, impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
@@ -18,7 +18,7 @@ import { SwapKind } from '@helpers/models/types/types';
 import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { deploy } from '@src';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 import { DAY, MINUTE, advanceTime, currentTimestamp } from '@helpers/time';
 
 describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function () {
@@ -47,13 +47,13 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
   const amplificationParameter = bn(400);
   const swapFeePercentage = fp(0.01);
   const initialBalanceDAI = fp(1e6);
-  const initialBalanceUSDC = fp(1e6).div(USDC_SCALING);
+  const initialBalanceUSDC = fp(1e6) / USDC_SCALING;
   const initialBalances = [initialBalanceDAI, initialBalanceUSDC];
 
   // Pool deployed from previous factory version (GRAVI AURA - AURA)
   const GRAVI_AURA_POOL = '0x6A9603E481Fb8F2c09804ea9AdaB49A338855B90';
 
-  let factoryDeploymentTimestamp: BigNumber;
+  let factoryDeploymentTimestamp: bigint;
 
   enum AttackType {
     DISABLE_RECOVERY_MODE,
@@ -90,8 +90,8 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     aura = await task.instanceAt('ERC20', AURA);
     graviAura = await task.instanceAt('ERC20', GRAVIAURA);
 
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
   });
 
   async function createPool(
@@ -101,7 +101,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     salt = ''
   ): Promise<Contract> {
     const rateProviders: string[] = Array(tokens.length).fill(rateProvider);
-    const cacheDurations: BigNumber[] = Array(tokens.length).fill(bn(0));
+    const cacheDurations: bigint[] = Array(tokens.length).fill(bn(0));
     const exemptFlag = false;
 
     const tx = await factory.create(
@@ -119,7 +119,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
     const pool = await task.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
 
     if (initialize) {
       const bptIndex = await pool.getBptIndex();
@@ -143,7 +143,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     return pool;
   }
 
-  function getRegisteredBalances(bptIndex: number, balances: BigNumber[]): BigNumber[] {
+  function getRegisteredBalances(bptIndex: number, balances: bigint[]): bigint[] {
     return Array.from({ length: balances.length + 1 }).map((_, i) =>
       i == bptIndex ? bn(0) : i < bptIndex ? balances[i] : balances[i - 1]
     );
@@ -188,14 +188,14 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.address);
+        expect(registeredAddress).to.equal(pool.target as string);
 
         bptIndex = await pool.getBptIndex();
       });
 
       it('performs a swap', async () => {
         await dai.connect(whale).transfer(owner.address, amount);
-        await dai.connect(owner).approve(vault.address, amount);
+        await dai.connect(owner).approve(vault.target as string, amount);
 
         await vault
           .connect(owner)
@@ -207,7 +207,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
           );
 
         // Assert pool swap
-        const expectedUSDC = amount.div(USDC_SCALING);
+        const expectedUSDC = amount / USDC_SCALING;
         expectEqualWithError(await dai.balanceOf(owner.address), 0, 0.0001);
         expectEqualWithError(await usdc.balanceOf(owner.address), bn(expectedUSDC), 0.1);
       });
@@ -221,20 +221,20 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.address);
+        expect(registeredAddress).to.equal(pool.target as string);
 
         bptIndex = await pool.getBptIndex();
       });
 
       it('joins proportionally', async () => {
         const ownerBptBalance = await pool.balanceOf(owner.address);
-        const bptOut = ownerBptBalance.div(5);
+        const bptOut = ownerBptBalance / BigInt(5);
 
         const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
         // Given the bptOut, the max amounts in should be slightly more than 1/5. Decimals make it a bit complicated.
         const adjustedBalances = [
-          initialBalanceDAI.div(fp(4.99)).mul(fp(1)),
-          initialBalanceUSDC.div(bn(4.99e6)).mul(1e6),
+          initialBalanceDAI / fp(4.99) * fp(1),
+          initialBalanceUSDC / bn(4.99e6) * 1e6,
         ];
         const maxAmountsIn = getRegisteredBalances(bptIndex, adjustedBalances);
 
@@ -264,14 +264,14 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         poolId = pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.address);
+        expect(registeredAddress).to.equal(pool.target as string);
 
         bptIndex = await pool.getBptIndex();
       });
 
       it('exits proportionally', async () => {
         const previousBptBalance = await pool.balanceOf(owner.address);
-        const bptIn = previousBptBalance.div(4);
+        const bptIn = previousBptBalance / BigInt(4);
 
         const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
@@ -283,9 +283,9 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
         });
         const receipt = await (await tx).wait();
         const { deltas } = expectEvent.inReceipt(receipt, 'PoolBalanceChanged').args;
-        const amountsOut = deltas.map((x: BigNumber) => x.mul(-1));
+        const amountsOut = deltas.map((x: bigint) => -x);
 
-        const expectedAmountsOut = (registeredBalances as BigNumber[]).map((b) => b.div(4));
+        const expectedAmountsOut = (registeredBalances as bigint[]).map((b) => b / BigInt(4));
         expectedAmountsOut[bptIndex] = bn(0);
 
         // Amounts out should be 1/4 the initial balances
@@ -293,7 +293,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         // Make sure sent BPT is close to what we expect
         const currentBptBalance = await pool.balanceOf(owner.address);
-        expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance).sub(bptIn), 0.001);
+        expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance) - bptIn, 0.001);
       });
     });
   });
@@ -308,7 +308,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     const attackerFunds = 1000;
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.address]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.target as string]);
       await dai.connect(whale).transfer(attacker.address, attackerFunds);
       await usdc.connect(whale).transfer(attacker.address, attackerFunds);
       await aura.connect(auraWhale).transfer(attacker.address, attackerFunds);
@@ -327,7 +327,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     context('when the target pool is protected', () => {
       sharedBeforeEach('deploy pool with rate providers', async () => {
         const rateProvider = await deploy('MockRateProvider');
-        pool = await createPool(tokens, rateProvider.address);
+        pool = await createPool(tokens, rateProvider.target as string);
         poolId = await pool.getPoolId();
       });
 
@@ -414,9 +414,9 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
     it('can exit via recovery mode', async () => {
       const bptBalance = await pool.balanceOf(owner.address);
-      expect(bptBalance).to.gt(0);
+      expect(bptBalance).to > 0;
 
-      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.address);
+      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target as string);
       const ownerUSDCBalanceBeforeExit = await usdc.balanceOf(owner.address);
 
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
@@ -432,11 +432,11 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.address);
+      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target as string);
       const ownerUSDCBalanceAfterExit = await usdc.balanceOf(owner.address);
 
-      expect(vaultUSDCBalanceAfterExit).to.lt(vaultUSDCBalanceBeforeExit);
-      expect(ownerUSDCBalanceAfterExit).to.gt(ownerUSDCBalanceBeforeExit);
+      expect(vaultUSDCBalanceAfterExit).to < vaultUSDCBalanceBeforeExit;
+      expect(ownerUSDCBalanceAfterExit).to > ownerUSDCBalanceBeforeExit;
     });
   });
 
@@ -445,7 +445,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
       const pool = await createPool(tokens, ZERO_ADDRESS, false, ZERO_BYTES32);
       const pool2 = await createPool(tokens, ZERO_ADDRESS, false, ONES_BYTES32);
 
-      expect(pool2.address).to.not.equal(pool.address);
+      expect(pool2.target as string).to.not.equal(pool.target as string);
     });
   });
 
@@ -454,12 +454,12 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
     const txA = {
       to: contractA,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     const txB = {
       to: contractB,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     await expect(owner.sendTransaction(txA)).to.be.reverted;
@@ -473,7 +473,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
     sharedBeforeEach(async () => {
       // Reset timestamp and double check that we're close to factory deployment time.
-      expect(await currentTimestamp()).to.be.lt(factoryDeploymentTimestamp.add(TOLERANCE));
+      expect(await currentTimestamp()).to.be.lt(factoryDeploymentTimestamp + TOLERANCE);
     });
 
     it('can be paused until 4 years after factory deployment', async () => {

@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
 import { bn, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
@@ -63,7 +63,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -72,19 +72,19 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
   });
 
   before('approve relayer by the user', async () => {
-    await vault.connect(owner).setRelayerApproval(owner.address, relayer.address, true);
+    await (vault.connect(owner) as Contract).setRelayerApproval(owner.address, relayer.address, true);
   });
 
   before('load tokens and approve', async () => {
     dai = await task.instanceAt('IERC20', DAI);
     usdc = await task.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+    await (dai.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
+    await (usdc.connect(whale) as Contract).approve(vault.target as string, MAX_UINT256);
   });
 
   before('run composable stable pool task', async () => {
@@ -107,11 +107,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('ComposableStablePool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.address);
+    expect(registeredAddress).to.equal(pool.target as string);
   });
 
   before('initialize composable stable pool', async () => {
@@ -123,7 +123,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
     const { tokens: allTokens } = await vault.getPoolTokens(poolId);
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
-    await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+    await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
       assets: allTokens,
       maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
       fromInternalBalance: false,
@@ -134,9 +134,9 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
   // V1 does not support proportional exits
   it('can exit with exact tokens through the relayer', async () => {
     const bptBalance = await pool.balanceOf(owner.address);
-    expect(bptBalance).to.gt(0);
+    expect(bptBalance).to.be.gt(0);
 
-    const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.address);
+    const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.target as string);
     const ownerDAIBalanceBeforeExit = await dai.balanceOf(owner.address);
     const { tokens: allTokens } = await vault.getPoolTokens(poolId);
     const amountsOut = [fp(100), bn(100e6)];
@@ -160,12 +160,12 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V1', 'mainnet'
       [],
     ]);
 
-    await relayer.connect(owner).multicall([exitCalldata]);
+    await (relayer.connect(owner) as Contract).multicall([exitCalldata]);
 
-    const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.address);
+    const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.target as string);
     const ownerDAIBalanceAfterExit = await dai.balanceOf(owner.address);
 
-    expect(vaultDAIBalanceAfterExit).to.lt(vaultDAIBalanceBeforeExit);
-    expect(ownerDAIBalanceAfterExit).to.gt(ownerDAIBalanceBeforeExit);
+    expect(vaultDAIBalanceAfterExit).to.be.lt(vaultDAIBalanceBeforeExit);
+    expect(ownerDAIBalanceAfterExit).to.be.gt(ownerDAIBalanceBeforeExit);
   });
 });

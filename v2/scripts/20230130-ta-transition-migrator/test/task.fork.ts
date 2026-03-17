@@ -10,7 +10,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { impersonate } from '@src';
 import { getForkedNetwork } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { TRANSITION_END_BLOCK, TimelockAuthorizerTransitionMigratorDeployment } from '../input';
 import { RoleData } from '../input/types';
 import { DAY, advanceTime } from '@helpers/time';
@@ -50,12 +50,12 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
   before('make the migrator a granter by governance', async () => {
     await newAuthorizer
       .connect(root)
-      .manageGranter(newAuthorizer.GENERAL_PERMISSION_SPECIFIER(), migrator.address, newAuthorizer.EVERYWHERE(), true);
+      .manageGranter(newAuthorizer.GENERAL_PERMISSION_SPECIFIER(), migrator.target as string, newAuthorizer.EVERYWHERE(), true);
 
     expect(
       await newAuthorizer.canGrant(
         newAuthorizer.GENERAL_PERMISSION_SPECIFIER(),
-        migrator.address,
+        migrator.target as string,
         newAuthorizer.EVERYWHERE()
       )
     ).to.be.true;
@@ -85,7 +85,7 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
           actionId: grantActionId,
           scheduledExecutionId: await migrator.scheduledExecutionIds(i),
         },
-        newAuthorizer.address
+        newAuthorizer.target as string
       );
     }
   });
@@ -138,7 +138,7 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
     expect(
       await newAuthorizer.canGrant(
         newAuthorizer.GENERAL_PERMISSION_SPECIFIER(),
-        migrator.address,
+        migrator.target as string,
         newAuthorizer.EVERYWHERE()
       )
     ).to.be.false;

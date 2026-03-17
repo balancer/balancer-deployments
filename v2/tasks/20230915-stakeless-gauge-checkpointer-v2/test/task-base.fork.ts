@@ -1,9 +1,9 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { Contract, ContractReceipt } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract, ContractTransactionReceipt } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -89,14 +89,14 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     ['0xE867AD0a48e8f815DC0cda2CDb275e0F163A480b', 1],
   ];
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
 
   type GaugeData = {
     address: string;
-    weight: BigNumber;
+    weight: bigint;
     expectedCheckpoints: number;
   };
 
@@ -136,7 +136,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     );
     adderCoordinator = await adderCoordinatorTask.deployedInstance('GaugeAdderMigrationCoordinator');
 
-    await authorizer.connect(daoMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.address);
+    await (authorizer.connect(daoMultisig) as Contract).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), adderCoordinator.target as string);
     await adderCoordinator.performNextStage();
   });
 
@@ -182,13 +182,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     // Some gauges were created from previous factories, so they need to be added by governance.
     // For simplicity, we just add all of them with the same method.
     // The non-permissioned 'addGauges' function is already tested in the unit test.
-    await authorizer
-      .connect(daoMultisig)
+    await (authorizer
+      .connect(daoMultisig) as Contract)
       .grantRole(await actionId(stakelessGaugeCheckpointer, 'addGaugesWithVerifiedType'), admin.address);
 
     await Promise.all(
       Array.from(gauges).map(([gaugeType, gaugesData]) => {
-        stakelessGaugeCheckpointer.connect(admin).addGaugesWithVerifiedType(
+        (stakelessGaugeCheckpointer.connect(admin) as Contract).addGaugesWithVerifiedType(
           GaugeType[gaugeType],
           gaugesData.map((gaugeData) => gaugeData.address)
         );
@@ -200,11 +200,11 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     // Any gauge works; we just need the interface.
     const gauge = await task.instanceAt('IStakelessGauge', gauges.get(GaugeType.Polygon)![0].address);
 
-    await authorizer
-      .connect(daoMultisig)
+    await (authorizer
+      .connect(daoMultisig) as Contract)
       .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.address
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+        stakelessGaugeCheckpointer.target as string
       );
   });
 
@@ -215,7 +215,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
   });
 
   describe('getTotalBridgeCost', () => {
-    function itChecksTotalBridgeCost(minRelativeWeight: BigNumber) {
+    function itChecksTotalBridgeCost(minRelativeWeight: bigint) {
       it('checks total bridge cost', async () => {
         const arbitrumGauge = await task.instanceAt('ArbitrumRootGauge', gauges.get(GaugeType.Arbitrum)![0].address);
 
@@ -224,7 +224,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
 
         // Bridge cost per gauge is always the same, so total cost is (single gauge cost) * (number of gauges).
         expect(await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight)).to.be.eq(
-          singleGaugeBridgeCost.mul(gaugesAmountAboveMinWeight)
+          singleGaugeBridgeCost * gaugesAmountAboveMinWeight
         );
       });
     }
@@ -247,7 +247,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
       const arbitrumGauge = await task.instanceAt('ArbitrumRootGauge', gauges.get(GaugeType.Arbitrum)![0].address);
       const bridgeCost = await arbitrumGauge.getTotalBridgeCost();
       const arbitrumType = GaugeType[GaugeType.Arbitrum];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.address)).to.be.eq(
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGauge.target as string)).to.be.eq(
         bridgeCost
       );
     });
@@ -255,13 +255,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     it('gets the cost for an non-arbitrum gauge', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const gnosisType = GaugeType[GaugeType.Gnosis];
-      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.address)).to.be.eq(0);
+      expect(await stakelessGaugeCheckpointer.getSingleBridgeCost(gnosisType, gnosisGauge.target as string)).to.be.eq(0);
     });
 
     it('reverts when the gauge address is not present in the type', async () => {
       const gnosisGauge = await task.instanceAt('GnosisRootGauge', gauges.get(GaugeType.Gnosis)![0].address);
       const polygonType = GaugeType[GaugeType.Polygon];
-      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.address)).to.be.revertedWith(
+      await expect(stakelessGaugeCheckpointer.getSingleBridgeCost(polygonType, gnosisGauge.target as string)).to.be.revertedWith(
         'Gauge not added'
       );
     });
@@ -285,8 +285,8 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
       itCheckpointsGaugesAboveRelativeWeight(fp(0), 20);
     });
 
-    function itCheckpointsGaugesAboveRelativeWeight(minRelativeWeight: BigNumber, gaugesAboveThreshold: number) {
-      let performCheckpoint: () => Promise<ContractReceipt>;
+    function itCheckpointsGaugesAboveRelativeWeight(minRelativeWeight: bigint, gaugesAboveThreshold: number) {
+      let performCheckpoint: () => Promise<ContractTransactionReceipt>;
       let gaugeDataAboveMinWeight: GaugeData[] = [];
       let ethereumGaugeDataAboveMinWeight: GaugeData[],
         polygonGaugeDataAboveMinWeight: GaugeData[],
@@ -503,7 +503,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
     });
   });
 
-  function getGaugeDataAboveMinWeight(gaugeType: GaugeType, fpMinRelativeWeight: BigNumber): GaugeData[] {
-    return gauges.get(gaugeType)!.filter((addressWeight) => addressWeight.weight.gte(fpMinRelativeWeight));
+  function getGaugeDataAboveMinWeight(gaugeType: GaugeType, fpMinRelativeWeight: bigint): GaugeData[] {
+    return gauges.get(gaugeType)!.filter((addressWeight) => addressWeight.weight >= fpMinRelativeWeight);
   }
 });

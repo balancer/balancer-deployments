@@ -31,7 +31,7 @@ describeForkTest('MevCaptureHook', 'mainnet', 21882500, function () {
   it('returns balancer registry', async () => {
     const registryTask = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const registry = await registryTask.deployedInstance('BalancerContractRegistry');
-    expect(await mevCaptureHook.getBalancerContractRegistry()).to.be.eq(registry.address);
+    expect(await mevCaptureHook.getBalancerContractRegistry()).to.be.eq(registry.target as string);
   });
 
   it('returns default mev tax multiplier', async () => {

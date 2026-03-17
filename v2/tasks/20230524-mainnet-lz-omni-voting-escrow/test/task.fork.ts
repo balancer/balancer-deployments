@@ -1,7 +1,7 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -44,7 +44,7 @@ describeForkTest.skip('OmniVotingEscrow', 'mainnet', 17331260, function () {
     });
 
     it('stores the remapper', async () => {
-      expect(await omniVotingEscrow.votingEscrowRemapper()).to.equal(veBalRemapper.address);
+      expect(await omniVotingEscrow.votingEscrowRemapper()).to.equal(veBalRemapper.target as string);
     });
   });
 
@@ -53,11 +53,11 @@ describeForkTest.skip('OmniVotingEscrow', 'mainnet', 17331260, function () {
       await expect(omniVotingEscrow.getTrustedRemoteAddress(POLYGON_LZ_CHAIN_ID)).to.be.revertedWith(
         'LzApp: no trusted path record'
       );
-      const encodedEndpoint = ethers.utils.defaultAbiCoder.encode(['bytes'], [POLYGON_TRUSTED_ENDPOINT]);
-      await omniVotingEscrow.connect(deployer).setTrustedRemoteAddress(POLYGON_LZ_CHAIN_ID, encodedEndpoint);
+      const encodedEndpoint = ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], [POLYGON_TRUSTED_ENDPOINT]);
+      await (omniVotingEscrow.connect(deployer) as Contract).setTrustedRemoteAddress(POLYGON_LZ_CHAIN_ID, encodedEndpoint);
 
       const remoteAddressBytes = await omniVotingEscrow.getTrustedRemoteAddress(POLYGON_LZ_CHAIN_ID);
-      const decodedAddress = ethers.utils.defaultAbiCoder.decode(['bytes'], remoteAddressBytes)[0];
+      const decodedAddress = ethers.AbiCoder.defaultAbiCoder().decode(['bytes'], remoteAddressBytes)[0];
 
       expect(decodedAddress).to.be.eq(POLYGON_TRUSTED_ENDPOINT.toLowerCase());
     });
@@ -65,7 +65,7 @@ describeForkTest.skip('OmniVotingEscrow', 'mainnet', 17331260, function () {
     it('transfer ownership to LM multisig', async () => {
       expect(await omniVotingEscrow.owner()).to.be.eq(deployer.address);
 
-      await omniVotingEscrow.connect(deployer).transferOwnership(LM_MULTISIG);
+      await (omniVotingEscrow.connect(deployer) as Contract).transferOwnership(LM_MULTISIG);
       expect(await omniVotingEscrow.owner()).to.be.eq(LM_MULTISIG);
     });
   });

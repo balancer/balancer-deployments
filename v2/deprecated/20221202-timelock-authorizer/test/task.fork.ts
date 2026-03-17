@@ -14,7 +14,7 @@ import { impersonate } from '@src';
 import { getForkedNetwork } from '@src';
 import { AuthorizerDeployment } from '../../../20210418-authorizer/input';
 import { TimelockAuthorizerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
   let input: TimelockAuthorizerDeployment;
@@ -45,7 +45,7 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
     const authorizerInput = authorizerTask.input() as AuthorizerDeployment;
     const multisig = await impersonate(authorizerInput.admin, fp(100));
     const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
-    await oldAuthorizer.connect(multisig).grantRolesToMany([setAuthorizerActionId], [migrator.address]);
+    await oldAuthorizer.connect(multisig).grantRolesToMany([setAuthorizerActionId], [migrator.target as string]);
   });
 
   it('migrates all roles properly', async () => {
@@ -86,8 +86,8 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
   });
 
   it('does not set the new authorizer immediately', async () => {
-    expect(await newAuthorizer.isRoot(migrator.address)).to.be.true;
-    expect(await vault.getAuthorizer()).to.be.equal(oldAuthorizer.address);
+    expect(await newAuthorizer.isRoot(migrator.target as string)).to.be.true;
+    expect(await vault.getAuthorizer()).to.be.equal(oldAuthorizer.target as string);
   });
 
   it('finalizes the migration once new root address claims root status', async () => {
@@ -96,9 +96,9 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
     await newAuthorizer.connect(root).claimRoot();
 
     await migrator.finalizeMigration();
-    expect(await vault.getAuthorizer()).to.be.equal(newAuthorizer.address);
-    expect(await newAuthorizer.isRoot(root.address)).to.be.true;
-    expect(await newAuthorizer.isRoot(migrator.address)).to.be.false;
+    expect(await vault.getAuthorizer()).to.be.equal(newAuthorizer.target as string);
+    expect(await newAuthorizer.isRoot(root.target as string)).to.be.true;
+    expect(await newAuthorizer.isRoot(migrator.target as string)).to.be.false;
   });
 
   it('allows minting after the migration', async () => {
@@ -112,13 +112,13 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
     const balAddress = tokensTask.output().BAL;
     const balancerToken = await balancerTokenAdminTask.instanceAt('IERC20', balAddress);
 
-    const balancerMinterSigner = await impersonate(balancerMinter.address, fp(100));
+    const balancerMinterSigner = await impersonate(balancerMinter.target as string, fp(100));
 
-    const tx = await balancerTokenAdmin.connect(balancerMinterSigner).mint(balancerMinter.address, 100);
+    const tx = await balancerTokenAdmin.connect(balancerMinterSigner).mint(balancerMinter.target as string, 100);
 
     expectEvent.inIndirectReceipt(await tx.wait(), balancerToken.interface, 'Transfer', {
       from: ZERO_ADDRESS,
-      to: balancerMinter.address,
+      to: balancerMinter.target as string,
       value: 100,
     });
   });
@@ -126,15 +126,15 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
   it('allows migrating the authorizer address again', async () => {
     const setAuthorizerActionId = await actionId(vault, 'setAuthorizer');
 
-    expect(await vault.getAuthorizer()).to.be.eq(newAuthorizer.address);
+    expect(await vault.getAuthorizer()).to.be.eq(newAuthorizer.target as string);
 
-    await newAuthorizer.connect(root).grantPermissions([setAuthorizerActionId], root.address, [vault.address]);
+    await newAuthorizer.connect(root).grantPermissions([setAuthorizerActionId], root.target as string, [vault.target as string]);
 
     // Schedule authorizer change
     const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
     const tx = await newAuthorizer
       .connect(root)
-      .schedule(vault.address, vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [root.address]);
+      .schedule(vault.target as string, vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [root.target as string]);
     const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 
     await advanceTime(30 * DAY);

@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { bn, fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 describeForkTest.skip('V3-PoolSwapFeeHelper', 'mainnet', 22348940, function () {
   const TASK_NAME = '20250430-v3-pool-swap-fee-helper';
@@ -53,28 +53,28 @@ describeForkTest.skip('V3-PoolSwapFeeHelper', 'mainnet', 22348940, function () {
     // Grant the helper permission to set pool swap fees.
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.address);
+      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target as string);
 
     // Grant permission to call add and set fees on the helper.
     await authorizer.connect(govMultisig).grantRole(await actionId(feeHelper, 'addPools'), admin.address);
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(feeHelper, 'setStaticSwapFeePercentage'), feeSetter.address);
+      .grantRole(await actionId(feeHelper, 'setStaticSwapFeePercentage'), feeSetter.target as string);
   });
 
   it('can add pools', async () => {
-    await feeHelper.connect(admin).addPools([pool.address]);
+    await feeHelper.connect(admin).addPools([pool.target as string]);
 
-    expect(await feeHelper.getPoolCount()).to.eq(1);
+    expect(await feeHelper.getPoolCount()).to.equal(1);
   });
 
   it('can set fees on pools', async () => {
-    await feeHelper.connect(feeSetter).setStaticSwapFeePercentage(pool.address, SWAP_FEE_PERCENTAGE);
+    await feeHelper.connect(feeSetter).setStaticSwapFeePercentage(pool.target as string, SWAP_FEE_PERCENTAGE);
 
     // Fees should now be set.
-    const extensionEntrypoint = vaultExtension.attach(vault.address);
-    const swapFeePercentage = await extensionEntrypoint.getStaticSwapFeePercentage(pool.address);
+    const extensionEntrypoint = vaultExtension.attach(vault.target as string);
+    const swapFeePercentage = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target as string);
 
-    expect(bn(swapFeePercentage)).to.eq(SWAP_FEE_PERCENTAGE);
+    expect(bn(swapFeePercentage)).to.equal(SWAP_FEE_PERCENTAGE);
   });
 });

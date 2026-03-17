@@ -1,8 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumberish, bn } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
@@ -20,7 +20,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
 
   let usdtToken: Contract, tetuVault: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
-  let chainedReference: BigNumber;
+  let chainedReference: bigint;
   const amountToWrap = 100e6;
 
   before('run task', async () => {
@@ -40,7 +40,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -49,7 +49,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
   });
 
   before(async () => {
@@ -61,15 +61,15 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     // Set whitelist approvals for the batch relayer to interact with the Tetu Smart Vault
     const governance = await impersonate(TETU_GOVERNANCE);
 
-    const tetuControllerABI = new ethers.utils.Interface([
+    const tetuControllerABI = new ethers.Interface([
       'function changeWhiteListStatus(address[] memory _targets, bool status) external',
     ]).format();
     const tetuController = await ethers.getContractAt(tetuControllerABI, TETU_CONTROLLER);
 
-    await tetuController.connect(governance).changeWhiteListStatus([relayer.address], true);
+    await (tetuController.connect(governance) as Contract).changeWhiteListStatus([relayer.address], true);
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.address, true);
   });
 
   it('should wrap successfully', async () => {
@@ -80,7 +80,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     expect(balanceOfTetuBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdtToken.connect(sender).approve(vault.address, amountToWrap);
+    await (usdtToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoTetu = library.interface.encodeFunctionData('wrapTetu', [
@@ -91,12 +91,12 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
       chainedReference,
     ]);
 
-    await relayer.connect(sender).multicall([depositIntoTetu]);
+    await (relayer.connect(sender) as Contract).multicall([depositIntoTetu]);
 
     const balanceOfUSDTAfter = await usdtToken.balanceOf(sender.address);
     const balanceOfTetuAfter = await tetuVault.balanceOf(recipient.address);
 
-    expect(balanceOfUSDTBefore.sub(balanceOfUSDTAfter)).to.be.equal(amountToWrap);
+    expect(balanceOfUSDTBefore - balanceOfUSDTAfter).to.be.equal(amountToWrap);
     expect(balanceOfTetuAfter).to.be.almostEqual(expectedBalanceOfTetuAfter, 0.000001);
   });
 
@@ -114,22 +114,22 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
       0,
     ]);
 
-    await tetuVault.connect(recipient).approve(vault.address, MAX_UINT256);
+    await (tetuVault.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
 
-    await relayer.connect(recipient).multicall([withdrawFromTetu]);
+    await (relayer.connect(recipient) as Contract).multicall([withdrawFromTetu]);
 
     const balanceOfUSDTAfter = await usdtToken.balanceOf(sender.address);
     const balanceOfTetuAfter = await tetuVault.balanceOf(recipient.address);
 
     expect(balanceOfTetuAfter).to.be.equal(0);
-    expect(balanceOfUSDTAfter.sub(balanceOfUSDTBefore)).to.be.almostEqual(tetuAmountToWithdraw, 0.0001);
+    expect(balanceOfUSDTAfter - balanceOfUSDTBefore).to.be.almostEqual(tetuAmountToWithdraw, 0.0001);
   });
 });
 
-function toChainedReference(key: BigNumberish): BigNumber {
+function toChainedReference(key: BigNumberish): bigint {
   const CHAINED_REFERENCE_PREFIX = 'ba10';
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigNumber.from(paddedPrefix).add(key);
+  return BigInt(paddedPrefix) + bn(key);
 }

@@ -1,9 +1,9 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-import { BigNumber, fp } from '@helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -46,14 +46,14 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
   const arbitrumRootGauge = '0xB5044FD339A7b858095324cC3F239C212956C179';
   const expectedCheckpoints = 8;
 
-  const checkpointInterface = new ethers.utils.Interface([
+  const checkpointInterface = new ethers.Interface([
     'function checkpoint()',
     'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
   ]);
 
   type GaugeData = {
     address: string;
-    weight: BigNumber;
+    weight: bigint;
     expectedCheckpoints: number;
   };
 
@@ -87,12 +87,12 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
 
   before('add gauge to checkpointer', async () => {
     // This gauge was created by a previous factory, so we just add it via governance providing the right type.
-    await authorizer
-      .connect(daoMultisig)
+    await (authorizer
+      .connect(daoMultisig) as Contract)
       .grantRole(await actionId(stakelessGaugeCheckpointer, 'addGaugesWithVerifiedType'), admin.address);
 
-    await stakelessGaugeCheckpointer
-      .connect(admin)
+    await (stakelessGaugeCheckpointer
+      .connect(admin) as Contract)
       .addGaugesWithVerifiedType(GaugeType[GaugeType.Arbitrum], [arbitrumRootGauge]);
   });
 
@@ -100,11 +100,11 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
     // Any gauge works; we just need the interface.
     const gauge = await task.instanceAt('IStakelessGauge', arbitrumRootGauge);
 
-    await authorizer
-      .connect(daoMultisig)
+    await (authorizer
+      .connect(daoMultisig) as Contract)
       .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
-        stakelessGaugeCheckpointer.address
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+        stakelessGaugeCheckpointer.target as string
       );
   });
 
@@ -113,7 +113,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
     // The gauge under test was created several weeks before the block specified in the fork test.
     // It meets 3 conditions, explained below.
     const currentWeek = await currentWeekTimestamp();
-    const previousWeek = currentWeek.sub(WEEK);
+    const previousWeek = currentWeek - bn(WEEK);
     const relativeWeightPreviousWeek = await gaugeController['gauge_relative_weight(address,uint256)'](
       arbitrumRootGauge,
       previousWeek
@@ -147,7 +147,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
     });
 
     context('when threshold is above gauge weight', () => {
-      const minRelativeWeight = WEIGHT_THRESHOLD.mul(10);
+      const minRelativeWeight = WEIGHT_THRESHOLD * BigInt(10);
 
       it('skips the gauge', async () => {
         const tx = await stakelessGaugeCheckpointer.checkpointAllGaugesAboveRelativeWeight(minRelativeWeight, {

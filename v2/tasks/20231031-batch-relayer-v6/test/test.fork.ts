@@ -1,8 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumberish, bn } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MAX_UINT256 } from '@helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
@@ -31,11 +31,11 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
   const RETH_STABLE_GAUGE = '0x79eF6103A513951a3b25743DB509E267685726B7';
 
   const CHAINED_REFERENCE_PREFIX = 'ba11';
-  function toChainedReference(key: BigNumberish): BigNumber {
+  function toChainedReference(key: BigNumberish): bigint {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigNumber.from(paddedPrefix).add(key);
+    return BigInt(paddedPrefix) + bn(key);
   }
 
   before('run task', async () => {
@@ -61,7 +61,7 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -70,11 +70,11 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
   });
 
   sharedBeforeEach('approve relayer by the user', async () => {
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
   });
 
   it('sender can unstake, exit, join and stake', async () => {
@@ -146,7 +146,7 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
       toChainedReference(17), // Stake all BPT from the join
     ]);
 
-    await relayer.connect(sender).multicall([unstakeCalldata, exitCalldata, joinCalldata, stakeCalldata]);
+    await (relayer.connect(sender) as Contract).multicall([unstakeCalldata, exitCalldata, joinCalldata, stakeCalldata]);
 
     expect(await destinationGauge.balanceOf(sender.address)).to.be.gt(0);
   });
@@ -156,13 +156,13 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
   });
 
   it('sender can update their gauge liquidity limits', async () => {
-    const tx = await relayer
-      .connect(sender)
+    const tx = await (relayer
+      .connect(sender) as Contract)
       .multicall([
         library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [RETH_STABLE_GAUGE, ETH_STETH_GAUGE]]),
       ]);
 
-    const gaugeInterface = new ethers.utils.Interface([
+    const gaugeInterface = new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
     ]);
 

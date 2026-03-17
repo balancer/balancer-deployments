@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, Task, TaskMode } from '@src';
 import { expect } from 'chai';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 describeForkTest('ClaimSignatureRegistryV2', 'mainnet', 24572000, function () {
   let task: Task;

@@ -4,10 +4,10 @@ import path from 'path';
 import hre from 'hardhat';
 import { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
@@ -29,11 +29,11 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
   const elements: string[] = [];
   const pendingClaims: PendingClaim[] = [];
   let merkleTree: MerkleTree;
-  let distributorLdoBalance: BigNumber;
+  let distributorLdoBalance: bigint;
 
   type PendingClaim = {
     address: string;
-    amount: BigNumber;
+    amount: bigint;
   };
 
   before('run task', async () => {
@@ -61,7 +61,7 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
     let totalClaimableAmount = bn(0);
     Object.entries(ldoClaims).forEach(([address, amount]) => {
       const amountFp = fp(Number(amount));
-      totalClaimableAmount = totalClaimableAmount.add(amountFp);
+      totalClaimableAmount = totalClaimableAmount + amountFp;
       pendingClaims.push({ address, amount: amountFp });
       elements.push(encodeElement(address, amountFp));
     });
@@ -75,8 +75,8 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
   });
 
   it('stores an allocation', async () => {
-    await ldoToken.connect(distributor).approve(merkleOrchard.address, distributorLdoBalance);
-    await merkleOrchard.connect(distributor).createDistribution(LDO_ADDRESS, LDO_ROOT, distributorLdoBalance, bn(1));
+    await (ldoToken.connect(distributor) as Contract).approve(merkleOrchard.target as string, distributorLdoBalance);
+    await (merkleOrchard.connect(distributor) as Contract).createDistribution(LDO_ADDRESS, LDO_ROOT, distributorLdoBalance, bn(1));
 
     const proof = merkleTree.getHexProof(elements[0]);
 
@@ -107,7 +107,7 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
       },
     ];
 
-    const tx = await merkleOrchard.connect(claimer).claimDistributions(claimer.address, claims, [LDO_ADDRESS]);
+    const tx = await (merkleOrchard.connect(claimer) as Contract).claimDistributions(claimer.address, claims, [LDO_ADDRESS]);
     await expectTransferEvent(
       await tx.wait(),
       { from: await merkleOrchard.getVault(), to: claimer.address, value: claim.amount },
@@ -139,11 +139,11 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
     ];
 
     await expect(
-      merkleOrchard.connect(claimer).claimDistributions(claimer.address, claims, [LDO_ADDRESS])
+      (merkleOrchard.connect(claimer) as Contract).claimDistributions(claimer.address, claims, [LDO_ADDRESS])
     ).to.be.revertedWith('cannot claim twice');
   });
 
-  function encodeElement(address: string, balance: BigNumber): string {
-    return ethers.utils.solidityKeccak256(['address', 'uint'], [address, balance]);
+  function encodeElement(address: string, balance: bigint): string {
+    return ethers.solidityPackedKeccak256(['address', 'uint'], [address, balance]);
   }
 });

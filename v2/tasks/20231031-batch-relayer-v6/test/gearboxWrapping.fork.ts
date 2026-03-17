@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { BigNumberish, bn } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
@@ -17,7 +17,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
 
   let usdcToken: Contract, dieselToken: Contract, gearboxVault: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
-  let chainedReference: BigNumber;
+  let chainedReference: bigint;
   const amountToWrap = 100e6;
 
   before('run task', async () => {
@@ -37,7 +37,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -46,7 +46,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
   });
 
   before(async () => {
@@ -56,8 +56,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
     sender = await impersonate(USDC_HOLDER);
     recipient = await getSigner();
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.address, true);
   });
 
   it('should wrap successfully', async () => {
@@ -67,7 +67,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
     expect(balanceOfDieselBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.address, amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target as string, amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoGearbox = library.interface.encodeFunctionData('wrapGearbox', [
@@ -78,13 +78,13 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
       chainedReference,
     ]);
 
-    await relayer.connect(sender).multicall([depositIntoGearbox]);
+    await (relayer.connect(sender) as Contract).multicall([depositIntoGearbox]);
 
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfDieselAfter = await dieselToken.balanceOf(recipient.address);
     const expectedBalanceOfDieselAfter = await gearboxVault.toDiesel(amountToWrap);
 
-    expect(balanceOfUSDCBefore.sub(balanceOfUSDCAfter)).to.be.equal(amountToWrap);
+    expect(balanceOfUSDCBefore - balanceOfUSDCAfter).to.be.equal(amountToWrap);
     expect(balanceOfDieselAfter).to.be.equal(expectedBalanceOfDieselAfter);
   });
 
@@ -104,22 +104,22 @@ describeForkTest.skip('BatchRelayerLibrary V6 - GearboxWrapping', 'mainnet', 166
       0,
     ]);
 
-    await dieselToken.connect(recipient).approve(vault.address, MAX_UINT256);
+    await (dieselToken.connect(recipient) as Contract).approve(vault.target as string, MAX_UINT256);
 
-    await relayer.connect(recipient).multicall([withdrawFromGearbox]);
+    await (relayer.connect(recipient) as Contract).multicall([withdrawFromGearbox]);
 
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfDieselAfter = await dieselToken.balanceOf(recipient.address);
 
     expect(balanceOfDieselAfter).to.be.equal(0);
-    expect(balanceOfUSDCAfter.sub(balanceOfUSDCBefore)).to.be.almostEqual(amountToWrap, 0.01);
+    expect(balanceOfUSDCAfter - balanceOfUSDCBefore).to.be.almostEqual(amountToWrap, 0.01);
   });
 });
 
-function toChainedReference(key: BigNumberish): BigNumber {
+function toChainedReference(key: BigNumberish): bigint {
   const CHAINED_REFERENCE_PREFIX = 'ba10';
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigNumber.from(paddedPrefix).add(key);
+  return BigInt(paddedPrefix) + bn(key);
 }

@@ -29,7 +29,7 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     const vault = await vaultTask.deployedInstance('Vault');
 
     poolToken = await vaultTask.instanceAt('IERC20', ECLP_POOL_ADDRESS);
-    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.address]);
+    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.target as string]);
   });
 
   it('checks version', async () => {
@@ -55,7 +55,7 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     // It's from using Ethers V5, and both FixedPoint and SignedFixedPoint defining the same error.
     eclpLPOracle = await task.instanceAt('EclpLPOracle', event?.args?.oracle);
     expect(eclpLPOracle).to.not.be.undefined;
-    expect(eclpLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(eclpLPOracle.target).to.not.equal(ZERO_ADDRESS);
 
     expect(await eclpLPOracle.getShouldUseBlockTimeForOldestFeedUpdate()).to.be.equal(
       input.ShouldUseBlockTimeForOldestFeedUpdate
@@ -88,7 +88,7 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     const callData = eclpLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(eclpLPOracle.address, callData),
+      unlockHelper.callWhileUnlocked(eclpLPOracle.target as string, callData),
       'VaultIsUnlocked()'
     );
   });

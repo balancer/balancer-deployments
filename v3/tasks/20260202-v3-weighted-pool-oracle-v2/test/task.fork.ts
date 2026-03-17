@@ -30,7 +30,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
 
     poolToken = await vaultTask.instanceAt('IERC20', WEIGHTED_POOL_ADDRESS);
 
-    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.address]);
+    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.target as string]);
   });
 
   it('checks version', async () => {
@@ -53,7 +53,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     const event = receipt.events?.find((e: { event: string }) => e.event === 'WeightedLPOracleCreated');
     weightedLPOracle = await task.instanceAt('WeightedLPOracle', event?.args?.oracle);
     expect(weightedLPOracle).to.not.be.undefined;
-    expect(weightedLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(weightedLPOracle.target).to.not.equal(ZERO_ADDRESS);
 
     expect(await weightedLPOracle.getShouldUseBlockTimeForOldestFeedUpdate()).to.be.equal(
       input.ShouldUseBlockTimeForOldestFeedUpdate
@@ -88,7 +88,7 @@ describeForkTest('WeightedLPOracle', 'base', 41509250, function () {
     const callData = weightedLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(weightedLPOracle.address, callData),
+      unlockHelper.callWhileUnlocked(weightedLPOracle.target as string, callData),
       'VaultIsUnlocked()'
     );
   });

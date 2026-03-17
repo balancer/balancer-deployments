@@ -10,11 +10,11 @@ import { bn, fp } from '@helpers/numbers';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { actionId } from '@helpers/models/misc/actions';
 import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ManagedPoolParams, ManagedPoolSettingsParams, ProtocolFee } from '@helpers/models/types/types';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 import { deploy } from '@src';
 
 describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
@@ -143,18 +143,18 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target as string);
     });
 
     it('initialize the pool', async () => {
-      await comp.connect(whale).approve(vault.address, MAX_UINT256);
-      await uni.connect(whale).approve(vault.address, MAX_UINT256);
-      await aave.connect(whale).approve(vault.address, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       // This is a composable pool, so assets array has to contain BPT.
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: [pool.address, ...tokens],
+        assets: [pool.target as string, ...tokens],
         maxAmountsIn: [MAX_UINT256, ...initialBalances],
         fromInternalBalance: false,
         userData,
@@ -165,13 +165,13 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       const ownerBpt = await pool.balanceOf(owner.address);
       const minBpt = await pool.balanceOf(ZERO_ADDRESS);
 
-      expect(balances).to.deep.equal([totalSupply.sub(ownerBpt).sub(minBpt), ...initialBalances]);
+      expect(balances).to.deep.equal([totalSupply - ownerBpt - minBpt, ...initialBalances]);
     });
 
     it('swap in the pool', async () => {
       const amount = fp(500);
       await comp.connect(whale).transfer(owner.address, amount);
-      await comp.connect(owner).approve(vault.address, amount);
+      await comp.connect(owner).approve(vault.target as string, amount);
 
       await vault
         .connect(owner)
@@ -196,7 +196,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
     it('joins proportionally', async () => {
       const ownerBptBalance = await pool.balanceOf(owner.address);
-      const bptOut = ownerBptBalance.div(5);
+      const bptOut = ownerBptBalance / BigInt(5);
 
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
 
@@ -214,7 +214,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
     it('exits proportionally', async () => {
       const previousBptBalance = await pool.balanceOf(whale.address);
-      const bptIn = previousBptBalance.div(4);
+      const bptIn = previousBptBalance / BigInt(4);
 
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
 
@@ -227,7 +227,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
       // Make sure sent BPT is close to what we expect
       const currentBptBalance = await pool.balanceOf(whale.address);
-      expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance).sub(bptIn), 0.001);
+      expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance) - bptIn, 0.001);
     });
   });
 
@@ -236,7 +236,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       const pool = await createPool(true, false, ZERO_BYTES32);
       const pool2 = await createPool(true, false, ONES_BYTES32);
 
-      expect(pool2.address).to.not.equal(pool.address);
+      expect(pool2.target as string).to.not.equal(pool.target as string);
     });
   });
 
@@ -247,7 +247,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
     const attackerFunds = fp(1000);
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerMP', [vault.address]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerMP', [vault.target as string]);
       await comp.connect(whale).transfer(attacker.address, attackerFunds);
       await uni.connect(whale).transfer(attacker.address, attackerFunds);
       await aave.connect(whale).transfer(attacker.address, attackerFunds);
@@ -257,14 +257,14 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       pool = await createPool();
       poolId = await pool.getPoolId();
 
-      await comp.connect(whale).approve(vault.address, MAX_UINT256);
-      await uni.connect(whale).approve(vault.address, MAX_UINT256);
-      await aave.connect(whale).approve(vault.address, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       // This is a composable pool, so assets array has to contain BPT.
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: [pool.address, ...tokens],
+        assets: [pool.target as string, ...tokens],
         maxAmountsIn: [MAX_UINT256, ...initialBalances],
         fromInternalBalance: false,
         userData,
@@ -320,14 +320,14 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       pool = await createPool();
       poolId = await pool.getPoolId();
 
-      await comp.connect(whale).approve(vault.address, MAX_UINT256);
-      await uni.connect(whale).approve(vault.address, MAX_UINT256);
-      await aave.connect(whale).approve(vault.address, MAX_UINT256);
+      await comp.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await uni.connect(whale).approve(vault.target as string, MAX_UINT256);
+      await aave.connect(whale).approve(vault.target as string, MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
       // This is a composable pool, so assets array has to contain BPT.
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: [pool.address, ...tokens],
+        assets: [pool.target as string, ...tokens],
         maxAmountsIn: [MAX_UINT256, ...initialBalances],
         fromInternalBalance: false,
         userData,
@@ -342,13 +342,13 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
     it('can exit via recovery mode', async () => {
       const bptBalance = await pool.balanceOf(owner.address);
-      expect(bptBalance).to.gt(0);
+      expect(bptBalance).to > 0;
 
-      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.address);
+      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target as string);
       const ownerUNIBalanceBeforeExit = await uni.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
-      const tokensWithBpt = [pool.address, ...tokens];
+      const tokensWithBpt = [pool.target as string, ...tokens];
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokensWithBpt,
         minAmountsOut: Array(tokensWithBpt.length).fill(0),
@@ -359,11 +359,11 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.address);
+      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target as string);
       const ownerUNIBalanceAfterExit = await uni.balanceOf(owner.address);
 
-      expect(vaultUNIBalanceAfterExit).to.lt(vaultUNIBalanceBeforeExit);
-      expect(ownerUNIBalanceAfterExit).to.gt(ownerUNIBalanceBeforeExit);
+      expect(vaultUNIBalanceAfterExit).to < vaultUNIBalanceBeforeExit;
+      expect(ownerUNIBalanceAfterExit).to > ownerUNIBalanceBeforeExit;
     });
   });
 
@@ -372,12 +372,12 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
     const txA = {
       to: contractA,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     const txB = {
       to: contractB,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     await expect(owner.sendTransaction(txA)).to.be.reverted;

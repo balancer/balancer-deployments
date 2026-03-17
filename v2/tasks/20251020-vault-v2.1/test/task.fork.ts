@@ -2,6 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import { bn } from '@helpers/numbers';
 import { VaultDeployment } from '../input';
 import { currentTimestamp } from '@helpers/time';
 
@@ -30,6 +31,6 @@ describeForkTest.skip('Vault v2.1', 'plasma', 3100000, function () {
     const currentTime = await currentTimestamp();
 
     expect(pausedState.paused).to.be.false;
-    expect(pausedState.pauseWindowEndTime).to.almostEqual(currentTime.add(input.pauseWindowDuration));
+    expect(pausedState.pauseWindowEndTime).to.almostEqual(currentTime + bn(input.pauseWindowDuration));
   });
 });

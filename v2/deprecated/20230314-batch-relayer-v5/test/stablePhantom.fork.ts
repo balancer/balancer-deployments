@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
 import { bn } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
@@ -59,8 +59,8 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     dai = await stableTask.instanceAt('IERC20', DAI);
     usdc = await stableTask.instanceAt('IERC20', USDC);
 
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+    await dai.connect(whale).approve(vault.target as string, MAX_UINT256);
+    await usdc.connect(whale).approve(vault.target as string, MAX_UINT256);
   });
 
   before('create pool', async () => {
@@ -77,11 +77,11 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await stableTask.instanceAt('StablePhantomPool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target as string)).to.be.true;
 
     poolId = await pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.address);
+    expect(registeredAddress).to.equal(pool.target as string);
 
     bptIndex = await pool.getBptIndex();
 
@@ -109,7 +109,7 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
 
   it('exits proportionally when paused', async () => {
     const previousBptBalance = await pool.balanceOf(owner.address);
-    const bptIn = previousBptBalance.div(4);
+    const bptIn = previousBptBalance / BigInt(4);
 
     const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
@@ -121,9 +121,9 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     });
     const receipt = await (await tx).wait();
     const { deltas } = expectEvent.inReceipt(receipt, 'PoolBalanceChanged').args;
-    const amountsOut = deltas.map((x: BigNumber) => x.mul(-1));
+    const amountsOut = deltas.map((x: bigint) => -x);
 
-    const expectedAmountsOut = (registeredBalances as BigNumber[]).map((b) => b.div(4));
+    const expectedAmountsOut = (registeredBalances as bigint[]).map((b) => b / BigInt(4));
     expectedAmountsOut[bptIndex] = bn(0);
 
     // Amounts out should be 1/4 the initial balances
@@ -131,6 +131,6 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
 
     // Make sure sent BPT is close to what we expect
     const currentBptBalance = await pool.balanceOf(owner.address);
-    expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance).sub(bptIn), 0.001);
+    expect(currentBptBalance).to.be.equalWithError(bn(previousBptBalance) - bptIn, 0.001);
   });
 });

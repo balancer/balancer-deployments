@@ -33,7 +33,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     poolToken = await vaultTask.instanceAt('IERC20', STABLE_POOL_ADDRESS);
 
     const VaultUnlockTestHelper = await ethers.getContractFactory('VaultUnlockTestHelper');
-    unlockHelper = await VaultUnlockTestHelper.deploy(vault.address);
+    unlockHelper = await VaultUnlockTestHelper.deploy(vault.target as string);
   });
 
   it('checks version', async () => {
@@ -56,7 +56,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     const event = receipt.events?.find((e: { event: string }) => e.event === 'StableLPOracleCreated');
     stableLPOracle = await task.instanceAt('StableLPOracle', event?.args?.oracle);
     expect(stableLPOracle).to.not.be.undefined;
-    expect(stableLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(stableLPOracle.target).to.not.equal(ZERO_ADDRESS);
 
     expect(await stableLPOracle.getShouldUseBlockTimeForOldestFeedUpdate()).to.be.equal(
       input.ShouldUseBlockTimeForOldestFeedUpdate
@@ -91,7 +91,7 @@ describeForkTest('StableLPOracle', 'mainnet', 24352030, function () {
     const callData = stableLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(stableLPOracle.address, callData),
+      unlockHelper.callWhileUnlocked(stableLPOracle.target as string, callData),
       'VaultIsUnlocked()'
     );
   });

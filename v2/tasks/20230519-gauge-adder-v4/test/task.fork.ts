@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -51,7 +51,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
 
   context('construction', () => {
     it('stores the entrypoint', async () => {
-      expect(await gaugeAdder.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.address);
+      expect(await gaugeAdder.getAuthorizerAdaptorEntrypoint()).to.equal(adaptorEntrypoint.target as string);
     });
 
     it('stores the gauge controller', async () => {
@@ -63,7 +63,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       expect(controllerAdmin).to.not.equal(ZERO_ADDRESS);
       expect(await gaugeController.gauge_exists(ZERO_ADDRESS)).to.be.false;
 
-      expect(await gaugeAdder.getGaugeController()).to.equal(gaugeController.address);
+      expect(await gaugeAdder.getGaugeController()).to.equal(gaugeController.target as string);
     });
   });
 
@@ -95,14 +95,14 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
         gaugeController.interface
       );
 
-      await authorizer.connect(daoMultisig).grantRole(addGaugeTypeAction, admin.address);
-      await authorizer.connect(daoMultisig).grantRole(setFactoryAction, admin.address);
-      await authorizer.connect(daoMultisig).grantRole(addGaugeAction, admin.address);
-      await authorizer.connect(daoMultisig).grantRole(gaugeControllerAddGaugeAction, gaugeAdder.address);
+      await (authorizer.connect(daoMultisig) as Contract).grantRole(addGaugeTypeAction, admin.address);
+      await (authorizer.connect(daoMultisig) as Contract).grantRole(setFactoryAction, admin.address);
+      await (authorizer.connect(daoMultisig) as Contract).grantRole(addGaugeAction, admin.address);
+      await (authorizer.connect(daoMultisig) as Contract).grantRole(gaugeControllerAddGaugeAction, gaugeAdder.target as string);
     });
 
     it('can add a gauge type', async () => {
-      const tx = await gaugeAdder.connect(admin).addGaugeType('Ethereum');
+      const tx = await (gaugeAdder.connect(admin) as Contract).addGaugeType('Ethereum');
       const receipt = await tx.wait();
 
       // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
@@ -117,7 +117,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
     });
 
     it('returns the added type correctly', async () => {
-      expect(await gaugeAdder.getGaugeTypesCount()).to.eq(1);
+      expect(await gaugeAdder.getGaugeTypesCount()).to.equal(1);
       expect(await gaugeAdder.getGaugeTypes()).to.deep.eq(['Ethereum']);
       expect(await gaugeAdder.getGaugeTypeAtIndex(0)).to.eq('Ethereum');
       expect(await gaugeAdder.isValidGaugeType('Ethereum')).to.be.true;
@@ -125,7 +125,7 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
     });
 
     it('can add factories for a gauge type', async () => {
-      const tx = await gaugeAdder.connect(admin).setGaugeFactory(factory.address, 'Ethereum'); // Ethereum is type 2
+      const tx = await (gaugeAdder.connect(admin) as Contract).setGaugeFactory(factory.target as string, 'Ethereum'); // Ethereum is type 2
       const receipt = await tx.wait();
       // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
       // One event in receipt, named `GaugeFactorySet`
@@ -136,11 +136,11 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       // Contains expected `gaugeType` and `gaugeFactory`.
       const decodedArgs = event.decode(event.data);
       expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
-      expect(decodedArgs.gaugeFactory).to.be.eq(factory.address);
+      expect(decodedArgs.gaugeFactory).to.be.eq(factory.target as string);
     });
 
     it('returns added factory correctly', async () => {
-      expect(await gaugeAdder.getFactoryForGaugeType('Ethereum')).to.eq(factory.address);
+      expect(await gaugeAdder.getFactoryForGaugeType('Ethereum')).to.eq(factory.target as string);
     });
 
     it('can add gauge to adder and controller', async () => {
@@ -148,10 +148,10 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
       gauge = await mainnetGaugeFactoryTask.instanceAt('LiquidityGaugeV5', event.args.gauge);
 
-      await gaugeAdder.connect(admin).addGauge(gauge.address, 'Ethereum');
+      await (gaugeAdder.connect(admin) as Contract).addGauge(gauge.target as string, 'Ethereum');
 
-      expect(await gaugeAdder.isGaugeFromValidFactory(gauge.address, 'Ethereum')).to.be.true;
-      expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
+      expect(await gaugeAdder.isGaugeFromValidFactory(gauge.target as string, 'Ethereum')).to.be.true;
+      expect(await gaugeController.gauge_exists(gauge.target as string)).to.be.true;
     });
   });
 });

@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { describeForkTest } from '@src';
@@ -62,7 +62,7 @@ describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, func
   });
 
   it('sets the smart wallet checker in veBAL', async () => {
-    expect(await veBAL.smart_wallet_checker()).to.equal(smartWalletChecker.address);
+    expect(await veBAL.smart_wallet_checker()).to.equal(smartWalletChecker.target as string);
   });
 
   it('authorizes the multisig to add contracts to the smart wallet checker', async () => {

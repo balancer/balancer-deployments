@@ -11,7 +11,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { deploy } from '@src';
 
 describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
@@ -58,26 +58,26 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   before('grant register and rename permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer
-      .connect(govMultisig)
+    await (authorizer
+      .connect(govMultisig) as Contract)
       .grantRole(await actionId(veRemapper, 'setNetworkRemappingManager'), admin.address);
-    await authorizer
-      .connect(govMultisig)
+    await (authorizer
+      .connect(govMultisig) as Contract)
       .grantRole(await actionId(omniVotingEscrowAdaptor, 'setOmniVotingEscrow'), admin.address);
-    await authorizer
-      .connect(govMultisig)
+    await (authorizer
+      .connect(govMultisig) as Contract)
       .grantRole(await actionId(smartWalletChecker, 'allowlistAddress'), admin.address);
-    await authorizer
-      .connect(govMultisig)
+    await (authorizer
+      .connect(govMultisig) as Contract)
       .grantRole(await actionId(smartWalletChecker, 'denylistAddress'), admin.address);
   });
 
   before('allowlist L1 account to be remapped in smart wallet checker', async () => {
-    await smartWalletChecker.connect(admin).allowlistAddress(local.address);
+    await (smartWalletChecker.connect(admin) as Contract).allowlistAddress(local.address);
   });
 
   before('set omni voting escrow', async () => {
-    await omniVotingEscrowAdaptor.connect(admin).setOmniVotingEscrow(omniVotingEscrow.address);
+    await (omniVotingEscrowAdaptor.connect(admin) as Contract).setOmniVotingEscrow(omniVotingEscrow.target as string);
   });
 
   it('gets total supply', async () => {
@@ -89,7 +89,7 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   });
 
   it('remaps allowed account', async () => {
-    const tx = await veRemapper.connect(local).setNetworkRemapping(local.address, remoteAccount, chainId);
+    const tx = await (veRemapper.connect(local) as Contract).setNetworkRemapping(local.address, remoteAccount, chainId);
     expectEvent.inReceipt(await tx.wait(), 'AddressMappingUpdated', {
       localUser: local.address,
       remoteUser: remoteAccount,
@@ -101,8 +101,8 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   });
 
   it('remaps using an appointed remapper', async () => {
-    await veRemapper.connect(admin).setNetworkRemappingManager(local.address, manager.address);
-    const tx = await veRemapper.connect(manager).setNetworkRemapping(local.address, otherRemoteAccount, chainId);
+    await (veRemapper.connect(admin) as Contract).setNetworkRemappingManager(local.address, manager.address);
+    const tx = await (veRemapper.connect(manager) as Contract).setNetworkRemapping(local.address, otherRemoteAccount, chainId);
     expectEvent.inReceipt(await tx.wait(), 'AddressMappingUpdated', {
       localUser: local.address,
       remoteUser: otherRemoteAccount,
@@ -123,7 +123,7 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
   });
 
   it('clears remapping of deny-listed account', async () => {
-    await smartWalletChecker.connect(admin).denylistAddress(local.address);
+    await (smartWalletChecker.connect(admin) as Contract).denylistAddress(local.address);
     const receipt = await (await veRemapper.clearNetworkRemapping(local.address, chainId)).wait();
 
     expectEvent.inReceipt(receipt, 'AddressMappingUpdated', {
@@ -136,7 +136,7 @@ describeForkTest.skip('VotingEscrowRemapper', 'mainnet', 17182400, function () {
 
   it('reverts with disallowed account', async () => {
     await expect(
-      veRemapper.connect(disallowedAccount).setNetworkRemapping(disallowedAccount.address, other.address, chainId)
+      (veRemapper.connect(disallowedAccount) as Contract).setNetworkRemapping(disallowedAccount.address, other.address, chainId)
     ).to.be.revertedWith('Only contracts which can hold veBAL can set up a mapping');
   });
 });

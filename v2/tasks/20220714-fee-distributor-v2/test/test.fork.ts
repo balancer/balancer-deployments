@@ -1,14 +1,14 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { advanceToTimestamp, currentWeekTimestamp, DAY, HOUR, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
 import { expectTransferEvent } from '@helpers/expectTransfer';
-import { _TypedDataEncoder } from 'ethers/lib/utils';
+import { TypedDataEncoder } from 'ethers';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
@@ -35,7 +35,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
   const balAmount = fp(42);
   const wethAmount = fp(5);
 
-  let firstWeek: BigNumber;
+  let firstWeek: bigint;
 
   before('run task', async () => {
     task = new Task('20220714-fee-distributor-v2', TaskMode.TEST, getForkedNetwork(hre));
@@ -66,18 +66,18 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
     context('in the first week', () => {
       before(async () => {
         firstWeek = bn(task.input().startTime);
-        await advanceToTimestamp(firstWeek.add(DAY));
+        await advanceToTimestamp(firstWeek + BigInt(DAY));
       });
 
       context('with BAL distributed', () => {
         before('send BAL to distribute', async () => {
-          await BAL.connect(feeCollector).approve(distributor.address, balAmount);
-          await distributor.connect(feeCollector).depositToken(BAL.address, balAmount);
+          await (BAL.connect(feeCollector) as Contract).approve(distributor.target as string, balAmount);
+          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target as string, balAmount);
         });
 
         it('veBAL holders cannot yet claim tokens', async () => {
           const balancesBefore = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.address, WETH.address]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
           const balancesAfter = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
 
           expectEvent.notEmitted(await tx.wait(), 'TokensClaimed');
@@ -90,33 +90,33 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
     context('in the second week', () => {
       before('advance time', async () => {
         // 1 day into the second week
-        await advanceToTimestamp(firstWeek.add(WEEK).add(DAY));
+        await advanceToTimestamp(firstWeek + BigInt(WEEK) + BigInt(DAY));
       });
 
       context('with WETH distributed', () => {
         before('send BAL to distribute', async () => {
-          await BAL.connect(feeCollector).approve(distributor.address, balAmount.mul(3));
-          await distributor.connect(feeCollector).depositToken(BAL.address, balAmount.mul(3));
+          await (BAL.connect(feeCollector) as Contract).approve(distributor.target as string, balAmount * BigInt(3));
+          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target as string, balAmount * BigInt(3));
         });
 
         before('send WETH to distribute', async () => {
-          await WETH.connect(feeCollector).approve(distributor.address, wethAmount);
-          await distributor.connect(feeCollector).depositToken(WETH.address, wethAmount);
+          await (WETH.connect(feeCollector) as Contract).approve(distributor.target as string, wethAmount);
+          await (distributor.connect(feeCollector) as Contract).depositToken(WETH.target as string, wethAmount);
         });
 
         it('veBAL holders can claim BAL and not WETH', async () => {
           const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, firstWeek);
           const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-          const expectedBALAmount = balAmount.mul(holderFirstWeekBalance).div(firstWeekSupply);
+          const expectedBALAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
 
           const wethBalanceBefore = await WETH.balanceOf(veBALHolder.address);
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.address, WETH.address]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
           const wethBalanceAfter = await WETH.balanceOf(veBALHolder.address);
 
           expectTransferEvent(
             await tx.wait(),
-            { from: distributor.address, to: veBALHolder.address, value: expectedBALAmount },
-            BAL.address
+            { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
+            BAL.target as string
           );
           expect(wethBalanceAfter).to.equal(wethBalanceBefore);
         });
@@ -126,57 +126,57 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
     context('in the third week', () => {
       before('advance time', async () => {
         // 1 day into the third week
-        await advanceToTimestamp(firstWeek.add(2 * WEEK).add(DAY));
+        await advanceToTimestamp(firstWeek + BigInt(2 * WEEK) + BigInt(DAY));
       });
 
       it('veBAL holders can claim BAL and WETH', async () => {
-        const secondWeek = firstWeek.add(WEEK);
+        const secondWeek = firstWeek + BigInt(WEEK);
         const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, secondWeek);
         const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
 
-        const expectedBALAmount = balAmount.mul(3).mul(holderSecondWeekBalance).div(secondWeekSupply);
-        const expectedWETHAmount = wethAmount.mul(holderSecondWeekBalance).div(secondWeekSupply);
+        const expectedBALAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
+        const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.address, WETH.address]);
+        const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target as string, WETH.target as string]);
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.address, to: veBALHolder.address, value: expectedBALAmount },
-          BAL.address
+          { from: distributor.target as string, to: veBALHolder.address, value: expectedBALAmount },
+          BAL.target as string
         );
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.address, to: veBALHolder.address, value: expectedWETHAmount },
-          WETH.address
+          { from: distributor.target as string, to: veBALHolder.address, value: expectedWETHAmount },
+          WETH.target as string
         );
       });
 
       it('veBAL holders can claim all the BAL and WETH at once', async () => {
         const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, firstWeek);
         const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-        const balFirstWeekAmount = balAmount.mul(holderFirstWeekBalance).div(firstWeekSupply);
+        const balFirstWeekAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
 
-        const secondWeek = firstWeek.add(WEEK);
+        const secondWeek = firstWeek + BigInt(WEEK);
         const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, secondWeek);
         const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
-        const balSecondWeekAmount = balAmount.mul(3).mul(holderSecondWeekBalance).div(secondWeekSupply);
+        const balSecondWeekAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
 
-        const expectedBALAmount = balFirstWeekAmount.add(balSecondWeekAmount);
-        const expectedWETHAmount = wethAmount.mul(holderSecondWeekBalance).div(secondWeekSupply);
+        const expectedBALAmount = balFirstWeekAmount + balSecondWeekAmount;
+        const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
 
-        const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.address, WETH.address]);
+        const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target as string, WETH.target as string]);
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.address, to: veBALHolder2.address, value: expectedBALAmount },
-          BAL.address
+          { from: distributor.target as string, to: veBALHolder2.address, value: expectedBALAmount },
+          BAL.target as string
         );
 
         expectTransferEvent(
           await tx.wait(),
-          { from: distributor.address, to: veBALHolder2.address, value: expectedWETHAmount },
-          WETH.address
+          { from: distributor.target as string, to: veBALHolder2.address, value: expectedWETHAmount },
+          WETH.target as string
         );
       });
     });
@@ -184,13 +184,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
 
   describe('only caller check', () => {
     before('setup voter proxy', async () => {
-      const voterProxyABI = new ethers.utils.Interface([
+      const voterProxyABI = [
         'function isValidSignature(bytes32 _hash, bytes) view returns (bytes4)',
         'function setVote(bytes32 _hash, bool _valid)',
         'function claimFees(address _distroContract, address _token) returns (uint256)',
-      ]).format();
+      ];
 
-      voterProxy = await ethers.getContractAt(voterProxyABI, VOTER_PROXY_ADDRESS);
+      voterProxy = await ethers.getContractAt(voterProxyABI, VOTER_PROXY_ADDRESS) as Contract;
       // VoterProxy contract doesn't actually use the signature; only voting with the right hash matters.
       // This hash is the distributor's outcome when enabling the caller check form the VoterProxy with the first
       // available nonce.
@@ -198,8 +198,8 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       const domain = {
         name: 'FeeDistributor',
         version: '1',
-        chainId: (await distributor.provider.getNetwork()).chainId,
-        verifyingContract: distributor.address,
+        chainId: (await distributor.runner!.provider!.getNetwork()).chainId,
+        verifyingContract: distributor.target as string,
       };
 
       const types = {
@@ -211,32 +211,32 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       };
 
       const values = {
-        user: voterProxy.address,
+        user: voterProxy.target as string,
         enabled: true,
-        nonce: (await distributor.getNextNonce(voterProxy.address)).toString(),
+        nonce: (await distributor.getNextNonce(voterProxy.target as string)).toString(),
       };
 
-      await voterProxy.connect(voterProxyAdmin).setVote(_TypedDataEncoder.hash(domain, types, values), true);
-      await distributor.connect(voterProxyAdmin).setOnlyCallerCheckWithSignature(voterProxy.address, true, '0x');
+      await (voterProxy.connect(voterProxyAdmin) as Contract).setVote(TypedDataEncoder.hash(domain, types, values), true);
+      await (distributor.connect(voterProxyAdmin) as Contract).setOnlyCallerCheckWithSignature(voterProxy.target as string, true, '0x');
     });
 
     context('in the third week, when every token is claimable', () => {
       before(async () => {
         firstWeek = await currentWeekTimestamp();
-        await advanceToTimestamp(firstWeek.add(2 * WEEK).add(DAY));
+        await advanceToTimestamp(firstWeek + BigInt(2 * WEEK) + BigInt(DAY));
       });
 
       it('other account cannot claim for voter proxy', async () => {
-        await expect(distributor.claimTokens(voterProxy.address, [BAL.address, WETH.address])).to.be.revertedWith(
+        await expect(distributor.claimTokens(voterProxy.target as string, [BAL.target as string, WETH.target as string])).to.be.revertedWith(
           'BAL#401'
         );
       });
 
       it('voter proxy can claim fees', async () => {
-        await expect(voterProxy.connect(voterProxyAdmin).claimFees(distributor.address, BAL.address)).to.not.be
+        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target as string, BAL.target as string)).to.not.be
           .reverted;
 
-        await expect(voterProxy.connect(voterProxyAdmin).claimFees(distributor.address, WETH.address)).to.not.be
+        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target as string, WETH.target as string)).to.not.be
           .reverted;
       });
     });

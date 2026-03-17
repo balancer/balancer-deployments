@@ -1,8 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MAX_UINT256 } from '@helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
@@ -33,11 +33,11 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15485000, function () {
   const TRANSFER_EXTERNAL_USER_BALANCE_OP_KIND = 3;
 
   const CHAINED_REFERENCE_PREFIX = 'ba10';
-  function toChainedReference(key: BigNumberish): BigNumber {
+  function toChainedReference(key: BigNumberish): bigint {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigNumber.from(paddedPrefix).add(key);
+    return BigInt(paddedPrefix) + key;
   }
 
   before('run task', async () => {
@@ -167,7 +167,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15485000, function () {
       ]),
     ]);
 
-    const gaugeInterface = new ethers.utils.Interface([
+    const gaugeInterface = new new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
     ]);
 
