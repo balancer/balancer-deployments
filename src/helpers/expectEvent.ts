@@ -1,5 +1,12 @@
 import { expect } from 'chai';
-import { ContractTransactionReceipt, EventLog, Interface, LogDescription, TransactionReceipt } from 'ethers';
+import {
+  ContractTransactionReceipt,
+  ContractTransactionResponse,
+  EventLog,
+  Interface,
+  LogDescription,
+  TransactionReceipt,
+} from 'ethers';
 
 // Ported from @openzeppelin/test-helpers to use with Ethers. The Test Helpers don't
 // yet have Typescript typings, so we're being lax about them here.
@@ -142,4 +149,16 @@ function contains(args: { [key: string]: any | undefined }, key: string, value: 
       `expected event argument '${key}' to have value ${value} but got ${args[key]}`
     );
   }
+}
+
+export async function inTransaction(tx: ContractTransactionResponse, eventName: string, eventArgs = {}): Promise<any> {
+  const receipt = await tx.wait();
+  if (receipt === null) throw new Error('Transaction was not mined');
+  return inReceipt(receipt, eventName, eventArgs);
+}
+
+export async function notEmittedInTransaction(tx: ContractTransactionResponse, eventName: string): Promise<void> {
+  const receipt = await tx.wait();
+  if (receipt === null) throw new Error('Transaction was not mined');
+  notEmitted(receipt, eventName);
 }
