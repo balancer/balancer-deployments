@@ -101,9 +101,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: umbrelladocs/action-linkspector@v1.4.1
+      - uses: actions/setup-node@v4
         with:
-          fail_level: any
-          filter_mode: nofilter
+          node-version: 'lts/*'
+      - name: Install linkspector
+        run: npm install -g @umbrelladocs/linkspector
+      - name: Check links
+        run: linkspector check
 env:
   CI: true
