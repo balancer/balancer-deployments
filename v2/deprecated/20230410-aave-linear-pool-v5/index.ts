@@ -28,7 +28,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // AaveLinearPools require a StaticAToken, which in turn requires a LendingPool.
     const mockLendingPool = await task.deployAndVerify('MockAaveLendingPool', [], from, force);
-    const mockStaticATokenArgs = ['DO NOT USE - Mock Static AToken', 'TEST', 18, input.WETH, mockLendingPool.address];
+    const mockStaticATokenArgs = ['DO NOT USE - Mock Static AToken', 'TEST', 18, input.WETH, mockLendingPool.target];
     const mockStaticAToken = await task.deployAndVerify('MockStaticAToken', mockStaticATokenArgs, from, force);
 
     // The assetManager, pauseWindowDuration and bufferPeriodDuration will be filled in later, but we need to declare
@@ -38,7 +38,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: 'DO NOT USE - Mock Linear Pool',
       symbol: 'TEST',
       mainToken: input.WETH,
-      wrappedToken: mockStaticAToken.address,
+      wrappedToken: mockStaticAToken.target,
       assetManager: undefined,
       upperTarget: 0,
       pauseWindowDuration: undefined,
@@ -86,7 +86,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     mockPoolArgs.assetManager = assetManagerAddress;
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
-    const txHash = await getContractDeploymentTransactionHash(mockPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
     const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
 
@@ -98,7 +98,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       .sub(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('AaveLinearPool', mockPool.address, [mockPoolArgs]);
+    await task.verify('AaveLinearPool', mockPool.target, [mockPoolArgs]);
 
     // We can also verify the Asset Manager
     await task.verify('AaveLinearPoolRebalancer', assetManagerAddress, [input.Vault, input.BalancerQueries]);

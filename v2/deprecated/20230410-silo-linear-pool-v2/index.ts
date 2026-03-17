@@ -38,11 +38,11 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const mockSiloRepo = await task.deployAndVerify('MockSiloRepository', mockSiloRepoArgs, from, force);
 
     // shareTokens require a Silo liquidity pool
-    const mockSiloArgs = [mockSiloRepo.address, input.WETH];
+    const mockSiloArgs = [mockSiloRepo.target, input.WETH];
     const mockSilo = await task.deployAndVerify('MockSilo', mockSiloArgs, from, force);
 
     // SiloLinearPools require an Silo Token
-    const mockShareTokenArgs = ['DO NOT USE - Mock Share Token', 'TEST', mockSilo.address, input.WETH, 18];
+    const mockShareTokenArgs = ['DO NOT USE - Mock Share Token', 'TEST', mockSilo.target, input.WETH, 18];
     const mockShareToken = await task.deployAndVerify('MockShareToken', mockShareTokenArgs, from, force);
 
     // It is necessary to set a total supply for the shareToken, as well as initialize assetStorage and interestData within the mockSilo.
@@ -51,9 +51,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     await mockSilo.setAssetStorage(
       input.WETH,
-      mockShareToken.address,
-      mockShareToken.address,
-      mockShareToken.address,
+      mockShareToken.target,
+      mockShareToken.target,
+      mockShareToken.target,
       fp(1),
       fp(1),
       fp(1)
@@ -74,7 +74,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: 'DO NOT USE - Mock Linear Pool',
       symbol: 'TEST',
       mainToken: input.WETH,
-      wrappedToken: mockShareToken.address,
+      wrappedToken: mockShareToken.target,
       assetManager: undefined,
       upperTarget: 0,
       pauseWindowDuration: undefined,
@@ -127,7 +127,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
 
-    const txHash = await getContractDeploymentTransactionHash(mockSiloLinearPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockSiloLinearPool.target, task.network);
 
     const tx = await ethers.provider.getTransactionReceipt(txHash);
     const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
@@ -142,13 +142,13 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       .sub(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('SiloLinearPool', mockSiloLinearPool.address, [mockPoolArgs]);
+    await task.verify('SiloLinearPool', mockSiloLinearPool.target, [mockPoolArgs]);
 
     // We can also verify the Asset Manager
     await task.verify('SiloLinearPoolRebalancer', assetManagerAddress, [
       input.Vault,
       input.BalancerQueries,
-      mockShareToken.address,
+      mockShareToken.target,
     ]);
   }
 };
