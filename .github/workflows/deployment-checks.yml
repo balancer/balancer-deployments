@@ -104,6 +104,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Configure Chrome sandbox
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: Install linkspector
         run: npm install -g @umbrelladocs/linkspector
       - name: Check links
