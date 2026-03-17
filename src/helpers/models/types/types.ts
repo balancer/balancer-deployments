@@ -5,6 +5,12 @@ export type NAry<T> = T | Array<T>;
 
 export type Account = string | SignerWithAddress | BaseContract | { address: string };
 
+export function toAddress(account: Account): string {
+  if (typeof account === 'string') return account;
+  if ('target' in account) return account.target.toString();
+  return (account as { address: string }).address;
+}
+
 export type TxParams = {
   from?: SignerWithAddress;
 };
