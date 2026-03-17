@@ -83,7 +83,9 @@ describeForkTest.skip('BalancerContractRegistryInitializer', 'mainnet', 21862412
   before('grant permissions', async () => {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString());
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString());
   });
 
   it('is initializing the correct registry', async () => {
@@ -109,7 +111,8 @@ describeForkTest.skip('BalancerContractRegistryInitializer', 'mainnet', 21862412
   });
 
   it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString())).to.be.false;
+    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), registryInitializer.target.toString())).to.be
+      .false;
   });
 
   it('has registered the routers', async () => {

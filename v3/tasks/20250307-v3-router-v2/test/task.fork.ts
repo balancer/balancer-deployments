@@ -149,9 +149,16 @@ describeForkTest('V3-Router (V2)', 'mainnet', 21934732, function () {
     await (balToken.connect(bob) as Contract).approve(permit2.target.toString(), initialBalanceBAL);
     await (permit2.connect(bob) as Contract).approve(BAL, router.target.toString(), initialBalanceBAL, maxUint(48));
 
-    await (router.connect(bob) as Contract)
-      .initialize(pool.target.toString(), [BAL, input.WETH], [initialBalanceBAL, initialBalanceWETH], 0, true, ZERO_BYTES32, {
+    await (router.connect(bob) as Contract).initialize(
+      pool.target.toString(),
+      [BAL, input.WETH],
+      [initialBalanceBAL, initialBalanceWETH],
+      0,
+      true,
+      ZERO_BYTES32,
+      {
         value: ethers.parseEther('1000.0'),
-      });
+      }
+    );
   });
 });

@@ -53,30 +53,28 @@ describeForkTest('AggregatorRouter-V3', 'mainnet', 21880900, function () {
   it('performs swap', async () => {
     const rplAmountIn = fp(1);
     // Query result
-    const expectedAmountOut = await (aggregatorRouter.connect(zero) as Contract)
-      .querySwapSingleTokenExactIn.staticCall(
-        pool.target.toString(),
-        RSETH_ADDRESS,
-        HGETH_ADDRESS,
-        rplAmountIn,
-        rsEthWhale.address,
-        '0x'
-      );
+    const expectedAmountOut = await (aggregatorRouter.connect(zero) as Contract).querySwapSingleTokenExactIn.staticCall(
+      pool.target.toString(),
+      RSETH_ADDRESS,
+      HGETH_ADDRESS,
+      rplAmountIn,
+      rsEthWhale.address,
+      '0x'
+    );
 
     const hgEthBalanceBefore: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
     // Pay token in upfront and swap
     await (rsETH.connect(rsEthWhale) as Contract).transfer(await aggregatorRouter.getVault(), rplAmountIn);
-    await (aggregatorRouter.connect(rsEthWhale) as Contract)
-      .swapSingleTokenExactIn(
-        pool.target.toString(),
-        RSETH_ADDRESS,
-        HGETH_ADDRESS,
-        rplAmountIn,
-        expectedAmountOut - BigInt(1),
-        (await currentTimestamp()) + bn(DAY),
-        '0x'
-      );
+    await (aggregatorRouter.connect(rsEthWhale) as Contract).swapSingleTokenExactIn(
+      pool.target.toString(),
+      RSETH_ADDRESS,
+      HGETH_ADDRESS,
+      rplAmountIn,
+      expectedAmountOut - BigInt(1),
+      (await currentTimestamp()) + bn(DAY),
+      '0x'
+    );
 
     const hgEthBalanceAfter: bigint = await hgETH.balanceOf(rsEthWhale.address);
 

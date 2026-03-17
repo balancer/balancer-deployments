@@ -58,7 +58,10 @@ describeForkTest.skip('OmniVotingEscrowChild', 'arbitrum', 94050211, function ()
         'LzApp: no trusted path record'
       );
       const encodedEndpoint = ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], [MAINNET_TRUSTED_ENDPOINT]);
-      await (omniVotingEscrowChild.connect(deployer) as Contract).setTrustedRemoteAddress(MAINNET_LZ_CHAIN_ID, encodedEndpoint);
+      await (omniVotingEscrowChild.connect(deployer) as Contract).setTrustedRemoteAddress(
+        MAINNET_LZ_CHAIN_ID,
+        encodedEndpoint
+      );
 
       const remoteAddressBytes = await omniVotingEscrowChild.getTrustedRemoteAddress(MAINNET_LZ_CHAIN_ID);
       const decodedAddress = ethers.AbiCoder.defaultAbiCoder().decode(['bytes'], remoteAddressBytes)[0];

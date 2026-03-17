@@ -160,7 +160,10 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
     });
 
     it('veBAL share size affects projected balances', async () => {
-      const [, projectedBalanceBefore] = await workingBalanceHelper.getWorkingBalances(gauge.target.toString(), other.address);
+      const [, projectedBalanceBefore] = await workingBalanceHelper.getWorkingBalances(
+        gauge.target.toString(),
+        other.address
+      );
       const [, projectedRatioBefore] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
         gauge.target.toString(),
         other.address
@@ -170,7 +173,10 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
       await workingBalanceHelper.getWorkingBalances(gauge.target.toString(), other.address);
 
       // Dilute other's share
-      await (votingEscrow.connect(veBALHolder) as Contract).create_lock(whaleBalance, (await currentTimestamp()) + bn(LOCK_PERIOD));
+      await (votingEscrow.connect(veBALHolder) as Contract).create_lock(
+        whaleBalance,
+        (await currentTimestamp()) + bn(LOCK_PERIOD)
+      );
 
       const [currentBalanceAfter, projectedBalanceAfter] = await workingBalanceHelper.getWorkingBalances(
         gauge.target.toString(),

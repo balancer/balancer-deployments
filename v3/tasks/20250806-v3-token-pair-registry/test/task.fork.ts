@@ -95,14 +95,26 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
       },
     ].map((o) => Object.values(o));
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waUSDT.target.toString())).to.deep.equal([waUsdtPath]);
-    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waUSDC.target.toString())).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waUSDT.target.toString())).to.deep.equal([
+      waUsdtPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waUSDC.target.toString())).to.deep.equal([
+      waUsdcPath,
+    ]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waGHO.target.toString())).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDC.target.toString())).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waGHO.target.toString())).to.deep.equal([
+      waGhoPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDC.target.toString())).to.deep.equal([
+      waUsdcPath,
+    ]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waGHO.target.toString())).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDT.target.toString())).to.deep.equal([waUsdtPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waGHO.target.toString())).to.deep.equal([
+      waGhoPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDT.target.toString())).to.deep.equal([
+      waUsdtPath,
+    ]);
   });
 
   it('set buffer path', async () => {
@@ -125,6 +137,8 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     ].map((o) => Object.values(o));
 
     expect(await tokenPairRegistry.getPaths(GHO.target.toString(), waGHO.target.toString())).to.deep.equal([wrapPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), GHO.target.toString())).to.deep.equal([unwrapPath]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), GHO.target.toString())).to.deep.equal([
+      unwrapPath,
+    ]);
   });
 });

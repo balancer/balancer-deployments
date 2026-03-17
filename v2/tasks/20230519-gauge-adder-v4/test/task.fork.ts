@@ -98,7 +98,10 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       await (authorizer.connect(daoMultisig) as Contract).grantRole(addGaugeTypeAction, admin.address);
       await (authorizer.connect(daoMultisig) as Contract).grantRole(setFactoryAction, admin.address);
       await (authorizer.connect(daoMultisig) as Contract).grantRole(addGaugeAction, admin.address);
-      await (authorizer.connect(daoMultisig) as Contract).grantRole(gaugeControllerAddGaugeAction, gaugeAdder.target.toString());
+      await (authorizer.connect(daoMultisig) as Contract).grantRole(
+        gaugeControllerAddGaugeAction,
+        gaugeAdder.target.toString()
+      );
     });
 
     it('can add a gauge type', async () => {

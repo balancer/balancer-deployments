@@ -91,12 +91,12 @@ describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function 
         expect(expectedState).to.equal(LinearPoolState.MAIN_EXCESS);
 
         const excess = scaledCash - upperTarget;
-        fees = excess * SWAP_FEE_PERCENTAGE / FP_ONE;
+        fees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
       } else if (scaledCash < lowerTarget) {
         expect(expectedState).to.equal(LinearPoolState.MAIN_LACK);
 
         const lack = lowerTarget - scaledCash;
-        fees = lack * SWAP_FEE_PERCENTAGE / FP_ONE;
+        fees = (lack * SWAP_FEE_PERCENTAGE) / FP_ONE;
       } else {
         expect(expectedState).to.equal(LinearPoolState.BALANCED);
 
@@ -114,10 +114,7 @@ describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function 
       if (fees > 0) {
         // The recipient of the rebalance call should get the fees that were collected (though there's some rounding
         // error in the main-wrapped conversion).
-        expect(finalRecipientMainBalance - initialRecipientMainBalance).to.be.almostEqual(
-          fees / USDC_SCALING,
-          0.0001
-        );
+        expect(finalRecipientMainBalance - initialRecipientMainBalance).to.be.almostEqual(fees / USDC_SCALING, 0.0001);
       } else {
         // The recipient of the rebalance call will get any extra main tokens that were not utilized.
         expect(finalRecipientMainBalance).to.be.almostEqual(initialRecipientMainBalance, 0.0001);
@@ -183,7 +180,7 @@ describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function 
       // We're going to join with enough main token to bring the Pool above its upper target, which will let us later
       // rebalance.
 
-      const joinAmount = INITIAL_UPPER_TARGET * BigInt(2) / USDC_SCALING;
+      const joinAmount = (INITIAL_UPPER_TARGET * BigInt(2)) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
@@ -201,7 +198,7 @@ describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function 
 
       // Assert join amount - some fees will be collected as we're going over the upper target.
       const excess = joinAmount * USDC_SCALING - INITIAL_UPPER_TARGET;
-      const joinCollectedFees = excess * SWAP_FEE_PERCENTAGE / FP_ONE;
+      const joinCollectedFees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
 
       const expectedBPT = joinAmount * USDC_SCALING - joinCollectedFees;
       expect(await pool.balanceOf(holder.address)).to.equal(expectedBPT);
@@ -224,7 +221,7 @@ describeForkTest.skip('GearboxLinearPoolFactory', 'mainnet', 16636000, function 
       // rebalance.
 
       const { upperTarget } = await pool.getTargets();
-      const joinAmount = upperTarget * BigInt(5) / USDC_SCALING;
+      const joinAmount = (upperTarget * BigInt(5)) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {

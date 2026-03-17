@@ -108,7 +108,10 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     await Promise.all(
       ['addGaugeFactory', 'addEthereumGauge'].map(
         async (method) =>
-          await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(gaugeAdder, method), admin.address)
+          await (authorizer.connect(govMultisig) as Contract).grantRole(
+            await actionId(gaugeAdder, method),
+            admin.address
+          )
       )
     );
   });
@@ -122,7 +125,9 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
 
   it('stake LP tokens in gauge', async () => {
     await (lpToken.connect(lpTokenHolder) as Contract).approve(gauge.target.toString(), MAX_UINT256);
-    await (gauge.connect(lpTokenHolder) as Contract)['deposit(uint256)'](await lpToken.balanceOf(lpTokenHolder.address));
+    await (gauge.connect(lpTokenHolder) as Contract)['deposit(uint256)'](
+      await lpToken.balanceOf(lpTokenHolder.address)
+    );
   });
 
   it('vote for gauge so that weight is above cap', async () => {
@@ -138,7 +143,10 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](
+        gauge.target.toString(),
+        await currentWeekTimestamp()
+      )
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -163,7 +171,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
 
     // Note that we use the cap instead of the weight, since we're testing a scenario in which the weight is larger than
     // the cap.
-    const expectedGaugeEmissions = weeklyRate * weightCap / fp(1);
+    const expectedGaugeEmissions = (weeklyRate * weightCap) / fp(1);
 
     // Since the LP token holder is the only account staking in the gauge, they'll receive the full amount destined to
     // the gauge.
@@ -183,7 +191,10 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - bn(WEEK * weekIndex)
+        )
       )
     );
 
@@ -206,7 +217,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     // The amount of tokens allocated to the gauge should equal the sum of the weekly emissions rate times the weight
     // cap.
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
-    const expectedGaugeEmissions = weeklyRate * bn(numberOfWeeks) * weightCap / fp(1);
+    const expectedGaugeEmissions = (weeklyRate * bn(numberOfWeeks) * weightCap) / fp(1);
 
     // Since the LP token holder is the only account staking in the gauge, they'll receive the full amount destined to
     // the gauge.

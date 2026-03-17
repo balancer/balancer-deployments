@@ -76,7 +76,12 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
 
   it('stores an allocation', async () => {
     await (ldoToken.connect(distributor) as Contract).approve(merkleOrchard.target.toString(), distributorLdoBalance);
-    await (merkleOrchard.connect(distributor) as Contract).createDistribution(LDO_ADDRESS, LDO_ROOT, distributorLdoBalance, bn(1));
+    await (merkleOrchard.connect(distributor) as Contract).createDistribution(
+      LDO_ADDRESS,
+      LDO_ROOT,
+      distributorLdoBalance,
+      bn(1)
+    );
 
     const proof = merkleTree.getHexProof(elements[0]);
 
@@ -107,7 +112,9 @@ describeForkTest.skip('MerkleOrchard V2', 'mainnet', 16684000, function () {
       },
     ];
 
-    const tx = await (merkleOrchard.connect(claimer) as Contract).claimDistributions(claimer.address, claims, [LDO_ADDRESS]);
+    const tx = await (merkleOrchard.connect(claimer) as Contract).claimDistributions(claimer.address, claims, [
+      LDO_ADDRESS,
+    ]);
     await expectTransferEvent(
       await tx.wait(),
       { from: await merkleOrchard.getVault(), to: claimer.address, value: claim.amount },

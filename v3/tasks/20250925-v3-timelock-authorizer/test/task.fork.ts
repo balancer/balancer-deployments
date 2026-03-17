@@ -47,7 +47,10 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
       const multisig = await impersonate(input.Root, fp(100));
       const setAuthorizerActionId = await actionId(vaultAdmin, 'setAuthorizer');
-      await (oldAuthorizer.connect(multisig) as Contract).grantRolesToMany([setAuthorizerActionId], [migrator.target.toString()]);
+      await (oldAuthorizer.connect(multisig) as Contract).grantRolesToMany(
+        [setAuthorizerActionId],
+        [migrator.target.toString()]
+      );
     });
 
     it('migrates all roles properly', async () => {
@@ -116,7 +119,10 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
         const balancerMinterSigner = await impersonate(balancerMinter.target.toString(), fp(100));
 
-        const tx = await (balancerTokenAdmin.connect(balancerMinterSigner) as Contract).mint(balancerMinter.target.toString(), 100);
+        const tx = await (balancerTokenAdmin.connect(balancerMinterSigner) as Contract).mint(
+          balancerMinter.target.toString(),
+          100
+        );
 
         expectEvent.inIndirectReceipt(await tx.wait(), balancerToken.interface, 'Transfer', {
           from: ZERO_ADDRESS,
@@ -131,14 +137,19 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
       expect(await vaultExtension.getAuthorizer()).to.be.eq(newAuthorizer.target.toString());
 
-      await (newAuthorizer.connect(root) as Contract).grantPermission(setAuthorizerActionId, root.address, vault.target.toString());
+      await (newAuthorizer.connect(root) as Contract).grantPermission(
+        setAuthorizerActionId,
+        root.address,
+        vault.target.toString()
+      );
 
       // Schedule authorizer change
       const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
-      const tx = await (newAuthorizer.connect(root) as Contract)
-        .schedule(vault.target.toString(), vaultAdmin.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [
-          root.address,
-        ]);
+      const tx = await (newAuthorizer.connect(root) as Contract).schedule(
+        vault.target.toString(),
+        vaultAdmin.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]),
+        [root.address]
+      );
       const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 
       await advanceTime(30 * DAY);

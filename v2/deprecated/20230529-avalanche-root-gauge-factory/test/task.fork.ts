@@ -246,7 +246,10 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](
+        gauge.target.toString(),
+        await currentWeekTimestamp()
+      )
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -279,7 +282,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
 
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
 
     // Tokens are minted for the gauge
@@ -314,7 +317,10 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - WEEK * weekIndex)
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - WEEK * weekIndex
+        )
       )
     );
 
@@ -328,7 +334,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     // cap.
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap * numberOfWeeks * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * numberOfWeeks * weeklyRate) / FP_ONE;
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
     const tx = await adaptorEntrypoint.connect(admin).performAction(gauge.target.toString(), calldata);

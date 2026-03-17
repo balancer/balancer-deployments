@@ -393,7 +393,7 @@ export default class Task {
 
   async run(options: TaskRunOptions = {}): Promise<void> {
     const taskPath = this._fileAt(this.dir(), 'index.ts');
-    const task = require(taskPath).default;
+    const task = (await import(taskPath)).default;
     await task(this, options);
   }
 
@@ -563,6 +563,7 @@ export default class Task {
 
   private _getDefaultExportForNetwork(script: string): RawInputKeyValue {
     const taskInputPath = this._fileAt(this.dir(), script);
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const rawInput = require(taskInputPath).default;
     const globalInput = { ...rawInput };
     NETWORKS.forEach((network) => delete globalInput[network]);

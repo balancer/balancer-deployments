@@ -128,13 +128,17 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
 
     expect(await vault.getAuthorizer()).to.be.eq(newAuthorizer.target.toString());
 
-    await newAuthorizer.connect(root).grantPermissions([setAuthorizerActionId], root.target.toString(), [vault.target.toString()]);
+    await newAuthorizer
+      .connect(root)
+      .grantPermissions([setAuthorizerActionId], root.target.toString(), [vault.target.toString()]);
 
     // Schedule authorizer change
     const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
     const tx = await newAuthorizer
       .connect(root)
-      .schedule(vault.target.toString(), vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [root.target.toString()]);
+      .schedule(vault.target.toString(), vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [
+        root.target.toString(),
+      ]);
     const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 
     await advanceTime(30 * DAY);

@@ -72,24 +72,35 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Allow adding the factory to the contract.
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(registry, 'registerBalancerContract'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(registry, 'registerBalancerContract'),
+      admin.address
+    );
 
     // Let the admin set factory fees.
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(feeHelper, 'setFactorySpecificProtocolFeePercentages'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeHelper, 'setFactorySpecificProtocolFeePercentages'),
+      admin.address
+    );
 
     // Let the fee helper set the actual fees.
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.target.toString());
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
 
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.target.toString());
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolYieldFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   before('add contract to registry', async () => {
-    await (registry.connect(admin) as Contract)
-      .registerBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool', factory.target.toString());
+    await (registry.connect(admin) as Contract).registerBalancerContract(
+      ContractType.POOL_FACTORY,
+      '20241205-v3-weighted-pool',
+      factory.target.toString()
+    );
   });
 
   it('stores the contracts', async () => {
@@ -103,8 +114,11 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
   });
 
   it('can set protocol fees', async () => {
-    await (feeHelper.connect(admin) as Contract)
-      .setFactorySpecificProtocolFeePercentages(factory.target.toString(), PROTOCOL_SWAP_FEE, PROTOCOL_YIELD_FEE);
+    await (feeHelper.connect(admin) as Contract).setFactorySpecificProtocolFeePercentages(
+      factory.target.toString(),
+      PROTOCOL_SWAP_FEE,
+      PROTOCOL_YIELD_FEE
+    );
     await feeHelper.setProtocolFeePercentagesForPools(factory.target.toString(), [pool.target.toString()]);
 
     const [actualSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());

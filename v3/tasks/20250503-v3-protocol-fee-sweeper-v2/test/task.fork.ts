@@ -58,11 +58,10 @@ describeForkTest('ProtocolFeeSweeper-V2', 'mainnet', 22391400, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the sweeper permission to withdraw fees.
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(
-        await feeController.getActionId(feeController.interface.getFunction('withdrawProtocolFeesForToken')!.selector),
-        feeSweeper.target.toString()
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await feeController.getActionId(feeController.interface.getFunction('withdrawProtocolFeesForToken')!.selector),
+      feeSweeper.target.toString()
+    );
   });
 
   it('returns default parameters', async () => {
@@ -87,12 +86,23 @@ describeForkTest('ProtocolFeeSweeper-V2', 'mainnet', 22391400, function () {
   });
 
   it('can call the sweep function (standard token)', async () => {
-    await (feeSweeper.connect(feeRecipient) as Contract).sweepProtocolFeesForToken(POOL, waEthUSDC, 0, MAX_UINT256, ZERO_ADDRESS);
+    await (feeSweeper.connect(feeRecipient) as Contract).sweepProtocolFeesForToken(
+      POOL,
+      waEthUSDC,
+      0,
+      MAX_UINT256,
+      ZERO_ADDRESS
+    );
   });
 
   it('can call the sweep function (wrapped token)', async () => {
-    await (feeSweeper.connect(feeRecipient) as Contract)
-      .sweepProtocolFeesForWrappedToken(POOL, waEthUSDT, 0, MAX_UINT256, ZERO_ADDRESS);
+    await (feeSweeper.connect(feeRecipient) as Contract).sweepProtocolFeesForWrappedToken(
+      POOL,
+      waEthUSDT,
+      0,
+      MAX_UINT256,
+      ZERO_ADDRESS
+    );
   });
 
   it('can recover protocol fees', async () => {

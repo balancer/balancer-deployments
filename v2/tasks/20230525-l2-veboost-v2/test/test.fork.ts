@@ -53,9 +53,10 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
 
   it('proxy can be migrated to delegation', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG);
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(delegationProxy, 'setDelegation'),
+      govMultisig.address
+    );
 
     await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target.toString());
 
@@ -76,8 +77,6 @@ describeForkTest.skip('L2VeBoostV2', 'arbitrum', 94139000, function () {
     // Exact user balance decays with time, and depends on block time.
     // This is an approximate value fetched from Etherscan at around the time the data was transferred.
     // Most importantly, it's not 0.
-    expect(await delegationProxy.adjustedBalanceOf(VEBAL_HOLDER)).to.be.almostEqual(
-      BigInt('11458834346686284')
-    );
+    expect(await delegationProxy.adjustedBalanceOf(VEBAL_HOLDER)).to.be.almostEqual(BigInt('11458834346686284'));
   });
 });

@@ -119,6 +119,8 @@ describeForkTest.skip('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function (
     // The order uses the current burner balance, which is slightly greater than `previewRedeem` because of rounding.
     expect(usdcBalanceOfBurner).to.be.equalWithError(Number(expectedUnderlyingAmount), 2);
     expect(usdcBalanceOfBurner).to.be.greaterThanOrEqual(Number(expectedUnderlyingAmount));
-    expect(await usdc.allowance(cowSwapFeeBurner.target.toString(), input.CowVaultRelayer)).to.be.equal(usdcBalanceOfBurner);
+    expect(await usdc.allowance(cowSwapFeeBurner.target.toString(), input.CowVaultRelayer)).to.be.equal(
+      usdcBalanceOfBurner
+    );
   });
 });

@@ -120,7 +120,10 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
       newVotingEscrow = await deploy('MockL2VotingEscrow');
 
       const admin = await impersonate(GOV_MULTISIG, fp(100));
-      await (authorizer.connect(admin) as Contract).grantRole(await actionId(veDelegationProxy, 'setDelegation'), admin.address);
+      await (authorizer.connect(admin) as Contract).grantRole(
+        await actionId(veDelegationProxy, 'setDelegation'),
+        admin.address
+      );
       await (veDelegationProxy.connect(admin) as Contract).setDelegation(newVotingEscrow.target.toString());
     });
 

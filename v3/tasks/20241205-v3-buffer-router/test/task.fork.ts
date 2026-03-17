@@ -67,7 +67,12 @@ describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
   it('tests buffer initialization', async () => {
     const initBalance = 1000000e6;
     await (usdc.connect(usdcWhale) as Contract).approve(permit2.target.toString(), initBalance);
-    await (permit2.connect(usdcWhale) as Contract).approve(USDC_ADDRESS, bufferRouter.target.toString(), initBalance, MAX_UINT48);
+    await (permit2.connect(usdcWhale) as Contract).approve(
+      USDC_ADDRESS,
+      bufferRouter.target.toString(),
+      initBalance,
+      MAX_UINT48
+    );
 
     await (bufferRouter.connect(usdcWhale) as Contract).initializeBuffer(waUSDC_ADDRESS, 1000000e6, 0, 0);
 

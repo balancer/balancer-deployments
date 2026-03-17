@@ -52,8 +52,14 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
   before('grant set and kill delegation permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(veProxy, 'setDelegation'), admin.address);
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(veProxy, 'killDelegation'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(veProxy, 'setDelegation'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(veProxy, 'killDelegation'),
+      admin.address
+    );
   });
 
   describe('getters', () => {

@@ -50,7 +50,12 @@ describeForkTest.skip('TimelockAuthorizerTransitionMigrator', 'mainnet', TRANSIT
   before('make the migrator a granter by governance', async () => {
     await newAuthorizer
       .connect(root)
-      .manageGranter(newAuthorizer.GENERAL_PERMISSION_SPECIFIER(), migrator.target.toString(), newAuthorizer.EVERYWHERE(), true);
+      .manageGranter(
+        newAuthorizer.GENERAL_PERMISSION_SPECIFIER(),
+        migrator.target.toString(),
+        newAuthorizer.EVERYWHERE(),
+        true
+      );
 
     expect(
       await newAuthorizer.canGrant(

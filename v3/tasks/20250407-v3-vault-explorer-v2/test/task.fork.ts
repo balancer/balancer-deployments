@@ -79,8 +79,14 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
     usdcWhale = await impersonate(USDC_WHALE, fp(10));
 
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'pausePool'), admin.address);
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(vaultAdmin, 'pauseVault'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'pausePool'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'pauseVault'),
+      admin.address
+    );
   });
 
   it('checks contract addresses', async () => {
@@ -105,7 +111,12 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
   it('has new buffer functions', async () => {
     const initBalance = 1000000e6;
     await (usdc.connect(usdcWhale) as Contract).approve(permit2.target.toString(), initBalance);
-    await (permit2.connect(usdcWhale) as Contract).approve(USDC_ADDRESS, bufferRouter.target.toString(), initBalance, MAX_UINT48);
+    await (permit2.connect(usdcWhale) as Contract).approve(
+      USDC_ADDRESS,
+      bufferRouter.target.toString(),
+      initBalance,
+      MAX_UINT48
+    );
 
     await (bufferRouter.connect(usdcWhale) as Contract).initializeBuffer(waUSDC_ADDRESS, initBalance, 0, 0);
 

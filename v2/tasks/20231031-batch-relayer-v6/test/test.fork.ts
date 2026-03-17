@@ -156,11 +156,9 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
   });
 
   it('sender can update their gauge liquidity limits', async () => {
-    const tx = await (relayer
-      .connect(sender) as Contract)
-      .multicall([
-        library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [RETH_STABLE_GAUGE, ETH_STETH_GAUGE]]),
-      ]);
+    const tx = await (relayer.connect(sender) as Contract).multicall([
+      library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [RETH_STABLE_GAUGE, ETH_STETH_GAUGE]]),
+    ]);
 
     const gaugeInterface = new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',

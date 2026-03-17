@@ -78,11 +78,9 @@ function doForkTestsOnNetwork(network: string, block: number) {
     });
 
     it('sender can update their gauge liquidity limits', async () => {
-      const tx = await (relayer
-        .connect(sender) as Contract)
-        .multicall([
-          library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [gaugeAddressA, gaugeAddressB]]),
-        ]);
+      const tx = await (relayer.connect(sender) as Contract).multicall([
+        library.interface.encodeFunctionData('gaugeCheckpoint', [sender.address, [gaugeAddressA, gaugeAddressB]]),
+      ]);
 
       const gaugeInterface = new ethers.Interface([
         'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',

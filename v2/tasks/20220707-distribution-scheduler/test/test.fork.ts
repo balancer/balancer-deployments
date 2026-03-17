@@ -77,21 +77,38 @@ describeForkTest.skip('DistributionScheduler', 'mainnet', 14850000, function () 
   it('schedules rewards', async () => {
     const nextWeek = (await currentWeekTimestamp()) + BigInt(WEEK);
 
-    await (scheduler.connect(distributor) as Contract).scheduleDistribution(gauge.target.toString(), DAI.target.toString(), daiWeeklyAmount, nextWeek);
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      DAI.target.toString(),
+      daiWeeklyAmount,
+      nextWeek
+    );
 
-    await (scheduler.connect(distributor) as Contract).scheduleDistribution(gauge.target.toString(), USDC.target.toString(), usdcWeeklyAmount, nextWeek);
-    await (scheduler
-      .connect(distributor) as Contract)
-      .scheduleDistribution(gauge.target.toString(), USDC.target.toString(), usdcWeeklyAmount, nextWeek + BigInt(WEEK));
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      USDC.target.toString(),
+      usdcWeeklyAmount,
+      nextWeek
+    );
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      USDC.target.toString(),
+      usdcWeeklyAmount,
+      nextWeek + BigInt(WEEK)
+    );
 
     // Fist week
-    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), DAI.target.toString(), nextWeek)).to.equal(daiWeeklyAmount);
-    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek)).to.equal(usdcWeeklyAmount);
+    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), DAI.target.toString(), nextWeek)).to.equal(
+      daiWeeklyAmount
+    );
+    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek)).to.equal(
+      usdcWeeklyAmount
+    );
 
     // Second week
-    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek + BigInt(WEEK))).to.equal(
-      usdcWeeklyAmount * BigInt(2)
-    );
+    expect(
+      await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek + BigInt(WEEK))
+    ).to.equal(usdcWeeklyAmount * BigInt(2));
   });
 
   it('does not distribute rewards until the scheduled time arrives', async () => {

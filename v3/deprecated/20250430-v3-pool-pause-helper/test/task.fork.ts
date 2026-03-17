@@ -49,11 +49,15 @@ describeForkTest.skip('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to pause pools.
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target.toString());
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(vaultAdmin, 'pausePool'), pauseHelper.target.toString());
 
     // Grant permission to call add and pause on the helper.
     await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'addPools'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'pausePools'), monitor.target.toString());
+    await authorizer
+      .connect(govMultisig)
+      .grantRole(await actionId(pauseHelper, 'pausePools'), monitor.target.toString());
   });
 
   it('can add pools', async () => {

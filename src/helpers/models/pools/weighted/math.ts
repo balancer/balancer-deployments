@@ -227,10 +227,6 @@ export function calculateSpotPrice(fpBalances: BigNumberish[], fpWeights: BigNum
   return bn(toFp(numerator.div(denominator)).toFixed(0));
 }
 
-export function calculateBPTPrice(
-  fpBalance: BigNumberish,
-  fpWeight: BigNumberish,
-  totalSupply: BigNumberish
-): bigint {
+export function calculateBPTPrice(fpBalance: BigNumberish, fpWeight: BigNumberish, totalSupply: BigNumberish): bigint {
   return bn(toFp(fromFp(fpBalance).div(fromFp(fpWeight)).div(fromFp(totalSupply))).toFixed(0));
 }

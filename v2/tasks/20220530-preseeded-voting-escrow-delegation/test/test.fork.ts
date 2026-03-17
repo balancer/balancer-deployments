@@ -47,9 +47,10 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     ).deployedInstance('Authorizer');
 
     const govMultisig = await impersonate(GOV_MULTISIG);
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(delegationProxy, 'setDelegation'),
+      govMultisig.address
+    );
 
     await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target.toString());
   });
@@ -113,7 +114,14 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     const operator = await impersonate(TRIBE_OPERATOR);
 
     const receipt = await (
-      await (delegation.connect(operator) as Contract).create_boost(TRIBE_DAO, receiver.address, 1000, 0, await fromNow(MONTH), 0)
+      await (delegation.connect(operator) as Contract).create_boost(
+        TRIBE_DAO,
+        receiver.address,
+        1000,
+        0,
+        await fromNow(MONTH),
+        0
+      )
     ).wait();
 
     expectEvent.inReceipt(receipt, 'DelegateBoost', {

@@ -56,7 +56,10 @@ export class StablePoolEncoder {
    * @param bptAmountOut - the amount of BPT to be minted
    */
   static joinAllTokensInForExactBptOut = (bptAmountOut: BigNumberish): string =>
-    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256'], [StablePoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT, bptAmountOut]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [StablePoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT, bptAmountOut]
+    );
 
   /**
    * Encodes the userData parameter for exiting a StablePool by removing a single token in return for an exact amount of BPT
@@ -85,5 +88,8 @@ export class StablePoolEncoder {
    * @param bptAmountIn - the amount of BPT to burn in exchange for withdrawn tokens
    */
   static exitExactBptInForTokensOut = (bptAmountIn: BigNumberish): string =>
-    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256'], [StablePoolExitKind.EXACT_BPT_IN_FOR_ALL_TOKENS_OUT, bptAmountIn]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [StablePoolExitKind.EXACT_BPT_IN_FOR_ALL_TOKENS_OUT, bptAmountIn]
+    );
 }

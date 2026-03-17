@@ -157,7 +157,9 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     await bal.connect(admin).mint(admin.address, INITIAL_BAL);
 
     await bal.connect(admin).approve(permit2.target.toString(), INITIAL_BAL);
-    await permit2.connect(admin).approve(bal.target.toString(), trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
+    await permit2
+      .connect(admin)
+      .approve(bal.target.toString(), trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
       pool.target.toString(),
@@ -215,9 +217,12 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target.toString());
     // New pool project weight is higher than LBP's project weight, so we use all of it (scaled at 80%).
     // Then, we apply the ratio of the weights to the reserve token, and we scale at 80% as well.
-    expect(currentBalances[0]).to.equalWithError(INITIAL_BAL * BigInt(80) / 100);
+    expect(currentBalances[0]).to.equalWithError((INITIAL_BAL * BigInt(80)) / 100);
     expect(currentBalances[1]).to.equalWithError(
-      INITIAL_WETH * weightedPoolReserveWeight / weightedPoolProjectWeight * projectTokenLbpEndWeight / reserveTokenLbpEndWeight * 80n / 100n
+      (((((INITIAL_WETH * weightedPoolReserveWeight) / weightedPoolProjectWeight) * projectTokenLbpEndWeight) /
+        reserveTokenLbpEndWeight) *
+        80n) /
+        100n
     );
   });
 });

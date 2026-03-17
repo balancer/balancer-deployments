@@ -90,10 +90,20 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
       gaugeController.interface.getSighash('add_gauge(address,int128)')
     );
 
-    expect(await authorizer.canPerform(addGaugePermission, oldGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
-      .false;
-    expect(await authorizer.canPerform(addGaugePermission, newGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
-      .true;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        oldGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.false;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        newGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.true;
   });
 
   it('grants permissions to the multisig to add gauges of existing types on the new GaugeAdder', async () => {

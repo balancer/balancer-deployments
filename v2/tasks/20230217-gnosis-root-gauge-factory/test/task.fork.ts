@@ -105,9 +105,10 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
 
     await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
-    await (veBAL
-      .connect(veBALHolder) as Contract)
-      .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime + bn(MONTH * 12));
+    await (veBAL.connect(veBALHolder) as Contract).create_lock(
+      await bal80weth20Pool.balanceOf(veBALHolder.address),
+      currentTime + bn(MONTH * 12)
+    );
   });
 
   it('create gauge', async () => {
@@ -124,41 +125,37 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // We need to grant permission to the admin to add gauges to the GaugeController.
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await authorizerAdaptor.getActionId(gauge.interface.getFunction('checkpoint')!.selector), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await authorizerAdaptor.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+      admin.address
+    );
 
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(
-        await authorizerAdaptor.getActionId(gaugeController.interface.getFunction('add_type(string,uint256)')!.selector),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await authorizerAdaptor.getActionId(gaugeController.interface.getFunction('add_type(string,uint256)')!.selector),
+      admin.address
+    );
 
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(
-        await authorizerAdaptor.getActionId(gaugeController.interface.getFunction('add_gauge(address,int128)')!.selector),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await authorizerAdaptor.getActionId(gaugeController.interface.getFunction('add_gauge(address,int128)')!.selector),
+      admin.address
+    );
   });
 
   it('add gauge to gauge controller', async () => {
     // Add gauge directly through the controller, since we can't use GaugeAdder V3 without the TimelockAuthorizer
 
-    await (authorizerAdaptor
-      .connect(admin) as Contract)
-      .performAction(
-        gaugeController.target.toString(),
-        gaugeController.interface.encodeFunctionData('add_type(string,uint256)', ['Gnosis', 1])
-      );
+    await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gaugeController.target.toString(),
+      gaugeController.interface.encodeFunctionData('add_type(string,uint256)', ['Gnosis', 1])
+    );
 
-    await (authorizerAdaptor
-      .connect(admin) as Contract)
-      .performAction(
-        gaugeController.target.toString(),
-        gaugeController.interface.encodeFunctionData('add_gauge(address,int128)', [gauge.target.toString(), GaugeType.Gnosis])
-      );
+    await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gaugeController.target.toString(),
+      gaugeController.interface.encodeFunctionData('add_gauge(address,int128)', [
+        gauge.target.toString(),
+        GaugeType.Gnosis,
+      ])
+    );
 
     expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
@@ -176,7 +173,10 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
 
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](
+        gauge.target.toString(),
+        await currentWeekTimestamp()
+      )
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -189,7 +189,10 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
+    const zeroMintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gauge.target.toString(),
+      calldata
+    );
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
@@ -199,7 +202,10 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     await advanceTime(WEEK);
 
     // The gauge should now mint and send all minted tokens to the Gnosis bridge
-    const mintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
+    const mintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gauge.target.toString(),
+      calldata
+    );
     const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp,
     });
@@ -208,7 +214,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
 
-    const expectedEmissions = weightCap * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
 
     // Tokens are minted for the gauge
@@ -244,7 +250,10 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - bn(WEEK * weekIndex)
+        )
       )
     );
 
@@ -257,7 +266,7 @@ describeForkTest.skip('GnosisRootGaugeFactory', 'mainnet', 16627100, function ()
     // The amount of tokens minted should equal the sum of the weekly emissions rate times the relative weight of the
     // gauge (this assumes we're not crossing an emissions rate epoch so that the inflation remains constant).
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
-    const expectedEmissions = weightCap * bn(numberOfWeeks) * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * bn(numberOfWeeks) * weeklyRate) / FP_ONE;
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
     const tx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);

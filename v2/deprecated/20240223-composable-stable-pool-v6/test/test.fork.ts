@@ -232,10 +232,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
         // Given the bptOut, the max amounts in should be slightly more than 1/5. Decimals make it a bit complicated.
-        const adjustedBalances = [
-          initialBalanceDAI / fp(4.99) * fp(1),
-          initialBalanceUSDC / bn(4.99e6) * 1e6,
-        ];
+        const adjustedBalances = [(initialBalanceDAI / fp(4.99)) * fp(1), (initialBalanceUSDC / bn(4.99e6)) * 1e6];
         const maxAmountsIn = getRegisteredBalances(bptIndex, adjustedBalances);
 
         const tx = await vault.connect(whale).joinPool(poolId, whale.address, whale.address, {

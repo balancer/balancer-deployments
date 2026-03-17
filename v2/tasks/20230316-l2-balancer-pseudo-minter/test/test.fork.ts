@@ -41,8 +41,14 @@ describeForkTest.skip('L2BalancerPseudoMinter', 'arbitrum', 70407500, function (
   before('grant register and rename permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pseudoMinter, 'addGaugeFactory'), admin.address);
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pseudoMinter, 'removeGaugeFactory'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'addGaugeFactory'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'removeGaugeFactory'),
+      admin.address
+    );
   });
 
   it('adds a gauge factory', async () => {

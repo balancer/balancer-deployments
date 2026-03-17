@@ -66,8 +66,11 @@ describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
       },
     ];
 
-    const queryResult = await (aggregatorBatchRouter.connect(zero) as Contract)
-      .querySwapExactIn.staticCall(pathsExactIn, rsEthWhale.address, '0x');
+    const queryResult = await (aggregatorBatchRouter.connect(zero) as Contract).querySwapExactIn.staticCall(
+      pathsExactIn,
+      rsEthWhale.address,
+      '0x'
+    );
 
     expect(queryResult.tokensOut[0]).to.equal(HGETH_ADDRESS);
     expect(queryResult.pathAmountsOut[0]).to.eq(queryResult.amountsOut[0]);

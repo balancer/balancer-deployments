@@ -98,8 +98,14 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
   before('grant add / remove child chain gauge factory permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pseudoMinter, 'addGaugeFactory'), admin.address);
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pseudoMinter, 'removeGaugeFactory'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'addGaugeFactory'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'removeGaugeFactory'),
+      admin.address
+    );
   });
 
   describe('create', () => {
@@ -210,7 +216,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       });
 
       // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
-      itMintsRewardsForUsers(balPerWeek / BigInt(3), balPerWeek * BigInt(2) / BigInt(3));
+      itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
 
       context('with extra rewards', () => {
         const extraReward = balPerWeek * BigInt(20);
@@ -221,7 +227,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
         // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
         // The increased rewards are still distributed proportionally.
-        itMintsRewardsForUsers(extraReward / BigInt(3), extraReward * BigInt(2) / BigInt(3));
+        itMintsRewardsForUsers(extraReward / BigInt(3), (extraReward * BigInt(2)) / BigInt(3));
       });
     });
 
@@ -236,7 +242,10 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       }
 
       before('update VE implementation in the proxy', async () => {
-        await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(veProxy, 'setDelegation'), admin.address);
+        await (authorizer.connect(govMultisig) as Contract).grantRole(
+          await actionId(veProxy, 'setDelegation'),
+          admin.address
+        );
 
         // In practice, the contract that provides veBAL balances is a third party contract (e.g. Layer Zero).
         mockVE = await deploy('MockVE');
@@ -272,7 +281,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         });
 
         // See unit test for reference: 'two users, unequal BPT stake and unequal boost'.
-        itMintsRewardsForUsers(balPerWeek * BigInt(5) / BigInt(12), balPerWeek * BigInt(7) / BigInt(12));
+        itMintsRewardsForUsers((balPerWeek * BigInt(5)) / BigInt(12), (balPerWeek * BigInt(7)) / BigInt(12));
       });
 
       context('with delegations', () => {
@@ -306,7 +315,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         });
 
         // See unit test for reference: 'two users, unequal BPT stake and unequal boost'.
-        itMintsRewardsForUsers(balPerWeek / BigInt(3), balPerWeek * BigInt(2) / BigInt(3));
+        itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
 
         context('after delegation expires', () => {
           before('bridge BAL and check status', async () => {
@@ -325,7 +334,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
           });
 
           // Same case as 'without delegations' again.
-          itMintsRewardsForUsers(balPerWeek * BigInt(5) / BigInt(12), balPerWeek * BigInt(7) / BigInt(12));
+          itMintsRewardsForUsers((balPerWeek * BigInt(5)) / BigInt(12), (balPerWeek * BigInt(7)) / BigInt(12));
         });
 
         context('when veBAL lock expired before delegating boost', () => {
@@ -341,13 +350,16 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
         context('after killing delegation implementation', () => {
           before(async () => {
-            await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(veProxy, 'killDelegation'), admin.address);
+            await (authorizer.connect(govMultisig) as Contract).grantRole(
+              await actionId(veProxy, 'killDelegation'),
+              admin.address
+            );
             await (veProxy.connect(admin) as Contract).killDelegation();
             await bridgeBAL(gauge.target.toString(), balPerWeek);
           });
 
           // Same case as 'without boosts' again.
-          itMintsRewardsForUsers(balPerWeek / BigInt(3), balPerWeek * BigInt(2) / BigInt(3));
+          itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
         });
       });
     });
@@ -370,7 +382,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
         // users.
         const claimerStake = await gauge.balanceOf(claimer.address);
         const gaugeTotalSupply = await gauge.totalSupply();
-        expectedReward = rewardAmount * claimerStake / gaugeTotalSupply;
+        expectedReward = (rewardAmount * claimerStake) / gaugeTotalSupply;
 
         claimedBeforeOther = await gauge.claimed_reward(other.address, reward.target.toString());
         claimableBeforeOther = await gauge.claimable_reward(other.address, reward.target.toString());
@@ -381,7 +393,11 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       });
 
       it('transfers rewards to claimer', async () => {
-        const event = expectTransferEvent(receipt, { from: gauge.target.toString(), to: claimer.address }, reward.target.toString());
+        const event = expectTransferEvent(
+          receipt,
+          { from: gauge.target.toString(), to: claimer.address },
+          reward.target.toString()
+        );
         expect(event.args.value).to.be.almostEqual(expectedReward);
       });
 
@@ -411,16 +427,15 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       distributor = whale;
       claimer = user1;
       other = user2;
-      await (authorizer
-        .connect(govMultisig) as Contract)
-        .grantRole(await actionId(authorizerAdaptor, 'add_reward', gauge.interface), admin.address);
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(authorizerAdaptor, 'add_reward', gauge.interface),
+        admin.address
+      );
 
-      await (authorizerAdaptor
-        .connect(admin) as Contract)
-        .performAction(
-          gauge.target.toString(),
-          gauge.interface.encodeFunctionData('add_reward', [reward.target.toString(), distributor.address])
-        );
+      await (authorizerAdaptor.connect(admin) as Contract).performAction(
+        gauge.target.toString(),
+        gauge.interface.encodeFunctionData('add_reward', [reward.target.toString(), distributor.address])
+      );
 
       await (reward.connect(distributor) as Contract).approve(gauge.target.toString(), rewardAmount);
       await (gauge.connect(distributor) as Contract).deposit_reward_token(reward.target.toString(), rewardAmount);

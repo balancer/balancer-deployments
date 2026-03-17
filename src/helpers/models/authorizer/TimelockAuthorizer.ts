@@ -220,7 +220,12 @@ export default class TimelockAuthorizer {
     return this.with(params).removeCanceler(scheduledExecutionId, this.toAddress(account));
   }
 
-  async addGranter(action: string, account: Account, where: Account, params?: TxParams): Promise<ContractTransactionResponse> {
+  async addGranter(
+    action: string,
+    account: Account,
+    where: Account,
+    params?: TxParams
+  ): Promise<ContractTransactionResponse> {
     return this.with(params).addGranter(action, this.toAddress(account), this.toAddress(where));
   }
 
@@ -263,11 +268,19 @@ export default class TimelockAuthorizer {
     return this.with(params).renouncePermission(action, this.toAddress(where));
   }
 
-  async grantPermissionGlobally(action: string, account: Account, params?: TxParams): Promise<ContractTransactionResponse> {
+  async grantPermissionGlobally(
+    action: string,
+    account: Account,
+    params?: TxParams
+  ): Promise<ContractTransactionResponse> {
     return this.with(params).grantPermission(action, this.toAddress(account), TimelockAuthorizer.EVERYWHERE);
   }
 
-  async revokePermissionGlobally(action: string, account: Account, params?: TxParams): Promise<ContractTransactionResponse> {
+  async revokePermissionGlobally(
+    action: string,
+    account: Account,
+    params?: TxParams
+  ): Promise<ContractTransactionResponse> {
     return this.with(params).revokePermission(action, this.toAddress(account), TimelockAuthorizer.EVERYWHERE);
   }
 

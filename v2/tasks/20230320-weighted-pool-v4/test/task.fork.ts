@@ -168,14 +168,12 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       await (comp.connect(whale) as Contract).transfer(owner.address, amount);
       await (comp.connect(owner) as Contract).approve(vault.target.toString(), amount);
 
-      await (vault
-        .connect(owner) as Contract)
-        .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: COMP, assetOut: UNI, amount, userData: '0x' },
-          { sender: owner.address, recipient: owner.address, fromInternalBalance: false, toInternalBalance: false },
-          0,
-          MAX_UINT256
-        );
+      await (vault.connect(owner) as Contract).swap(
+        { kind: SwapKind.GivenIn, poolId, assetIn: COMP, assetOut: UNI, amount, userData: '0x' },
+        { sender: owner.address, recipient: owner.address, fromInternalBalance: false, toInternalBalance: false },
+        0,
+        MAX_UINT256
+      );
 
       // Assert pool swap
       const expectedUNI = await math.calcOutGivenIn(
@@ -235,9 +233,10 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
       context('disable recovery mode', () => {
         sharedBeforeEach('grant permissions to attacker', async () => {
-          await (authorizer
-            .connect(govMultisig) as Contract)
-            .grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.address);
+          await (authorizer.connect(govMultisig) as Contract).grantRole(
+            await actionId(pool, 'disableRecoveryMode'),
+            attacker.address
+          );
         });
 
         it(`${action} disable recovery mode attack`, async () => {
@@ -287,7 +286,10 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
     });
 
     before('enter recovery mode', async () => {
-      await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(pool, 'enableRecoveryMode'), govMultisig.address);
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(pool, 'enableRecoveryMode'),
+        govMultisig.address
+      );
       await (pool.connect(govMultisig) as Contract).enableRecoveryMode();
       expect(await pool.inRecoveryMode()).to.be.true;
     });
@@ -346,24 +348,25 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
   describe('factory disable', () => {
     it('the factory can be disabled', async () => {
-      await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(factory, 'disable'), govMultisig.address);
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(factory, 'disable'),
+        govMultisig.address
+      );
       await (factory.connect(govMultisig) as Contract).disable();
 
       expect(await factory.isDisabled()).to.be.true;
 
       await expect(
-        (factory
-          .connect(owner) as Contract)
-          .create(
-            NAME,
-            SYMBOL,
-            tokens,
-            WEIGHTS,
-            [ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS],
-            POOL_SWAP_FEE_PERCENTAGE,
-            owner.address,
-            randomBytes(32)
-          )
+        (factory.connect(owner) as Contract).create(
+          NAME,
+          SYMBOL,
+          tokens,
+          WEIGHTS,
+          [ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS],
+          POOL_SWAP_FEE_PERCENTAGE,
+          owner.address,
+          randomBytes(32)
+        )
       ).to.be.revertedWith('BAL#211');
     });
   });

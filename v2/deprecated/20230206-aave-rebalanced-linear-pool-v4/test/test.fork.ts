@@ -81,12 +81,12 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
         expect(expectedState).to.equal(LinearPoolState.MAIN_EXCESS);
 
         const excess = scaledCash - upperTarget;
-        fees = excess * SWAP_FEE_PERCENTAGE / FP_ONE;
+        fees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
       } else if (scaledCash < lowerTarget) {
         expect(expectedState).to.equal(LinearPoolState.MAIN_LACK);
 
         const lack = lowerTarget - scaledCash;
-        fees = lack * SWAP_FEE_PERCENTAGE / FP_ONE;
+        fees = (lack * SWAP_FEE_PERCENTAGE) / FP_ONE;
       } else {
         expect(expectedState).to.equal(LinearPoolState.BALANCED);
 
@@ -174,20 +174,25 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       // We're going to join with enough main token to bring the Pool above its upper target, which will let us later
       // rebalance.
 
-      const joinAmount = INITIAL_UPPER_TARGET * BigInt(2) / USDT_SCALING;
+      const joinAmount = (INITIAL_UPPER_TARGET * BigInt(2)) / USDT_SCALING;
 
-      await vault
-        .connect(holder)
-        .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
-          { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
-          0,
-          MAX_UINT256
-        );
+      await vault.connect(holder).swap(
+        {
+          kind: SwapKind.GivenIn,
+          poolId,
+          assetIn: USDT,
+          assetOut: pool.target.toString(),
+          amount: joinAmount,
+          userData: '0x',
+        },
+        { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
+        0,
+        MAX_UINT256
+      );
 
       // Assert join amount - some fees will be collected as we're going over the upper target.
       const excess = joinAmount * USDT_SCALING - INITIAL_UPPER_TARGET;
-      const joinCollectedFees = excess * SWAP_FEE_PERCENTAGE / FP_ONE;
+      const joinCollectedFees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
 
       const expectedBPT = joinAmount * USDT_SCALING - joinCollectedFees;
       expect(await pool.balanceOf(holder.address)).to.equal(expectedBPT);
@@ -206,16 +211,21 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       // rebalance.
 
       const { upperTarget } = await pool.getTargets();
-      const joinAmount = upperTarget * BigInt(5) / USDT_SCALING;
+      const joinAmount = (upperTarget * BigInt(5)) / USDT_SCALING;
 
-      await vault
-        .connect(holder)
-        .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
-          { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
-          0,
-          MAX_UINT256
-        );
+      await vault.connect(holder).swap(
+        {
+          kind: SwapKind.GivenIn,
+          poolId,
+          assetIn: USDT,
+          assetOut: pool.target.toString(),
+          amount: joinAmount,
+          userData: '0x',
+        },
+        { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
+        0,
+        MAX_UINT256
+      );
     });
 
     itRebalancesThePool(LinearPoolState.MAIN_EXCESS);
@@ -259,14 +269,19 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
 
       const joinAmount = midpoint / BigInt(100) / USDT_SCALING;
 
-      await vault
-        .connect(holder)
-        .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: USDT, assetOut: pool.target.toString(), amount: joinAmount, userData: '0x' },
-          { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
-          0,
-          MAX_UINT256
-        );
+      await vault.connect(holder).swap(
+        {
+          kind: SwapKind.GivenIn,
+          poolId,
+          assetIn: USDT,
+          assetOut: pool.target.toString(),
+          amount: joinAmount,
+          userData: '0x',
+        },
+        { sender: holder.address, recipient: holder.address, fromInternalBalance: false, toInternalBalance: false },
+        0,
+        MAX_UINT256
+      );
     });
 
     itRebalancesThePool(LinearPoolState.BALANCED);

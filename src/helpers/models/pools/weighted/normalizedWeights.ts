@@ -24,7 +24,7 @@ export function toNormalizedWeights(weights: bigint[]): bigint[] {
   let normalizedSum = 0n;
   for (let index = 0; index < weights.length; index++) {
     if (index < weights.length - 1) {
-      normalizedWeights[index] = weights[index] * ONE / sum;
+      normalizedWeights[index] = (weights[index] * ONE) / sum;
       normalizedSum = normalizedSum + normalizedWeights[index];
     } else {
       normalizedWeights[index] = ONE - normalizedSum;

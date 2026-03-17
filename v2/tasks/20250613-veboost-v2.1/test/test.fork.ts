@@ -53,9 +53,10 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     ).deployedInstance('Authorizer');
 
     govMultisig = await impersonate(GOV_MULTISIG);
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(delegationProxy, 'setDelegation'),
+      govMultisig.address
+    );
   });
 
   it('proxy can be migrated to delegation', async () => {

@@ -169,7 +169,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15485000, function () {
 
     const gaugeInterface = new new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed user, uint256 original_balance, uint256 original_supply, uint256 working_balance, uint256 working_supply)',
-    ]);
+    ])();
 
     expectEvent.inIndirectReceipt(
       await tx.wait(),

@@ -140,7 +140,12 @@ describeForkTest('V3-FixedPriceLBPool', 'mainnet', 23929800, function () {
     await (bal.connect(admin) as Contract).mint(admin.address, INITIAL_BAL);
 
     await (bal.connect(admin) as Contract).approve(permit2.target.toString(), INITIAL_BAL);
-    await (permit2.connect(admin) as Contract).approve(bal.target.toString(), trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
+    await (permit2.connect(admin) as Contract).approve(
+      bal.target.toString(),
+      trustedRouter.target.toString(),
+      INITIAL_BAL,
+      maxUint(48)
+    );
 
     await (trustedRouter.connect(admin) as Contract).initialize(
       pool.target.toString(),

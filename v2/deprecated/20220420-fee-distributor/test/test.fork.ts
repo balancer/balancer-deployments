@@ -95,7 +95,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
       it('veBAL holders can claim BAL and not WETH', async () => {
         const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, firstWeek);
         const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-        const expectedBALAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
+        const expectedBALAmount = (balAmount * holderFirstWeekBalance) / firstWeekSupply;
 
         const wethBalanceBefore = await WETH.balanceOf(veBALHolder.address);
         const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
@@ -122,8 +122,8 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
       const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, secondWeek);
       const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
 
-      const expectedBALAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
-      const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
+      const expectedBALAmount = (balAmount * BigInt(3) * holderSecondWeekBalance) / secondWeekSupply;
+      const expectedWETHAmount = (wethAmount * holderSecondWeekBalance) / secondWeekSupply;
 
       const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
 
@@ -143,15 +143,15 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
     it('veBAL holders can claim all the BAL and WETH at once', async () => {
       const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, firstWeek);
       const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-      const balFirstWeekAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
+      const balFirstWeekAmount = (balAmount * holderFirstWeekBalance) / firstWeekSupply;
 
       const secondWeek = firstWeek + WEEK;
       const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, secondWeek);
       const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
-      const balSecondWeekAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
+      const balSecondWeekAmount = (balAmount * BigInt(3) * holderSecondWeekBalance) / secondWeekSupply;
 
       const expectedBALAmount = balFirstWeekAmount + balSecondWeekAmount;
-      const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
+      const expectedWETHAmount = (wethAmount * holderSecondWeekBalance) / secondWeekSupply;
 
       const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target.toString(), WETH.target.toString()]);
 

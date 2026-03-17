@@ -32,6 +32,7 @@ const input: TimelockAuthorizerDeploymentInputType = {
 };
 
 // Include input files for each network inside global inputs.
+/* eslint-disable @typescript-eslint/no-require-imports */
 input.networks.forEach((network) => {
   input[network] = require(`./input/${network}.ts`);
 });

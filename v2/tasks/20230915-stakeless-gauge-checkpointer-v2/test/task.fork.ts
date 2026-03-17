@@ -87,25 +87,25 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2', 'mainnet', 17431930, func
 
   before('add gauge to checkpointer', async () => {
     // This gauge was created by a previous factory, so we just add it via governance providing the right type.
-    await (authorizer
-      .connect(daoMultisig) as Contract)
-      .grantRole(await actionId(stakelessGaugeCheckpointer, 'addGaugesWithVerifiedType'), admin.address);
+    await (authorizer.connect(daoMultisig) as Contract).grantRole(
+      await actionId(stakelessGaugeCheckpointer, 'addGaugesWithVerifiedType'),
+      admin.address
+    );
 
-    await (stakelessGaugeCheckpointer
-      .connect(admin) as Contract)
-      .addGaugesWithVerifiedType(GaugeType[GaugeType.Arbitrum], [arbitrumRootGauge]);
+    await (stakelessGaugeCheckpointer.connect(admin) as Contract).addGaugesWithVerifiedType(
+      GaugeType[GaugeType.Arbitrum],
+      [arbitrumRootGauge]
+    );
   });
 
   before('grant checkpoint permission to gauge checkpointer', async () => {
     // Any gauge works; we just need the interface.
     const gauge = await task.instanceAt('IStakelessGauge', arbitrumRootGauge);
 
-    await (authorizer
-      .connect(daoMultisig) as Contract)
-      .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
-        stakelessGaugeCheckpointer.target.toString()
-      );
+    await (authorizer.connect(daoMultisig) as Contract).grantRole(
+      await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+      stakelessGaugeCheckpointer.target.toString()
+    );
   });
 
   before('check relative weight and store gauge data', async () => {

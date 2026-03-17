@@ -121,9 +121,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
     await (bal80weth20Pool.connect(veBALHolder) as Contract).approve(veBAL.target.toString(), MAX_UINT256);
     const currentTime = await currentTimestamp();
-    await (veBAL
-      .connect(veBALHolder) as Contract)
-      .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime + bn(MONTH * 12));
+    await (veBAL.connect(veBALHolder) as Contract).create_lock(
+      await bal80weth20Pool.balanceOf(veBALHolder.address),
+      currentTime + bn(MONTH * 12)
+    );
 
     // Verify non-zero veBAL balance
     const now = await currentTimestamp();
@@ -139,9 +140,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
 
     // We need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor Entrypoint
-    await (authorizer
-      .connect(daoMultisig) as Contract)
-      .grantRole(await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector), admin.address);
+    await (authorizer.connect(daoMultisig) as Contract).grantRole(
+      await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+      admin.address
+    );
   });
 
   before('grant permissions on gauge adder', async () => {
@@ -197,7 +199,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](
+        gauge.target.toString(),
+        await currentWeekTimestamp()
+      )
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -210,7 +215,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
+    const zeroMintTx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(
+      gauge.target.toString(),
+      calldata
+    );
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
@@ -223,7 +231,9 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
 
     // The gauge should now mint and send all minted tokens to the Fraxtal bridge
     const mintReceipt = await (
-      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost })
+      await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, {
+        value: bridgeCost,
+      })
     ).wait();
 
     const event = expectEvent.inIndirectReceipt(mintReceipt, gauge.interface, 'Checkpoint', {
@@ -235,7 +245,7 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
 
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
 
     // Tokens are minted for the gauge
@@ -279,7 +289,10 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - bn(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - bn(WEEK * weekIndex)
+        )
       )
     );
 
@@ -293,11 +306,13 @@ describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function (
     // cap.
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap * bn(numberOfWeeks) * weeklyRate / FP_ONE;
+    const expectedEmissions = (weightCap * bn(numberOfWeeks) * weeklyRate) / FP_ONE;
 
     const bridgeCost = await gauge.getTotalBridgeCost();
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, { value: bridgeCost });
+    const tx = await (adaptorEntrypoint.connect(admin) as Contract).performAction(gauge.target.toString(), calldata, {
+      value: bridgeCost,
+    });
     const receipt = await tx.wait();
 
     await Promise.all(

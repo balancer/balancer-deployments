@@ -63,12 +63,16 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to set pool swap fees. This is all that is needed for v2.
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.target.toString());
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'setStaticSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   it('can create a pool set', async () => {
-    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [pool.target.toString()]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [
+      pool.target.toString(),
+    ]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 

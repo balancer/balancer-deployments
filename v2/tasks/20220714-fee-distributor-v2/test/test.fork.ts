@@ -77,7 +77,10 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
 
         it('veBAL holders cannot yet claim tokens', async () => {
           const balancesBefore = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [
+            BAL.target.toString(),
+            WETH.target.toString(),
+          ]);
           const balancesAfter = await Promise.all([BAL, WETH].map((token) => token.balanceOf(veBALHolder.address)));
 
           expectEvent.notEmitted(await tx.wait(), 'TokensClaimed');
@@ -96,7 +99,10 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       context('with WETH distributed', () => {
         before('send BAL to distribute', async () => {
           await (BAL.connect(feeCollector) as Contract).approve(distributor.target.toString(), balAmount * BigInt(3));
-          await (distributor.connect(feeCollector) as Contract).depositToken(BAL.target.toString(), balAmount * BigInt(3));
+          await (distributor.connect(feeCollector) as Contract).depositToken(
+            BAL.target.toString(),
+            balAmount * BigInt(3)
+          );
         });
 
         before('send WETH to distribute', async () => {
@@ -107,10 +113,13 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         it('veBAL holders can claim BAL and not WETH', async () => {
           const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, firstWeek);
           const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-          const expectedBALAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
+          const expectedBALAmount = (balAmount * holderFirstWeekBalance) / firstWeekSupply;
 
           const wethBalanceBefore = await WETH.balanceOf(veBALHolder.address);
-          const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
+          const tx = await distributor.claimTokens(veBALHolder.address, [
+            BAL.target.toString(),
+            WETH.target.toString(),
+          ]);
           const wethBalanceAfter = await WETH.balanceOf(veBALHolder.address);
 
           expectTransferEvent(
@@ -134,8 +143,8 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, secondWeek);
         const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
 
-        const expectedBALAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
-        const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
+        const expectedBALAmount = (balAmount * BigInt(3) * holderSecondWeekBalance) / secondWeekSupply;
+        const expectedWETHAmount = (wethAmount * holderSecondWeekBalance) / secondWeekSupply;
 
         const tx = await distributor.claimTokens(veBALHolder.address, [BAL.target.toString(), WETH.target.toString()]);
 
@@ -155,15 +164,15 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       it('veBAL holders can claim all the BAL and WETH at once', async () => {
         const holderFirstWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, firstWeek);
         const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
-        const balFirstWeekAmount = balAmount * holderFirstWeekBalance / firstWeekSupply;
+        const balFirstWeekAmount = (balAmount * holderFirstWeekBalance) / firstWeekSupply;
 
         const secondWeek = firstWeek + BigInt(WEEK);
         const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, secondWeek);
         const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
-        const balSecondWeekAmount = balAmount * BigInt(3) * holderSecondWeekBalance / secondWeekSupply;
+        const balSecondWeekAmount = (balAmount * BigInt(3) * holderSecondWeekBalance) / secondWeekSupply;
 
         const expectedBALAmount = balFirstWeekAmount + balSecondWeekAmount;
-        const expectedWETHAmount = wethAmount * holderSecondWeekBalance / secondWeekSupply;
+        const expectedWETHAmount = (wethAmount * holderSecondWeekBalance) / secondWeekSupply;
 
         const tx = await distributor.claimTokens(veBALHolder2.address, [BAL.target.toString(), WETH.target.toString()]);
 
@@ -190,7 +199,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         'function claimFees(address _distroContract, address _token) returns (uint256)',
       ];
 
-      voterProxy = await ethers.getContractAt(voterProxyABI, VOTER_PROXY_ADDRESS) as Contract;
+      voterProxy = (await ethers.getContractAt(voterProxyABI, VOTER_PROXY_ADDRESS)) as Contract;
       // VoterProxy contract doesn't actually use the signature; only voting with the right hash matters.
       // This hash is the distributor's outcome when enabling the caller check form the VoterProxy with the first
       // available nonce.
@@ -216,8 +225,15 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
         nonce: (await distributor.getNextNonce(voterProxy.target.toString())).toString(),
       };
 
-      await (voterProxy.connect(voterProxyAdmin) as Contract).setVote(TypedDataEncoder.hash(domain, types, values), true);
-      await (distributor.connect(voterProxyAdmin) as Contract).setOnlyCallerCheckWithSignature(voterProxy.target.toString(), true, '0x');
+      await (voterProxy.connect(voterProxyAdmin) as Contract).setVote(
+        TypedDataEncoder.hash(domain, types, values),
+        true
+      );
+      await (distributor.connect(voterProxyAdmin) as Contract).setOnlyCallerCheckWithSignature(
+        voterProxy.target.toString(),
+        true,
+        '0x'
+      );
     });
 
     context('in the third week, when every token is claimable', () => {
@@ -227,17 +243,25 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
       });
 
       it('other account cannot claim for voter proxy', async () => {
-        await expect(distributor.claimTokens(voterProxy.target.toString(), [BAL.target.toString(), WETH.target.toString()])).to.be.revertedWith(
-          'BAL#401'
-        );
+        await expect(
+          distributor.claimTokens(voterProxy.target.toString(), [BAL.target.toString(), WETH.target.toString()])
+        ).to.be.revertedWith('BAL#401');
       });
 
       it('voter proxy can claim fees', async () => {
-        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target.toString(), BAL.target.toString())).to.not.be
-          .reverted;
+        await expect(
+          (voterProxy.connect(voterProxyAdmin) as Contract).claimFees(
+            distributor.target.toString(),
+            BAL.target.toString()
+          )
+        ).to.not.be.reverted;
 
-        await expect((voterProxy.connect(voterProxyAdmin) as Contract).claimFees(distributor.target.toString(), WETH.target.toString())).to.not.be
-          .reverted;
+        await expect(
+          (voterProxy.connect(voterProxyAdmin) as Contract).claimFees(
+            distributor.target.toString(),
+            WETH.target.toString()
+          )
+        ).to.not.be.reverted;
       });
     });
   });

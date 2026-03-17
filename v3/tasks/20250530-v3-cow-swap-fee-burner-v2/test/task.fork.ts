@@ -69,16 +69,15 @@ describeForkTest('CowSwapFeeBurnerV2', 'mainnet', 22631600, function () {
     // Approve CowSwapFeeBurner to spend USDC
     await (usdc.connect(protocolFeeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target.toString(), initBalance);
 
-    await (cowSwapFeeBurner.connect(protocolFeeSweeperSigner) as Contract)
-      .burn(
-        ZERO_ADDRESS,
-        usdc.target.toString(),
-        initBalance,
-        waUSDC_ADDRESS,
-        minAmountOut,
-        RECIPIENT,
-        block!.timestamp + FIVE_MINUTES
-      );
+    await (cowSwapFeeBurner.connect(protocolFeeSweeperSigner) as Contract).burn(
+      ZERO_ADDRESS,
+      usdc.target.toString(),
+      initBalance,
+      waUSDC_ADDRESS,
+      minAmountOut,
+      RECIPIENT,
+      block!.timestamp + FIVE_MINUTES
+    );
 
     const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target.toString());
     const existingOrder = {

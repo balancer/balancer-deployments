@@ -169,7 +169,9 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
           0,
         ]);
 
-        [actualAmountOut] = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([callData]);
+        [actualAmountOut] = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([
+          callData,
+        ]);
 
         expect(actualAmountOut).to.equal(expectedAmountOut);
       });
@@ -202,7 +204,10 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
 
         const peekData = library.interface.encodeFunctionData('peekChainedReferenceValue', [outputReference]);
 
-        const results = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([swapData, peekData]);
+        const results = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([
+          swapData,
+          peekData,
+        ]);
         actualAmountOut = results[1];
 
         expect(actualAmountOut).to.equal(expectedAmountOut);
@@ -241,6 +246,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
       [],
     ]);
 
-    await expect((relayer.connect(owner) as Contract).vaultActionsQueryMulticall([callData])).to.be.revertedWith('BAL#998');
+    await expect((relayer.connect(owner) as Contract).vaultActionsQueryMulticall([callData])).to.be.revertedWith(
+      'BAL#998'
+    );
   });
 });

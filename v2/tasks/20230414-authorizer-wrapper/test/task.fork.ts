@@ -113,7 +113,9 @@ describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, fu
       });
 
       it('attempting to add gauges reverts as the Adaptor Entrypoint is not yet operational', async () => {
-        await expect((gaugeAdder.connect(lmMultisig) as Contract).addEthereumGauge(gauge)).to.be.revertedWith('BAL#401');
+        await expect((gaugeAdder.connect(lmMultisig) as Contract).addEthereumGauge(gauge)).to.be.revertedWith(
+          'BAL#401'
+        );
       });
     });
 

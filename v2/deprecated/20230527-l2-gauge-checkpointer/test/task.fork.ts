@@ -426,9 +426,13 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
           const arbitrumGaugeData = gauges.get(GaugeType.Arbitrum)![0];
           const arbitrumType = GaugeType[GaugeType.Arbitrum];
 
-          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.target.toString(), {
-            value: await L2GaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target.toString()),
-          });
+          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(
+            arbitrumType,
+            arbitrumGaugeData.target.toString(),
+            {
+              value: await L2GaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target.toString()),
+            }
+          );
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,

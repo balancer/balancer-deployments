@@ -184,7 +184,7 @@ describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, funct
     const gaugeInterface = new new ethers.Interface([
       'function checkpoint()',
       'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
-    ]);
+    ])();
 
     for (const gaugeAddress of [arbitrumGaugeAddress, polygonGaugeAddress]) {
       const tx = await authorizerAdaptor

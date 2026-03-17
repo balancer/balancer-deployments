@@ -79,7 +79,10 @@ export class WeightedPoolEncoder {
    * @param bptAmountIn - the amount of BPT to be burned
    */
   static exitExactBPTInForTokensOut = (bptAmountIn: BigNumberish): string =>
-    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256'], [WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT, bptAmountIn]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT, bptAmountIn]
+    );
 
   /**
    * Encodes the userData parameter for exiting a WeightedPool by removing exact amounts of tokens

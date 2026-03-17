@@ -151,7 +151,9 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     await advanceTime(WEEK);
 
     // The gauge should now mint and send all minted tokens to the Arbitrum bridge
-    const mintTx = await authorizerAdaptor.connect(admin).performAction(gauge.target.toString(), calldata, { value: bridgeETH });
+    const mintTx = await authorizerAdaptor
+      .connect(admin)
+      .performAction(gauge.target.toString(), calldata, { value: bridgeETH });
     const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp,
     });
@@ -160,7 +162,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
 
-    const expectedEmissions = gaugeRelativeWeight * weeklyRate / FP_ONE;
+    const expectedEmissions = (gaugeRelativeWeight * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
 
     // Tokens are minted for the gauge
@@ -177,7 +179,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     // And the gauge then deposits those in the predicate via the bridge mechanism
     const bridgeInterface = new new ethers.Interface([
       'event DepositInitiated(address l1Token, address indexed from, address indexed to, uint256 indexed sequenceNumber, uint256 amount)',
-    ]);
+    ])();
 
     expectEvent.inIndirectReceipt(await mintTx.wait(), bridgeInterface, 'DepositInitiated', {
       from: gauge.target.toString(),
@@ -197,7 +199,10 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     // We can query the relative weight of the gauge for each of the weeks that have passed
     const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.target.toString(), weekTimestamp - WEEK * weekIndex)
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - WEEK * weekIndex
+        )
       )
     );
 
@@ -205,7 +210,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     // gauge (this assumes we're not crossing an emissions rate epoch so that the inflation remains constant).
     const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
     const expectedEmissions = relativeWeights
-      .map((weight) => weight * weeklyRate / FP_ONE)
+      .map((weight) => (weight * weeklyRate) / FP_ONE)
       .reduce((sum, value) => sum + value);
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
@@ -235,7 +240,7 @@ describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function 
     // And the gauge then deposits those in the predicate via the bridge mechanism
     const bridgeInterface = new new ethers.Interface([
       'event DepositInitiated(address l1Token, address indexed from, address indexed to, uint256 indexed sequenceNumber, uint256 amount)',
-    ]);
+    ])();
 
     expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'DepositInitiated', {
       from: gauge.target.toString(),

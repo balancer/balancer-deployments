@@ -51,14 +51,15 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
   before('grant permissions', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(await registry.getActionId(registry.interface.getFunction('registerBalancerContract')!.selector), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await registry.getActionId(registry.interface.getFunction('registerBalancerContract')!.selector),
+      admin.address
+    );
 
-    await (authorizer.connect(govMultisig) as Contract)
-      .grantRole(
-        await registry.getActionId(registry.interface.getFunction('addOrUpdateBalancerContractAlias')!.selector),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await registry.getActionId(registry.interface.getFunction('addOrUpdateBalancerContractAlias')!.selector),
+      admin.address
+    );
   });
 
   it('deploys with correct Vault', async () => {
@@ -66,9 +67,15 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
   });
 
   it('can register a contract', async () => {
-    await (registry.connect(admin) as Contract)
-      .registerBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool', factory.target.toString());
-    await (registry.connect(admin) as Contract).addOrUpdateBalancerContractAlias('WeightedPool', factory.target.toString());
+    await (registry.connect(admin) as Contract).registerBalancerContract(
+      ContractType.POOL_FACTORY,
+      '20241205-v3-weighted-pool',
+      factory.target.toString()
+    );
+    await (registry.connect(admin) as Contract).addOrUpdateBalancerContractAlias(
+      'WeightedPool',
+      factory.target.toString()
+    );
   });
 
   it('detects active contracts', async () => {
@@ -84,7 +91,11 @@ describeForkTest('BalancerContractRegistry-V3', 'mainnet', 21436200, function ()
   });
 
   it('has trusted router', async () => {
-    await (registry.connect(admin) as Contract).registerBalancerContract(ContractType.ROUTER, '20241205-v3-router', router.target.toString());
+    await (registry.connect(admin) as Contract).registerBalancerContract(
+      ContractType.ROUTER,
+      '20241205-v3-router',
+      router.target.toString()
+    );
 
     expect(await registry.isActiveBalancerContract(ContractType.ROUTER, router.target.toString())).to.be.true;
     expect(await registry.isTrustedRouter(router.target.toString())).to.be.true;

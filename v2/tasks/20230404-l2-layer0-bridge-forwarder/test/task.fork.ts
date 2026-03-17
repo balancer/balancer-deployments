@@ -43,7 +43,10 @@ describeForkTest.skip('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function 
   before('grant set and kill delegation permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer.connect(govMultisig) as Contract).grantRole(await actionId(forwarder, 'setDelegation'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(forwarder, 'setDelegation'),
+      admin.address
+    );
   });
 
   it('returns empty delegation', async () => {

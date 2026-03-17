@@ -39,12 +39,14 @@ describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   before('grant register and rename permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await actionId(protocolIdRegistry, 'registerProtocolId'), admin.address);
-    await (authorizer
-      .connect(govMultisig) as Contract)
-      .grantRole(await actionId(protocolIdRegistry, 'renameProtocolId'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(protocolIdRegistry, 'registerProtocolId'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(protocolIdRegistry, 'renameProtocolId'),
+      admin.address
+    );
   });
 
   it('gets default protocol IDs', async () => {
@@ -58,8 +60,12 @@ describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   });
 
   it('reverts when adding or renaming protocol IDs without permission', async () => {
-    await expect((protocolIdRegistry.connect(other) as Contract).registerProtocolId(20, 'test')).to.be.revertedWith('BAL#401');
-    await expect((protocolIdRegistry.connect(other) as Contract).renameProtocolId(1, 'test')).to.be.revertedWith('BAL#401');
+    await expect((protocolIdRegistry.connect(other) as Contract).registerProtocolId(20, 'test')).to.be.revertedWith(
+      'BAL#401'
+    );
+    await expect((protocolIdRegistry.connect(other) as Contract).renameProtocolId(1, 'test')).to.be.revertedWith(
+      'BAL#401'
+    );
   });
 
   it('adds new protocols', async () => {

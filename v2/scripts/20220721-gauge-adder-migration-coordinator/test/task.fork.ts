@@ -95,10 +95,20 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
       gaugeController.interface.getSighash('add_gauge(address,int128)')
     );
 
-    expect(await authorizer.canPerform(addGaugePermission, oldGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
-      .false;
-    expect(await authorizer.canPerform(addGaugePermission, newGaugeAdder.target.toString(), authorizerAdaptor.target.toString())).to.be
-      .true;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        oldGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.false;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        newGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.true;
   });
 
   it('grants permissions to the multisig to add gauges of existing types on the new GaugeAdder', async () => {
@@ -133,11 +143,12 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
       arbitrumRootGaugeFactory,
       'setArbitrumFees(uint64 gasLimit,uint64 gasPrice,uint64 maxSubmissionCost)'
     );
-    expect(await authorizer.canPerform(setArbitrumFeesAction, multisig, arbitrumRootGaugeFactory.target.toString())).to.be.true;
+    expect(await authorizer.canPerform(setArbitrumFeesAction, multisig, arbitrumRootGaugeFactory.target.toString())).to
+      .be.true;
 
     const setOptimismGasLimitAction = await actionId(optimismRootGaugeFactory, 'setOptimismGasLimit(uint32 gasLimit)');
-    expect(await authorizer.canPerform(setOptimismGasLimitAction, multisig, optimismRootGaugeFactory.target.toString())).to.be
-      .true;
+    expect(await authorizer.canPerform(setOptimismGasLimitAction, multisig, optimismRootGaugeFactory.target.toString()))
+      .to.be.true;
   });
 
   it('renounces the admin role', async () => {
