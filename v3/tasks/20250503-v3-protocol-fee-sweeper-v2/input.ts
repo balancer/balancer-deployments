@@ -6,7 +6,7 @@ export type ProtocolFeeSweeperDeployment = {
 };
 
 const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
-// See https://github.com/balancer/bal_addresses/blob/main/outputs/addressbook.json#L268
+// See https://github.com/balancer/bal_addresses/blob/cc26cd8c1d7c3c48c09f4d5d35704a0bbf00dd48/extras/multisigs.json#L10
 const MaxiOmniMultisig = '0x9ff471F9f98F42E5151C7855fD1b5aa906b1AF7e';
 const SepoliaAdmin = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
 
