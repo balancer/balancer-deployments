@@ -136,9 +136,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const { pauseWindowEndTime, bufferPeriodEndTime } = await mockSiloLinearPool.getPausedState();
 
     mockPoolArgs.pauseWindowDuration = pauseWindowEndTime - BigInt(poolCreationBlock!.timestamp);
-    mockPoolArgs.bufferPeriodDuration = bufferPeriodEndTime
-      - BigInt(poolCreationBlock!.timestamp)
-      - BigInt(mockPoolArgs.pauseWindowDuration);
+    mockPoolArgs.bufferPeriodDuration =
+      bufferPeriodEndTime - BigInt(poolCreationBlock!.timestamp) - BigInt(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
     await task.verify('SiloLinearPool', mockSiloLinearPool.target, [mockPoolArgs]);

@@ -92,9 +92,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // With those and the period end times, we can compute the durations.
     const { pauseWindowEndTime, bufferPeriodEndTime } = await mockPool.getPausedState();
     mockPoolArgs.pauseWindowDuration = pauseWindowEndTime - BigInt(poolCreationBlock!.timestamp);
-    mockPoolArgs.bufferPeriodDuration = bufferPeriodEndTime
-      - BigInt(poolCreationBlock!.timestamp)
-      - BigInt(mockPoolArgs.pauseWindowDuration);
+    mockPoolArgs.bufferPeriodDuration =
+      bufferPeriodEndTime - BigInt(poolCreationBlock!.timestamp) - BigInt(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
     await task.verify('ERC4626LinearPool', mockPool.target, [mockPoolArgs]);
