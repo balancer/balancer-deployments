@@ -127,7 +127,7 @@ export default class TimelockAuthorizer {
     params?: TxParams
   ): Promise<number> {
     const receipt = await this.with(params).scheduleGrantDelayChange(action, delay, this.toAddresses(executors));
-    const event = await expectEvent.inTransaction(receipt, 'RootChangeScheduled', {
+    const event = await expectEvent.inTransaction(receipt, 'GrantDelayChangeScheduled', {
       actionId: action,
       newDelay: delay,
     });
@@ -142,7 +142,7 @@ export default class TimelockAuthorizer {
     params?: TxParams
   ): Promise<number> {
     const receipt = await this.with(params).scheduleRevokeDelayChange(action, delay, this.toAddresses(executors));
-    const event = await expectEvent.inTransaction(receipt, 'RootChangeScheduled', {
+    const event = await expectEvent.inTransaction(receipt, 'RevokeDelayChangeScheduled', {
       actionId: action,
       newDelay: delay,
     });
