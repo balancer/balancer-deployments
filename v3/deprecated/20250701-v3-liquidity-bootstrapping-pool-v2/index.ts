@@ -18,7 +18,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.FactoryVersion,
     input.PoolVersion,
     input.Router,
-    migrationRouter.address,
+    migrationRouter.target,
   ];
   const factory = await task.deployAndVerify('LBPoolFactory', factoryArgs, from, force);
 
@@ -95,6 +95,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     ];
 
     // We are now ready to verify the Pool
-    await task.verify('LBPool', mockPool.address, poolParams);
+    await task.verify('LBPool', mockPool.target, poolParams);
   }
 };
