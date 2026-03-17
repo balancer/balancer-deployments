@@ -1,5 +1,4 @@
 import { bn } from '@helpers/numbers';
-import { randomBytes } from 'ethers/lib/utils';
 import { Task, TaskMode, TaskRunOptions } from '@src';
 import { GearboxLinearPoolDeployment } from './input';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -51,7 +50,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['MockGearboxLinearPool']) {
       const PROTOCOL_ID = 0;
-      const SALT = randomBytes(32);
+      const SALT = ethers.randomBytes(32);
 
       const poolCreationReceipt = await (
         await factory.create(
@@ -69,7 +68,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const mockPoolAddress = event.args.pool;
 
-      await saveContractDeploymentTransactionHash(mockPoolAddress, poolCreationReceipt.transactionHash, task.network);
+      await saveContractDeploymentTransactionHash(mockPoolAddress, poolCreationReceipt.hash, task.network);
       await task.save({ MockGearboxLinearPool: mockPoolAddress });
     }
 
@@ -88,14 +87,14 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
     const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
-    const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
+    const poolCreationBlock = await ethers.provider.getBlock(tx!.blockNumber);
 
     // With those and the period end times, we can compute the durations.
     const { pauseWindowEndTime, bufferPeriodEndTime } = await mockPool.getPausedState();
-    mockPoolArgs.pauseWindowDuration = pauseWindowEndTime.sub(poolCreationBlock.timestamp);
+    mockPoolArgs.pauseWindowDuration = pauseWindowEndTime - BigInt(poolCreationBlock!.timestamp);
     mockPoolArgs.bufferPeriodDuration = bufferPeriodEndTime
-      .sub(poolCreationBlock.timestamp)
-      .sub(mockPoolArgs.pauseWindowDuration);
+      - BigInt(poolCreationBlock!.timestamp)
+      - BigInt(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
     await task.verify('GearboxLinearPool', mockPool.target, [mockPoolArgs]);
