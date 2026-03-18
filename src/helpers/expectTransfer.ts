@@ -1,7 +1,6 @@
 import { BigNumberish, ContractTransactionReceipt, Interface } from 'ethers';
 import * as expectEvent from './expectEvent';
-import { Account } from './models/types/types';
-import { ZERO_ADDRESS } from './constants';
+import { Account, toAddress } from './models/types/types';
 
 export function expectTransferEvent(
   receipt: ContractTransactionReceipt,
@@ -19,11 +18,4 @@ export function expectTransferEvent(
     args,
     toAddress(token)
   );
-}
-
-function toAddress(to?: Account): string {
-  if (!to) return ZERO_ADDRESS;
-  if (typeof to === 'string') return to;
-  if ('target' in to) return to.target.toString();
-  return (to as { address: string }).address;
 }
