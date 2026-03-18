@@ -117,6 +117,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     };
 
     // We are now ready to verify the Pool
-    await task.verify('GyroECLPPool', mockPool.address, [poolParams, input.Vault]);
+    await task.verify('GyroECLPPool', mockPool.target.toString(), [poolParams, input.Vault]);
   }
 };

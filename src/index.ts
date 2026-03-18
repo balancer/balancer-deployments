@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 export * from './forkTests';
 export * from './signers';
 export * from './task';

@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BigNumber, bn, fp } from '@helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ProtocolFeeHelperDeployment } from '../input';
 
 describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
@@ -22,9 +22,9 @@ describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
   let pool: Contract;
   let feeController: Contract;
 
-  let poolSetId: BigNumber;
-  let oldSwapFee: BigNumber;
-  let oldYieldFee: BigNumber;
+  let poolSetId: bigint;
+  let oldSwapFee: bigint;
+  let oldYieldFee: bigint;
 
   let admin: SignerWithAddress;
   let manager: SignerWithAddress;
@@ -62,54 +62,67 @@ describeForkTest('V3-ProtocolFeeHelper-V2', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to set protocol swap and yield fees. This is all that is needed for v2.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
 
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolYieldFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   it('can create a pool set', async () => {
-    await feeHelper.connect(admin)['createPoolSet(address,address[])'](manager.address, [pool.address]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [
+      pool.target.toString(),
+    ]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(manager.address);
-    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.eq(1);
+    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.equal(1);
   });
 
   it('can set fees on pools', async () => {
-    [oldSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.address);
-    [oldYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.address);
+    [oldSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    [oldYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
-    await feeHelper.connect(manager).setProtocolSwapFeePercentage(pool.address, SWAP_FEE_PERCENTAGE);
-    await feeHelper.connect(manager).setProtocolYieldFeePercentage(pool.address, YIELD_FEE_PERCENTAGE);
+    await (feeHelper.connect(manager) as Contract).setProtocolSwapFeePercentage(
+      pool.target.toString(),
+      SWAP_FEE_PERCENTAGE
+    );
+    await (feeHelper.connect(manager) as Contract).setProtocolYieldFeePercentage(
+      pool.target.toString(),
+      YIELD_FEE_PERCENTAGE
+    );
 
     // Fees should now be set.
-    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.address);
-    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.address);
+    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
-    expect(bn(protocolSwapFeePercentage)).to.eq(SWAP_FEE_PERCENTAGE);
-    expect(bn(protocolYieldFeePercentage)).to.eq(YIELD_FEE_PERCENTAGE);
+    expect(bn(protocolSwapFeePercentage)).to.equal(SWAP_FEE_PERCENTAGE);
+    expect(bn(protocolYieldFeePercentage)).to.equal(YIELD_FEE_PERCENTAGE);
   });
 
   it('can transfer fee permission', async () => {
-    await feeHelper.connect(manager).transferPoolSetOwnership(newManager.address);
+    await (feeHelper.connect(manager) as Contract).transferPoolSetOwnership(newManager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager.address);
   });
 
   it('new manager can set fees on pools', async () => {
-    await feeHelper.connect(newManager).setProtocolSwapFeePercentage(pool.address, oldSwapFee);
-    await feeHelper.connect(newManager).setProtocolYieldFeePercentage(pool.address, oldYieldFee);
+    await (feeHelper.connect(newManager) as Contract).setProtocolSwapFeePercentage(pool.target.toString(), oldSwapFee);
+    await (feeHelper.connect(newManager) as Contract).setProtocolYieldFeePercentage(
+      pool.target.toString(),
+      oldYieldFee
+    );
 
     // Fees should now be set.
-    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.address);
-    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.address);
+    const [protocolSwapFeePercentage] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    const [protocolYieldFeePercentage] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
-    expect(bn(protocolSwapFeePercentage)).to.eq(oldSwapFee);
-    expect(bn(protocolYieldFeePercentage)).to.eq(oldYieldFee);
+    expect(bn(protocolSwapFeePercentage)).to.equal(oldSwapFee);
+    expect(bn(protocolYieldFeePercentage)).to.equal(oldYieldFee);
   });
 });

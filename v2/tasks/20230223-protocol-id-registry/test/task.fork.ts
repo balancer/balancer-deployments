@@ -9,7 +9,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   let vault: Contract, authorizer: Contract;
@@ -39,12 +39,14 @@ describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   before('grant register and rename permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(protocolIdRegistry, 'registerProtocolId'), admin.address);
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(protocolIdRegistry, 'renameProtocolId'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(protocolIdRegistry, 'registerProtocolId'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(protocolIdRegistry, 'renameProtocolId'),
+      admin.address
+    );
   });
 
   it('gets default protocol IDs', async () => {
@@ -58,19 +60,23 @@ describeForkTest.skip('ProtocolIdRegistry', 'mainnet', 16691900, function () {
   });
 
   it('reverts when adding or renaming protocol IDs without permission', async () => {
-    await expect(protocolIdRegistry.connect(other).registerProtocolId(20, 'test')).to.be.revertedWith('BAL#401');
-    await expect(protocolIdRegistry.connect(other).renameProtocolId(1, 'test')).to.be.revertedWith('BAL#401');
+    await expect((protocolIdRegistry.connect(other) as Contract).registerProtocolId(20, 'test')).to.be.revertedWith(
+      'BAL#401'
+    );
+    await expect((protocolIdRegistry.connect(other) as Contract).renameProtocolId(1, 'test')).to.be.revertedWith(
+      'BAL#401'
+    );
   });
 
   it('adds new protocols', async () => {
-    await protocolIdRegistry.connect(admin).registerProtocolId(20, 'new protocol');
+    await (protocolIdRegistry.connect(admin) as Contract).registerProtocolId(20, 'new protocol');
 
     expect(await protocolIdRegistry.isValidProtocolId(20)).to.be.true;
     expect(await protocolIdRegistry.getProtocolName(20)).to.be.eq('new protocol');
   });
 
   it('renames existing protocols', async () => {
-    await protocolIdRegistry.connect(admin).renameProtocolId(20, 'new protocol V2');
+    await (protocolIdRegistry.connect(admin) as Contract).renameProtocolId(20, 'new protocol V2');
 
     expect(await protocolIdRegistry.isValidProtocolId(20)).to.be.true;
     expect(await protocolIdRegistry.getProtocolName(20)).to.be.eq('new protocol V2');

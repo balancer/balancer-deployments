@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { StablePoolEncoder } from '@helpers/models/pools/stable/encoder';
 import { MAX_UINT256 } from '@helpers/constants';
 import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
@@ -63,7 +63,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
     before('approve relayer at the authorizer', async () => {
       const relayerActionIds = await Promise.all(
         ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-          vault.getActionId(vault.interface.getSighash(action))
+          vault.getActionId(vault.interface.getFunction(action)!.selector)
         )
       );
 
@@ -72,19 +72,19 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
       const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
       // Grant relayer permission to call all relayer functions
-      await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
     });
 
     before('approve relayer by the user', async () => {
-      await vault.connect(owner).setRelayerApproval(owner.address, relayer.address, true);
+      await (vault.connect(owner) as Contract).setRelayerApproval(owner.address, relayer.address, true);
     });
 
     before('load tokens and approve', async () => {
       dai = await task.instanceAt('IERC20', DAI);
       usdc = await task.instanceAt('IERC20', USDC);
 
-      await dai.connect(whale).approve(vault.address, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+      await (dai.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+      await (usdc.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
     });
 
     context('stable pool', () => {
@@ -98,17 +98,17 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
         pool = await stableTask.instanceAt('StablePool', event.args.pool);
-        expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+        expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
         poolId = await pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.address);
+        expect(registeredAddress).to.equal(pool.target.toString());
       });
 
       before('initialize stable pool', async () => {
         const userData = StablePoolEncoder.joinInit(initialBalances);
 
-        await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+        await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
           assets: tokens,
           maxAmountsIn: initialBalances,
           fromInternalBalance: false,
@@ -118,9 +118,9 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
 
       it('can exit proportionally through the relayer', async () => {
         const bptBalance = await pool.balanceOf(owner.address);
-        expect(bptBalance).to.gt(0);
+        expect(bptBalance).to.be.gt(0);
 
-        const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.address);
+        const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.target.toString());
         const ownerDAIBalanceBeforeExit = await dai.balanceOf(owner.address);
 
         const userData = defaultAbiCoder.encode(
@@ -129,7 +129,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         );
 
         // Send BPT to the relayer so it can exit.
-        await pool.connect(owner).transfer(relayer.address, bptBalance);
+        await (pool.connect(owner) as Contract).transfer(relayer.address, bptBalance);
 
         const exitCalldata = library.interface.encodeFunctionData('exitPool', [
           poolId,
@@ -145,16 +145,16 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
           [],
         ]);
 
-        await relayer.connect(owner).multicall([exitCalldata]);
+        await (relayer.connect(owner) as Contract).multicall([exitCalldata]);
 
         const remainingBalance = await pool.balanceOf(owner.address);
         expect(remainingBalance).to.equal(0);
 
-        const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.address);
+        const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.target.toString());
         const ownerDAIBalanceAfterExit = await dai.balanceOf(owner.address);
 
-        expect(vaultDAIBalanceAfterExit).to.lt(vaultDAIBalanceBeforeExit);
-        expect(ownerDAIBalanceAfterExit).to.gt(ownerDAIBalanceBeforeExit);
+        expect(vaultDAIBalanceAfterExit).to.be.lt(vaultDAIBalanceBeforeExit);
+        expect(ownerDAIBalanceAfterExit).to.be.gt(ownerDAIBalanceBeforeExit);
       });
     });
 
@@ -180,16 +180,16 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
         pool = await stableTask.instanceAt('MetaStablePool', event.args.pool);
-        expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+        expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
         poolId = await pool.getPoolId();
         const [registeredAddress] = await vault.getPool(poolId);
-        expect(registeredAddress).to.equal(pool.address);
+        expect(registeredAddress).to.equal(pool.target.toString());
       });
 
       before('initialize meta stable pool', async () => {
         const userData = StablePoolEncoder.joinInit(initialBalances);
-        await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+        await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
           assets: tokens,
           maxAmountsIn: initialBalances,
           fromInternalBalance: false,
@@ -199,9 +199,9 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
 
       it('can exit proportionally through the relayer', async () => {
         const bptBalance = await pool.balanceOf(owner.address);
-        expect(bptBalance).to.gt(0);
+        expect(bptBalance).to.be.gt(0);
 
-        const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.address);
+        const vaultDAIBalanceBeforeExit = await dai.balanceOf(vault.target.toString());
         const ownerDAIBalanceBeforeExit = await dai.balanceOf(owner.address);
 
         const userData = defaultAbiCoder.encode(
@@ -210,7 +210,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         );
 
         // Send BPT to the relayer so it can exit.
-        await pool.connect(owner).transfer(relayer.address, bptBalance);
+        await (pool.connect(owner) as Contract).transfer(relayer.address, bptBalance);
 
         const exitCalldata = library.interface.encodeFunctionData('exitPool', [
           poolId,
@@ -226,16 +226,16 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
           [],
         ]);
 
-        await relayer.connect(owner).multicall([exitCalldata]);
+        await (relayer.connect(owner) as Contract).multicall([exitCalldata]);
 
         const remainingBalance = await pool.balanceOf(owner.address);
         expect(remainingBalance).to.equal(0);
 
-        const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.address);
+        const vaultDAIBalanceAfterExit = await dai.balanceOf(vault.target.toString());
         const ownerDAIBalanceAfterExit = await dai.balanceOf(owner.address);
 
-        expect(vaultDAIBalanceAfterExit).to.lt(vaultDAIBalanceBeforeExit);
-        expect(ownerDAIBalanceAfterExit).to.gt(ownerDAIBalanceBeforeExit);
+        expect(vaultDAIBalanceAfterExit).to.be.lt(vaultDAIBalanceBeforeExit);
+        expect(ownerDAIBalanceAfterExit).to.be.gt(ownerDAIBalanceBeforeExit);
       });
     });
   });

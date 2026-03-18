@@ -8,7 +8,7 @@ import { Artifact } from 'hardhat/types';
  * @param network Name of the network looking the deployment for (e.g. mainnet,  polygon, etc)
  */
 export function lookupBalancerContractByAddress(address: string, network: string): { task: string; name: string } {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const networkAddresses = require(getBalancerContractAddresses(network));
   const deploymentInfo = networkAddresses[address];
   if (deploymentInfo === undefined) {
@@ -45,6 +45,7 @@ export async function getBalancerContractAt(task: string, contract: string, addr
  * @param contract Name of the contract to looking the ABI of
  */
 export function getBalancerContractArtifact(task: string, contract: string): Artifact {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(getBalancerContractArtifactPath(task, contract));
 }
 
@@ -87,6 +88,7 @@ export function getBalancerContractAddress(task: string, contract: string, netwo
  * @param network Name of the network looking the deployment output for (e.g. mainnet, polygon, etc)
  */
 export function getBalancerDeployment(task: string, network: string): { [key: string]: string } {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require(getBalancerDeploymentPath(task, network));
 }
 

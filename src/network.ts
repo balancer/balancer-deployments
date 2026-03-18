@@ -5,8 +5,7 @@ import Task, { TaskStatus } from './task';
 import { Network } from './types';
 import { getActionIdInfo } from 'actionId';
 import { timestampToString } from '@helpers/time';
-import { BigNumber } from 'ethers';
-import { bn, decimal } from '@helpers/numbers';
+import { decimal } from '@helpers/numbers';
 import retry from 'async-retry';
 
 const DEPLOYMENT_TXS_DIRECTORY = path.resolve(__dirname, '../deployment-txs');
@@ -174,12 +173,12 @@ export async function getTimelockAuthorizerConfigDiff(task: Task, network: strin
 
   for (const delayInfo of allDelays.grantDelays) {
     const actionId = delayInfo.actionIdInfo.actionId;
-    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdGrantDelay(actionId);
+    const onchainDelay: bigint = await timelockAuthorizer.getActionIdGrantDelay(actionId);
 
-    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+    if (onchainDelay.toString() !== String(delayInfo.delay.value)) {
       diff.push({
         actionId: delayInfo.actionIdInfo,
-        onchainDelay: decimal(onchainDelay),
+        onchainDelay: decimal(onchainDelay.toString()),
         expectedDelay: delayInfo.delay.value,
         type: 'Grant',
       });
@@ -188,12 +187,12 @@ export async function getTimelockAuthorizerConfigDiff(task: Task, network: strin
 
   for (const delayInfo of allDelays.executeDelays) {
     const actionId = delayInfo.actionIdInfo.actionId;
-    const onchainDelay: BigNumber = await timelockAuthorizer.getActionIdDelay(actionId);
+    const onchainDelay: bigint = await timelockAuthorizer.getActionIdDelay(actionId);
 
-    if (!onchainDelay.eq(bn(delayInfo.delay.value))) {
+    if (onchainDelay.toString() !== String(delayInfo.delay.value)) {
       diff.push({
         actionId: delayInfo.actionIdInfo,
-        onchainDelay: decimal(onchainDelay),
+        onchainDelay: decimal(onchainDelay.toString()),
         expectedDelay: delayInfo.delay.value,
         type: 'Execute',
       });

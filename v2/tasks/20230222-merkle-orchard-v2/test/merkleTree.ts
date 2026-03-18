@@ -1,4 +1,4 @@
-import { ethers } from 'hardhat';
+import { keccak256, getBytes } from 'ethers';
 
 /* eslint-disable */
 
@@ -54,7 +54,7 @@ export class MerkleTree {
       return first;
     }
 
-    return this._stringToBuffer(ethers.utils.keccak256(this.sortAndConcat(first, second)));
+    return this._stringToBuffer(keccak256(this.sortAndConcat(first, second)));
   }
 
   getRoot() {
@@ -87,7 +87,7 @@ export class MerkleTree {
 
   // external call - convert to buffer
   getHexProof(_el: any) {
-    const el = Buffer.from(ethers.utils.arrayify(_el));
+    const el = Buffer.from(getBytes(_el));
 
     const proof = this.getProof(el);
 
@@ -109,7 +109,7 @@ export class MerkleTree {
 
     // Convert element to 32 byte hash if it is not one already
     if (el.length !== 32 || !Buffer.isBuffer(el)) {
-      hash = this._stringToBuffer(ethers.utils.keccak256(el as string));
+      hash = this._stringToBuffer(keccak256(el as string));
     } else {
       hash = el as Buffer;
     }
@@ -142,6 +142,6 @@ export class MerkleTree {
   }
 
   _stringToBuffer(str: string): Buffer {
-    return Buffer.from(ethers.utils.arrayify(str));
+    return Buffer.from(getBytes(str));
   }
 }

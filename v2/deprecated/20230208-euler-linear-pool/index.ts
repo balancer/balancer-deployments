@@ -37,7 +37,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: 'DO NOT USE - Mock Linear Pool',
       symbol: 'TEST',
       mainToken: input.WETH,
-      wrappedToken: mockEulerToken.address,
+      wrappedToken: mockEulerToken.target,
       assetManager: undefined,
       upperTarget: 0,
       pauseWindowDuration: undefined,
@@ -83,7 +83,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     mockPoolArgs.assetManager = assetManagerAddress;
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
-    const txHash = await getContractDeploymentTransactionHash(mockPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
     const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
 
@@ -95,7 +95,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       .sub(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('EulerLinearPool', mockPool.address, [mockPoolArgs]);
+    await task.verify('EulerLinearPool', mockPool.target, [mockPoolArgs]);
 
     // We can also verify the Asset Manager
     await task.verify('EulerLinearPoolRebalancer', assetManagerAddress, [

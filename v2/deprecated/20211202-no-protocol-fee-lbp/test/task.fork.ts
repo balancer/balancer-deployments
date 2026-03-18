@@ -1,13 +1,13 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract, ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
 import * as expectEvent from '@helpers/expectEvent';
-import { fp } from '@helpers/numbers';
+import { bn, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { calculateInvariant } from '@helpers/models/pools/weighted/math';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '@helpers/time';
@@ -32,10 +32,10 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
 
   const weightChangeDuration = MONTH;
   const endWeights = [fp(0.2), fp(0.8)];
-  let endTime: BigNumber;
+  let endTime: bigint;
 
   const initialBalanceDAI = fp(9e6); // 9:1 DAI:USDC ratio
-  const initialBalanceUSDC = fp(1e6).div(1e12); // 6 digits
+  const initialBalanceUSDC = fp(1e6) / bn(1e12); // 6 digits
   const initialBalances = [initialBalanceDAI, initialBalanceUSDC];
 
   const LARGE_TOKEN_HOLDER = '0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503';
@@ -71,11 +71,11 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
     const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
     pool = await task.instanceAt('NoProtocolFeeLiquidityBootstrappingPool', event.args.pool);
-    expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+    expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
     const poolId = pool.getPoolId();
     const [registeredAddress] = await vault.getPool(poolId);
-    expect(registeredAddress).to.equal(pool.address);
+    expect(registeredAddress).to.equal(pool.target.toString());
   });
 
   it('initialize a liquidity bootstrapping pool from the owner', async () => {
@@ -84,8 +84,8 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
     await usdc.connect(whale).transfer(owner.address, initialBalanceUSDC);
 
     // Approve the Vault to join
-    await dai.connect(owner).approve(vault.address, MAX_UINT256);
-    await usdc.connect(owner).approve(vault.address, MAX_UINT256);
+    await dai.connect(owner).approve(vault.target.toString(), MAX_UINT256);
+    await usdc.connect(owner).approve(vault.target.toString(), MAX_UINT256);
 
     const poolId = await pool.getPoolId();
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
@@ -96,16 +96,16 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
       userData,
     });
 
-    const scaledBalances = [initialBalanceDAI, initialBalanceUSDC.mul(1e12)];
+    const scaledBalances = [initialBalanceDAI, initialBalanceUSDC * BigInt(1e12)];
     // Initial BPT is the invariant multiplied by the number of tokens
-    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights).mul(tokens.length);
+    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights) * tokens.length;
 
     expectEqualWithError(await pool.balanceOf(owner.address), expectedInvariant, 0.001);
   });
 
   it('can swap in a liquidity bootstrapping pool', async () => {
     const amount = fp(500); // Small relative to Pool balance - should have zero price impact
-    await dai.connect(whale).approve(vault.address, amount);
+    await dai.connect(whale).approve(vault.target.toString(), amount);
 
     const poolId = await pool.getPoolId();
 
@@ -123,8 +123,8 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
     const whaleUSDCBalanceAfter = await usdc.balanceOf(whale.address);
 
     // Assert pool swap
-    const expectedUSDC = amount.div(1e12);
-    expectEqualWithError(whaleUSDCBalanceAfter.sub(whaleUSDCBalanceBefore), expectedUSDC, 0.1);
+    const expectedUSDC = amount / BigInt(1e12);
+    expectEqualWithError(whaleUSDCBalanceAfter - whaleUSDCBalanceBefore, expectedUSDC, 0.1);
   });
 
   it('initial weights are correct', async () => {
@@ -133,8 +133,8 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
   });
 
   it('owner can start a gradual weight change', async () => {
-    const startTime = (await currentTimestamp()).add(DAY);
-    endTime = startTime.add(weightChangeDuration);
+    const startTime = (await currentTimestamp()) + DAY;
+    endTime = startTime + weightChangeDuration;
 
     const tx = await pool.connect(owner).updateWeightsGradually(startTime, endTime, endWeights);
 
@@ -148,7 +148,7 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
   });
 
   it('weights fully change once the time expires', async () => {
-    await advanceToTimestamp(endTime.add(MINUTE));
+    await advanceToTimestamp(endTime + MINUTE);
 
     // Weights are not exact due to being stored in fewer bits
     expect(await pool.getNormalizedWeights()).to.equalWithError(endWeights, 0.0001);
@@ -159,12 +159,12 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
 
     const txA = {
       to: contractA,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     const txB = {
       to: contractB,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     await expect(owner.sendTransaction(txA)).to.be.reverted;

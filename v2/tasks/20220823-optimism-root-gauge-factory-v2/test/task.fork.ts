@@ -2,8 +2,8 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, fp, FP_ONE } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { bn, fp, FP_ONE } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { advanceTime, currentTimestamp, currentWeekTimestamp, DAY, WEEK } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
@@ -79,7 +79,7 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
 
     gauge = await task.instanceAt('OptimismRootGauge', event.args.gauge);
 
-    expect(await factory.isGaugeFromFactory(gauge.address)).to.be.true;
+    expect(await factory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
   });
 
   it('grant permissions', async () => {
@@ -90,28 +90,32 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
     await Promise.all(
       ['addGaugeFactory', 'addOptimismGauge'].map(
         async (method) =>
-          await authorizer.connect(govMultisig).grantRole(await actionId(gaugeAdder, method), admin.address)
+          await (authorizer.connect(govMultisig) as Contract).grantRole(
+            await actionId(gaugeAdder, method),
+            admin.address
+          )
       )
     );
 
     // We also need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await authorizerAdaptor.getActionId(gauge.interface.getSighash('checkpoint')), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await authorizerAdaptor.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+      admin.address
+    );
   });
 
   it('add gauge to gauge controller', async () => {
-    await gaugeAdder.connect(admin).addGaugeFactory(factory.address, 5); // Optimism is Gauge Type 5
-    await gaugeAdder.connect(admin).addOptimismGauge(gauge.address);
+    await (gaugeAdder.connect(admin) as Contract).addGaugeFactory(factory.target.toString(), 5); // Optimism is Gauge Type 5
+    await (gaugeAdder.connect(admin) as Contract).addOptimismGauge(gauge.target.toString());
 
-    expect(await gaugeController.gauge_exists(gauge.address)).to.be.true;
+    expect(await gaugeController.gauge_exists(gauge.target.toString())).to.be.true;
   });
 
   it('vote for gauge', async () => {
-    expect(await gaugeController.get_gauge_weight(gauge.address)).to.equal(0);
+    expect(await gaugeController.get_gauge_weight(gauge.target.toString())).to.equal(0);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(0);
 
-    await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.address, 10000); // Max voting power is 10k points
+    await (gaugeController.connect(veBALHolder) as Contract).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in
     await advanceTime(DAY * 8);
@@ -119,7 +123,10 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
     expect(
-      await gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, await currentWeekTimestamp())
+      await gaugeController['gauge_relative_weight(address,uint256)'](
+        gauge.target.toString(),
+        await currentWeekTimestamp()
+      )
     ).to.be.gt(weightCap);
     expect(await gauge.getCappedRelativeWeight(await currentTimestamp())).to.equal(weightCap);
   });
@@ -132,9 +139,12 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
-    const zeroMintTx = await authorizerAdaptor.connect(admin).performAction(gauge.address, calldata);
+    const zeroMintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gauge.target.toString(),
+      calldata
+    );
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
-      periodTime: firstMintWeekTimestamp.sub(WEEK), // Process past week, which had zero votes
+      periodTime: firstMintWeekTimestamp - bn(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
     });
     // No token transfers are performed if the emissions are zero, but we can't test for a lack of those
@@ -142,17 +152,20 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
     await advanceTime(WEEK);
 
     // The gauge should now mint and send all minted tokens to the Arbitrum bridge
-    const mintTx = await authorizerAdaptor.connect(admin).performAction(gauge.address, calldata);
+    const mintTx = await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gauge.target.toString(),
+      calldata
+    );
     const event = expectEvent.inIndirectReceipt(await mintTx.wait(), gauge.interface, 'Checkpoint', {
       periodTime: firstMintWeekTimestamp,
     });
     const actualEmissions = event.args.periodEmissions;
 
     // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()).mul(WEEK);
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
 
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap.mul(weeklyRate).div(FP_ONE);
+    const expectedEmissions = (weightCap * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
 
     // Tokens are minted for the gauge
@@ -160,21 +173,21 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
       await mintTx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.address,
+        to: gauge.target.toString(),
         value: actualEmissions,
       },
       BAL
     );
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
     ]);
 
     expectEvent.inIndirectReceipt(await mintTx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: OptimismBAL,
-      _from: gauge.address,
+      _from: gauge.target.toString(),
       _to: recipient.address,
       _amount: actualEmissions,
     });
@@ -183,14 +196,17 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
     await advanceTime(WEEK * numberOfWeeks);
-    await gaugeController.checkpoint_gauge(gauge.address);
+    await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
 
     // We can query the relative weight of the gauge for each of the weeks that have passed
-    const relativeWeights: BigNumber[] = await Promise.all(
+    const relativeWeights: bigint[] = await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
-        gaugeController['gauge_relative_weight(address,uint256)'](gauge.address, weekTimestamp.sub(WEEK * weekIndex))
+        gaugeController['gauge_relative_weight(address,uint256)'](
+          gauge.target.toString(),
+          weekTimestamp - bn(WEEK * weekIndex)
+        )
       )
     );
 
@@ -202,17 +218,17 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
 
     // The amount of tokens allocated to the gauge should equal the sum of the weekly emissions rate times the weight
     // cap.
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()).mul(WEEK);
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = weightCap.mul(numberOfWeeks).mul(weeklyRate).div(FP_ONE);
+    const expectedEmissions = (weightCap * bn(numberOfWeeks) * weeklyRate) / FP_ONE;
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
-    const tx = await authorizerAdaptor.connect(admin).performAction(gauge.address, calldata);
+    const tx = await (authorizerAdaptor.connect(admin) as Contract).performAction(gauge.target.toString(), calldata);
 
     await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
         expectEvent.inIndirectReceipt(await tx.wait(), gauge.interface, 'Checkpoint', {
-          periodTime: weekTimestamp.sub(WEEK * weekIndex),
+          periodTime: weekTimestamp - bn(WEEK * weekIndex),
         })
       )
     );
@@ -222,7 +238,7 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
       await tx.wait(),
       {
         from: ZERO_ADDRESS,
-        to: gauge.address,
+        to: gauge.target.toString(),
       },
       BAL
     );
@@ -230,14 +246,14 @@ describeForkTest.skip('OptimismRootGaugeFactoryV2', 'mainnet', 15397200, functio
     expect(transferEvent.args.value).to.be.almostEqual(expectedEmissions);
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new ethers.utils.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
     ]);
 
     const depositEvent = expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
       _l2Token: OptimismBAL,
-      _from: gauge.address,
+      _from: gauge.target.toString(),
       _to: recipient.address,
     });
 

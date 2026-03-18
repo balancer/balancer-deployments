@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { advanceToTimestamp, DAY } from '@helpers/time';
 
 import { describeForkTest } from '@src';
@@ -47,7 +47,7 @@ describeForkTest.skip('veBALDeploymentCoordinator', 'mainnet', 14458084, functio
   });
 
   it('perform first stage', async () => {
-    await advanceToTimestamp((await coordinator.getActivationScheduledTime()).add(1));
+    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + 1);
     await coordinator.performFirstStage();
 
     expect(await coordinator.getCurrentDeploymentStage()).to.equal(1);
@@ -60,7 +60,7 @@ describeForkTest.skip('veBALDeploymentCoordinator', 'mainnet', 14458084, functio
   });
 
   it('perform third stage', async () => {
-    await advanceToTimestamp((await coordinator.getActivationScheduledTime()).add(DAY * 10));
+    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + DAY * 10);
     await coordinator.performThirdStage();
 
     expect(await coordinator.getCurrentDeploymentStage()).to.equal(3);

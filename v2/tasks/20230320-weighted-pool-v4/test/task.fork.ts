@@ -12,9 +12,9 @@ import { expectEqualWithError } from '@helpers/relativeError';
 import { actionId } from '@helpers/models/misc/actions';
 import { MAX_UINT256, ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { deploy } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
   let owner: SignerWithAddress,
@@ -107,12 +107,12 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
   }
 
   async function initPool(poolId: string) {
-    await comp.connect(whale).approve(vault.address, MAX_UINT256);
-    await uni.connect(whale).approve(vault.address, MAX_UINT256);
-    await aave.connect(whale).approve(vault.address, MAX_UINT256);
+    await (comp.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+    await (uni.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+    await (aave.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
-    await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+    await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
       assets: tokens,
       maxAmountsIn: initialBalances,
       fromInternalBalance: false,
@@ -153,7 +153,7 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
@@ -165,17 +165,15 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
     it('swap in the pool', async () => {
       const amount = fp(500);
-      await comp.connect(whale).transfer(owner.address, amount);
-      await comp.connect(owner).approve(vault.address, amount);
+      await (comp.connect(whale) as Contract).transfer(owner.address, amount);
+      await (comp.connect(owner) as Contract).approve(vault.target.toString(), amount);
 
-      await vault
-        .connect(owner)
-        .swap(
-          { kind: SwapKind.GivenIn, poolId, assetIn: COMP, assetOut: UNI, amount, userData: '0x' },
-          { sender: owner.address, recipient: owner.address, fromInternalBalance: false, toInternalBalance: false },
-          0,
-          MAX_UINT256
-        );
+      await (vault.connect(owner) as Contract).swap(
+        { kind: SwapKind.GivenIn, poolId, assetIn: COMP, assetOut: UNI, amount, userData: '0x' },
+        { sender: owner.address, recipient: owner.address, fromInternalBalance: false, toInternalBalance: false },
+        0,
+        MAX_UINT256
+      );
 
       // Assert pool swap
       const expectedUNI = await math.calcOutGivenIn(
@@ -197,11 +195,11 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
     const attackerFunds = fp(1);
 
     sharedBeforeEach('deploy and fund attacker', async () => {
-      attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.address]);
-      await comp.connect(whale).transfer(attacker.address, attackerFunds);
-      await uni.connect(whale).transfer(attacker.address, attackerFunds);
-      await aave.connect(whale).transfer(attacker.address, attackerFunds);
-      await wstEth.connect(wstEthWhale).transfer(attacker.address, attackerFunds);
+      attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.target.toString()]);
+      await (comp.connect(whale) as Contract).transfer(attacker.address, attackerFunds);
+      await (uni.connect(whale) as Contract).transfer(attacker.address, attackerFunds);
+      await (aave.connect(whale) as Contract).transfer(attacker.address, attackerFunds);
+      await (wstEth.connect(wstEthWhale) as Contract).transfer(attacker.address, attackerFunds);
     });
 
     context('when the target pool is not protected', () => {
@@ -235,9 +233,10 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
       context('disable recovery mode', () => {
         sharedBeforeEach('grant permissions to attacker', async () => {
-          await authorizer
-            .connect(govMultisig)
-            .grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.address);
+          await (authorizer.connect(govMultisig) as Contract).grantRole(
+            await actionId(pool, 'disableRecoveryMode'),
+            attacker.address
+          );
         });
 
         it(`${action} disable recovery mode attack`, async () => {
@@ -273,12 +272,12 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       pool = await createPool();
       poolId = await pool.getPoolId();
 
-      await comp.connect(whale).approve(vault.address, MAX_UINT256);
-      await uni.connect(whale).approve(vault.address, MAX_UINT256);
-      await aave.connect(whale).approve(vault.address, MAX_UINT256);
+      await (comp.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+      await (uni.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+      await (aave.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = WeightedPoolEncoder.joinInit(initialBalances);
-      await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+      await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
         assets: tokens,
         maxAmountsIn: initialBalances,
         fromInternalBalance: false,
@@ -287,20 +286,23 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
     });
 
     before('enter recovery mode', async () => {
-      await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'enableRecoveryMode'), govMultisig.address);
-      await pool.connect(govMultisig).enableRecoveryMode();
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(pool, 'enableRecoveryMode'),
+        govMultisig.address
+      );
+      await (pool.connect(govMultisig) as Contract).enableRecoveryMode();
       expect(await pool.inRecoveryMode()).to.be.true;
     });
 
     it('can exit via recovery mode', async () => {
       const bptBalance = await pool.balanceOf(owner.address);
-      expect(bptBalance).to.gt(0);
+      expect(bptBalance).to.be.gt(0);
 
-      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.address);
+      const vaultUNIBalanceBeforeExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceBeforeExit = await uni.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
-      await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
+      await (vault.connect(owner) as Contract).exitPool(poolId, owner.address, owner.address, {
         assets: tokens,
         minAmountsOut: Array(tokens.length).fill(0),
         fromInternalBalance: false,
@@ -310,11 +312,11 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.address);
+      const vaultUNIBalanceAfterExit = await uni.balanceOf(vault.target.toString());
       const ownerUNIBalanceAfterExit = await uni.balanceOf(owner.address);
 
-      expect(vaultUNIBalanceAfterExit).to.lt(vaultUNIBalanceBeforeExit);
-      expect(ownerUNIBalanceAfterExit).to.gt(ownerUNIBalanceBeforeExit);
+      expect(vaultUNIBalanceAfterExit).to.be.lt(vaultUNIBalanceBeforeExit);
+      expect(ownerUNIBalanceAfterExit).to.be.gt(ownerUNIBalanceBeforeExit);
     });
   });
 
@@ -323,7 +325,7 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
       const pool = await createPool(ZERO_BYTES32);
       const pool2 = await createPool(ONES_BYTES32);
 
-      expect(pool2.address).to.not.equal(pool.address);
+      expect(pool2.target.toString()).to.not.equal(pool.target.toString());
     });
   });
 
@@ -332,12 +334,12 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
     const txA = {
       to: contractA,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     const txB = {
       to: contractB,
-      value: ethers.utils.parseEther('0.001'),
+      value: ethers.parseEther('0.001'),
     };
 
     await expect(owner.sendTransaction(txA)).to.be.reverted;
@@ -346,24 +348,25 @@ describeForkTest.skip('WeightedPool V4', 'mainnet', 16870763, function () {
 
   describe('factory disable', () => {
     it('the factory can be disabled', async () => {
-      await authorizer.connect(govMultisig).grantRole(await actionId(factory, 'disable'), govMultisig.address);
-      await factory.connect(govMultisig).disable();
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(factory, 'disable'),
+        govMultisig.address
+      );
+      await (factory.connect(govMultisig) as Contract).disable();
 
       expect(await factory.isDisabled()).to.be.true;
 
       await expect(
-        factory
-          .connect(owner)
-          .create(
-            NAME,
-            SYMBOL,
-            tokens,
-            WEIGHTS,
-            [ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS],
-            POOL_SWAP_FEE_PERCENTAGE,
-            owner.address,
-            randomBytes(32)
-          )
+        (factory.connect(owner) as Contract).create(
+          NAME,
+          SYMBOL,
+          tokens,
+          WEIGHTS,
+          [ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS],
+          POOL_SWAP_FEE_PERCENTAGE,
+          owner.address,
+          randomBytes(32)
+        )
       ).to.be.revertedWith('BAL#211');
     });
   });

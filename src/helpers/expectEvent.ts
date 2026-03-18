@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import { BigNumber, ContractReceipt } from 'ethers';
-import { Interface, LogDescription } from 'ethers/lib/utils';
+import { ContractTransactionReceipt, EventLog, Interface, LogDescription, TransactionReceipt } from 'ethers';
 
 // Ported from @openzeppelin/test-helpers to use with Ethers. The Test Helpers don't
 // yet have Typescript typings, so we're being lax about them here.
@@ -8,12 +7,8 @@ import { Interface, LogDescription } from 'ethers/lib/utils';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export function inReceipt(receipt: ContractReceipt, eventName: string, eventArgs = {}): any {
-  if (receipt.events == undefined) {
-    throw new Error('No events found in receipt');
-  }
-
-  const events = receipt.events.filter((e) => e.event === eventName);
+export function inReceipt(receipt: ContractTransactionReceipt, eventName: string, eventArgs = {}): any {
+  const events = receipt.logs.filter((log): log is EventLog => log instanceof EventLog && log.eventName === eventName);
   expect(events.length > 0).to.equal(true, `No '${eventName}' events found`);
 
   const exceptions: Array<string> = [];
@@ -56,7 +51,7 @@ export function inReceipt(receipt: ContractReceipt, eventName: string, eventArgs
  * @returns First matching event if the amount is not specified; all matching events otherwise.
  */
 export function inIndirectReceipt(
-  receipt: ContractReceipt,
+  receipt: TransactionReceipt,
   emitter: Interface,
   eventName: string,
   eventArgs = {},
@@ -106,15 +101,13 @@ export function inIndirectReceipt(
   }
 }
 
-export function notEmitted(receipt: ContractReceipt, eventName: string): void {
-  if (receipt.events != undefined) {
-    const events = receipt.events.filter((e) => e.event === eventName);
-    expect(events.length > 0).to.equal(false, `'${eventName}' event found`);
-  }
+export function notEmitted(receipt: ContractTransactionReceipt, eventName: string): void {
+  const events = receipt.logs.filter((log): log is EventLog => log instanceof EventLog && log.eventName === eventName);
+  expect(events.length > 0).to.equal(false, `'${eventName}' event found`);
 }
 
 function arrayFromIndirectReceipt(
-  receipt: ContractReceipt,
+  receipt: TransactionReceipt,
   emitter: Interface,
   eventName: string,
   address?: string
@@ -130,7 +123,7 @@ function arrayFromIndirectReceipt(
     })
     .filter((e): e is LogDescription => e !== undefined);
 
-  return decodedEvents.filter((event) => event.name === eventName);
+  return decodedEvents.filter((event) => event?.name === eventName);
 }
 
 function contains(args: { [key: string]: any | undefined }, key: string, value: any) {
@@ -138,11 +131,11 @@ function contains(args: { [key: string]: any | undefined }, key: string, value: 
 
   if (value === null) {
     expect(args[key]).to.equal(null, `expected event argument '${key}' to be null but got ${args[key]}`);
-  } else if (BigNumber.isBigNumber(args[key]) || BigNumber.isBigNumber(value)) {
-    const actual = BigNumber.isBigNumber(args[key]) ? args[key].toString() : args[key];
-    const expected = BigNumber.isBigNumber(value) ? value.toString() : value;
-
-    expect(args[key]).to.equal(value, `expected event argument '${key}' to have value ${expected} but got ${actual}`);
+  } else if (typeof args[key] === 'bigint' || typeof value === 'bigint') {
+    expect(args[key].toString()).to.equal(
+      value.toString(),
+      `expected event argument '${key}' to have value ${value.toString()} but got ${args[key].toString()}`
+    );
   } else {
     expect(args[key]).to.be.deep.equal(
       value,

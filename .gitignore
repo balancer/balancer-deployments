@@ -21,6 +21,7 @@ cache/
 # Build artifacts
 dist/
 pkg/balancer-js/src/typechain/*
+typechain-types/
 
 test.json
 

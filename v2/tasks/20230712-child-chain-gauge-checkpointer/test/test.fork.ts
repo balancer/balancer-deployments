@@ -1,7 +1,7 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 
@@ -42,7 +42,7 @@ describeForkTest.skip('ChildChainGaugeCheckpointer (BalancerRelayer)', 'polygon'
   });
 
   it('checkpoints gauges for user', async () => {
-    const checkpointInterface = new ethers.utils.Interface([
+    const checkpointInterface = new ethers.Interface([
       'event UpdateLiquidityLimit(address indexed _user, uint256 _original_balance, uint256 _original_supply, uint256 _working_balance, uint256 _working_supply)',
     ]);
 

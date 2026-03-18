@@ -2,7 +2,7 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { fp, maxUint } from '@helpers/numbers';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
@@ -41,7 +41,7 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
     WETH = await testBALTokenTask.instanceAt('TestBalancerToken', input.WETH);
     BAL = await testBALTokenTask.instanceAt('TestBalancerToken', input.BAL);
 
-    wethSigner = await impersonate(WETH.address, fp(10e8));
+    wethSigner = await impersonate(WETH.target.toString(), fp(10e8));
     alice = await getSigner();
   });
 
@@ -114,14 +114,14 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
 
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: router.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: router.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: router.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
   });
@@ -134,20 +134,20 @@ describeForkTest.skip('Router-V3', 'mainnet', 21336200, function () {
 
     BAL.connect(largeHolderSigner).transfer(bob.address, initialBalanceBAL);
 
-    await BAL.connect(bob).approve(permit2.address, initialBalanceBAL);
-    await permit2.connect(bob).approve(input.BAL, router.address, initialBalanceBAL, maxUint(48));
+    await BAL.connect(bob).approve(permit2.target.toString(), initialBalanceBAL);
+    await permit2.connect(bob).approve(input.BAL, router.target.toString(), initialBalanceBAL, maxUint(48));
 
     await router
       .connect(bob)
       .initialize(
-        pool.address,
+        pool.target.toString(),
         [input.BAL, input.WETH],
         [initialBalanceBAL, initialBalanceWETH],
         0,
         true,
         ZERO_BYTES32,
         {
-          value: ethers.utils.parseEther('1000.0'),
+          value: ethers.parseEther('1000.0'),
         }
       );
   });

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { defaultAbiCoder } from '@ethersproject/abi';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { actionId } from '@helpers/models/misc/actions';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
@@ -67,27 +67,30 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
     // Gov approval for relayer
     const exitPoolRole = await actionId(vault, 'exitPool');
     const withdrawCollectedFeesRole = await actionId(protocolFeesCollector, 'withdrawCollectedFees');
-    await authorizer.connect(govMultisig).grantRoles([exitPoolRole, withdrawCollectedFeesRole], relayer.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRoles(
+      [exitPoolRole, withdrawCollectedFeesRole],
+      relayer.address
+    );
 
     // User approval for relayer
     btcBptHolder = await impersonate(BTC_STABLE_POOL_GAUGE);
-    await vault.connect(btcBptHolder).setRelayerApproval(btcBptHolder.address, relayer.address, true);
+    await (vault.connect(btcBptHolder) as Contract).setRelayerApproval(btcBptHolder.address, relayer.address, true);
 
     snxBptHolder = await impersonate(SNX_WEIGHTED_POOL_GAUGE);
-    await vault.connect(snxBptHolder).setRelayerApproval(snxBptHolder.address, relayer.address, true);
+    await (vault.connect(snxBptHolder) as Contract).setRelayerApproval(snxBptHolder.address, relayer.address, true);
   });
 
   it('sweeps sBTC', async () => {
-    const vaultBalanceBefore = await sBTCContract.balanceOf(vault.address);
-    const protocolFeesCollectorBalanceBefore = await sBTCContract.balanceOf(protocolFeesCollector.address);
+    const vaultBalanceBefore = await sBTCContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceBefore = await sBTCContract.balanceOf(protocolFeesCollector.target.toString());
 
     await relayer.sweepDoubleEntrypointToken([sBTC_IMPLEMENTATION, sBTC]);
 
-    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.address);
-    const protocolFeesCollectorBalanceAfter = await sBTCContract.balanceOf(protocolFeesCollector.address);
+    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceAfter = await sBTCContract.balanceOf(protocolFeesCollector.target.toString());
 
     expect(vaultBalanceAfter).to.be.eq(0);
-    expect(protocolFeesCollectorBalanceAfter.sub(protocolFeesCollectorBalanceBefore)).to.be.eq(vaultBalanceBefore);
+    expect(protocolFeesCollectorBalanceAfter - protocolFeesCollectorBalanceBefore).to.be.eq(vaultBalanceBefore);
   });
 
   it('exits from the sBTC pool', async () => {
@@ -95,7 +98,7 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
     const poolContract = await testBALTokenTask.instanceAt('TestBalancerToken', BTC_STABLE_POOL_ADDRESS);
     const EXACT_BPT_IN_FOR_TOKENS_OUT = 1;
 
-    const [, expectedAmountsOut] = await balancerHelpers.callStatic.queryExit(
+    const [, expectedAmountsOut] = await balancerHelpers.queryExit.staticCall(
       BTC_STABLE_POOL_ID,
       btcBptHolder.address,
       btcBptHolder.address,
@@ -111,37 +114,37 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
       }
     );
 
-    await relayer.connect(btcBptHolder).exitBTCStablePool();
+    await (relayer.connect(btcBptHolder) as Contract).exitBTCStablePool();
 
     const actualAmountsOut = await Promise.all(
       [wBTCContract, renBTCContract, sBTCContract].map((token) => token.balanceOf(btcBptHolder.address))
     );
 
     expect(await poolContract.balanceOf(btcBptHolder.address)).to.be.eq(0);
-    expect(expectedAmountsOut).to.be.deep.eq(actualAmountsOut);
+    expect(expectedAmountsOut).to.deep.equal(actualAmountsOut);
 
-    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.address);
+    const vaultBalanceAfter = await sBTCContract.balanceOf(vault.target.toString());
     expect(vaultBalanceAfter).to.be.eq(0);
   });
 
   it('sweeps SNX', async () => {
-    const vaultBalanceBefore = await snxContract.balanceOf(vault.address);
-    const protocolFeesCollectorBalanceBefore = await snxContract.balanceOf(protocolFeesCollector.address);
+    const vaultBalanceBefore = await snxContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceBefore = await snxContract.balanceOf(protocolFeesCollector.target.toString());
 
     await relayer.sweepDoubleEntrypointToken([SNX_IMPLEMENTATION, SNX]);
 
-    const vaultBalanceAfter = await snxContract.balanceOf(vault.address);
-    const protocolFeesCollectorBalanceAfter = await snxContract.balanceOf(protocolFeesCollector.address);
+    const vaultBalanceAfter = await snxContract.balanceOf(vault.target.toString());
+    const protocolFeesCollectorBalanceAfter = await snxContract.balanceOf(protocolFeesCollector.target.toString());
 
     expect(vaultBalanceAfter).to.be.eq(0);
-    expect(protocolFeesCollectorBalanceAfter.sub(protocolFeesCollectorBalanceBefore)).to.be.eq(vaultBalanceBefore);
+    expect(protocolFeesCollectorBalanceAfter - protocolFeesCollectorBalanceBefore).to.be.eq(vaultBalanceBefore);
   });
 
   it('exits from the SNX pool', async () => {
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const poolContract = await testBALTokenTask.instanceAt('TestBalancerToken', SNX_WEIGHTED_POOL_ADDRESS);
 
-    const [, expectedAmountsOut] = await balancerHelpers.callStatic.queryExit(
+    const [, expectedAmountsOut] = await balancerHelpers.queryExit.staticCall(
       SNX_WEIGHTED_POOL_ID,
       snxBptHolder.address,
       snxBptHolder.address,
@@ -153,16 +156,16 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
       }
     );
 
-    await relayer.connect(snxBptHolder).exitSNXWeightedPool();
+    await (relayer.connect(snxBptHolder) as Contract).exitSNXWeightedPool();
 
     const actualAmountsOut = await Promise.all(
       [snxContract, wethContract].map((token) => token.balanceOf(snxBptHolder.address))
     );
 
     expect(await poolContract.balanceOf(snxBptHolder.address)).to.be.eq(0);
-    expect(expectedAmountsOut).to.be.deep.eq(actualAmountsOut);
+    expect(expectedAmountsOut).to.deep.equal(actualAmountsOut);
 
-    const vaultBalanceAfter = await snxContract.balanceOf(vault.address);
+    const vaultBalanceAfter = await snxContract.balanceOf(vault.target.toString());
     expect(vaultBalanceAfter).to.be.eq(0);
   });
 });

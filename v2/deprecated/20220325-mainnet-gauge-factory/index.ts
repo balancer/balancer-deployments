@@ -7,6 +7,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const gaugeImplementationArgs = [input.BalancerMinter, input.VotingEscrowDelegationProxy, input.AuthorizerAdaptor];
   const gaugeImplementation = await task.deploy('LiquidityGaugeV5', gaugeImplementationArgs, from, force);
 
-  const args = [gaugeImplementation.address];
+  const args = [gaugeImplementation.target];
   await task.deployAndVerify('LiquidityGaugeFactory', args, from, force);
 };

@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { ProtocolFeePercentagesProviderDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { fp } from '@helpers/numbers';
 import { actionId } from '@helpers/models/misc/actions';
@@ -59,7 +59,7 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     const registryTask = new Task('20250117-v3-contract-registry', TaskMode.READ_ONLY, getForkedNetwork(hre));
     registry = await registryTask.deployedInstance('BalancerContractRegistry');
 
-    const vaultAsExtension = vaultExtension.attach(vault.address);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     const feeControllerAddress = await vaultAsExtension.getProtocolFeeController();
     feeController = await task.instanceAt('ProtocolFeeController', feeControllerAddress);
 
@@ -72,51 +72,59 @@ describeForkTest('V3-FactoryFeeHelper', 'mainnet', 22342890, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Allow adding the factory to the contract.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(registry, 'registerBalancerContract'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(registry, 'registerBalancerContract'),
+      admin.address
+    );
 
     // Let the admin set factory fees.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(feeHelper, 'setFactorySpecificProtocolFeePercentages'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeHelper, 'setFactorySpecificProtocolFeePercentages'),
+      admin.address
+    );
 
     // Let the fee helper set the actual fees.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(feeController, 'setProtocolSwapFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
 
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(feeController, 'setProtocolYieldFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(feeController, 'setProtocolYieldFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   before('add contract to registry', async () => {
-    await registry
-      .connect(admin)
-      .registerBalancerContract(ContractType.POOL_FACTORY, '20241205-v3-weighted-pool', factory.address);
+    await (registry.connect(admin) as Contract).registerBalancerContract(
+      ContractType.POOL_FACTORY,
+      '20241205-v3-weighted-pool',
+      factory.target.toString()
+    );
   });
 
   it('stores the contracts', async () => {
-    expect(await feeHelper.getProtocolFeeController()).to.eq(feeController.address);
+    expect(await feeHelper.getProtocolFeeController()).to.eq(feeController.target.toString());
     expect(await feeHelper.getBalancerContractRegistry()).to.eq(input.BalancerContractRegistry);
     expect(await feeHelper.getVault()).to.eq(input.Vault);
   });
 
   it('can add to the registry', async () => {
-    expect(await registry.isActiveBalancerContract(ContractType.POOL_FACTORY, factory.address)).to.be.true;
+    expect(await registry.isActiveBalancerContract(ContractType.POOL_FACTORY, factory.target.toString())).to.be.true;
   });
 
   it('can set protocol fees', async () => {
-    await feeHelper
-      .connect(admin)
-      .setFactorySpecificProtocolFeePercentages(factory.address, PROTOCOL_SWAP_FEE, PROTOCOL_YIELD_FEE);
-    await feeHelper.setProtocolFeePercentagesForPools(factory.address, [pool.address]);
+    await (feeHelper.connect(admin) as Contract).setFactorySpecificProtocolFeePercentages(
+      factory.target.toString(),
+      PROTOCOL_SWAP_FEE,
+      PROTOCOL_YIELD_FEE
+    );
+    await feeHelper.setProtocolFeePercentagesForPools(factory.target.toString(), [pool.target.toString()]);
 
-    const [actualSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.address);
-    const [actualYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.address);
+    const [actualSwapFee] = await feeController.getPoolProtocolSwapFeeInfo(pool.target.toString());
+    const [actualYieldFee] = await feeController.getPoolProtocolYieldFeeInfo(pool.target.toString());
 
-    expect(actualSwapFee).to.eq(PROTOCOL_SWAP_FEE);
-    expect(actualYieldFee).to.eq(PROTOCOL_YIELD_FEE);
+    expect(actualSwapFee).to.equal(PROTOCOL_SWAP_FEE);
+    expect(actualYieldFee).to.equal(PROTOCOL_YIELD_FEE);
   });
 });

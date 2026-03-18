@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { bn, fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';
@@ -60,30 +60,32 @@ describeForkTest('AggregatorBatchRouter-V3', 'mainnet', 21880900, function () {
     const pathsExactIn = [
       {
         tokenIn: RSETH_ADDRESS,
-        steps: [{ pool: pool.address, tokenOut: HGETH_ADDRESS, isBuffer: false }],
+        steps: [{ pool: pool.target.toString(), tokenOut: HGETH_ADDRESS, isBuffer: false }],
         exactAmountIn: rplAmountIn,
         minAmountOut: rplAmountIn,
       },
     ];
 
-    const queryResult = await aggregatorBatchRouter
-      .connect(zero)
-      .callStatic.querySwapExactIn(pathsExactIn, rsEthWhale.address, '0x');
+    const queryResult = await (aggregatorBatchRouter.connect(zero) as Contract).querySwapExactIn.staticCall(
+      pathsExactIn,
+      rsEthWhale.address,
+      '0x'
+    );
 
-    expect(queryResult.tokensOut[0]).to.eq(HGETH_ADDRESS);
+    expect(queryResult.tokensOut[0]).to.equal(HGETH_ADDRESS);
     expect(queryResult.pathAmountsOut[0]).to.eq(queryResult.amountsOut[0]);
 
     const expectedAmountOut = queryResult.amountsOut[0];
-    const hgEthBalanceBefore: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
+    const hgEthBalanceBefore: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
     // Pay token in upfront and swap
-    await rsETH.connect(rsEthWhale).transfer(vault.address, rplAmountIn);
-    const deadline = (await currentTimestamp()).add(bn(DAY));
+    await (rsETH.connect(rsEthWhale) as Contract).transfer(vault.target.toString(), rplAmountIn);
+    const deadline = (await currentTimestamp()) + bn(DAY);
 
-    await aggregatorBatchRouter.connect(rsEthWhale).swapExactIn(pathsExactIn, deadline, '0x');
+    await (aggregatorBatchRouter.connect(rsEthWhale) as Contract).swapExactIn(pathsExactIn, deadline, '0x');
 
-    const hgEthBalanceAfter: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
+    const hgEthBalanceAfter: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
-    expect(hgEthBalanceAfter).to.be.eq(hgEthBalanceBefore.add(expectedAmountOut));
+    expect(hgEthBalanceAfter).to.be.eq(hgEthBalanceBefore + expectedAmountOut);
   });
 });

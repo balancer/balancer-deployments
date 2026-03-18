@@ -7,6 +7,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const args = [input.VotingEscrow, 'VotingEscrow Delegation', 'veBoost', '', input.AuthorizerAdaptor];
   const votingEscrowDelegation = await task.deploy('VotingEscrowDelegation', args, from);
 
-  const proxyArgs = [input.Vault, input.VotingEscrow, votingEscrowDelegation.address];
+  const proxyArgs = [input.Vault, input.VotingEscrow, votingEscrowDelegation.target];
   await task.deployAndVerify('VotingEscrowDelegationProxy', proxyArgs, from, force);
 };

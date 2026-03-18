@@ -10,7 +10,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { deploy } from '@src';
 
@@ -52,13 +52,19 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
   before('grant set and kill delegation permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await actionId(veProxy, 'setDelegation'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(veProxy, 'killDelegation'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(veProxy, 'setDelegation'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(veProxy, 'killDelegation'),
+      admin.address
+    );
   });
 
   describe('getters', () => {
     it('returns null voting escrow', async () => {
-      expect(await veProxy.getVotingEscrow()).to.be.eq(nullVotingEscrow.address);
+      expect(await veProxy.getVotingEscrow()).to.be.eq(nullVotingEscrow.target.toString());
     });
 
     it('returns empty default voting escrow delegation implementation', async () => {
@@ -76,9 +82,9 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
   });
 
   it('sets a new delegation implementation', async () => {
-    const tx = await veProxy.connect(admin).setDelegation(veDelegation.address);
+    const tx = await (veProxy.connect(admin) as Contract).setDelegation(veDelegation.target.toString());
     expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
-      newImplementation: veDelegation.address,
+      newImplementation: veDelegation.target.toString(),
     });
   });
 
@@ -86,11 +92,11 @@ describeForkTest.skip('L2VotingEscrowDelegationProxy', 'arbitrum', 70407500, fun
     expect(await veProxy.adjusted_balance_of(user1.address)).to.be.eq(user1VeBal);
     expect(await veProxy.adjusted_balance_of(user2.address)).to.be.eq(user2VeBal);
 
-    expect(await veProxy.totalSupply()).to.be.eq(user1VeBal.add(user2VeBal));
+    expect(await veProxy.totalSupply()).to.be.eq(user1VeBal + user2VeBal);
   });
 
   it('kills delegation', async () => {
-    const tx = await veProxy.connect(admin).killDelegation();
+    const tx = await (veProxy.connect(admin) as Contract).killDelegation();
     expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
       newImplementation: ZERO_ADDRESS,
     });

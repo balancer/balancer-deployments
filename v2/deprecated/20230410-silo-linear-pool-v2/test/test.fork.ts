@@ -1,12 +1,12 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { randomBytes } from 'ethers/lib/utils';
-import { BigNumber, Contract } from 'ethers';
+import { randomBytes } from 'ethers';
+import { Contract } from 'ethers';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
 import * as expectEvent from '@helpers/expectEvent';
 import { bn, fp, FP_ONE } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 import { describeForkTest } from '@src';
@@ -74,7 +74,7 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
     vault = await new Task('20210418-vault', TaskMode.READ_ONLY, getForkedNetwork(hre)).deployedInstance('Vault');
 
     usdc = await task.instanceAt('IERC20', USDC);
-    await usdc.connect(holder).approve(vault.address, MAX_UINT256);
+    await usdc.connect(holder).approve(vault.target.toString(), MAX_UINT256);
   });
 
   enum LinearPoolState {
@@ -88,20 +88,20 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       const { lowerTarget, upperTarget } = await pool.getTargets();
 
       const { cash } = await vault.getPoolTokenInfo(poolId, USDC);
-      const scaledCash = cash.mul(USDC_SCALING);
+      const scaledCash = cash * USDC_SCALING;
 
       let fees;
 
-      if (scaledCash.gt(upperTarget)) {
+      if (scaledCash > upperTarget) {
         expect(expectedState).to.equal(LinearPoolState.MAIN_EXCESS);
 
-        const excess = scaledCash.sub(upperTarget);
-        fees = excess.mul(SWAP_FEE_PERCENTAGE).div(FP_ONE);
-      } else if (scaledCash.lt(lowerTarget)) {
+        const excess = scaledCash - upperTarget;
+        fees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
+      } else if (scaledCash < lowerTarget) {
         expect(expectedState).to.equal(LinearPoolState.MAIN_LACK);
 
-        const lack = lowerTarget.sub(scaledCash);
-        fees = lack.mul(SWAP_FEE_PERCENTAGE).div(FP_ONE);
+        const lack = lowerTarget - scaledCash;
+        fees = (lack * SWAP_FEE_PERCENTAGE) / FP_ONE;
       } else {
         expect(expectedState).to.equal(LinearPoolState.BALANCED);
 
@@ -120,8 +120,8 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       if (fees > 0) {
         // The recipient of the rebalance call should get the fees that were collected (though there's some rounding
         // error in the main-wrapped conversion).
-        expect(finalRecipientMainBalance.sub(initialRecipientMainBalance)).to.be.almostEqual(
-          fees.div(USDC_SCALING),
+        expect(finalRecipientMainBalance - initialRecipientMainBalance).to.be.almostEqual(
+          fees / USDC_SCALING,
           0.000001
         );
       } else {
@@ -131,8 +131,8 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
 
       const mainInfo = await vault.getPoolTokenInfo(poolId, USDC);
 
-      const expectedMainBalance = lowerTarget.add(upperTarget).div(2);
-      expect(mainInfo.cash.mul(USDC_SCALING)).to.equal(expectedMainBalance);
+      const expectedMainBalance = lowerTarget + upperTarget / BigInt(2);
+      expect(mainInfo.cash * USDC_SCALING).to.equal(expectedMainBalance);
       expect(mainInfo.managed).to.equal(0);
     });
   }
@@ -153,16 +153,16 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('SiloLinearPool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target.toString());
 
       const { assetManager } = await vault.getPoolTokenInfo(poolId, USDC); // We could query for either frxEth or SiloToken
       rebalancer = await task.instanceAt('SiloLinearPoolRebalancer', assetManager);
 
-      await usdc.connect(holder).approve(rebalancer.address, MAX_UINT256); // To send extra main on rebalance
+      await usdc.connect(holder).approve(rebalancer.target.toString(), MAX_UINT256); // To send extra main on rebalance
     });
 
     it('check factory version', async () => {
@@ -191,13 +191,13 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       // We're going to join with enough main token to bring the Pool above its upper target, which will let us later
       // rebalance.
 
-      const joinAmount = INITIAL_UPPER_TARGET.mul(2).div(USDC_SCALING);
+      const joinAmount = (INITIAL_UPPER_TARGET * BigInt(2)) / USDC_SCALING;
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.address,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -207,10 +207,10 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       );
 
       // Assert join amount - some fees will be collected as we're going over the upper target.
-      const excess = joinAmount.mul(USDC_SCALING).sub(INITIAL_UPPER_TARGET);
-      const joinCollectedFees = excess.mul(SWAP_FEE_PERCENTAGE).div(FP_ONE);
+      const excess = joinAmount * USDC_SCALING - INITIAL_UPPER_TARGET;
+      const joinCollectedFees = (excess * SWAP_FEE_PERCENTAGE) / FP_ONE;
 
-      const expectedBPT = joinAmount.mul(USDC_SCALING).sub(joinCollectedFees);
+      const expectedBPT = joinAmount * USDC_SCALING - joinCollectedFees;
       expect(await pool.balanceOf(holder.address)).to.equal(expectedBPT);
     });
 
@@ -227,14 +227,14 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       // rebalance.
 
       const { upperTarget } = await pool.getTargets();
-      const joinAmount = upperTarget.mul(5).div(USDC_SCALING);
+      const joinAmount = (upperTarget * BigInt(5)) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.address,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -253,16 +253,16 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       // rebalance.
 
       const { cash } = await vault.getPoolTokenInfo(poolId, USDC);
-      const scaledCash = cash.mul(USDC_SCALING);
+      const scaledCash = cash * USDC_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash.sub(lowerTarget.div(3)).div(USDC_SCALING);
+      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.address,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -281,16 +281,16 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       // We're going to join with few tokens, causing the Pool to not reach its upper target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget.add(upperTarget).div(2);
+      const midpoint = lowerTarget + upperTarget / BigInt(2);
 
-      const joinAmount = midpoint.div(100).div(USDC_SCALING);
+      const joinAmount = midpoint / BigInt(100) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenIn,
           poolId,
           assetIn: USDC,
-          assetOut: pool.address,
+          assetOut: pool.target.toString(),
           amount: joinAmount,
           userData: '0x',
         },
@@ -308,15 +308,15 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
       // We're going to exit with few tokens, causing for the Pool to not reach its lower target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget.add(upperTarget).div(2);
+      const midpoint = lowerTarget + upperTarget / BigInt(2);
 
-      const exitAmount = midpoint.div(100).div(USDC_SCALING);
+      const exitAmount = midpoint / BigInt(100) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.address,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -338,16 +338,16 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
   describe('rebalancer query protection', async () => {
     it('reverts with a malicious lending pool', async () => {
       const { cash } = await vault.getPoolTokenInfo(poolId, USDC);
-      const scaledCash = cash.mul(USDC_SCALING);
+      const scaledCash = cash * USDC_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash.sub(lowerTarget.div(3)).div(USDC_SCALING);
+      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
           kind: SwapKind.GivenOut,
           poolId,
-          assetIn: pool.address,
+          assetIn: pool.target.toString(),
           assetOut: USDC,
           amount: exitAmount,
           userData: '0x',
@@ -370,15 +370,15 @@ describeForkTest.skip('SiloLinearPoolFactory', 'mainnet', 16478568, function () 
 
     before('deploy attacker', async () => {
       // Using Reentrancy Attacker from Aave Fork Test (task 20230206-aave-rebalanced-linear-pool-v4)
-      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.address]);
+      attacker = await deploy('ReadOnlyReentrancyAttackerAaveLP', [vault.target.toString()]);
     });
 
-    async function performAttack(attackType: AttackType, ethAmount: BigNumber, expectRevert: boolean) {
+    async function performAttack(attackType: AttackType, ethAmount: bigint, expectRevert: boolean) {
       // To trigger the callback and revert, send more than we need for the deposit
       // If we send just enough, there will be no "extra" ETH, and it won't trigger the callback and attack
-      const amountToSend = expectRevert ? ethAmount.add(1) : ethAmount;
+      const amountToSend = expectRevert ? ethAmount + BigInt(1) : ethAmount;
 
-      const attack = attacker.startAttack(pool.address, attackType, ethAmount, { value: amountToSend });
+      const attack = attacker.startAttack(pool.target.toString(), attackType, ethAmount, { value: amountToSend });
       if (expectRevert) {
         await expect(attack).to.be.revertedWith('BAL#420');
       } else {

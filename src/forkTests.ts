@@ -34,6 +34,8 @@ function _describeBody(forkNetwork: Network, blockNumber: number, callback: () =
       method: 'hardhat_reset',
       params: [{ forking: { jsonRpcUrl: forkingNetworkConfig.url, blockNumber } }],
     });
+    // Force it back to 0 immediately to prevent "maxFeePerGas too low" errors.
+    await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', ['0x0']);
 
     const config = hre.network.config as HardhatNetworkConfig;
     config.forking = { enabled: true, blockNumber, url: forkingNetworkConfig.url, httpHeaders: {} };

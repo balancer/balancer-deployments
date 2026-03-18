@@ -7,6 +7,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const adaptorArgs = [input.Vault];
   const omniVotingEscrowAdaptor = await task.deployAndVerify('OmniVotingEscrowAdaptor', adaptorArgs, from, force);
 
-  const remapperArgs = [input.Vault, input.VotingEscrow, omniVotingEscrowAdaptor.address];
+  const remapperArgs = [input.Vault, input.VotingEscrow, omniVotingEscrowAdaptor.target];
   await task.deployAndVerify('VotingEscrowRemapper', remapperArgs, from, force);
 };

@@ -2,13 +2,13 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
-import { Interface } from '@ethersproject/abi';
+import { Interface } from 'ethers';
 
 describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {
   let task: Task;
@@ -39,7 +39,7 @@ describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {
   });
 
   before('approve helper at the authorizer', async () => {
-    const selector = new Interface(task.artifact('IRecoveryMode').abi).getSighash('enableRecoveryMode()');
+    const selector = new Interface(task.artifact('IRecoveryMode').abi).getFunction('enableRecoveryMode')!.selector;
 
     const actionIds = await Promise.all(
       [POOL_STABLE, POOL_WEIGHTED].map(async (poolAddress) => {
@@ -49,14 +49,14 @@ describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {
     );
 
     // Grant helper permission to enable recovery mode
-    await authorizer.connect(admin).grantRoles(actionIds, helper.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(actionIds, helper.target.toString());
   });
 
   before('approve operator at the authorizer', async () => {
     const actionIds = await Promise.all(
       ['addPoolFactory', 'removePoolFactory'].map(async (method) => actionId(helper, method))
     );
-    await authorizer.connect(admin).grantRoles(actionIds, operator.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(actionIds, operator.address);
   });
   context('with ComposableStablePool', () => {
     itWorksWithPool(POOL_STABLE);

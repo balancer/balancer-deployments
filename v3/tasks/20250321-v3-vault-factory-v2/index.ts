@@ -1,6 +1,6 @@
 import { VaultFactoryDeployment } from './input';
 import { Task, TaskMode, TaskRunOptions } from '@src';
-import { ethers } from 'hardhat';
+import { keccak256 } from 'ethers';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise<void> => {
@@ -12,9 +12,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.bufferPeriodDuration,
     input.minTradeAmount,
     input.minWrapAmount,
-    ethers.utils.keccak256(input.vaultCreationCode),
-    ethers.utils.keccak256(input.vaultExtensionCreationCode),
-    ethers.utils.keccak256(input.vaultAdminCreationCode),
+    keccak256(input.vaultCreationCode),
+    keccak256(input.vaultExtensionCreationCode),
+    keccak256(input.vaultAdminCreationCode),
   ];
 
   const vaultFactory = await task.deployAndVerify('VaultFactory', vaultFactoryArgs, from, force);
@@ -32,10 +32,10 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   // Deploy the Vault contracts.
   const deployTransaction = await task.deployFactoryContracts(
-    await vaultFactory.populateTransaction.create(
+    await vaultFactory.create.populateTransaction(
       input.salt,
       vaultAddress,
-      protocolFeeController.address,
+      protocolFeeController.target.toString(),
       input.vaultCreationCode,
       input.vaultExtensionCreationCode,
       input.vaultAdminCreationCode,
@@ -75,7 +75,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       {
         name: 'Vault',
         expectedAddress: vaultAddress,
-        args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.address],
+        args: [vaultExtensionAddress, input.Authorizer, protocolFeeController.target.toString()],
       },
     ],
     deployTransaction,

@@ -4,8 +4,8 @@ import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, getSigner, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
-import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { fp } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { Gyro2CLPPoolDeployment } from '../input';
 import { currentTimestamp, MONTH } from '@helpers/time';
@@ -40,7 +40,7 @@ describeForkTest('V3-Gyro2CLPPool-V2', 'mainnet', 24285750, function () {
     vault = await vaultTask.deployedInstance('Vault');
     const vaultExtension = await vaultTask.deployedInstance('VaultExtension');
 
-    vaultAsExtension = vaultExtension.attach(vault.address);
+    vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
   });
 
   before('setup contracts and parameters', async () => {
@@ -124,19 +124,17 @@ describeForkTest('V3-Gyro2CLPPool-V2', 'mainnet', 24285750, function () {
   });
 
   it('has a pool creator', async () => {
-    const roleAccounts = await vaultAsExtension.getPoolRoleAccounts(pool.address);
+    const roleAccounts = await vaultAsExtension.getPoolRoleAccounts(pool.target.toString());
     expect(roleAccounts.poolCreator).to.eq(admin.address);
   });
 
   it('has an absurdly long pause window', async () => {
-    const [poolPaused, poolPauseWindowEndTime] = await vaultAsExtension.getPoolPausedState(pool.address);
+    const [poolPaused, poolPauseWindowEndTime] = await vaultAsExtension.getPoolPausedState(pool.target.toString());
     const now = await currentTimestamp();
 
     expect(poolPaused).to.be.false;
 
-    const yearsUntilExpiration = bn(poolPauseWindowEndTime)
-      .sub(now)
-      .div(12 * MONTH);
-    expect(yearsUntilExpiration).to.gt(50);
+    const yearsUntilExpiration = (poolPauseWindowEndTime - now) / BigInt(12 * MONTH);
+    expect(yearsUntilExpiration).to.be.gt(50n);
   });
 });

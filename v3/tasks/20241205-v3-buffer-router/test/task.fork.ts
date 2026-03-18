@@ -2,7 +2,7 @@ import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { MAX_UINT48 } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { BufferRouterDeployment } from '../input';
@@ -32,7 +32,7 @@ describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
 
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     const WETH = await testBALTokenTask.instanceAt('TestBalancerToken', WETH_ADDRESS);
-    wethSigner = await impersonate(WETH.address, fp(10e8));
+    wethSigner = await impersonate(WETH.target.toString(), fp(10e8));
     alice = await getSigner();
     usdcWhale = await impersonate(USDC_WHALE, fp(10));
 
@@ -52,26 +52,31 @@ describeForkTest('BufferRouter-V3', 'mainnet', 21336200, function () {
 
   it('checks router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: bufferRouter.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: bufferRouter.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: bufferRouter.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: bufferRouter.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
   });
 
   it('tests buffer initialization', async () => {
     const initBalance = 1000000e6;
-    await usdc.connect(usdcWhale).approve(permit2.address, initBalance);
-    await permit2.connect(usdcWhale).approve(USDC_ADDRESS, bufferRouter.address, initBalance, MAX_UINT48);
+    await (usdc.connect(usdcWhale) as Contract).approve(permit2.target.toString(), initBalance);
+    await (permit2.connect(usdcWhale) as Contract).approve(
+      USDC_ADDRESS,
+      bufferRouter.target.toString(),
+      initBalance,
+      MAX_UINT48
+    );
 
-    await bufferRouter.connect(usdcWhale).initializeBuffer(waUSDC_ADDRESS, 1000000e6, 0, 0);
+    await (bufferRouter.connect(usdcWhale) as Contract).initializeBuffer(waUSDC_ADDRESS, 1000000e6, 0, 0);
 
-    const extensionEntrypoint = vaultExtension.attach(vault.address);
+    const extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
     expect(await extensionEntrypoint.isERC4626BufferInitialized(waUSDC_ADDRESS)).to.be.true;
     expect(await extensionEntrypoint.getERC4626BufferAsset(waUSDC_ADDRESS)).to.be.eq(USDC_ADDRESS);
   });

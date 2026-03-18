@@ -46,7 +46,7 @@ describeForkTest.skip('StableLPOracle', 'mainnet', 23182450, function () {
     const event = receipt.events?.find((e: { event: string }) => e.event === 'StableLPOracleCreated');
     stableLPOracle = await task.instanceAt('StableLPOracle', event?.args?.oracle);
     expect(stableLPOracle).to.not.be.undefined;
-    expect(stableLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(stableLPOracle).to.not.be === ZERO_ADDRESS;
   });
 
   it('checks price feeds', async () => {

@@ -10,7 +10,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ANY_ADDRESS } from '@helpers/constants';
 
 describeForkTest.skip('L2BalancerPseudoMinter', 'arbitrum', 70407500, function () {

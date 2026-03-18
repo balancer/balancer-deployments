@@ -13,7 +13,7 @@ import { Task, TaskMode } from '@src';
 import { impersonate } from '@src';
 import { getForkedNetwork } from '@src';
 import { TimelockAuthorizerDeployment, default as input } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 function doForkTestsOnNetwork(network: string, block: number) {
   describeForkTest(`TimelockAuthorizerV3 ${network}`, network, block, function () {
@@ -38,7 +38,7 @@ function doForkTestsOnNetwork(network: string, block: number) {
       vault = await vaultTask.instanceAt('Vault', await migrator.vault());
       vaultExtension = await vaultTask.deployedInstance('VaultExtension');
       vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
-      vaultExtension = vaultExtension.attach(vault.address);
+      vaultExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     });
 
     before('load old authorizer and impersonate multisig', async () => {
@@ -47,7 +47,10 @@ function doForkTestsOnNetwork(network: string, block: number) {
 
       const multisig = await impersonate(input.Root, fp(100));
       const setAuthorizerActionId = await actionId(vaultAdmin, 'setAuthorizer');
-      await oldAuthorizer.connect(multisig).grantRolesToMany([setAuthorizerActionId], [migrator.address]);
+      await (oldAuthorizer.connect(multisig) as Contract).grantRolesToMany(
+        [setAuthorizerActionId],
+        [migrator.target.toString()]
+      );
     });
 
     it('migrates all roles properly', async () => {
@@ -82,19 +85,19 @@ function doForkTestsOnNetwork(network: string, block: number) {
     });
 
     it('does not set the new authorizer immediately', async () => {
-      expect(await newAuthorizer.isRoot(migrator.address)).to.be.true;
-      expect(await vaultExtension.getAuthorizer()).to.be.equal(oldAuthorizer.address);
+      expect(await newAuthorizer.isRoot(migrator.target.toString())).to.be.true;
+      expect(await vaultExtension.getAuthorizer()).to.be.equal(oldAuthorizer.target.toString());
     });
 
     it('finalizes the migration once new root address claims root status', async () => {
       await expect(migrator.finalizeMigration()).to.be.revertedWith('ROOT_NOT_CLAIMED_YET');
 
-      await newAuthorizer.connect(root).claimRoot();
+      await (newAuthorizer.connect(root) as Contract).claimRoot();
 
       await migrator.finalizeMigration();
-      expect(await vaultExtension.getAuthorizer()).to.be.equal(newAuthorizer.address);
+      expect(await vaultExtension.getAuthorizer()).to.be.equal(newAuthorizer.target.toString());
       expect(await newAuthorizer.isRoot(root.address)).to.be.true;
-      expect(await newAuthorizer.isRoot(migrator.address)).to.be.false;
+      expect(await newAuthorizer.isRoot(migrator.target.toString())).to.be.false;
     });
 
     // we mint only on mainnet
@@ -114,13 +117,16 @@ function doForkTestsOnNetwork(network: string, block: number) {
         const balAddress = tokensTask.output().BAL;
         const balancerToken = await balancerTokenAdminTask.instanceAt('IERC20', balAddress);
 
-        const balancerMinterSigner = await impersonate(balancerMinter.address, fp(100));
+        const balancerMinterSigner = await impersonate(balancerMinter.target.toString(), fp(100));
 
-        const tx = await balancerTokenAdmin.connect(balancerMinterSigner).mint(balancerMinter.address, 100);
+        const tx = await (balancerTokenAdmin.connect(balancerMinterSigner) as Contract).mint(
+          balancerMinter.target.toString(),
+          100
+        );
 
         expectEvent.inIndirectReceipt(await tx.wait(), balancerToken.interface, 'Transfer', {
           from: ZERO_ADDRESS,
-          to: balancerMinter.address,
+          to: balancerMinter.target.toString(),
           value: 100,
         });
       });
@@ -129,23 +135,27 @@ function doForkTestsOnNetwork(network: string, block: number) {
     it('allows migrating the authorizer address again', async () => {
       const setAuthorizerActionId = await actionId(vaultAdmin, 'setAuthorizer');
 
-      expect(await vaultExtension.getAuthorizer()).to.be.eq(newAuthorizer.address);
+      expect(await vaultExtension.getAuthorizer()).to.be.eq(newAuthorizer.target.toString());
 
-      await newAuthorizer.connect(root).grantPermission(setAuthorizerActionId, root.address, vault.address);
+      await (newAuthorizer.connect(root) as Contract).grantPermission(
+        setAuthorizerActionId,
+        root.address,
+        vault.target.toString()
+      );
 
       // Schedule authorizer change
       const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
-      const tx = await newAuthorizer
-        .connect(root)
-        .schedule(vault.address, vaultAdmin.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [
-          root.address,
-        ]);
+      const tx = await (newAuthorizer.connect(root) as Contract).schedule(
+        vault.target.toString(),
+        vaultAdmin.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]),
+        [root.address]
+      );
       const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 
       await advanceTime(30 * DAY);
 
       // Execute authorizer change
-      await newAuthorizer.connect(root).execute(event.args.scheduledExecutionId);
+      await (newAuthorizer.connect(root) as Contract).execute(event.args.scheduledExecutionId);
 
       expect(await vaultExtension.getAuthorizer()).to.be.eq(nextAuthorizer);
     });

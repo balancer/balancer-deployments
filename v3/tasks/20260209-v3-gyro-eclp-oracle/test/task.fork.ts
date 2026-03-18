@@ -1,6 +1,7 @@
 import hre from 'hardhat';
 import { Contract } from 'ethers';
 import { deploy, describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
 import { fpMul, fromFp } from '@helpers/numbers';
 import { expect } from 'chai';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -29,7 +30,7 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     const vault = await vaultTask.deployedInstance('Vault');
 
     poolToken = await vaultTask.instanceAt('IERC20', ECLP_POOL_ADDRESS);
-    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.address]);
+    unlockHelper = await deploy('VaultUnlockTestHelper', [vault.target.toString()]);
   });
 
   it('checks version', async () => {
@@ -49,13 +50,13 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     );
 
     const receipt = await tx.wait();
-    const event = receipt.events?.find((e: { event: string }) => e.event === 'EclpLPOracleCreated');
+    const event = expectEvent.inReceipt(receipt, 'EclpLPOracleCreated');
 
     // NOTE: this is going to print "duplicate definition - ZeroDivision()" in the console, ignore it.
     // It's from using Ethers V5, and both FixedPoint and SignedFixedPoint defining the same error.
     eclpLPOracle = await task.instanceAt('EclpLPOracle', event?.args?.oracle);
     expect(eclpLPOracle).to.not.be.undefined;
-    expect(eclpLPOracle).to.not.be.eq(ZERO_ADDRESS);
+    expect(eclpLPOracle.target).to.not.equal(ZERO_ADDRESS);
 
     expect(await eclpLPOracle.getShouldUseBlockTimeForOldestFeedUpdate()).to.be.equal(
       input.ShouldUseBlockTimeForOldestFeedUpdate
@@ -88,7 +89,7 @@ describeForkTest('EclpLPOracle', 'base', 41687300, function () {
     const callData = eclpLPOracle.interface.encodeFunctionData('latestRoundData');
 
     await expectRevertWithCustomError(
-      unlockHelper.callWhileUnlocked(eclpLPOracle.address, callData),
+      unlockHelper.callWhileUnlocked(eclpLPOracle.target.toString(), callData),
       'VaultIsUnlocked()'
     );
   });
