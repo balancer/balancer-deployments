@@ -9,7 +9,7 @@ import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, function () {
+describeForkTest.only('DoubleEntrypointFixRelayer', 'mainnet', 14770592, function () {
   let govMultisig: SignerWithAddress;
   let btcBptHolder: SignerWithAddress, snxBptHolder: SignerWithAddress;
   let relayer: Contract;
@@ -69,15 +69,15 @@ describeForkTest.skip('DoubleEntrypointFixRelayer', 'mainnet', 14770592, functio
     const withdrawCollectedFeesRole = await actionId(protocolFeesCollector, 'withdrawCollectedFees');
     await (authorizer.connect(govMultisig) as Contract).grantRoles(
       [exitPoolRole, withdrawCollectedFeesRole],
-      relayer.address
+      relayer.target
     );
 
     // User approval for relayer
     btcBptHolder = await impersonate(BTC_STABLE_POOL_GAUGE);
-    await (vault.connect(btcBptHolder) as Contract).setRelayerApproval(btcBptHolder.address, relayer.address, true);
+    await (vault.connect(btcBptHolder) as Contract).setRelayerApproval(btcBptHolder.address, relayer.target, true);
 
     snxBptHolder = await impersonate(SNX_WEIGHTED_POOL_GAUGE);
-    await (vault.connect(snxBptHolder) as Contract).setRelayerApproval(snxBptHolder.address, relayer.address, true);
+    await (vault.connect(snxBptHolder) as Contract).setRelayerApproval(snxBptHolder.address, relayer.target, true);
   });
 
   it('sweeps sBTC', async () => {

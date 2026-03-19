@@ -14,7 +14,7 @@ import { advanceToTimestamp, currentTimestamp, DAY, MINUTE, MONTH } from '@helpe
 
 import { describeForkTest, getSigners, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
 
-describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('InvestmentPoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, wallet: SignerWithAddress, whale: SignerWithAddress;
   let pool: Contract, factory: Contract, vault: Contract, usdc: Contract, dai: Contract;
 
@@ -99,7 +99,7 @@ describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () 
 
     const scaledBalances = [initialBalanceDAI, initialBalanceUSDC * BigInt(1e12)];
     // Initial BPT is the invariant multiplied by the number of tokens
-    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights) * tokens.length;
+    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights) * BigInt(tokens.length);
 
     expectEqualWithError(await pool.balanceOf(whale.address), expectedInvariant, 0.001);
   });
@@ -162,15 +162,15 @@ describeForkTest.skip('InvestmentPoolFactory', 'mainnet', 14850000, function () 
   });
 
   it('owner can start a gradual weight change', async () => {
-    const startTime = (await currentTimestamp()) + DAY;
-    endTime = startTime + weightChangeDuration;
+    const startTime = (await currentTimestamp()) + BigInt(DAY);
+    endTime = startTime + BigInt(weightChangeDuration);
 
     const tx = await pool.connect(owner).updateWeightsGradually(startTime, endTime, endWeights);
     expectEvent.inReceipt(await tx.wait(), 'GradualWeightUpdateScheduled');
   });
 
   it('weights fully change once the time expires', async () => {
-    await advanceToTimestamp(endTime + MINUTE);
+    await advanceToTimestamp(endTime + BigInt(MINUTE));
 
     // Weights are not exact due to being stored in fewer bits
     expect(await pool.getNormalizedWeights()).to.equalWithError(endWeights, 0.0001);

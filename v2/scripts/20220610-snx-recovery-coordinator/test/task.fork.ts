@@ -13,7 +13,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
+describeForkTest.only('SNXRecoveryCoordinator', 'mainnet', 14945041, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 
@@ -73,7 +73,7 @@ describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function ()
     withdrawCollectedFeesRole = await actionId(protocolFeeWithdrawer, 'withdrawCollectedFees');
     await authorizer
       .connect(govMultisig)
-      .grantRoles([allowlistTokenRole, withdrawCollectedFeesRole], coordinator.address);
+      .grantRoles([allowlistTokenRole, withdrawCollectedFeesRole], coordinator.target);
   });
 
   // Before coordinator execution
@@ -132,11 +132,11 @@ describeForkTest.skip('SNXRecoveryCoordinator', 'mainnet', 14945041, function ()
   });
 
   it('renounces its permissions to allowlist tokens on the ProtocolFeesWithdrawer', async () => {
-    expect(await authorizer.hasRole(allowlistTokenRole, coordinator.address)).to.be.false;
+    expect(await authorizer.hasRole(allowlistTokenRole, coordinator.target)).to.be.false;
   });
 
   it('renounces its permissions to withdraw tokens through the ProtocolFeesWithdrawer', async () => {
-    expect(await authorizer.hasRole(withdrawCollectedFeesRole, coordinator.address)).to.be.false;
+    expect(await authorizer.hasRole(withdrawCollectedFeesRole, coordinator.target)).to.be.false;
   });
 
   it('fails on future attempts to send tokens to Vault', async () => {

@@ -13,7 +13,7 @@ import { impersonate } from '@src';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { randomAddress, ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest.skip('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function () {
+describeForkTest.only('L2Layer0BridgeForwarder', 'arbitrum', 70407500, function () {
   let vault: Contract, authorizer: Contract;
   let forwarder: Contract;
   let admin: SignerWithAddress, other: SignerWithAddress;

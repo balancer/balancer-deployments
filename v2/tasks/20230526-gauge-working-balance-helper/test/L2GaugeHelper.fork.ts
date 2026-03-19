@@ -1,14 +1,14 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, deploy, instanceAt } from '@src';
+import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, deploy } from '@src';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { FP_ONE, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
 import { MONTH } from '@helpers/time';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function () {
+describeForkTest.only('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;
@@ -55,7 +55,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
     );
     gauge = await gaugeFactoryTask.instanceAt('ChildChainGauge', GAUGE);
 
-    lpToken = await instanceAt('IERC20', LP_TOKEN);
+    lpToken = await task.instanceAt('IERC20', LP_TOKEN);
   });
 
   before('stake in gauge', async () => {

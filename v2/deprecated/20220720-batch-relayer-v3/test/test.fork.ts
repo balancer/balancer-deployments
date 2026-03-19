@@ -11,7 +11,7 @@ import { defaultAbiCoder } from '@ethersproject/abi/lib/abi-coder';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
+describeForkTest.only('BatchRelayerLibrary', 'mainnet', 15150000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -33,7 +33,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigInt(paddedPrefix) + key;
+    return BigInt(paddedPrefix) + BigInt(key);
   }
 
   before('run task', async () => {
@@ -58,7 +58,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -67,11 +67,11 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before('approve relayer by the user', async () => {
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, true);
   });
 
   it('sender can unstake, exit, join and stake', async () => {
@@ -88,7 +88,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
     const unstakeCalldata = library.interface.encodeFunctionData('gaugeWithdraw', [
       ETH_STETH_GAUGE,
       sender.address,
-      relayer.address,
+      relayer.target,
       stakedBalance,
     ]);
 
@@ -102,8 +102,8 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
       ETH_STETH_POOL,
       0, // Even if this a Stable Pool, the Batch Relayer is unaware of their encodings and the Weighted Pool encoding
       // happens to match here
-      relayer.address,
-      relayer.address,
+      relayer.target,
+      relayer.target,
       {
         assets: ethStethTokens,
         minAmountsOut: ethStethTokens.map(() => 0),
@@ -124,8 +124,8 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
     const joinCalldata = library.interface.encodeFunctionData('joinPool', [
       ETH_DAI_POOL,
       0, // Weighted Pool
-      relayer.address,
-      relayer.address,
+      relayer.target,
+      relayer.target,
       {
         assets: ethDaiTokens,
         maxAmountsIn: ethDaiTokens.map(() => MAX_UINT256),
@@ -138,7 +138,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 15150000, function () {
 
     const stakeCalldata = library.interface.encodeFunctionData('gaugeDeposit', [
       ETH_DAI_GAUGE,
-      relayer.address,
+      relayer.target,
       sender.address,
       toChainedReference(17), // Stake all BPT from the join
     ]);

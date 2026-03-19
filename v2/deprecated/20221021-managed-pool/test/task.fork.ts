@@ -28,7 +28,7 @@ type ManagedPoolParams = {
   aumFeeId: BigNumberish;
 };
 
-describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
+describeForkTest.only('ManagedPoolFactory', 'mainnet', 15634000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
   let factory: Contract,
     vault: Contract,
@@ -208,7 +208,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokensWithBpt,
         minAmountsOut: Array(tokensWithBpt.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 

@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 
-describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, function () {
+describeForkTest.only('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 
@@ -51,7 +51,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
   before('grant permissions', async () => {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), coordinator.address);
+    await authorizer.connect(govMultisig).grantRole(await authorizer.DEFAULT_ADMIN_ROLE(), coordinator.target);
   });
 
   it('performs first stage', async () => {
@@ -87,7 +87,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
 
   it('transfers the rights to add new gauges to the new GaugeAdder', async () => {
     const addGaugePermission = await authorizerAdaptor.getActionId(
-      gaugeController.interface.getSighash('add_gauge(address,int128)')
+      gaugeController.interface.getFunction('add_gauge(address,int128)')!.selector
     );
 
     expect(
@@ -132,6 +132,6 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 16378450, fun
   });
 
   it('renounces the admin role', async () => {
-    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), coordinator.address)).to.equal(false);
+    expect(await authorizer.hasRole(await authorizer.DEFAULT_ADMIN_ROLE(), coordinator.target)).to.equal(false);
   });
 });

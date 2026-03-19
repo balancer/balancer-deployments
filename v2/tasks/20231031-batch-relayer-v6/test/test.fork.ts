@@ -10,7 +10,7 @@ import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from 
 import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 
-describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
+describeForkTest.only('BatchRelayerLibrary V6', 'mainnet', 15485000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -70,11 +70,11 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
   });
 
   sharedBeforeEach('approve relayer by the user', async () => {
-    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
   });
 
   it('sender can unstake, exit, join and stake', async () => {
@@ -91,7 +91,7 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
     const unstakeCalldata = library.interface.encodeFunctionData('gaugeWithdraw', [
       ETH_STETH_GAUGE,
       sender.address,
-      relayer.address,
+      relayer.target,
       stakedBalance,
     ]);
 
@@ -105,8 +105,8 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
       ETH_STETH_POOL,
       0, // Even if this a Stable Pool, the Batch Relayer is unaware of their encodings and the Weighted Pool encoding
       // happens to match here
-      relayer.address,
-      relayer.address,
+      relayer.target,
+      relayer.target,
       {
         assets: ethStethTokens,
         minAmountsOut: ethStethTokens.map(() => 0),
@@ -127,8 +127,8 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
     const joinCalldata = library.interface.encodeFunctionData('joinPool', [
       ETH_DAI_POOL,
       0, // Weighted Pool
-      relayer.address,
-      relayer.address,
+      relayer.target,
+      relayer.target,
       {
         assets: ethDaiTokens,
         maxAmountsIn: ethDaiTokens.map(() => MAX_UINT256),
@@ -141,7 +141,7 @@ describeForkTest.skip('BatchRelayerLibrary V6', 'mainnet', 15485000, function ()
 
     const stakeCalldata = library.interface.encodeFunctionData('gaugeDeposit', [
       ETH_DAI_GAUGE,
-      relayer.address,
+      relayer.target,
       sender.address,
       toChainedReference(17), // Stake all BPT from the join
     ]);

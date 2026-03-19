@@ -7,7 +7,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest.skip('ERC4626Wrapping', 'mainnet', 18412883, function () {
+describeForkTest.only('ERC4626Wrapping', 'mainnet', 18412883, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -45,7 +45,7 @@ describeForkTest.skip('ERC4626Wrapping', 'mainnet', 18412883, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -54,7 +54,7 @@ describeForkTest.skip('ERC4626Wrapping', 'mainnet', 18412883, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -63,8 +63,8 @@ describeForkTest.skip('ERC4626Wrapping', 'mainnet', 18412883, function () {
     sender = await impersonate(USDM_HOLDER);
     recipient = await getSigner();
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, true);
+    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
@@ -128,5 +128,5 @@ function toChainedReference(key: BigNumberish): bigint {
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigInt(paddedPrefix) + key;
+  return BigInt(paddedPrefix) + BigInt(key);
 }

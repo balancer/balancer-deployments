@@ -5,7 +5,7 @@ import { BigNumberish, bn } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 16622559, function () {
+describeForkTest.only('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 16622559, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -46,7 +46,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -56,8 +56,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
     sender = await impersonate(USDC_HOLDER);
     recipient = await getSigner();
 
-    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
-    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
@@ -93,10 +93,10 @@ describeForkTest.skip('BatchRelayerLibrary V6 - SiloWrapping', 'mainnet', 166225
 
   it('should unwrap successfully', async () => {
     const estimatedRate = await siloExchangeRate(silo, USDC, shareToken);
-    const wrappedRate = Math.floor(1e6 / estimatedRate);
+    const wrappedRate = BigInt(1e6) / estimatedRate;
     const balanceOfWrappedBefore = await shareToken.balanceOf(recipient.address);
 
-    const amountToWithdraw = Math.floor((wrappedRate * balanceOfWrappedBefore) / 1e6);
+    const amountToWithdraw = (wrappedRate * balanceOfWrappedBefore) / BigInt(1e6);
 
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
 
@@ -133,5 +133,5 @@ async function siloExchangeRate(silo: Contract, mainTokenAddress: string, wrappe
   const assetSotrage = await silo.assetStorage(mainTokenAddress);
   const totalAmount = assetSotrage[3];
   const totalShares = await wrappedTokenContract.totalSupply();
-  return totalAmount / totalShares;
+  return bn(totalAmount / totalShares);
 }

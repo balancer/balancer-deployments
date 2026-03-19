@@ -10,7 +10,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { SwapKind } from '@helpers/models/types/types';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 
-describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
+describeForkTest.only('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract, vault: Contract, usdt: Contract;
   let rebalancer: Contract;
@@ -115,7 +115,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
 
       const mainInfo = await vault.getPoolTokenInfo(poolId, USDT);
 
-      const expectedMainBalance = lowerTarget + upperTarget / BigInt(2);
+      const expectedMainBalance = (lowerTarget + upperTarget) / BigInt(2);
       expect(mainInfo.cash * USDT_SCALING).to.equal(expectedMainBalance);
       expect(mainInfo.managed).to.equal(0);
     });
@@ -240,7 +240,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       const scaledCash = cash * USDT_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDT_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / USDT_SCALING;
 
       await vault.connect(holder).swap(
         {
@@ -265,7 +265,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       // We're going to join with few tokens, causing the Pool to not reach its upper target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const joinAmount = midpoint / BigInt(100) / USDT_SCALING;
 
@@ -292,7 +292,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       // We're going to exit with few tokens, causing for the Pool to not reach its lower target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const exitAmount = midpoint / BigInt(100) / USDT_SCALING;
 
@@ -325,7 +325,7 @@ describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function 
       const scaledCash = cash * USDT_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDT_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / USDT_SCALING;
 
       await vault.connect(holder).swap(
         {

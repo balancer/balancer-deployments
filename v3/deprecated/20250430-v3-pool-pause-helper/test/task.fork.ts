@@ -6,7 +6,7 @@ import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSig
 import { actionId } from '@helpers/models/misc/actions';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-describeForkTest.skip('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
+describeForkTest.only('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
   const TASK_NAME = '20250430-v3-pool-pause-helper';
   const CONTRACT_NAME = 'PoolPauseHelper';
 
@@ -55,9 +55,7 @@ describeForkTest.skip('V3-PoolPauseHelper', 'mainnet', 22348940, function () {
 
     // Grant permission to call add and pause on the helper.
     await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'addPools'), admin.address);
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(pauseHelper, 'pausePools'), monitor.target.toString());
+    await authorizer.connect(govMultisig).grantRole(await actionId(pauseHelper, 'pausePools'), monitor.address);
   });
 
   it('can add pools', async () => {

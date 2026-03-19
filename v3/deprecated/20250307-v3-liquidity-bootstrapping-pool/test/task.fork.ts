@@ -8,7 +8,7 @@ import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
 
-describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
+describeForkTest.only('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
   const POOL_CONTRACT_NAME = 'LBPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
@@ -98,8 +98,8 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: LOW_WEIGHT,
       reserveTokenEndWeight: HIGH_WEIGHT,
-      startTime: startTime + HOUR,
-      endTime: startTime + DAY,
+      startTime: startTime + BigInt(HOUR),
+      endTime: startTime + BigInt(DAY),
       blockProjectTokenSwapsIn: false,
     };
 
@@ -159,13 +159,13 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
   });
 
   it('starts the sale', async () => {
-    await advanceTime(2 * HOUR);
+    await advanceTime(BigInt(2 * HOUR));
 
     expect(await pool.isSwapEnabled()).to.be.true;
   });
 
   it('ends the sale', async () => {
-    await advanceTime(DAY);
+    await advanceTime(BigInt(DAY));
 
     expect(await pool.isSwapEnabled()).to.be.false;
   });

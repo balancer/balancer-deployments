@@ -12,7 +12,7 @@ import { getSigner, impersonate } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
+describeForkTest.only('GaugeAdderV4', 'mainnet', 17295800, function () {
   let factory: Contract;
   let adaptorEntrypoint: Contract;
   let authorizer: Contract;
@@ -110,13 +110,12 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
 
       // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
       // One event in receipt, named `GaugeTypeAdded`
-      expect(receipt.events.length).to.be.eq(1);
-      const event = receipt.events[0];
-      expect(event.event).to.be.eq('GaugeTypeAdded');
+      const events = receipt.logs.filter((log: { eventName: string }) => log.eventName === 'GaugeTypeAdded');
+      expect(events.length).to.be.eq(1);
+      const event = events[0];
 
-      // Contains expected `gaugeType` and `gaugeFactory`.
-      const decodedArgs = event.decode(event.data);
-      expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
+      // Contains expected `gaugeType`.
+      expect(event.args.gaugeType).to.be.eq('Ethereum');
     });
 
     it('returns the added type correctly', async () => {
@@ -132,14 +131,13 @@ describeForkTest.skip('GaugeAdderV4', 'mainnet', 17295800, function () {
       const receipt = await tx.wait();
       // `expectEvent` does not work with indexed strings, so we decode the pieces we are interested in manually.
       // One event in receipt, named `GaugeFactorySet`
-      expect(receipt.events.length).to.be.eq(1);
-      const event = receipt.events[0];
-      expect(event.event).to.be.eq('GaugeFactorySet');
+      const events = receipt.logs.filter((log: { eventName: string }) => log.eventName === 'GaugeFactorySet');
+      expect(events.length).to.be.eq(1);
+      const event = events[0];
 
       // Contains expected `gaugeType` and `gaugeFactory`.
-      const decodedArgs = event.decode(event.data);
-      expect(decodedArgs.gaugeType).to.be.eq('Ethereum');
-      expect(decodedArgs.gaugeFactory).to.be.eq(factory.target.toString());
+      expect(event.args.gaugeType).to.be.eq('Ethereum');
+      expect(event.args.gaugeFactory).to.be.eq(factory.target.toString());
     });
 
     it('returns added factory correctly', async () => {

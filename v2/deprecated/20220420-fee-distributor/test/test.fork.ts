@@ -10,7 +10,7 @@ import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
+describeForkTest.only('FeeDistributor', 'mainnet', 14623150, function () {
   let veBALHolder: SignerWithAddress, veBALHolder2: SignerWithAddress, feeCollector: SignerWithAddress;
   let distributor: Contract;
 
@@ -78,7 +78,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
   context('in the second week', () => {
     before('advance time', async () => {
       // 1 day into the second week
-      await advanceToTimestamp(firstWeek + WEEK + DAY);
+      await advanceToTimestamp(firstWeek + BigInt(WEEK) + BigInt(DAY));
     });
 
     context('with WETH distributed', () => {
@@ -114,11 +114,11 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
   context('in the third week', () => {
     before('advance time', async () => {
       // 1 day into the third week
-      await advanceToTimestamp(firstWeek + 2 * WEEK + DAY);
+      await advanceToTimestamp(firstWeek + BigInt(2 * WEEK) + BigInt(DAY));
     });
 
     it('veBAL holders can claim BAL and WETH', async () => {
-      const secondWeek = firstWeek + WEEK;
+      const secondWeek = firstWeek + BigInt(WEEK);
       const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder.address, secondWeek);
       const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
 
@@ -145,7 +145,7 @@ describeForkTest.skip('FeeDistributor', 'mainnet', 14623150, function () {
       const firstWeekSupply = await VEBAL['totalSupply(uint256)'](firstWeek);
       const balFirstWeekAmount = (balAmount * holderFirstWeekBalance) / firstWeekSupply;
 
-      const secondWeek = firstWeek + WEEK;
+      const secondWeek = firstWeek + BigInt(WEEK);
       const holderSecondWeekBalance = await VEBAL['balanceOf(address,uint256)'](veBALHolder2.address, secondWeek);
       const secondWeekSupply = await VEBAL['totalSupply(uint256)'](secondWeek);
       const balSecondWeekAmount = (balAmount * BigInt(3) * holderSecondWeekBalance) / secondWeekSupply;

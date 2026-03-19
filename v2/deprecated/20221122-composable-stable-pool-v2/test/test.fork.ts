@@ -17,7 +17,7 @@ import { SwapKind } from '@helpers/models/types/types';
 import { actionId } from '@helpers/models/misc/actions';
 import { expectEqualWithError } from '@helpers/relativeError';
 
-describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
+describeForkTest.only('ComposableStablePool', 'mainnet', 16000000, function () {
   let task: Task;
 
   let factory: Contract;
@@ -103,7 +103,7 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
       registeredBalances[bptIndex] = MAX_UINT256;
 
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         maxAmountsIn: registeredBalances,
         fromInternalBalance: false,
         userData,
@@ -202,11 +202,14 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
         const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
         // Given the bptOut, the max amounts in should be slightly more than 1/5. Decimals make it a bit complicated.
-        const adjustedBalances = [(initialBalanceBUSD / fp(4.99)) * fp(1), (initialBalanceUSDT / bn(4.99e6)) * 1e6];
+        const adjustedBalances = [
+          (initialBalanceBUSD / fp(4.99)) * fp(1),
+          (initialBalanceUSDT / bn(4.99e6)) * BigInt(1e6),
+        ];
         const maxAmountsIn = getRegisteredBalances(bptIndex, adjustedBalances);
 
         const tx = await vault.connect(whale).joinPool(poolId, whale.address, whale.address, {
-          assets: registeredTokens,
+          assets: [...registeredTokens],
           maxAmountsIn: maxAmountsIn,
           fromInternalBalance: false,
           userData: StablePoolEncoder.joinAllTokensInForExactBptOut(bptOut),
@@ -243,9 +246,9 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
         const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
         const tx = await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-          assets: registeredTokens,
+          assets: [...registeredTokens],
           minAmountsOut: Array(registeredTokens.length).fill(0),
-          fromInternalBalance: false,
+          toInternalBalance: false,
           userData: StablePoolEncoder.exitExactBptInForTokensOut(bptIn),
         });
         const receipt = await (await tx).wait();
@@ -291,9 +294,9 @@ describeForkTest.skip('ComposableStablePool', 'mainnet', 16000000, function () {
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         minAmountsOut: Array(registeredTokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 

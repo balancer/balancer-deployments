@@ -20,7 +20,7 @@ import {
   initialBalances,
 } from './helpers/sharedStableParams';
 
-describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
+describeForkTest.only('Stable Phantom Exit', 'mainnet', 13776527, function () {
   let vault: Contract, authorizer: Contract;
 
   before('load vault and tokens', async () => {
@@ -92,7 +92,7 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
     await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-      assets: allTokens,
+      assets: [...allTokens],
       maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
       fromInternalBalance: false,
       userData,
@@ -114,9 +114,9 @@ describeForkTest.skip('Stable Phantom Exit', 'mainnet', 13776527, function () {
     const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
     const tx = await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-      assets: registeredTokens,
+      assets: [...registeredTokens],
       minAmountsOut: Array(registeredTokens.length).fill(0),
-      fromInternalBalance: false,
+      toInternalBalance: false,
       userData: defaultAbiCoder.encode(['uint256', 'uint256'], [ExitKindPhantom.EXACT_BPT_IN_FOR_TOKENS_OUT, bptIn]),
     });
     const receipt = await (await tx).wait();

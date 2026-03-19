@@ -16,7 +16,7 @@ import { AuthorizerDeployment } from '../../../20210418-authorizer/input';
 import { TimelockAuthorizerDeployment } from '../input';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
+describeForkTest.only('TimelockAuthorizer', 'mainnet', 16076200, function () {
   let input: TimelockAuthorizerDeployment;
   let migrator: Contract, vault: Contract, newAuthorizer: Contract, oldAuthorizer: Contract;
   let root: SignerWithAddress;
@@ -97,7 +97,7 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
 
     await migrator.finalizeMigration();
     expect(await vault.getAuthorizer()).to.be.equal(newAuthorizer.target.toString());
-    expect(await newAuthorizer.isRoot(root.target.toString())).to.be.true;
+    expect(await newAuthorizer.isRoot(root.address)).to.be.true;
     expect(await newAuthorizer.isRoot(migrator.target.toString())).to.be.false;
   });
 
@@ -130,14 +130,14 @@ describeForkTest.skip('TimelockAuthorizer', 'mainnet', 16076200, function () {
 
     await newAuthorizer
       .connect(root)
-      .grantPermissions([setAuthorizerActionId], root.target.toString(), [vault.target.toString()]);
+      .grantPermissions([setAuthorizerActionId], root.address, [vault.target.toString()]);
 
     // Schedule authorizer change
     const nextAuthorizer = '0xaF52695E1bB01A16D33D7194C28C42b10e0Dbec2';
     const tx = await newAuthorizer
       .connect(root)
       .schedule(vault.target.toString(), vault.interface.encodeFunctionData('setAuthorizer', [nextAuthorizer]), [
-        root.target.toString(),
+        root.address,
       ]);
     const event = expectEvent.inReceipt(await tx.wait(), 'ExecutionScheduled');
 

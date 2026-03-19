@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function () {
+describeForkTest.only('AvalancheRootGaugeFactory', 'mainnet', 17395000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let daoMultisig: SignerWithAddress;
   let factory: Contract, gauge: Contract;
@@ -176,7 +176,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     const currentTime = await currentTimestamp();
     await veBAL
       .connect(veBALHolder)
-      .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime + MONTH * 12);
+      .create_lock(await bal80weth20Pool.balanceOf(veBALHolder.address), currentTime + BigInt(MONTH) * 12n);
 
     // Verify non-zero veBAL balance
     const now = await currentTimestamp();
@@ -194,7 +194,10 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     // We need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor Entrypoint
     await authorizer
       .connect(daoMultisig)
-      .grantRole(await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')), admin.address);
+      .grantRole(
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+        admin.address
+      );
   });
 
   before('grant permissions on gauge adder', async () => {
@@ -241,7 +244,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     await gaugeController.connect(veBALHolder).vote_for_gauge_weights(gauge.target.toString(), 10000); // Max voting power is 10k points
 
     // We now need to go through an epoch for the votes to be locked in
-    await advanceTime(DAY * 8);
+    await advanceTime(BigInt(DAY) * 8n);
 
     await gaugeController.checkpoint();
     // Gauge weight is equal to the cap, and controller weight for the gauge is greater than the cap.
@@ -264,12 +267,12 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
     const zeroMintTx = await adaptorEntrypoint.connect(admin).performAction(gauge.target.toString(), calldata);
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
-      periodTime: firstMintWeekTimestamp - WEEK, // Process past week, which had zero votes
+      periodTime: firstMintWeekTimestamp - BigInt(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
     });
     // No token transfers are performed if the emissions are zero, but we can't test for a lack of those
 
-    await advanceTime(WEEK);
+    await advanceTime(BigInt(WEEK));
 
     // The gauge should now mint and send all minted tokens to the Polygon ZkEVM bridge
     const mintTx = await adaptorEntrypoint.connect(admin).performAction(gauge.target.toString(), calldata);
@@ -279,7 +282,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     const actualEmissions = event.args.periodEmissions;
 
     // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * BigInt(WEEK);
 
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
     const expectedEmissions = (weightCap * weeklyRate) / FP_ONE;
@@ -309,7 +312,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
 
   it('mint multiple weeks', async () => {
     const numberOfWeeks = 5;
-    await advanceTime(WEEK * numberOfWeeks);
+    await advanceTime(BigInt(WEEK) * BigInt(numberOfWeeks));
     await gaugeController.checkpoint_gauge(gauge.target.toString());
 
     const weekTimestamp = await currentWeekTimestamp();
@@ -319,7 +322,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
         gaugeController['gauge_relative_weight(address,uint256)'](
           gauge.target.toString(),
-          weekTimestamp - WEEK * weekIndex
+          weekTimestamp - BigInt(WEEK) * BigInt(weekIndex)
         )
       )
     );
@@ -332,9 +335,9 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
 
     // The amount of tokens allocated to the gauge should equal the sum of the weekly emissions rate times the weight
     // cap.
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * BigInt(WEEK);
     // Note that instead of the weight, we use the cap (since we expect for the weight to be larger than the cap)
-    const expectedEmissions = (weightCap * numberOfWeeks * weeklyRate) / FP_ONE;
+    const expectedEmissions = (weightCap * BigInt(numberOfWeeks) * weeklyRate) / FP_ONE;
 
     const calldata = gauge.interface.encodeFunctionData('checkpoint');
     const tx = await adaptorEntrypoint.connect(admin).performAction(gauge.target.toString(), calldata);
@@ -342,7 +345,7 @@ describeForkTest.skip('AvalancheRootGaugeFactory', 'mainnet', 17395000, function
     await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
         expectEvent.inIndirectReceipt(await tx.wait(), gauge.interface, 'Checkpoint', {
-          periodTime: weekTimestamp - WEEK * weekIndex,
+          periodTime: weekTimestamp - BigInt(WEEK) * BigInt(weekIndex),
         })
       )
     );

@@ -14,6 +14,7 @@ const defaultPoolDataQueryConfig = {
   loadTotalSupply: false,
   loadSwapFees: false,
   loadLinearWrappedTokenRates: false,
+  loadLinearTargets: false,
   loadNormalizedWeights: false,
   loadScalingFactors: false,
   loadAmps: false,
@@ -29,7 +30,7 @@ const defaultPoolDataQueryConfig = {
   ratePoolIdxs: [],
 };
 
-describeForkTest.skip('BalancerPoolDataQueries', 'mainnet', 17238447, function () {
+describeForkTest.only('BalancerPoolDataQueries', 'mainnet', 17238447, function () {
   let balancerPoolDataQueries: Contract;
 
   before('deploy balancer pool data queries', async () => {

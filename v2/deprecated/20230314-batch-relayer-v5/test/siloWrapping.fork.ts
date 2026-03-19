@@ -5,7 +5,7 @@ import { BigNumberish, bn } from '@helpers/numbers';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
+describeForkTest.only('SiloWrapping', 'mainnet', 16622559, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -18,7 +18,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
   let usdcToken: Contract, shareToken: Contract, silo: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
   let chainedReference: bigint;
-  const amountToWrap = 100e6;
+  const amountToWrap = bn(100e6);
 
   before('run task', async () => {
     task = new Task('20230314-batch-relayer-v5', TaskMode.TEST, getForkedNetwork(hre));
@@ -37,7 +37,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -46,7 +46,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -56,8 +56,8 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
     sender = await impersonate(USDC_HOLDER);
     recipient = await getSigner();
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
@@ -67,7 +67,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfWrappedBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
+    await (usdcToken.connect(sender) as Contract).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoSilo = library.interface.encodeFunctionData('wrapShareToken', [
@@ -78,7 +78,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
       chainedReference,
     ]);
 
-    await relayer.connect(sender).multicall([depositIntoSilo]);
+    await (relayer.connect(sender) as Contract).multicall([depositIntoSilo]);
 
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfWrappedAfter = await shareToken.balanceOf(recipient.address);
@@ -93,10 +93,10 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
 
   it('should unwrap successfully', async () => {
     const estimatedRate = await siloExchangeRate(silo, USDC, shareToken);
-    const wrappedRate = Math.floor(1e6 / estimatedRate);
+    const wrappedRate = Math.floor(1e6 / Number(estimatedRate));
     const balanceOfWrappedBefore = await shareToken.balanceOf(recipient.address);
 
-    const amountToWithdraw = Math.floor((wrappedRate * balanceOfWrappedBefore) / 1e6);
+    const amountToWithdraw = (bn(wrappedRate) * bn(balanceOfWrappedBefore)) / BigInt(1e6);
 
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
 
@@ -108,9 +108,9 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
       chainedReference,
     ]);
 
-    await shareToken.connect(recipient).approve(vault.target.toString(), amountToWithdraw);
+    await (shareToken.connect(recipient) as Contract).approve(vault.target.toString(), amountToWithdraw);
 
-    await relayer.connect(recipient).multicall([withdrawFromSilo]);
+    await (relayer.connect(recipient) as Contract).multicall([withdrawFromSilo]);
 
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfWrappedAfter = await shareToken.balanceOf(recipient.address);
@@ -126,7 +126,7 @@ function toChainedReference(key: BigNumberish): bigint {
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigInt(paddedPrefix) + key;
+  return BigInt(paddedPrefix) + BigInt(key);
 }
 
 async function siloExchangeRate(silo: Contract, mainTokenAddress: string, wrappedTokenContract: Contract) {

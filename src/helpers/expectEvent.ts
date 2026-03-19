@@ -127,7 +127,9 @@ function arrayFromIndirectReceipt(
 }
 
 function contains(args: { [key: string]: any | undefined }, key: string, value: any) {
-  expect(key in args).to.equal(true, `Event argument '${key}' not found`);
+  // Ethers v6 Result objects don't support the `in` operator for named keys;
+  // use direct property access instead.
+  expect(args[key] !== undefined).to.equal(true, `Event argument '${key}' not found`);
 
   if (value === null) {
     expect(args[key]).to.equal(null, `expected event argument '${key}' to be null but got ${args[key]}`);

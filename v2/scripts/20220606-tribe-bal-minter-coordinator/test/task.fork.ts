@@ -12,7 +12,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
+describeForkTest.only('TribeBALMinterCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress;
   let coordinator: Contract;
 
@@ -53,7 +53,7 @@ describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function
 
     // Gov approval for relayer
     mintRole = await actionId(balancerTokenAdmin, 'mint');
-    await authorizer.connect(govMultisig).grantRoles([mintRole], coordinator.address);
+    await authorizer.connect(govMultisig).grantRoles([mintRole], coordinator.target);
   });
 
   it('mints BAL', async () => {
@@ -69,7 +69,7 @@ describeForkTest.skip('TribeBALMinterCoordinator', 'mainnet', 14850000, function
   });
 
   it('renounces its permission to mint BAL', async () => {
-    expect(await authorizer.hasRole(mintRole, coordinator.address)).to.be.false;
+    expect(await authorizer.hasRole(mintRole, coordinator.target)).to.be.false;
   });
 
   it('fails on future attempts to mint BAL', async () => {

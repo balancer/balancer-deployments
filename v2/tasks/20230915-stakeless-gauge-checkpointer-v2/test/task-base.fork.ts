@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 // This test verifies the checkpointer against the manual transactions for the given period.
 // This test is exactly the same as the one in 20230527-l2-gauge-checkpointer but using the new artifacts.
 // It validates that the new version of the checkpointer can still do the same as the previous one in the base case.
-describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 17332499, function () {
+describeForkTest.only('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 17332499, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {
@@ -226,7 +226,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer V2 - Base', 'mainnet', 1733249
 
         // Bridge cost per gauge is always the same, so total cost is (single gauge cost) * (number of gauges).
         expect(await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight)).to.be.eq(
-          singleGaugeBridgeCost * gaugesAmountAboveMinWeight
+          singleGaugeBridgeCost * BigInt(gaugesAmountAboveMinWeight)
         );
       });
     }

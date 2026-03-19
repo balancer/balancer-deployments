@@ -14,7 +14,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
-describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('StablePoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress;
   let pool: Contract, factory: Contract, vault: Contract, usdc: Contract, dai: Contract;
 

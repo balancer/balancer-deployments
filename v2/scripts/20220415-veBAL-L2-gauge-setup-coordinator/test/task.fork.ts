@@ -11,7 +11,7 @@ import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 import { advanceTime, WEEK } from '@helpers/time';
 
-describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, function () {
+describeForkTest.only('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, function () {
   let govMultisig: SignerWithAddress, checkpointMultisig: SignerWithAddress;
   let coordinator: Contract;
 
@@ -86,7 +86,7 @@ describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, funct
 
     await authorizer
       .connect(govMultisig)
-      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.address);
+      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.target);
   });
 
   it('perform first stage', async () => {
@@ -181,10 +181,10 @@ describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, funct
     // A new epoch needs to begin for gauges to be checkpointable
     await advanceTime(WEEK);
 
-    const gaugeInterface = new new ethers.Interface([
+    const gaugeInterface = new ethers.Interface([
       'function checkpoint()',
       'event Checkpoint(uint256 indexed periodTime, uint256 periodEmissions)',
-    ])();
+    ]);
 
     for (const gaugeAddress of [arbitrumGaugeAddress, polygonGaugeAddress]) {
       const tx = await authorizerAdaptor
@@ -197,10 +197,7 @@ describeForkTest.skip('veBALL2GaugeSetupCoordinator', 'mainnet', 14616219, funct
 
   it('renounces the admin role', async () => {
     expect(
-      await authorizer.hasRole(
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        coordinator.address
-      )
+      await authorizer.hasRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.target)
     ).to.equal(false);
   });
 });

@@ -14,7 +14,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 // This block number is before the manual weekly checkpoint. This ensures gauges will actually be checkpointed.
 // This test verifies the checkpointer against the manual transactions for the given period.
-describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
+describeForkTest.only('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {
@@ -190,7 +190,7 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
       Array.from(gauges).map(([gaugeType, gaugesData]) => {
         L2GaugeCheckpointer.connect(admin).addGaugesWithVerifiedType(
           GaugeType[gaugeType],
-          gaugesData.map((gaugeData) => gaugeData.target.toString())
+          gaugesData.map((gaugeData) => gaugeData.address)
         );
       })
     );
@@ -203,7 +203,7 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
     await authorizer
       .connect(daoMultisig)
       .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
         L2GaugeCheckpointer.target.toString()
       );
   });
@@ -224,7 +224,7 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
 
         // Bridge cost per gauge is always the same, so total cost is (single gauge cost) * (number of gauges).
         expect(await L2GaugeCheckpointer.getTotalBridgeCost(minRelativeWeight)).to.be.eq(
-          singleGaugeBridgeCost * gaugesAmountAboveMinWeight
+          singleGaugeBridgeCost * BigInt(gaugesAmountAboveMinWeight)
         );
       });
     }
@@ -412,7 +412,7 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
               checkpointInterface,
               'Checkpoint',
               {},
-              gaugeData.target.toString(),
+              gaugeData.address,
               gaugeData.expectedCheckpoints
             );
           });
@@ -426,19 +426,15 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
           const arbitrumGaugeData = gauges.get(GaugeType.Arbitrum)![0];
           const arbitrumType = GaugeType[GaugeType.Arbitrum];
 
-          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(
-            arbitrumType,
-            arbitrumGaugeData.target.toString(),
-            {
-              value: await L2GaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.target.toString()),
-            }
-          );
+          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.address, {
+            value: await L2GaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.address),
+          });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            arbitrumGaugeData.target.toString(),
+            arbitrumGaugeData.address,
             arbitrumGaugeData.expectedCheckpoints
           );
         });
@@ -449,13 +445,13 @@ describeForkTest.skip('L2GaugeCheckpointer', 'mainnet', 17332499, function () {
           const gnosisGaugeData = gauges.get(GaugeType.Gnosis)![0];
           const gnosisType = GaugeType[GaugeType.Gnosis];
 
-          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.target.toString());
+          const tx = await L2GaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.address);
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            gnosisGaugeData.target.toString(),
+            gnosisGaugeData.address,
             gnosisGaugeData.expectedCheckpoints
           );
         });

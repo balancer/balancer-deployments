@@ -10,7 +10,7 @@ import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { getSigner, impersonate } from '@src';
 
-describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, function () {
+describeForkTest.only('SmartWalletCheckerCoordinator', 'mainnet', 14850000, function () {
   let govMultisig: SignerWithAddress, other: SignerWithAddress;
   let coordinator: Contract;
 
@@ -53,7 +53,7 @@ describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, func
 
     await authorizer
       .connect(govMultisig)
-      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.address);
+      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.target);
   });
 
   it('perform first stage', async () => {
@@ -81,10 +81,7 @@ describeForkTest.skip('SmartWalletCheckerCoordinator', 'mainnet', 14850000, func
 
   it('renounces the admin role', async () => {
     expect(
-      await authorizer.hasRole(
-        '0x0000000000000000000000000000000000000000000000000000000000000000',
-        coordinator.address
-      )
+      await authorizer.hasRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.target)
     ).to.equal(false);
   });
 });

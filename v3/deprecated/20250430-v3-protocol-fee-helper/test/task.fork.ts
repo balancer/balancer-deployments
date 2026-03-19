@@ -6,7 +6,7 @@ import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSig
 import { actionId } from '@helpers/models/misc/actions';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
-describeForkTest.skip('V3-ProtocolFeeHelper', 'mainnet', 22348940, function () {
+describeForkTest.only('V3-ProtocolFeeHelper', 'mainnet', 22348940, function () {
   const TASK_NAME = '20250430-v3-protocol-fee-helper';
   const CONTRACT_NAME = 'ProtocolFeeHelper';
 
@@ -63,10 +63,10 @@ describeForkTest.skip('V3-ProtocolFeeHelper', 'mainnet', 22348940, function () {
     await authorizer.connect(govMultisig).grantRole(await actionId(feeHelper, 'addPools'), admin.address);
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(feeHelper, 'setProtocolSwapFeePercentage'), feeSetter.target.toString());
+      .grantRole(await actionId(feeHelper, 'setProtocolSwapFeePercentage'), feeSetter.address);
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(feeHelper, 'setProtocolYieldFeePercentage'), feeSetter.target.toString());
+      .grantRole(await actionId(feeHelper, 'setProtocolYieldFeePercentage'), feeSetter.address);
   });
 
   it('can add pools', async () => {
