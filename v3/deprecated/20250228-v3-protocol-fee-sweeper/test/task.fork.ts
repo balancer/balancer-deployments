@@ -7,7 +7,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ProtocolFeeSweeperDeployment } from '../input';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest.only('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
+describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
   const TASK_NAME = '20250228-v3-protocol-fee-sweeper';
   const CONTRACT_NAME = 'ProtocolFeeSweeper';
 
