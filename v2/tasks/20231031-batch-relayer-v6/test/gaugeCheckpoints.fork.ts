@@ -111,7 +111,6 @@ const networksUnderTest = {
   optimism: 111935000,
   gnosis: 30856000,
   avalanche: 37505000,
-  zkevm: 7228000,
   base: 6339000,
 };
 
