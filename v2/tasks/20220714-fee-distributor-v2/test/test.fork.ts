@@ -12,7 +12,7 @@ import { TypedDataEncoder } from 'ethers';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('FeeDistributor', 'mainnet', 15130000, function () {
+describeForkTest.only('FeeDistributor', 'mainnet', 15130000, function () {
   let veBALHolder: SignerWithAddress,
     veBALHolder2: SignerWithAddress,
     feeCollector: SignerWithAddress,

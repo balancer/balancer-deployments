@@ -13,7 +13,7 @@ import { MAX_UINT256 } from '@helpers/constants';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
+describeForkTest.only('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -33,7 +33,7 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigInt(paddedPrefix) + key;
+    return BigInt(paddedPrefix) + BigInt(key);
   }
 
   before('run task', async () => {
@@ -77,35 +77,17 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   afterEach('disapprove relayer by sender', async () => {
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, false);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, false);
   });
-
-  async function getApprovalCalldata(deadline: bigint): Promise<string> {
-    return library.interface.encodeFunctionData('setRelayerApproval', [
-      relayer.address,
-      true,
-      RelayerAuthorization.encodeCalldataAuthorization(
-        '0x',
-        deadline,
-        await RelayerAuthorization.signSetRelayerApprovalAuthorization(
-          vault,
-          sender,
-          relayer,
-          vault.interface.encodeFunctionData('setRelayerApproval', [sender.address, relayer.address, true]),
-          deadline
-        )
-      ),
-    ]);
-  }
 
   it('sender can approve relayer, swap and join', async () => {
     const deadline = await fromNow(30 * MINUTE);
@@ -154,7 +136,25 @@ describeForkTest.skip('BatchRelayerLibrary', 'mainnet', 14850000, function () {
       0, // No output reference
     ]);
 
-    await relayer.connect(sender).multicall([getApprovalCalldata(deadline), swapCalldata, joinCalldata]);
+    const getApprovalCalldata = async (deadline: bigint): Promise<string> => {
+      return library.interface.encodeFunctionData('setRelayerApproval', [
+        relayer.target,
+        true,
+        RelayerAuthorization.encodeCalldataAuthorization(
+          '0x',
+          deadline,
+          await RelayerAuthorization.signSetRelayerApprovalAuthorization(
+            vault,
+            sender,
+            relayer,
+            vault.interface.encodeFunctionData('setRelayerApproval', [sender.address, relayer.target, true]),
+            deadline
+          )
+        ),
+      ]);
+    };
+
+    await relayer.connect(sender).multicall([await getApprovalCalldata(deadline), swapCalldata, joinCalldata]);
 
     const pool = await task.instanceAt('IERC20', ETH_DAI_POOL.slice(0, 42));
     expect(await pool.balanceOf(sender.address)).to.be.gt(0);

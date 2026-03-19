@@ -20,7 +20,7 @@ import {
   PoolKind,
 } from './helpers/sharedStableParams';
 
-describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet', 16789433, function () {
+describeForkTest.only('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet', 16789433, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -67,11 +67,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
   });
 
   before('approve relayer by the user', async () => {
-    await (vault.connect(whale) as Contract).setRelayerApproval(whale.address, relayer.address, true);
+    await (vault.connect(whale) as Contract).setRelayerApproval(whale.address, relayer.target, true);
   });
 
   before('load tokens and approve', async () => {
@@ -118,7 +118,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
     await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
-      assets: allTokens,
+      assets: [...allTokens],
       maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
       fromInternalBalance: false,
       userData,
@@ -152,7 +152,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
         whale.address,
         whale.address,
         {
-          assets: allTokens,
+          assets: [...allTokens],
           maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
           userData: joinUserData,
           fromInternalBalance: false,
@@ -169,7 +169,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Composable Stable V2+', 'mainnet
         whale.address,
         owner.address,
         {
-          assets: allTokens,
+          assets: [...allTokens],
           minAmountsOut: Array(tokens.length + 1).fill(0),
           userData: exitUserData,
           toInternalBalance: false,

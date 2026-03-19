@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
+describeForkTest.only('YearnWrapping', 'mainnet', 16622559, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -37,7 +37,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -46,7 +46,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -55,14 +55,14 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
     sender = await impersonate(USDC_HOLDER);
     recipient = await getSigner();
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, true);
+    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
     const balanceOfYearnBefore = await yearnToken.balanceOf(recipient.address);
-    const expectedBalanceOfYearnAfter = Math.floor((1e6 / (await yearnToken.pricePerShare())) * amountToWrap);
+    const expectedBalanceOfYearnAfter = (BigInt(1e6) * BigInt(amountToWrap)) / (await yearnToken.pricePerShare());
 
     expect(balanceOfYearnBefore).to.be.equal(0);
 
@@ -88,7 +88,7 @@ describeForkTest.skip('YearnWrapping', 'mainnet', 16622559, function () {
   });
 
   it('should unwrap successfully', async () => {
-    const YearnAmountToWithdraw = Math.floor((1e6 / (await yearnToken.pricePerShare())) * amountToWrap);
+    const YearnAmountToWithdraw = (BigInt(1e6) * BigInt(amountToWrap)) / (await yearnToken.pricePerShare());
 
     const balanceOfUSDCBefore = await usdcToken.balanceOf(sender.address);
     const balanceOfYearnBefore = await yearnToken.balanceOf(recipient.address);
@@ -120,5 +120,5 @@ function toChainedReference(key: BigNumberish): bigint {
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigInt(paddedPrefix) + key;
+  return BigInt(paddedPrefix) + BigInt(key);
 }

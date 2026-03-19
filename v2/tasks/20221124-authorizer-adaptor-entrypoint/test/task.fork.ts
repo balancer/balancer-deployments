@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('AuthorizerAdaptorEntrypoint', 'mainnet', 16041900, function () {
+describeForkTest.only('AuthorizerAdaptorEntrypoint', 'mainnet', 16041900, function () {
   let adaptorEntrypoint: Contract, vault: Contract, authorizerAdaptor: Contract, authorizer: Contract;
 
   let task: Task;
@@ -34,7 +34,7 @@ describeForkTest.skip('AuthorizerAdaptorEntrypoint', 'mainnet', 16041900, functi
 
     it('checks authorizer address', async () => {
       const entrypointAuthorizer = await adaptorEntrypoint.getAuthorizer();
-      expect(entrypointAuthorizer).to.equal(authorizer.address);
+      expect(entrypointAuthorizer).to.equal(authorizer.target);
     });
 
     it('checks authorizer adaptor address', async () => {

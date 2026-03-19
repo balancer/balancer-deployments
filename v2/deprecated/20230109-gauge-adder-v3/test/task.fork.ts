@@ -14,7 +14,7 @@ import TimelockAuthorizer from '@helpers/models/authorizer/TimelockAuthorizer';
 import { advanceTime, DAY } from '@helpers/time';
 import { ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
+describeForkTest.only('GaugeAdderV3', 'mainnet', 16370000, function () {
   let factory: Contract;
   let adaptorEntrypoint: Contract;
   let authorizer: Contract;
@@ -116,18 +116,13 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(addFactoryAction, lmMultisig.target.toString(), TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(addFactoryAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(addGaugeAction, lmMultisig.target.toString(), TimelockAuthorizer.EVERYWHERE, true);
+        .manageGranter(addGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
       await authorizer
         .connect(daoMultisig)
-        .manageGranter(
-          gaugeControllerAddGaugeAction,
-          lmMultisig.target.toString(),
-          TimelockAuthorizer.EVERYWHERE,
-          true
-        );
+        .manageGranter(gaugeControllerAddGaugeAction, lmMultisig.address, TimelockAuthorizer.EVERYWHERE, true);
 
       let tx = await authorizer
         .connect(lmMultisig)
@@ -187,7 +182,7 @@ describeForkTest.skip('GaugeAdderV3', 'mainnet', 16370000, function () {
 
       // Ensure the authorizer we just set the permissions on is the same one the gauge adder is using
       expect(entrypoint).to.equal(adaptorEntrypoint.target.toString());
-      expect(gaugeAdderAuthorizer).to.equal(authorizer.address);
+      expect(gaugeAdderAuthorizer).to.equal(authorizer.target.toString());
     });
 
     it('can add factories for a gauge type', async () => {

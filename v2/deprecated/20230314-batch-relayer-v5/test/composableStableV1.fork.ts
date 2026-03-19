@@ -21,7 +21,7 @@ import {
   PoolKind,
 } from './helpers/sharedStableParams';
 
-describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 16083775, function () {
+describeForkTest.only('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 16083775, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -63,7 +63,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -72,11 +72,11 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before('approve relayer by the user', async () => {
-    await vault.connect(owner).setRelayerApproval(owner.address, relayer.address, true);
+    await vault.connect(owner).setRelayerApproval(owner.address, relayer.target, true);
   });
 
   before('load tokens and approve', async () => {
@@ -124,7 +124,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
 
     const userData = StablePoolEncoder.joinInit(composableInitialBalances);
     await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-      assets: allTokens,
+      assets: [...allTokens],
       maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
       fromInternalBalance: false,
       userData,
@@ -152,7 +152,7 @@ describeForkTest.skip('BatchRelayerLibrary - Composable Stable V1', 'mainnet', 1
       owner.address,
       owner.address,
       {
-        assets: allTokens,
+        assets: [...allTokens],
         minAmountsOut: Array(tokens.length + 1).fill(0),
         toInternalBalance: false,
         userData,

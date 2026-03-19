@@ -19,7 +19,7 @@ import {
   PoolKind,
 } from './helpers/sharedStableParams';
 
-describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860000, function () {
+describeForkTest.only('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860000, function () {
   let task: Task;
 
   let relayer: Contract, library: Contract;
@@ -72,11 +72,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
       const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
       // Grant relayer permission to call all relayer functions
-      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
     });
 
     before('approve relayer by the user', async () => {
-      await (vault.connect(owner) as Contract).setRelayerApproval(owner.address, relayer.address, true);
+      await (vault.connect(owner) as Contract).setRelayerApproval(owner.address, relayer.target, true);
     });
 
     before('load tokens and approve', async () => {
@@ -129,12 +129,12 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         );
 
         // Send BPT to the relayer so it can exit.
-        await (pool.connect(owner) as Contract).transfer(relayer.address, bptBalance);
+        await (pool.connect(owner) as Contract).transfer(relayer.target, bptBalance);
 
         const exitCalldata = library.interface.encodeFunctionData('exitPool', [
           poolId,
           PoolKind.LEGACY_STABLE,
-          relayer.address,
+          relayer.target,
           owner.address,
           {
             assets: tokens,
@@ -210,12 +210,12 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Legacy Stable', 'mainnet', 14860
         );
 
         // Send BPT to the relayer so it can exit.
-        await (pool.connect(owner) as Contract).transfer(relayer.address, bptBalance);
+        await (pool.connect(owner) as Contract).transfer(relayer.target, bptBalance);
 
         const exitCalldata = library.interface.encodeFunctionData('exitPool', [
           poolId,
           PoolKind.LEGACY_STABLE,
-          relayer.address,
+          relayer.target,
           owner.address,
           {
             assets: tokens,

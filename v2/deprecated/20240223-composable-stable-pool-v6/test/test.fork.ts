@@ -21,7 +21,7 @@ import { deploy } from '@src';
 import { randomBytes } from 'ethers';
 import { DAY, MINUTE, advanceTime, currentTimestamp } from '@helpers/time';
 
-describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function () {
+describeForkTest.only('ComposableStablePool V6', 'mainnet', 19292000, function () {
   let task: Task;
 
   let factory: Contract;
@@ -133,7 +133,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
       registeredBalances[bptIndex] = MAX_UINT256;
 
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         maxAmountsIn: registeredBalances,
         fromInternalBalance: false,
         userData,
@@ -232,11 +232,14 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
         const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
         // Given the bptOut, the max amounts in should be slightly more than 1/5. Decimals make it a bit complicated.
-        const adjustedBalances = [(initialBalanceDAI / fp(4.99)) * fp(1), (initialBalanceUSDC / bn(4.99e6)) * 1e6];
+        const adjustedBalances = [
+          (initialBalanceDAI / fp(4.99)) * fp(1),
+          (initialBalanceUSDC / bn(4.99e6)) * BigInt(1e6),
+        ];
         const maxAmountsIn = getRegisteredBalances(bptIndex, adjustedBalances);
 
         const tx = await vault.connect(whale).joinPool(poolId, whale.address, whale.address, {
-          assets: registeredTokens,
+          assets: [...registeredTokens],
           maxAmountsIn: maxAmountsIn,
           fromInternalBalance: false,
           userData: StablePoolEncoder.joinAllTokensInForExactBptOut(bptOut),
@@ -273,9 +276,9 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
         const { tokens: registeredTokens, balances: registeredBalances } = await vault.getPoolTokens(poolId);
 
         const tx = await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-          assets: registeredTokens,
+          assets: [...registeredTokens],
           minAmountsOut: Array(registeredTokens.length).fill(0),
-          fromInternalBalance: false,
+          toInternalBalance: false,
           userData: StablePoolEncoder.exitExactBptInForTokensOut(bptIn),
         });
         const receipt = await (await tx).wait();
@@ -306,10 +309,10 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
     sharedBeforeEach('deploy and fund attacker', async () => {
       attacker = await deploy('ReadOnlyReentrancyAttackerCSP', [vault.target.toString()]);
-      await dai.connect(whale).transfer(attacker.address, attackerFunds);
-      await usdc.connect(whale).transfer(attacker.address, attackerFunds);
-      await aura.connect(auraWhale).transfer(attacker.address, attackerFunds);
-      await graviAura.connect(graviAuraWhale).transfer(attacker.address, attackerFunds);
+      await dai.connect(whale).transfer(attacker.target, attackerFunds);
+      await usdc.connect(whale).transfer(attacker.target, attackerFunds);
+      await aura.connect(auraWhale).transfer(attacker.target, attackerFunds);
+      await graviAura.connect(graviAuraWhale).transfer(attacker.target, attackerFunds);
     });
 
     context('when the target pool is not protected', () => {
@@ -350,7 +353,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
         sharedBeforeEach('grant permissions to attacker', async () => {
           await authorizer
             .connect(govMultisig)
-            .grantRole(await actionId(pool, 'setTokenRateCacheDuration'), attacker.address);
+            .grantRole(await actionId(pool, 'setTokenRateCacheDuration'), attacker.target);
         });
 
         it(`${action} token rate cache duration attack`, async () => {
@@ -360,9 +363,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
       context('disable recovery mode', () => {
         sharedBeforeEach('grant permissions to attacker', async () => {
-          await authorizer
-            .connect(govMultisig)
-            .grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.address);
+          await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.target);
         });
 
         it(`${action} disable recovery mode attack`, async () => {
@@ -372,7 +373,7 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
     }
 
     async function performAttack(attackType: AttackType, expectRevert: boolean) {
-      const allTokens = (await vault.getPoolTokens(poolId)).tokens;
+      const allTokens = [...(await vault.getPoolTokens(poolId)).tokens];
       // Amounts in must not include BPT in user data.
       const userData = StablePoolEncoder.joinExactTokensInForBPTOut(Array(allTokens.length - 1).fill(attackerFunds), 0);
 
@@ -420,9 +421,9 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         minAmountsOut: Array(registeredTokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 
@@ -464,9 +465,9 @@ describeForkTest.skip('ComposableStablePool V6', 'mainnet', 19292000, function (
   });
 
   describe('pause window', () => {
-    const EXPECTED_PAUSE_WINDOW = 4 * 365 * DAY;
-    const EXPECTED_BUFFER_PERIOD = 180 * DAY;
-    const TOLERANCE = 10 * MINUTE;
+    const EXPECTED_PAUSE_WINDOW = BigInt(4 * 365 * DAY);
+    const EXPECTED_BUFFER_PERIOD = BigInt(180 * DAY);
+    const TOLERANCE = BigInt(10 * MINUTE);
 
     sharedBeforeEach(async () => {
       // Reset timestamp and double check that we're close to factory deployment time.

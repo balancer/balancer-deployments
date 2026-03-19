@@ -7,7 +7,7 @@ import { CowSwapFeeBurnerDeployment } from '../input';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 
-describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
+describeForkTest.only('CowSwapFeeBurner', 'mainnet', 21896824, function () {
   enum OrderStatus {
     Nonexistent,
     Active,
@@ -57,7 +57,10 @@ describeForkTest.skip('CowSwapFeeBurner', 'mainnet', 21896824, function () {
     // Grant burn role to admin
     await authorizer
       .connect(govMultisig)
-      .grantRole(await cowSwapFeeBurner.getActionId(cowSwapFeeBurner.interface.getSighash('burn')), usdcWhale.address);
+      .grantRole(
+        await cowSwapFeeBurner.getActionId(cowSwapFeeBurner.interface.getFunction('burn')!.selector),
+        usdcWhale.address
+      );
     await usdc.connect(usdcWhale).approve(cowSwapFeeBurner.target.toString(), initBalance);
 
     const block = await ethers.provider.getBlock('latest');

@@ -16,7 +16,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkTest } from '@src';
 
-describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
+describeForkTest.only('WeightedPool V3', 'mainnet', 16577000, function () {
   let owner: SignerWithAddress,
     whale: SignerWithAddress,
     wstEthWhale: SignerWithAddress,
@@ -197,10 +197,10 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
 
     sharedBeforeEach('deploy and fund attacker', async () => {
       attacker = await deploy('ReadOnlyReentrancyAttackerWP', [vault.target.toString()]);
-      await comp.connect(whale).transfer(attacker.address, attackerFunds);
-      await uni.connect(whale).transfer(attacker.address, attackerFunds);
-      await aave.connect(whale).transfer(attacker.address, attackerFunds);
-      await wstEth.connect(wstEthWhale).transfer(attacker.address, attackerFunds);
+      await comp.connect(whale).transfer(attacker.target, attackerFunds);
+      await uni.connect(whale).transfer(attacker.target, attackerFunds);
+      await aave.connect(whale).transfer(attacker.target, attackerFunds);
+      await wstEth.connect(wstEthWhale).transfer(attacker.target, attackerFunds);
     });
 
     context('when the target pool is not protected', () => {
@@ -234,9 +234,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
 
       context('disable recovery mode', () => {
         sharedBeforeEach('grant permissions to attacker', async () => {
-          await authorizer
-            .connect(govMultisig)
-            .grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.address);
+          await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'disableRecoveryMode'), attacker.target);
         });
 
         it(`${action} disable recovery mode attack`, async () => {
@@ -249,7 +247,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       const attackTokens = (await vault.getPoolTokens(poolId)).tokens;
 
       const joinRequest = {
-        assets: attackTokens,
+        assets: [...attackTokens],
         maxAmountsIn: Array(attackTokens.length).fill(MAX_UINT256),
         userData: WeightedPoolEncoder.joinExactTokensInForBPTOut(Array(attackTokens.length).fill(attackerFunds), 0),
         fromInternalBalance: false,
@@ -302,7 +300,7 @@ describeForkTest.skip('WeightedPool V3', 'mainnet', 16577000, function () {
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokens,
         minAmountsOut: Array(tokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 

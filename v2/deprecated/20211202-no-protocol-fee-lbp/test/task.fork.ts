@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress;
   let pool: Contract, factory: Contract, vault: Contract, usdc: Contract, dai: Contract;
 
@@ -98,7 +98,7 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
 
     const scaledBalances = [initialBalanceDAI, initialBalanceUSDC * BigInt(1e12)];
     // Initial BPT is the invariant multiplied by the number of tokens
-    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights) * tokens.length;
+    const expectedInvariant = calculateInvariant(scaledBalances, initialWeights) * BigInt(tokens.length);
 
     expectEqualWithError(await pool.balanceOf(owner.address), expectedInvariant, 0.001);
   });
@@ -133,8 +133,8 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
   });
 
   it('owner can start a gradual weight change', async () => {
-    const startTime = (await currentTimestamp()) + DAY;
-    endTime = startTime + weightChangeDuration;
+    const startTime = (await currentTimestamp()) + BigInt(DAY);
+    endTime = startTime + BigInt(weightChangeDuration);
 
     const tx = await pool.connect(owner).updateWeightsGradually(startTime, endTime, endWeights);
 
@@ -148,7 +148,7 @@ describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet
   });
 
   it('weights fully change once the time expires', async () => {
-    await advanceToTimestamp(endTime + MINUTE);
+    await advanceToTimestamp(endTime + BigInt(MINUTE));
 
     // Weights are not exact due to being stored in fewer bits
     expect(await pool.getNormalizedWeights()).to.equalWithError(endWeights, 0.0001);

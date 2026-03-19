@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest.skip('TetuWrapping', 'polygon', 37945364, function () {
+describeForkTest.only('TetuWrapping', 'polygon', 37945364, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -40,7 +40,7 @@ describeForkTest.skip('TetuWrapping', 'polygon', 37945364, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -49,7 +49,7 @@ describeForkTest.skip('TetuWrapping', 'polygon', 37945364, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -61,21 +61,21 @@ describeForkTest.skip('TetuWrapping', 'polygon', 37945364, function () {
     // Set whitelist approvals for the batch relayer to interact with the Tetu Smart Vault
     const governance = await impersonate(TETU_GOVERNANCE);
 
-    const tetuControllerABI = new new ethers.Interface([
+    const tetuControllerABI = new ethers.Interface([
       'function changeWhiteListStatus(address[] memory _targets, bool status) external',
     ]).format();
     const tetuController = await ethers.getContractAt(tetuControllerABI, TETU_CONTROLLER);
 
-    await tetuController.connect(governance).changeWhiteListStatus([relayer.address], true);
+    await tetuController.connect(governance).changeWhiteListStatus([relayer.target], true);
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, true);
+    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
     const balanceOfUSDTBefore = await usdtToken.balanceOf(sender.address);
     const balanceOfTetuBefore = await tetuVault.balanceOf(recipient.address);
-    const expectedBalanceOfTetuAfter = Math.floor((1e6 / (await tetuVault.getPricePerFullShare())) * amountToWrap);
+    const expectedBalanceOfTetuAfter = (BigInt(1e6) * BigInt(amountToWrap)) / (await tetuVault.getPricePerFullShare());
 
     expect(balanceOfTetuBefore).to.be.equal(0);
 
@@ -102,7 +102,7 @@ describeForkTest.skip('TetuWrapping', 'polygon', 37945364, function () {
 
   it('should unwrap successfully', async () => {
     const tetuBalance = await tetuVault.balanceOf(recipient.address);
-    const tetuAmountToWithdraw = Math.floor((tetuBalance * (await tetuVault.getPricePerFullShare())) / 1e6);
+    const tetuAmountToWithdraw = (tetuBalance * (await tetuVault.getPricePerFullShare())) / BigInt(1e6);
 
     const balanceOfUSDTBefore = await usdtToken.balanceOf(sender.address);
 
@@ -131,5 +131,5 @@ function toChainedReference(key: BigNumberish): bigint {
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigInt(paddedPrefix) + key;
+  return BigInt(paddedPrefix) + BigInt(key);
 }

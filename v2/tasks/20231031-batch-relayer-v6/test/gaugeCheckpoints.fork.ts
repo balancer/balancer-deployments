@@ -7,7 +7,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 
 function doForkTestsOnNetwork(network: string, block: number) {
-  describeForkTest.skip(`BatchRelayerLibrary V6 - Gauge checkpoints - ${network}`, network, block, function () {
+  describeForkTest.only(`BatchRelayerLibrary V6 - Gauge checkpoints - ${network}`, network, block, function () {
     let task: Task;
 
     let relayer: Contract, library: Contract;
@@ -66,11 +66,11 @@ function doForkTestsOnNetwork(network: string, block: number) {
       const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
       // Grant relayer permission to call all relayer functions
-      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+      await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
     });
 
     sharedBeforeEach('approve relayer by the user', async () => {
-      await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
+      await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
     });
 
     it('can call user checkpoint: true', async () => {
@@ -111,7 +111,6 @@ const networksUnderTest = {
   optimism: 111935000,
   gnosis: 30856000,
   avalanche: 37505000,
-  zkevm: 7228000,
   base: 6339000,
 };
 

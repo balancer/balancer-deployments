@@ -14,7 +14,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('StablePoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
   let factory: Contract, vault: Contract, authorizer: Contract, usdc: Contract, dai: Contract, usdt: Contract;
 
@@ -119,8 +119,8 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     it('the invariant converges', async () => {
       const unbalancedTokens = [DAI, USDC, USDT];
       const unbalancedBalanceDAI = fp(0.00000001);
-      const unbalancedBalanceUSDC = fp(1200000000) / 1e12; // 6 digits
-      const unbalancedBalanceUSDT = fp(300) / 1e12; // 6 digits
+      const unbalancedBalanceUSDC = fp(1200000000) / BigInt(1e12); // 6 digits
+      const unbalancedBalanceUSDT = fp(300) / BigInt(1e12); // 6 digits
       const unbalancedBalances = [unbalancedBalanceDAI, unbalancedBalanceUSDC, unbalancedBalanceUSDT];
       const upscaledUnbalancedBalances = [
         unbalancedBalanceDAI,
@@ -203,7 +203,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokens,
         minAmountsOut: Array(tokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 

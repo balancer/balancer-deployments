@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 37945364, function () {
+describeForkTest.only('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 37945364, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -49,7 +49,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -66,16 +66,16 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
     ]).format();
     const tetuController = await ethers.getContractAt(tetuControllerABI, TETU_CONTROLLER);
 
-    await (tetuController.connect(governance) as Contract).changeWhiteListStatus([relayer.address], true);
+    await (tetuController.connect(governance) as Contract).changeWhiteListStatus([relayer.target], true);
 
-    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
-    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
     const balanceOfUSDTBefore = await usdtToken.balanceOf(sender.address);
     const balanceOfTetuBefore = await tetuVault.balanceOf(recipient.address);
-    const expectedBalanceOfTetuAfter = Math.floor((1e6 / (await tetuVault.getPricePerFullShare())) * amountToWrap);
+    const expectedBalanceOfTetuAfter = (BigInt(1e6) * BigInt(amountToWrap)) / (await tetuVault.getPricePerFullShare());
 
     expect(balanceOfTetuBefore).to.be.equal(0);
 
@@ -102,7 +102,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - TetuWrapping', 'polygon', 379453
 
   it('should unwrap successfully', async () => {
     const tetuBalance = await tetuVault.balanceOf(recipient.address);
-    const tetuAmountToWithdraw = Math.floor((tetuBalance * (await tetuVault.getPricePerFullShare())) / 1e6);
+    const tetuAmountToWithdraw = (tetuBalance * bn(await tetuVault.getPricePerFullShare())) / BigInt(1e6);
 
     const balanceOfUSDTBefore = await usdtToken.balanceOf(sender.address);
 

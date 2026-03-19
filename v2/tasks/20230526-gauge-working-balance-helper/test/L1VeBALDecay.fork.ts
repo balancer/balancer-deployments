@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, instanceAt } from '@src';
+import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate } from '@src';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { bn, fp, fpMul } from '@helpers/numbers';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
@@ -9,7 +9,7 @@ import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { MONTH, currentTimestamp } from '@helpers/time';
 import * as expectEvent from '@helpers/expectEvent';
 
-describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, function () {
+describeForkTest.only('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367389, function () {
   let workingBalanceHelper: Contract;
   let veDelegationProxy: Contract;
   let votingEscrow: Contract;
@@ -66,7 +66,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
 
     BAL = await BALTokenAdmin.getBalancerToken();
 
-    lpToken = await instanceAt('IERC20', LP_TOKEN);
+    lpToken = await task.instanceAt('IERC20', LP_TOKEN);
   });
 
   before('create gauge', async () => {
@@ -131,7 +131,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L1-TimeDecay', 'mainnet', 17367
     before('create veBAL whale', async () => {
       const [poolAddress] = await vault.getPool(VEBAL_POOL_ID);
 
-      bal80weth20Pool = await instanceAt('IERC20', poolAddress);
+      bal80weth20Pool = await task.instanceAt('IERC20', poolAddress);
 
       await (vault.connect(veBALHolder) as Contract).joinPool(
         VEBAL_POOL_ID,

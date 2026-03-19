@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
-describeForkTest.skip('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 18412883, function () {
+describeForkTest.only('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 18412883, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -53,7 +53,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 184
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.address);
+    await (authorizer.connect(admin) as Contract).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -62,8 +62,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - ERC4626Wrapping', 'mainnet', 184
     sender = await impersonate(USDM_HOLDER);
     recipient = await getSigner();
 
-    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.address, true);
-    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.address, true);
+    await (vault.connect(sender) as Contract).setRelayerApproval(sender.address, relayer.target, true);
+    await (vault.connect(recipient) as Contract).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {

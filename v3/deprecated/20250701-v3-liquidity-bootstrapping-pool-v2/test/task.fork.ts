@@ -8,14 +8,14 @@ import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR, MONTH } from '@helpers/time';
 
-describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
+describeForkTest.only('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   const TASK_NAME = '20250701-v3-liquidity-bootstrapping-pool-v2';
   const POOL_CONTRACT_NAME = 'LBPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
   const VERSION_NUM = 2;
 
-  const HIGH_WEIGHT = fp(0.8);
-  const LOW_WEIGHT = fp(0.2);
+  const HIGH_WEIGHT: bigint = fp(0.8);
+  const LOW_WEIGHT: bigint = fp(0.2);
 
   const SWAP_FEE = fp(0.01);
 
@@ -102,8 +102,8 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: projectTokenLbpEndWeight,
       reserveTokenEndWeight: reserveTokenLbpEndWeight,
-      startTime: startTime + HOUR,
-      endTime: startTime + DAY,
+      startTime: startTime + BigInt(HOUR),
+      endTime: startTime + BigInt(DAY),
       blockProjectTokenSwapsIn: false,
     };
 
@@ -115,7 +115,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
         SWAP_FEE,
         ONES_BYTES32,
         ZERO_ADDRESS,
-        12 * MONTH,
+        BigInt(12 * MONTH),
         fp(0.8), // Migrate 80% of the liquidity
         HIGH_WEIGHT,
         LOW_WEIGHT
@@ -173,13 +173,13 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('starts the sale', async () => {
-    await advanceTime(2 * HOUR);
+    await advanceTime(BigInt(2 * HOUR));
 
     expect(await pool.isSwapEnabled()).to.be.true;
   });
 
   it('ends the sale', async () => {
-    await advanceTime(DAY);
+    await advanceTime(BigInt(DAY));
 
     expect(await pool.isSwapEnabled()).to.be.false;
   });
@@ -190,7 +190,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const weightedPoolReserveWeight = LOW_WEIGHT;
 
     const migrateReceipt = await (
-      await migrationRouter.connect(admin).migrateLiquidity(pool.target.toString(), projectTreasury.target.toString(), {
+      await migrationRouter.connect(admin).migrateLiquidity(pool.target.toString(), projectTreasury.address, {
         name: 'Weighted Pool',
         symbol: 'WP-TEST',
         normalizedWeights: [weightedPoolProjectWeight, weightedPoolReserveWeight],
@@ -201,7 +201,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
         },
         swapFeePercentage: SWAP_FEE,
         poolHooksContract: ZERO_ADDRESS,
-        enableDonations: false,
+        enableDonation: false,
         disableUnbalancedLiquidity: false,
         salt: ONES_BYTES32,
       })
@@ -217,7 +217,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target.toString());
     // New pool project weight is higher than LBP's project weight, so we use all of it (scaled at 80%).
     // Then, we apply the ratio of the weights to the reserve token, and we scale at 80% as well.
-    expect(currentBalances[0]).to.equalWithError((INITIAL_BAL * BigInt(80)) / 100);
+    expect(currentBalances[0]).to.equalWithError((INITIAL_BAL * BigInt(80)) / 100n);
     expect(currentBalances[1]).to.equalWithError(
       (((((INITIAL_WETH * weightedPoolReserveWeight) / weightedPoolProjectWeight) * projectTokenLbpEndWeight) /
         reserveTokenLbpEndWeight) *

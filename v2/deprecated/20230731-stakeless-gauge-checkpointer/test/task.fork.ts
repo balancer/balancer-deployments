@@ -17,7 +17,7 @@ import { WEEK, currentWeekTimestamp } from '@helpers/time';
 // The only gauge under test should have been checkpointed at this block.
 // The contract in `20230527-l2-gauge-checkpointer` would skip it because it measures the gauge relative weight in
 // the current week, whereas the new version does so in the previous week.
-describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, function () {
+describeForkTest.only('StakelessGaugeCheckpointer', 'mainnet', 17431930, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {
@@ -103,7 +103,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
     await authorizer
       .connect(daoMultisig)
       .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
         stakelessGaugeCheckpointer.target.toString()
       );
   });
@@ -113,7 +113,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
     // The gauge under test was created several weeks before the block specified in the fork test.
     // It meets 3 conditions, explained below.
     const currentWeek = await currentWeekTimestamp();
-    const previousWeek = currentWeek - WEEK;
+    const previousWeek = currentWeek - BigInt(WEEK);
     const relativeWeightPreviousWeek = await gaugeController['gauge_relative_weight(address,uint256)'](
       arbitrumRootGauge,
       previousWeek
@@ -171,7 +171,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer', 'mainnet', 17431930, functio
           checkpointInterface,
           'Checkpoint',
           {},
-          gaugeData.target.toString(),
+          gaugeData.address,
           gaugeData.expectedCheckpoints
         );
       });

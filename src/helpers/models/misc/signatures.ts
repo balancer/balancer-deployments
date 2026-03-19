@@ -2,16 +2,8 @@ import { MaxUint256 as MAX_DEADLINE } from '@ethersproject/constants';
 import { Contract } from '@ethersproject/contracts';
 import { hexValue, hexZeroPad, splitSignature } from '@ethersproject/bytes';
 import { BigNumberish } from '@ethersproject/bignumber';
-import { Signer, TypedDataSigner } from '@ethersproject/abstract-signer';
-
-export type Account = string | Signer | Contract;
-
-export async function accountToAddress(account: Account): Promise<string> {
-  if (typeof account == 'string') return account;
-  if (Signer.isSigner(account)) return account.getAddress();
-  if (account.address) return account.address;
-  throw new Error('Could not read account address');
-}
+import { Account, toAddress } from '../types/types';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 export enum RelayerAction {
   JoinPool = 'JoinPool',
@@ -40,7 +32,7 @@ export class RelayerAuthorization {
 
   static signJoinAuthorization = (
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline?: BigNumberish,
@@ -58,7 +50,7 @@ export class RelayerAuthorization {
 
   static signExitAuthorization = (
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline?: BigNumberish,
@@ -76,7 +68,7 @@ export class RelayerAuthorization {
 
   static signSwapAuthorization = (
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline?: BigNumberish,
@@ -94,7 +86,7 @@ export class RelayerAuthorization {
 
   static signBatchSwapAuthorization = (
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline?: BigNumberish,
@@ -112,7 +104,7 @@ export class RelayerAuthorization {
 
   static signSetRelayerApprovalAuthorization = (
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline?: BigNumberish,
@@ -131,13 +123,13 @@ export class RelayerAuthorization {
   static signAuthorizationFor = async (
     type: RelayerAction,
     validator: Contract,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     allowedSender: Account,
     allowedCalldata: string,
     deadline: BigNumberish = MAX_DEADLINE,
     nonce?: BigNumberish
   ): Promise<string> => {
-    const { chainId } = await validator.provider.getNetwork();
+    const { chainId } = await validator.runner.provider.getNetwork();
     if (!nonce) {
       const userAddress = await user.getAddress();
       nonce = (await validator.getNextNonce(userAddress)) as BigNumberish;
@@ -147,7 +139,7 @@ export class RelayerAuthorization {
       name: 'Balancer V2 Vault',
       version: '1',
       chainId,
-      verifyingContract: validator.address,
+      verifyingContract: validator.target,
     };
 
     const types = {
@@ -161,12 +153,12 @@ export class RelayerAuthorization {
 
     const value = {
       calldata: allowedCalldata,
-      sender: await accountToAddress(allowedSender),
+      sender: await toAddress(allowedSender),
       nonce: nonce.toString(),
       deadline: deadline.toString(),
     };
 
-    return user._signTypedData(domain, types, value);
+    return user.signTypedData(domain, types, value);
   };
 }
 
@@ -182,7 +174,7 @@ export class BalancerMinterAuthorization {
     minterContract: Contract,
     minter: Account,
     approval: boolean,
-    user: Signer & TypedDataSigner,
+    user: SignerWithAddress,
     deadline: BigNumberish = MAX_DEADLINE,
     nonce?: BigNumberish
   ): Promise<{ v: number; r: string; s: string; deadline: bigint }> => {
@@ -196,7 +188,7 @@ export class BalancerMinterAuthorization {
       name: 'Balancer Minter',
       version: '1',
       chainId,
-      verifyingContract: minterContract.address,
+      verifyingContract: minterContract.target,
     };
 
     const types = {
@@ -209,13 +201,13 @@ export class BalancerMinterAuthorization {
     };
 
     const value = {
-      minter: await accountToAddress(minter),
+      minter: toAddress(minter),
       approval,
       nonce: nonce.toString(),
       deadline: deadline.toString(),
     };
 
-    const signature = await user._signTypedData(domain, types, value);
+    const signature = await user.signTypedData(domain, types, value);
 
     return { ...splitSignature(signature), deadline: BigInt(deadline.toString()) };
   };

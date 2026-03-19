@@ -8,7 +8,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { currentTimestamp } from '@helpers/time';
 
-describeForkTest.skip('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
+describeForkTest.only('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   enum OrderStatus {
     Nonexistent,
     Active,

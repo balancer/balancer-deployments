@@ -18,7 +18,7 @@ import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskM
 // We then place the gauge deployed for this test into the "Arbitrum" type.
 // In production a proper gauge type should be created for the gauges deployed by this factory.
 
-describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('OptimismRootGaugeFactory', 'mainnet', 14850000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,
@@ -94,7 +94,9 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     // gauges from said factory to the GaugeController.
     const govMultisig = await impersonate(GOV_MULTISIG);
 
-    const selectors = ['addGaugeFactory', 'addArbitrumGauge'].map((method) => gaugeAdder.interface.getSighash(method));
+    const selectors = ['addGaugeFactory', 'addArbitrumGauge'].map(
+      (method) => gaugeAdder.interface.getFunction(method)!.selector
+    );
     await Promise.all(
       selectors.map(
         async (selector) =>
@@ -105,7 +107,10 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     // We also need to grant permissions to mint in the gauges, which is done via the Authorizer Adaptor
     await authorizer
       .connect(govMultisig)
-      .grantRole(await authorizerAdaptor.getActionId(gauge.interface.getSighash('checkpoint')), admin.address);
+      .grantRole(
+        await authorizerAdaptor.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
+        admin.address
+      );
   });
 
   it('add gauge to gauge controller', async () => {
@@ -137,7 +142,7 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     // Even though the gauge has relative weight, it cannot mint yet as it needs for the epoch to finish
     const zeroMintTx = await authorizerAdaptor.connect(admin).performAction(gauge.target.toString(), calldata);
     expectEvent.inIndirectReceipt(await zeroMintTx.wait(), gauge.interface, 'Checkpoint', {
-      periodTime: firstMintWeekTimestamp - WEEK, // Process past week, which had zero votes
+      periodTime: firstMintWeekTimestamp - BigInt(WEEK), // Process past week, which had zero votes
       periodEmissions: 0,
     });
     // No token transfers are performed if the emissions are zero, but we can't test for a lack of those
@@ -152,7 +157,7 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     const actualEmissions = event.args.periodEmissions;
 
     // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * BigInt(WEEK);
 
     const expectedEmissions = (gaugeRelativeWeight * weeklyRate) / FP_ONE;
     expectEqualWithError(actualEmissions, expectedEmissions, 0.001);
@@ -169,9 +174,9 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     );
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new new ethers.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-    ])();
+    ]);
 
     expectEvent.inIndirectReceipt(await mintTx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,
@@ -194,14 +199,14 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
         gaugeController['gauge_relative_weight(address,uint256)'](
           gauge.target.toString(),
-          weekTimestamp - WEEK * weekIndex
+          weekTimestamp - BigInt(WEEK) * BigInt(weekIndex)
         )
       )
     );
 
     // The amount of tokens minted should equal the sum of the weekly emissions rate times the relative weight of the
     // gauge (this assumes we're not crossing an emissions rate epoch so that the inflation remains constant).
-    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * WEEK;
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * BigInt(WEEK);
     const expectedEmissions = relativeWeights
       .map((weight) => (weight * weeklyRate) / FP_ONE)
       .reduce((sum, value) => sum + value);
@@ -212,7 +217,7 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     await Promise.all(
       range(1, numberOfWeeks + 1).map(async (weekIndex) =>
         expectEvent.inIndirectReceipt(await tx.wait(), gauge.interface, 'Checkpoint', {
-          periodTime: weekTimestamp - WEEK * weekIndex,
+          periodTime: weekTimestamp - BigInt(WEEK) * BigInt(weekIndex),
         })
       )
     );
@@ -229,9 +234,9 @@ describeForkTest.skip('OptimismRootGaugeFactory', 'mainnet', 14850000, function 
     );
 
     // And the gauge then deposits those in the predicate via the bridge mechanism
-    const bridgeInterface = new new ethers.Interface([
+    const bridgeInterface = new ethers.Interface([
       'event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)',
-    ])();
+    ]);
 
     expectEvent.inIndirectReceipt(await tx.wait(), bridgeInterface, 'ERC20DepositInitiated', {
       _l1Token: BAL,

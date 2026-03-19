@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 // This test verifies the checkpointer against the manual transactions for the given period.
 // This test is exactly the same as the one in 20230527-l2-gauge-checkpointer but using the new artifacts.
 // It validates that the new version of the checkpointer can still do the same as the previous one in the base case.
-describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, function () {
+describeForkTest.only('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, function () {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
   enum GaugeType {
@@ -192,7 +192,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
       Array.from(gauges).map(([gaugeType, gaugesData]) => {
         stakelessGaugeCheckpointer.connect(admin).addGaugesWithVerifiedType(
           GaugeType[gaugeType],
-          gaugesData.map((gaugeData) => gaugeData.target.toString())
+          gaugesData.map((gaugeData) => gaugeData.address)
         );
       })
     );
@@ -205,7 +205,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
     await authorizer
       .connect(daoMultisig)
       .grantRole(
-        await adaptorEntrypoint.getActionId(gauge.interface.getSighash('checkpoint')),
+        await adaptorEntrypoint.getActionId(gauge.interface.getFunction('checkpoint')!.selector),
         stakelessGaugeCheckpointer.target.toString()
       );
   });
@@ -226,7 +226,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
 
         // Bridge cost per gauge is always the same, so total cost is (single gauge cost) * (number of gauges).
         expect(await stakelessGaugeCheckpointer.getTotalBridgeCost(minRelativeWeight)).to.be.eq(
-          singleGaugeBridgeCost * gaugesAmountAboveMinWeight
+          singleGaugeBridgeCost * BigInt(gaugesAmountAboveMinWeight)
         );
       });
     }
@@ -416,7 +416,7 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
               checkpointInterface,
               'Checkpoint',
               {},
-              gaugeData.target.toString(),
+              gaugeData.address,
               gaugeData.expectedCheckpoints
             );
           });
@@ -430,22 +430,15 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const arbitrumGaugeData = gauges.get(GaugeType.Arbitrum)![0];
           const arbitrumType = GaugeType[GaugeType.Arbitrum];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(
-            arbitrumType,
-            arbitrumGaugeData.target.toString(),
-            {
-              value: await stakelessGaugeCheckpointer.getSingleBridgeCost(
-                arbitrumType,
-                arbitrumGaugeData.target.toString()
-              ),
-            }
-          );
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(arbitrumType, arbitrumGaugeData.address, {
+            value: await stakelessGaugeCheckpointer.getSingleBridgeCost(arbitrumType, arbitrumGaugeData.address),
+          });
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            arbitrumGaugeData.target.toString(),
+            arbitrumGaugeData.address,
             arbitrumGaugeData.expectedCheckpoints
           );
         });
@@ -456,16 +449,13 @@ describeForkTest.skip('StakelessGaugeCheckpointer - Base', 'mainnet', 17332499, 
           const gnosisGaugeData = gauges.get(GaugeType.Gnosis)![0];
           const gnosisType = GaugeType[GaugeType.Gnosis];
 
-          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(
-            gnosisType,
-            gnosisGaugeData.target.toString()
-          );
+          const tx = await stakelessGaugeCheckpointer.checkpointSingleGauge(gnosisType, gnosisGaugeData.address);
           expectEvent.inIndirectReceipt(
             await tx.wait(),
             checkpointInterface,
             'Checkpoint',
             {},
-            gnosisGaugeData.target.toString(),
+            gnosisGaugeData.address,
             gnosisGaugeData.expectedCheckpoints
           );
         });

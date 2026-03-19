@@ -6,7 +6,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { MAX_UINT256 } from '@helpers/constants';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
-describeForkTest.skip('CompoundV2Wrapping', 'polygon', 40305420, function () {
+describeForkTest.only('CompoundV2Wrapping', 'polygon', 40305420, function () {
   let task: Task;
   let relayer: Contract, library: Contract;
   let vault: Contract, authorizer: Contract;
@@ -37,7 +37,7 @@ describeForkTest.skip('CompoundV2Wrapping', 'polygon', 40305420, function () {
   before('approve relayer at the authorizer', async () => {
     const relayerActionIds = await Promise.all(
       ['swap', 'batchSwap', 'joinPool', 'exitPool', 'setRelayerApproval', 'manageUserBalance'].map((action) =>
-        vault.getActionId(vault.interface.getSighash(action))
+        vault.getActionId(vault.interface.getFunction(action)!.selector)
       )
     );
 
@@ -46,7 +46,7 @@ describeForkTest.skip('CompoundV2Wrapping', 'polygon', 40305420, function () {
     const admin = await impersonate(await authorizer.getRoleMember(await authorizer.DEFAULT_ADMIN_ROLE(), 0));
 
     // Grant relayer permission to call all relayer functions
-    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.address);
+    await authorizer.connect(admin).grantRoles(relayerActionIds, relayer.target);
   });
 
   before(async () => {
@@ -55,8 +55,8 @@ describeForkTest.skip('CompoundV2Wrapping', 'polygon', 40305420, function () {
     sender = await impersonate(BRZ_HOLDER);
     recipient = await getSigner();
 
-    await vault.connect(sender).setRelayerApproval(sender.address, relayer.address, true);
-    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.address, true);
+    await vault.connect(sender).setRelayerApproval(sender.address, relayer.target, true);
+    await vault.connect(recipient).setRelayerApproval(recipient.address, relayer.target, true);
   });
 
   it('should wrap successfully', async () => {
@@ -120,5 +120,5 @@ function toChainedReference(key: BigNumberish): bigint {
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigInt(paddedPrefix) + key;
+  return BigInt(paddedPrefix) + BigInt(key);
 }

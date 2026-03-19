@@ -18,7 +18,7 @@ export enum SwapKind {
   GivenOut,
 }
 
-describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
+describeForkTest.only('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let govMultisig: SignerWithAddress;
   let vault: Contract, authorizer: Contract, mainToken: Contract;
@@ -137,7 +137,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
 
       const mainInfo = await vault.getPoolTokenInfo(poolId, frxEth);
 
-      const expectedMainBalance = lowerTarget + upperTarget / BigInt(2);
+      const expectedMainBalance = (lowerTarget + upperTarget) / BigInt(2);
       expect(mainInfo.cash * FRXETH_SCALING).to.equal(expectedMainBalance);
       expect(mainInfo.managed).to.equal(0);
     });
@@ -265,7 +265,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       const scaledCash = cash * FRXETH_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / FRXETH_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / FRXETH_SCALING;
 
       await vault.connect(holder).swap(
         {
@@ -290,7 +290,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       // We're going to join with few tokens, causing the Pool to not reach its upper target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const joinAmount = midpoint / BigInt(100) / FRXETH_SCALING;
 
@@ -317,7 +317,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       // We're going to exit with few tokens, causing for the Pool to not reach its lower target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const exitAmount = midpoint / BigInt(100) / FRXETH_SCALING;
 
@@ -352,7 +352,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
 
     before('use WETH', async () => {
       wethHolder = await impersonate(WETH_HOLDER, fp(100));
-      const weth = await instanceAt('IERC20', WETH);
+      const weth = await task.instanceAt('IERC20', WETH);
       await weth.connect(wethHolder).approve(vault.target.toString(), MAX_UINT256);
     });
 
@@ -390,8 +390,8 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
           userData: '0x',
         },
         {
-          sender: wethHolder.target.toString(),
-          recipient: wethHolder.target.toString(),
+          sender: wethHolder.address,
+          recipient: wethHolder.address,
           fromInternalBalance: false,
           toInternalBalance: false,
         },
@@ -402,15 +402,15 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       await authorizer.connect(govMultisig).grantRole(await actionId(wethPool, 'enableRecoveryMode'), other.address);
 
       // The functions to attack are permissioned, so the attacker needs permissions before starting.
-      await authorizer.connect(govMultisig).grantRole(await actionId(wethPool, 'setTargets'), attacker.address);
+      await authorizer.connect(govMultisig).grantRole(await actionId(wethPool, 'setTargets'), attacker.target);
       await authorizer
         .connect(govMultisig)
-        .grantRole(await actionId(wethPool, 'setSwapFeePercentage'), attacker.address);
+        .grantRole(await actionId(wethPool, 'setSwapFeePercentage'), attacker.target);
 
       await wethPool.connect(other).enableRecoveryMode();
 
-      const bptBalance = await wethPool.balanceOf(wethHolder.target.toString());
-      await wethPool.connect(wethHolder).transfer(attacker.address, bptBalance);
+      const bptBalance = await wethPool.balanceOf(wethHolder.address.toString());
+      await wethPool.connect(wethHolder).transfer(attacker.target, bptBalance);
     });
 
     async function performAttack(attackType: AttackType) {
@@ -418,7 +418,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       const attack = attacker.startAttack(
         wethPool.target.toString(),
         attackType,
-        await wethPool.balanceOf(attacker.address)
+        await wethPool.balanceOf(attacker.target)
       );
       await expect(attack).to.be.revertedWith('BAL#420');
     }
@@ -442,7 +442,7 @@ describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function 
       const scaledCash = cash * FRXETH_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / FRXETH_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / FRXETH_SCALING;
 
       await vault.connect(holder).swap(
         {

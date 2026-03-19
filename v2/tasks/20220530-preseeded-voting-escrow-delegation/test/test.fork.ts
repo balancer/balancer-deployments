@@ -12,7 +12,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, function () {
+describeForkTest.only('PreseededVotingEscrowDelegation', 'mainnet', 14850000, function () {
   let oldDelegation: Contract;
   let receiver: SignerWithAddress;
   let delegation: Contract;
@@ -84,7 +84,7 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     const oldTotalSupply = await oldDelegation.totalSupply();
     let cancelledTokens = 0;
 
-    for (const i in range(oldTotalSupply)) {
+    for (let i = 0; i < Number(oldTotalSupply); i++) {
       const id = await oldDelegation.tokenByIndex(i);
 
       // Any cancelled boosts will still show up in the token enumeration (as the token is not burned), but will have a
@@ -103,7 +103,7 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
       // preseeded delegation using that extra veBAL in the new boost.
     }
 
-    expect(await delegation.totalSupply()).to.equal(oldTotalSupply - cancelledTokens);
+    expect(await delegation.totalSupply()).to.equal(oldTotalSupply - BigInt(cancelledTokens));
   });
 
   it('the Tribe operator can create boosts for the DAO', async () => {

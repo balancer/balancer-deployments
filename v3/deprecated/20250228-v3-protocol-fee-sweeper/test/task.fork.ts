@@ -7,7 +7,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ProtocolFeeSweeperDeployment } from '../input';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 
-describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
+describeForkTest.only('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
   const TASK_NAME = '20250228-v3-protocol-fee-sweeper';
   const CONTRACT_NAME = 'ProtocolFeeSweeper';
 
@@ -60,7 +60,7 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
     await authorizer
       .connect(govMultisig)
       .grantRole(
-        await feeController.getActionId(feeController.interface.getSighash('withdrawProtocolFeesForToken')),
+        await feeController.getActionId(feeController.interface.getFunction('withdrawProtocolFeesForToken')!.selector),
         feeSweeper.target.toString()
       );
   });
@@ -96,9 +96,9 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
 
     await usdcToken.connect(whale).transfer(feeSweeper.target.toString(), USDC_AMOUNT);
 
-    const balanceBefore = await usdcToken.balanceOf(feeRecipient.target.toString());
+    const balanceBefore = await usdcToken.balanceOf(feeRecipient.address);
     await feeSweeper.connect(feeRecipient).recoverProtocolFees([USDC]);
-    const balanceAfter = await usdcToken.balanceOf(feeRecipient.target.toString());
+    const balanceAfter = await usdcToken.balanceOf(feeRecipient.address);
 
     expect(balanceAfter - balanceBefore).to.equal(USDC_AMOUNT);
   });

@@ -4,13 +4,14 @@ import { Contract } from 'ethers';
 
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { advanceToTimestamp, DAY } from '@helpers/time';
+import { bn } from '@helpers/numbers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
 
-describeForkTest.skip('veBALDeploymentCoordinator', 'mainnet', 14458084, function () {
+describeForkTest.only('veBALDeploymentCoordinator', 'mainnet', 14458084, function () {
   let balMultisig: SignerWithAddress, govMultisig: SignerWithAddress;
   let coordinator: Contract, authorizer: Contract, BAL: Contract;
 
@@ -39,30 +40,30 @@ describeForkTest.skip('veBALDeploymentCoordinator', 'mainnet', 14458084, functio
 
     await authorizer
       .connect(govMultisig)
-      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.address);
+      .grantRole('0x0000000000000000000000000000000000000000000000000000000000000000', coordinator.target);
     await BAL.connect(balMultisig).grantRole(
       '0x0000000000000000000000000000000000000000000000000000000000000000',
-      coordinator.address
+      coordinator.target
     );
   });
 
   it('perform first stage', async () => {
-    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + 1);
+    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + 1n);
     await coordinator.performFirstStage();
 
-    expect(await coordinator.getCurrentDeploymentStage()).to.equal(1);
+    expect(await coordinator.getCurrentDeploymentStage()).to.equal(1n);
   });
 
   it('perform second stage', async () => {
     await coordinator.performSecondStage();
 
-    expect(await coordinator.getCurrentDeploymentStage()).to.equal(2);
+    expect(await coordinator.getCurrentDeploymentStage()).to.equal(2n);
   });
 
   it('perform third stage', async () => {
-    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + DAY * 10);
+    await advanceToTimestamp((await coordinator.getActivationScheduledTime()) + bn(DAY) * 10n);
     await coordinator.performThirdStage();
 
-    expect(await coordinator.getCurrentDeploymentStage()).to.equal(3);
+    expect(await coordinator.getCurrentDeploymentStage()).to.equal(3n);
   });
 });

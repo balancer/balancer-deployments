@@ -17,7 +17,7 @@ export enum SwapKind {
   GivenOut,
 }
 
-describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function () {
+describeForkTest.only('YearnLinearPoolFactory', 'mainnet', 16610000, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let vault: Contract, mainToken: Contract;
   let factory: Contract;
@@ -123,7 +123,7 @@ describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function ()
 
       const mainInfo = await vault.getPoolTokenInfo(poolId, USDC);
 
-      const expectedMainBalance = lowerTarget + upperTarget / BigInt(2);
+      const expectedMainBalance = (lowerTarget + upperTarget) / BigInt(2);
       expect(mainInfo.cash * USDC_SCALING).to.equal(expectedMainBalance);
       expect(mainInfo.managed).to.equal(0);
     });
@@ -251,7 +251,7 @@ describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function ()
       const scaledCash = cash * USDC_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDC_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {
@@ -276,7 +276,7 @@ describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function ()
       // We're going to join with few tokens, causing the Pool to not reach its upper target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const joinAmount = midpoint / BigInt(100) / USDC_SCALING;
 
@@ -303,7 +303,7 @@ describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function ()
       // We're going to exit with few tokens, causing for the Pool to not reach its lower target.
 
       const { lowerTarget, upperTarget } = await pool.getTargets();
-      const midpoint = lowerTarget + upperTarget / BigInt(2);
+      const midpoint = (lowerTarget + upperTarget) / BigInt(2);
 
       const exitAmount = midpoint / BigInt(100) / USDC_SCALING;
 
@@ -336,7 +336,7 @@ describeForkTest.skip('YearnLinearPoolFactory', 'mainnet', 16610000, function ()
       const scaledCash = cash * USDC_SCALING;
       const { lowerTarget } = await pool.getTargets();
 
-      const exitAmount = scaledCash - lowerTarget / BigInt(3) / USDC_SCALING;
+      const exitAmount = (scaledCash - lowerTarget / BigInt(3)) / USDC_SCALING;
 
       await vault.connect(holder).swap(
         {

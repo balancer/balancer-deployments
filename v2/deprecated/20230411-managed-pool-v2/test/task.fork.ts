@@ -17,7 +17,7 @@ import { getSigner, impersonate, getForkedNetwork, Task, TaskMode, describeForkT
 import { randomBytes } from 'ethers';
 import { deploy } from '@src';
 
-describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
+describeForkTest.only('ManagedPoolFactory', 'mainnet', 17033100, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
   let factory: Contract,
     vault: Contract,
@@ -201,7 +201,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
 
       await vault.connect(whale).joinPool(poolId, whale.address, whale.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         maxAmountsIn: Array(tokens.length + 1).fill(MAX_UINT256),
         fromInternalBalance: false,
         userData: WeightedPoolEncoder.joinAllTokensInForExactBPTOut(bptOut),
@@ -219,9 +219,9 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       const { tokens: registeredTokens } = await vault.getPoolTokens(poolId);
 
       await vault.connect(whale).exitPool(poolId, whale.address, whale.address, {
-        assets: registeredTokens,
+        assets: [...registeredTokens],
         minAmountsOut: Array(registeredTokens.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData: WeightedPoolEncoder.exitExactBPTInForTokensOut(bptIn),
       });
 
@@ -248,9 +248,9 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
 
     sharedBeforeEach('deploy and fund attacker', async () => {
       attacker = await deploy('ReadOnlyReentrancyAttackerMP', [vault.target.toString()]);
-      await comp.connect(whale).transfer(attacker.address, attackerFunds);
-      await uni.connect(whale).transfer(attacker.address, attackerFunds);
-      await aave.connect(whale).transfer(attacker.address, attackerFunds);
+      await comp.connect(whale).transfer(attacker.target, attackerFunds);
+      await uni.connect(whale).transfer(attacker.target, attackerFunds);
+      await aave.connect(whale).transfer(attacker.target, attackerFunds);
     });
 
     sharedBeforeEach('deploy pool and attacker', async () => {
@@ -302,7 +302,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       );
 
       const joinRequest = {
-        assets: allTokens,
+        assets: [...allTokens],
         maxAmountsIn: Array(allTokens.length).fill(MAX_UINT256),
         userData,
         fromInternalBalance: false,
@@ -352,7 +352,7 @@ describeForkTest.skip('ManagedPoolFactory', 'mainnet', 17033100, function () {
       await vault.connect(owner).exitPool(poolId, owner.address, owner.address, {
         assets: tokensWithBpt,
         minAmountsOut: Array(tokensWithBpt.length).fill(0),
-        fromInternalBalance: false,
+        toInternalBalance: false,
         userData,
       });
 
