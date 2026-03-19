@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest.only('V3-ReClammPool', 'mainnet', 22590000, function () {
+describeForkTest.skip('V3-ReClammPool', 'mainnet', 22590000, function () {
   const TASK_NAME = '20250409-v3-reclamm-pool';
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';

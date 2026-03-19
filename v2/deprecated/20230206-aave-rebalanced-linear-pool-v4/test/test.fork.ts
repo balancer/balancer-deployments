@@ -10,7 +10,7 @@ import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { SwapKind } from '@helpers/models/types/types';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 
-describeForkTest.only('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
+describeForkTest.skip('AaveLinearPoolFactory V4', 'mainnet', 16592300, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract, vault: Contract, usdt: Contract;
   let rebalancer: Contract;
