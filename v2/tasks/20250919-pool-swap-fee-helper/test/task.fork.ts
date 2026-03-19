@@ -1,15 +1,15 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { PoolSwapFeeHelperDeployment } from '../input';
 import { toNormalizedWeights } from '@helpers/models/pools/weighted/normalizedWeights';
 import { ZERO_ADDRESS } from '@helpers/constants';
-import { randomBytes } from 'ethers/lib/utils';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
   const TASK_NAME = '20250919-pool-swap-fee-helper';
@@ -38,8 +38,8 @@ describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
   let factory: Contract;
   let poolId: string;
 
-  let poolSetId: BigNumber;
-  let oldSwapFee: BigNumber;
+  let poolSetId: bigint;
+  let oldSwapFee: bigint;
 
   let admin: SignerWithAddress;
   let manager: SignerWithAddress;
@@ -75,40 +75,43 @@ describeForkTest.skip('PoolSwapFeeHelper', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to set pool swap fees.
-    await authorizer.connect(govMultisig).grantRole(await actionId(pool, 'setSwapFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pool, 'setSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   it('can create a pool set', async () => {
-    await feeHelper.connect(admin)['createPoolSet(address,bytes32[])'](manager.address, [poolId]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,bytes32[])'](manager.address, [poolId]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(manager.address);
-    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.eq(1);
+    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.equal(1);
   });
 
   it('can set swap fees on pools', async () => {
     oldSwapFee = await pool.getSwapFeePercentage();
 
-    expect(oldSwapFee).not.to.eq(NEW_SWAP_FEE);
+    expect(oldSwapFee).not.to.equal(NEW_SWAP_FEE);
 
-    await feeHelper.connect(manager).setSwapFeePercentage(poolId, NEW_SWAP_FEE);
+    await (feeHelper.connect(manager) as Contract).setSwapFeePercentage(poolId, NEW_SWAP_FEE);
 
     // Pool should now have an updated swap fee.
-    expect(await pool.getSwapFeePercentage()).to.eq(NEW_SWAP_FEE);
+    expect(await pool.getSwapFeePercentage()).to.equal(NEW_SWAP_FEE);
   });
 
   it('can transfer fee permission', async () => {
-    await feeHelper.connect(manager).transferPoolSetOwnership(newManager.address);
+    await (feeHelper.connect(manager) as Contract).transferPoolSetOwnership(newManager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager.address);
   });
 
   it('new manager can set swap fees on pools', async () => {
-    await feeHelper.connect(newManager).setSwapFeePercentage(poolId, oldSwapFee);
+    await (feeHelper.connect(newManager) as Contract).setSwapFeePercentage(poolId, oldSwapFee);
 
     // Pool should now have the original swap fee.
-    expect(await pool.getSwapFeePercentage()).to.eq(oldSwapFee);
+    expect(await pool.getSwapFeePercentage()).to.equal(oldSwapFee);
   });
 
   async function createPool(): Promise<Contract> {

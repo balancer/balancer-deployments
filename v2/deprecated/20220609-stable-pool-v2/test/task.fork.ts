@@ -10,7 +10,7 @@ import { calculateInvariant } from '@helpers/models/pools/stable/math';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { actionId } from '@helpers/models/misc/actions';
 import { MAX_UINT256 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
@@ -28,9 +28,9 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
   const amplificationParameter = bn(100);
   const swapFeePercentage = fp(0.01);
   const initialBalanceDAI = fp(1e6);
-  const initialBalanceUSDC = fp(1e6).div(1e12); // 6 digits
+  const initialBalanceUSDC = fp(1e6) / bn(1e12); // 6 digits
   const initialBalances = [initialBalanceDAI, initialBalanceUSDC];
-  const upscaledInitialBalances = [initialBalanceDAI, initialBalanceUSDC.mul(1e12)];
+  const upscaledInitialBalances = [initialBalanceDAI, initialBalanceUSDC * bn(1e12)];
 
   const GOV_MULTISIG = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';
   const LARGE_TOKEN_HOLDER = '0x47ac0fb4f2d84898e4d9e7b4dab3c24507a6d503';
@@ -68,16 +68,16 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const event = expectEvent.inReceipt(await tx.wait(), 'PoolCreated');
 
       pool = await task.instanceAt('StablePool', event.args.pool);
-      expect(await factory.isPoolFromFactory(pool.address)).to.be.true;
+      expect(await factory.isPoolFromFactory(pool.target.toString())).to.be.true;
 
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
-      await dai.connect(whale).approve(vault.address, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(initialBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -97,7 +97,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     it('swap in the pool', async () => {
       const amount = fp(500);
       await dai.connect(whale).transfer(owner.address, amount);
-      await dai.connect(owner).approve(vault.address, amount);
+      await dai.connect(owner).approve(vault.target.toString(), amount);
 
       await vault
         .connect(owner)
@@ -109,7 +109,7 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
         );
 
       // Assert pool swap
-      const expectedUSDC = amount.div(1e12);
+      const expectedUSDC = amount / BigInt(1e12);
       expectEqualWithError(await dai.balanceOf(owner.address), 0, 0.0001);
       expectEqualWithError(await usdc.balanceOf(owner.address), expectedUSDC, 0.1);
     });
@@ -119,13 +119,13 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
     it('the invariant converges', async () => {
       const unbalancedTokens = [DAI, USDC, USDT];
       const unbalancedBalanceDAI = fp(0.00000001);
-      const unbalancedBalanceUSDC = fp(1200000000).div(1e12); // 6 digits
-      const unbalancedBalanceUSDT = fp(300).div(1e12); // 6 digits
+      const unbalancedBalanceUSDC = fp(1200000000) / 1e12; // 6 digits
+      const unbalancedBalanceUSDT = fp(300) / 1e12; // 6 digits
       const unbalancedBalances = [unbalancedBalanceDAI, unbalancedBalanceUSDC, unbalancedBalanceUSDT];
       const upscaledUnbalancedBalances = [
         unbalancedBalanceDAI,
-        unbalancedBalanceUSDC.mul(1e12),
-        unbalancedBalanceUSDT.mul(1e12),
+        unbalancedBalanceUSDC * BigInt(1e12),
+        unbalancedBalanceUSDT * BigInt(1e12),
       ];
 
       const tx = await factory.create(
@@ -142,9 +142,9 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const poolId = await pool.getPoolId();
 
       // Initialize the pool
-      await dai.connect(whale).approve(vault.address, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.address, MAX_UINT256);
-      await usdt.connect(whale).approve(vault.address, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdt.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(unbalancedBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -174,8 +174,8 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       pool = await task.instanceAt('StablePool', event.args.pool);
       poolId = await pool.getPoolId();
 
-      await dai.connect(whale).approve(vault.address, MAX_UINT256);
-      await usdc.connect(whale).approve(vault.address, MAX_UINT256);
+      await dai.connect(whale).approve(vault.target.toString(), MAX_UINT256);
+      await usdc.connect(whale).approve(vault.target.toString(), MAX_UINT256);
 
       const userData = StablePoolEncoder.joinInit(initialBalances);
       await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
@@ -194,9 +194,9 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
 
     it('can exit via recovery mode', async () => {
       const bptBalance = await pool.balanceOf(owner.address);
-      expect(bptBalance).to.gt(0);
+      expect(bptBalance).to > 0;
 
-      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.address);
+      const vaultUSDCBalanceBeforeExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceBeforeExit = await usdc.balanceOf(owner.address);
 
       const userData = BasePoolEncoder.recoveryModeExit(bptBalance);
@@ -210,11 +210,11 @@ describeForkTest.skip('StablePoolFactory', 'mainnet', 14850000, function () {
       const remainingBalance = await pool.balanceOf(owner.address);
       expect(remainingBalance).to.equal(0);
 
-      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.address);
+      const vaultUSDCBalanceAfterExit = await usdc.balanceOf(vault.target.toString());
       const ownerUSDCBalanceAfterExit = await usdc.balanceOf(owner.address);
 
-      expect(vaultUSDCBalanceAfterExit).to.lt(vaultUSDCBalanceBeforeExit);
-      expect(ownerUSDCBalanceAfterExit).to.gt(ownerUSDCBalanceBeforeExit);
+      expect(vaultUSDCBalanceAfterExit).to < vaultUSDCBalanceBeforeExit;
+      expect(ownerUSDCBalanceAfterExit).to > ownerUSDCBalanceBeforeExit;
     });
   });
 

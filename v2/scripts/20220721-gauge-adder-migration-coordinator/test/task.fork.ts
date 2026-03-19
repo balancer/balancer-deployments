@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -95,10 +95,20 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
       gaugeController.interface.getSighash('add_gauge(address,int128)')
     );
 
-    expect(await authorizer.canPerform(addGaugePermission, oldGaugeAdder.address, authorizerAdaptor.address)).to.be
-      .false;
-    expect(await authorizer.canPerform(addGaugePermission, newGaugeAdder.address, authorizerAdaptor.address)).to.be
-      .true;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        oldGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.false;
+    expect(
+      await authorizer.canPerform(
+        addGaugePermission,
+        newGaugeAdder.target.toString(),
+        authorizerAdaptor.target.toString()
+      )
+    ).to.be.true;
   });
 
   it('grants permissions to the multisig to add gauges of existing types on the new GaugeAdder', async () => {
@@ -112,7 +122,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
     ];
     for (const addGaugeFunction of activeAddGaugeFunctions) {
       const permission = await actionId(newGaugeAdder, addGaugeFunction);
-      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.address)).to.be.true;
+      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target.toString())).to.be.true;
     }
   });
 
@@ -122,7 +132,7 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
     const inactiveAddGaugeFunctions = ['addGnosisGauge(address)', 'addZKSyncGauge(address)'];
     for (const addGaugeFunction of inactiveAddGaugeFunctions) {
       const permission = await actionId(newGaugeAdder, addGaugeFunction);
-      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.address)).to.be.false;
+      expect(await authorizer.canPerform(permission, multisig, newGaugeAdder.target.toString())).to.be.false;
     }
   });
 
@@ -133,11 +143,12 @@ describeForkTest.skip('GaugeAdderMigrationCoordinator', 'mainnet', 15150000, fun
       arbitrumRootGaugeFactory,
       'setArbitrumFees(uint64 gasLimit,uint64 gasPrice,uint64 maxSubmissionCost)'
     );
-    expect(await authorizer.canPerform(setArbitrumFeesAction, multisig, arbitrumRootGaugeFactory.address)).to.be.true;
+    expect(await authorizer.canPerform(setArbitrumFeesAction, multisig, arbitrumRootGaugeFactory.target.toString())).to
+      .be.true;
 
     const setOptimismGasLimitAction = await actionId(optimismRootGaugeFactory, 'setOptimismGasLimit(uint32 gasLimit)');
-    expect(await authorizer.canPerform(setOptimismGasLimitAction, multisig, optimismRootGaugeFactory.address)).to.be
-      .true;
+    expect(await authorizer.canPerform(setOptimismGasLimitAction, multisig, optimismRootGaugeFactory.target.toString()))
+      .to.be.true;
   });
 
   it('renounces the admin role', async () => {

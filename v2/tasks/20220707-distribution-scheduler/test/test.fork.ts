@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { bn, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { advanceTime, currentWeekTimestamp, MONTH, WEEK } from '@helpers/time';
 import { expectTransferEvent } from '@helpers/expectTransfer';
 
@@ -58,10 +58,10 @@ describeForkTest.skip('DistributionScheduler', 'mainnet', 14850000, function () 
 
     await Promise.all(
       [DAI, USDC].map((token) =>
-        authorizerAdaptor.connect(lmCommittee).performAction(
-          gauge.address,
+        (authorizerAdaptor.connect(lmCommittee) as Contract).performAction(
+          gauge.target.toString(),
           // Note that we need to make the scheduler the distributor
-          gauge.interface.encodeFunctionData('add_reward', [token.address, scheduler.address])
+          gauge.interface.encodeFunctionData('add_reward', [token.target.toString(), scheduler.target.toString()])
         )
       )
     );
@@ -70,59 +70,76 @@ describeForkTest.skip('DistributionScheduler', 'mainnet', 14850000, function () 
   });
 
   before('approve tokens', async () => {
-    await USDC.connect(distributor).approve(scheduler.address, MAX_UINT256);
-    await DAI.connect(distributor).approve(scheduler.address, MAX_UINT256);
+    await (USDC.connect(distributor) as Contract).approve(scheduler.target.toString(), MAX_UINT256);
+    await (DAI.connect(distributor) as Contract).approve(scheduler.target.toString(), MAX_UINT256);
   });
 
   it('schedules rewards', async () => {
-    const nextWeek = (await currentWeekTimestamp()).add(WEEK);
+    const nextWeek = (await currentWeekTimestamp()) + BigInt(WEEK);
 
-    await scheduler.connect(distributor).scheduleDistribution(gauge.address, DAI.address, daiWeeklyAmount, nextWeek);
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      DAI.target.toString(),
+      daiWeeklyAmount,
+      nextWeek
+    );
 
-    await scheduler.connect(distributor).scheduleDistribution(gauge.address, USDC.address, usdcWeeklyAmount, nextWeek);
-    await scheduler
-      .connect(distributor)
-      .scheduleDistribution(gauge.address, USDC.address, usdcWeeklyAmount, nextWeek.add(WEEK));
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      USDC.target.toString(),
+      usdcWeeklyAmount,
+      nextWeek
+    );
+    await (scheduler.connect(distributor) as Contract).scheduleDistribution(
+      gauge.target.toString(),
+      USDC.target.toString(),
+      usdcWeeklyAmount,
+      nextWeek + BigInt(WEEK)
+    );
 
     // Fist week
-    expect(await scheduler.getPendingRewardsAt(gauge.address, DAI.address, nextWeek)).to.equal(daiWeeklyAmount);
-    expect(await scheduler.getPendingRewardsAt(gauge.address, USDC.address, nextWeek)).to.equal(usdcWeeklyAmount);
+    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), DAI.target.toString(), nextWeek)).to.equal(
+      daiWeeklyAmount
+    );
+    expect(await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek)).to.equal(
+      usdcWeeklyAmount
+    );
 
     // Second week
-    expect(await scheduler.getPendingRewardsAt(gauge.address, USDC.address, nextWeek.add(WEEK))).to.equal(
-      usdcWeeklyAmount.mul(2)
-    );
+    expect(
+      await scheduler.getPendingRewardsAt(gauge.target.toString(), USDC.target.toString(), nextWeek + BigInt(WEEK))
+    ).to.equal(usdcWeeklyAmount * BigInt(2));
   });
 
   it('does not distribute rewards until the scheduled time arrives', async () => {
-    const daiBalanceBefore = await DAI.balanceOf(scheduler.address);
-    const usdcBalanceBefore = await USDC.balanceOf(scheduler.address);
+    const daiBalanceBefore = await DAI.balanceOf(scheduler.target.toString());
+    const usdcBalanceBefore = await USDC.balanceOf(scheduler.target.toString());
 
-    await scheduler.startDistributions(gauge.address);
+    await scheduler.startDistributions(gauge.target.toString());
 
-    const daiBalanceAfter = await DAI.balanceOf(scheduler.address);
-    const usdcBalanceAfter = await USDC.balanceOf(scheduler.address);
+    const daiBalanceAfter = await DAI.balanceOf(scheduler.target.toString());
+    const usdcBalanceAfter = await USDC.balanceOf(scheduler.target.toString());
 
     expect(daiBalanceAfter).to.equal(daiBalanceBefore);
     expect(usdcBalanceAfter).to.equal(usdcBalanceBefore);
   });
 
   it('distributes rewards', async () => {
-    await advanceTime((await currentWeekTimestamp()).add(MONTH));
-    const tx = await scheduler.startDistributions(gauge.address);
+    await advanceTime((await currentWeekTimestamp()) + BigInt(MONTH));
+    const tx = await scheduler.startDistributions(gauge.target.toString());
 
     // Ideally we'd look for events on the gauge as it processes the deposit, but deposit_reward_token emits no events.
 
     expectTransferEvent(
       await tx.wait(),
-      { from: scheduler.address, to: gauge.address, value: daiWeeklyAmount },
-      DAI.address
+      { from: scheduler.target.toString(), to: gauge.target.toString(), value: daiWeeklyAmount },
+      DAI.target.toString()
     );
 
     expectTransferEvent(
       await tx.wait(),
-      { from: scheduler.address, to: gauge.address, value: usdcWeeklyAmount.mul(2) },
-      USDC.address
+      { from: scheduler.target.toString(), to: gauge.target.toString(), value: usdcWeeklyAmount * BigInt(2) },
+      USDC.target.toString()
     );
   });
 });

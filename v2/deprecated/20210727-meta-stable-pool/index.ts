@@ -6,5 +6,5 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const input = task.input() as MetaStablePoolDeployment;
   const args = [input.Vault];
-  await task.deployAndVerify('MetaStablePoolFactory', args, from, force, { QueryProcessor: query.address });
+  await task.deployAndVerify('MetaStablePoolFactory', args, from, force, { QueryProcessor: query.target });
 };

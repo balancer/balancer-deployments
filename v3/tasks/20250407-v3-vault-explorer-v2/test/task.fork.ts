@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { takeSnapshot, SnapshotRestorer } from '@nomicfoundation/hardhat-network-helpers';
 
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { fp } from '@helpers/numbers';
 import { MAX_UINT48 } from '@helpers/constants';
 import { actionId } from '@helpers/models/misc/actions';
@@ -55,8 +55,8 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
 
-    extensionEntrypoint = vaultExtension.attach(vault.address);
-    adminEntrypoint = vaultAdmin.attach(vault.address);
+    extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
+    adminEntrypoint = vaultAdmin.attach(vault.target.toString()) as Contract;
 
     const routerTask = new Task('20241205-v3-buffer-router', TaskMode.READ_ONLY, getForkedNetwork(hre));
     bufferRouter = await routerTask.deployedInstance('BufferRouter');
@@ -79,15 +79,21 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
     usdcWhale = await impersonate(USDC_WHALE, fp(10));
 
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pausePool'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(vaultAdmin, 'pauseVault'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'pausePool'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'pauseVault'),
+      admin.address
+    );
   });
 
   it('checks contract addresses', async () => {
-    expect(await explorer.getVault()).eq(vault.address);
+    expect(await explorer.getVault()).eq(vault.target.toString());
 
     const extensionAddress = await explorer.getVaultExtension();
-    expect(extensionAddress).to.eq(vaultExtension.address);
+    expect(extensionAddress).to.eq(vaultExtension.target.toString());
 
     expect(await vaultExtension.getVaultAdmin()).to.eq(await explorer.getVaultAdmin());
   });
@@ -96,51 +102,56 @@ describeForkTest('VaultExplorer-V2', 'mainnet', 22192500, function () {
     const poolTokens = (await mockPool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq([BAL, WETH]);
 
-    const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.address)).map((token: string) =>
+    const explorerPoolTokens = (await explorer.getPoolTokens(mockPool.target.toString())).map((token: string) =>
       token.toLowerCase()
     );
-    expect(explorerPoolTokens).to.be.deep.eq(poolTokens);
+    expect(explorerPoolTokens).to.be.deep.equal(poolTokens);
   });
 
   it('has new buffer functions', async () => {
     const initBalance = 1000000e6;
-    await usdc.connect(usdcWhale).approve(permit2.address, initBalance);
-    await permit2.connect(usdcWhale).approve(USDC_ADDRESS, bufferRouter.address, initBalance, MAX_UINT48);
+    await (usdc.connect(usdcWhale) as Contract).approve(permit2.target.toString(), initBalance);
+    await (permit2.connect(usdcWhale) as Contract).approve(
+      USDC_ADDRESS,
+      bufferRouter.target.toString(),
+      initBalance,
+      MAX_UINT48
+    );
 
-    await bufferRouter.connect(usdcWhale).initializeBuffer(waUSDC_ADDRESS, initBalance, 0, 0);
+    await (bufferRouter.connect(usdcWhale) as Contract).initializeBuffer(waUSDC_ADDRESS, initBalance, 0, 0);
 
     expect(await extensionEntrypoint.isERC4626BufferInitialized(waUSDC_ADDRESS)).to.be.true;
     expect(await extensionEntrypoint.getERC4626BufferAsset(waUSDC_ADDRESS)).to.be.eq(USDC_ADDRESS);
 
     // Two buffer asset functions.
-    expect(await explorer.getERC4626BufferAsset(waUSDC_ADDRESS)).to.eq(USDC_ADDRESS);
-    expect(await explorer.getBufferAsset(waUSDC_ADDRESS)).to.eq(USDC_ADDRESS);
+    expect(await explorer.getERC4626BufferAsset(waUSDC_ADDRESS)).to.equal(USDC_ADDRESS);
+    expect(await explorer.getBufferAsset(waUSDC_ADDRESS)).to.equal(USDC_ADDRESS);
   });
 
   it('can enable recovery mode when pool paused', async () => {
     snapshot = await takeSnapshot();
 
-    await adminEntrypoint.connect(admin).pausePool(mockPool.address);
+    await (adminEntrypoint.connect(admin) as Contract).pausePool(mockPool.target.toString());
 
     // Ensure paused and not in recovery mode.
-    expect(await extensionEntrypoint.isPoolPaused(mockPool.address)).to.be.true;
-    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.address)).to.be.false;
+    expect(await extensionEntrypoint.isPoolPaused(mockPool.target.toString())).to.be.true;
+    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.target.toString())).to.be.false;
 
-    await explorer.enableRecoveryMode(mockPool.address);
-    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.address)).to.be.true;
+    await explorer.enableRecoveryMode(mockPool.target.toString());
+    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.target.toString())).to.be.true;
 
     // Restore previous state so that the pool is unpaused and out of recovery mode.
     await snapshot.restore();
   });
 
   it('can enable recovery mode when Vault paused', async () => {
-    await adminEntrypoint.connect(admin).pauseVault();
+    await (adminEntrypoint.connect(admin) as Contract).pauseVault();
 
     // Ensure paused and not in recovery mode.
     expect(await adminEntrypoint.isVaultPaused()).to.be.true;
-    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.address)).to.be.false;
+    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.target.toString())).to.be.false;
 
-    await explorer.enableRecoveryMode(mockPool.address);
-    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.address)).to.be.true;
+    await explorer.enableRecoveryMode(mockPool.target.toString());
+    expect(await extensionEntrypoint.isPoolInRecoveryMode(mockPool.target.toString())).to.be.true;
   });
 });

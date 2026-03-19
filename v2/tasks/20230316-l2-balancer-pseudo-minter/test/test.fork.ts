@@ -10,7 +10,7 @@ import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
 import { getForkedNetwork } from '@src';
 import { impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ANY_ADDRESS } from '@helpers/constants';
 
 describeForkTest.skip('L2BalancerPseudoMinter', 'arbitrum', 70407500, function () {
@@ -41,18 +41,24 @@ describeForkTest.skip('L2BalancerPseudoMinter', 'arbitrum', 70407500, function (
   before('grant register and rename permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await actionId(pseudoMinter, 'addGaugeFactory'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(pseudoMinter, 'removeGaugeFactory'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'addGaugeFactory'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'removeGaugeFactory'),
+      admin.address
+    );
   });
 
   it('adds a gauge factory', async () => {
-    const tx = await pseudoMinter.connect(admin).addGaugeFactory(ANY_ADDRESS);
+    const tx = await (pseudoMinter.connect(admin) as Contract).addGaugeFactory(ANY_ADDRESS);
     expectEvent.inReceipt(await tx.wait(), 'GaugeFactoryAdded', { factory: ANY_ADDRESS });
     expect(await pseudoMinter.isValidGaugeFactory(ANY_ADDRESS)).to.be.true;
   });
 
   it('remove a gauge factory', async () => {
-    const tx = await pseudoMinter.connect(admin).removeGaugeFactory(ANY_ADDRESS);
+    const tx = await (pseudoMinter.connect(admin) as Contract).removeGaugeFactory(ANY_ADDRESS);
     expectEvent.inReceipt(await tx.wait(), 'GaugeFactoryRemoved', { factory: ANY_ADDRESS });
     expect(await pseudoMinter.isValidGaugeFactory(ANY_ADDRESS)).to.be.false;
   });

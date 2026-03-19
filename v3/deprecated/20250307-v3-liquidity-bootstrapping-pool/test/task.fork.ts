@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
@@ -36,7 +36,7 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tokenConfig: any[];
   let WETH: string;
-  let startTime: BigNumber;
+  let startTime: bigint;
   const BAL = '0xba100000625a3754423978a60c9317c58a424e3D';
 
   before('run task', async () => {
@@ -84,7 +84,7 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.address);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
   });
 
   it('deploys LBP', async () => {
@@ -98,8 +98,8 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: LOW_WEIGHT,
       reserveTokenEndWeight: HIGH_WEIGHT,
-      startTime: startTime.add(HOUR),
-      endTime: startTime.add(DAY),
+      startTime: startTime + HOUR,
+      endTime: startTime + DAY,
       blockProjectTokenSwapsIn: false,
     };
 
@@ -115,8 +115,8 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(BAL);
-    expect(await pool.getReserveToken()).to.eq(WETH);
+    expect(await pool.getProjectToken()).to.equal(BAL);
+    expect(await pool.getReserveToken()).to.equal(WETH);
   });
 
   it('checks pool version', async () => {
@@ -142,14 +142,14 @@ describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
     balToken.connect(whale).transfer(admin.address, INITIAL_BAL);
     wethToken.connect(whale).transfer(admin.address, INITIAL_WETH);
 
-    await balToken.connect(admin).approve(permit2.address, INITIAL_BAL);
-    await permit2.connect(admin).approve(BAL, trustedRouter.address, INITIAL_BAL, maxUint(48));
+    await balToken.connect(admin).approve(permit2.target.toString(), INITIAL_BAL);
+    await permit2.connect(admin).approve(BAL, trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
 
-    await wethToken.connect(admin).approve(permit2.address, INITIAL_WETH);
-    await permit2.connect(admin).approve(WETH, trustedRouter.address, INITIAL_WETH, maxUint(48));
+    await wethToken.connect(admin).approve(permit2.target.toString(), INITIAL_WETH);
+    await permit2.connect(admin).approve(WETH, trustedRouter.target.toString(), INITIAL_WETH, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
-      pool.address,
+      pool.target.toString(),
       [BAL, WETH],
       [INITIAL_BAL, INITIAL_WETH],
       0,

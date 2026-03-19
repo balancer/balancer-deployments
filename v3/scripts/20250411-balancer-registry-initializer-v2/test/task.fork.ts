@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 
 import { fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest } from '@src';
 import { Task, TaskMode } from '@src';
@@ -101,14 +101,14 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(registry, 'registerBalancerContract'), registryInitializer.address);
+      .grantRole(await actionId(registry, 'registerBalancerContract'), registryInitializer.target.toString());
     await authorizer
       .connect(govMultisig)
-      .grantRole(await actionId(registry, 'addOrUpdateBalancerContractAlias'), registryInitializer.address);
+      .grantRole(await actionId(registry, 'addOrUpdateBalancerContractAlias'), registryInitializer.target.toString());
   });
 
   it('is initializing the correct registry', async () => {
-    expect(await registryInitializer.balancerContractRegistry()).to.eq(registry.address);
+    expect(await registryInitializer.balancerContractRegistry()).to.eq(registry.target.toString());
   });
 
   it('perform registry initialization', async () => {
@@ -121,86 +121,86 @@ describeForkTest('BalancerContractRegistryInitializer-V2', 'mainnet', 22198270, 
 
   it('does not hold permission to register contracts', async () => {
     const permission = await actionId(registry, 'registerBalancerContract');
-    expect(await authorizer.hasRole(permission, registryInitializer.address)).to.be.false;
+    expect(await authorizer.hasRole(permission, registryInitializer.target.toString())).to.be.false;
   });
 
   it('does not hold permission to add aliases', async () => {
     const permission = await actionId(registry, 'addOrUpdateBalancerContractAlias');
-    expect(await authorizer.hasRole(permission, registryInitializer.address)).to.be.false;
+    expect(await authorizer.hasRole(permission, registryInitializer.target.toString())).to.be.false;
   });
 
   it('has registered the routers', async () => {
-    expect(await registry.isTrustedRouter(router.address)).to.be.true;
-    expect(await registry.isTrustedRouter(batchRouter.address)).to.be.true;
-    expect(await registry.isTrustedRouter(bufferRouter.address)).to.be.true;
-    expect(await registry.isTrustedRouter(compositeLiquidityRouter.address)).to.be.true;
-    expect(await registry.isTrustedRouter(aggregatorRouter.address)).to.be.true;
-    expect(await registry.isTrustedRouter(aggregatorBatchRouter.address)).to.be.true;
+    expect(await registry.isTrustedRouter(router.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(batchRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(bufferRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(compositeLiquidityRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(aggregatorRouter.target.toString())).to.be.true;
+    expect(await registry.isTrustedRouter(aggregatorBatchRouter.target.toString())).to.be.true;
   });
 
   it('has registered the pool factories', async () => {
-    let info = await registry.getBalancerContractInfo(weightedPoolFactory.address);
+    let info = await registry.getBalancerContractInfo(weightedPoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(stablePoolFactory.address);
+    info = await registry.getBalancerContractInfo(stablePoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(stableSurgePoolFactory.address);
+    info = await registry.getBalancerContractInfo(stableSurgePoolFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(gyro2CLPFactory.address);
+    info = await registry.getBalancerContractInfo(gyro2CLPFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(gyroECLPFactory.address);
+    info = await registry.getBalancerContractInfo(gyroECLPFactory.target.toString());
     _validateInfo(info);
 
-    info = await registry.getBalancerContractInfo(reClammPoolFactory.address);
+    info = await registry.getBalancerContractInfo(reClammPoolFactory.target.toString());
     _validateInfo(info);
   });
 
   it('has registered the aliases', async () => {
     let [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'WeightedPool');
-    expect(contractAddress).to.eq(weightedPoolFactory.address);
+    expect(contractAddress).to.eq(weightedPoolFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'StablePool');
-    expect(contractAddress).to.eq(stablePoolFactory.address);
+    expect(contractAddress).to.eq(stablePoolFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'StableSurgePool');
-    expect(contractAddress).to.eq(stableSurgePoolFactory.address);
+    expect(contractAddress).to.eq(stableSurgePoolFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'Router');
-    expect(contractAddress).to.eq(router.address);
+    expect(contractAddress).to.eq(router.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'BatchRouter');
-    expect(contractAddress).to.eq(batchRouter.address);
+    expect(contractAddress).to.eq(batchRouter.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'CompositeLiquidityRouter');
-    expect(contractAddress).to.eq(compositeLiquidityRouter.address);
+    expect(contractAddress).to.eq(compositeLiquidityRouter.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'AggregatorRouter');
-    expect(contractAddress).to.eq(aggregatorRouter.address);
+    expect(contractAddress).to.eq(aggregatorRouter.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.ROUTER, 'AggregatorBatchRouter');
-    expect(contractAddress).to.eq(aggregatorBatchRouter.address);
+    expect(contractAddress).to.eq(aggregatorBatchRouter.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'Gyro2CLP');
-    expect(contractAddress).to.eq(gyro2CLPFactory.address);
+    expect(contractAddress).to.eq(gyro2CLPFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'GyroECLP');
-    expect(contractAddress).to.eq(gyroECLPFactory.address);
+    expect(contractAddress).to.eq(gyroECLPFactory.target.toString());
     expect(isActive).to.be.true;
 
     [contractAddress, isActive] = await registry.getBalancerContract(ContractType.POOL_FACTORY, 'ReClammPool');
-    expect(contractAddress).to.eq(reClammPoolFactory.address);
+    expect(contractAddress).to.eq(reClammPoolFactory.target.toString());
     expect(isActive).to.be.true;
   });
 

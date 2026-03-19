@@ -1,7 +1,6 @@
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { Contract } from 'ethers';
 import { Artifacts } from 'hardhat/internal/artifacts';
-
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
 
 import { getSigner } from './signers';
 import { Artifact, Libraries, Param } from './types';
@@ -22,7 +21,7 @@ export async function deploy(
   const { ethers } = await import('hardhat');
   const factory = await ethers.getContractFactoryFromArtifact(artifact, { libraries: libs });
   const deployment = await factory.connect(from).deploy(...args);
-  return deployment.deployed();
+  return deployment.waitForDeployment() as Promise<Contract>;
 }
 
 export async function instanceAt(contract: Artifact | string, address: string): Promise<Contract> {
@@ -36,7 +35,8 @@ export async function deploymentTxData(artifact: Artifact, args: Array<Param> = 
   const { ethers } = await import('hardhat');
   const factory = await ethers.getContractFactoryFromArtifact(artifact, { libraries: libs });
 
-  const { data } = factory.getDeployTransaction(...args);
+  const tx = await factory.getDeployTransaction(...args);
+  const { data } = tx;
   if (data === undefined) throw new Error('Deploy transaction with no data. Something is very wrong');
 
   return data.toString();

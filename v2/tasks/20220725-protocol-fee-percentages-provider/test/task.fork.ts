@@ -2,8 +2,8 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 
-import { BigNumber, fp } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { fp } from '@helpers/numbers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { actionId } from '@helpers/models/misc/actions';
 
@@ -53,9 +53,10 @@ describeForkTest.skip('ProtocolFeePercentagesProvider', 'mainnet', 15130000, fun
 
   context('with setFeeTypePercentage permission', () => {
     before('grant setFeePercentage permission to admin', async () => {
-      await authorizer
-        .connect(admin)
-        .grantRole(await actionId(protocolFeePercentagesProvider, 'setFeeTypePercentage'), admin.address);
+      await (authorizer.connect(admin) as Contract).grantRole(
+        await actionId(protocolFeePercentagesProvider, 'setFeeTypePercentage'),
+        admin.address
+      );
     });
 
     itSetsFeeCorrectly(FeeType.Yield, fp(0.1537));
@@ -64,27 +65,28 @@ describeForkTest.skip('ProtocolFeePercentagesProvider', 'mainnet', 15130000, fun
 
     context('with swapFeePercentage permission', () => {
       before('grant setSwapFeePercentage permission to fees provider', async () => {
-        await authorizer
-          .connect(admin)
-          .grantRole(await actionId(feesCollector, 'setSwapFeePercentage'), protocolFeePercentagesProvider.address);
+        await (authorizer.connect(admin) as Contract).grantRole(
+          await actionId(feesCollector, 'setSwapFeePercentage'),
+          protocolFeePercentagesProvider.target.toString()
+        );
       });
 
       itSetsFeeCorrectly(FeeType.Swap, fp(0.0951));
     });
   });
 
-  function itSetsFeeCorrectly(feeType: FeeType, fee: BigNumber): void {
+  function itSetsFeeCorrectly(feeType: FeeType, fee: bigint): void {
     it(`set ${FeeType[feeType]} fee`, async () => {
-      await protocolFeePercentagesProvider.connect(admin).setFeeTypePercentage(feeType, fee);
+      await (protocolFeePercentagesProvider.connect(admin) as Contract).setFeeTypePercentage(feeType, fee);
       expect(await protocolFeePercentagesProvider.getFeeTypePercentage(feeType)).to.be.eq(fee);
     });
   }
 
-  function itRevertsSettingFee(feeType: FeeType, fee: BigNumber): void {
+  function itRevertsSettingFee(feeType: FeeType, fee: bigint): void {
     it(`revert setting ${FeeType[feeType]} fee`, async () => {
-      expect(protocolFeePercentagesProvider.connect(admin).setFeeTypePercentage(feeType, fee)).to.be.revertedWith(
-        'BAL#401'
-      );
+      expect(
+        (protocolFeePercentagesProvider.connect(admin) as Contract).setFeeTypePercentage(feeType, fee)
+      ).to.be.revertedWith('BAL#401');
     });
   }
 });

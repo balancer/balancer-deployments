@@ -15,7 +15,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   if (task.mode === TaskMode.LIVE) {
     const blockNumBefore = await ethers.provider.getBlockNumber();
-    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
+    const blockBefore = (await ethers.provider.getBlock(blockNumBefore))!;
     const timestampBefore = bn(blockBefore.timestamp);
 
     const newFixedLBPParams = {
@@ -24,8 +24,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       owner: from ?? DELEGATE_OWNER,
       projectToken: input.TestBalancerToken,
       reserveToken: input.WETH,
-      startTime: timestampBefore.add(HOUR),
-      endTime: timestampBefore.add(DAY),
+      startTime: timestampBefore + BigInt(HOUR),
+      endTime: timestampBefore + BigInt(DAY),
       blockProjectTokenSwapsIn: true,
     };
 
@@ -61,6 +61,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const poolParams = [newFixedLBPParams, factoryParams, projectTokenRate];
 
     // We are now ready to verify the Pool
-    await task.verify('FixedPriceLBPool', mockPool.address, poolParams);
+    await task.verify('FixedPriceLBPool', mockPool.target.toString(), poolParams);
   }
 };

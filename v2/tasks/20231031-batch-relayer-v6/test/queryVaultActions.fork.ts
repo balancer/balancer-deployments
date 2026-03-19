@@ -1,14 +1,15 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 import { SwapKind } from '@helpers/models/types/types';
 import * as expectEvent from '@helpers/expectEvent';
-import { BigNumberish, fp } from '@helpers/numbers';
+import { BigNumberish, bn, fp } from '@helpers/numbers';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
-import { randomBytes } from 'ethers/lib/utils';
+import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
+import { randomBytes } from 'ethers';
 
 describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet', 18412883, function () {
   const DAI = '0x6b175474e89094c44da98b954eedeac495271d0f';
@@ -62,13 +63,13 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
     owner = await getSigner();
   });
 
-  function toChainedReference(key: BigNumberish): BigNumber {
+  function toChainedReference(key: BigNumberish): bigint {
     // Use the permanent prefix (temporary is 'ba10')
     const CHAINED_REFERENCE_PREFIX = 'ba11';
     // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
     const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-    return BigNumber.from(paddedPrefix).add(key);
+    return BigInt(paddedPrefix) + bn(key);
   }
 
   async function createPool(salt = ''): Promise<Contract> {
@@ -90,11 +91,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
   }
 
   async function initPool(poolId: string) {
-    await dai.connect(whale).approve(vault.address, MAX_UINT256);
-    await mkr.connect(whale).approve(vault.address, MAX_UINT256);
+    await (dai.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
+    await (mkr.connect(whale) as Contract).approve(vault.target.toString(), MAX_UINT256);
 
     const userData = WeightedPoolEncoder.joinInit(initialBalances);
-    await vault.connect(whale).joinPool(poolId, whale.address, owner.address, {
+    await (vault.connect(whale) as Contract).joinPool(poolId, whale.address, owner.address, {
       assets: tokens,
       maxAmountsIn: initialBalances,
       fromInternalBalance: false,
@@ -111,7 +112,7 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
       poolId = await pool.getPoolId();
       const [registeredAddress] = await vault.getPool(poolId);
 
-      expect(registeredAddress).to.equal(pool.address);
+      expect(registeredAddress).to.equal(pool.target.toString());
     });
 
     it('initialize the pool', async () => {
@@ -124,11 +125,11 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
     describe('compare to Balancer Queries', () => {
       const amountIn = fp(100);
       let actualAmountOut;
-      let expectedAmountOut: BigNumber;
+      let expectedAmountOut: bigint;
 
       sharedBeforeEach('do BalancerQuery', async () => {
         // Do a swap through Balancer Queries
-        expectedAmountOut = await balancerQueries.callStatic.querySwap(
+        expectedAmountOut = await balancerQueries.querySwap.staticCall(
           {
             poolId: poolId,
             kind: SwapKind.GivenIn,
@@ -168,7 +169,9 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
           0,
         ]);
 
-        [actualAmountOut] = await relayer.connect(owner).callStatic.vaultActionsQueryMulticall([callData]);
+        [actualAmountOut] = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([
+          callData,
+        ]);
 
         expect(actualAmountOut).to.equal(expectedAmountOut);
       });
@@ -201,7 +204,10 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
 
         const peekData = library.interface.encodeFunctionData('peekChainedReferenceValue', [outputReference]);
 
-        const results = await relayer.connect(owner).callStatic.vaultActionsQueryMulticall([swapData, peekData]);
+        const results = await (relayer.connect(owner) as Contract).vaultActionsQueryMulticall.staticCall([
+          swapData,
+          peekData,
+        ]);
         actualAmountOut = results[1];
 
         expect(actualAmountOut).to.equal(expectedAmountOut);
@@ -240,6 +246,8 @@ describeForkTest.skip('BatchRelayerLibrary V6 - Query functionality', 'mainnet',
       [],
     ]);
 
-    await expect(relayer.connect(owner).vaultActionsQueryMulticall([callData])).to.be.revertedWith('BAL#998');
+    await expect((relayer.connect(owner) as Contract).vaultActionsQueryMulticall([callData])).to.be.revertedWith(
+      'BAL#998'
+    );
   });
 });

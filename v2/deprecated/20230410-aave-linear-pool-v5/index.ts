@@ -1,5 +1,4 @@
 import { ethers } from 'hardhat';
-import { randomBytes } from 'ethers/lib/utils';
 import { bn } from '@helpers/numbers';
 import { Task, TaskMode, TaskRunOptions } from '@src';
 import { AaveLinearPoolDeployment } from './input';
@@ -28,7 +27,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
     // AaveLinearPools require a StaticAToken, which in turn requires a LendingPool.
     const mockLendingPool = await task.deployAndVerify('MockAaveLendingPool', [], from, force);
-    const mockStaticATokenArgs = ['DO NOT USE - Mock Static AToken', 'TEST', 18, input.WETH, mockLendingPool.address];
+    const mockStaticATokenArgs = ['DO NOT USE - Mock Static AToken', 'TEST', 18, input.WETH, mockLendingPool.target];
     const mockStaticAToken = await task.deployAndVerify('MockStaticAToken', mockStaticATokenArgs, from, force);
 
     // The assetManager, pauseWindowDuration and bufferPeriodDuration will be filled in later, but we need to declare
@@ -38,7 +37,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: 'DO NOT USE - Mock Linear Pool',
       symbol: 'TEST',
       mainToken: input.WETH,
-      wrappedToken: mockStaticAToken.address,
+      wrappedToken: mockStaticAToken.target,
       assetManager: undefined,
       upperTarget: 0,
       pauseWindowDuration: undefined,
@@ -51,7 +50,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // This mimics the logic inside task.deploy
     if (force || !task.output({ ensure: false })['MockAaveLinearPool']) {
       const PROTOCOL_ID = 0;
-      const SALT = randomBytes(32);
+      const SALT = ethers.randomBytes(32);
 
       const poolCreationReceipt = await (
         await factory.create(
@@ -69,7 +68,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
       const mockPoolAddress = event.args.pool;
 
-      await saveContractDeploymentTransactionHash(mockPoolAddress, poolCreationReceipt.transactionHash, task.network);
+      await saveContractDeploymentTransactionHash(mockPoolAddress, poolCreationReceipt.hash, task.network);
       await task.save({ MockAaveLinearPool: mockPoolAddress });
     }
 
@@ -86,19 +85,18 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     mockPoolArgs.assetManager = assetManagerAddress;
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
-    const txHash = await getContractDeploymentTransactionHash(mockPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
-    const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
+    const poolCreationBlock = await ethers.provider.getBlock(tx!.blockNumber);
 
     // With those and the period end times, we can compute the durations.
     const { pauseWindowEndTime, bufferPeriodEndTime } = await mockPool.getPausedState();
-    mockPoolArgs.pauseWindowDuration = pauseWindowEndTime.sub(poolCreationBlock.timestamp);
-    mockPoolArgs.bufferPeriodDuration = bufferPeriodEndTime
-      .sub(poolCreationBlock.timestamp)
-      .sub(mockPoolArgs.pauseWindowDuration);
+    mockPoolArgs.pauseWindowDuration = pauseWindowEndTime - BigInt(poolCreationBlock!.timestamp);
+    mockPoolArgs.bufferPeriodDuration =
+      bufferPeriodEndTime - BigInt(poolCreationBlock!.timestamp) - BigInt(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('AaveLinearPool', mockPool.address, [mockPoolArgs]);
+    await task.verify('AaveLinearPool', mockPool.target, [mockPoolArgs]);
 
     // We can also verify the Asset Manager
     await task.verify('AaveLinearPoolRebalancer', assetManagerAddress, [input.Vault, input.BalancerQueries]);

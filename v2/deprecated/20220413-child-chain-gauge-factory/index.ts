@@ -10,6 +10,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const streamerArgs = [input.BAL, input.AuthorizerAdaptor];
   const streamerImplementation = await task.deploy('ChildChainStreamer', streamerArgs, from, force);
 
-  const factoryArgs = [gaugeImplementation.address, streamerImplementation.address];
+  const factoryArgs = [gaugeImplementation.target, streamerImplementation.target];
   await task.deployAndVerify('ChildChainLiquidityGaugeFactory', factoryArgs, from, force);
 };

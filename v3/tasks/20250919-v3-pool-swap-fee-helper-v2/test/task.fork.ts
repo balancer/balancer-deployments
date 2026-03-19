@@ -1,10 +1,10 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { BigNumber, fp } from '@helpers/numbers';
+import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate, getSigner } from '@src';
 import { actionId } from '@helpers/models/misc/actions';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { PoolSwapFeeHelperDeployment } from '../input';
 
 describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
@@ -23,8 +23,8 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
   let authorizer: Contract;
   let pool: Contract;
 
-  let poolSetId: BigNumber;
-  let oldSwapFee: BigNumber;
+  let poolSetId: bigint;
+  let oldSwapFee: bigint;
 
   let admin: SignerWithAddress;
   let manager: SignerWithAddress;
@@ -44,7 +44,7 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
     vault = await vaultTask.deployedInstance('Vault');
     vaultExtension = await vaultTask.deployedInstance('VaultExtension');
     vaultAdmin = await vaultTask.deployedInstance('VaultAdmin');
-    extensionEntrypoint = vaultExtension.attach(vault.address);
+    extensionEntrypoint = vaultExtension.attach(vault.target.toString()) as Contract;
 
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
@@ -63,41 +63,44 @@ describeForkTest('V3-PoolSwapFeeHelper-V2', 'mainnet', 23376250, function () {
     govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Grant the helper permission to set pool swap fees. This is all that is needed for v2.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(vaultAdmin, 'setStaticSwapFeePercentage'), feeHelper.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(vaultAdmin, 'setStaticSwapFeePercentage'),
+      feeHelper.target.toString()
+    );
   });
 
   it('can create a pool set', async () => {
-    await feeHelper.connect(admin)['createPoolSet(address,address[])'](manager.address, [pool.address]);
+    await (feeHelper.connect(admin) as Contract)['createPoolSet(address,address[])'](manager.address, [
+      pool.target.toString(),
+    ]);
 
     poolSetId = await feeHelper.getPoolSetIdForManager(manager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(manager.address);
-    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.eq(1);
+    expect(await feeHelper.getPoolCountForSet(poolSetId)).to.equal(1);
   });
 
   it('can set swap fees on pools', async () => {
-    oldSwapFee = await extensionEntrypoint.getStaticSwapFeePercentage(pool.address);
+    oldSwapFee = await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString());
 
-    expect(oldSwapFee).not.to.eq(NEW_SWAP_FEE);
+    expect(oldSwapFee).not.to.equal(NEW_SWAP_FEE);
 
-    await feeHelper.connect(manager).setStaticSwapFeePercentage(pool.address, NEW_SWAP_FEE);
+    await (feeHelper.connect(manager) as Contract).setStaticSwapFeePercentage(pool.target.toString(), NEW_SWAP_FEE);
 
     // Pool should now have an updated swap fee.
-    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.address)).to.eq(NEW_SWAP_FEE);
+    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString())).to.equal(NEW_SWAP_FEE);
   });
 
   it('can transfer fee permission', async () => {
-    await feeHelper.connect(manager).transferPoolSetOwnership(newManager.address);
+    await (feeHelper.connect(manager) as Contract).transferPoolSetOwnership(newManager.address);
 
     expect(await feeHelper.getManagerForPoolSet(poolSetId)).to.eq(newManager.address);
   });
 
   it('new manager can set swap fees on pools', async () => {
-    await feeHelper.connect(newManager).setStaticSwapFeePercentage(pool.address, oldSwapFee);
+    await (feeHelper.connect(newManager) as Contract).setStaticSwapFeePercentage(pool.target.toString(), oldSwapFee);
 
     // Pool should now have the original swap fee.
-    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.address)).to.eq(oldSwapFee);
+    expect(await extensionEntrypoint.getStaticSwapFeePercentage(pool.target.toString())).to.equal(oldSwapFee);
   });
 });

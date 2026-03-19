@@ -6,6 +6,7 @@ import input from './input';
 const networks = input.networks;
 
 // Assign settings file for each deployed network.
+/* eslint-disable @typescript-eslint/no-require-imports */
 const settings = Object.fromEntries(
   networks.map((network: string) => {
     return [network, require(`./settings/${network}.ts`)];

@@ -80,6 +80,7 @@ v3-fee-percentages-provider
 v3-fixed-price-lbp
 v3-gyro-2clp
 v3-gyro-eclp
+v3-gyro-eclp-oracle
 v3-hook-examples
 v3-hyperevm-rate-provider
 v3-liquidity-bootstrapping-pool

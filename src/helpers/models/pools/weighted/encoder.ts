@@ -1,5 +1,5 @@
-import { defaultAbiCoder } from '@ethersproject/abi';
-import { BigNumberish } from '@ethersproject/bignumber';
+import { AbiCoder } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 export enum WeightedPoolJoinKind {
   INIT = 0,
@@ -29,7 +29,7 @@ export class WeightedPoolEncoder {
    * @param initialBalances - the amounts of tokens to send to the pool to form the initial balances
    */
   static joinInit = (amountsIn: BigNumberish[]): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256[]'], [WeightedPoolJoinKind.INIT, amountsIn]);
+    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256[]'], [WeightedPoolJoinKind.INIT, amountsIn]);
 
   /**
    * Encodes the userData parameter for joining a WeightedPool with exact token inputs
@@ -37,7 +37,7 @@ export class WeightedPoolEncoder {
    * @param minimumBPT - the minimum acceptable BPT to receive in return for deposited tokens
    */
   static joinExactTokensInForBPTOut = (amountsIn: BigNumberish[], minimumBPT: BigNumberish): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256[]', 'uint256'],
       [WeightedPoolJoinKind.EXACT_TOKENS_IN_FOR_BPT_OUT, amountsIn, minimumBPT]
     );
@@ -48,7 +48,7 @@ export class WeightedPoolEncoder {
    * @param enterTokenIndex - the index of the token to be provided as liquidity
    */
   static joinTokenInForExactBPTOut = (bptAmountOut: BigNumberish, enterTokenIndex: number): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256', 'uint256'],
       [WeightedPoolJoinKind.TOKEN_IN_FOR_EXACT_BPT_OUT, bptAmountOut, enterTokenIndex]
     );
@@ -58,7 +58,7 @@ export class WeightedPoolEncoder {
    * @param bptAmountOut - the amount of BPT to be minted
    */
   static joinAllTokensInForExactBPTOut = (bptAmountOut: BigNumberish): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256'],
       [WeightedPoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT, bptAmountOut]
     );
@@ -69,7 +69,7 @@ export class WeightedPoolEncoder {
    * @param enterTokenIndex - the index of the token to removed from the pool
    */
   static exitExactBPTInForOneTokenOut = (bptAmountIn: BigNumberish, exitTokenIndex: number): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256', 'uint256'],
       [WeightedPoolExitKind.EXACT_BPT_IN_FOR_ONE_TOKEN_OUT, bptAmountIn, exitTokenIndex]
     );
@@ -79,7 +79,10 @@ export class WeightedPoolEncoder {
    * @param bptAmountIn - the amount of BPT to be burned
    */
   static exitExactBPTInForTokensOut = (bptAmountIn: BigNumberish): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256'], [WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT, bptAmountIn]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [WeightedPoolExitKind.EXACT_BPT_IN_FOR_TOKENS_OUT, bptAmountIn]
+    );
 
   /**
    * Encodes the userData parameter for exiting a WeightedPool by removing exact amounts of tokens
@@ -87,7 +90,7 @@ export class WeightedPoolEncoder {
    * @param maxBPTAmountIn - the minimum acceptable BPT to burn in return for withdrawn tokens
    */
   static exitBPTInForExactTokensOut = (amountsOut: BigNumberish[], maxBPTAmountIn: BigNumberish): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256[]', 'uint256'],
       [WeightedPoolExitKind.BPT_IN_FOR_EXACT_TOKENS_OUT, amountsOut, maxBPTAmountIn]
     );
@@ -106,5 +109,5 @@ export class ManagedPoolEncoder {
    * This can only be done by the pool owner.
    */
   static exitForRemoveToken = (tokenIndex: BigNumberish): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256'], [WeightedPoolExitKind.REMOVE_TOKEN, tokenIndex]);
+    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256'], [WeightedPoolExitKind.REMOVE_TOKEN, tokenIndex]);
 }

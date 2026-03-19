@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ProtocolFeeSweeperDeployment } from '../input';
 import { MAX_UINT256, ZERO_ADDRESS } from '@helpers/constants';
 
@@ -44,7 +44,7 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
     const authorizerTask = new Task('20210418-authorizer', TaskMode.READ_ONLY, getForkedNetwork(hre));
     authorizer = await authorizerTask.deployedInstance('Authorizer');
 
-    const vaultAsExtension = vaultExtension.attach(vault.address);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString());
     const controllerAddress = await vaultAsExtension.getProtocolFeeController();
     feeController = await vaultTask.instanceAt('ProtocolFeeController', controllerAddress);
 
@@ -61,7 +61,7 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
       .connect(govMultisig)
       .grantRole(
         await feeController.getActionId(feeController.interface.getSighash('withdrawProtocolFeesForToken')),
-        feeSweeper.address
+        feeSweeper.target.toString()
       );
   });
 
@@ -73,7 +73,7 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
   it('sets target token', async () => {
     await feeSweeper.connect(feeRecipient).setTargetToken(USDC);
 
-    expect(await feeSweeper.getTargetToken()).to.eq(USDC);
+    expect(await feeSweeper.getTargetToken()).to.equal(USDC);
   });
 
   it('can set/remove burners', async () => {
@@ -94,12 +94,12 @@ describeForkTest.skip('ProtocolFeeSweeper', 'mainnet', 21917206, function () {
     const whale = await impersonate(USDC_HOLDER, fp(100));
     const USDC_AMOUNT = 1000e6;
 
-    await usdcToken.connect(whale).transfer(feeSweeper.address, USDC_AMOUNT);
+    await usdcToken.connect(whale).transfer(feeSweeper.target.toString(), USDC_AMOUNT);
 
-    const balanceBefore = await usdcToken.balanceOf(feeRecipient.address);
+    const balanceBefore = await usdcToken.balanceOf(feeRecipient.target.toString());
     await feeSweeper.connect(feeRecipient).recoverProtocolFees([USDC]);
-    const balanceAfter = await usdcToken.balanceOf(feeRecipient.address);
+    const balanceAfter = await usdcToken.balanceOf(feeRecipient.target.toString());
 
-    expect(balanceAfter - balanceBefore).to.eq(USDC_AMOUNT);
+    expect(balanceAfter - balanceBefore).to.equal(USDC_AMOUNT);
   });
 });

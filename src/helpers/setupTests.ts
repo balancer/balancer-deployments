@@ -1,5 +1,4 @@
 import { AsyncFunc } from 'mocha';
-import { BigNumber } from 'ethers';
 import chai, { expect } from 'chai';
 
 import { NAry } from './models/types/types';
@@ -101,9 +100,9 @@ chai.use(function (chai, utils) {
           Array.isArray(actual) &&
           Array.isArray(expected) &&
           actual.length === expected.length &&
-          (actual.some(BigNumber.isBigNumber) || expected.some(BigNumber.isBigNumber))
+          (actual.some((v: any) => typeof v === 'bigint') || expected.some((v: any) => typeof v === 'bigint'))
         ) {
-          const equal = actual.every((value: any, i: number) => BigNumber.from(value).eq(expected[i]));
+          const equal = actual.every((value: any, i: number) => BigInt(value) === BigInt(expected[i]));
           this.assert(
             equal,
             `Expected "[${expected}]" to be deeply equal [${actual}]`,

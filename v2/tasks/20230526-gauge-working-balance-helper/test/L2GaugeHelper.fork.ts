@@ -2,7 +2,7 @@ import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { getForkedNetwork, Task, TaskMode, describeForkTest, getSigners, impersonate, deploy, instanceAt } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { FP_ONE, fp } from '@helpers/numbers';
 import { MAX_UINT256 } from '@helpers/constants';
 import { MONTH } from '@helpers/time';
@@ -60,27 +60,27 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
 
   before('stake in gauge', async () => {
     const stakeAmount = fp(100);
-    await lpToken.connect(lpTokenHolder).transfer(veBALHolder.address, stakeAmount);
-    await lpToken.connect(veBALHolder).approve(gauge.address, MAX_UINT256);
+    await (lpToken.connect(lpTokenHolder) as Contract).transfer(veBALHolder.address, stakeAmount);
+    await (lpToken.connect(veBALHolder) as Contract).approve(gauge.target.toString(), MAX_UINT256);
 
-    await gauge.connect(veBALHolder)['deposit(uint256)'](stakeAmount);
+    await (gauge.connect(veBALHolder) as Contract)['deposit(uint256)'](stakeAmount);
 
     // We also have `other` stake in the gauge so that the veBALHolder is not the sole gauge staker, and their supply
     // ratio is less than 100%.
-    const smallerStakeAmount = stakeAmount.div(2);
-    await lpToken.connect(lpTokenHolder).transfer(other.address, smallerStakeAmount);
-    await lpToken.connect(other).approve(gauge.address, MAX_UINT256);
+    const smallerStakeAmount = stakeAmount / BigInt(2);
+    await (lpToken.connect(lpTokenHolder) as Contract).transfer(other.address, smallerStakeAmount);
+    await (lpToken.connect(other) as Contract).approve(gauge.target.toString(), MAX_UINT256);
 
-    await gauge.connect(other)['deposit(uint256)'](smallerStakeAmount);
+    await (gauge.connect(other) as Contract)['deposit(uint256)'](smallerStakeAmount);
   });
 
   describe('getters (as deployed)', () => {
     it('stores the veDelegationProxy', async () => {
-      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.address);
+      expect(await workingBalanceHelper.getVotingEscrowDelegationProxy()).to.equal(veDelegationProxy.target.toString());
     });
 
     it('stores the votingEscrow', async () => {
-      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.address);
+      expect(await workingBalanceHelper.getVotingEscrow()).to.equal(votingEscrow.target.toString());
     });
 
     it('indicates where to read supply from', async () => {
@@ -91,22 +91,22 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
   context('with no veBAL', () => {
     it('projected balance should equal current', async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-        gauge.address,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
       // Ensure we have equal balances (that are non-zero)
-      expect(projectedWorkingBalance).to.eq(currentWorkingBalance);
-      expect(projectedWorkingBalance).to.gt(0);
+      expect(projectedWorkingBalance).to.equal(currentWorkingBalance);
+      expect(projectedWorkingBalance).to.be.gt(0);
     });
 
     it('projected ratio should equal current', async () => {
       const [current, projected] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-        gauge.address,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
-      expect(projected).to.eq(current);
+      expect(projected).to.equal(current);
 
       // As a sanity check, we test that they don't own the entire gauge.
       expect(projected).to.be.lt(FP_ONE);
@@ -120,24 +120,27 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
       newVotingEscrow = await deploy('MockL2VotingEscrow');
 
       const admin = await impersonate(GOV_MULTISIG, fp(100));
-      await authorizer.connect(admin).grantRole(await actionId(veDelegationProxy, 'setDelegation'), admin.address);
-      await veDelegationProxy.connect(admin).setDelegation(newVotingEscrow.address);
+      await (authorizer.connect(admin) as Contract).grantRole(
+        await actionId(veDelegationProxy, 'setDelegation'),
+        admin.address
+      );
+      await (veDelegationProxy.connect(admin) as Contract).setDelegation(newVotingEscrow.target.toString());
     });
 
     const veBALTotal = fp(1000);
 
     before('create veBAL whale', async () => {
       // The lock duration is irrelevant because this mock voting escrow doesn't take it into consideration.
-      await newVotingEscrow.connect(veBALHolder).create_lock(veBALTotal, MONTH * 12);
+      await (newVotingEscrow.connect(veBALHolder) as Contract).create_lock(veBALTotal, MONTH * 12);
     });
 
     it('shows a veBAL balance', async () => {
-      expect(await newVotingEscrow.balanceOf(veBALHolder.address)).to.eq(veBALTotal);
+      expect(await newVotingEscrow.balanceOf(veBALHolder.address)).to.equal(veBALTotal);
     });
 
     it(`projected balance should be greater than current`, async () => {
       const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-        gauge.address,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
@@ -146,7 +149,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
 
     it('projected ratio should be greater than current', async () => {
       const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-        gauge.address,
+        gauge.target.toString(),
         veBALHolder.address
       );
 
@@ -155,12 +158,12 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
 
     context('updates after checkpointing', () => {
       before('checkpoint', async () => {
-        await gauge.connect(veBALHolder).user_checkpoint(veBALHolder.address);
+        await (gauge.connect(veBALHolder) as Contract).user_checkpoint(veBALHolder.address);
       });
 
       it('projected balance should be equal to or slightly less than current', async () => {
         const [currentWorkingBalance, projectedWorkingBalance] = await workingBalanceHelper.getWorkingBalances(
-          gauge.address,
+          gauge.target.toString(),
           veBALHolder.address
         );
 
@@ -170,7 +173,7 @@ describeForkTest.skip('GaugeWorkingBalanceHelper-L2', 'polygon', 42002545, funct
 
       it('projected ratio should be equal to or slightly less than current', async () => {
         const [currentWorkingRatio, projectedWorkingRatio] = await workingBalanceHelper.getWorkingBalanceToSupplyRatios(
-          gauge.address,
+          gauge.target.toString(),
           veBALHolder.address
         );
 

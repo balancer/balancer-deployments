@@ -176,6 +176,7 @@ These are deployments for script-like contracts (often called 'coordinators') wh
 | Protocol Fee Controller Migration                   | [`20250221-protocol-fee-controller-migration`](./v3/scripts/20250221-protocol-fee-controller-migration) |
 | Balancer Contract Registry Initializer (V2)         | [`20250411-balancer-registry-initializer-v2`](./v3/scripts/20250411-balancer-registry-initializer-v2)   |
 | Claim Signature Registry                            | [`20260122-claim-signature-registry`](./v2/scripts/20260122-claim-signature-registry)                   |
+| Claim Signature Registry (V2)                       | [`20260302-claim-signature-registry-v2`](./v2/scripts/20260302-claim-signature-registry-v2)             |
 
 ## Deprecated Deployments
 

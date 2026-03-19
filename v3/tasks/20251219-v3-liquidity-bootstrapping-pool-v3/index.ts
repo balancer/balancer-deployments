@@ -18,7 +18,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     input.FactoryVersion,
     input.PoolVersion,
     input.Router,
-    migrationRouter.address,
+    migrationRouter.target.toString(),
   ];
   const factory = await task.deployAndVerify('LBPoolFactory', factoryArgs, from, force);
 
@@ -27,7 +27,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const LOW_WEIGHT = fp(0.2);
 
     const blockNumBefore = await ethers.provider.getBlockNumber();
-    const blockBefore = await ethers.provider.getBlock(blockNumBefore);
+    const blockBefore = (await ethers.provider.getBlock(blockNumBefore))!;
     const timestampBefore = bn(blockBefore.timestamp);
 
     const newLBPCommonParams = {
@@ -36,8 +36,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       owner: from ?? DELEGATE_OWNER,
       projectToken: input.TestBalancerToken,
       reserveToken: input.WETH,
-      startTime: timestampBefore.add(HOUR),
-      endTime: timestampBefore.add(DAY),
+      startTime: timestampBefore + BigInt(HOUR),
+      endTime: timestampBefore + BigInt(DAY),
       blockProjectTokenSwapsIn: false,
     };
 
@@ -96,6 +96,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     const poolParams = [newLBPCommonParams, migrationParams, newLBPParams, factoryParams];
 
     // We are now ready to verify the Pool
-    await task.verify('LBPool', mockPool.address, poolParams);
+    await task.verify('LBPool', mockPool.target.toString(), poolParams);
   }
 };

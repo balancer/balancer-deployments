@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { BigNumberish, bn } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 
 describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
@@ -17,7 +17,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
 
   let usdcToken: Contract, shareToken: Contract, silo: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
-  let chainedReference: BigNumber;
+  let chainedReference: bigint;
   const amountToWrap = 100e6;
 
   before('run task', async () => {
@@ -67,7 +67,7 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
     expect(balanceOfWrappedBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.address, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoSilo = library.interface.encodeFunctionData('wrapShareToken', [
@@ -85,9 +85,9 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
 
     const estimatedRate = await siloExchangeRate(silo, USDC, shareToken);
 
-    const expectedBalanceOfWrappedAfter = bn(estimatedRate).mul(amountToWrap);
+    const expectedBalanceOfWrappedAfter = bn(estimatedRate) * amountToWrap;
 
-    expect(balanceOfUSDCBefore.sub(balanceOfUSDCAfter)).to.be.equal(amountToWrap);
+    expect(balanceOfUSDCBefore - balanceOfUSDCAfter).to.be.equal(amountToWrap);
     expect(balanceOfWrappedAfter).to.be.almostEqual(expectedBalanceOfWrappedAfter, 0.01);
   });
 
@@ -108,25 +108,25 @@ describeForkTest.skip('SiloWrapping', 'mainnet', 16622559, function () {
       chainedReference,
     ]);
 
-    await shareToken.connect(recipient).approve(vault.address, amountToWithdraw);
+    await shareToken.connect(recipient).approve(vault.target.toString(), amountToWithdraw);
 
     await relayer.connect(recipient).multicall([withdrawFromSilo]);
 
     const balanceOfUSDCAfter = await usdcToken.balanceOf(sender.address);
     const balanceOfWrappedAfter = await shareToken.balanceOf(recipient.address);
 
-    expect(balanceOfWrappedBefore.sub(balanceOfWrappedAfter)).to.be.equal(amountToWithdraw);
+    expect(balanceOfWrappedBefore - balanceOfWrappedAfter).to.be.equal(amountToWithdraw);
     // Because rate is very close to 1
-    expect(balanceOfUSDCAfter.sub(balanceOfUSDCBefore)).to.be.almostEqual(amountToWithdraw);
+    expect(balanceOfUSDCAfter - balanceOfUSDCBefore).to.be.almostEqual(amountToWithdraw);
   });
 });
 
-function toChainedReference(key: BigNumberish): BigNumber {
+function toChainedReference(key: BigNumberish): bigint {
   const CHAINED_REFERENCE_PREFIX = 'ba10';
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigNumber.from(paddedPrefix).add(key);
+  return BigInt(paddedPrefix) + key;
 }
 
 async function siloExchangeRate(silo: Contract, mainTokenAddress: string, wrappedTokenContract: Contract) {

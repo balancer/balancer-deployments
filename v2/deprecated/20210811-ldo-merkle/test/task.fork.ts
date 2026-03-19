@@ -1,17 +1,17 @@
 import hre, { ethers } from 'hardhat';
-import { Contract, BigNumber } from 'ethers';
+import { Contract } from 'ethers';
 
 import { bn, fp } from '@helpers/numbers';
 import { expectEqualWithError } from '@helpers/relativeError';
 import { MerkleTree } from '@helpers/merkleTree';
 
 import { MAX_UINT256 } from '@helpers/constants';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-function encodeElement(address: string, balance: BigNumber): string {
-  return ethers.utils.solidityKeccak256(['address', 'uint'], [address, balance]);
+function encodeElement(address: string, balance: bigint): string {
+  return ethers.solidityPackedKeccak256(['address', 'uint'], [address, balance]);
 }
 
 describeForkTest.skip('MerkleRedeem', 'mainnet', 14850000, function () {
@@ -36,7 +36,7 @@ describeForkTest.skip('MerkleRedeem', 'mainnet', 14850000, function () {
     token = await task.instanceAt('IERC20', LDO_TOKEN_ADDRESS);
 
     await distributor.transferOwnership(whale.address);
-    await token.connect(whale).approve(distributor.address, MAX_UINT256);
+    await token.connect(whale).approve(distributor.target.toString(), MAX_UINT256);
   });
 
   describe('with an allocation defined', async () => {
@@ -56,7 +56,7 @@ describeForkTest.skip('MerkleRedeem', 'mainnet', 14850000, function () {
       await distributor.connect(whale).seedAllocations(bn(0), root, fp(100));
 
       const expectedReward = fp(100);
-      expectEqualWithError(await token.balanceOf(distributor.address), expectedReward, fp(1));
+      expectEqualWithError(await token.balanceOf(distributor.target.toString()), expectedReward, fp(1));
     });
 
     it('can claim a reward', async () => {

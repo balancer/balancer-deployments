@@ -1,7 +1,7 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
 import { Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signer-with-address';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
 import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
@@ -71,13 +71,13 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   before('setup contracts and parameters', async () => {
     tokenConfig = [
       {
-        token: weth.address,
+        token: weth.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
       },
       {
-        token: bal.address,
+        token: bal.target.toString(),
         tokenType: 0,
         rateProvider: ZERO_ADDRESS,
         paysYieldFees: false,
@@ -88,7 +88,7 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('has trusted router', async () => {
-    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.address);
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
   });
 
   it('deploys LBP', async () => {
@@ -96,14 +96,14 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
 
     const lbpParams = {
       owner: admin.address,
-      projectToken: bal.address,
-      reserveToken: weth.address,
+      projectToken: bal.target.toString(),
+      reserveToken: weth.target.toString(),
       projectTokenStartWeight: HIGH_WEIGHT,
       reserveTokenStartWeight: LOW_WEIGHT,
       projectTokenEndWeight: projectTokenLbpEndWeight,
       reserveTokenEndWeight: reserveTokenLbpEndWeight,
-      startTime: startTime.add(HOUR),
-      endTime: startTime.add(DAY),
+      startTime: startTime + HOUR,
+      endTime: startTime + DAY,
       blockProjectTokenSwapsIn: false,
     };
 
@@ -130,8 +130,8 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
     expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
 
-    expect(await pool.getProjectToken()).to.eq(bal.address);
-    expect(await pool.getReserveToken()).to.eq(weth.address);
+    expect(await pool.getProjectToken()).to.eq(bal.target.toString());
+    expect(await pool.getReserveToken()).to.eq(weth.target.toString());
   });
 
   it('checks pool version', async () => {
@@ -156,12 +156,14 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     // Give the admin tokens: mint test tokens, get WETH
     await bal.connect(admin).mint(admin.address, INITIAL_BAL);
 
-    await bal.connect(admin).approve(permit2.address, INITIAL_BAL);
-    await permit2.connect(admin).approve(bal.address, trustedRouter.address, INITIAL_BAL, maxUint(48));
+    await bal.connect(admin).approve(permit2.target.toString(), INITIAL_BAL);
+    await permit2
+      .connect(admin)
+      .approve(bal.target.toString(), trustedRouter.target.toString(), INITIAL_BAL, maxUint(48));
 
     await trustedRouter.connect(admin).initialize(
-      pool.address,
-      [bal.address, weth.address],
+      pool.target.toString(),
+      [bal.target.toString(), weth.target.toString()],
       [INITIAL_BAL, INITIAL_WETH],
       0,
       true, // wethIsETH
@@ -183,12 +185,12 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
   });
 
   it('migrates the liquidity', async () => {
-    await pool.connect(admin).approve(migrationRouter.address, maxUint(256));
+    await pool.connect(admin).approve(migrationRouter.target.toString(), maxUint(256));
     const weightedPoolProjectWeight = HIGH_WEIGHT;
     const weightedPoolReserveWeight = LOW_WEIGHT;
 
     const migrateReceipt = await (
-      await migrationRouter.connect(admin).migrateLiquidity(pool.address, projectTreasury.address, {
+      await migrationRouter.connect(admin).migrateLiquidity(pool.target.toString(), projectTreasury.target.toString(), {
         name: 'Weighted Pool',
         symbol: 'WP-TEST',
         normalizedWeights: [weightedPoolProjectWeight, weightedPoolReserveWeight],
@@ -208,21 +210,19 @@ describeForkTest.skip('LBPool-V3 (V2)', 'mainnet', 22839800, function () {
     const migrationEvent = expectEvent.inReceipt(migrateReceipt, 'PoolMigrated');
     const weightedPool = await task.instanceAt('WeightedPool', migrationEvent.args.weightedPool);
 
-    expect(await weightedPool.getTokens()).to.deep.equal([bal.address, weth.address]);
+    expect(await weightedPool.getTokens()).to.deep.equal([bal.target.toString(), weth.target.toString()]);
     expect(await weightedPool.getNormalizedWeights()).to.deep.equal([HIGH_WEIGHT, LOW_WEIGHT]);
 
-    const vaultAsExtension = vaultExtension.attach(vault.address);
-    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.address);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString());
+    const currentBalances = await vaultAsExtension.getCurrentLiveBalances(weightedPool.target.toString());
     // New pool project weight is higher than LBP's project weight, so we use all of it (scaled at 80%).
     // Then, we apply the ratio of the weights to the reserve token, and we scale at 80% as well.
-    expect(currentBalances[0]).to.equalWithError(INITIAL_BAL.mul(80).div(100));
+    expect(currentBalances[0]).to.equalWithError((INITIAL_BAL * BigInt(80)) / 100);
     expect(currentBalances[1]).to.equalWithError(
-      INITIAL_WETH.mul(weightedPoolReserveWeight)
-        .div(weightedPoolProjectWeight)
-        .mul(projectTokenLbpEndWeight)
-        .div(reserveTokenLbpEndWeight)
-        .mul(80)
-        .div(100)
+      (((((INITIAL_WETH * weightedPoolReserveWeight) / weightedPoolProjectWeight) * projectTokenLbpEndWeight) /
+        reserveTokenLbpEndWeight) *
+        80n) /
+        100n
     );
   });
 });

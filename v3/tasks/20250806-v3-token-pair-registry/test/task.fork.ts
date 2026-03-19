@@ -3,7 +3,7 @@ import { Contract } from 'ethers';
 import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
 import { fp } from '@helpers/numbers';
 import { TokenPairRegistryDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 
 describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
@@ -47,34 +47,34 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
   it('set e2e boosted pool path (underlying <--> underlying)', async () => {
     const boostedPoolPath = [];
     boostedPoolPath.push({
-      pool: waUSDC.address,
-      tokenOut: waUSDC.address,
+      pool: waUSDC.target.toString(),
+      tokenOut: waUSDC.target.toString(),
       isBuffer: true,
     });
     boostedPoolPath.push({
       pool: STABLE_POOL_ADDRESS,
-      tokenOut: waUSDT.address,
+      tokenOut: waUSDT.target.toString(),
       isBuffer: false,
     });
     boostedPoolPath.push({
-      pool: waUSDT.address,
-      tokenOut: USDT.address,
+      pool: waUSDT.target.toString(),
+      tokenOut: USDT.target.toString(),
       isBuffer: true,
     });
 
-    tokenPairRegistry.connect(admin).addPath(USDC.address, boostedPoolPath);
-    expect(await tokenPairRegistry.getPaths(USDC.address, USDT.address)).to.deep.equal([
+    await (tokenPairRegistry.connect(admin) as Contract).addPath(USDC.target.toString(), boostedPoolPath);
+    expect(await tokenPairRegistry.getPaths(USDC.target.toString(), USDT.target.toString())).to.deep.equal([
       boostedPoolPath.map((o) => Object.values(o)),
     ]);
   });
 
   it('set boosted pool path', async () => {
-    await tokenPairRegistry.connect(admin).addSimplePath(STABLE_POOL_ADDRESS);
+    await (tokenPairRegistry.connect(admin) as Contract).addSimplePath(STABLE_POOL_ADDRESS);
 
     const waUsdtPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waUSDT.address,
+        tokenOut: waUSDT.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
@@ -82,7 +82,7 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     const waUsdcPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waUSDC.address,
+        tokenOut: waUSDC.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
@@ -90,41 +90,55 @@ describeForkTest('TokenPairRegistry', 'mainnet', 23083800, function () {
     const waGhoPath = [
       {
         pool: STABLE_POOL_ADDRESS,
-        tokenOut: waGHO.address,
+        tokenOut: waGHO.target.toString(),
         isBuffer: false,
       },
     ].map((o) => Object.values(o));
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.address, waUSDT.address)).to.deep.equal([waUsdtPath]);
-    expect(await tokenPairRegistry.getPaths(waUSDT.address, waUSDC.address)).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waUSDT.target.toString())).to.deep.equal([
+      waUsdtPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waUSDC.target.toString())).to.deep.equal([
+      waUsdcPath,
+    ]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDC.address, waGHO.address)).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.address, waUSDC.address)).to.deep.equal([waUsdcPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDC.target.toString(), waGHO.target.toString())).to.deep.equal([
+      waGhoPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDC.target.toString())).to.deep.equal([
+      waUsdcPath,
+    ]);
 
-    expect(await tokenPairRegistry.getPaths(waUSDT.address, waGHO.address)).to.deep.equal([waGhoPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.address, waUSDT.address)).to.deep.equal([waUsdtPath]);
+    expect(await tokenPairRegistry.getPaths(waUSDT.target.toString(), waGHO.target.toString())).to.deep.equal([
+      waGhoPath,
+    ]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), waUSDT.target.toString())).to.deep.equal([
+      waUsdtPath,
+    ]);
   });
 
   it('set buffer path', async () => {
-    await tokenPairRegistry.connect(admin).addSimplePath(waGHO.address);
+    await (tokenPairRegistry.connect(admin) as Contract).addSimplePath(waGHO.target.toString());
 
     const wrapPath = [
       {
-        pool: waGHO.address,
-        tokenOut: waGHO.address,
+        pool: waGHO.target.toString(),
+        tokenOut: waGHO.target.toString(),
         isBuffer: true,
       },
     ].map((o) => Object.values(o));
 
     const unwrapPath = [
       {
-        pool: waGHO.address,
-        tokenOut: GHO.address,
+        pool: waGHO.target.toString(),
+        tokenOut: GHO.target.toString(),
         isBuffer: true,
       },
     ].map((o) => Object.values(o));
 
-    expect(await tokenPairRegistry.getPaths(GHO.address, waGHO.address)).to.deep.equal([wrapPath]);
-    expect(await tokenPairRegistry.getPaths(waGHO.address, GHO.address)).to.deep.equal([unwrapPath]);
+    expect(await tokenPairRegistry.getPaths(GHO.target.toString(), waGHO.target.toString())).to.deep.equal([wrapPath]);
+    expect(await tokenPairRegistry.getPaths(waGHO.target.toString(), GHO.target.toString())).to.deep.equal([
+      unwrapPath,
+    ]);
   });
 });

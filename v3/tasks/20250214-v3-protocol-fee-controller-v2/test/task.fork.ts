@@ -4,7 +4,7 @@ import { Contract } from 'ethers';
 import { fp } from '@helpers/numbers';
 import * as expectEvent from '@helpers/expectEvent';
 import { describeForkTest, getForkedNetwork, Task, TaskMode, getSigner, impersonate } from '@src';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { ProtocolFeeControllerDeployment } from '../input';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 
@@ -96,48 +96,46 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
     // Allow admin to upgrade the protocol fee controller to the version with events.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(
-        await vaultAdmin.getActionId(vaultAdmin.interface.getSighash('setProtocolFeeController')),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await vaultAdmin.getActionId(vaultAdmin.interface.getFunction('setProtocolFeeController')!.selector),
+      admin.address
+    );
 
     // Allow admin to set global fees, so that pools will be created with non-zero initial percentages.
     // No standard factories allow turning off fees, but that's fine. We're just testing that the event comes through.
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(
-        await feeController.getActionId(feeController.interface.getSighash('setGlobalProtocolSwapFeePercentage')),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await feeController.getActionId(
+        feeController.interface.getFunction('setGlobalProtocolSwapFeePercentage')!.selector
+      ),
+      admin.address
+    );
 
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(
-        await feeController.getActionId(feeController.interface.getSighash('setGlobalProtocolYieldFeePercentage')),
-        admin.address
-      );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await feeController.getActionId(
+        feeController.interface.getFunction('setGlobalProtocolYieldFeePercentage')!.selector
+      ),
+      admin.address
+    );
   });
 
   it('replaces the old fee controller', async () => {
-    const vaultAsExtension = vaultExtension.attach(vault.address);
+    const vaultAsExtension = vaultExtension.attach(vault.target.toString()) as Contract;
     const oldFeeControllerAddress = await vaultAsExtension.getProtocolFeeController();
 
-    const vaultAsAdmin = vaultAdmin.attach(vault.address);
-    await vaultAsAdmin.connect(admin).setProtocolFeeController(feeController.address);
+    const vaultAsAdmin = vaultAdmin.attach(vault.target.toString()) as Contract;
+    await (vaultAsAdmin.connect(admin) as Contract).setProtocolFeeController(feeController.target.toString());
 
     const newFeeControllerAddress = await vaultAsExtension.getProtocolFeeController();
-    expect(newFeeControllerAddress).not.to.eq(oldFeeControllerAddress);
-    expect(newFeeControllerAddress).to.eq(feeController.address);
+    expect(newFeeControllerAddress).not.to.equal(oldFeeControllerAddress);
+    expect(newFeeControllerAddress).to.eq(feeController.target.toString());
   });
 
   it('sets non-zero global fees', async () => {
-    await feeController.connect(admin).setGlobalProtocolSwapFeePercentage(GLOBAL_SWAP_FEE_PERCENTAGE);
-    await feeController.connect(admin).setGlobalProtocolYieldFeePercentage(GLOBAL_YIELD_FEE_PERCENTAGE);
+    await (feeController.connect(admin) as Contract).setGlobalProtocolSwapFeePercentage(GLOBAL_SWAP_FEE_PERCENTAGE);
+    await (feeController.connect(admin) as Contract).setGlobalProtocolYieldFeePercentage(GLOBAL_YIELD_FEE_PERCENTAGE);
 
-    expect(await feeController.getGlobalProtocolSwapFeePercentage()).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
-    expect(await feeController.getGlobalProtocolYieldFeePercentage()).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
+    expect(await feeController.getGlobalProtocolSwapFeePercentage()).to.equal(GLOBAL_SWAP_FEE_PERCENTAGE);
+    expect(await feeController.getGlobalProtocolYieldFeePercentage()).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
   });
 
   it('deploys a pool and gets the events', async () => {
@@ -189,8 +187,8 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
       'InitialPoolAggregateSwapFeePercentage'
     );
 
-    expect(swapFeeEvent.args.pool).to.eq(pool.address);
-    expect(swapFeeEvent.args.aggregateSwapFeePercentage).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
+    expect(swapFeeEvent.args.pool).to.eq(pool.target.toString());
+    expect(swapFeeEvent.args.aggregateSwapFeePercentage).to.equal(GLOBAL_SWAP_FEE_PERCENTAGE);
     expect(swapFeeEvent.args.isProtocolFeeExempt).to.be.false;
 
     const yieldFeeEvent = expectEvent.inIndirectReceipt(
@@ -199,8 +197,8 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
       'InitialPoolAggregateYieldFeePercentage'
     );
 
-    expect(yieldFeeEvent.args.pool).to.eq(pool.address);
-    expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
+    expect(yieldFeeEvent.args.pool).to.eq(pool.target.toString());
+    expect(yieldFeeEvent.args.aggregateYieldFeePercentage).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
     expect(yieldFeeEvent.args.isProtocolFeeExempt).to.be.false;
 
     const poolCreatorEvent = expectEvent.inIndirectReceipt(
@@ -209,21 +207,21 @@ describeForkTest('ProtocolFeeController', 'mainnet', 21827132, function () {
       'PoolRegisteredWithFeeController'
     );
 
-    expect(poolCreatorEvent.args.pool).to.eq(pool.address);
-    expect(poolCreatorEvent.args.poolCreator).to.eq(ZERO_ADDRESS);
+    expect(poolCreatorEvent.args.pool).to.eq(pool.target.toString());
+    expect(poolCreatorEvent.args.poolCreator).to.equal(ZERO_ADDRESS);
     expect(poolCreatorEvent.args.protocolFeeExempt).to.be.false;
   });
 
   it('checks pool aggregate fees', async () => {
     const [aggregateSwapFeePercentage, aggregateYieldFeePercentage] = await pool.getAggregateFeePercentages();
 
-    expect(aggregateSwapFeePercentage).to.eq(GLOBAL_SWAP_FEE_PERCENTAGE);
-    expect(aggregateYieldFeePercentage).to.eq(GLOBAL_YIELD_FEE_PERCENTAGE);
+    expect(aggregateSwapFeePercentage).to.equal(GLOBAL_SWAP_FEE_PERCENTAGE);
+    expect(aggregateYieldFeePercentage).to.equal(GLOBAL_YIELD_FEE_PERCENTAGE);
   });
 
   it('has new getters', async () => {
-    expect(await feeController.isPoolRegistered(pool.address)).to.be.true;
-    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.address)).to.eq(0);
-    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.address)).to.eq(0);
+    expect(await feeController.isPoolRegistered(pool.target.toString())).to.be.true;
+    expect(await feeController.getPoolCreatorSwapFeePercentage(pool.target.toString())).to.equal(0);
+    expect(await feeController.getPoolCreatorYieldFeePercentage(pool.target.toString())).to.equal(0);
   });
 });

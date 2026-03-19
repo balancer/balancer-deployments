@@ -1,8 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, BigNumberish, Contract, ContractReceipt } from 'ethers';
+import { BigNumberish, Contract, ContractTransactionReceipt } from 'ethers';
 
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { bn, fp } from '@helpers/numbers';
 import { actionId } from '@helpers/models/misc/actions';
 import * as expectEvent from '@helpers/expectEvent';
@@ -35,25 +35,25 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
   const USDT_ADDRESS = '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9';
   const USDT_WHALE = '0xf89d7b9c864f589bbf53a82105107622b35eaa40';
 
-  async function stakeBPT(user1Stake: BigNumber, user2Stake: BigNumber) {
-    await BPT.connect(user1).approve(gauge.address, user1Stake);
-    await BPT.connect(user2).approve(gauge.address, user2Stake);
+  async function stakeBPT(user1Stake: bigint, user2Stake: bigint) {
+    await (BPT.connect(user1) as Contract).approve(gauge.target.toString(), user1Stake);
+    await (BPT.connect(user2) as Contract).approve(gauge.target.toString(), user2Stake);
 
-    await gauge.connect(user1)['deposit(uint256)'](user1Stake);
-    await gauge.connect(user2)['deposit(uint256)'](user2Stake);
+    await (gauge.connect(user1) as Contract)['deposit(uint256)'](user1Stake);
+    await (gauge.connect(user2) as Contract)['deposit(uint256)'](user2Stake);
   }
 
   async function bridgeBAL(to: string, amount: BigNumberish) {
     const bridgeInterface = ['function bridgeMint(address account, uint256 amount) external'];
     const BAL = await ethers.getContractAt(bridgeInterface, await pseudoMinter.getBalancerToken());
-    await BAL.connect(gateway).bridgeMint(to, amount);
+    await (BAL.connect(gateway) as Contract).bridgeMint(to, amount);
   }
 
   async function checkpointAndAdvanceWeek() {
-    await gauge.connect(user1).user_checkpoint(user1.address);
-    await gauge.connect(user2).user_checkpoint(user2.address);
+    await (gauge.connect(user1) as Contract).user_checkpoint(user1.address);
+    await (gauge.connect(user2) as Contract).user_checkpoint(user2.address);
 
-    await advanceToTimestamp((await currentWeekTimestamp()).add(WEEK));
+    await advanceToTimestamp((await currentWeekTimestamp()) + BigInt(WEEK));
   }
 
   before('run task', async () => {
@@ -98,8 +98,14 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
   before('grant add / remove child chain gauge factory permissions to admin', async () => {
     const govMultisig = await impersonate(GOV_MULTISIG, fp(100));
 
-    await authorizer.connect(govMultisig).grantRole(await actionId(pseudoMinter, 'addGaugeFactory'), admin.address);
-    await authorizer.connect(govMultisig).grantRole(await actionId(pseudoMinter, 'removeGaugeFactory'), admin.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'addGaugeFactory'),
+      admin.address
+    );
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(pseudoMinter, 'removeGaugeFactory'),
+      admin.address
+    );
   });
 
   describe('create', () => {
@@ -113,26 +119,26 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     });
 
     it('adds gauge factory to pseudo minter', async () => {
-      await pseudoMinter.connect(admin).addGaugeFactory(gaugeFactory.address);
-      expect(await pseudoMinter.isValidGaugeFactory(gaugeFactory.address)).to.be.true;
+      await (pseudoMinter.connect(admin) as Contract).addGaugeFactory(gaugeFactory.target.toString());
+      expect(await pseudoMinter.isValidGaugeFactory(gaugeFactory.target.toString())).to.be.true;
     });
 
     it('create gauge', async () => {
-      const tx = await gaugeFactory.create(BPT.address);
+      const tx = await gaugeFactory.create(BPT.target.toString());
       const event = expectEvent.inReceipt(await tx.wait(), 'GaugeCreated');
       gauge = await task.instanceAt('ChildChainGauge', event.args.gauge);
 
-      expect(await gaugeFactory.isGaugeFromFactory(gauge.address)).to.be.true;
+      expect(await gaugeFactory.isGaugeFromFactory(gauge.target.toString())).to.be.true;
     });
   });
 
   describe('getters', () => {
     it('returns BPT', async () => {
-      expect(await gauge.lp_token()).to.equal(BPT.address);
+      expect(await gauge.lp_token()).to.equal(BPT.target.toString());
     });
 
     it('returns factory', async () => {
-      expect(await gauge.factory()).to.equal(gaugeFactory.address);
+      expect(await gauge.factory()).to.equal(gaugeFactory.target.toString());
     });
 
     it('returns gauge version', async () => {
@@ -145,7 +151,7 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     });
 
     it('returns the pseudo minter', async () => {
-      expect(await gauge.bal_pseudo_minter()).to.be.eq(pseudoMinter.address);
+      expect(await gauge.bal_pseudo_minter()).to.be.eq(pseudoMinter.target.toString());
     });
   });
 
@@ -153,75 +159,75 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
     const balPerWeek = fp(2000);
     const bptAmount = fp(100);
 
-    function itMintsRewardsForUsers(rewardUser1: BigNumber, rewardUser2: BigNumber) {
+    function itMintsRewardsForUsers(rewardUser1: bigint, rewardUser2: bigint) {
       describe('reward distribution', () => {
         before(async () => {
           await checkpointAndAdvanceWeek();
         });
 
         it('outputs the claimable tokens', async () => {
-          const availableTokens1 = await gauge.callStatic.claimable_tokens(user1.address);
-          const availableTokens2 = await gauge.callStatic.claimable_tokens(user2.address);
+          const availableTokens1 = await gauge.claimable_tokens.staticCall(user1.address);
+          const availableTokens2 = await gauge.claimable_tokens.staticCall(user2.address);
           expect(availableTokens1).to.be.almostEqual(rewardUser1);
           expect(availableTokens2).to.be.almostEqual(rewardUser2);
         });
 
         it('"mints" BAL rewards for users', async () => {
-          const receipt1 = await (await pseudoMinter.connect(user1).mint(gauge.address)).wait();
-          const receipt2 = await (await pseudoMinter.connect(user2).mint(gauge.address)).wait();
+          const receipt1 = await (await (pseudoMinter.connect(user1) as Contract).mint(gauge.target.toString())).wait();
+          const receipt2 = await (await (pseudoMinter.connect(user2) as Contract).mint(gauge.target.toString())).wait();
 
           const user1Rewards = expectTransferEvent(
             receipt1,
-            { from: pseudoMinter.address, to: user1.address },
-            BAL.address
+            { from: pseudoMinter.target.toString(), to: user1.address },
+            BAL.target.toString()
           );
           expect(user1Rewards.args.value).to.be.almostEqual(rewardUser1);
 
           const user2Rewards = expectTransferEvent(
             receipt2,
-            { from: pseudoMinter.address, to: user2.address },
-            BAL.address
+            { from: pseudoMinter.target.toString(), to: user2.address },
+            BAL.target.toString()
           );
 
           expect(user2Rewards.args.value).to.be.almostEqual(rewardUser2);
         });
 
         it('updates claimable tokens', async () => {
-          expect(await gauge.callStatic.claimable_tokens(user1.address)).to.be.eq(0);
-          expect(await gauge.callStatic.claimable_tokens(user2.address)).to.be.eq(0);
+          expect(await gauge.claimable_tokens.staticCall(user1.address)).to.be.eq(0);
+          expect(await gauge.claimable_tokens.staticCall(user2.address)).to.be.eq(0);
         });
       });
     }
 
     context('without boosts', () => {
       before('stake BPT to the gauges and bridge BAL rewards', async () => {
-        await stakeBPT(bptAmount, bptAmount.mul(2));
-        await bridgeBAL(gauge.address, balPerWeek);
-        expect(await BAL.balanceOf(gauge.address)).to.be.eq(balPerWeek);
-        expect(await BAL.balanceOf(pseudoMinter.address)).to.be.eq(0);
+        await stakeBPT(bptAmount, bptAmount * BigInt(2));
+        await bridgeBAL(gauge.target.toString(), balPerWeek);
+        expect(await BAL.balanceOf(gauge.target.toString())).to.be.eq(balPerWeek);
+        expect(await BAL.balanceOf(pseudoMinter.target.toString())).to.be.eq(0);
       });
 
       it('checkpoints the gauge and moves the rewards to the pseudo minter', async () => {
         await gauge.user_checkpoint(user1.address);
         await gauge.user_checkpoint(user2.address);
 
-        expect(await BAL.balanceOf(gauge.address)).to.be.eq(0);
-        expect(await BAL.balanceOf(pseudoMinter.address)).to.be.eq(balPerWeek);
+        expect(await BAL.balanceOf(gauge.target.toString())).to.be.eq(0);
+        expect(await BAL.balanceOf(pseudoMinter.target.toString())).to.be.eq(balPerWeek);
       });
 
       // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
-      itMintsRewardsForUsers(balPerWeek.div(3), balPerWeek.mul(2).div(3));
+      itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
 
       context('with extra rewards', () => {
-        const extraReward = balPerWeek.mul(20);
+        const extraReward = balPerWeek * BigInt(20);
 
         before('stake BPT to the gauges and bridge BAL rewards', async () => {
-          await bridgeBAL(gauge.address, extraReward);
+          await bridgeBAL(gauge.target.toString(), extraReward);
         });
 
         // User 2 has double the stake, so 1/3 of the rewards go to User 1, and 2/3 go to User 2.
         // The increased rewards are still distributed proportionally.
-        itMintsRewardsForUsers(extraReward.div(3), extraReward.mul(2).div(3));
+        itMintsRewardsForUsers(extraReward / BigInt(3), (extraReward * BigInt(2)) / BigInt(3));
       });
     });
 
@@ -230,26 +236,29 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       const boost = fp(100);
 
       // MockVE balances represent veBAL balances bridged to the L2.
-      async function setupBoosts(user1Boost: BigNumber, user2Boost: BigNumber) {
+      async function setupBoosts(user1Boost: bigint, user2Boost: bigint) {
         await mockVE.mint(user1.address, user1Boost);
         await mockVE.mint(user2.address, user2Boost);
       }
 
       before('update VE implementation in the proxy', async () => {
-        await authorizer.connect(govMultisig).grantRole(await actionId(veProxy, 'setDelegation'), admin.address);
+        await (authorizer.connect(govMultisig) as Contract).grantRole(
+          await actionId(veProxy, 'setDelegation'),
+          admin.address
+        );
 
         // In practice, the contract that provides veBAL balances is a third party contract (e.g. Layer Zero).
         mockVE = await deploy('MockVE');
-        veBoost = await deploy('VeBoostV2', [ZERO_ADDRESS, mockVE.address]);
+        veBoost = await deploy('VeBoostV2', [ZERO_ADDRESS, mockVE.target.toString()]);
 
-        await bridgeBAL(gauge.address, balPerWeek);
-        await setupBoosts(boost.mul(2), boost);
+        await bridgeBAL(gauge.target.toString(), balPerWeek);
+        await setupBoosts(boost * BigInt(2), boost);
       });
 
       it('sets delegation', async () => {
-        const tx = await veProxy.connect(admin).setDelegation(veBoost.address);
+        const tx = await (veProxy.connect(admin) as Contract).setDelegation(veBoost.target.toString());
         expectEvent.inReceipt(await tx.wait(), 'DelegationImplementationUpdated', {
-          newImplementation: veBoost.address,
+          newImplementation: veBoost.target.toString(),
         });
       });
 
@@ -263,29 +272,29 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
           // User 1 has half the stake and twice the boost as user 1.
           expect(user1Stake).to.be.eq(bptAmount);
-          expect(user2Stake).to.be.eq(user1Stake.mul(2));
-          expect(user1Boost).to.be.eq(boost.mul(2));
-          expect(user2Boost).to.be.eq(user1Boost.div(2));
+          expect(user2Stake).to.be.eq(user1Stake * BigInt(2));
+          expect(user1Boost).to.be.eq(boost * BigInt(2));
+          expect(user2Boost).to.be.eq(user1Boost / BigInt(2));
 
           // Base boost and stake are equal in nominal terms.
           expect(boost).to.be.eq(bptAmount);
         });
 
         // See unit test for reference: 'two users, unequal BPT stake and unequal boost'.
-        itMintsRewardsForUsers(balPerWeek.mul(5).div(12), balPerWeek.mul(7).div(12));
+        itMintsRewardsForUsers((balPerWeek * BigInt(5)) / BigInt(12), (balPerWeek * BigInt(7)) / BigInt(12));
       });
 
       context('with delegations', () => {
         const boostFn = 'boost(address,uint256,uint256)';
 
         before('delegate boosts', async () => {
-          await bridgeBAL(gauge.address, balPerWeek);
+          await bridgeBAL(gauge.target.toString(), balPerWeek);
 
           await mockVE.setLockedEnd(user1.address, MAX_UINT256);
           await mockVE.setLockedEnd(user2.address, MAX_UINT256);
 
-          const endTime = (await currentWeekTimestamp()).add(WEEK);
-          await veBoost.connect(user1)[boostFn](user2.address, boost, endTime);
+          const endTime = (await currentWeekTimestamp()) + BigInt(WEEK);
+          await (veBoost.connect(user1) as Contract)[boostFn](user2.address, boost, endTime);
         });
 
         before('status checks', async () => {
@@ -297,112 +306,119 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
 
           // User 2 has twice the stake and twice the boost as user 1.
           expect(user1Stake).to.be.eq(bptAmount);
-          expect(user2Stake).to.be.eq(user1Stake.mul(2));
+          expect(user2Stake).to.be.eq(user1Stake * BigInt(2));
           expect(user1Boost).to.be.almostEqual(boost); // Using almostEqual because of VeBoostV2 inner accounting.
-          expect(user2Boost).to.be.almostEqual(user1Boost.mul(2));
+          expect(user2Boost).to.be.almostEqual(user1Boost * BigInt(2));
 
           // Base boost and stake are equal in nominal terms.
           expect(boost).to.be.eq(bptAmount);
         });
 
         // See unit test for reference: 'two users, unequal BPT stake and unequal boost'.
-        itMintsRewardsForUsers(balPerWeek.div(3), balPerWeek.mul(2).div(3));
+        itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
 
         context('after delegation expires', () => {
           before('bridge BAL and check status', async () => {
-            await bridgeBAL(gauge.address, balPerWeek);
+            await bridgeBAL(gauge.target.toString(), balPerWeek);
 
             const user1Boost = await veProxy.adjustedBalanceOf(user1.address);
             const user2Boost = await veProxy.adjustedBalanceOf(user2.address);
 
             // One week has passed after the last test, which means the delegation has ended.
             // Therefore, we go back to the original case without delegations.
-            expect(user1Boost).to.be.eq(boost.mul(2));
-            expect(user2Boost).to.be.eq(user1Boost.div(2));
+            expect(user1Boost).to.be.eq(boost * BigInt(2));
+            expect(user2Boost).to.be.eq(user1Boost / BigInt(2));
 
             // Base boost and stake are equal in nominal terms.
             expect(boost).to.be.eq(bptAmount);
           });
 
           // Same case as 'without delegations' again.
-          itMintsRewardsForUsers(balPerWeek.mul(5).div(12), balPerWeek.mul(7).div(12));
+          itMintsRewardsForUsers((balPerWeek * BigInt(5)) / BigInt(12), (balPerWeek * BigInt(7)) / BigInt(12));
         });
 
         context('when veBAL lock expired before delegating boost', () => {
           before(async () => {
-            await mockVE.setLockedEnd(user1.address, (await currentTimestamp()).sub(1));
+            await mockVE.setLockedEnd(user1.address, (await currentTimestamp()) - BigInt(1));
           });
 
           it('reverts', async () => {
-            const endTime = (await currentWeekTimestamp()).add(WEEK);
-            await expect(veBoost.connect(user1)[boostFn](user2.address, boost, endTime)).to.be.reverted;
+            const endTime = (await currentWeekTimestamp()) + BigInt(WEEK);
+            await expect((veBoost.connect(user1) as Contract)[boostFn](user2.address, boost, endTime)).to.be.reverted;
           });
         });
 
         context('after killing delegation implementation', () => {
           before(async () => {
-            await authorizer.connect(govMultisig).grantRole(await actionId(veProxy, 'killDelegation'), admin.address);
-            await veProxy.connect(admin).killDelegation();
-            await bridgeBAL(gauge.address, balPerWeek);
+            await (authorizer.connect(govMultisig) as Contract).grantRole(
+              await actionId(veProxy, 'killDelegation'),
+              admin.address
+            );
+            await (veProxy.connect(admin) as Contract).killDelegation();
+            await bridgeBAL(gauge.target.toString(), balPerWeek);
           });
 
           // Same case as 'without boosts' again.
-          itMintsRewardsForUsers(balPerWeek.div(3), balPerWeek.mul(2).div(3));
+          itMintsRewardsForUsers(balPerWeek / BigInt(3), (balPerWeek * BigInt(2)) / BigInt(3));
         });
       });
     });
   });
 
   describe('other rewards', () => {
-    const rewardAmount = fp(1e6).div(bn(1e12)); // Scaling factor is 1e12 since USDT has 6 decimals.
+    const rewardAmount = fp(1e6) / bn(1e12); // Scaling factor is 1e12 since USDT has 6 decimals.
     let reward: Contract;
     let distributor: SignerWithAddress;
     let claimer: SignerWithAddress, other: SignerWithAddress;
 
     function itTransfersRewardsToClaimer() {
-      let expectedReward: BigNumber;
-      let receipt: ContractReceipt;
-      let claimedBeforeOther: BigNumber;
-      let claimableBeforeOther: BigNumber;
+      let expectedReward: bigint;
+      let receipt: ContractTransactionReceipt;
+      let claimedBeforeOther: bigint;
+      let claimableBeforeOther: bigint;
 
       before('estimate expected reward', async () => {
         // Claimer rewards are proportional to their BPT stake in the gauge given that staking time is constant for all
         // users.
         const claimerStake = await gauge.balanceOf(claimer.address);
         const gaugeTotalSupply = await gauge.totalSupply();
-        expectedReward = rewardAmount.mul(claimerStake).div(gaugeTotalSupply);
+        expectedReward = (rewardAmount * claimerStake) / gaugeTotalSupply;
 
-        claimedBeforeOther = await gauge.claimed_reward(other.address, reward.address);
-        claimableBeforeOther = await gauge.claimable_reward(other.address, reward.address);
+        claimedBeforeOther = await gauge.claimed_reward(other.address, reward.target.toString());
+        claimableBeforeOther = await gauge.claimable_reward(other.address, reward.target.toString());
 
-        receipt = await (
-          await gauge.connect(claimer)['claim_rewards(address,address)'](claimer.address, ZERO_ADDRESS)
-        ).wait();
+        receipt = (await (
+          await (gauge.connect(claimer) as Contract)['claim_rewards(address,address)'](claimer.address, ZERO_ADDRESS)
+        ).wait())!;
       });
 
       it('transfers rewards to claimer', async () => {
-        const event = expectTransferEvent(receipt, { from: gauge.address, to: claimer.address }, reward.address);
+        const event = expectTransferEvent(
+          receipt,
+          { from: gauge.target.toString(), to: claimer.address },
+          reward.target.toString()
+        );
         expect(event.args.value).to.be.almostEqual(expectedReward);
       });
 
       it('updates claimed balance for claimer', async () => {
-        const claimedAfterClaimer = await gauge.claimed_reward(claimer.address, reward.address);
+        const claimedAfterClaimer = await gauge.claimed_reward(claimer.address, reward.target.toString());
         expect(claimedAfterClaimer).to.be.almostEqual(expectedReward);
       });
 
       it('keeps the same claimed balances for others', async () => {
-        const claimedAfterOther = await gauge.claimed_reward(other.address, reward.address);
+        const claimedAfterOther = await gauge.claimed_reward(other.address, reward.target.toString());
         expect(claimedAfterOther).to.be.eq(claimedBeforeOther);
       });
 
       it('updates claimable balance for claimer', async () => {
-        const claimableAfterClaimer = await gauge.claimable_reward(claimer.address, reward.address);
+        const claimableAfterClaimer = await gauge.claimable_reward(claimer.address, reward.target.toString());
         expect(claimableAfterClaimer).to.be.eq(0);
       });
 
       it('keeps the same claimable balances for others', async () => {
-        const claimableAfterOther = await gauge.claimable_reward(other.address, reward.address);
-        expect(claimableAfterOther).to.be.deep.eq(claimableBeforeOther);
+        const claimableAfterOther = await gauge.claimable_reward(other.address, reward.target.toString());
+        expect(claimableAfterOther).to.deep.equal(claimableBeforeOther);
       });
     }
 
@@ -411,20 +427,19 @@ describeForkTest.skip('ChildChainGaugeFactoryV2', 'arbitrum', 72486400, function
       distributor = whale;
       claimer = user1;
       other = user2;
-      await authorizer
-        .connect(govMultisig)
-        .grantRole(await actionId(authorizerAdaptor, 'add_reward', gauge.interface), admin.address);
+      await (authorizer.connect(govMultisig) as Contract).grantRole(
+        await actionId(authorizerAdaptor, 'add_reward', gauge.interface),
+        admin.address
+      );
 
-      authorizerAdaptor
-        .connect(admin)
-        .performAction(
-          gauge.address,
-          gauge.interface.encodeFunctionData('add_reward', [reward.address, distributor.address])
-        );
+      await (authorizerAdaptor.connect(admin) as Contract).performAction(
+        gauge.target.toString(),
+        gauge.interface.encodeFunctionData('add_reward', [reward.target.toString(), distributor.address])
+      );
 
-      await reward.connect(distributor).approve(gauge.address, rewardAmount);
-      await gauge.connect(distributor).deposit_reward_token(reward.address, rewardAmount);
-      await advanceToTimestamp((await currentTimestamp()).add(WEEK));
+      await (reward.connect(distributor) as Contract).approve(gauge.target.toString(), rewardAmount);
+      await (gauge.connect(distributor) as Contract).deposit_reward_token(reward.target.toString(), rewardAmount);
+      await advanceToTimestamp((await currentTimestamp()) + BigInt(WEEK));
     });
 
     itTransfersRewardsToClaimer();

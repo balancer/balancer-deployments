@@ -1,5 +1,5 @@
 import { keccak256, keccakFromString, bufferToHex } from 'ethereumjs-util';
-import { utils } from 'ethers';
+import { getBytes } from 'ethers';
 
 /* eslint-disable */
 
@@ -9,7 +9,7 @@ export class MerkleTree {
   layers: any[];
 
   constructor(elements: string[]) {
-    this.elements = elements.filter((el) => el).map((el) => Buffer.from(utils.arrayify(el)));
+    this.elements = elements.filter((el) => el).map((el) => Buffer.from(getBytes(el)));
 
     // Sort elements
     this.elements.sort(Buffer.compare);
@@ -88,7 +88,7 @@ export class MerkleTree {
 
   // external call - convert to buffer
   getHexProof(_el: any) {
-    const el = Buffer.from(utils.arrayify(_el));
+    const el = Buffer.from(getBytes(_el));
 
     const proof = this.getProof(el);
 

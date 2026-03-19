@@ -1,5 +1,5 @@
-import { defaultAbiCoder } from '@ethersproject/abi';
-import { BigNumberish } from '@ethersproject/bignumber';
+import { AbiCoder } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 export enum StablePoolJoinKind {
   INIT = 0,
@@ -27,7 +27,7 @@ export class StablePoolEncoder {
    * @param initialBalances - the amounts of tokens to send to the pool to form the initial balances
    */
   static joinInit = (amountsIn: BigNumberish[]): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256[]'], [StablePoolJoinKind.INIT, amountsIn]);
+    AbiCoder.defaultAbiCoder().encode(['uint256', 'uint256[]'], [StablePoolJoinKind.INIT, amountsIn]);
 
   /**
    * Encodes the userData parameter for joining a StablePool with exact token inputs
@@ -35,7 +35,7 @@ export class StablePoolEncoder {
    * @param minimumBPT - the minimum acceptable BPT to receive in return for deposited tokens
    */
   static joinExactTokensInForBPTOut = (amountsIn: BigNumberish[], minimumBPT: BigNumberish): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256[]', 'uint256'],
       [StablePoolJoinKind.EXACT_TOKENS_IN_FOR_BPT_OUT, amountsIn, minimumBPT]
     );
@@ -46,7 +46,7 @@ export class StablePoolEncoder {
    * @param enterTokenIndex - the index of the token to be provided as liquidity
    */
   static joinTokenInForExactBPTOut = (bptAmountOut: BigNumberish, enterTokenIndex: number): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256', 'uint256'],
       [StablePoolJoinKind.TOKEN_IN_FOR_EXACT_BPT_OUT, bptAmountOut, enterTokenIndex]
     );
@@ -56,7 +56,10 @@ export class StablePoolEncoder {
    * @param bptAmountOut - the amount of BPT to be minted
    */
   static joinAllTokensInForExactBptOut = (bptAmountOut: BigNumberish): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256'], [StablePoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT, bptAmountOut]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [StablePoolJoinKind.ALL_TOKENS_IN_FOR_EXACT_BPT_OUT, bptAmountOut]
+    );
 
   /**
    * Encodes the userData parameter for exiting a StablePool by removing a single token in return for an exact amount of BPT
@@ -64,7 +67,7 @@ export class StablePoolEncoder {
    * @param exitTokenIndex - the index of the token to removed from the pool
    */
   static exitExactBPTInForOneTokenOut = (bptAmountIn: BigNumberish, exitTokenIndex: number): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256', 'uint256'],
       [StablePoolExitKind.EXACT_BPT_IN_FOR_ONE_TOKEN_OUT, bptAmountIn, exitTokenIndex]
     );
@@ -75,7 +78,7 @@ export class StablePoolEncoder {
    * @param maxBPTAmountIn - the minimum acceptable BPT to burn in return for withdrawn tokens
    */
   static exitBPTInForExactTokensOut = (amountsOut: BigNumberish[], maxBPTAmountIn: BigNumberish): string =>
-    defaultAbiCoder.encode(
+    AbiCoder.defaultAbiCoder().encode(
       ['uint256', 'uint256[]', 'uint256'],
       [StablePoolExitKind.BPT_IN_FOR_EXACT_TOKENS_OUT, amountsOut, maxBPTAmountIn]
     );
@@ -85,5 +88,8 @@ export class StablePoolEncoder {
    * @param bptAmountIn - the amount of BPT to burn in exchange for withdrawn tokens
    */
   static exitExactBptInForTokensOut = (bptAmountIn: BigNumberish): string =>
-    defaultAbiCoder.encode(['uint256', 'uint256'], [StablePoolExitKind.EXACT_BPT_IN_FOR_ALL_TOKENS_OUT, bptAmountIn]);
+    AbiCoder.defaultAbiCoder().encode(
+      ['uint256', 'uint256'],
+      [StablePoolExitKind.EXACT_BPT_IN_FOR_ALL_TOKENS_OUT, bptAmountIn]
+    );
 }

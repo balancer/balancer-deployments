@@ -28,7 +28,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // GearboxLinearPools require a Gearbox (Diesel) Token
     // Using MockGearboxVault from 20230409-gearbox-linear-pool-v2
     const mockGearboxVault = await task.deployAndVerify('MockGearboxVault', [input.WETH], from, force);
-    const mockDieselTokenArgs = ['DO NOT USE - Mock Diesel Token', 'TEST', 18, mockGearboxVault.address];
+    const mockDieselTokenArgs = ['DO NOT USE - Mock Diesel Token', 'TEST', 18, mockGearboxVault.target];
     // Using MockGearboxDieselToken from 20230409-gearbox-linear-pool-v2
     const mockDieselToken = await task.deployAndVerify('MockGearboxDieselToken', mockDieselTokenArgs, from, force);
 
@@ -39,7 +39,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       name: 'DO NOT USE - Mock Linear Pool',
       symbol: 'TEST',
       mainToken: input.WETH,
-      wrappedToken: mockDieselToken.address,
+      wrappedToken: mockDieselToken.target,
       assetManager: undefined,
       upperTarget: 0,
       pauseWindowDuration: undefined,
@@ -85,7 +85,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     mockPoolArgs.assetManager = assetManagerAddress;
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
-    const txHash = await getContractDeploymentTransactionHash(mockPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
     const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
 
@@ -97,7 +97,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       .sub(mockPoolArgs.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('GearboxLinearPool', mockPool.address, [mockPoolArgs]);
+    await task.verify('GearboxLinearPool', mockPool.target, [mockPoolArgs]);
 
     // We can also verify the Asset Manager
     await task.verify('GearboxLinearPoolRebalancer', assetManagerAddress, [input.Vault, input.BalancerQueries]);

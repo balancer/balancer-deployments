@@ -4,7 +4,7 @@ import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskM
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { ERC4626CowSwapFeeBurnerDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { currentTimestamp } from '@helpers/time';
 
@@ -50,7 +50,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
 
   before('fund fee sweeper signer', async () => {
     // Only the fee sweeper can call `burn`, so we mock it as a signer with funds.
-    waUsdc.connect(waUsdcWhale).transfer(feeSweeperSigner.address, BURN_AMOUNT);
+    await (waUsdc.connect(waUsdcWhale) as Contract).transfer(feeSweeperSigner.address, BURN_AMOUNT);
     expect(await usdc.balanceOf(feeSweeperSigner.address)).to.equal(0);
   });
 
@@ -59,7 +59,7 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
   });
 
   it('can burn tokens', async () => {
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Nonexistent);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Nonexistent);
 
     const erc4626Interface = [
       'function previewRedeem(uint256 amount) external view returns (uint256)',
@@ -68,61 +68,61 @@ describeForkTest('ERC4626CowSwapFeeBurner', 'mainnet', 22427000, function () {
     const waUsdc4626 = await ethers.getContractAt(erc4626Interface, waUSDC_ADDRESS);
 
     const expectedUnderlyingAmount = bn(await waUsdc4626.previewRedeem(BURN_AMOUNT));
-    const minAmountOut = expectedUnderlyingAmount.sub(1);
+    const minAmountOut = expectedUnderlyingAmount - BigInt(1);
 
-    await waUsdc.connect(feeSweeperSigner).approve(cowSwapFeeBurner.address, BURN_AMOUNT);
+    await (waUsdc.connect(feeSweeperSigner) as Contract).approve(cowSwapFeeBurner.target.toString(), BURN_AMOUNT);
 
     const blockTimestamp = bn(await currentTimestamp());
 
     // Burn USDC --> DAI
-    await cowSwapFeeBurner
-      .connect(feeSweeperSigner)
-      .burn(
-        ZERO_ADDRESS,
-        waUsdc.address,
-        BURN_AMOUNT,
-        DAI_ADDRESS,
-        minAmountOut,
-        admin.address,
-        blockTimestamp.add(FIVE_MINUTES)
-      );
+    await (cowSwapFeeBurner.connect(feeSweeperSigner) as Contract).burn(
+      ZERO_ADDRESS,
+      waUsdc.target.toString(),
+      BURN_AMOUNT,
+      DAI_ADDRESS,
+      minAmountOut,
+      admin.address,
+      blockTimestamp + BigInt(FIVE_MINUTES)
+    );
 
     // Order is created for underlying asset
-    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.address);
+    const existingRawOrder = await cowSwapFeeBurner.getOrder(usdc.target.toString());
     const existingOrder = {
       sellToken: existingRawOrder.sellToken,
       buyToken: existingRawOrder.buyToken,
       receiver: existingRawOrder.receiver,
-      sellAmount: existingRawOrder.sellAmount.toNumber(),
-      buyAmount: existingRawOrder.buyAmount.toNumber(),
+      sellAmount: Number(existingRawOrder.sellAmount),
+      buyAmount: Number(existingRawOrder.buyAmount),
       validTo: existingRawOrder.validTo,
       appData: existingRawOrder.appData,
-      feeAmount: existingRawOrder.feeAmount.toNumber(),
+      feeAmount: Number(existingRawOrder.feeAmount),
       kind: existingRawOrder.kind,
       partiallyFillable: existingRawOrder.partiallyFillable,
     };
 
-    const usdcBalanceOfBurner = (await usdc.balanceOf(cowSwapFeeBurner.address)).toNumber();
+    const usdcBalanceOfBurner = Number(await usdc.balanceOf(cowSwapFeeBurner.target.toString()));
 
     const expectedOrder = {
-      sellToken: usdc.address,
+      sellToken: usdc.target.toString(),
       buyToken: DAI_ADDRESS,
       receiver: admin.address,
       sellAmount: usdcBalanceOfBurner,
-      buyAmount: minAmountOut.toNumber(),
-      validTo: blockTimestamp.add(FIVE_MINUTES).toNumber(),
+      buyAmount: Number(minAmountOut),
+      validTo: blockTimestamp + BigInt(FIVE_MINUTES),
       appData: input.AppDataHash,
       feeAmount: 0,
-      kind: ethers.utils.keccak256(ethers.utils.toUtf8Bytes('sell')),
+      kind: ethers.keccak256(ethers.toUtf8Bytes('sell')),
       partiallyFillable: true,
     };
 
     expect(existingOrder).to.deep.equal(expectedOrder);
-    expect(await cowSwapFeeBurner.getOrderStatus(usdc.address)).to.equal(OrderStatus.Active);
+    expect(await cowSwapFeeBurner.getOrderStatus(usdc.target.toString())).to.equal(OrderStatus.Active);
 
     // The order uses the current burner balance, which is slightly greater than `previewRedeem` because of rounding.
-    expect(usdcBalanceOfBurner).to.be.equalWithError(expectedUnderlyingAmount.toNumber(), 2);
-    expect(usdcBalanceOfBurner).to.be.greaterThanOrEqual(expectedUnderlyingAmount.toNumber());
-    expect(await usdc.allowance(cowSwapFeeBurner.address, input.CowVaultRelayer)).to.be.equal(usdcBalanceOfBurner);
+    expect(usdcBalanceOfBurner).to.be.equalWithError(Number(expectedUnderlyingAmount), 2);
+    expect(usdcBalanceOfBurner).to.be.greaterThanOrEqual(Number(expectedUnderlyingAmount));
+    expect(await usdc.allowance(cowSwapFeeBurner.target.toString(), input.CowVaultRelayer)).to.be.equal(
+      usdcBalanceOfBurner
+    );
   });
 });

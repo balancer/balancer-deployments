@@ -1,5 +1,5 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { expect } from 'chai';
 
 import { actionId } from '@helpers/models/misc/actions';
@@ -7,7 +7,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
 import { VeBoostV21Deployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { bn } from '@helpers/numbers';
 import { currentTimestamp, WEEK } from '@helpers/time';
 import { ZERO_ADDRESS } from '@helpers/constants';
@@ -19,7 +19,7 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
   let votingEscrow: Contract;
 
   let govMultisig: SignerWithAddress;
-  let currentTime: BigNumber;
+  let currentTime: bigint;
 
   let input: VeBoostV21Deployment;
   let task: Task;
@@ -53,18 +53,19 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     ).deployedInstance('Authorizer');
 
     govMultisig = await impersonate(GOV_MULTISIG);
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(delegationProxy, 'setDelegation'),
+      govMultisig.address
+    );
   });
 
   it('proxy can be migrated to delegation', async () => {
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(oldBoost.address);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(oldBoost.target.toString());
 
     await newBoost.migrate();
-    await delegationProxy.connect(govMultisig).setDelegation(newBoost.address);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(newBoost.target.toString());
 
-    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(newBoost.address);
+    expect(await delegationProxy.getDelegationImplementation()).to.be.eq(newBoost.target.toString());
   });
 
   it('adjusted balances should be unchanged after migration', async () => {
@@ -77,7 +78,7 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
       const oldBalance = await oldBoost.adjusted_balance_of(address);
       const newBalance = await newBoost.adjusted_balance_of(address);
 
-      expect(newBalance).to.eq(oldBalance);
+      expect(newBalance).to.equal(oldBalance);
     }
   });
 
@@ -85,7 +86,7 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     const oldSupply = await oldBoost.totalSupply();
     const newSupply = await newBoost.totalSupply();
 
-    expect(newSupply).to.eq(oldSupply);
+    expect(newSupply).to.equal(oldSupply);
   });
 
   it('should allow creating boosts from Tetu operator', async () => {
@@ -99,10 +100,10 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
 
     const operatorBalanceBefore = await newBoost.adjusted_balance_of(currentOperator.address);
-    expect(operatorBalanceBefore).to.eq(0);
+    expect(operatorBalanceBefore).to.equal(0);
 
     // Calls _boost(from: delegator, to: operator, amount: 1, end_time: endTime)
-    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
+    const boostMethod = (newBoost.connect(currentOperator) as Contract)['boost(address,uint256,uint256,address)'];
     await boostMethod(currentOperator.address, amount, endTime, delegator);
 
     const operatorBalanceAfter = await newBoost.adjusted_balance_of(currentOperator.address);
@@ -120,10 +121,10 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
     await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
 
     const operatorBalanceBefore = await newBoost.adjusted_balance_of(currentOperator.address);
-    expect(operatorBalanceBefore).to.eq(0);
+    expect(operatorBalanceBefore).to.equal(0);
 
     // Should not revert.
-    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
+    const boostMethod = (newBoost.connect(currentOperator) as Contract)['boost(address,uint256,uint256,address)'];
     await boostMethod(currentOperator.address, amount, endTime, delegator);
 
     const operatorBalanceAfter = await newBoost.adjusted_balance_of(currentOperator.address);
@@ -141,40 +142,40 @@ describeForkTest.skip('VeBoostV2', 'mainnet', 22668480, function () {
 
     await validateBoostAssumptions(currentOperator.address, delegator, amount, endTime);
 
-    const boostMethod = newBoost.connect(currentOperator)['boost(address,uint256,uint256,address)'];
+    const boostMethod = (newBoost.connect(currentOperator) as Contract)['boost(address,uint256,uint256,address)'];
 
     // Should revert.
     await expect(boostMethod(currentOperator.address, amount, endTime, delegator)).to.be.reverted;
   });
 
-  async function computeValidEndTime(delegator: string): Promise<BigNumber> {
+  async function computeValidEndTime(delegator: string): Promise<bigint> {
     const endOfLockPeriod = await votingEscrow.locked__end(delegator);
     expect(endOfLockPeriod).to.be.gt(currentTime);
 
     // Has to be on a week boundary in the future, but earlier than the end of the lock.
-    return endOfLockPeriod.sub(bn(WEEK));
+    return endOfLockPeriod - bn(WEEK);
   }
 
   async function validateBoostAssumptions(
     operator: string,
     delegator: string,
-    amount: BigNumber,
-    endTime: BigNumber
+    amount: bigint,
+    endTime: bigint
   ): Promise<void> {
     // Validate boost assumptions
-    expect(operator).to.not.eq(ZERO_ADDRESS);
-    expect(operator).to.not.eq(delegator);
+    expect(operator).to.not.equal(ZERO_ADDRESS);
+    expect(operator).to.not.equal(delegator);
     expect(amount).to.be.gt(0);
     expect(endTime).to.be.gt(currentTime);
-    expect(endTime.toNumber() % WEEK).to.eq(0);
+    expect(Number(endTime) % WEEK).to.equal(0);
 
     const veLockedEnd = await votingEscrow.locked__end(delegator);
     expect(endTime).to.be.lte(veLockedEnd);
   }
 
-  async function computeValidAmount(delegator: string): Promise<BigNumber> {
+  async function computeValidAmount(delegator: string): Promise<bigint> {
     const balance = await votingEscrow['balanceOf(address)'](delegator);
 
-    return balance.div(2);
+    return balance / BigInt(2);
   }
 });

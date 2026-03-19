@@ -19,6 +19,6 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   // ChildChainGauge is written in Vyper, so we only deploy.
   const gaugeImplementation = await task.deploy('ChildChainGauge', gaugeArgs, from, force);
 
-  const factoryArgs = [gaugeImplementation.address, input.FactoryVersion, input.ProductVersion];
+  const factoryArgs = [gaugeImplementation.target, input.FactoryVersion, input.ProductVersion];
   await task.deployAndVerify('ChildChainGaugeFactory', factoryArgs, from, force);
 };

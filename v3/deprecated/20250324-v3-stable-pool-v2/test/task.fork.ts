@@ -6,7 +6,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { bn, fp } from '@helpers/numbers';
 import { StablePoolDeployment } from '../input';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { currentTimestamp, DAY } from '@helpers/time';
 
 describeForkTest.skip('V3-StablePool-V2', 'mainnet', 22069200, function () {
@@ -109,7 +109,7 @@ describeForkTest.skip('V3-StablePool-V2', 'mainnet', 22069200, function () {
   });
 
   it('swap fee manager can set amp factor above 5k', async () => {
-    const endTime = (await currentTimestamp()).add(4 * DAY);
+    const endTime = (await currentTimestamp()) + 4 * DAY;
 
     await pool.connect(admin).startAmplificationParameterUpdate(LARGE_AMP, endTime);
 

@@ -1,5 +1,5 @@
 import hre from 'hardhat';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { expect } from 'chai';
 
 import * as expectEvent from '@helpers/expectEvent';
@@ -8,7 +8,7 @@ import { ZERO_ADDRESS } from '@helpers/constants';
 import { range } from 'lodash';
 import { actionId } from '@helpers/models/misc/actions';
 import { fromNow, MONTH } from '@helpers/time';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
@@ -47,11 +47,12 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     ).deployedInstance('Authorizer');
 
     const govMultisig = await impersonate(GOV_MULTISIG);
-    await authorizer
-      .connect(govMultisig)
-      .grantRole(await actionId(delegationProxy, 'setDelegation'), govMultisig.address);
+    await (authorizer.connect(govMultisig) as Contract).grantRole(
+      await actionId(delegationProxy, 'setDelegation'),
+      govMultisig.address
+    );
 
-    await delegationProxy.connect(govMultisig).setDelegation(delegation.address);
+    await (delegationProxy.connect(govMultisig) as Contract).setDelegation(delegation.target.toString());
   });
 
   it('preseeds boosts and approvals', async () => {
@@ -88,7 +89,7 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
 
       // Any cancelled boosts will still show up in the token enumeration (as the token is not burned), but will have a
       // zero expiration time. We simply skip those, since cancelled boosts are not recreated in the preseeded contract.
-      if (((await oldDelegation.token_expiry(id)) as BigNumber).isZero()) {
+      if ((await oldDelegation.token_expiry(id)) === 0n) {
         cancelledTokens += 1;
         continue;
       }
@@ -102,7 +103,7 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
       // preseeded delegation using that extra veBAL in the new boost.
     }
 
-    expect(await delegation.totalSupply()).to.equal(oldTotalSupply.sub(cancelledTokens));
+    expect(await delegation.totalSupply()).to.equal(oldTotalSupply - cancelledTokens);
   });
 
   it('the Tribe operator can create boosts for the DAO', async () => {
@@ -113,7 +114,14 @@ describeForkTest.skip('PreseededVotingEscrowDelegation', 'mainnet', 14850000, fu
     const operator = await impersonate(TRIBE_OPERATOR);
 
     const receipt = await (
-      await delegation.connect(operator).create_boost(TRIBE_DAO, receiver.address, 1000, 0, await fromNow(MONTH), 0)
+      await (delegation.connect(operator) as Contract).create_boost(
+        TRIBE_DAO,
+        receiver.address,
+        1000,
+        0,
+        await fromNow(MONTH),
+        0
+      )
     ).wait();
 
     expectEvent.inReceipt(receipt, 'DelegateBoost', {

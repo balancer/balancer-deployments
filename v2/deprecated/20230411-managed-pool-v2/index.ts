@@ -11,7 +11,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
 
   const addRemoveTokenLib = await task.deployAndVerify('ManagedPoolAddRemoveTokenLib', [], from, force);
   const circuitBreakerLib = await task.deployAndVerify('CircuitBreakerLib', [], from, force);
-  const libs = { CircuitBreakerLib: circuitBreakerLib.address };
+  const libs = { CircuitBreakerLib: circuitBreakerLib.target };
   const ammLib = await task.deployAndVerify('ManagedPoolAmmLib', [], from, force, libs);
   const math = await task.deployAndVerify('ExternalWeightedMath', [], from, force);
   const recoveryModeHelper = await task.deployAndVerify('RecoveryModeHelper', [input.Vault], from, force);
@@ -19,8 +19,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   const args = [
     input.Vault,
     input.ProtocolFeePercentagesProvider,
-    math.address,
-    recoveryModeHelper.address,
+    math.target,
+    recoveryModeHelper.target,
     input.FactoryVersion,
     input.PoolVersion,
     input.InitialPauseWindowDuration,
@@ -28,9 +28,9 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
   ];
 
   const factory = await task.deployAndVerify('ManagedPoolFactory', args, from, force, {
-    CircuitBreakerLib: circuitBreakerLib.address,
-    ManagedPoolAddRemoveTokenLib: addRemoveTokenLib.address,
-    ManagedPoolAmmLib: ammLib.address,
+    CircuitBreakerLib: circuitBreakerLib.target,
+    ManagedPoolAddRemoveTokenLib: addRemoveTokenLib.target,
+    ManagedPoolAmmLib: ammLib.target,
   });
 
   if (task.mode === TaskMode.LIVE) {
@@ -92,7 +92,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
     // provided arguments (pause durations).
 
     // The durations require knowing when the Pool was created, so we look for the timestamp of its creation block.
-    const txHash = await getContractDeploymentTransactionHash(mockPool.address, task.network);
+    const txHash = await getContractDeploymentTransactionHash(mockPool.target, task.network);
     const tx = await ethers.provider.getTransactionReceipt(txHash);
     const poolCreationBlock = await ethers.provider.getBlock(tx.blockNumber);
 
@@ -104,7 +104,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       .sub(mockPoolArgs.config.pauseWindowDuration);
 
     // We are now ready to verify the Pool
-    await task.verify('ManagedPool', mockPool.address, [
+    await task.verify('ManagedPool', mockPool.target, [
       mockPoolArgs.params,
       mockPoolArgs.config,
       mockPoolArgs.settings,

@@ -1,8 +1,8 @@
 import hre from 'hardhat';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { BigNumberish } from '@helpers/numbers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigner } from '@src';
 import { MAX_UINT256 } from '@helpers/constants';
 
@@ -18,8 +18,8 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
 
   let usdcToken: Contract, eToken: Contract;
   let sender: SignerWithAddress, recipient: SignerWithAddress;
-  let chainedReference: BigNumber;
-  let chainedReferenceOut: BigNumber;
+  let chainedReference: bigint;
+  let chainedReferenceOut: bigint;
 
   const amountToWrap = 50000e6; //50k USDC
 
@@ -69,7 +69,7 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
     expect(balanceOfeUSDClBefore).to.be.equal(0);
 
     // Approving vault to pull tokens from user.
-    await usdcToken.connect(sender).approve(vault.address, amountToWrap);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap);
 
     chainedReference = toChainedReference(30);
     const depositIntoEuler = library.interface.encodeFunctionData('wrapEuler', [
@@ -90,7 +90,7 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
     // @return eToken balance, in internal book-keeping units (18 decimals)
     const expectedbalanceOfeUSDCAfter = await eToken.convertUnderlyingToBalance(amountToWrap);
 
-    expect(balanceOfUSDCBefore.sub(balanceOfUSDCAfter)).to.be.equal(amountToWrap);
+    expect(balanceOfUSDCBefore - balanceOfUSDCAfter).to.be.equal(amountToWrap);
     expect(balanceOfeUSDCAfter).to.be.equal(expectedbalanceOfeUSDCAfter);
   });
 
@@ -110,7 +110,7 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
       0,
     ]);
 
-    await eToken.connect(recipient).approve(vault.address, MAX_UINT256);
+    await eToken.connect(recipient).approve(vault.target.toString(), MAX_UINT256);
 
     await relayer.connect(recipient).multicall([withdrawFromEuler]);
 
@@ -118,14 +118,14 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
     const balanceOfeUSDCAfter = await eToken.balanceOf(recipient.address);
 
     expect(balanceOfeUSDCAfter).to.be.equal(0);
-    expect(balanceOfUSDCAfter.sub(balanceOfUSDCBefore)).to.be.almostEqual(amountToWrap, 0.01);
+    expect(balanceOfUSDCAfter - balanceOfUSDCBefore).to.be.almostEqual(amountToWrap, 0.01);
   });
 
   it('should wrap and unwrap successfully', async () => {
     chainedReference = toChainedReference(30);
     chainedReferenceOut = toChainedReference(80);
-    await usdcToken.connect(sender).approve(vault.address, amountToWrap * 2);
-    await eToken.connect(sender).approve(vault.address, MAX_UINT256);
+    await usdcToken.connect(sender).approve(vault.target.toString(), amountToWrap * 2);
+    await eToken.connect(sender).approve(vault.target.toString(), MAX_UINT256);
 
     const depositIntoEuler_1 = library.interface.encodeFunctionData('wrapEuler', [
       eUSDC,
@@ -157,10 +157,10 @@ describeForkTest.skip('EulerWrapping', 'mainnet', 16636628, function () {
   });
 });
 
-function toChainedReference(key: BigNumberish): BigNumber {
+function toChainedReference(key: BigNumberish): bigint {
   const CHAINED_REFERENCE_PREFIX = 'ba10';
   // The full padded prefix is 66 characters long, with 64 hex characters and the 0x prefix.
   const paddedPrefix = `0x${CHAINED_REFERENCE_PREFIX}${'0'.repeat(64 - CHAINED_REFERENCE_PREFIX.length)}`;
 
-  return BigNumber.from(paddedPrefix).add(key);
+  return BigInt(paddedPrefix) + key;
 }
