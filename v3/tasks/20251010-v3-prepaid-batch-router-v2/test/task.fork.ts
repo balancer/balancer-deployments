@@ -1,9 +1,9 @@
 import hre, { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { describeForkTest, getForkedNetwork, getSigner, impersonate, Task, TaskMode } from '@src';
-import { BigNumber, Contract } from 'ethers';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { bn, fp } from '@helpers/numbers';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import { fp } from '@helpers/numbers';
 import { ZERO_ADDRESS } from '@helpers/constants';
 import { currentTimestamp, DAY } from '@helpers/time';
 
@@ -42,7 +42,7 @@ describeForkTest('V3-PrepaidBatchRouter-V2', 'mainnet', 23534632, function () {
     rsEthWhale = await impersonate(RSETH_WHALE, fp(10));
     zero = await impersonate(ZERO_ADDRESS, fp(10));
 
-    wethSigner = await impersonate(WETH.address, fp(10e8));
+    wethSigner = await impersonate(WETH.target.toString(), fp(10e8));
     alice = await getSigner();
   });
 
@@ -72,46 +72,48 @@ describeForkTest('V3-PrepaidBatchRouter-V2', 'mainnet', 23534632, function () {
     const pathsExactIn = [
       {
         tokenIn: RSETH_ADDRESS,
-        steps: [{ pool: pool.address, tokenOut: HGETH_ADDRESS, isBuffer: false }],
+        steps: [{ pool: pool.target.toString(), tokenOut: HGETH_ADDRESS, isBuffer: false }],
         exactAmountIn: rplAmountIn,
         minAmountOut: rplAmountIn,
       },
     ];
 
-    const queryResult = await prepaidBatchRouter
-      .connect(zero)
-      .callStatic.querySwapExactIn(pathsExactIn, rsEthWhale.address, '0x');
+    const queryResult = await (prepaidBatchRouter.connect(zero) as Contract).querySwapExactIn.staticCall(
+      pathsExactIn,
+      rsEthWhale.address,
+      '0x'
+    );
 
     expect(queryResult.tokensOut[0]).to.eq(HGETH_ADDRESS);
     expect(queryResult.pathAmountsOut[0]).to.eq(queryResult.amountsOut[0]);
 
     const expectedAmountOut = queryResult.amountsOut[0];
-    const hgEthBalanceBefore: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
+    const hgEthBalanceBefore: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
     // Pay token in upfront and swap.
-    await rsETH.connect(rsEthWhale).transfer(vault.address, rplAmountIn);
-    const deadline = (await currentTimestamp()).add(bn(DAY));
+    await (rsETH.connect(rsEthWhale) as Contract).transfer(vault.target.toString(), rplAmountIn);
+    const deadline = (await currentTimestamp()) + BigInt(DAY);
 
     // Set actual expected amount out.
     pathsExactIn[0].minAmountOut = expectedAmountOut;
 
-    await prepaidBatchRouter.connect(rsEthWhale).swapExactIn(pathsExactIn, deadline, false, '0x');
+    await (prepaidBatchRouter.connect(rsEthWhale) as Contract).swapExactIn(pathsExactIn, deadline, false, '0x');
 
-    const hgEthBalanceAfter: BigNumber = await hgETH.balanceOf(rsEthWhale.address);
+    const hgEthBalanceAfter: bigint = await hgETH.balanceOf(rsEthWhale.address);
 
-    expect(hgEthBalanceAfter).to.be.eq(hgEthBalanceBefore.add(expectedAmountOut));
+    expect(hgEthBalanceAfter).to.be.eq(hgEthBalanceBefore + expectedAmountOut);
   });
 
   it('checks batch router WETH', async () => {
     const wethTx = wethSigner.sendTransaction({
-      to: prepaidBatchRouter.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: prepaidBatchRouter.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(wethTx).to.not.be.reverted;
 
     const aliceTx = alice.sendTransaction({
-      to: prepaidBatchRouter.address,
-      value: ethers.utils.parseEther('1.0'),
+      to: prepaidBatchRouter.target.toString(),
+      value: ethers.parseEther('1.0'),
     });
     await expect(aliceTx).to.be.reverted;
   });
@@ -124,7 +126,7 @@ describeForkTest('V3-PrepaidBatchRouter-V2', 'mainnet', 23534632, function () {
     ]);
 
     try {
-      await prepaidBatchRouter.connect(rsEthWhale).multicall([dummyCalldata]);
+      await (prepaidBatchRouter.connect(rsEthWhale) as Contract).multicall([dummyCalldata]);
       expect.fail('Expected transaction to revert');
     } catch (error: unknown) {
       // OperationNotSupported() selector is 0x29a270f5.
