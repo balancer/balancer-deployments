@@ -28,7 +28,7 @@ type ManagedPoolParams = {
   aumFeeId: BigNumberish;
 };
 
-describeForkTest.skip('ManagedPoolFactory', 'mainnet', 15634000, function () {
+describeForkTest.only('ManagedPoolFactory', 'mainnet', 15634000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress, govMultisig: SignerWithAddress;
   let factory: Contract,
     vault: Contract,

@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 import { WeightedPoolEncoder } from '@helpers/models/pools/weighted/encoder';
 
-describeForkTest.skip('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
+describeForkTest.only('FraxtalRootGaugeFactory', 'mainnet', 19928000, function () {
   let veBALHolder: SignerWithAddress,
     admin: SignerWithAddress,
     recipient: SignerWithAddress,

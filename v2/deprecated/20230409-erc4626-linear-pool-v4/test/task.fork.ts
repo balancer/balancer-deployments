@@ -18,7 +18,7 @@ export enum SwapKind {
   GivenOut,
 }
 
-describeForkTest.skip('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
+describeForkTest.only('ERC4626LinearPoolFactory', 'mainnet', 16550500, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let govMultisig: SignerWithAddress;
   let vault: Contract, authorizer: Contract, mainToken: Contract;

@@ -12,7 +12,7 @@ import { SwapKind } from '@helpers/models/types/types';
 
 import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSigners } from '@src';
 
-describeForkTest.skip('AaveLinearPoolFactory V5', 'mainnet', 16592300, function () {
+describeForkTest.only('AaveLinearPoolFactory V5', 'mainnet', 16592300, function () {
   let owner: SignerWithAddress, holder: SignerWithAddress, other: SignerWithAddress;
   let factory: Contract, vault: Contract, usdt: Contract;
   let rebalancer: Contract;

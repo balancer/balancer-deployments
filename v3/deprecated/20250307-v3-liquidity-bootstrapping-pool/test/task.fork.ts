@@ -8,7 +8,7 @@ import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
 import { fp, maxUint } from '@helpers/numbers';
 import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
 
-describeForkTest.skip('LBPool-V3', 'mainnet', 21970456, function () {
+describeForkTest.only('LBPool-V3', 'mainnet', 21970456, function () {
   const TASK_NAME = '20250307-v3-liquidity-bootstrapping-pool';
   const POOL_CONTRACT_NAME = 'LBPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';

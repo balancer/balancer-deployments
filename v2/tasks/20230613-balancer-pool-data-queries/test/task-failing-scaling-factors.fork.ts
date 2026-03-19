@@ -30,7 +30,7 @@ const defaultPoolDataQueryConfig = {
   ratePoolIdxs: [],
 };
 
-describeForkTest.skip('BalancerPoolDataQueries', 'mainnet', 17238447, function () {
+describeForkTest.only('BalancerPoolDataQueries', 'mainnet', 17238447, function () {
   let balancerPoolDataQueries: Contract;
 
   before('deploy balancer pool data queries', async () => {

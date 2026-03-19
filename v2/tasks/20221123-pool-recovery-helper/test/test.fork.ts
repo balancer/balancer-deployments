@@ -10,7 +10,7 @@ import { describeForkTest, impersonate, getForkedNetwork, Task, TaskMode, getSig
 import { setCode } from '@nomicfoundation/hardhat-network-helpers';
 import { Interface } from 'ethers';
 
-describeForkTest.skip('PoolRecoveryHelper', 'mainnet', 15998800, function () {
+describeForkTest.only('PoolRecoveryHelper', 'mainnet', 15998800, function () {
   let task: Task;
 
   let helper: Contract;

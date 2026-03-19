@@ -16,7 +16,7 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet', 14850000, function () {
+describeForkTest.only('NoProtocolFeeLiquidityBootstrappingPoolFactory', 'mainnet', 14850000, function () {
   let owner: SignerWithAddress, whale: SignerWithAddress;
   let pool: Contract, factory: Contract, vault: Contract, usdc: Contract, dai: Contract;
 

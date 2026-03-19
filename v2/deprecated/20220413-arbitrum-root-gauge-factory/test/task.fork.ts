@@ -14,7 +14,7 @@ import { expectTransferEvent } from '@helpers/expectTransfer';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function () {
+describeForkTest.only('ArbitrumRootGaugeFactory', 'mainnet', 14600000, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, recipient: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,
