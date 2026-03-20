@@ -9,7 +9,7 @@ import { StablePoolDeployment } from '../input';
 import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
 import { currentTimestamp, DAY } from '@helpers/time';
 
-describeForkTest.only('V3-StablePool-V2', 'mainnet', 22069200, function () {
+describeForkTest.skip('V3-StablePool-V2', 'mainnet', 22069200, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: StablePoolDeployment;

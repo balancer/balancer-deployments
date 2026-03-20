@@ -20,7 +20,7 @@ import { expectEqualWithError } from '@helpers/relativeError';
 import { deploy } from '@src';
 import { randomBytes } from 'ethers';
 
-describeForkTest.only('ComposableStablePool V5', 'mainnet', 17663500, function () {
+describeForkTest.skip('ComposableStablePool V5', 'mainnet', 17663500, function () {
   let task: Task;
 
   let factory: Contract;

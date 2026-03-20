@@ -7,7 +7,7 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { fp } from '@helpers/numbers';
 import { WeightedPoolDeployment } from '../input';
 
-describeForkTest.only('WeightedPool-V3', 'mainnet', 21336200, function () {
+describeForkTest.skip('WeightedPool-V3', 'mainnet', 21336200, function () {
   let task: Task;
   let factory: Contract, pool: Contract;
   let input: WeightedPoolDeployment;

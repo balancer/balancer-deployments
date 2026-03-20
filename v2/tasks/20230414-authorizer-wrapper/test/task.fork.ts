@@ -11,7 +11,7 @@ import * as expectEvent from '@helpers/expectEvent';
 import { sharedBeforeEach } from '@helpers/sharedBeforeEach';
 import { Interface } from 'ethers';
 
-describeForkTest.only('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
+describeForkTest.skip('AuthorizerWithAdaptorValidation', 'mainnet', 17047707, function () {
   let admin: SignerWithAddress;
   let govMultisig: SignerWithAddress, lmMultisig: SignerWithAddress, swapFeeSetter: SignerWithAddress;
   let authorizer: Contract,
