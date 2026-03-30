@@ -845,19 +845,6 @@
     "path": "./v3/tasks/20250503-v3-protocol-fee-sweeper-v2"
   },
   {
-    "description": "V3 Aggregator Batch Router",
-    "task_id": "20250507-v3-aggregator-batch-router",
-    "date": "2025-05-07",
-    "date_raw": "20250507",
-    "slug": "v3-aggregator-batch-router",
-    "family": "v3-aggregator-batch-router",
-    "family_source": "derived",
-    "version": "v1",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250507-v3-aggregator-batch-router"
-  },
-  {
     "description": "V2 VeBoost V2.1",
     "task_id": "20250613-veboost-v2.1",
     "date": "2025-06-13",
@@ -1001,30 +988,17 @@
     "path": "./v3/tasks/20250925-v3-timelock-authorizer"
   },
   {
-    "description": "V3 Unbalanced Add via Swap Router",
-    "task_id": "20251010-v3-unbalanced-add-via-swap-router",
+    "description": "V3 Prepaid Batch Router (V2)",
+    "task_id": "20251010-v3-prepaid-batch-router-v2",
     "date": "2025-10-10",
     "date_raw": "20251010",
-    "slug": "v3-unbalanced-add-via-swap-router",
-    "family": "v3-unbalanced-add-via-swap-router",
+    "slug": "v3-prepaid-batch-router-v2",
+    "family": "v3-prepaid-batch-router",
     "family_source": "derived",
-    "version": "v1",
+    "version": "v2",
     "ecosystem": "v3",
     "status": "active",
-    "path": "./v3/tasks/20251010-v3-unbalanced-add-via-swap-router"
-  },
-  {
-    "description": "V3 Prepaid Composite Liquidity Router (V3)",
-    "task_id": "20251010-v3-prepaid-composite-liquidity-router",
-    "date": "2025-10-10",
-    "date_raw": "20251010",
-    "slug": "v3-prepaid-composite-liquidity-router",
-    "family": "v3-prepaid-composite-liquidity-router",
-    "family_source": "derived",
-    "version": "v1",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20251010-v3-prepaid-composite-liquidity-router-v3"
+    "path": "./v3/tasks/20251010-v3-prepaid-batch-router-v2"
   },
   {
     "description": "Vault v2.1 (patched for new L2s)",
@@ -2234,6 +2208,32 @@
     "ecosystem": "v3",
     "status": "deprecated",
     "path": "./v3/deprecated/20250430-v3-pool-swap-fee-helper"
+  },
+  {
+    "description": "V3 Liquidity Bootstrapping Pool (V2)",
+    "task_id": "20250701-v3-liquidity-bootstrapping-pool-v2",
+    "date": "2025-07-01",
+    "date_raw": "20250701",
+    "slug": "v3-liquidity-bootstrapping-pool-v2",
+    "family": "v3-liquidity-bootstrapping-pool",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2"
+  },
+  {
+    "description": "V3 Aggregator Batch Router",
+    "task_id": "20250507-v3-aggregator-batch-router",
+    "date": "2025-05-07",
+    "date_raw": "20250507",
+    "slug": "v3-aggregator-batch-router",
+    "family": "v3-aggregator-batch-router",
+    "family_source": "derived",
+    "version": "v1",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250507-v3-aggregator-batch-router"
   },
   {
     "description": "V3 ERC4626 Cow Swap Fee Burner",
