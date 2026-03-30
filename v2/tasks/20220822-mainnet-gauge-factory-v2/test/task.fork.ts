@@ -15,16 +15,18 @@ import { actionId } from '@helpers/models/misc/actions';
 
 import { describeForkTest, getSigner, impersonate, getForkedNetwork, Task, TaskMode } from '@src';
 
-describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function () {
+describeForkTest.only('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function () {
   let veBALHolder: SignerWithAddress, admin: SignerWithAddress, lpTokenHolder: SignerWithAddress;
   let factory: Contract, gauge: Contract;
   let vault: Contract,
     authorizer: Contract,
+    authorizerAdaptor: Contract,
     BALTokenAdmin: Contract,
     gaugeController: Contract,
     gaugeAdder: Contract,
     lpToken: Contract,
-    balancerMinter: Contract;
+    balancerMinter: Contract,
+    bal: Contract;
 
   let BAL: string;
 
@@ -73,6 +75,7 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     );
 
     BAL = await BALTokenAdmin.getBalancerToken();
+    bal = await vaultTask.instanceAt('IERC20', BAL);
 
     const gaugeControllerTask = new Task('20220325-gauge-controller', TaskMode.READ_ONLY, getForkedNetwork(hre));
     gaugeController = await gaugeControllerTask.instanceAt(
@@ -88,6 +91,9 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     // We use test balancer token to make use of the ERC-20 interface.
     const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
     lpToken = await testBALTokenTask.instanceAt('TestBalancerToken', LP_TOKEN);
+
+    const authorizerAdaptorTask = new Task('20220325-authorizer-adaptor', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    authorizerAdaptor = await authorizerAdaptorTask.deployedInstance('AuthorizerAdaptor');
   });
 
   it('create gauge', async () => {
@@ -110,6 +116,16 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
         async (method) =>
           await (authorizer.connect(govMultisig) as Contract).grantRole(
             await actionId(gaugeAdder, method),
+            admin.address
+          )
+      )
+    );
+
+    await Promise.all(
+      ['change_type_weight(int128,uint256)'].map(
+        async (method) =>
+          await (authorizer.connect(govMultisig) as Contract).grantRole(
+            await authorizerAdaptor.getActionId(gaugeController.interface.getFunction(method)!.selector),
             admin.address
           )
       )
@@ -223,5 +239,68 @@ describeForkTest.skip('LiquidityGaugeFactoryV2', 'mainnet', 15397200, function (
     // the gauge.
     const actualEmissions = event.args.value;
     expectEqualWithError(actualEmissions, expectedGaugeEmissions, 0.001);
+  });
+
+  it('change type weight', async () => {
+    const gaugeWeight = await gauge.getCappedRelativeWeight(await currentTimestamp());
+    expect(gaugeWeight).to.be.gt(0);
+
+    await (authorizerAdaptor.connect(admin) as Contract).performAction(
+      gaugeController.target.toString(),
+      gaugeController.interface.encodeFunctionData('change_type_weight', [2, fp(0)])
+    );
+  });
+
+  it('mint tokens (2 - earned before sunset)', async () => {
+    // For simplicty, we're going to move to the end of the week so that we mint a full week's worth of tokens.
+    const firstMintWeekTimestamp = await currentWeekTimestamp();
+    await advanceToTimestamp(firstMintWeekTimestamp + bn(WEEK));
+
+    // Gauge weight is now 0, but we can still claim what was already earned
+    const gaugeWeightAfter = await gauge.getCappedRelativeWeight(await currentTimestamp());
+    expect(gaugeWeightAfter).to.be.eq(0);
+
+    const balanceBefore = await bal.balanceOf(lpTokenHolder.address);
+
+    const tx = await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target.toString());
+    const event = expectTransferEvent(
+      await tx.wait(),
+      {
+        from: ZERO_ADDRESS,
+        to: lpTokenHolder.address,
+      },
+      BAL
+    );
+
+    // The amount of tokens minted should equal the weekly emissions rate times the relative weight of the gauge.
+    const weeklyRate = (await BALTokenAdmin.getInflationRate()) * bn(WEEK);
+
+    // Note that we use the cap instead of the weight, since we're testing a scenario in which the weight is larger than
+    // the cap.
+    const expectedGaugeEmissions = (weeklyRate * weightCap) / fp(1);
+
+    // Since the LP token holder is the only account staking in the gauge, they'll receive the full amount destined to
+    // the gauge.
+    const actualEmissions = event.args.value;
+    expectEqualWithError(actualEmissions, expectedGaugeEmissions, 0.001);
+
+    const balanceAfter = await bal.balanceOf(lpTokenHolder.address);
+    expect(balanceAfter).to.be.eq(balanceBefore + actualEmissions);
+  });
+
+  it('mint tokens (3 - no emissions)', async () => {
+    // For simplicty, we're going to move to the end of the week so that we mint a full week's worth of tokens.
+    const firstMintWeekTimestamp = await currentWeekTimestamp();
+    await advanceToTimestamp(firstMintWeekTimestamp + bn(WEEK));
+
+    const balanceBefore = await bal.balanceOf(lpTokenHolder.address);
+
+    expect(await (balancerMinter.connect(lpTokenHolder) as Contract).mint(gauge.target.toString())).to.not.be.reverted;
+
+    const balanceAfter = await bal.balanceOf(lpTokenHolder.address);
+    expect(balanceAfter).to.be.eq(balanceBefore);
+
+    const gaugeWeight = await gauge.getCappedRelativeWeight(await currentTimestamp());
+    expect(gaugeWeight).to.be.eq(0);
   });
 });
