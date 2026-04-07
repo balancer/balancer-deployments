@@ -7,9 +7,9 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest('V3-ReClammPool (V2)', 'mainnet', 22827600, function () {
-  const TASK_NAME = '20250702-v3-reclamm-pool-v2';
-  const VERSION_NUM = 2;
+describeForkTest('V3-ReClammPool (V2.1)', 'mainnet', 24829700, function () {
+  const TASK_NAME = '20260407-v3-reclamm-pool-v2.1 (RC0)';
+  const VERSION_NUM = 3;
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 

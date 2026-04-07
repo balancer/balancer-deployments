@@ -134,7 +134,6 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Protocol Fee Sweeper (V2)                           | [`20250503-v3-protocol-fee-sweeper-v2`](./v3/tasks/20250503-v3-protocol-fee-sweeper-v2)                 |
 | V3 Aggregator Batch Router                             | [`20250507-v3-aggregator-batch-router`](./v3/tasks/20250507-v3-aggregator-batch-router)                 |
 | V2 VeBoost V2.1                                        | [`20250613-veboost-v2.1`](./v2/tasks/20250613-veboost-v2.1)                                             |
-| V3 ReClamm Pool (V2)                                   | [`20250702-v3-reclamm-pool-v2`](./v3/tasks/20250702-v3-reclamm-pool-v2)                                 |
 | V3 Token Pair Registry                                 | [`20250806-v3-token-pair-registry`](./v3/tasks/20250806-v3-token-pair-registry)                         |
 | V3 Chainlink Constant Price Feed                       | [`20250813-v3-constant-price-feed`](./v3/tasks/20250813-v3-constant-price-feed)                         |
 | V3 HyperEVM Rate Provider                              | [`20250828-v3-hyperevm-rate-provider`](./v3/tasks/20250828-v3-hyperevm-rate-provider)                   |
@@ -157,7 +156,8 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Gyro E-CLP (V2)                                     | [`20260126-v3-gyro-eclp-v2`](./v3/tasks/20260126-v3-gyro-eclp-v2)                                       |
 | V3 Weighted LP Oracle (V2)                             | [`20260202-v3-weighted-pool-oracle-v2`](./v3/tasks/20260202-v3-weighted-pool-oracle-v2)                 |
 | V3 Stable LP Oracle (V2)                               | [`20260203-v3-stable-pool-oracle-v2`](./v3/tasks/20260203-v3-stable-pool-oracle-v2)                     |
-| V3 Gyro E-CLP Oracle                                   | [`20260209-v3-gyro-eclp-oracle`](./v3/tasks/20260209-v3-gyro-eclp-oracle)                                |
+| V3 Gyro E-CLP Oracle                                   | [`20260209-v3-gyro-eclp-oracle`](./v3/tasks/20260209-v3-gyro-eclp-oracle)                               |
+| V3 ReClamm Pool (V2.1)                                 | [`20260407-v3-reclamm-pool-v2.1`](./v3/tasks/20260407-v3-reclamm-pool-v2.1)                             |
 
 ## Scripts
 
@@ -272,5 +272,6 @@ Go to each deprecated deployment's readme file to learn more about why it is dep
 | V3 ERC4626 Cow Swap Fee Burner                      | [`20250507-v3-erc4626-cow-swap-fee-burner`](./v3/deprecated/20250507-v3-erc4626-cow-swap-fee-burner)     |
 | V3 Balancer Fee Burner                              | [`20250530-v3-balancer-fee-burner`](./v3/deprecated/20250530-v3-balancer-fee-burner)                     |
 | V3 Liquidity Bootstrapping Pool (V2)                | [`20250701-v3-liquidity-bootstrapping-pool-v2`](./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2) |
+| V3 ReClamm Pool (V2)                                | [`20250702-v3-reclamm-pool-v2`](./v3/deprecated/20250702-v3-reclamm-pool-v2)                             |
 | V3 Weighted LP Oracle                               | [`20250814-v3-weighted-pool-oracle`](./v3/deprecated/20250814-v3-weighted-pool-oracle)                   |
 | V3 Stable LP Oracle                                 | [`20250815-v3-stable-pool-oracle`](./v3/deprecated/20250815-v3-stable-pool-oracle)                       |
