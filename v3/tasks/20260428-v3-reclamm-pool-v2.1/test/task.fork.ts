@@ -7,14 +7,14 @@ import { ONES_BYTES32, ZERO_ADDRESS } from '@helpers/constants';
 import { ReClammPoolDeployment } from '../input';
 import { bn, fp } from '@helpers/numbers';
 
-describeForkTest('V3-ReClammPool (V2.1)', 'mainnet', 24829700, function () {
-  const TASK_NAME = '20260407-v3-reclamm-pool-v2.1 (RC0)';
+describeForkTest('V3-ReClammPool (V2.1)', 'mainnet', 24980000, function () {
+  const TASK_NAME = '20260428-v3-reclamm-pool-v2.1';
   const VERSION_NUM = 3;
   const POOL_CONTRACT_NAME = 'ReClammPool';
   const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
 
-  const DAILY_PRICE_SHIFT_EXPONENT = bn(100e16); // 100%
-  const CENTEREDNESS_MARGIN = bn(20e16); // 20%
+  const DAILY_PRICE_SHIFT_EXPONENT = bn(50e16); // 50%
+  const CENTEREDNESS_MARGIN = bn(10e16); // 10%
   const INITIAL_MIN_PRICE = fp(1000);
   const INITIAL_MAX_PRICE = fp(4000);
   const INITIAL_TARGET_PRICE = fp(2500);

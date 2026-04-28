@@ -14,7 +14,7 @@ const Vault = new Task('20241204-v3-vault', TaskMode.READ_ONLY);
 const TestBalancerToken = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY);
 const WETH = new Task('00000000-tokens', TaskMode.READ_ONLY);
 
-const BaseVersion = { version: 0, deployment: '20260407-v3-reclamm-pool-v2.1 (RC0)' };
+const BaseVersion = { version: 3, deployment: '20260428-v3-reclamm-pool-v2.1' };
 
 export default {
   Vault,
