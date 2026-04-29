@@ -157,6 +157,7 @@ Returns an object with all contracts from a deployment and their addresses.
 | V3 Weighted LP Oracle (V2)                             | [`20260202-v3-weighted-pool-oracle-v2`](./v3/tasks/20260202-v3-weighted-pool-oracle-v2)                 |
 | V3 Stable LP Oracle (V2)                               | [`20260203-v3-stable-pool-oracle-v2`](./v3/tasks/20260203-v3-stable-pool-oracle-v2)                     |
 | V3 Gyro E-CLP Oracle                                   | [`20260209-v3-gyro-eclp-oracle`](./v3/tasks/20260209-v3-gyro-eclp-oracle)                               |
+| V3 Liquidity Bootstrapping Pool (V4)                   | [`20260501-v3-liquidity-bootstrapping-pool-v4`](./v3/tasks/20260501-v3-liquidity-bootstrapping-pool-v4) |
 
 ## Scripts
 
