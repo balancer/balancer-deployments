@@ -27,7 +27,7 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       owner: from ?? DELEGATE_OWNER,
       projectToken: input.TestBalancerToken,
       reserveToken: input.WETH,
-      startTime: timestampBefore + BigInt(HOUR),
+      startTime: timestampBefore + BigInt(HOUR) + 60n,
       endTime: timestampBefore + BigInt(DAY),
       blockProjectTokenSwapsIn: false,
     };
