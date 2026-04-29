@@ -1,5 +1,9 @@
 # 2025-12-19 - V3 Liquidity Bootstrapping Pool (V3)
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version was superseded by [`Liquidity Bootstrapping Pool` V4](../../tasks/20260501-v3-liquidity-bootstrapping-pool-v4/), which removes the automatic migration path.
+
 Third deployment for the LBPool, a Weighted Pool with mutable weights, designed to support v3 Liquidity Bootstrapping.
 
 This deployment includes the ability to launch "Seedless" LBPs: pools where no reserve tokens are required. This is accomplished by passing a non-zero "virtual reserve balance" on creation, then initializing with only project tokens. If the LBP allows selling project tokens back into the pool, these operations will fail unless project token sales have added sufficient "real" reserve tokens to fund them.
