@@ -1053,19 +1053,6 @@
     "path": "./v3/tasks/20251205-v3-fixed-price-lbp"
   },
   {
-    "description": "V3 Liquidity Bootstrapping Pool (V3)",
-    "task_id": "20251219-v3-liquidity-bootstrapping-pool-v3",
-    "date": "2025-12-19",
-    "date_raw": "20251219",
-    "slug": "v3-liquidity-bootstrapping-pool-v3",
-    "family": "v3-liquidity-bootstrapping-pool",
-    "family_source": "derived",
-    "version": "v3",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20251219-v3-liquidity-bootstrapping-pool-v3"
-  },
-  {
     "description": "V3 Balancer Fee Burner (V2)",
     "task_id": "20251219-v3-balancer-fee-burner-v2",
     "date": "2025-12-19",
@@ -1181,6 +1168,19 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20260209-v3-gyro-eclp-oracle"
+  },
+  {
+    "description": "V3 Liquidity Bootstrapping Pool (V4)",
+    "task_id": "20260501-v3-liquidity-bootstrapping-pool-v4",
+    "date": "2026-05-01",
+    "date_raw": "20260501",
+    "slug": "v3-liquidity-bootstrapping-pool-v4",
+    "family": "v3-liquidity-bootstrapping-pool",
+    "family_source": "derived",
+    "version": "v4",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260501-v3-liquidity-bootstrapping-pool-v4"
   },
   {
     "description": "Weighted Pools of up to 8 tokens",
@@ -2299,5 +2299,18 @@
     "ecosystem": "v3",
     "status": "deprecated",
     "path": "./v3/deprecated/20250815-v3-stable-pool-oracle"
+  },
+  {
+    "description": "V3 Liquidity Bootstrapping Pool (V3)",
+    "task_id": "20251219-v3-liquidity-bootstrapping-pool-v3",
+    "date": "2025-12-19",
+    "date_raw": "20251219",
+    "slug": "v3-liquidity-bootstrapping-pool-v3",
+    "family": "v3-liquidity-bootstrapping-pool",
+    "family_source": "derived",
+    "version": "v3",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20251219-v3-liquidity-bootstrapping-pool-v3"
   }
 ]
