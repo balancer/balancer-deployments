@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`Liquidity Bootstrapping Pool` V4](../../tasks/20260501-v3-liquidity-bootstrapping-pool-v4/), which removes the automatic migration path.
+> This version was superseded by [`Liquidity Bootstrapping Pool` V4](../../tasks/20260501-v3-liquidity-bootstrapping-pool-v4/), which removes the automatic migration path. This version can still be used if migration is required.
 
 Third deployment for the LBPool, a Weighted Pool with mutable weights, designed to support v3 Liquidity Bootstrapping.
 
