@@ -1,0 +1,189 @@
+import hre from 'hardhat';
+import { expect } from 'chai';
+import { Contract } from 'ethers';
+import { SignerWithAddress } from '@nomicfoundation/hardhat-ethers/signers';
+import { describeForkTest, getForkedNetwork, impersonate, Task, TaskMode } from '@src';
+import * as expectEvent from '@helpers/expectEvent';
+import { ONES_BYTES32, ZERO_ADDRESS, ZERO_BYTES32 } from '@helpers/constants';
+import { bn, fp, maxUint } from '@helpers/numbers';
+import { advanceTime, currentTimestamp, DAY, HOUR } from '@helpers/time';
+
+describeForkTest('V3-LBPool (V4)', 'mainnet', 24986525, function () {
+  const TASK_NAME = '20260501-v3-liquidity-bootstrapping-pool-v4';
+  const POOL_CONTRACT_NAME = 'LBPool';
+  const FACTORY_CONTRACT_NAME = POOL_CONTRACT_NAME + 'Factory';
+  const VERSION_NUM = 4;
+
+  const HIGH_WEIGHT = fp(0.8);
+  const LOW_WEIGHT = fp(0.2);
+
+  const SWAP_FEE = fp(0.01);
+
+  const TEST_BAL_ADMIN = '0x9098b50ee2d9E4c3C69928A691DA3b192b4C9673';
+
+  const INITIAL_BAL = fp(26667);
+  const INITIAL_WETH = fp(8);
+
+  let factory: Contract, pool: Contract;
+  let trustedRouter: Contract;
+  let bal: Contract, weth: Contract;
+  let permit2: Contract;
+  let task: Task;
+  let admin: SignerWithAddress;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let tokenConfig: any[];
+  const projectTokenLbpEndWeight = LOW_WEIGHT;
+  const reserveTokenLbpEndWeight = HIGH_WEIGHT;
+
+  before('run task', async () => {
+    task = new Task(TASK_NAME, TaskMode.TEST, getForkedNetwork(hre));
+    await task.run({ force: true });
+    factory = await task.deployedInstance(FACTORY_CONTRACT_NAME);
+
+    const routerTask = new Task('20250307-v3-router-v2', TaskMode.READ_ONLY, getForkedNetwork(hre));
+    trustedRouter = await routerTask.deployedInstance('Router');
+
+    const permit2Task = new Task('00000000-permit2', TaskMode.READ_ONLY);
+    const permit2Address = permit2Task.output({ network: 'mainnet' }).Permit2;
+    permit2 = await task.instanceAt('IPermit2', permit2Address);
+
+    admin = await impersonate(TEST_BAL_ADMIN, fp(10e8));
+
+    const tokensTask = new Task('00000000-tokens', TaskMode.READ_ONLY);
+    const testBALTokenTask = new Task('20220325-test-balancer-token', TaskMode.READ_ONLY, getForkedNetwork(hre));
+
+    const fork = getForkedNetwork(hre);
+
+    const WETH = tokensTask.output({ network: fork }).WETH;
+
+    bal = await testBALTokenTask.deployedInstance('TestBalancerToken');
+    weth = await task.instanceAt('IERC20', WETH);
+  });
+
+  before('setup contracts and parameters', async () => {
+    tokenConfig = [
+      {
+        token: weth.target.toString(),
+        tokenType: 0,
+        rateProvider: ZERO_ADDRESS,
+        paysYieldFees: false,
+      },
+      {
+        token: bal.target.toString(),
+        tokenType: 0,
+        rateProvider: ZERO_ADDRESS,
+        paysYieldFees: false,
+      },
+    ].sort(function (a, b) {
+      return a.token.toLowerCase().localeCompare(b.token.toLowerCase());
+    });
+  });
+
+  it('has trusted router', async () => {
+    expect(await factory.getTrustedRouter()).to.eq(trustedRouter.target.toString());
+  });
+
+  it('deploys LBP', async () => {
+    const startTime = await currentTimestamp();
+
+    const lbpCommonParams = {
+      name: 'Mock Seedless LBP',
+      symbol: 'SLBP-TEST',
+      owner: admin.address,
+      projectToken: bal.target.toString(),
+      reserveToken: weth.target.toString(),
+      startTime: startTime + bn(HOUR) + 60n, // add a minute to ensure the start time is after the initialization buffer
+      endTime: startTime + bn(DAY),
+      blockProjectTokenSwapsIn: false,
+    };
+
+    const lbpParams = {
+      projectTokenStartWeight: HIGH_WEIGHT,
+      reserveTokenStartWeight: LOW_WEIGHT,
+      projectTokenEndWeight: projectTokenLbpEndWeight,
+      reserveTokenEndWeight: reserveTokenLbpEndWeight,
+      reserveTokenVirtualBalance: INITIAL_WETH,
+    };
+
+    const poolCreationReceipt = await (
+      await factory.create(lbpCommonParams, lbpParams, SWAP_FEE, ONES_BYTES32, ZERO_ADDRESS)
+    ).wait();
+
+    const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
+    pool = await task.instanceAt(POOL_CONTRACT_NAME, event.args.pool);
+  });
+
+  it('checks pool tokens', async () => {
+    const poolTokens = (await pool.getTokens()).map((token: string) => token.toLowerCase());
+    expect(poolTokens).to.be.deep.eq(tokenConfig.map((config) => config.token.toLowerCase()));
+
+    expect(await pool.getProjectToken()).to.eq(bal.target.toString());
+    expect(await pool.getReserveToken()).to.eq(weth.target.toString());
+  });
+
+  it('checks pool version', async () => {
+    const version = JSON.parse(await pool.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(VERSION_NUM);
+    expect(version.name).to.be.eq(POOL_CONTRACT_NAME);
+  });
+
+  it('checks factory version', async () => {
+    const version = JSON.parse(await factory.version());
+    expect(version.deployment).to.be.eq(TASK_NAME);
+    expect(version.version).to.be.eq(VERSION_NUM);
+    expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
+  });
+
+  it('sale has not started yet', async () => {
+    expect(await pool.isSwapEnabled()).to.be.false;
+  });
+
+  it('initializes the pool', async () => {
+    // Give the admin tokens: mint test tokens, get WETH
+    await (bal.connect(admin) as Contract).mint(admin.address, INITIAL_BAL);
+
+    await (bal.connect(admin) as Contract).approve(permit2.target.toString(), INITIAL_BAL);
+    await (permit2.connect(admin) as Contract).approve(
+      bal.target.toString(),
+      trustedRouter.target.toString(),
+      INITIAL_BAL,
+      maxUint(48)
+    );
+
+    await (trustedRouter.connect(admin) as Contract).initialize(
+      pool.target.toString(),
+      [bal.target.toString(), weth.target.toString()],
+      [INITIAL_BAL, 0], // 0 reserve tokens
+      0,
+      false, // wethIsETH
+      ZERO_BYTES32
+    );
+  });
+
+  it('starts the sale', async () => {
+    await advanceTime(2 * HOUR);
+
+    expect(await pool.isSwapEnabled()).to.be.true;
+
+    // Actually need to buy some to get a non-zero reserve balance for migration.
+    await (trustedRouter.connect(admin) as Contract).swapSingleTokenExactIn(
+      pool.target.toString(),
+      weth.target.toString(),
+      bal.target.toString(),
+      INITIAL_WETH / BigInt(4),
+      0,
+      (await currentTimestamp()) + bn(DAY),
+      true,
+      '0x',
+      { value: INITIAL_WETH / BigInt(4) }
+    );
+  });
+
+  it('ends the sale', async () => {
+    await advanceTime(DAY);
+
+    expect(await pool.isSwapEnabled()).to.be.false;
+  });
+});
