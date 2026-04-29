@@ -2,7 +2,7 @@
 
 > ⚠️ **DEPRECATED: do not use** ⚠️
 >
-> This version was superseded by [`LiquidityBoostrappingPool` V3](../../tasks/20251219-v3-liquidity-bootstrapping-pool-v3/), which supports seedless LBPs. This deployment can still be used if the seedless functionality is not desired.
+> This version was superseded by [`LiquidityBoostrappingPool` V3](../20251219-v3-liquidity-bootstrapping-pool-v3/), which supports seedless LBPs. This deployment can still be used if the seedless functionality is not desired.
 
 Second deployment for the LBPool, a Weighted Pool with mutable weights, designed to support v3 Liquidity Bootstrapping. LBPs in Balancer V3 are more restrictive than what they were in V2, in order to make them more deterministic, simpler for aggregators, and safer for end users. They are limited to two tokens and a single weight change operation, specified on deployment.
 
