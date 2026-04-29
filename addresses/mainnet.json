@@ -1998,7 +1998,7 @@
         "address": "0x0954601F4b1fFECe41A411A66F4546620F121b8c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20260115-v3-weighted-pool-v2": {

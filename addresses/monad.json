@@ -416,7 +416,7 @@
         "address": "0xCEeaaA79222DB3bE51d82FAE9A32A1A04e7b3884"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20260115-v3-weighted-pool-v2": {
