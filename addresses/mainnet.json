@@ -1878,7 +1878,7 @@
         "address": "0x000aB3853737842bED7Dabe3540E3e5336FE62a6"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250813-v3-constant-price-feed": {

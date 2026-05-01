@@ -1320,7 +1320,7 @@
         "address": "0x89d9D76C1E5aA9a78364380bB17c4c7d385dA83c"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250813-v3-constant-price-feed": {

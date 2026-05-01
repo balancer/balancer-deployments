@@ -296,7 +296,7 @@
         "address": "0x09FDF368e2febE461F916Fe311e6d43f3C2A5Ca3"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250813-v3-constant-price-feed": {

@@ -402,7 +402,7 @@
         "address": "0x2CFDD50F108e49c1320cd8E2E1472dEf5c8268D4"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250806-v3-token-pair-registry": {
