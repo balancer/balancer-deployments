@@ -1,5 +1,9 @@
 # 2025-07-02 - V3 Readjusting Concentrated Liquidity AMM (ReClAMM) - V2
 
+> ⚠️ **DEPRECATED: do not use** ⚠️
+>
+> This version was superseded by [`ReClamm` V2.1](../../tasks/20260428-v3-reclamm-pool-v2.1/), which fixes a high severity issue that allowed corrupting the pool state by an attacker via cross-hook calls. This pool version is unsafe to use.
+
 Deployment of `ReClammPoolFactory`, a new pool type that implements concentrated liquidity by imposing price bounds on the constant product "weighted" math curve (using virtual balances). Current approaches to CL require active management of the position by the user: either by adjusting "ticks" in a Uniswap-style non-fungible position, or by adding/removing liquidity with fungible approaches. The ReClamm uses algorithmic virtual balance modifications to internally and automatically adjust the price interval as needed.
 
 This deployment implements protections against edge cases (no operations for long periods of time while out of target range), as well as stricter limits for admin settings:
