@@ -6,6 +6,7 @@ This deployment patches unauthorized executions for hook functions (`onBeforeIni
 
 ## Useful Files
 
-- [Code](https://github.com/balancer/reclamm/commit/8b48db4f6b6f7104bd1638b63c049a979affb9d2)
+- [Code](https://github.com/balancer/reclamm/commit/cff18033d401a61326a2d6c078507084cbdc864b)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
+- [`ReClammPoolHelper` artifact](./artifact/ReClammPoolHelper.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)

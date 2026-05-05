@@ -103,4 +103,8 @@ describeForkTest('V3-ReClammPool (V2.1)', 'mainnet', 24980000, function () {
     expect(version.version).to.be.eq(VERSION_NUM);
     expect(version.name).to.be.eq(FACTORY_CONTRACT_NAME);
   });
+
+  it('calls the helper', async () => {
+    await pool.computeInitialBalancesRaw(input.WETH, fp(1000));
+  });
 });
