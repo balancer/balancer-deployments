@@ -871,19 +871,6 @@
     "path": "./v2/tasks/20250613-veboost-v2.1"
   },
   {
-    "description": "V3 ReClamm Pool (V2)",
-    "task_id": "20250702-v3-reclamm-pool-v2",
-    "date": "2025-07-02",
-    "date_raw": "20250702",
-    "slug": "v3-reclamm-pool-v2",
-    "family": "v3-reclamm-pool",
-    "family_source": "derived",
-    "version": "v2",
-    "ecosystem": "v3",
-    "status": "active",
-    "path": "./v3/tasks/20250702-v3-reclamm-pool-v2"
-  },
-  {
     "description": "V3 Token Pair Registry",
     "task_id": "20250806-v3-token-pair-registry",
     "date": "2025-08-06",
@@ -1181,6 +1168,19 @@
     "ecosystem": "v3",
     "status": "active",
     "path": "./v3/tasks/20260209-v3-gyro-eclp-oracle"
+  },
+  {
+    "description": "V3 ReClamm Pool (V2.1)",
+    "task_id": "20260428-v3-reclamm-pool-v2.1",
+    "date": "2026-04-28",
+    "date_raw": "20260428",
+    "slug": "v3-reclamm-pool-v2.1",
+    "family": "v3-reclamm-pool",
+    "family_source": "derived",
+    "version": "v2.1",
+    "ecosystem": "v3",
+    "status": "active",
+    "path": "./v3/tasks/20260428-v3-reclamm-pool-v2.1"
   },
   {
     "description": "Weighted Pools of up to 8 tokens",
@@ -2273,6 +2273,19 @@
     "ecosystem": "v3",
     "status": "deprecated",
     "path": "./v3/deprecated/20250701-v3-liquidity-bootstrapping-pool-v2"
+  },
+  {
+    "description": "V3 ReClamm Pool (V2)",
+    "task_id": "20250702-v3-reclamm-pool-v2",
+    "date": "2025-07-02",
+    "date_raw": "20250702",
+    "slug": "v3-reclamm-pool-v2",
+    "family": "v3-reclamm-pool",
+    "family_source": "derived",
+    "version": "v2",
+    "ecosystem": "v3",
+    "status": "deprecated",
+    "path": "./v3/deprecated/20250702-v3-reclamm-pool-v2"
   },
   {
     "description": "V3 Weighted LP Oracle",
