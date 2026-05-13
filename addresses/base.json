@@ -910,7 +910,7 @@
         "address": "0x6147DCcc9aF9641CA5e86e3b0075E8c7c853AEF6"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250813-v3-constant-price-feed": {

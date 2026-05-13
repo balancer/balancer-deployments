@@ -842,7 +842,7 @@
         "address": "0x443aC03E071E38577f2c50e3a7bdE30D9CEc06C2"
       }
     ],
-    "status": "ACTIVE",
+    "status": "DEPRECATED",
     "version": "v3"
   },
   "20250813-v3-constant-price-feed": {
