@@ -7,6 +7,17 @@ This deployment patches unauthorized executions for hook functions (`onBeforeIni
 ## Useful Files
 
 - [Code](https://github.com/balancer/reclamm/commit/17262629ef80fcb852fe30a1b5617574daacea7a)
+- [Ethereum mainnet addresses](./output/mainnet.json)
+- [Gnosis mainnet addresses](./output/gnosis.json)
+- [Arbitrum mainnet addresses](./output/arbitrum.json)
+- [Base mainnet addresses](./output/base.json)
+- [Optimism mainnet addresses](./output/optimism.json)
+- [Avalanche mainnet addresses](./output/avalanche.json)
+- [Hyperevm mainnet addresses](./output/hyperevm.json)
+- [Plasma mainnet addresses](./output/plasma.json)
+- [X-Layer mainnet addresses](./output/xlayer.json)
+- [Monad mainnet addresses](./output/monad.json)
+- [Sepolia testnet addresses](./output/sepolia.json)
 - [`ReClammPoolFactory` artifact](./artifact/ReClammPoolFactory.json)
 - [`ReClammPoolHelper` artifact](./artifact/ReClammPoolHelper.json)
 - [`ReClammPool` artifact](./artifact/ReClammPool.json)
