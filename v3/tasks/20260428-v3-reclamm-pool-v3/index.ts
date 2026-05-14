@@ -77,7 +77,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
           priceParams,
           newReClammPoolParams.dailyPriceShiftExponent,
           newReClammPoolParams.centerednessMargin,
-          newReClammPoolParams.salt
+          newReClammPoolParams.salt,
+          { gasLimit: 10_000_000 }
         )
       ).wait();
       const event = expectEvent.inReceipt(poolCreationReceipt, 'PoolCreated');
@@ -98,6 +99,8 @@ export default async (task: Task, { force, from }: TaskRunOptions = {}): Promise
       initialMinPrice: newReClammPoolParams.initialMinPrice,
       initialMaxPrice: newReClammPoolParams.initialMaxPrice,
       initialTargetPrice: newReClammPoolParams.initialTargetPrice,
+      tokenAPriceIncludesRate: priceParams.tokenAPriceIncludesRate,
+      tokenBPriceIncludesRate: priceParams.tokenBPriceIncludesRate,
     };
 
     // We are now ready to verify the Pool
