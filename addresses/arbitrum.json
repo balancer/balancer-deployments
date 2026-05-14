@@ -1554,5 +1554,19 @@
     ],
     "status": "ACTIVE",
     "version": "v3"
+  },
+  "20260501-v3-liquidity-bootstrapping-pool-v4": {
+    "contracts": [
+      {
+        "name": "LBPoolFactory",
+        "address": "0x6b7DEd11F15D6AB9959c29cEd3Cd101D69A14c35"
+      },
+      {
+        "name": "MockLBPool",
+        "address": "0xFCc2E066e4019d1e06AaDfe48B15F95345D8875B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
   }
 }
