@@ -443,5 +443,14 @@
         "disable()": "0xed6f8a5f0602534601834cae86e16a9424b7bf30c562d15bd781fbcd5026d9a1"
       }
     }
+  },
+  "20260501-v3-liquidity-bootstrapping-pool-v4": {
+    "LBPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create((string,string,address,address,address,uint256,uint256,bool),(uint256,uint256,uint256,uint256,uint256),uint256,bytes32,address)": "0x6c4270bf6b5d39a5f74cd64d194749fbf1b55309b6da6a07a4d01b6222a92354",
+        "disable()": "0x2f9da633af72e79ee363d063d4a1793f03d08d19cbab7d6b126e9dbc6e533360"
+      }
+    }
   }
 }
