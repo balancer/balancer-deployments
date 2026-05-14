@@ -8,6 +8,8 @@ import 'hardhat-ignore-warnings';
 import 'tsconfig-paths/register';
 
 import './src/helpers/setupTests';
+import './scripts/hyperevm-big-blocks';
+import './scripts/hyperliquid-bridge';
 
 import { task } from 'hardhat/config';
 import { TASK_TEST } from 'hardhat/builtin-tasks/task-names';
