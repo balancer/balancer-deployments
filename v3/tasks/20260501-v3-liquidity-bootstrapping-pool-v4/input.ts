@@ -1,5 +1,5 @@
 import { Task, TaskMode } from '@src';
-import { YEAR } from '@helpers/time';
+import { MONTH } from '@helpers/time';
 
 export type LBPoolFactoryDeployment = {
   Vault: string;
@@ -25,7 +25,7 @@ export default {
   WETH,
   TestBalancerToken,
   Router: TrustedRouter,
-  PauseWindowDuration: 4 * YEAR,
+  PauseWindowDuration: 75 * 12 * MONTH,
   FactoryVersion: JSON.stringify({ name: 'LBPoolFactory', ...BaseVersion }),
   PoolVersion: JSON.stringify({ name: 'LBPool', ...BaseVersion }),
 };
