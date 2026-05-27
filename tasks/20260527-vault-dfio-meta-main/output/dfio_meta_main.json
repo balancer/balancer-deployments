@@ -1,0 +1,11 @@
+{
+  "chainId": 138,
+  "network": "dfio_meta_main",
+  "chainName": "DeFi Oracle Meta Mainnet",
+  "taskId": "20260527-vault-dfio-meta-main",
+  "contracts": {
+    "Vault": "0x96423d7C1727698D8a25EbFB88131e9422d1a3C3"
+  },
+  "source": "balancer/balancer-deployments official artifact",
+  "balancerDeploymentsNote": "Submit as tasks/<taskId>/output/dfio_meta_main.json per DEPLOYING.md"
+}
