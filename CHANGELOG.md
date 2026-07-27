@@ -5,6 +5,7 @@
 ### Breaking changes
 
 - The `20221205-l2-gauge-checkpointer` task was deleted and replaced with `20230527-l2-gauge-checkpointer`. The old task had not been used by anyone.
+- The `20251010-v3-composite-liquidity-router-v3` and `20251010-v3-prepaid-composite-liquidity-router-v3` tasks were deleted. Neither was ever deployed to any network.
 
 ### New Deployments
 
