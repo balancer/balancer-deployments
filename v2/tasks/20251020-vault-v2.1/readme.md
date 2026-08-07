@@ -2,6 +2,8 @@
 
 Deployment of a patched version of the Vault, Balancer V2's core contract, for new L2s that require veBAL infrastructure (e.g., Plasma).
 
+> **Obsolete: do not deploy.** The protocol has moved on to V3, so no new V2 Vaults should be deployed. Existing deployments are unaffected. Note that only the networks recorded in this repository's task outputs have official Balancer deployments.
+
 The patch addresses the two known vulnerabilities discovered since the original deployment in 2021.
 
 1) Token front-running: due to a gas optimization that removed a required check to ensure internal balances could only be created for deployed tokens as disclosed [here](https://forum.balancer.fi/t/balancer-v2-token-frontrun-vulnerability-disclosure/6309).
