@@ -20,5 +20,6 @@ Allows setting pool creator on pool deployment.
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
+- [Arbitrum Sepolia testnet addresses](./output/arbitrumSepolia.json)
 - [`WeightedPoolFactory` artifact](./artifact/WeightedPoolFactory.json)
 - [`WeightedPool` artifact](./artifact/WeightedPool.json)
