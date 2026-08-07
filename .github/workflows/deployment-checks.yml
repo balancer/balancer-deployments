@@ -22,13 +22,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, xlayer]
+        network: [arbitrum, arbitrumSepolia, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, xlayer]
     steps:
       - uses: actions/checkout@v4
       - name: Check ${{ matrix.network }} deployment addresses
         uses: ./.github/actions/check-network-deployments
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          ARBITRUM_SEPOLIA_RPC_ENDPOINT: ${{ secrets.ARBITRUM_SEPOLIA_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}
@@ -51,13 +52,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [arbitrum, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, xlayer]
+        network: [arbitrum, arbitrumSepolia, avalanche, base, bsc, fraxtal, gnosis, hyperevm, mainnet, mode, optimism, plasma, polygon, sepolia, xlayer]
     steps:
       - uses: actions/checkout@v4
       - name: Check ${{ matrix.network }} Action IDs
         uses: ./.github/actions/check-network-action-ids
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          ARBITRUM_SEPOLIA_RPC_ENDPOINT: ${{ secrets.ARBITRUM_SEPOLIA_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}

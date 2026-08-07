@@ -574,6 +574,14 @@ export default {
           browserURL: 'https://monadscan.com/',
         },
       },
+      {
+        network: 'arbitrumSepolia',
+        chainId: 421614,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=421614',
+          browserURL: 'https://sepolia.arbiscan.io/',
+        },
+      },
     ],
   },
 };

@@ -85,6 +85,7 @@ jobs:
           XLAYER_RPC_ENDPOINT: ${{ secrets.XLAYER_RPC_ENDPOINT }}
           MONAD_RPC_ENDPOINT: ${{ secrets.MONAD_RPC_ENDPOINT }}
           SEPOLIA_RPC_ENDPOINT: ${{ secrets.SEPOLIA_RPC_ENDPOINT }}
+          ARBITRUM_SEPOLIA_RPC_ENDPOINT: ${{ secrets.ARBITRUM_SEPOLIA_RPC_ENDPOINT }}
       - name: Test
         run: yarn test --bail
       - name: Save Forked Network Cache

@@ -15,6 +15,7 @@ export const NETWORKS = [
   'avalanche',
   'zkevm',
   'sepolia',
+  'arbitrumSepolia',
   'base',
   'fraxtal',
   'mode',
