@@ -11,5 +11,6 @@ The current VaultFactory deploys the ProtocolFeeController and passes it into th
 - [Plasma mainnet addresses](./output/plasma.json)
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Monad mainnet addresses](./output/monad.json)
+- [Arbitrum Sepolia testnet addresses](./output/arbitrumSepolia.json)
 - [`VaultFactory` artifact](./artifact/VaultFactory.json)
 
