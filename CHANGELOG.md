@@ -52,6 +52,7 @@
 - Deployed V3 ECLP Oracle Factory to all networks.
 - Deployed V3 AutoRange (ReClamm) Pool Factory V3 to all networks.
 - Deployed V3 Liquidity Bootstrapping Pool (V4) to all networks.
+- Deployed V3 Vault, Weighted and Stable pools, and Router to Arbitrum Sepolia
 
 #### V2
 
