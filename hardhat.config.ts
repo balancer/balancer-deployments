@@ -163,7 +163,7 @@ task('check-deployments', `Check that all tasks' deployments correspond to their
 
         if (existsSync(outputDir) && statSync(outputDir).isDirectory()) {
           const outputFiles = readdirSync(outputDir);
-          if (outputFiles.some((outputFile) => outputFile.includes(hre.network.name))) {
+          if (outputFiles.some((outputFile) => outputFile === `${hre.network.name}.json`)) {
             // Not all tasks have outputs for all networks, so we skip those that don't
             await withRetries(async () => task.run(args));
           }
@@ -231,7 +231,7 @@ task('save-action-ids', `Print the action IDs for a particular contract and chec
           if (existsSync(outputDir) && statSync(outputDir).isDirectory()) {
             for (const outputFile of readdirSync(outputDir)) {
               const outputFilePath = path.resolve(outputDir, outputFile);
-              if (outputFile.includes(hre.network.name) && statSync(outputFilePath).isFile()) {
+              if (outputFile === `${hre.network.name}.json` && statSync(outputFilePath).isFile()) {
                 const fileContents = JSON.parse(readFileSync(outputFilePath).toString());
                 const contractNames = Object.keys(fileContents);
 
@@ -572,6 +572,14 @@ export default {
         urls: {
           apiURL: 'https://api.etherscan.io/v2/api?chainid=143',
           browserURL: 'https://monadscan.com/',
+        },
+      },
+      {
+        network: 'arbitrumSepolia',
+        chainId: 421614,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=421614',
+          browserURL: 'https://sepolia.arbiscan.io/',
         },
       },
     ],

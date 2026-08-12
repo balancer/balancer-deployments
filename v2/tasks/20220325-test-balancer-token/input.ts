@@ -36,4 +36,7 @@ export default {
   sepolia: {
     Admin: '0x171C0fF5943CE5f133130436A29bF61E26516003',
   },
+  arbitrumSepolia: {
+    Admin: '0xEb12e16955eFe9C728b5cccF8Cf188AF4AE92f94',
+  },
 };

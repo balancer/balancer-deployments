@@ -57,6 +57,9 @@ if (process.env.CI) {
       },
       "monad": {
         "url": "${process.env.MONAD_RPC_ENDPOINT}"
+      },
+      "arbitrumSepolia": {
+        "url": "${process.env.ARBITRUM_SEPOLIA_RPC_ENDPOINT}"
       }
     },
     "defaultConfig": {

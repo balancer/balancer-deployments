@@ -1,0 +1,112 @@
+{
+  "20210418-authorizer": {
+    "contracts": [
+      {
+        "name": "Authorizer",
+        "address": "0x04E66e492Cc14947138608811Eeed0B17224F2b6"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
+  "20220325-test-balancer-token": {
+    "contracts": [
+      {
+        "name": "TestBalancerToken",
+        "address": "0x3ccD78683efFffdDc1A16f5553C896ac6D3ab7FF"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v2"
+  },
+  "20241204-v3-vault": {
+    "contracts": [
+      {
+        "name": "VaultFactory",
+        "address": "0xAc27df81663d139072E615855eF9aB0Af3FBD281"
+      },
+      {
+        "name": "ProtocolFeeController",
+        "address": "0xCaCC7E1efEEA8BB3af6d5720d12C1876aa6EE76b"
+      },
+      {
+        "name": "VaultAdmin",
+        "address": "0x35fFB749B273bEb20F40f35EdeB805012C539864"
+      },
+      {
+        "name": "VaultExtension",
+        "address": "0x0E8B07657D719B86e06bF0806D6729e3D528C9A9"
+      },
+      {
+        "name": "Vault",
+        "address": "0xbA1333333333a1BA1108E8412f11850A5C319bA9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250307-v3-router-v2": {
+    "contracts": [
+      {
+        "name": "Router",
+        "address": "0xCcDE8AB8355Bb656eF20630363B860B0ebe14f00"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20250321-v3-vault-factory-v2": {
+    "contracts": [
+      {
+        "name": "VaultFactory",
+        "address": "0xAc27df81663d139072E615855eF9aB0Af3FBD281"
+      },
+      {
+        "name": "ProtocolFeeController",
+        "address": "0xCaCC7E1efEEA8BB3af6d5720d12C1876aa6EE76b"
+      },
+      {
+        "name": "VaultAdmin",
+        "address": "0x35fFB749B273bEb20F40f35EdeB805012C539864"
+      },
+      {
+        "name": "VaultExtension",
+        "address": "0x0E8B07657D719B86e06bF0806D6729e3D528C9A9"
+      },
+      {
+        "name": "Vault",
+        "address": "0xbA1333333333a1BA1108E8412f11850A5C319bA9"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260115-v3-weighted-pool-v2": {
+    "contracts": [
+      {
+        "name": "WeightedPoolFactory",
+        "address": "0xDE3d3d70Cc85a456f2D2569Ddec1ba38fA144837"
+      },
+      {
+        "name": "MockWeightedPool",
+        "address": "0x19133E33E5530E5e471EcA7c0886858b17B84f9E"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  },
+  "20260116-v3-stable-pool-v3": {
+    "contracts": [
+      {
+        "name": "StablePoolFactory",
+        "address": "0xBDd2c9EEf209c991c6eAeB0c932C404782427dE2"
+      },
+      {
+        "name": "MockStablePool",
+        "address": "0xC332Ee892B49f6f651Bf3EED056656E60D90e18B"
+      }
+    ],
+    "status": "ACTIVE",
+    "version": "v3"
+  }
+}

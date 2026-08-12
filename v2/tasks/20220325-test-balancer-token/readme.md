@@ -15,4 +15,5 @@ Deployment of the `TestBalancerToken`, for replicating the BAL token's access co
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
+- [Arbitrum Sepolia testnet addresses](./output/arbitrumSepolia.json)
 - [`TestBalancerToken` artifact](./artifact/TestBalancerToken.json)

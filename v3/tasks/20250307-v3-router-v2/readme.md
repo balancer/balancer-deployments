@@ -21,5 +21,6 @@ There were also other changes to the Router contract and inheritance hierarchy s
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
+- [Arbitrum Sepolia testnet addresses](./output/arbitrumSepolia.json)
 - [`Router` artifact](./artifact/Router.json)
 

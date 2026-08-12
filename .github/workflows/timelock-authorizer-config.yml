@@ -22,6 +22,7 @@ jobs:
         uses: ./.github/actions/verify-network-timelock-authorizer-config
         env:
           ARBITRUM_RPC_ENDPOINT: ${{ secrets.ARBITRUM_RPC_ENDPOINT }}
+          ARBITRUM_SEPOLIA_RPC_ENDPOINT: ${{ secrets.ARBITRUM_SEPOLIA_RPC_ENDPOINT }}
           AVALANCHE_RPC_ENDPOINT: ${{ secrets.AVALANCHE_RPC_ENDPOINT }}
           BASE_RPC_ENDPOINT: ${{ secrets.BASE_RPC_ENDPOINT }}
           BINANCE_RPC_ENDPOINT: ${{ secrets.BINANCE_RPC_ENDPOINT }}

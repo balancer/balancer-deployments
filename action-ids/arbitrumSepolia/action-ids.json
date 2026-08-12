@@ -1,0 +1,31 @@
+{
+  "20260115-v3-weighted-pool-v2": {
+    "WeightedPoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256[],(address,address,address),uint256,address,bool,bool,bytes32)": "0x698dc1eb9fc02b75002308526d3907ac9dc31aee8f3cf6e04e86b177e0311d3d",
+        "disable()": "0x4be9c29c0ff87c4564b34dc925f347d1f61d65719c8dcb2de9b8399f788774c0"
+      }
+    }
+  },
+  "20260116-v3-stable-pool-v3": {
+    "StablePoolFactory": {
+      "useAdaptor": false,
+      "actionIds": {
+        "create(string,string,(address,uint8,address,bool)[],uint256,(address,address,address),uint256,address,bool,bool,bytes32)": "0x03158f2dc14cdf6e729084af86691e0475286160b42fecae5f47b40987f5cca9",
+        "disable()": "0xf387dfe79f12dfd8c09478cd7cea99c84517df28ae98c1e4df43874edd3a55f1"
+      }
+    },
+    "StablePool": {
+      "useAdaptor": false,
+      "factoryOutput": "0xC332Ee892B49f6f651Bf3EED056656E60D90e18B",
+      "actionIds": {
+        "emitApproval(address,address,uint256)": "0xa9c0589c55329d7d21992917dfce4c52cb088ee4af1904aedcaa8d0f5d043430",
+        "emitTransfer(address,address,uint256)": "0x360f8a9db43ebf4273e536d3fa4e453ebfa35ae6ee30a7f4d5dd9f36451ac532",
+        "incrementNonce()": "0xb36843eb1fcf238d69fdf8213d1ac1614269f5047c7129036fb3458d647016fe",
+        "startAmplificationParameterUpdate(uint256,uint256)": "0x95c1cbcb5f434893744f86ad4b07fea31dabb817c942c365f8a8439cc6be9302",
+        "stopAmplificationParameterUpdate()": "0xc076ef070f3055102a389307cdeaba1920b0535bc47aa7684fd5c68b860e743b"
+      }
+    }
+  }
+}

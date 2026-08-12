@@ -22,4 +22,5 @@ This contract is expected to be eventually replaced by one with a) native suppor
 - [X-Layer mainnet addresses](./output/xlayer.json)
 - [Monad mainnet addresses](./output/monad.json)
 - [Sepolia testnet addresses](./output/sepolia.json)
+- [Arbitrum Sepolia testnet addresses](./output/arbitrumSepolia.json)
 - [`Authorizer` artifact](./artifact/Authorizer.json)

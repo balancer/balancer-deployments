@@ -31,6 +31,10 @@
     "chainId": 11155111,
     "block-explorer": "https://sepolia.etherscan.io"
   },
+  "arbitrumSepolia": {
+    "chainId": 421614,
+    "block-explorer": "https://sepolia.arbiscan.io"
+  },
   "zkevm": {
     "chainId": 1101,
     "block-explorer": "https://zkevm.polygonscan.com"
