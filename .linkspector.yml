@@ -17,3 +17,5 @@ ignorePatterns:
   - pattern: '^https://medium\.com/balancer-protocol/.*$'
   - pattern: '^https://medium\.com/immunefi/.*$'
   - pattern: '^https://www\.npmjs\.com/.*$'
+  - pattern: '^https://etherscan\.io/.*$'
+  - pattern: '^https://polygonscan\.com/.*$'
